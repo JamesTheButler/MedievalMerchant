@@ -1,35 +1,55 @@
 using System.Collections.Generic;
+using Data;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 public class TilemapManager : MonoBehaviour
 {
     [SerializeField]
     private Tilemap tilemap;
-    
+
     [SerializeField]
     private Tile grassTile;
-    
-    [SerializeField]
-    private Tile townTile;
 
-    public void PlaceTiles(int size, List<Vector2Int> townLocations)
+    [SerializeField, FormerlySerializedAs("townTile")]
+    private Tile townTileT1;
+
+    [SerializeField]
+    private Tile townTileT2;
+
+    private int _size;
+    private Vector2Int _origin;
+
+    public void InitTilemap(int size, List<Vector2Int> townLocations)
     {
-        var origin = new Vector3Int(-(size / 2), -(size / 2), 0);
-        
+        _origin = new Vector2Int(-(size / 2), -(size / 2));
+
         for (var x = 0; x < size; x++)
         {
             for (var y = 0; y < size; y++)
             {
-                var pos = origin + new Vector3Int(x, y, 0);
-                tilemap.SetTile(pos, grassTile);
+                var pos = _origin + new Vector2Int(x, y);
+                tilemap.SetTile(new Vector3Int(pos.x, pos.y, 0), grassTile);
+
+                if (townLocations.Contains(new Vector2Int(x, y)))
+                {
+                    tilemap.SetTile(new Vector3Int(pos.x, pos.y, 1), townTileT1);
+                }
             }
         }
+    }
 
-        foreach (var townLocation in townLocations)
+    public void UpdateTown(Vector2Int townLocation, Tier townTier)
+    {
+        var tile = townTier switch
         {
-            var pos = new Vector3Int(townLocation.x, townLocation.y, 1);
-            tilemap.SetTile(pos, townTile);
-        }
+            Tier.Tier1 => townTileT1,
+            Tier.Tier2 => townTileT2,
+            _ => townTileT1
+        };
+
+        var pos = _origin + townLocation;
+        tilemap.SetTile(new Vector3Int(pos.x, pos.y, 1), tile);
     }
 }

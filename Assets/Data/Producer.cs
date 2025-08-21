@@ -3,11 +3,6 @@ using System.Collections.Generic;
 
 namespace Data
 {
-    /// <summary>
-    /// Tier 1: 1 Tier1 Good
-    /// Tier 2: 2 Tier1 Good + 1 Tier2 Good
-    /// Tier 3: 2 Tier1 Good + 2 Tier2 Good + 1 Tier3 Good
-    /// </summary>
     public class Producer
     {
         // goods this producer is allowed to produce
@@ -20,14 +15,18 @@ namespace Data
         public Producer(ProductionTable possibleProductionTable)
         {
             _possibleProductionTable = possibleProductionTable;
+            _currentProductionTable = possibleProductionTable;
             UpgradeTier(Tier.Tier1);
         }
 
         public IEnumerable<Good> Produce()
         {
-            return _currentProductionTable.GetProduction();
+            return new List<Good>();
         }
 
+        // Tier 1: 1 Tier1 Good
+        // Tier 2: 2 Tier1 Good + 1 Tier2 Good
+        // Tier 3: 2 Tier1 Good + 2 Tier2 Good + 1 Tier3 Good
         private void UpgradeTier(Tier tier)
         {
             if (_tier == tier) return;

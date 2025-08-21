@@ -19,7 +19,6 @@ namespace Data
             _location = location;
             _producer = new Producer(setupInfo.Production);
             _goodInfoManager = GoodInfoManager.instance;
-            
         }
 
         public void Tick()

@@ -579,6 +579,7 @@ GameObject:
   - component: {fileID: 1986165992}
   - component: {fileID: 1986165990}
   - component: {fileID: 1986165991}
+  - component: {fileID: 1986165993}
   m_Layer: 0
   m_Name: The Everything Manager
   m_TagString: Untagged
@@ -615,7 +616,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemap: {fileID: 1339183431}
   grassTile: {fileID: 11400000, guid: 2129126de058fa247a1699b50d48338f, type: 2}
-  townTile: {fileID: 11400000, guid: 0711d45eea9cdae408e12b418fa456b6, type: 2}
+  townTileT1: {fileID: 11400000, guid: 0711d45eea9cdae408e12b418fa456b6, type: 2}
+  townTileT2: {fileID: 11400000, guid: 58f96e38c8b8c7645ae082fdd0fa5ca6, type: 2}
 --- !u!114 &1986165991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,6 +654,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 229c97ad26039814ebdd09437bd69cbd, type: 2}
   - {fileID: 11400000, guid: 913889fd7195689419b0232a006dddea, type: 2}
   mapSize: 6
+--- !u!114 &1986165993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986165988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf137586886f4859b1132aed50d1e283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 766223028}
+  tilemap: {fileID: 1339183431}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
