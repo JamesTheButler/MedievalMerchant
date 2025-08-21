@@ -5,7 +5,9 @@ public class GameTicker : MonoBehaviour
 {
     public event Action OnTick;
     
-    public float tickRate = 20f;
+    [SerializeField]
+    private float tickRate = 20f;
+    
     private float _tickInterval;
     private float _timer;
 

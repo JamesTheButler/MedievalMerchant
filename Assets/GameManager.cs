@@ -1,17 +1,19 @@
 using System.Collections.Generic;
 using Data;
-using Model;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    private MapManager mapManager;
+    public Model Model { get; private set; }
+
+    [FormerlySerializedAs("mapManager"),SerializeField]
+    private TilemapManager tilemapManager;
     
     [SerializeField]
     private GameTicker ticker;
     
-    [SerializeField]
+    [Header("Map Setup"), SerializeField]
     private List<Vector2Int> townLocations;
 
     [SerializeField]
@@ -20,28 +22,31 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int mapSize;
 
-    private List<Town> _towns;
-
     private void Start()
     {
-        GenerateMap();
+        var towns = GenerateMap();
+        Model = new Model(towns);
         
-        ticker.OnTick += TickTowns;
+        ticker.OnTick += Tick;
     }
 
-    private void GenerateMap()
+    private List<Town> GenerateMap()
     {
+        var towns = new List<Town>();
+
         for (var i = 0; i < townLocations.Count; i++)
         {
-            _towns.Add(new Town(townInfos[i]));
+            towns.Add(new Town(townInfos[i], townLocations[i]));
         }
         
-        mapManager.PlaceTiles(mapSize, townLocations);
+        tilemapManager.PlaceTiles(mapSize, townLocations);
+        
+        return towns;
     }
 
-    private void TickTowns()
+    private void Tick()
     {
-        foreach (var town in _towns)
+        foreach (var town in Model.Towns)
         {
             town.Tick();
         }

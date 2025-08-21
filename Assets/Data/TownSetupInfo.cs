@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Model;
 using UnityEngine;
 
 namespace Data
@@ -7,7 +5,8 @@ namespace Data
     [CreateAssetMenu(fileName = "TownSetupInfo", menuName = "Data/TownSetupInfo")]
     public class TownSetupInfo : ScriptableObject
     {
-        [SerializeField] private string townName;
-        [SerializeField] private List<Good> production;
+        [field: SerializeField] public int InitialFunds { get; private set;} 
+        [field: SerializeField] public ProductionTable Production { get; private set;} 
+        [field: SerializeField] public TownNameGenerator TownName { get; private set;} 
     }
 }
