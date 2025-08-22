@@ -8,6 +8,11 @@ namespace UI
         [SerializeField]
         private TownInventoryUI inventoryUi;
 
+        private void Start()
+        {
+            inventoryUi.Hide();
+        }
+
         public void SelectTown(Town town)
         {
             inventoryUi.Bind(town);

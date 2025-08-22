@@ -24,6 +24,13 @@ namespace UI
 
         private Inventory _boundInventory;
 
+        private void Start()
+        {
+            CollectInventoryCells(inventorySectionT1);
+            CollectInventoryCells(inventorySectionT2);
+            CollectInventoryCells(inventorySectionT3);
+        }
+
         public void Bind(Inventory inventory)
         {
             UnBind();
@@ -31,7 +38,6 @@ namespace UI
             inventory.GoodUpdated += OnGoodUpdated;
             inventory.FundsUpdated += OnFundsUpdated;
 
-            // initialize
             foreach (var (good, amount) in inventory.Goods)
             {
                 OnGoodUpdated(good, amount);
@@ -64,7 +70,6 @@ namespace UI
         public void Show()
         {
             gameObject.SetActive(true);
-            LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
         }
 
         public void Hide()
@@ -72,15 +77,6 @@ namespace UI
             gameObject.SetActive(false);
         }
 
-        private void Start()
-        {
-            CollectInventoryCells(inventorySectionT1);
-            CollectInventoryCells(inventorySectionT2);
-            CollectInventoryCells(inventorySectionT3);
-
-            Hide();
-            LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
-        }
 
         private void OnFundsUpdated(int funds)
         {

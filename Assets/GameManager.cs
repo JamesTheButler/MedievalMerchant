@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Model Model { get; private set; }
-
     [SerializeField]
     private TilemapManager tilemapManager;
 
@@ -21,20 +19,16 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private int mapSize;
-    
+
     [SerializeField]
     private TransactionUI transactionUI;
 
-    private void Awake()
-    {
-        var towns = GenerateMap();
-        Model = new Model(towns);
-    }
-
     private void Start()
     {
+        var towns = GenerateMap();
+        Model.Instance.SetTowns(towns);
         ticker.OnTick += Tick;
-        
+
         transactionUI.Initialize(Good.Leather, TransactionType.Buy, 250);
     }
 
@@ -55,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     private void Tick()
     {
-        foreach (var town in Model.Towns.Values)
+        foreach (var town in Model.Instance.Towns.Values)
         {
             town.Tick();
         }

@@ -4,17 +4,30 @@ using UnityEngine;
 
 namespace Data
 {
-    public class Model
+    public class Model : MonoBehaviour
     {
-        public Player Player { get; private set; }
+        public static Model Instance;
+
+        public Player Player { get; private set; } = new();
         public IReadOnlyDictionary<Vector2Int, Town> Towns => _towns;
 
-        private readonly Dictionary<Vector2Int, Town> _towns;
+        private Dictionary<Vector2Int, Town> _towns;
 
-        public Model(IEnumerable<Town> towns)
+        public void SetTowns(IEnumerable<Town> towns)
         {
-            Player = new Player();
             _towns = towns.ToDictionary(town => town.Location, town => town);
+        }
+
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 }

@@ -78,7 +78,7 @@ public class TilemapManager : MonoBehaviour
         var mouseWorldPos = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
         var cellPos = grid.WorldToCell(mouseWorldPos).XY() - _origin;
 
-        if (gameManager.Model.Towns.TryGetValue(cellPos, out var town))
+        if (Model.Instance.Towns.TryGetValue(cellPos, out var town))
         {
             onTownSelected.Invoke(town);
         }
