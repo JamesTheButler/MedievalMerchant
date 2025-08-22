@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Data;
+using UI;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -20,6 +21,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private int mapSize;
+    
+    [SerializeField]
+    private TransactionUI transactionUI;
 
     private void Awake()
     {
@@ -30,6 +34,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         ticker.OnTick += Tick;
+        
+        transactionUI.Initialize(Good.Leather, TransactionType.Buy, 250);
     }
 
     private List<Town> GenerateMap()
