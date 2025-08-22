@@ -1,16 +1,13 @@
 using System.Collections.Generic;
 using Data;
-using UI;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Tilemaps;
 
 public class TilemapManager : MonoBehaviour
 {
     [SerializeField]
     private GameManager gameManager;
-
-    [SerializeField]
-    private InventoryUI inventoryUI;
 
     [SerializeField]
     private Tilemap tilemap;
@@ -29,6 +26,12 @@ public class TilemapManager : MonoBehaviour
 
     private int _size;
     private Vector2Int _origin;
+
+    [SerializeField]
+    private UnityEvent<Town> onTownSelected;
+
+    [SerializeField]
+    private UnityEvent onDeselected;
 
     public void InitTilemap(int size, List<Vector2Int> townLocations)
     {
@@ -49,16 +52,16 @@ public class TilemapManager : MonoBehaviour
         }
     }
 
-    public void UpdateTown(Vector2Int townLocation, Tier townTier)
+    public void UpdateTown(Town town)
     {
-        var tile = townTier switch
+        var tile = town.Tier switch
         {
             Tier.Tier1 => townTileT1,
             Tier.Tier2 => townTileT2,
             _ => townTileT1
         };
 
-        var pos = _origin + townLocation;
+        var pos = _origin + town.Location;
         tilemap.SetTile(new Vector3Int(pos.x, pos.y, 1), tile);
     }
 
@@ -77,15 +80,11 @@ public class TilemapManager : MonoBehaviour
 
         if (gameManager.Model.Towns.TryGetValue(cellPos, out var town))
         {
-            var romanTier = ((int)town.Tier).ToRomanNumeral();
-            inventoryUI.SetTitle($"{town.Name} ({romanTier})");
-            inventoryUI.Bind(town.Inventory);
-            inventoryUI.Show();
+            onTownSelected.Invoke(town);
         }
         else
         {
-            inventoryUI.UnBind();
-            inventoryUI.Hide();
+            onDeselected.Invoke();
         }
     }
 }

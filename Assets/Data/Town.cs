@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -8,10 +9,11 @@ namespace Data
         private readonly GoodInfoManager _goodInfoManager;
         private readonly Producer _producer;
 
-        public Inventory Inventory { get; } = new();
+        public event Action TierChanged;
 
+        public Inventory Inventory { get; } = new();
         public string Name { get; }
-        public Tier Tier { get; }
+        public Tier Tier { get; private set; }
         public Vector2Int Location { get; }
         public float DevelopmentScore { get; private set; } = 100f;
         public float DevelopmentTrend { get; private set; } = 0f;
@@ -20,7 +22,7 @@ namespace Data
         {
             Location = location;
             _goodInfoManager = goodInfoManager;
-            
+
             Name = setupInfo.NameGenerator.GenerateName();
             Tier = Tier.Tier1;
             _producer = new Producer(setupInfo.Production);
@@ -63,6 +65,23 @@ namespace Data
             }
 
             DevelopmentScore += DevelopmentScore * DevelopmentTrend;
+        }
+
+        public void Upgrade()
+        {
+            switch (Tier)
+            {
+                case Tier.Tier1:
+                    Tier = Tier.Tier2;
+                    TierChanged?.Invoke();
+                    break;
+                case Tier.Tier2:
+                    Tier = Tier.Tier3;
+                    TierChanged?.Invoke();
+                    break;
+                case Tier.Tier3:
+                default: break;
+            }
         }
     }
 }

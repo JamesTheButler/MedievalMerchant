@@ -9,9 +9,6 @@ namespace UI
     public class InventoryUI : MonoBehaviour
     {
         [SerializeField]
-        private TMP_Text titleText;
-
-        [SerializeField]
         private TMP_Text fundsText;
 
         [SerializeField]
@@ -26,11 +23,6 @@ namespace UI
         private readonly Dictionary<Good, InventoryCell> _inventoryCells = new();
 
         private Inventory _boundInventory;
-
-        public void SetTitle(string title)
-        {
-            titleText.text = title;
-        }
 
         public void Bind(Inventory inventory)
         {
