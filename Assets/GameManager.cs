@@ -1,19 +1,17 @@
-using System;
 using System.Collections.Generic;
 using Data;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     public Model Model { get; private set; }
 
-    [FormerlySerializedAs("mapManager"),SerializeField]
+    [SerializeField]
     private TilemapManager tilemapManager;
-    
+
     [SerializeField]
     private GameTicker ticker;
-    
+
     [Header("Map Setup"), SerializeField]
     private List<Vector2Int> townLocations;
 
@@ -36,21 +34,22 @@ public class GameManager : MonoBehaviour
 
     private List<Town> GenerateMap()
     {
+        var goodInfoManager = Setup.Instance.GoodInfoManager;
         var towns = new List<Town>();
 
         for (var i = 0; i < townLocations.Count; i++)
         {
-            towns.Add(new Town(townInfos[i], townLocations[i]));
+            towns.Add(new Town(townInfos[i], townLocations[i], goodInfoManager));
         }
-        
+
         tilemapManager.InitTilemap(mapSize, townLocations);
-        
+
         return towns;
     }
 
     private void Tick()
     {
-        foreach (var town in Model.Towns)
+        foreach (var town in Model.Towns.Values)
         {
             town.Tick();
         }

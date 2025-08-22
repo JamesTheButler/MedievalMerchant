@@ -1,18 +1,27 @@
 using System.Collections.Generic;
 using Data;
+using UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 public class TilemapManager : MonoBehaviour
 {
     [SerializeField]
+    private GameManager gameManager;
+
+    [SerializeField]
+    private InventoryUI inventoryUI;
+
+    [SerializeField]
     private Tilemap tilemap;
+
+    [SerializeField]
+    private Grid grid;
 
     [SerializeField]
     private Tile grassTile;
 
-    [SerializeField, FormerlySerializedAs("townTile")]
+    [SerializeField]
     private Tile townTileT1;
 
     [SerializeField]
@@ -51,5 +60,32 @@ public class TilemapManager : MonoBehaviour
 
         var pos = _origin + townLocation;
         tilemap.SetTile(new Vector3Int(pos.x, pos.y, 1), tile);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            LeftClick();
+        }
+    }
+
+    private void LeftClick()
+    {
+        var mouseWorldPos = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
+        var cellPos = grid.WorldToCell(mouseWorldPos).XY() - _origin;
+
+        if (gameManager.Model.Towns.TryGetValue(cellPos, out var town))
+        {
+            var romanTier = ((int)town.Tier).ToRomanNumeral();
+            inventoryUI.SetTitle($"{town.Name} ({romanTier})");
+            inventoryUI.Bind(town.Inventory);
+            inventoryUI.Show();
+        }
+        else
+        {
+            inventoryUI.UnBind();
+            inventoryUI.Hide();
+        }
     }
 }

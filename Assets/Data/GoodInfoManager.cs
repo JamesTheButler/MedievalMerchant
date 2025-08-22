@@ -1,21 +1,22 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace Data
 {
     [CreateAssetMenu(fileName = "GoodInfoManager", menuName = "Data/GoodInfoManager")]
-    public class GoodInfoManager : ScriptableSingleton<GoodInfoManager>
+    public class GoodInfoManager : ScriptableObject
     {
         [SerializeField]
-        private List<GoodInfo> infos;
+        private List<GoodInfo> goodInfos;
 
-        public Dictionary<Good, GoodInfo> Infos { get; private set; }
-    
-        private void Awake()
+        public IReadOnlyDictionary<Good, GoodInfo> GoodInfos => _goodInfoDict ??= GenerateGoodDictionary();
+
+        private Dictionary<Good, GoodInfo> _goodInfoDict;
+
+        private Dictionary<Good, GoodInfo> GenerateGoodDictionary()
         {
-            Infos = infos.ToDictionary(item => item.GoodType, item => item);
+            return goodInfos.ToDictionary(info => info.GoodType, info => info);
         }
     }
 }

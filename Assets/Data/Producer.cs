@@ -21,7 +21,7 @@ namespace Data
 
         public IEnumerable<Good> Produce()
         {
-            return new List<Good>();
+            return _possibleProductionTable.GetProduction();
         }
 
         // Tier 1: 1 Tier1 Good

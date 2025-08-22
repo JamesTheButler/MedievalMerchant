@@ -4,25 +4,19 @@ using UnityEngine;
 public class GameTicker : MonoBehaviour
 {
     public event Action OnTick;
-    
-    [SerializeField]
-    private float tickRate = 20f;
-    
-    private float _tickInterval;
-    private float _timer;
 
-    private void Start()
-    {
-        _tickInterval = 1f / tickRate;
-    }
+    [SerializeField]
+    private float tickRateSec = .02f;
+
+    private float _timer;
 
     private void Update()
     {
         _timer += Time.deltaTime;
 
-        while (_timer >= _tickInterval)
+        while (_timer >= tickRateSec)
         {
-            _timer -= _tickInterval;
+            _timer -= tickRateSec;
             OnTick?.Invoke();
         }
     }
