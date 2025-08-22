@@ -39,10 +39,9 @@ namespace Data
         private void Produce()
         {
             var production = _producer.Produce();
-
-            foreach (var good in production)
+            foreach (var (good, amount) in production)
             {
-                Inventory.AddGood(good, 3);
+                Inventory.AddGood(good, amount);
             }
         }
 
@@ -69,6 +68,8 @@ namespace Data
 
         public void Upgrade()
         {
+            Debug.Log($"{Name} upgraded to {Tier}");
+
             switch (Tier)
             {
                 case Tier.Tier1:
@@ -82,6 +83,8 @@ namespace Data
                 case Tier.Tier3:
                 default: break;
             }
+
+            _producer.UpgradeTier(Tier);
         }
     }
 }
