@@ -7,6 +7,8 @@ namespace UI
 {
     public class InventoryCell : MonoBehaviour
     {
+        public Good Good { get; private set; }
+
         [SerializeField]
         private Image goodIcon;
 
@@ -21,6 +23,7 @@ namespace UI
 
         public void SetGood(Good good)
         {
+            Good = good;
             goodIcon.sprite = Setup.Instance.GoodInfoManager.GoodInfos[good].Icon;
         }
 
