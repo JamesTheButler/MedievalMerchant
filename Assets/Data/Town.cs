@@ -68,7 +68,6 @@ namespace Data
 
         public void Upgrade()
         {
-            Debug.Log($"{Name} upgraded to {Tier}");
 
             switch (Tier)
             {
@@ -84,6 +83,7 @@ namespace Data
                 default: break;
             }
 
+            Debug.Log($"{Name} upgraded to {Tier}");
             _producer.UpgradeTier(Tier);
         }
     }

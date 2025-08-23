@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Data;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 public class TilemapManager : MonoBehaviour
@@ -67,7 +68,7 @@ public class TilemapManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             LeftClick();
         }
