@@ -1,13 +1,17 @@
+using System;
 using System.Collections.Generic;
 using Data;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace UI
 {
     public class InventoryUI : MonoBehaviour
     {
+        [SerializeField]
+        private UnityEvent<InventoryCell> inventoryCellClicked;
+
         [SerializeField]
         private TMP_Text fundsText;
 
@@ -100,6 +104,7 @@ namespace UI
             foreach (var (good, cell) in inventorySection.Cells)
             {
                 _inventoryCells.Add(good, cell);
+                cell.Clicked += () => inventoryCellClicked?.Invoke(cell);
             }
         }
     }

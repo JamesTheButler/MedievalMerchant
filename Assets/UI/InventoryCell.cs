@@ -1,12 +1,16 @@
+using System;
 using Data;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI
 {
-    public class InventoryCell : MonoBehaviour
+    public class InventoryCell : MonoBehaviour, IPointerClickHandler
     {
+        public event Action Clicked;
+
         public Good Good { get; private set; }
 
         [SerializeField]
@@ -45,6 +49,14 @@ namespace UI
         public void SetIsProduced(bool isProduced)
         {
             productionIcon.gameObject.SetActive(isProduced);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                Clicked?.Invoke();
+            }
         }
     }
 }

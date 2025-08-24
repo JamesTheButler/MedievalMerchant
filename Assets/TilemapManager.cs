@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Data;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -25,14 +26,28 @@ public class TilemapManager : MonoBehaviour
     [SerializeField]
     private Tile townTileT2;
 
+    [SerializeField]
+    private Tile townTileT3;
+
+    [SerializeField]
+    private UnityEvent<Town> onTownClicked;
+
+    [SerializeField]
+    private UnityEvent onGroundClicked;
+
+    private const int GroundZIndex = 0;
+    private const int TownZIndex = 5;
+
     private int _size;
     private Vector2Int _origin;
 
-    [SerializeField]
-    private UnityEvent<Town> onTownSelected;
-
-    [SerializeField]
-    private UnityEvent onDeselected;
+    private void Start()
+    {
+        foreach (var town in Model.Instance.Towns.Values)
+        {
+            town.TierChanged += () => UpdateTown(town);
+        }
+    }
 
     public void InitTilemap(int size, List<Vector2Int> townLocations)
     {
@@ -43,27 +58,28 @@ public class TilemapManager : MonoBehaviour
             for (var y = 0; y < size; y++)
             {
                 var pos = _origin + new Vector2Int(x, y);
-                tilemap.SetTile(new Vector3Int(pos.x, pos.y, 0), grassTile);
+                tilemap.SetTile(new Vector3Int(pos.x, pos.y, GroundZIndex), grassTile);
 
                 if (townLocations.Contains(new Vector2Int(x, y)))
                 {
-                    tilemap.SetTile(new Vector3Int(pos.x, pos.y, 1), townTileT1);
+                    tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), townTileT1);
                 }
             }
         }
     }
 
-    public void UpdateTown(Town town)
+    private void UpdateTown(Town town)
     {
         var tile = town.Tier switch
         {
             Tier.Tier1 => townTileT1,
             Tier.Tier2 => townTileT2,
-            _ => townTileT1
+            Tier.Tier3 => townTileT3,
+            _ => townTileT3
         };
 
         var pos = _origin + town.Location;
-        tilemap.SetTile(new Vector3Int(pos.x, pos.y, 1), tile);
+        tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), tile);
     }
 
     private void Update()
@@ -81,11 +97,11 @@ public class TilemapManager : MonoBehaviour
 
         if (Model.Instance.Towns.TryGetValue(cellPos, out var town))
         {
-            onTownSelected.Invoke(town);
+            onTownClicked?.Invoke(town);
         }
         else
         {
-            onDeselected.Invoke();
+            onGroundClicked?.Invoke();
         }
     }
 }

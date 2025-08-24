@@ -8,41 +8,49 @@ namespace UI
         [SerializeField]
         private BuySellPopup buySellPopup;
 
-        private Good? _good;
-        private Inventory _thisInventory;
-        private Inventory _otherInventory;
-        
-        public void Initialize(Vector2 position, Good good, Inventory thisInventory, Inventory otherInventory)
+        private Good _good;
+        private Inventory _townInventory;
+        private Inventory _playerInventory;
+
+        private void Start()
         {
-            _good = good;
-            _thisInventory = thisInventory;
-            _otherInventory = otherInventory;
+            buySellPopup.Hide();
+        }
 
-            ((RectTransform)buySellPopup.transform).anchoredPosition = position;
+        public void Initialize(InventoryCell inventoryCell)
+        {
+            _good = inventoryCell.Good;
 
-            buySellPopup.SetGood(good);
-            
-            // can sell and buy?
-            var canBuy = otherInventory.Goods.ContainsKey(good);
-            var canSell = thisInventory.Goods.ContainsKey(good);
-            buySellPopup.CanBuy(canBuy);
+            _townInventory = SelectionModel.Instance.SelectedTown.Inventory;
+            _playerInventory = Model.Instance.Player.Inventory;
+
+            // TODO: fix this
+            //((RectTransform)buySellPopup.transform).anchoredPosition = inventoryCell.transform.localPosition;
+
+            buySellPopup.SetGood(_good);
+
+            // player inventory is checked for buying of goods
+            var canSell = _playerInventory.Goods.ContainsKey(_good);
             buySellPopup.CanSell(canSell);
-            _thisInventory.GoodUpdated += TryRefreshCanSell;
-            _otherInventory.GoodUpdated += TryRefreshCanBuy;
+            _playerInventory.GoodUpdated += TryRefreshCanSell;
 
-            buySellPopup.gameObject.SetActive(true);
+            // player inventory is checked for SALE of goods
+            var canBuy = _townInventory.Goods.ContainsKey(_good);
+            buySellPopup.CanBuy(canBuy);
+            _townInventory.GoodUpdated += TryRefreshCanBuy;
+
+            buySellPopup.Show();
         }
 
         public void Reset()
         {
-            buySellPopup.gameObject.SetActive(false);
+            buySellPopup.Hide();
 
-            _thisInventory.GoodUpdated -= TryRefreshCanSell;
-            _otherInventory.GoodUpdated -= TryRefreshCanBuy;
+            _townInventory.GoodUpdated -= TryRefreshCanSell;
+            _playerInventory.GoodUpdated -= TryRefreshCanBuy;
 
-            _good = null;
-            _thisInventory = null;
-            _otherInventory = null;
+            _townInventory = null;
+            _playerInventory = null;
         }
 
         private void TryRefreshCanBuy(Good good, int amount)

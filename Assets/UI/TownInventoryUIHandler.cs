@@ -11,15 +11,23 @@ namespace UI
         private void Start()
         {
             inventoryUi.Hide();
+
+            SelectionModel.Instance.TownSelected += SelectTown;
         }
 
-        public void SelectTown(Town town)
+        private void SelectTown(Town town)
         {
+            if (town == null)
+            {
+                DeselectTown();
+                return;
+            }
+
             inventoryUi.Bind(town);
             inventoryUi.Show();
         }
 
-        public void DeselectTown()
+        private void DeselectTown()
         {
             inventoryUi.UnBindTown();
             inventoryUi.Hide();

@@ -14,16 +14,16 @@ namespace Data
 
         private readonly Dictionary<Good, int> _goods = new();
 
-        public void AddFunds(int count)
+        public void AddFunds(int fundChange)
         {
-            Funds += count;
-            FundsUpdated?.Invoke(count);
+            Funds += fundChange;
+            FundsUpdated?.Invoke(Funds);
         }
 
-        public void RemoveFunds(int count)
+        public void RemoveFunds(int fundChange)
         {
-            Funds -= count;
-            FundsUpdated?.Invoke(count);
+            Funds -= fundChange;
+            FundsUpdated?.Invoke(Funds);
         }
 
         public bool HasFunds(int funds)
@@ -31,6 +31,16 @@ namespace Data
             return Funds >= funds;
         }
 
+        public bool HasGood(Good good)
+        {
+            return _goods.ContainsKey(good);
+        }
+        
+        public bool HasGood(Good good, int amount)
+        {
+            return _goods.ContainsKey(good) && _goods[good] <= amount;
+        }
+        
         public void AddGood(Good good, int amount)
         {
             _goods.TryAdd(good, 0);
@@ -38,16 +48,9 @@ namespace Data
             GoodUpdated?.Invoke(good, _goods[good]);
         }
 
-        public bool HasGood(Good good, int amount)
+        public void RemoveGood(Good good, int amount)
         {
-            if (!_goods.TryGetValue(good, out var currentAmount)) return false;
-
-            return currentAmount >= amount;
-        }
-
-        public bool RemoveGood(Good good, int amount)
-        {
-            if (!HasGood(good, amount)) return false;
+            if (!HasGood(good)) return;
 
             _goods[good] -= amount;
 
@@ -57,9 +60,13 @@ namespace Data
             }
 
             GoodUpdated?.Invoke(good, _goods[good]);
-            return true;
         }
 
+        public int Get(Good good)
+        {
+            return _goods.GetValueOrDefault(good, 0);
+        }
+        
         public bool SellTo(Inventory other, Good good, int amount, int totalPrice)
         {
             // we don't have enough of this good
