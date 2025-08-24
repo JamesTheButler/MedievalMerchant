@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ namespace Data
         public float DevelopmentScore { get; private set; } = 100f;
         public float DevelopmentTrend { get; private set; } = 0f;
 
+        public IEnumerable<Good> Production => _producer.ProducedGoods;
+        
         public Town(TownSetupInfo setupInfo, Vector2Int location, GoodInfoManager goodInfoManager)
         {
             Location = location;
@@ -68,23 +71,21 @@ namespace Data
 
         public void Upgrade()
         {
-
-            switch (Tier)
-            {
-                case Tier.Tier1:
-                    Tier = Tier.Tier2;
-                    TierChanged?.Invoke();
-                    break;
-                case Tier.Tier2:
-                    Tier = Tier.Tier3;
-                    TierChanged?.Invoke();
-                    break;
-                case Tier.Tier3:
-                default: break;
-            }
+            var oldTier = Tier;
+            IncreaseTier();
 
             Debug.Log($"{Name} upgraded to {Tier}");
             _producer.UpgradeTier(Tier);
+
+            if (oldTier != Tier)
+            {
+                TierChanged?.Invoke();
+            }
+        }
+
+        private void IncreaseTier()
+        {
+            Tier = (Tier)Math.Min((int)Tier + 1, (int)Tier.Tier3);
         }
     }
 }

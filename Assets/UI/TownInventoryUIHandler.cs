@@ -23,8 +23,8 @@ namespace UI
                 return;
             }
 
-            inventoryUi.Bind(town);
             inventoryUi.Show();
+            inventoryUi.Bind(town);
         }
 
         private void DeselectTown()

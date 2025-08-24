@@ -6,8 +6,10 @@ namespace Data
 {
     public class Producer
     {
-        private readonly ProductionTable _productionTable;
+        public IEnumerable<Good> ProducedGoods => _producedGoods;
+
         private readonly HashSet<Good> _producedGoods = new();
+        private readonly ProductionTable _productionTable;
 
         private Tier? _tier;
 

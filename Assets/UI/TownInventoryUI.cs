@@ -21,31 +21,34 @@ namespace UI
 
             if (town == null) return;
 
+            base.Bind(town.Inventory);
+
             _boundTown = town;
-            UpdateTownTitle();
-            _boundTown.TierChanged += UpdateTownTitle;
+            TownUpgrade();
+            _boundTown.TierChanged += TownUpgrade;
 
             upgradeButton.onClick.AddListener(() => _boundTown.Upgrade());
-
-            base.Bind(town.Inventory);
         }
 
 
         public void UnBindTown()
         {
             upgradeButton.onClick.RemoveAllListeners();
-            if (_boundTown != null)
-            {
-                _boundTown.TierChanged -= UpdateTownTitle;
-                _boundTown = null;
-            }
 
-            UnBind();
+            if (_boundTown == null) return;
+
+            _boundTown.TierChanged -= TownUpgrade;
+            _boundTown = null;
         }
 
-        private void UpdateTownTitle()
+        private void TownUpgrade()
         {
             townNameText.text = $"{_boundTown.Name} ({_boundTown.Tier.ToRomanNumeral()})";
+
+            foreach (var good in _boundTown.Production)
+            {
+                InventoryCells[good].SetIsProduced(true);
+            }
         }
     }
 }

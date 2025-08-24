@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Data;
 using TMPro;
@@ -24,19 +23,22 @@ namespace UI
         [SerializeField]
         private InventorySection inventorySectionT3;
 
-        private readonly Dictionary<Good, InventoryCell> _inventoryCells = new();
+        protected readonly Dictionary<Good, InventoryCell> InventoryCells = new();
 
         private Inventory _boundInventory;
 
-        private void Start()
-        {
-            CollectInventoryCells(inventorySectionT1);
-            CollectInventoryCells(inventorySectionT2);
-            CollectInventoryCells(inventorySectionT3);
-        }
+        private bool _isInitialized;
 
         public void Bind(Inventory inventory)
         {
+            if (!_isInitialized)
+            {
+                CollectInventoryCells(inventorySectionT1);
+                CollectInventoryCells(inventorySectionT2);
+                CollectInventoryCells(inventorySectionT3);
+                _isInitialized = true;
+            }
+
             UnBind();
 
             inventory.GoodUpdated += OnGoodUpdated;
@@ -62,7 +64,7 @@ namespace UI
                 _boundInventory = null;
             }
 
-            foreach (var (_, cell) in _inventoryCells)
+            foreach (var (_, cell) in InventoryCells)
             {
                 cell.SetAmount(0);
                 cell.SetIsProduced(false);
@@ -81,7 +83,6 @@ namespace UI
             gameObject.SetActive(false);
         }
 
-
         private void OnFundsUpdated(int funds)
         {
             fundsText.text = funds.ToString();
@@ -89,7 +90,7 @@ namespace UI
 
         private void OnGoodUpdated(Good good, int amount)
         {
-            if (!_inventoryCells.TryGetValue(good, out var cell))
+            if (!InventoryCells.TryGetValue(good, out var cell))
             {
                 Debug.LogWarning($"Could not find inventory cell for good '{good}'");
                 return;
@@ -98,12 +99,11 @@ namespace UI
             cell.SetAmount(amount);
         }
 
-
         private void CollectInventoryCells(InventorySection inventorySection)
         {
             foreach (var (good, cell) in inventorySection.Cells)
             {
-                _inventoryCells.Add(good, cell);
+                InventoryCells.Add(good, cell);
                 cell.Clicked += () => inventoryCellClicked?.Invoke(cell);
             }
         }
