@@ -1,6 +1,6 @@
-namespace UI
+namespace Data
 {
-    public enum TransactionType
+    public enum TradeType
     {
         Buy,
         Sell,
