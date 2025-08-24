@@ -103,7 +103,7 @@ namespace UI
         private void SetUpInventories()
         {
             var player = Model.Instance.Player.Inventory;
-            var town = SelectionModel.Instance.SelectedTown?.Inventory;
+            var town = Selection.Instance.SelectedTown?.Inventory;
 
             if (town is null) return;
 

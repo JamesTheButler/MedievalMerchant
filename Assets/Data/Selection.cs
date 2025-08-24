@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Data
 {
-    public class SelectionModel : MonoBehaviour
+    public class Selection : MonoBehaviour
     {
-        public static SelectionModel Instance;
+        public static Selection Instance;
 
         public event Action<Town> TownSelected;
         public Town SelectedTown { get; private set; }

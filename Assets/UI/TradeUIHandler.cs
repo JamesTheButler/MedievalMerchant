@@ -12,7 +12,7 @@ namespace UI
         {
             tradeUI.gameObject.SetActive(false);
 
-            SelectionModel.Instance.TownSelected += OnSelectedTownChanged;
+            Selection.Instance.TownSelected += OnSelectedTownChanged;
         }
 
         private void OnSelectedTownChanged(Town town)

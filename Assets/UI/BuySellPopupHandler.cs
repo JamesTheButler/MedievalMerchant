@@ -21,7 +21,7 @@ namespace UI
         {
             _good = inventoryCell.Good;
 
-            _townInventory = SelectionModel.Instance.SelectedTown.Inventory;
+            _townInventory = Selection.Instance.SelectedTown.Inventory;
             _playerInventory = Model.Instance.Player.Inventory;
 
             // TODO: fix this

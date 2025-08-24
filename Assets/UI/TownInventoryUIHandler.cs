@@ -12,7 +12,7 @@ namespace UI
         {
             inventoryUi.Hide();
 
-            SelectionModel.Instance.TownSelected += SelectTown;
+            Selection.Instance.TownSelected += SelectTown;
         }
 
         private void SelectTown(Town town)
