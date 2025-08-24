@@ -29,7 +29,7 @@ namespace UI
         private Slider amountSlider;
 
         private bool _isInitialized;
-        
+
         private GoodInfoManager _goodInfoManager;
         private GoodInfo _goodInfo;
         private Good _good;
@@ -49,11 +49,6 @@ namespace UI
 
         private readonly Color _coinTextColorGood = Color.green;
         private readonly Color _coinTextColorBad = Color.red;
-
-        private void Start()
-        {
-            gameObject.SetActive(false);
-        }
 
         public void Initialize(Good good, TradeType tradeType)
         {
@@ -77,13 +72,20 @@ namespace UI
             _isInitialized = true;
         }
 
-        public void Reset()
+        public void Hide()
         {
             if (!_isInitialized) return;
+
             amountSlider.onValueChanged.RemoveListener(TradeSliderUpdate);
             _sellingInventory.GoodUpdated -= OnSellingInventoryGoodUpdated;
             _buyingInventory.FundsUpdated -= OnBuyingInventoryFundsUpdated;
+
+            _activeButton.onClick.RemoveAllListeners();
+            cancelButton.onClick.RemoveAllListeners();
+
             _isInitialized = false;
+
+            gameObject.SetActive(false);
         }
 
         private void TradeSliderUpdate(float amount)
@@ -98,6 +100,9 @@ namespace UI
             _activeButton.gameObject.SetActive(true);
             _activeButton.onClick.AddListener(CompleteTrade);
             cancelButton.onClick.AddListener(AbortTrade);
+
+            var inactiveButton = _tradeType == TradeType.Buy ? sellButton : buyButton;
+            inactiveButton.gameObject.SetActive(false);
         }
 
         private void SetUpInventories()
@@ -130,11 +135,13 @@ namespace UI
 
             _sellerGoodAmount = amount;
             amountSlider.maxValue = amount;
+
+            Debug.Log($"{Time.frameCount} // {good} - {amount}");
         }
 
         private void AbortTrade()
         {
-            gameObject.SetActive(false);
+            Hide();
         }
 
         private void CompleteTrade()
@@ -145,7 +152,7 @@ namespace UI
             _sellingInventory.AddFunds(_totalPrice);
             _sellingInventory.RemoveGood(_good, _tradeAmount);
 
-            gameObject.SetActive(false);
+            Hide();
         }
 
         private void SetAmount(int amount)
@@ -170,7 +177,7 @@ namespace UI
             var isTradePossible = _buyerFunds > _totalPrice;
 
             _activeButton.interactable = isTradePossible;
-            coinAmountText.color = isTradePossible ? _coinTextColorBad : _coinTextColorGood;
+            coinAmountText.color = isTradePossible ? _coinTextColorGood : _coinTextColorBad;
         }
     }
 }

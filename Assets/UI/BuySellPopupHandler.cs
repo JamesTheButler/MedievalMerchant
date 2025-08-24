@@ -14,29 +14,29 @@ namespace UI
 
         private void Start()
         {
-            buySellPopup.Hide();
+            Reset();
+
+            Selection.Instance.TownSelected += _ => { Reset(); };
         }
 
         public void Initialize(InventoryCell inventoryCell)
         {
+            Reset();
+
             _good = inventoryCell.Good;
 
             _townInventory = Selection.Instance.SelectedTown.Inventory;
             _playerInventory = Model.Instance.Player.Inventory;
 
-            // TODO: fix this
+            // TODO: fix popup position
             //((RectTransform)buySellPopup.transform).anchoredPosition = inventoryCell.transform.localPosition;
 
             buySellPopup.SetGood(_good);
 
-            // player inventory is checked for buying of goods
-            var canSell = _playerInventory.Goods.ContainsKey(_good);
-            buySellPopup.CanSell(canSell);
+            // can buy and sell?
+            TryRefreshCanSell(_good, _playerInventory.Get(_good));
+            TryRefreshCanBuy(_good, _townInventory.Get(_good));
             _playerInventory.GoodUpdated += TryRefreshCanSell;
-
-            // player inventory is checked for SALE of goods
-            var canBuy = _townInventory.Goods.ContainsKey(_good);
-            buySellPopup.CanBuy(canBuy);
             _townInventory.GoodUpdated += TryRefreshCanBuy;
 
             buySellPopup.Show();
@@ -46,11 +46,17 @@ namespace UI
         {
             buySellPopup.Hide();
 
-            _townInventory.GoodUpdated -= TryRefreshCanSell;
-            _playerInventory.GoodUpdated -= TryRefreshCanBuy;
+            if (_playerInventory != null)
+            {
+                _playerInventory.GoodUpdated -= TryRefreshCanSell;
+                _playerInventory = null;
+            }
 
-            _townInventory = null;
-            _playerInventory = null;
+            if (_townInventory != null)
+            {
+                _townInventory.GoodUpdated -= TryRefreshCanBuy;
+                _townInventory = null;
+            }
         }
 
         private void TryRefreshCanBuy(Good good, int amount)

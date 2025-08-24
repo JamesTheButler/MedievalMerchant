@@ -28,8 +28,7 @@ namespace UI
 
         public void Hide()
         {
-            tradeUI.gameObject.SetActive(false);
-            tradeUI.Reset();
+            tradeUI.Hide();
         }
     }
 }

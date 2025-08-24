@@ -25,6 +25,8 @@ namespace UI
                 var cellObject = Instantiate(cellPrefab, parent);
                 var cell = cellObject.GetComponent<InventoryCell>();
                 cell.SetGood(good);
+                cell.SetAmount(0);
+                cell.SetIsProduced(false);
                 
                 Cells.Add(good, cell);
             }

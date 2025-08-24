@@ -66,22 +66,5 @@ namespace Data
         {
             return _goods.GetValueOrDefault(good, 0);
         }
-        
-        public bool SellTo(Inventory other, Good good, int amount, int totalPrice)
-        {
-            // we don't have enough of this good
-            if (!HasGood(good, amount)) return false;
-            // other inventory does not have enough money
-            if (!other.HasFunds(totalPrice)) return false;
-
-            // sell
-            RemoveGood(good, amount);
-            AddFunds(totalPrice);
-            // buy
-            other.AddGood(good, amount);
-            other.RemoveFunds(totalPrice);
-
-            return true;
-        }
     }
 }
