@@ -36,6 +36,10 @@ namespace UI
                 CollectInventoryCells(inventorySectionT1);
                 CollectInventoryCells(inventorySectionT2);
                 CollectInventoryCells(inventorySectionT3);
+
+                // makes sure that the UI is properly inflates after dynamic inventory creation
+                Canvas.ForceUpdateCanvases();
+
                 _isInitialized = true;
             }
 
