@@ -11,6 +11,7 @@ namespace Data
         private readonly Producer _producer;
 
         private const int StartGoodMultiplier = 25;
+        private const int BaseFundsPerTick = 20;
 
         public event Action TierChanged;
         public event Action DevelopmentScoreChanged;
@@ -78,6 +79,10 @@ namespace Data
                 _ => 1f,
             };
             _producer.SetProductionMultiplier(multiplier);
+            
+            // if development trend is positive, add
+            var trendFundMultiplier = DevelopmentTrend > 0 ? DevelopmentTrend : 1f;
+            Inventory.AddFunds((int)(BaseFundsPerTick * (int)Tier * trendFundMultiplier));
 
             var production = _producer.Produce();
             foreach (var (good, amount) in production)
@@ -118,7 +123,6 @@ namespace Data
         {
             _developmentTable = _developmentSetup.Tables[Tier];
         }
-
 
         private void IncreaseTier()
         {
