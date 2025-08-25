@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Data;
 using UnityEngine;
@@ -19,21 +20,23 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int mapSize;
 
+    private Model _model;
+
     private void Awake()
     {
+        _model = Model.Instance;
         var towns = GenerateMap();
-        Model.Instance.SetTowns(towns);
+        _model.SetTowns(towns);
         ticker.OnTick += Tick;
     }
 
     private List<Town> GenerateMap()
     {
-        var goodInfoManager = Setup.Instance.GoodInfoManager;
         var towns = new List<Town>();
 
         for (var i = 0; i < townLocations.Count; i++)
         {
-            towns.Add(new Town(townInfos[i], townLocations[i], goodInfoManager));
+            towns.Add(new Town(townInfos[i], townLocations[i]));
         }
 
         tilemapManager.InitTilemap(mapSize, townLocations);
@@ -43,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     private void Tick()
     {
-        foreach (var town in Model.Instance.Towns.Values)
+        foreach (var town in _model.Towns.Values)
         {
             town.Tick();
         }

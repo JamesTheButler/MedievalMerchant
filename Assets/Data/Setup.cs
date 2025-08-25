@@ -8,6 +8,9 @@ namespace Data
 
         [field: SerializeField]
         public GoodInfoManager GoodInfoManager { get; private set; }
+        
+        [field: SerializeField]
+        public Colors Colors { get; private set; }
 
         private void Awake()
         {

@@ -17,6 +17,7 @@ namespace Data
         {
             _productionTable = productionTable;
             UpgradeTier(Tier.Tier1);
+            
         }
 
         public IDictionary<Good, int> Produce()

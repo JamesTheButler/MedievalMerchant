@@ -23,6 +23,8 @@ namespace UI
         {
             Reset();
 
+            if (Selection.Instance.SelectedTown is null) return;
+
             _good = inventoryCell.Good;
 
             _townInventory = Selection.Instance.SelectedTown.Inventory;

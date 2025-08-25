@@ -10,6 +10,8 @@ namespace Data
         private readonly GoodInfoManager _goodInfoManager;
         private readonly Producer _producer;
 
+        private const int StartGoodMultiplier = 25;
+        
         public event Action TierChanged;
 
         public Inventory Inventory { get; } = new();
@@ -20,16 +22,21 @@ namespace Data
         public float DevelopmentTrend { get; private set; } = 0f;
 
         public IEnumerable<Good> Production => _producer.ProducedGoods;
-        
-        public Town(TownSetupInfo setupInfo, Vector2Int location, GoodInfoManager goodInfoManager)
+
+        public Town(TownSetupInfo setupInfo, Vector2Int location)
         {
             Location = location;
-            _goodInfoManager = goodInfoManager;
+            _goodInfoManager = Setup.Instance.GoodInfoManager;
 
             Name = setupInfo.NameGenerator.GenerateName();
             Tier = Tier.Tier1;
             _producer = new Producer(setupInfo.Production);
+            // initial funds and goods
             Inventory.AddFunds(setupInfo.InitialFunds);
+            foreach (var (good, amount) in _producer.Produce())
+            {
+                Inventory.AddGood(good, amount * StartGoodMultiplier);
+            }
         }
 
         public void Tick()

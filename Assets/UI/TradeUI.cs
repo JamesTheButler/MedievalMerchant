@@ -1,3 +1,4 @@
+using System;
 using Data;
 using TMPro;
 using UnityEngine;
@@ -30,7 +31,7 @@ namespace UI
 
         private bool _isInitialized;
 
-        private GoodInfoManager _goodInfoManager;
+        private Colors _colors;
         private GoodInfo _goodInfo;
         private Good _good;
         private TradeType _tradeType;
@@ -47,8 +48,10 @@ namespace UI
         private Inventory _buyingInventory;
         private Inventory _sellingInventory;
 
-        private readonly Color _coinTextColorGood = Color.green;
-        private readonly Color _coinTextColorBad = Color.red;
+        private void Start()
+        {
+            _colors = Setup.Instance.Colors;
+        }
 
         public void Initialize(Good good, TradeType tradeType)
         {
@@ -177,7 +180,7 @@ namespace UI
             var isTradePossible = _buyerFunds > _totalPrice;
 
             _activeButton.interactable = isTradePossible;
-            coinAmountText.color = isTradePossible ? _coinTextColorGood : _coinTextColorBad;
+            coinAmountText.color = isTradePossible ? _colors.FontDark : _colors.Bad;
         }
     }
 }
