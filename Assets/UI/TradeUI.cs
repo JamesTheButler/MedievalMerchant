@@ -177,7 +177,7 @@ namespace UI
 
         private void EvaluateTotalPrice()
         {
-            var isTradePossible = _buyerFunds > _totalPrice;
+            var isTradePossible = _buyerFunds >= _totalPrice;
 
             _activeButton.interactable = isTradePossible;
             coinAmountText.color = isTradePossible ? _colors.FontDark : _colors.Bad;
