@@ -8,7 +8,7 @@ namespace Data
     {
         public static Model Instance;
 
-        public Player Player { get; private set; } = new(5000);
+        public Player Player { get; private set; } = new(50000);
         public IReadOnlyDictionary<Vector2Int, Town> Towns => _towns;
 
         private Dictionary<Vector2Int, Town> _towns = new();

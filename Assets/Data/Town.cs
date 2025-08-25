@@ -7,30 +7,37 @@ namespace Data
 {
     public class Town
     {
-        private readonly GoodInfoManager _goodInfoManager;
+        private readonly DevelopmentSetup _developmentSetup;
         private readonly Producer _producer;
 
         private const int StartGoodMultiplier = 25;
-        
+
         public event Action TierChanged;
+        public event Action DevelopmentScoreChanged;
+        public event Action DevelopmentTrendChanged;
 
         public Inventory Inventory { get; } = new();
         public string Name { get; }
         public Tier Tier { get; private set; }
         public Vector2Int Location { get; }
-        public float DevelopmentScore { get; private set; } = 100f;
-        public float DevelopmentTrend { get; private set; } = 0f;
+
+        public float DevelopmentScore { get; private set; }
+        public float DevelopmentTrend { get; private set; }
 
         public IEnumerable<Good> Production => _producer.ProducedGoods;
+
+        private DevelopmentTable _developmentTable;
 
         public Town(TownSetupInfo setupInfo, Vector2Int location)
         {
             Location = location;
-            _goodInfoManager = Setup.Instance.GoodInfoManager;
+            _developmentSetup = Setup.Instance.DevelopmentSetup;
 
             Name = setupInfo.NameGenerator.GenerateName();
             Tier = Tier.Tier1;
+            UpdateDevelopmentTable();
             _producer = new Producer(setupInfo.Production);
+
             // initial funds and goods
             Inventory.AddFunds(setupInfo.InitialFunds);
             foreach (var (good, amount) in _producer.Produce())
@@ -41,13 +48,37 @@ namespace Data
 
         public void Tick()
         {
-            UpdateDevelopment();
             Produce();
+            Develop();
             Consume();
+        }
+
+        public void Upgrade()
+        {
+            var oldTier = Tier;
+            IncreaseTier();
+
+            Debug.Log($"{Name} upgraded to {Tier}");
+            _producer.UpgradeTier(Tier);
+
+            if (oldTier != Tier)
+            {
+                _developmentTable = _developmentSetup.Tables[Tier];
+                TierChanged?.Invoke();
+            }
         }
 
         private void Produce()
         {
+            // update production multiplier
+            var multiplier = DevelopmentScore switch
+            {
+                < 20 => 0.5f,
+                > 80 => 2f,
+                _ => 1f,
+            };
+            _producer.SetProductionMultiplier(multiplier);
+
             var production = _producer.Produce();
             foreach (var (good, amount) in production)
             {
@@ -63,32 +94,31 @@ namespace Data
             }
         }
 
-        private void UpdateDevelopment()
+        private void Develop()
         {
-            DevelopmentTrend = -0.25f;
+            var goodsPerTier = Inventory.CountItemTiers();
+            DevelopmentTrend = _developmentTable.GetDevelopmentTrend(
+                goodsPerTier[Tier.Tier1],
+                goodsPerTier[Tier.Tier2],
+                goodsPerTier[Tier.Tier3]);
 
-            foreach (var good in Inventory.Goods.Keys.ToList())
+            DevelopmentScore += DevelopmentTrend * _developmentSetup.DevelopmentMultiplier;
+            if (DevelopmentScore >= 100 && Tier <= Tier.Tier2)
             {
-                var tier = _goodInfoManager.GoodInfos[good].Tier;
-                DevelopmentTrend += 0.25f * (int)tier + 1; // Tier1 -> 0.25, Tier2 0.5, and so on
+                Upgrade();
+                DevelopmentScore = 0;
             }
 
-            DevelopmentScore += DevelopmentScore * DevelopmentTrend;
+            DevelopmentScore = Mathf.Clamp(DevelopmentScore, 0, 100);
+            DevelopmentTrendChanged?.Invoke();
+            DevelopmentScoreChanged?.Invoke();
         }
 
-        public void Upgrade()
+        private void UpdateDevelopmentTable()
         {
-            var oldTier = Tier;
-            IncreaseTier();
-
-            Debug.Log($"{Name} upgraded to {Tier}");
-            _producer.UpgradeTier(Tier);
-
-            if (oldTier != Tier)
-            {
-                TierChanged?.Invoke();
-            }
+            _developmentTable = _developmentSetup.Tables[Tier];
         }
+
 
         private void IncreaseTier()
         {

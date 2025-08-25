@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Data
 {
-    [CreateAssetMenu(fileName = "DevelopmentTables", menuName = "Data/DevelopmentTables")]
-    public class DevelopmentTables : ScriptableObject
+    [CreateAssetMenu(fileName = "DevelopmentSetup", menuName = "Data/DevelopmentSetup")]
+    public class DevelopmentSetup : ScriptableObject
     {
         [SerializeField]
         private DevelopmentTable tier1Table;
@@ -14,6 +14,9 @@ namespace Data
 
         [SerializeField]
         private DevelopmentTable tier3Table;
+
+        [field: SerializeField]
+        public float DevelopmentMultiplier { get; private set; } = 1f;
 
         public IReadOnlyDictionary<Tier, DevelopmentTable> Tables => _tables ??= GenerateTableDictionary();
 

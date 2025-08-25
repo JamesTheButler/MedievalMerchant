@@ -8,21 +8,23 @@ namespace Data
     {
         public IEnumerable<Good> ProducedGoods => _producedGoods;
 
+        private const int BaseProduction = 4;
+        
         private readonly HashSet<Good> _producedGoods = new();
         private readonly ProductionTable _productionTable;
 
-        private Tier? _tier;
+        private Tier _tier;
+        private float _multiplier = 1f;
 
         public Producer(ProductionTable productionTable)
         {
             _productionTable = productionTable;
             UpgradeTier(Tier.Tier1);
-            
         }
 
         public IDictionary<Good, int> Produce()
         {
-            return _producedGoods.ToDictionary(good => good, _ => Random.Range(1, 4));
+            return _producedGoods.ToDictionary(good => good, _ => (int)(BaseProduction * _multiplier * (int)_tier));
         }
 
         // Tier 1: 1 Tier1 Good
@@ -51,6 +53,11 @@ namespace Data
             }
 
             _tier = tier;
+        }
+
+        public void SetProductionMultiplier(float multiplier)
+        {
+            _multiplier = multiplier;
         }
     }
 }

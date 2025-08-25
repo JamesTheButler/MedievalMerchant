@@ -10,6 +10,9 @@ namespace Data
         public GoodInfoManager GoodInfoManager { get; private set; }
         
         [field: SerializeField]
+        public DevelopmentSetup DevelopmentSetup { get; private set; }
+        
+        [field: SerializeField]
         public Colors Colors { get; private set; }
 
         private void Awake()

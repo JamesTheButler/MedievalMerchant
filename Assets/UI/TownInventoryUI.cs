@@ -11,6 +11,12 @@ namespace UI
         private TMP_Text townNameText;
 
         [SerializeField]
+        private TMP_Text developmentScoreText;
+
+        [SerializeField]
+        private TMP_Text developmentTrendText;
+
+        [SerializeField]
         private Button upgradeButton;
 
         private Town _boundTown;
@@ -25,11 +31,14 @@ namespace UI
 
             _boundTown = town;
             TownUpgrade();
+            UpdateDevelopmentScore();
+            UpdateDevelopmentTrend();
             _boundTown.TierChanged += TownUpgrade;
+            _boundTown.DevelopmentScoreChanged += UpdateDevelopmentScore;
+            _boundTown.DevelopmentTrendChanged += UpdateDevelopmentTrend;
 
             upgradeButton.onClick.AddListener(() => _boundTown.Upgrade());
         }
-
 
         public void UnBindTown()
         {
@@ -38,6 +47,8 @@ namespace UI
             if (_boundTown == null) return;
 
             _boundTown.TierChanged -= TownUpgrade;
+            _boundTown.DevelopmentScoreChanged -= UpdateDevelopmentScore;
+            _boundTown.DevelopmentTrendChanged -= UpdateDevelopmentTrend;
             _boundTown = null;
         }
 
@@ -49,6 +60,16 @@ namespace UI
             {
                 InventoryCells[good].SetIsProduced(true);
             }
+        }
+
+        private void UpdateDevelopmentScore()
+        {
+            developmentScoreText.text = $"{_boundTown.DevelopmentScore}";
+        }
+        
+        private void UpdateDevelopmentTrend()
+        {
+            developmentTrendText.text = $"{_boundTown.DevelopmentTrend}%";
         }
     }
 }

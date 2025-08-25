@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Data
 {
@@ -12,6 +13,7 @@ namespace Data
 
         public IReadOnlyDictionary<Good, int> Goods => _goods;
 
+        private readonly Lazy<GoodInfoManager> _goodsInfoManager = new(() => Setup.Instance.GoodInfoManager);
         private readonly Dictionary<Good, int> _goods = new();
 
         public void AddFunds(int fundChange)
@@ -35,12 +37,12 @@ namespace Data
         {
             return _goods.ContainsKey(good);
         }
-        
+
         public bool HasGood(Good good, int amount)
         {
             return _goods.ContainsKey(good) && _goods[good] <= amount;
         }
-        
+
         public void AddGood(Good good, int amount)
         {
             _goods.TryAdd(good, 0);
@@ -65,6 +67,23 @@ namespace Data
         public int Get(Good good)
         {
             return _goods.GetValueOrDefault(good, 0);
+        }
+
+        public IReadOnlyDictionary<Tier, int> CountItemTiers()
+        {
+            var result = Enum.GetValues(typeof(Tier))
+                .Cast<Tier>()
+                .ToDictionary(tier => tier, _ => 0);
+
+            foreach (var (good, amount) in _goods)
+            {
+                if (amount <= 0) continue;
+
+                var tier = _goodsInfoManager.Value.GoodInfos[good].Tier;
+                result[tier]++;
+            }
+
+            return result;
         }
     }
 }
