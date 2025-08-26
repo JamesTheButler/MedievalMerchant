@@ -36,11 +36,9 @@ namespace UI
         private GoodInfo _goodInfo;
         private Good _good;
         private TradeType _tradeType;
-        private int _unitPrice;
-
+        private int _goodBasePrice;
         private int _sellerGoodAmount;
         private int _buyerFunds;
-
         private int _tradeAmount;
         private int _totalPrice;
 
@@ -49,6 +47,8 @@ namespace UI
         private Inventory _buyingInventory;
         private Inventory _sellingInventory;
 
+        private MarketStateManager _marketStateManager;
+        
         private void Start()
         {
             _colors = SetupManager.Instance.Colors;
@@ -59,7 +59,7 @@ namespace UI
             _tradeType = tradeType;
             _good = good;
             _goodInfo = SetupManager.Instance.GoodInfoManager.GoodInfos[good];
-            _unitPrice = (int)_goodInfo.BasePrice;
+            _goodBasePrice = (int)_goodInfo.BasePrice;
             goodIcon.sprite = _goodInfo.Icon;
 
             SetUpInventories();
@@ -87,6 +87,10 @@ namespace UI
             _activeButton.onClick.RemoveAllListeners();
             cancelButton.onClick.RemoveAllListeners();
 
+            _marketStateManager = null;
+            _buyingInventory = null;
+            _sellingInventory = null;
+                
             _isInitialized = false;
 
             gameObject.SetActive(false);
@@ -113,9 +117,11 @@ namespace UI
         {
             var player = Model.Instance.Player.Inventory;
             var town = Selection.Instance.SelectedTown?.Inventory;
-
+            
             if (town is null) return;
 
+            _marketStateManager = new MarketStateManager(town);
+            
             _buyingInventory = _tradeType == TradeType.Buy ? player : town;
             _sellingInventory = _tradeType == TradeType.Sell ? player : town;
 
@@ -162,7 +168,8 @@ namespace UI
         private void SetAmount(int amount)
         {
             _tradeAmount = amount;
-            _totalPrice = amount * _unitPrice;
+            var multiplier = _marketStateManager.GetPriceMultiplier(_good);
+            _totalPrice = (int)(amount * _goodBasePrice * multiplier);
 
             goodAmountText.text = $"x{amount}";
 

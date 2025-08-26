@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 595b7b6cad6247898151fb0893ad0e34, type: 3}
-  m_Name: DemandMultipliers
+  m_Script: {fileID: 11500000, guid: a70cab9862984f44840fb180728c02c0, type: 3}
+  m_Name: MarketStateThresholds
   m_EditorClassIdentifier: 
-  veryLowDemandMultiplier: 0.25
-  lowDemandMultiplier: 0.5
-  normalDemandMultiplier: 1
-  highDemandMultiplier: 1.5
-  veryHighDemandMultiplier: 3
+  veryLowDemandThreshold: 50
+  lowDemandThreshold: 40
+  normalDemandThreshold: 30
+  highDemandThreshold: 20
+  veryHighDemandThreshold: 10

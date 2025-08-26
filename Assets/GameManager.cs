@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Data;
 using Data.Setup;
+using Data.Towns;
 using UnityEngine;
 
 public sealed class GameManager : MonoBehaviour

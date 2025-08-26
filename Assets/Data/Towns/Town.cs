@@ -10,7 +10,7 @@ namespace Data.Towns
     {
         private readonly DevelopmentSetup _developmentSetup;
         private readonly Producer _producer;
-        private readonly DemandManager _demandManager;
+        private readonly MarketStateManager _marketStateManager;
 
         private const int StartGoodMultiplier = 25;
         private const int BaseFundsPerTick = 20;
@@ -36,7 +36,7 @@ namespace Data.Towns
             Location = location;
             _developmentSetup = SetupManager.Instance.DevelopmentSetup;
             _producer = new Producer(setupInfo.Production);
-            _demandManager = new DemandManager(this);
+            _marketStateManager = new MarketStateManager(Inventory);
 
             Name = setupInfo.NameGenerator.GenerateName();
             Tier = Tier.Tier1;

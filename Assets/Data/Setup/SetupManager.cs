@@ -13,7 +13,13 @@ namespace Data.Setup
         public DevelopmentSetup DevelopmentSetup { get; private set; }
 
         [field: SerializeField]
-        public DemandMultipliers DemandMultipliers { get; private set; }
+        public MarketStateMultipliers MarketStateMultipliers { get; private set; }
+
+        [field: SerializeField]
+        public MarketStateIcons MarketStateIcons { get; private set; }
+
+        [field: SerializeField]
+        public MarketStateThresholds MarketStateThresholds { get; private set; }
 
         [field: SerializeField]
         public Colors Colors { get; private set; }

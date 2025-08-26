@@ -1,8 +1,10 @@
+using System;
 using Data;
 using Data.Setup;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
@@ -21,7 +23,16 @@ namespace UI
         [SerializeField]
         private Button sellButton;
 
+        [FormerlySerializedAs("supplyDemandIcon"),SerializeField]
+        private Image marketStateIcon;
+
+        [FormerlySerializedAs("supplyDemandText"),SerializeField]
+        private TMP_Text marketStateText;
+
+        private readonly Lazy<MarketStateIcons> _marketStateIcons = new(() => SetupManager.Instance.MarketStateIcons);
+
         private Good _good;
+        private MarketState? _marketState;
 
         private void Start()
         {
@@ -59,6 +70,16 @@ namespace UI
         public void CanSell(bool canSell)
         {
             sellButton.interactable = canSell;
+        }
+
+        public void SetMarketState(MarketState marketState)
+        {
+            if (_marketState == marketState) return;
+
+            marketStateIcon.sprite = _marketStateIcons.Value.Icons[marketState];
+            marketStateText.text = marketState.ToString();
+
+            _marketState = marketState;
         }
     }
 }
