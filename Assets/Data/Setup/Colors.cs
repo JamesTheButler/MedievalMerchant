@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Data
+namespace Data.Setup
 {
     [CreateAssetMenu(fileName = "Colors", menuName = "Data/Colors")]
     public sealed class Colors : ScriptableObject

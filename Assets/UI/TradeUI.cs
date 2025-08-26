@@ -1,4 +1,6 @@
 using Data;
+using Data.Setup;
+using Data.Towns;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,14 +51,14 @@ namespace UI
 
         private void Start()
         {
-            _colors = Setup.Instance.Colors;
+            _colors = SetupManager.Instance.Colors;
         }
 
         public void Initialize(Good good, TradeType tradeType)
         {
             _tradeType = tradeType;
             _good = good;
-            _goodInfo = Setup.Instance.GoodInfoManager.GoodInfos[good];
+            _goodInfo = SetupManager.Instance.GoodInfoManager.GoodInfos[good];
             _unitPrice = (int)_goodInfo.BasePrice;
             goodIcon.sprite = _goodInfo.Icon;
 

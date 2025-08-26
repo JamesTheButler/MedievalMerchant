@@ -1,4 +1,5 @@
 using Data;
+using Data.Towns;
 using UnityEngine;
 
 namespace UI

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Data
+namespace Data.Setup
 {
     /// <summary>
     /// Table to define which amount of different tier goods results in which development trend modifiers.

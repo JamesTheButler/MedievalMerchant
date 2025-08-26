@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Data
+namespace Data.Towns
 {
     public sealed class Selection : MonoBehaviour
     {

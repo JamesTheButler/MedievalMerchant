@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Data;
+using Data.Setup;
 using UnityEngine;
 
 public sealed class GameManager : MonoBehaviour

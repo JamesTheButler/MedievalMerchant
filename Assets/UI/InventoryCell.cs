@@ -1,5 +1,6 @@
 using System;
 using Data;
+using Data.Setup;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,7 +29,7 @@ namespace UI
         public void SetGood(Good good)
         {
             Good = good;
-            goodIcon.sprite = Setup.Instance.GoodInfoManager.GoodInfos[good].Icon;
+            goodIcon.sprite = SetupManager.Instance.GoodInfoManager.GoodInfos[good].Icon;
         }
 
         public void SetAmount(int amount)

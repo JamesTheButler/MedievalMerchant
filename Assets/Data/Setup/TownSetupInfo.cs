@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Data
+namespace Data.Setup
 {
     [CreateAssetMenu(fileName = "TownSetupInfo", menuName = "Data/TownSetupInfo")]
     public sealed class TownSetupInfo : ScriptableObject

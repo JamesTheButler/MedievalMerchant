@@ -1,16 +1,19 @@
 using UnityEngine;
 
-namespace Data
+namespace Data.Setup
 {
-    public sealed class Setup : MonoBehaviour
+    public sealed class SetupManager : MonoBehaviour
     {
-        public static Setup Instance;
+        public static SetupManager Instance;
 
         [field: SerializeField]
         public GoodInfoManager GoodInfoManager { get; private set; }
 
         [field: SerializeField]
         public DevelopmentSetup DevelopmentSetup { get; private set; }
+
+        [field: SerializeField]
+        public DemandMultipliers DemandMultipliers { get; private set; }
 
         [field: SerializeField]
         public Colors Colors { get; private set; }

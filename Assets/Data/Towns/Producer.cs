@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using Data.Setup;
 using UnityEngine;
 
-namespace Data
+namespace Data.Towns
 {
     public sealed class Producer
     {

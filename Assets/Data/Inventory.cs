@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Data.Setup;
 
 namespace Data
 {
@@ -13,7 +14,7 @@ namespace Data
 
         public IReadOnlyDictionary<Good, int> Goods => _goods;
 
-        private readonly Lazy<GoodInfoManager> _goodsInfoManager = new(() => Setup.Instance.GoodInfoManager);
+        private readonly Lazy<GoodInfoManager> _goodsInfoManager = new(() => SetupManager.Instance.GoodInfoManager);
         private readonly Dictionary<Good, int> _goods = new();
 
         public void AddFunds(int fundChange)

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Data
+namespace Data.Setup
 {
     [CreateAssetMenu(fileName = "TownNameGenerator", menuName = "Data/TownNameGenerator")]
     public sealed class TownNameGenerator : ScriptableObject

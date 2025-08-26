@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Data.Setup;
 using UnityEngine;
 
-namespace Data
+namespace Data.Towns
 {
     public sealed class Town
     {
         private readonly DevelopmentSetup _developmentSetup;
         private readonly Producer _producer;
+        private readonly DemandManager _demandManager;
 
         private const int StartGoodMultiplier = 25;
         private const int BaseFundsPerTick = 20;
@@ -32,12 +34,13 @@ namespace Data
         public Town(TownSetupInfo setupInfo, Vector2Int location)
         {
             Location = location;
-            _developmentSetup = Setup.Instance.DevelopmentSetup;
+            _developmentSetup = SetupManager.Instance.DevelopmentSetup;
+            _producer = new Producer(setupInfo.Production);
+            _demandManager = new DemandManager(this);
 
             Name = setupInfo.NameGenerator.GenerateName();
             Tier = Tier.Tier1;
             UpdateDevelopmentTable();
-            _producer = new Producer(setupInfo.Production);
 
             // initial funds and goods
             Inventory.AddFunds(setupInfo.InitialFunds);

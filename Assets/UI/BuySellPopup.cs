@@ -1,4 +1,5 @@
 using Data;
+using Data.Setup;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -47,7 +48,7 @@ namespace UI
         public void SetGood(Good good)
         {
             _good = good;
-            goodNameText.text = Setup.Instance.GoodInfoManager.GoodInfos[good].GoodName;
+            goodNameText.text = SetupManager.Instance.GoodInfoManager.GoodInfos[good].GoodName;
         }
 
         public void CanBuy(bool canBuy)

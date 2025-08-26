@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Data
+namespace Data.Setup
 {
     [CreateAssetMenu(fileName = "GoodInfo", menuName = "Data/GoodInfo")]
     public sealed class GoodInfo : ScriptableObject

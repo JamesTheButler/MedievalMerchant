@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Data
+namespace Data.Setup
 {
     [CreateAssetMenu(fileName = "DevelopmentSetup", menuName = "Data/DevelopmentSetup")]
     public sealed class DevelopmentSetup : ScriptableObject
