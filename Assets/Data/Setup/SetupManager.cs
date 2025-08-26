@@ -22,6 +22,9 @@ namespace Data.Setup
         public MarketStateThresholds MarketStateThresholds { get; private set; }
 
         [field: SerializeField]
+        public GrowthTrendIcons GrowthTrendIcons { get; private set; }
+
+        [field: SerializeField]
         public Colors Colors { get; private set; }
 
         private void Awake()
