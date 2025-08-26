@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Data
 {
     [CreateAssetMenu(fileName = "DevelopmentSetup", menuName = "Data/DevelopmentSetup")]
-    public class DevelopmentSetup : ScriptableObject
+    public sealed class DevelopmentSetup : ScriptableObject
     {
         [SerializeField]
         private DevelopmentTable tier1Table;

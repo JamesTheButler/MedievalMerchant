@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Data
 {
     [CreateAssetMenu(fileName = "GoodInfoManager", menuName = "Data/GoodInfoManager")]
-    public class GoodInfoManager : ScriptableObject
+    public sealed class GoodInfoManager : ScriptableObject
     {
         [SerializeField]
         private List<GoodInfo> goodInfos;

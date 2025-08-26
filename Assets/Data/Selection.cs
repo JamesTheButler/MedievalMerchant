@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Data
 {
-    public class Selection : MonoBehaviour
+    public sealed class Selection : MonoBehaviour
     {
         public static Selection Instance;
 

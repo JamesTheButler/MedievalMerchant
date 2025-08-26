@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Data
 {
-    public class Model : MonoBehaviour
+    public sealed class Model : MonoBehaviour
     {
         public static Model Instance;
 

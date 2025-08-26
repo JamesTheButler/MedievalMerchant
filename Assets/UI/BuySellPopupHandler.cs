@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class BuySellPopupHandler : MonoBehaviour
+    public sealed class BuySellPopupHandler : MonoBehaviour
     {
         [SerializeField]
         private BuySellPopup buySellPopup;

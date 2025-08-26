@@ -1,4 +1,3 @@
-using System;
 using Data;
 using TMPro;
 using UnityEngine;
@@ -6,7 +5,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class TradeUI : MonoBehaviour
+    public sealed class TradeUI : MonoBehaviour
     {
         [SerializeField]
         private TMP_Text goodAmountText;

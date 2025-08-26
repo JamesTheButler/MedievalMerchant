@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class InventoryCell : MonoBehaviour, IPointerClickHandler
+    public sealed class InventoryCell : MonoBehaviour, IPointerClickHandler
     {
         public event Action Clicked;
 

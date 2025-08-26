@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class PlayerInventoryHandler : MonoBehaviour
+    public sealed class PlayerInventoryHandler : MonoBehaviour
     {
         [SerializeField]
         private InventoryUI inventoryUi;

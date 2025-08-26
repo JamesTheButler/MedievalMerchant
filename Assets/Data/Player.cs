@@ -1,6 +1,6 @@
 namespace Data
 {
-    public class Player
+    public sealed class Player
     {
         public Inventory Inventory { get; private set; } = new();
 

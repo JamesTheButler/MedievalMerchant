@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class TradeUIHandler : MonoBehaviour
+    public sealed class TradeUIHandler : MonoBehaviour
     {
         [SerializeField]
         private TradeUI tradeUI;

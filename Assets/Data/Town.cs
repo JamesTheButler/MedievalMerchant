@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Data
 {
-    public class Town
+    public sealed class Town
     {
         private readonly DevelopmentSetup _developmentSetup;
         private readonly Producer _producer;
@@ -79,7 +79,7 @@ namespace Data
                 _ => 1f,
             };
             _producer.SetProductionMultiplier(multiplier);
-            
+
             // if development trend is positive, add
             var trendFundMultiplier = DevelopmentTrend > 0 ? DevelopmentTrend : 1f;
             Inventory.AddFunds((int)(BaseFundsPerTick * (int)Tier * trendFundMultiplier));

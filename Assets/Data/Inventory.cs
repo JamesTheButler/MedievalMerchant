@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Data
 {
-    public class Inventory
+    public sealed class Inventory
     {
         public event Action<int> FundsUpdated;
         public event Action<Good, int> GoodUpdated;

@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using Data;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI
 {
-    public class InventorySection : MonoBehaviour
+    public sealed class InventorySection : MonoBehaviour
     {
         [SerializeField]
         private Transform parent;
+
         [SerializeField]
         private GameObject cellPrefab;
+
         [SerializeField]
         private List<Good> goods;
 
@@ -27,7 +28,7 @@ namespace UI
                 cell.SetGood(good);
                 cell.SetAmount(0);
                 cell.SetIsProduced(false);
-                
+
                 Cells.Add(good, cell);
             }
         }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Data
 {
-    public class Producer
+    public sealed class Producer
     {
         public IEnumerable<Good> ProducedGoods => _producedGoods;
 
         private const int BaseProduction = 4;
-        
+
         private readonly HashSet<Good> _producedGoods = new();
         private readonly ProductionTable _productionTable;
 

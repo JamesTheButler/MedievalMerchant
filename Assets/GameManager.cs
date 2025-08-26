@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using Data;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public sealed class GameManager : MonoBehaviour
 {
     [SerializeField]
     private TilemapManager tilemapManager;

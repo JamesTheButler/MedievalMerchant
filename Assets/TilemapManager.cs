@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using Data;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
-public class TilemapManager : MonoBehaviour
+public sealed class TilemapManager : MonoBehaviour
 {
     [SerializeField]
     private GameManager gameManager;

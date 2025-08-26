@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class BuySellPopup : MonoBehaviour
+    public sealed class BuySellPopup : MonoBehaviour
     {
         [SerializeField]
         private UnityEvent<Good, TradeType> tradeInitiated;

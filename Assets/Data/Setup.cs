@@ -2,16 +2,16 @@ using UnityEngine;
 
 namespace Data
 {
-    public class Setup : MonoBehaviour
+    public sealed class Setup : MonoBehaviour
     {
         public static Setup Instance;
 
         [field: SerializeField]
         public GoodInfoManager GoodInfoManager { get; private set; }
-        
+
         [field: SerializeField]
         public DevelopmentSetup DevelopmentSetup { get; private set; }
-        
+
         [field: SerializeField]
         public Colors Colors { get; private set; }
 

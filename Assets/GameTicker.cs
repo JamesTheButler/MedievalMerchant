@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class GameTicker : MonoBehaviour
+public sealed class GameTicker : MonoBehaviour
 {
     public event Action OnTick;
 

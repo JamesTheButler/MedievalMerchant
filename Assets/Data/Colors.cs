@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Data
 {
     [CreateAssetMenu(fileName = "Colors", menuName = "Data/Colors")]
-    public class Colors : ScriptableObject
+    public sealed class Colors : ScriptableObject
     {
         [field: SerializeField]
         public Color FontDark { get; private set; }
