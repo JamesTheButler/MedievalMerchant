@@ -1,10 +1,10 @@
 using System;
 using Data;
+using Data.Configuration;
 using Data.Setup;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
@@ -23,13 +23,16 @@ namespace UI
         [SerializeField]
         private Button sellButton;
 
-        [FormerlySerializedAs("supplyDemandIcon"),SerializeField]
+        [SerializeField]
         private Image marketStateIcon;
 
-        [FormerlySerializedAs("supplyDemandText"),SerializeField]
+        [SerializeField]
         private TMP_Text marketStateText;
 
-        private readonly Lazy<MarketStateIcons> _marketStateIcons = new(() => SetupManager.Instance.MarketStateIcons);
+        private readonly Lazy<MarketStateConfig> _marketStateConfig =
+            new(() => ConfigurationManager.Instance.MarketStateConfig);
+
+        private readonly Lazy<GoodsConfig> _goodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
 
         private Good _good;
         private MarketState? _marketState;
@@ -59,7 +62,7 @@ namespace UI
         public void SetGood(Good good)
         {
             _good = good;
-            goodNameText.text = SetupManager.Instance.GoodInfoManager.GoodInfos[good].GoodName;
+            goodNameText.text = _goodsConfig.Value.ConfigData[good].GoodName;
         }
 
         public void CanBuy(bool canBuy)
@@ -76,7 +79,7 @@ namespace UI
         {
             if (_marketState == marketState) return;
 
-            marketStateIcon.sprite = _marketStateIcons.Value.Icons[marketState];
+            marketStateIcon.sprite = _marketStateConfig.Value.ConfigData[marketState].Icon;
             marketStateText.text = marketState.ToString();
 
             _marketState = marketState;

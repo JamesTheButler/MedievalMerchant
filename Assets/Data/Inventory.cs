@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Data.Configuration;
 using Data.Setup;
 
 namespace Data
@@ -14,7 +15,7 @@ namespace Data
 
         public IReadOnlyDictionary<Good, int> Goods => _goods;
 
-        private readonly Lazy<GoodInfoManager> _goodsInfoManager = new(() => SetupManager.Instance.GoodInfoManager);
+        private readonly Lazy<GoodsConfig> _goodsInfoManager = new(() => ConfigurationManager.Instance.GoodsConfig);
         private readonly Dictionary<Good, int> _goods = new();
 
         public void AddFunds(int fundChange)
@@ -80,7 +81,7 @@ namespace Data
             {
                 if (amount <= 0) continue;
 
-                var tier = _goodsInfoManager.Value.GoodInfos[good].Tier;
+                var tier = _goodsInfoManager.Value.ConfigData[good].Tier;
                 result[tier]++;
             }
 

@@ -6,6 +6,6 @@ namespace Data
         Down = -1,
         Balanced = 0,
         Up = 1,
-        VeryU = 2,
+        VeryUp = 2,
     }
 }

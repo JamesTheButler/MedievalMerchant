@@ -1,4 +1,4 @@
-using Data.Setup;
+using Data.Configuration;
 
 namespace Data.Towns
 {
@@ -6,42 +6,40 @@ namespace Data.Towns
     {
         private readonly Inventory _inventory;
 
-        private readonly MarketStateMultipliers _marketStateMultipliers;
-        private readonly MarketStateThresholds _marketStateThresholds;
+        private readonly MarketStateConfig _marketStateConfig;
 
         public MarketStateManager(Inventory inventory)
         {
             _inventory = inventory;
-            _marketStateMultipliers = SetupManager.Instance.MarketStateMultipliers;
-            _marketStateThresholds = SetupManager.Instance.MarketStateThresholds;
+
+            _marketStateConfig = ConfigurationManager.Instance.MarketStateConfig;
         }
 
         // TODO: clean up the copy pasta
         public MarketState GetMarketState(Good good)
         {
             var amount = _inventory.Get(good);
-            if (amount < _marketStateThresholds.Thresholds[MarketState.HighDemand])
+            if (amount < _marketStateConfig.ConfigData[MarketState.HighDemand].ActivationThreshold)
             {
                 return MarketState.HighDemand;
             }
 
-            if (amount < _marketStateThresholds.Thresholds[MarketState.Demand])
+            if (amount < _marketStateConfig.ConfigData[MarketState.Demand].ActivationThreshold)
             {
                 return MarketState.Demand;
             }
 
-            if (amount < _marketStateThresholds.Thresholds[MarketState.Supply])
+            if (amount < _marketStateConfig.ConfigData[MarketState.Supply].ActivationThreshold)
             {
                 return MarketState.Supply;
             }
-
 
             return MarketState.HighSupply;
         }
 
         public float GetPriceMultiplier(Good good)
         {
-            return _marketStateMultipliers.Multipliers[GetMarketState(good)];
+            return _marketStateConfig.ConfigData[GetMarketState(good)].PriceMultiplier;
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Data.Setup
 {
     [CreateAssetMenu(fileName = "GoodInfo", menuName = "Data/GoodInfo")]
-    public sealed class GoodInfo : ScriptableObject
+    public sealed class GoodConfigData : ScriptableObject
     {
         [field: SerializeField]
         public Good GoodType { get; private set; }

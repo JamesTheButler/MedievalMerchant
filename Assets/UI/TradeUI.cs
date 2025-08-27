@@ -1,4 +1,6 @@
+using System;
 using Data;
+using Data.Configuration;
 using Data.Setup;
 using Data.Towns;
 using TMPro;
@@ -30,10 +32,14 @@ namespace UI
         [SerializeField]
         private Slider amountSlider;
 
+        private readonly Lazy<Model> _model = new(() => Model.Instance);
+        private readonly Lazy<Selection> _selection = new(() => Selection.Instance);
+        private readonly Lazy<Colors> _colors = new(() => ConfigurationManager.Instance.Colors);
+        private readonly Lazy<GoodsConfig> _configurationManager = new(() => ConfigurationManager.Instance.GoodsConfig);
+
         private bool _isInitialized;
 
-        private Colors _colors;
-        private GoodInfo _goodInfo;
+        private GoodConfigData _goodConfigData;
         private Good _good;
         private TradeType _tradeType;
         private int _goodBasePrice;
@@ -48,19 +54,14 @@ namespace UI
         private Inventory _sellingInventory;
 
         private MarketStateManager _marketStateManager;
-        
-        private void Start()
-        {
-            _colors = SetupManager.Instance.Colors;
-        }
 
         public void Initialize(Good good, TradeType tradeType)
         {
             _tradeType = tradeType;
             _good = good;
-            _goodInfo = SetupManager.Instance.GoodInfoManager.GoodInfos[good];
-            _goodBasePrice = (int)_goodInfo.BasePrice;
-            goodIcon.sprite = _goodInfo.Icon;
+            _goodConfigData = _configurationManager.Value.ConfigData[good];
+            _goodBasePrice = (int)_goodConfigData.BasePrice;
+            goodIcon.sprite = _goodConfigData.Icon;
 
             SetUpInventories();
             SetUpButtons();
@@ -90,7 +91,7 @@ namespace UI
             _marketStateManager = null;
             _buyingInventory = null;
             _sellingInventory = null;
-                
+
             _isInitialized = false;
 
             gameObject.SetActive(false);
@@ -115,13 +116,13 @@ namespace UI
 
         private void SetUpInventories()
         {
-            var player = Model.Instance.Player.Inventory;
-            var town = Selection.Instance.SelectedTown?.Inventory;
-            
+            var player = _model.Value.Player.Inventory;
+            var town = _selection.Value.SelectedTown?.Inventory;
+
             if (town is null) return;
 
             _marketStateManager = new MarketStateManager(town);
-            
+
             _buyingInventory = _tradeType == TradeType.Buy ? player : town;
             _sellingInventory = _tradeType == TradeType.Sell ? player : town;
 
@@ -188,7 +189,7 @@ namespace UI
             var isTradePossible = _buyerFunds >= _totalPrice;
 
             _activeButton.interactable = isTradePossible;
-            coinAmountText.color = isTradePossible ? _colors.FontDark : _colors.Bad;
+            coinAmountText.color = isTradePossible ? _colors.Value.FontDark : _colors.Value.Bad;
         }
     }
 }

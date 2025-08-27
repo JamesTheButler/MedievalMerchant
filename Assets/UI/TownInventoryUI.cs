@@ -1,4 +1,5 @@
-using Data;
+using System;
+using Data.Configuration;
 using Data.Towns;
 using TMPro;
 using UnityEngine;
@@ -18,9 +19,15 @@ namespace UI
         private TMP_Text developmentTrendText;
 
         [SerializeField]
+        private Image developmentTrendIcon;
+
+        [SerializeField]
         private Button upgradeButton;
 
         private Town _boundTown;
+
+        private readonly Lazy<GrowthTrendConfig> _growthConfig =
+            new(() => ConfigurationManager.Instance.GrowthTrendConfig);
 
         public void Bind(Town town)
         {
@@ -67,10 +74,14 @@ namespace UI
         {
             developmentScoreText.text = $"{_boundTown.DevelopmentScore}";
         }
-        
+
         private void UpdateDevelopmentTrend()
         {
-            developmentTrendText.text = $"{_boundTown.DevelopmentTrend}%";
+            var sign = _boundTown.DevelopmentTrend > 0 ? "+" : "";
+            developmentTrendText.text = $"{sign}{_boundTown.DevelopmentTrend}%";
+
+            var growthTrend = _growthConfig.Value.GetTrend(_boundTown.DevelopmentTrend);
+            developmentTrendIcon.sprite = _growthConfig.Value.ConfigData[growthTrend].Icon;
         }
     }
 }

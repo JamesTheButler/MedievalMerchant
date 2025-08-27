@@ -7,25 +7,7 @@ namespace Data.Setup
         public static SetupManager Instance;
 
         [field: SerializeField]
-        public GoodInfoManager GoodInfoManager { get; private set; }
-
-        [field: SerializeField]
         public DevelopmentSetup DevelopmentSetup { get; private set; }
-
-        [field: SerializeField]
-        public MarketStateMultipliers MarketStateMultipliers { get; private set; }
-
-        [field: SerializeField]
-        public MarketStateIcons MarketStateIcons { get; private set; }
-
-        [field: SerializeField]
-        public MarketStateThresholds MarketStateThresholds { get; private set; }
-
-        [field: SerializeField]
-        public GrowthTrendIcons GrowthTrendIcons { get; private set; }
-
-        [field: SerializeField]
-        public Colors Colors { get; private set; }
 
         private void Awake()
         {
