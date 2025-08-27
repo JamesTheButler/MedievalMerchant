@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Data.Configuration;
 using Data.Setup;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace Data.Towns
 {
     public sealed class Town
     {
-        private readonly DevelopmentSetup _developmentSetup;
+        private readonly DevelopmentConfig _developmentConfig;
         private readonly Producer _producer;
         private readonly MarketStateManager _marketStateManager;
 
@@ -34,7 +35,7 @@ namespace Data.Towns
         public Town(TownSetupInfo setupInfo, Vector2Int location)
         {
             Location = location;
-            _developmentSetup = SetupManager.Instance.DevelopmentSetup;
+            _developmentConfig = ConfigurationManager.Instance.DevelopmentConfig;
             _producer = new Producer(setupInfo.Production);
             _marketStateManager = new MarketStateManager(Inventory);
 
@@ -67,7 +68,7 @@ namespace Data.Towns
 
             if (oldTier != Tier)
             {
-                _developmentTable = _developmentSetup.Tables[Tier];
+                _developmentTable = _developmentConfig.DevelopmentTables[Tier];
                 TierChanged?.Invoke();
             }
         }
@@ -110,7 +111,7 @@ namespace Data.Towns
                 goodsPerTier[Tier.Tier2],
                 goodsPerTier[Tier.Tier3]);
 
-            DevelopmentScore += DevelopmentTrend * _developmentSetup.DevelopmentMultiplier;
+            DevelopmentScore += DevelopmentTrend * _developmentConfig.DevelopmentMultiplier;
             if (DevelopmentScore >= 100 && Tier <= Tier.Tier2)
             {
                 Upgrade();
@@ -124,7 +125,7 @@ namespace Data.Towns
 
         private void UpdateDevelopmentTable()
         {
-            _developmentTable = _developmentSetup.Tables[Tier];
+            _developmentTable = _developmentConfig.DevelopmentTables[Tier];
         }
 
         private void IncreaseTier()

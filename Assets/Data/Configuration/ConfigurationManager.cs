@@ -15,7 +15,10 @@ namespace Data.Configuration
 
         [field: SerializeField]
         public GrowthTrendConfig GrowthTrendConfig { get; private set; }
-
+        
+        [field: SerializeField]
+        public DevelopmentConfig DevelopmentConfig { get; private set; }
+        
         [field: SerializeField]
         public Colors Colors { get; private set; }
 
