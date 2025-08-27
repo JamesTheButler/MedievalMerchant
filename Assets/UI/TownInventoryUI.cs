@@ -80,8 +80,9 @@ namespace UI
             var sign = _boundTown.DevelopmentTrend > 0 ? "+" : "";
             developmentTrendText.text = $"{sign}{_boundTown.DevelopmentTrend}%";
 
-            var growthTrend = _growthConfig.Value.GetTrend(_boundTown.DevelopmentTrend);
-            developmentTrendIcon.sprite = _growthConfig.Value.ConfigData[growthTrend].Icon;
+            var growthConfig = _growthConfig.Value;
+            var growthTrend = growthConfig.GetTrend(_boundTown.DevelopmentTrend);
+            developmentTrendIcon.sprite = growthConfig.ConfigData[growthTrend].Icon;
         }
     }
 }

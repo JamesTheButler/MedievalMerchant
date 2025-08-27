@@ -109,9 +109,14 @@ namespace Data.Towns
             DevelopmentTrend = _developmentTable.GetDevelopmentTrend(
                 goodsPerTier[Tier.Tier1],
                 goodsPerTier[Tier.Tier2],
-                goodsPerTier[Tier.Tier3]);
+                goodsPerTier[Tier.Tier3]) * _developmentConfig.DevelopmentMultiplier;
 
-            DevelopmentScore += DevelopmentTrend * _developmentConfig.DevelopmentMultiplier;
+            if (DevelopmentScore <= 0 && DevelopmentTrend < 0)
+            {
+                DevelopmentTrend = 0;
+            }
+
+            DevelopmentScore += DevelopmentTrend;
             if (DevelopmentScore >= 100 && Tier <= Tier.Tier2)
             {
                 Upgrade();
