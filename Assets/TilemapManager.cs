@@ -32,13 +32,19 @@ public sealed class TilemapManager : MonoBehaviour
     private RandomTileSet townTileSetT3;
 
     [SerializeField]
+    private Tile selectionTile;
+
+    [SerializeField]
     private UnityEvent<Town> onTownClicked;
 
     [SerializeField]
     private UnityEvent onGroundClicked;
 
+    private Vector2Int? _selectedCoordinate;
+
     private const int GroundZIndex = 0;
     private const int TownZIndex = 5;
+    private const int SelectionZIndex = 10;
 
     private int _size;
     private Vector2Int _origin;
@@ -97,8 +103,18 @@ public sealed class TilemapManager : MonoBehaviour
         var mouseWorldPos = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
         var cellPos = grid.WorldToCell(mouseWorldPos).XY() - _origin;
 
+        if (_selectedCoordinate != null)
+        {
+            var pos = new Vector3Int(_selectedCoordinate.Value.x, _selectedCoordinate.Value.y, SelectionZIndex);
+            tilemap.SetTile(pos, null);
+            _selectedCoordinate = null;
+        }
+
         if (Model.Instance.Towns.TryGetValue(cellPos, out var town))
         {
+            var pos = cellPos + _origin;
+            _selectedCoordinate = pos;
+            tilemap.SetTile(new Vector3Int(pos.x, pos.y, SelectionZIndex) , selectionTile) ;
             onTownClicked?.Invoke(town);
         }
         else

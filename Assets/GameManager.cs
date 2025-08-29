@@ -3,6 +3,7 @@ using Data;
 using Data.Setup;
 using Data.Towns;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public sealed class GameManager : MonoBehaviour
 {
