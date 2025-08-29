@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using Art.Tiles;
 using Data;
 using Data.Towns;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 public sealed class TilemapManager : MonoBehaviour
@@ -21,13 +23,13 @@ public sealed class TilemapManager : MonoBehaviour
     private Tile grassTile;
 
     [SerializeField]
-    private Tile townTileT1;
+    private RandomTileSet townTileSetT1;
 
     [SerializeField]
-    private Tile townTileT2;
+    private RandomTileSet townTileSetT2;
 
     [SerializeField]
-    private Tile townTileT3;
+    private RandomTileSet townTileSetT3;
 
     [SerializeField]
     private UnityEvent<Town> onTownClicked;
@@ -62,7 +64,7 @@ public sealed class TilemapManager : MonoBehaviour
 
                 if (townLocations.Contains(new Vector2Int(x, y)))
                 {
-                    tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), townTileT1);
+                    tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), townTileSetT1.GetRandom());
                 }
             }
         }
@@ -70,16 +72,16 @@ public sealed class TilemapManager : MonoBehaviour
 
     private void UpdateTown(Town town)
     {
-        var tile = town.Tier switch
+        var tileSet = town.Tier switch
         {
-            Tier.Tier1 => townTileT1,
-            Tier.Tier2 => townTileT2,
-            Tier.Tier3 => townTileT3,
-            _ => townTileT3
+            Tier.Tier1 => townTileSetT1,
+            Tier.Tier2 => townTileSetT2,
+            Tier.Tier3 => townTileSetT3,
+            _ => townTileSetT3
         };
 
         var pos = _origin + town.Location;
-        tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), tile);
+        tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), tileSet.GetRandom());
     }
 
     private void Update()
