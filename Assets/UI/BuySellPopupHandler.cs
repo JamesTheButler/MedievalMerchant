@@ -1,3 +1,4 @@
+using System.Linq;
 using Data;
 using Data.Towns;
 using UnityEngine;
@@ -8,6 +9,9 @@ namespace UI
     {
         [SerializeField]
         private BuySellPopup buySellPopup;
+
+        [SerializeField]
+        private float yOffset;
 
         private Good _good;
         private Inventory _townInventory;
@@ -34,8 +38,11 @@ namespace UI
 
             _marketStateManager = new MarketStateManager(_townInventory);
 
-            // TODO: fix popup position
-            //((RectTransform)buySellPopup.transform).anchoredPosition = inventoryCell.transform.localPosition;
+            var cellTransform = (RectTransform)inventoryCell.transform;
+            var arr = new Vector3[4];
+            cellTransform.GetWorldCorners(arr);
+            var cellCenter = arr.Aggregate(Vector3.zero, (curr, next) => curr + next / arr.Length);
+            buySellPopup.transform.position = cellCenter + Vector3.up * yOffset;
 
             buySellPopup.SetGood(_good);
 
