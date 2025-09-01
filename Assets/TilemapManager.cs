@@ -24,6 +24,9 @@ public sealed class TilemapManager : MonoBehaviour
     private UnityEvent<Town> onTownClicked;
 
     [SerializeField]
+    private UnityEvent<float> onMapGenerated;
+
+    [SerializeField]
     private UnityEvent onGroundClicked;
 
     private Vector2Int? _selectedCoordinate;
@@ -56,7 +59,7 @@ public sealed class TilemapManager : MonoBehaviour
                 tilemap.SetTile(new Vector3Int(pos.x, pos.y, FrameZIndex), tiles.FrameTile2);
 
                 if (x < 0 || x >= size || y < 0 || y >= size) continue;
-                
+
                 tilemap.SetTile(new Vector3Int(pos.x, pos.y, GroundZIndex), tiles.GrassTile);
 
                 if (townLocations.Contains(new Vector2Int(x, y)))
@@ -65,6 +68,8 @@ public sealed class TilemapManager : MonoBehaviour
                 }
             }
         }
+
+        onMapGenerated?.Invoke(size);
     }
 
     private void UpdateTown(Town town)
