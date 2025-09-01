@@ -1,4 +1,5 @@
 using System;
+using Data;
 using Data.Configuration;
 using Data.Towns;
 using TMPro;
@@ -37,6 +38,9 @@ namespace UI
 
             base.Bind(town.Inventory);
 
+            HideSection(Tier.Tier2);
+            HideSection(Tier.Tier3);
+            
             _boundTown = town;
             TownUpgrade();
             UpdateDevelopmentScore();
@@ -62,8 +66,10 @@ namespace UI
 
         private void TownUpgrade()
         {
-            townNameText.text = $"{_boundTown.Name} ({_boundTown.Tier.ToRomanNumeral()})";
-
+            var newTier = _boundTown.Tier;
+            townNameText.text = $"{_boundTown.Name} ({newTier.ToRomanNumeral()})";
+            ShowSection(newTier);
+            
             foreach (var good in _boundTown.Production)
             {
                 InventoryCells[good].SetIsProduced(true);

@@ -25,14 +25,21 @@ namespace UI
 
         protected readonly Dictionary<Good, InventoryCell> InventoryCells = new();
 
-        private Inventory _boundInventory;
-
         private bool _isInitialized;
+        private Inventory _boundInventory;
+        private Dictionary<Tier, InventorySection> _inventorySections;
 
         public void Bind(Inventory inventory)
         {
             if (!_isInitialized)
             {
+                _inventorySections = new()
+                {
+                    { Tier.Tier1, inventorySectionT1 },
+                    { Tier.Tier2, inventorySectionT2 },
+                    { Tier.Tier3, inventorySectionT3 },
+                };
+
                 CollectInventoryCells(inventorySectionT1);
                 CollectInventoryCells(inventorySectionT2);
                 CollectInventoryCells(inventorySectionT3);
@@ -85,6 +92,16 @@ namespace UI
         public void Hide()
         {
             gameObject.SetActive(false);
+        }
+
+        public void HideSection(Tier tier)
+        {
+            _inventorySections[tier].gameObject.SetActive(false);
+        }
+
+        public void ShowSection(Tier tier)
+        {
+            _inventorySections[tier].gameObject.SetActive(true);
         }
 
         private void OnFundsUpdated(int funds)
