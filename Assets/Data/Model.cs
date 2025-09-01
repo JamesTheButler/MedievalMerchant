@@ -7,9 +7,12 @@ namespace Data
 {
     public sealed class Model : MonoBehaviour
     {
+        [SerializeField]
+        private int playerStartFunds = 1000;
+
         public static Model Instance;
 
-        public Player Player { get; private set; } = new(50000);
+        public Player Player { get; private set; }
         public IReadOnlyDictionary<Vector2Int, Town> Towns => _towns;
 
         private Dictionary<Vector2Int, Town> _towns = new();
@@ -26,6 +29,8 @@ namespace Data
                 Destroy(gameObject);
                 return;
             }
+
+            Player = new Player(playerStartFunds);
 
             Instance = this;
             DontDestroyOnLoad(gameObject);
