@@ -14,7 +14,7 @@ namespace UI
         private TMP_Text townNameText;
 
         [SerializeField]
-        private TMP_Text developmentScoreText;
+        private DevelopmentSlider developmentScore;
 
         [SerializeField]
         private TMP_Text developmentTrendText;
@@ -40,7 +40,7 @@ namespace UI
 
             HideSection(Tier.Tier2);
             HideSection(Tier.Tier3);
-            
+
             _boundTown = town;
             TownUpgrade();
             UpdateDevelopmentScore();
@@ -69,7 +69,7 @@ namespace UI
             var newTier = _boundTown.Tier;
             townNameText.text = $"{_boundTown.Name} ({newTier.ToRomanNumeral()})";
             ShowSection(newTier);
-            
+
             foreach (var good in _boundTown.Production)
             {
                 InventoryCells[good].SetIsProduced(true);
@@ -78,7 +78,7 @@ namespace UI
 
         private void UpdateDevelopmentScore()
         {
-            developmentScoreText.text = $"{_boundTown.DevelopmentScore}";
+            developmentScore.SetDevelopment(_boundTown.DevelopmentScore);
         }
 
         private void UpdateDevelopmentTrend()
