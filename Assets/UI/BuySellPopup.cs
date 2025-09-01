@@ -79,8 +79,9 @@ namespace UI
         {
             if (_marketState == marketState) return;
 
-            marketStateIcon.sprite = _marketStateConfig.Value.ConfigData[marketState].Icon;
-            marketStateText.text = marketState.ToString();
+            var configData = _marketStateConfig.Value.ConfigData[marketState];
+            marketStateIcon.sprite = configData.Icon;
+            marketStateText.text = configData.DisplayString;
 
             _marketState = marketState;
         }
