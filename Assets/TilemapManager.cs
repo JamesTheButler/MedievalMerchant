@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using Art.Tiles;
 using Data;
 using Data.Towns;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 public sealed class TilemapManager : MonoBehaviour
@@ -20,19 +18,7 @@ public sealed class TilemapManager : MonoBehaviour
     private Grid grid;
 
     [SerializeField]
-    private Tile grassTile;
-
-    [SerializeField]
-    private RandomTileSet townTileSetT1;
-
-    [SerializeField]
-    private RandomTileSet townTileSetT2;
-
-    [SerializeField]
-    private RandomTileSet townTileSetT3;
-
-    [SerializeField]
-    private Tile selectionTile;
+    private Tiles tiles;
 
     [SerializeField]
     private UnityEvent<Town> onTownClicked;
@@ -45,6 +31,7 @@ public sealed class TilemapManager : MonoBehaviour
     private const int GroundZIndex = 0;
     private const int TownZIndex = 5;
     private const int SelectionZIndex = 10;
+    private const int FrameZIndex = 15;
 
     private int _size;
     private Vector2Int _origin;
@@ -61,16 +48,20 @@ public sealed class TilemapManager : MonoBehaviour
     {
         _origin = new Vector2Int(-(size / 2), -(size / 2));
 
-        for (var x = 0; x < size; x++)
+        for (var x = -1; x < size + 1; x++)
         {
-            for (var y = 0; y < size; y++)
+            for (var y = -1; y < size + 1; y++)
             {
                 var pos = _origin + new Vector2Int(x, y);
-                tilemap.SetTile(new Vector3Int(pos.x, pos.y, GroundZIndex), grassTile);
+                tilemap.SetTile(new Vector3Int(pos.x, pos.y, FrameZIndex), tiles.FrameTile2);
+
+                if (x < 0 || x >= size || y < 0 || y >= size) continue;
+                
+                tilemap.SetTile(new Vector3Int(pos.x, pos.y, GroundZIndex), tiles.GrassTile);
 
                 if (townLocations.Contains(new Vector2Int(x, y)))
                 {
-                    tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), townTileSetT1.GetRandom());
+                    tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), tiles.TownTileSetT1.GetRandom());
                 }
             }
         }
@@ -80,10 +71,10 @@ public sealed class TilemapManager : MonoBehaviour
     {
         var tileSet = town.Tier switch
         {
-            Tier.Tier1 => townTileSetT1,
-            Tier.Tier2 => townTileSetT2,
-            Tier.Tier3 => townTileSetT3,
-            _ => townTileSetT3
+            Tier.Tier1 => tiles.TownTileSetT1,
+            Tier.Tier2 => tiles.TownTileSetT2,
+            Tier.Tier3 => tiles.TownTileSetT3,
+            _ => tiles.TownTileSetT3
         };
 
         var pos = _origin + town.Location;
@@ -114,7 +105,7 @@ public sealed class TilemapManager : MonoBehaviour
         {
             var pos = cellPos + _origin;
             _selectedCoordinate = pos;
-            tilemap.SetTile(new Vector3Int(pos.x, pos.y, SelectionZIndex) , selectionTile) ;
+            tilemap.SetTile(new Vector3Int(pos.x, pos.y, SelectionZIndex), tiles.SelectionTile);
             onTownClicked?.Invoke(town);
         }
         else
