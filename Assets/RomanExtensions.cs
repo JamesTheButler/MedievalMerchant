@@ -1,5 +1,7 @@
 using Data;
+using JetBrains.Annotations;
 
+[PublicAPI]
 public static class RomanExtensions
 {
     private const string Fallback = "???";

@@ -52,7 +52,7 @@ namespace UI
                 slider.value = _targetValue;
                 return;
             }
-            
+
             if (_tween != null)
             {
                 StopCoroutine(_tween);
