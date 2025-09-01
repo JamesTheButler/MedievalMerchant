@@ -64,7 +64,7 @@ public sealed class TilemapManager : MonoBehaviour
 
                 if (townLocations.Contains(new Vector2Int(x, y)))
                 {
-                    tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), tiles.TownTileSetT1.GetRandom());
+                    tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), tiles.TownTileT1);
                 }
             }
         }
@@ -74,16 +74,16 @@ public sealed class TilemapManager : MonoBehaviour
 
     private void UpdateTown(Town town)
     {
-        var tileSet = town.Tier switch
+        var tile = town.Tier switch
         {
-            Tier.Tier1 => tiles.TownTileSetT1,
-            Tier.Tier2 => tiles.TownTileSetT2,
-            Tier.Tier3 => tiles.TownTileSetT3,
-            _ => tiles.TownTileSetT3
+            Tier.Tier1 => tiles.TownTileT1,
+            Tier.Tier2 => tiles.TownTileT2,
+            Tier.Tier3 => tiles.TownTileT3,
+            _ => tiles.TownTileT3
         };
 
         var pos = _origin + town.Location;
-        tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), tileSet.GetRandom());
+        tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), tile);
     }
 
     private void Update()

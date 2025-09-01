@@ -1,4 +1,3 @@
-using Art.Tiles;
 using Data.Configuration;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -7,16 +6,16 @@ using UnityEngine.Tilemaps;
 public sealed class Tiles : ScriptableObject
 {
     [field: SerializeField]
-    public Tile GrassTile { get; private set; }
+    public TileBase GrassTile { get; private set; }
 
     [field: SerializeField]
-    public RandomTileSet TownTileSetT1 { get; private set; }
+    public TileBase TownTileT1 { get; private set; }
 
     [field: SerializeField]
-    public RandomTileSet TownTileSetT2 { get; private set; }
+    public TileBase TownTileT2 { get; private set; }
 
     [field: SerializeField]
-    public RandomTileSet TownTileSetT3 { get; private set; }
+    public TileBase TownTileT3 { get; private set; }
 
     [field: SerializeField]
     public Tile SelectionTile { get; private set; }
