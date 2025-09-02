@@ -6,7 +6,7 @@ namespace UI
     public sealed class PlayerInventoryHandler : MonoBehaviour
     {
         [SerializeField]
-        private InventoryUI inventoryUi;
+        private PlayerInventoryUI playerInventoryUI;
 
         private Player _player;
 

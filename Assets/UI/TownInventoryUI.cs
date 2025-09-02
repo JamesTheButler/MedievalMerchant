@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public sealed class TownInventoryUI : InventoryUI
+    public sealed class TownInventoryUI : MonoBehaviour
     {
         [SerializeField]
         private UnityEvent<InventoryCell> inventoryCellClicked;
@@ -106,8 +106,6 @@ namespace UI
         {
             ResetInventorySections();
 
-            // BUG: this breaks when clicking a lvl 3 town
-            //  need to show all sections needed
             HideSection(Tier.Tier2);
             HideSection(Tier.Tier3);
 
