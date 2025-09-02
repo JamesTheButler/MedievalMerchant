@@ -11,14 +11,13 @@ namespace Data.Towns
     {
         private readonly DevelopmentConfig _developmentConfig;
         private readonly Producer _producer;
-        private readonly MarketStateManager _marketStateManager;
 
         private const int StartGoodMultiplier = 25;
         private const int BaseFundsPerTick = 20;
 
-        public event Action TierChanged;
-        public event Action DevelopmentScoreChanged;
-        public event Action DevelopmentTrendChanged;
+        public event Action<Tier> TierChanged;
+        public event Action<float> DevelopmentScoreChanged;
+        public event Action<float> DevelopmentTrendChanged;
 
         public Inventory Inventory { get; } = new();
         public string Name { get; }
@@ -37,7 +36,6 @@ namespace Data.Towns
             Location = location;
             _developmentConfig = ConfigurationManager.Instance.DevelopmentConfig;
             _producer = new Producer(setupInfo.Production);
-            _marketStateManager = new MarketStateManager(Inventory);
 
             Name = setupInfo.NameGenerator.GenerateName();
             Tier = Tier.Tier1;
@@ -69,7 +67,7 @@ namespace Data.Towns
             if (oldTier != Tier)
             {
                 _developmentTable = _developmentConfig.DevelopmentTables[Tier];
-                TierChanged?.Invoke();
+                TierChanged?.Invoke(Tier);
             }
         }
 
@@ -124,8 +122,8 @@ namespace Data.Towns
             }
 
             DevelopmentScore = Mathf.Clamp(DevelopmentScore, 0, 100);
-            DevelopmentTrendChanged?.Invoke();
-            DevelopmentScoreChanged?.Invoke();
+            DevelopmentTrendChanged?.Invoke(DevelopmentTrend);
+            DevelopmentScoreChanged?.Invoke(DevelopmentScore);
         }
 
         private void UpdateDevelopmentTable()

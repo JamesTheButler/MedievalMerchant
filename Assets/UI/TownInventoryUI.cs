@@ -76,9 +76,6 @@ namespace UI
 
             BindTown(town);
 
-            HideSection(Tier.Tier2);
-            HideSection(Tier.Tier3);
-
             upgradeButton.onClick.AddListener(() => _boundTown.Upgrade());
 
             // makes sure that the UI is properly inflated after dynamic inventory creation
@@ -95,14 +92,24 @@ namespace UI
             _boundTown.DevelopmentScoreChanged += UpdateDevelopmentScore;
             _boundTown.DevelopmentTrendChanged += UpdateDevelopmentTrend;
 
-            TownUpgrade();
-            UpdateDevelopmentScore();
-            UpdateDevelopmentTrend();
+            // upgrade each tier until current tier is reached
+            for (var i = Tier.Tier1; i <= _boundTown.Tier; i++)
+            {
+                TownUpgrade(i);
+            }
+
+            UpdateDevelopmentScore(_boundTown.DevelopmentScore);
+            UpdateDevelopmentTrend(_boundTown.DevelopmentTrend);
         }
 
         private void BindInventory(Inventory inventory)
         {
             ResetInventorySections();
+
+            // BUG: this breaks when clicking a lvl 3 town
+            //  need to show all sections needed
+            HideSection(Tier.Tier2);
+            HideSection(Tier.Tier3);
 
             inventory.GoodUpdated += OnGoodUpdated;
             inventory.FundsUpdated += OnFundsUpdated;
@@ -156,25 +163,24 @@ namespace UI
             }
         }
 
-        private void TownUpgrade()
+        private void TownUpgrade(Tier tier)
         {
-            var newTier = _boundTown.Tier;
-            townNameText.text = $"{_boundTown.Name} ({newTier.ToRomanNumeral()})";
-            ShowSection(newTier);
+            townNameText.text = $"{_boundTown.Name} ({tier.ToRomanNumeral()})";
+            ShowSection(tier);
         }
 
-        private void UpdateDevelopmentScore()
+        private void UpdateDevelopmentScore(float score)
         {
-            developmentScore.SetDevelopment(_boundTown.DevelopmentScore);
+            developmentScore.SetDevelopment(score);
         }
 
-        private void UpdateDevelopmentTrend()
+        private void UpdateDevelopmentTrend(float trend)
         {
-            var sign = _boundTown.DevelopmentTrend > 0 ? "+" : "";
-            developmentTrendText.text = $"{sign}{_boundTown.DevelopmentTrend}%";
+            var sign = trend > 0 ? "+" : "";
+            developmentTrendText.text = $"{sign}{trend}%";
 
             var growthConfig = _growthConfig.Value;
-            var growthTrend = growthConfig.GetTrend(_boundTown.DevelopmentTrend);
+            var growthTrend = growthConfig.GetTrend(trend);
             developmentTrendIcon.sprite = growthConfig.ConfigData[growthTrend].Icon;
         }
 

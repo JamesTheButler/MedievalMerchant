@@ -43,7 +43,7 @@ public sealed class TilemapManager : MonoBehaviour
     {
         foreach (var town in Model.Instance.Towns.Values)
         {
-            town.TierChanged += () => UpdateTown(town);
+            town.TierChanged += _ => UpdateTown(town);
         }
     }
 
