@@ -6,7 +6,7 @@ using Data.Setup;
 
 namespace Data
 {
-    public sealed class Inventory
+    public class Inventory
     {
         public event Action<int> FundsUpdated;
         public event Action<Good, int> GoodUpdated;
@@ -15,8 +15,9 @@ namespace Data
 
         public IReadOnlyDictionary<Good, int> Goods => _goods;
 
-        private readonly Lazy<GoodsConfig> _goodsInfoManager = new(() => ConfigurationManager.Instance.GoodsConfig);
+        protected readonly Lazy<GoodsConfig> GoodsInfoManager = new(() => ConfigurationManager.Instance.GoodsConfig);
         private readonly Dictionary<Good, int> _goods = new();
+
 
         public void AddFunds(int fundChange)
         {
@@ -60,10 +61,10 @@ namespace Data
 
             if (_goods[good] <= 0)
             {
-                _goods[good] = 0;
+                _goods.Remove(good);
             }
 
-            GoodUpdated?.Invoke(good, _goods[good]);
+            GoodUpdated?.Invoke(good, _goods.GetValueOrDefault(good, 0));
         }
 
         public int Get(Good good)
@@ -71,7 +72,7 @@ namespace Data
             return _goods.GetValueOrDefault(good, 0);
         }
 
-        public IReadOnlyDictionary<Tier, int> CountItemTiers()
+        public IReadOnlyDictionary<Tier, int> GoodsPerTier()
         {
             var result = Enum.GetValues(typeof(Tier))
                 .Cast<Tier>()
@@ -81,7 +82,7 @@ namespace Data
             {
                 if (amount <= 0) continue;
 
-                var tier = _goodsInfoManager.Value.ConfigData[good].Tier;
+                var tier = GoodsInfoManager.Value.ConfigData[good].Tier;
                 result[tier]++;
             }
 

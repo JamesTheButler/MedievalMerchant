@@ -2,7 +2,7 @@ namespace Data
 {
     public sealed class Player
     {
-        public Inventory Inventory { get; private set; } = new();
+        public PlayerInventory Inventory { get; private set; } = new();
 
         public Player(int startFunds)
         {

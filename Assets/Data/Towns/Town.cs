@@ -84,7 +84,7 @@ namespace Data.Towns
             };
             _producer.SetProductionMultiplier(multiplier);
 
-            // if development trend is positive, add
+            // if development trend is positive, add funds
             var trendFundMultiplier = DevelopmentTrend > 0 ? DevelopmentTrend : 1f;
             Inventory.AddFunds((int)(BaseFundsPerTick * (int)Tier * trendFundMultiplier));
 
@@ -105,7 +105,7 @@ namespace Data.Towns
 
         private void Develop()
         {
-            var goodsPerTier = Inventory.CountItemTiers();
+            var goodsPerTier = Inventory.GoodsPerTier();
             DevelopmentTrend = _developmentTable.GetDevelopmentTrend(
                 goodsPerTier[Tier.Tier1],
                 goodsPerTier[Tier.Tier2],

@@ -1,4 +1,3 @@
-using Data;
 using Data.Towns;
 using UnityEngine;
 
@@ -12,6 +11,7 @@ namespace UI
         private void Start()
         {
             inventoryUi.Hide();
+            inventoryUi.Initialize();
 
             Selection.Instance.TownSelected += SelectTown;
         }
@@ -30,7 +30,7 @@ namespace UI
 
         private void DeselectTown()
         {
-            inventoryUi.UnBindTown();
+            inventoryUi.Unbind();
             inventoryUi.Hide();
         }
     }

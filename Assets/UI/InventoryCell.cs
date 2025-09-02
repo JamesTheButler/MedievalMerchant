@@ -12,7 +12,7 @@ namespace UI
     {
         public event Action Clicked;
 
-        public Good Good { get; private set; }
+        public Good? Good { get; private set; }
 
         [SerializeField]
         private Image goodIcon;
@@ -26,10 +26,18 @@ namespace UI
         [SerializeField]
         private TMP_Text amountText;
 
-        public void SetGood(Good good)
+        public void SetGood(Good? good)
         {
             Good = good;
-            goodIcon.sprite = ConfigurationManager.Instance.GoodsConfig.ConfigData[good].Icon;
+            if (good == null)
+            {
+                goodIcon.gameObject.SetActive(false);
+            }
+            else
+            {
+                goodIcon.gameObject.SetActive(true);
+                goodIcon.sprite = ConfigurationManager.Instance.GoodsConfig.ConfigData[good!.Value].Icon;
+            }
         }
 
         public void SetAmount(int amount)

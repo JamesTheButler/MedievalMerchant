@@ -30,8 +30,9 @@ namespace UI
             Reset();
 
             if (Selection.Instance.SelectedTown is null) return;
+            if (inventoryCell.Good == null) return;
 
-            _good = inventoryCell.Good;
+            _good = inventoryCell.Good.Value;
 
             _townInventory = Selection.Instance.SelectedTown.Inventory;
             _playerInventory = Model.Instance.Player.Inventory;
