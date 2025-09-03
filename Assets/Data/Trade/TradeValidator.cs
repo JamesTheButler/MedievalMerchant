@@ -1,7 +1,6 @@
 using Data.Towns;
-using Data.Trade;
 
-namespace Data
+namespace Data.Trade
 {
     public sealed class TradeValidator
     {

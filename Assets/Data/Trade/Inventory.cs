@@ -4,7 +4,7 @@ using System.Linq;
 using Data.Configuration;
 using Data.Setup;
 
-namespace Data
+namespace Data.Trade
 {
     public sealed class Inventory
     {
@@ -21,6 +21,7 @@ namespace Data
         public Inventory(IInventoryPolicy inventoryPolicy)
         {
             InventoryPolicy = inventoryPolicy;
+            inventoryPolicy.SetInventory(this);
         }
 
         public void AddFunds(int fundChange)

@@ -4,6 +4,7 @@ using AYellowpaper.SerializedCollections;
 using Data;
 using Data.Configuration;
 using Data.Towns;
+using Data.Trade;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;

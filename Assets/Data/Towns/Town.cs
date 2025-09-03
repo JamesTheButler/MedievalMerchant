@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Data.Configuration;
 using Data.Setup;
+using Data.Trade;
 using UnityEngine;
 
 namespace Data.Towns
@@ -11,6 +12,7 @@ namespace Data.Towns
     {
         private readonly DevelopmentConfig _developmentConfig;
         private readonly Producer _producer;
+        private readonly TierBasedInventoryPolicy _inventoryPolicy;
 
         private const int StartGoodMultiplier = 25;
         private const int BaseFundsPerTick = 20;
@@ -19,7 +21,7 @@ namespace Data.Towns
         public event Action<float> DevelopmentScoreChanged;
         public event Action<float> DevelopmentTrendChanged;
 
-        public Inventory Inventory { get; } = new(new UnlimitedInventoryPolicy());
+        public Inventory Inventory { get; }
         public string Name { get; }
         public Tier Tier { get; private set; }
         public Vector2Int Location { get; }
@@ -33,15 +35,21 @@ namespace Data.Towns
 
         public Town(TownSetupInfo setupInfo, Vector2Int location)
         {
+            _inventoryPolicy = new TierBasedInventoryPolicy();
+
             Location = location;
             _developmentConfig = ConfigurationManager.Instance.DevelopmentConfig;
             _producer = new Producer(setupInfo.Production);
 
             Name = setupInfo.NameGenerator.GenerateName();
+
+
             Tier = Tier.Tier1;
+            _inventoryPolicy.SetTier(Tier.Tier1);
             UpdateDevelopmentTable();
 
             // initial funds and goods
+            Inventory = new Inventory(_inventoryPolicy);
             Inventory.AddFunds(setupInfo.InitialFunds);
             foreach (var (good, amount) in _producer.Produce())
             {
@@ -66,7 +74,8 @@ namespace Data.Towns
 
             if (oldTier != Tier)
             {
-                _developmentTable = _developmentConfig.DevelopmentTables[Tier];
+                UpdateDevelopmentTable();
+                _inventoryPolicy.SetTier(Tier);
                 TierChanged?.Invoke(Tier);
             }
         }

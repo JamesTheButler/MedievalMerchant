@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Data
+namespace Data.Trade
 {
     public readonly struct TradeResult
     {
