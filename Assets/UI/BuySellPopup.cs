@@ -66,14 +66,16 @@ namespace UI
             goodNameText.text = _goodsConfig.Value.ConfigData[good].GoodName;
         }
 
-        public void CanBuy(bool canBuy)
+        public void CanBuy(TradeResult canBuy)
         {
-            buyButton.interactable = canBuy;
+            buyButton.interactable = canBuy.Success;
+            // TODO: on error: add a tooltip as to why it cannot be bought
         }
 
-        public void CanSell(bool canSell)
+        public void CanSell(TradeResult canSell)
         {
-            sellButton.interactable = canSell;
+            sellButton.interactable = canSell.Success;
+            // TODO: on error: add a tooltip as to why it cannot be sold
         }
 
         public void SetMarketState(MarketState marketState)

@@ -19,7 +19,7 @@ namespace Data.Towns
         public event Action<float> DevelopmentScoreChanged;
         public event Action<float> DevelopmentTrendChanged;
 
-        public Inventory Inventory { get; } = new();
+        public Inventory Inventory { get; } = new(new UnlimitedInventoryPolicy());
         public string Name { get; }
         public Tier Tier { get; private set; }
         public Vector2Int Location { get; }

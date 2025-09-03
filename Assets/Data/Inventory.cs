@@ -47,7 +47,7 @@ namespace Data
 
         public bool HasGood(Good good, int amount)
         {
-            return _goods.ContainsKey(good) && _goods[good] <= amount;
+            return _goods.ContainsKey(good) && _goods[good] >= amount;
         }
 
         public void AddGood(Good good, int amount)

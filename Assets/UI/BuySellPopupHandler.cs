@@ -1,6 +1,7 @@
 using System.Linq;
 using Data;
 using Data.Towns;
+using Data.Trade;
 using UnityEngine;
 
 namespace UI
@@ -14,9 +15,12 @@ namespace UI
         private float yOffset;
 
         private Good _good;
+        private Player _player;
+        private Town _town;
         private Inventory _townInventory;
         private Inventory _playerInventory;
         private MarketStateManager _marketStateManager;
+        private TradeValidator _tradeValidator;
 
         private void Start()
         {
@@ -34,9 +38,13 @@ namespace UI
 
             _good = inventoryCell.Good.Value;
 
-            _townInventory = Selection.Instance.SelectedTown.Inventory;
-            _playerInventory = Model.Instance.Player.Inventory;
+            _player = Model.Instance.Player;
+            _town = Selection.Instance.SelectedTown;
 
+            _playerInventory = _player.Inventory;
+            _townInventory = _town.Inventory;
+
+            _tradeValidator = new TradeValidator(_player, _town);
             _marketStateManager = new MarketStateManager(_townInventory);
 
             var cellTransform = (RectTransform)inventoryCell.transform;
@@ -78,17 +86,19 @@ namespace UI
             if (_good != good)
                 return;
 
-            buySellPopup.CanBuy(amount > 0);
+            var canBuy = _tradeValidator.Validate(TradeType.Buy, good, 1);
+            buySellPopup.CanBuy(canBuy);
             var marketState = _marketStateManager.GetMarketState(good);
             buySellPopup.SetMarketState(marketState);
         }
 
         private void OnPlayerGoodUpdated(Good good, int amount)
         {
-            if (_good == good)
-            {
-                buySellPopup.CanSell(amount > 0);
-            }
+            if (_good != good)
+                return;
+
+            var tradeResult = _tradeValidator.Validate(TradeType.Sell, good, 1);
+            buySellPopup.CanSell(tradeResult);
         }
     }
 }
