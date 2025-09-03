@@ -1,5 +1,6 @@
 using Data;
 using Data.Towns;
+using Data.Trade;
 using UnityEngine;
 
 namespace UI

@@ -2,6 +2,7 @@ using System;
 using Data;
 using Data.Configuration;
 using Data.Setup;
+using Data.Trade;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;

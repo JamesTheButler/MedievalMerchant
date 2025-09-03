@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using AYellowpaper.SerializedCollections;
 using Data;
 using Data.Configuration;
 using Data.Towns;
@@ -36,33 +36,19 @@ namespace UI
         [SerializeField]
         private TMP_Text fundsText;
 
-        [SerializeField]
-        private TownInventorySection inventorySectionT1;
-
-        [SerializeField]
-        private TownInventorySection inventorySectionT2;
-
-        [SerializeField]
-        private TownInventorySection inventorySectionT3;
+        [SerializeField, SerializedDictionary("Tier", "Section")]
+        private SerializedDictionary<Tier, TownInventorySection> inventorySections;
 
         private Town _boundTown;
 
         private Inventory _boundInventory;
-        private Dictionary<Tier, TownInventorySection> _inventorySections;
 
         private readonly Lazy<GrowthTrendConfig> _growthConfig =
             new(() => ConfigurationManager.Instance.GrowthTrendConfig);
 
         public void Initialize()
         {
-            _inventorySections = new Dictionary<Tier, TownInventorySection>
-            {
-                { Tier.Tier1, inventorySectionT1 },
-                { Tier.Tier2, inventorySectionT2 },
-                { Tier.Tier3, inventorySectionT3 },
-            };
-
-            foreach (var section in _inventorySections.Values)
+            foreach (var section in inventorySections.Values)
             {
                 section.CellClicked += InvokeCellClicked;
             }
@@ -104,6 +90,7 @@ namespace UI
 
         private void BindInventory(Inventory inventory)
         {
+            ResetInventorySections();
             ResetInventorySections();
 
             HideSection(Tier.Tier2);
@@ -155,7 +142,7 @@ namespace UI
 
         private void ResetInventorySections()
         {
-            foreach (var section in _inventorySections.Values)
+            foreach (var section in inventorySections.Values)
             {
                 section.Initialize();
             }
@@ -194,12 +181,12 @@ namespace UI
 
         private void HideSection(Tier tier)
         {
-            _inventorySections[tier].gameObject.SetActive(false);
+            inventorySections[tier].gameObject.SetActive(false);
         }
 
         private void ShowSection(Tier tier)
         {
-            _inventorySections[tier].gameObject.SetActive(true);
+            inventorySections[tier].gameObject.SetActive(true);
         }
 
         private void OnFundsUpdated(int funds)
@@ -212,7 +199,7 @@ namespace UI
             var tier = ConfigurationManager.Instance.GoodsConfig.ConfigData[good].Tier;
 
             var isProduced = _boundTown?.Production.Contains(good) ?? false;
-            _inventorySections[tier].UpdateGood(good, amount, isProduced);
+            inventorySections[tier].UpdateGood(good, amount, isProduced);
         }
 
         private void InvokeCellClicked(InventoryCell cell)

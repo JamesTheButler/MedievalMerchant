@@ -6,18 +6,22 @@ using Data.Setup;
 
 namespace Data
 {
-    public class Inventory
+    public sealed class Inventory
     {
         public event Action<int> FundsUpdated;
         public event Action<Good, int> GoodUpdated;
 
+        public IInventoryPolicy InventoryPolicy { get; }
         public int Funds { get; private set; }
-
         public IReadOnlyDictionary<Good, int> Goods => _goods;
 
-        protected readonly Lazy<GoodsConfig> GoodsInfoManager = new(() => ConfigurationManager.Instance.GoodsConfig);
+        private readonly Lazy<GoodsConfig> _goodsInfoManager = new(() => ConfigurationManager.Instance.GoodsConfig);
         private readonly Dictionary<Good, int> _goods = new();
 
+        public Inventory(IInventoryPolicy inventoryPolicy)
+        {
+            InventoryPolicy = inventoryPolicy;
+        }
 
         public void AddFunds(int fundChange)
         {
@@ -82,7 +86,7 @@ namespace Data
             {
                 if (amount <= 0) continue;
 
-                var tier = GoodsInfoManager.Value.ConfigData[good].Tier;
+                var tier = _goodsInfoManager.Value.ConfigData[good].Tier;
                 result[tier]++;
             }
 

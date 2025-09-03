@@ -1,0 +1,81 @@
+using System;
+using Data.Configuration;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace UI
+{
+    public sealed class UpgradeButton : MonoBehaviour
+    {
+        public enum State
+        {
+            Hidden = 0, // button is not shown
+            Disabled = 1, // button is shown but inactive
+            Active = 2, // button is fully visible and interactable
+        }
+
+        [SerializeField]
+        private CanvasGroup canvasGroup;
+
+        [SerializeField]
+        private TMP_Text costText;
+
+        [SerializeField]
+        private Button button;
+
+        public State ButtonState { get; private set; }
+        public Button.ButtonClickedEvent OnClick => button.onClick;
+
+        private readonly Lazy<Colors> _colors = new(() => ConfigurationManager.Instance.Colors);
+
+        private int _cost;
+
+        public void SetState(State state)
+        {
+            ButtonState = state;
+            switch (state)
+            {
+                case State.Hidden:
+                    Hide();
+                    break;
+                case State.Disabled:
+                    Show();
+                    button.interactable = false;
+                    break;
+                case State.Active:
+                    Show();
+                    button.interactable = true;
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
+
+        public void SetCost(int cost)
+        {
+            _cost = cost;
+            costText.text = cost.ToString();
+        }
+
+        public void Validate(int availableFunds)
+        {
+            var canAfford = availableFunds >= _cost;
+            var color = canAfford ? _colors.Value.FontDark : _colors.Value.Bad;
+            costText.color = color;
+        }
+
+        private void Hide()
+        {
+            canvasGroup.alpha = 0;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        }
+
+        private void Show()
+        {
+            canvasGroup.alpha = 1;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+        }
+    }
+}

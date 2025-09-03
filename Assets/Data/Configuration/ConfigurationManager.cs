@@ -9,16 +9,19 @@ namespace Data.Configuration
 
         [field: SerializeField]
         public GoodsConfig GoodsConfig { get; private set; }
-        
+
         [field: SerializeField]
         public MarketStateConfig MarketStateConfig { get; private set; }
 
         [field: SerializeField]
         public GrowthTrendConfig GrowthTrendConfig { get; private set; }
-        
+
         [field: SerializeField]
         public DevelopmentConfig DevelopmentConfig { get; private set; }
-        
+
+        [field: SerializeField]
+        public PlayerUpgradeConfigData PlayerUpgradeConfigData { get; private set; }
+
         [field: SerializeField]
         public Colors Colors { get; private set; }
 

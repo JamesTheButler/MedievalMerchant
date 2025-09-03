@@ -14,13 +14,12 @@ namespace UI
         {
             _player = Model.Instance.Player;
 
-            //inventoryUi.Bind(_player.Inventory);
-            //inventoryUi.Show();
+            playerInventoryUI.Bind(_player);
         }
 
         private void OnDestroy()
         {
-            //inventoryUi.UnBind();
+            playerInventoryUI.Unbind();
         }
     }
 }

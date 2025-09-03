@@ -1,4 +1,4 @@
-namespace Data
+namespace Data.Trade
 {
     public enum TradeType
     {
