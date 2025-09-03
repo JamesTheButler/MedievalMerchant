@@ -1,16 +1,18 @@
-using AYellowpaper.SerializedCollections;
+using System;
 using UnityEngine;
 
 namespace Data.Configuration
 {
-    [CreateAssetMenu(
-        fileName = "PlayerUpgradeConfigData",
-        menuName = AssetMenu.ConfigDataFolder + "PlayerUpgradeConfigData")]
-    public sealed class PlayerUpgradeConfigData : ScriptableObject
+    [Serializable]
+    public sealed class PlayerUpgradeConfigData
     {
-        [field: SerializeField, SerializedDictionary("Upgrade", "Cost")]
-        public SerializedDictionary<PlayerUpgrade, int> UpgradeCosts { get; private set; }
+        [field: SerializeField]
+        public int Price { get; private set; }
 
-        public PlayerUpgradeProgression ProgressionData { get; } = new();
+        [field: SerializeField]
+        public Tier Tier { get; private set; }
+
+        [field: SerializeField]
+        public int SlotCount { get; private set; }
     }
 }

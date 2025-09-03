@@ -23,12 +23,12 @@ namespace UI
         private Player _player;
         private Inventory _playerInventory;
         private GoodsConfig _goodsConfig;
-        private PlayerUpgradeConfigData _playerUpgradeConfig;
+        private PlayerUpgradeConfig _playerUpgradeConfig;
 
         public void Bind(Player player)
         {
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
-            _playerUpgradeConfig = ConfigurationManager.Instance.PlayerUpgradeConfigData;
+            _playerUpgradeConfig = ConfigurationManager.Instance.PlayerUpgradeConfig;
             _player = player;
             _playerInventory = player.Inventory;
 
@@ -77,10 +77,10 @@ namespace UI
         {
             foreach (var (upgrade, button) in upgradeButtons)
             {
-                var price = _playerUpgradeConfig.UpgradeCosts[upgrade];
-                button.SetCost(price);
+                var upgradeData = _playerUpgradeConfig.InventoryUpgrades[upgrade];
+                button.SetCost(upgradeData.Price);
                 button.SetState(UpgradeButton.State.Disabled);
-                button.OnClick.AddListener(() => UpgradePlayer(upgrade, price));
+                button.OnClick.AddListener(() => UpgradePlayer(upgrade, upgradeData.Price));
 
                 button.Validate(_playerInventory.Funds);
             }

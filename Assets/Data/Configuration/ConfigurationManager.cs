@@ -20,7 +20,7 @@ namespace Data.Configuration
         public DevelopmentConfig DevelopmentConfig { get; private set; }
 
         [field: SerializeField]
-        public PlayerUpgradeConfigData PlayerUpgradeConfigData { get; private set; }
+        public PlayerUpgradeConfig PlayerUpgradeConfig { get; private set; }
 
         [field: SerializeField]
         public Colors Colors { get; private set; }
