@@ -30,7 +30,6 @@ public sealed class GameManager : MonoBehaviour
         _model = Model.Instance;
         var towns = GenerateMap();
         _model.SetTowns(towns);
-        ticker.OnTick += Tick;
     }
 
     private List<Town> GenerateMap()
@@ -47,7 +46,7 @@ public sealed class GameManager : MonoBehaviour
         return towns;
     }
 
-    private void Tick()
+    public void Tick()
     {
         foreach (var town in _model.Towns.Values)
         {

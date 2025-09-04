@@ -1,23 +1,24 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public sealed class GameTicker : MonoBehaviour
 {
-    public event Action OnTick;
+    [SerializeField]
+    private UnityEvent onTick;
 
     [SerializeField]
-    private float tickRateSec = .02f;
+    private float secondsPerTick = .5f;
 
     private float _timer;
 
-    private void Update()
+    private void FixedUpdate()
     {
-        _timer += Time.deltaTime;
+        _timer += Time.fixedDeltaTime;
 
-        while (_timer >= tickRateSec)
+        while (_timer >= secondsPerTick)
         {
-            _timer -= tickRateSec;
-            OnTick?.Invoke();
+            _timer -= secondsPerTick;
+            onTick?.Invoke();
         }
     }
 }

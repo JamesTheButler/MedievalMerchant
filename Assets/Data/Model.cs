@@ -12,6 +12,7 @@ namespace Data
 
         public static Model Instance;
 
+        public Date Date { get; private set; } = new();
         public Player Player { get; private set; }
         public IReadOnlyDictionary<Vector2Int, Town> Towns => _towns;
 
