@@ -25,6 +25,9 @@ namespace UI
         [SerializeField, Required]
         private Button button;
 
+        [SerializeField, Required]
+        private TooltipHandler tooltipHandler;
+
         public State ButtonState { get; private set; }
         public Button.ButtonClickedEvent OnClick => button.onClick;
 
@@ -43,10 +46,13 @@ namespace UI
                 case State.Disabled:
                     Show();
                     button.interactable = false;
+                    tooltipHandler.SetEnabled(true);
+                    tooltipHandler.SetTooltip("Unlock previous upgrades first.");
                     break;
                 case State.Active:
                     Show();
                     button.interactable = true;
+                    tooltipHandler.SetEnabled(false);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }

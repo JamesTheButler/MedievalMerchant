@@ -5,6 +5,7 @@ using Data.Setup;
 using Data.Trade;
 using NaughtyAttributes;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -23,7 +24,13 @@ namespace UI
         private Button buyButton;
 
         [SerializeField, Required]
+        private TooltipHandler buyButtonTooltip;
+
+        [SerializeField, Required]
         private Button sellButton;
+
+        [SerializeField, Required]
+        private TooltipHandler sellButtonTooltip;
 
         [SerializeField, Required]
         private Image marketStateIcon;
@@ -41,6 +48,9 @@ namespace UI
 
         private void Start()
         {
+            buyButtonTooltip = buyButton.gameObject.GetComponent<TooltipHandler>();
+            sellButtonTooltip = sellButton.gameObject.GetComponent<TooltipHandler>();
+
             buyButton.onClick.AddListener(() => TradeInitiated(TradeType.Buy));
             sellButton.onClick.AddListener(() => TradeInitiated(TradeType.Sell));
         }
@@ -70,13 +80,15 @@ namespace UI
         public void CanBuy(TradeResult canBuy)
         {
             buyButton.interactable = canBuy.Success;
-            // TODO: on error: add a tooltip as to why it cannot be bought
+            buyButtonTooltip.SetEnabled(!canBuy.Success);
+            buyButtonTooltip.SetTooltip(canBuy.Error);
         }
 
         public void CanSell(TradeResult canSell)
         {
             sellButton.interactable = canSell.Success;
-            // TODO: on error: add a tooltip as to why it cannot be sold
+            sellButtonTooltip.SetEnabled(!canSell.Success);
+            sellButtonTooltip.SetTooltip(canSell.Error);
         }
 
         public void SetMarketState(MarketState marketState)

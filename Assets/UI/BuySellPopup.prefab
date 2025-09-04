@@ -294,6 +294,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1677446131663535407}
+  - component: {fileID: 8493438834822083739}
   - component: {fileID: 1146195160975712088}
   - component: {fileID: 4121836191449802529}
   - component: {fileID: 3621634657780705479}
@@ -324,6 +325,19 @@ RectTransform:
   m_AnchoredPosition: {x: 175, y: -117.5}
   m_SizeDelta: {x: 75, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8493438834822083739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3149282265182796820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b0d54d24a073ba40b369cd9380b9c69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
 --- !u!222 &1146195160975712088
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -415,6 +429,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 845233280759826495}
+  - component: {fileID: 7308399338766322894}
   - component: {fileID: 5363454809081623297}
   - component: {fileID: 3834149241467900418}
   - component: {fileID: 9032215896422021009}
@@ -445,6 +460,19 @@ RectTransform:
   m_AnchoredPosition: {x: 66, y: -120}
   m_SizeDelta: {x: 75, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7308399338766322894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843390359191213307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b0d54d24a073ba40b369cd9380b9c69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
 --- !u!222 &5363454809081623297
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1066,7 +1094,9 @@ MonoBehaviour:
       m_Calls: []
   goodNameText: {fileID: 3055369061214659180}
   buyButton: {fileID: 9032215896422021009}
+  buyButtonTooltip: {fileID: 7308399338766322894}
   sellButton: {fileID: 3621634657780705479}
+  sellButtonTooltip: {fileID: 8493438834822083739}
   marketStateIcon: {fileID: 7874953209255644984}
   marketStateText: {fileID: 1653797439863139901}
 --- !u!114 &5132515537927709242

@@ -36,7 +36,7 @@ namespace Data.Trade
 
             return canFitGood
                 ? TradeResult.Succeeded()
-                : TradeResult.Failed($"There are no more empty slots for Tier {goodTier}");
+                : TradeResult.Failed($"There are no more empty slots for {goodTier}");
         }
     }
 }
