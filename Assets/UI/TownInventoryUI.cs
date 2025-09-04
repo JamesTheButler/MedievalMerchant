@@ -38,7 +38,7 @@ namespace UI
         private TMP_Text fundsText;
 
         [SerializeField, SerializedDictionary("Tier", "Section")]
-        private SerializedDictionary<Tier, TownInventorySection> inventorySections;
+        private SerializedDictionary<Tier, InventorySection> inventorySections;
 
         private Town _boundTown;
 
@@ -91,7 +91,6 @@ namespace UI
 
         private void BindInventory(Inventory inventory)
         {
-            ResetInventorySections();
             ResetInventorySections();
 
             HideSection(Tier.Tier2);

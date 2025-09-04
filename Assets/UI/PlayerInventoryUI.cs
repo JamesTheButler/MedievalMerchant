@@ -6,16 +6,20 @@ using Data.Setup;
 using Data.Trade;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace UI
 {
     public class PlayerInventoryUI : MonoBehaviour
     {
         [SerializeField]
+        private UnityEvent<InventoryCell> inventoryCellClicked;
+        
+        [SerializeField]
         private TMP_Text fundsText;
 
         [SerializeField, SerializedDictionary("Tier", "Section")]
-        private SerializedDictionary<Tier, PlayerInventorySection> inventorySections;
+        private SerializedDictionary<Tier, InventorySection> inventorySections;
 
         [SerializeField, SerializedDictionary("Upgrade", "Button")]
         private SerializedDictionary<PlayerUpgrade, UpgradeButton> upgradeButtons;
@@ -50,6 +54,13 @@ namespace UI
             _playerInventory.GoodUpdated -= OnGoodUpdated;
 
             _player.UpgradeAdded -= OnPlayerUpgradeAdded;
+            
+            
+            foreach(var section in inventorySections.Values)
+            {
+                section.CellClicked -= InvokeCellClicked;
+                section.CleanUp();
+            }
         }
 
         private void OnPlayerUpgradeAdded(PlayerUpgrade upgrade)
@@ -75,6 +86,12 @@ namespace UI
 
         private void SetUpUpgradeButtons()
         {
+            foreach(var section in inventorySections.Values)
+            {
+                section.Initialize();
+                section.CellClicked += InvokeCellClicked;
+            }
+            
             foreach (var (upgrade, button) in upgradeButtons)
             {
                 var upgradeData = _playerUpgradeConfig.InventoryUpgrades[upgrade];
@@ -97,7 +114,7 @@ namespace UI
         {
             var tier = _goodsConfig.ConfigData[good].Tier;
             var section = inventorySections[tier];
-            section.UpdateGood(good, amount);
+            section.UpdateGood(good, amount, false);
         }
 
         private void OnFundsChanged(int funds)
@@ -116,6 +133,11 @@ namespace UI
 
             _playerInventory.RemoveFunds(price);
             _player.AddUpgrade(upgrade);
+        }
+        
+        private void InvokeCellClicked(InventoryCell cell)
+        {
+            inventoryCellClicked?.Invoke(cell);
         }
     }
 }

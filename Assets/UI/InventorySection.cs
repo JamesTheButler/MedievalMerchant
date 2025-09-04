@@ -7,10 +7,9 @@ using UnityEngine;
 namespace UI
 {
     /// <summary>
-    /// Responsible for a section in the towns inventory. Controls the display of the given goods. Dynamically
-    /// adds and removes inventory cells as needed.
+    /// Responsible for a section of cells in an inventory. Controls the display of the given goods.
     /// </summary>
-    public sealed class TownInventorySection : MonoBehaviour
+    public sealed class InventorySection : MonoBehaviour
     {
         [SerializeField]
         private Transform parent;
@@ -20,6 +19,9 @@ namespace UI
 
         [SerializeField]
         private int minCellCount = 6;
+
+        [SerializeField]
+        private bool resizeDynamically = true;
 
         [SerializeField]
         private int newCellCount = 3;
@@ -60,7 +62,7 @@ namespace UI
             // Find next free cell or create new ones if needed.
             if (!_cellsPerGoods.ContainsKey(good))
             {
-                if (_allCells.All(potentiallyFreeCell => potentiallyFreeCell.HasGood()))
+                if (resizeDynamically && _allCells.All(potentiallyFreeCell => potentiallyFreeCell.HasGood()))
                 {
                     AddNewCells(newCellCount);
                 }
