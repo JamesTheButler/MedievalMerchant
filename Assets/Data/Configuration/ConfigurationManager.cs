@@ -1,4 +1,5 @@
 using Data.Setup;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Data.Configuration
@@ -7,22 +8,22 @@ namespace Data.Configuration
     {
         public static ConfigurationManager Instance;
 
-        [field: SerializeField]
+        [field: SerializeField, Required]
         public GoodsConfig GoodsConfig { get; private set; }
 
-        [field: SerializeField]
+        [field: SerializeField, Required]
         public MarketStateConfig MarketStateConfig { get; private set; }
 
-        [field: SerializeField]
+        [field: SerializeField, Required]
         public GrowthTrendConfig GrowthTrendConfig { get; private set; }
 
-        [field: SerializeField]
+        [field: SerializeField, Required]
         public DevelopmentConfig DevelopmentConfig { get; private set; }
 
-        [field: SerializeField]
+        [field: SerializeField, Required]
         public PlayerUpgradeConfig PlayerUpgradeConfig { get; private set; }
 
-        [field: SerializeField]
+        [field: SerializeField, Required]
         public Colors Colors { get; private set; }
 
         private void Awake()

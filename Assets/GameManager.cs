@@ -2,14 +2,15 @@ using System.Collections.Generic;
 using Data;
 using Data.Setup;
 using Data.Towns;
+using NaughtyAttributes;
 using UnityEngine;
 
 public sealed class GameManager : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, Required]
     private TilemapManager tilemapManager;
 
-    [SerializeField]
+    [SerializeField, Required]
     private GameTicker ticker;
 
     [Header("Map Setup"), SerializeField]

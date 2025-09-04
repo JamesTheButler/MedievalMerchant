@@ -1,4 +1,5 @@
 using System.Collections;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ namespace UI
     // TODO: needs a "reset" or "cancel" method to abort the current animation
     public class SliderAnimator : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField, Required]
         private Slider slider;
 
         [SerializeField]

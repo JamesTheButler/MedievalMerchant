@@ -4,6 +4,7 @@ using Data;
 using Data.Configuration;
 using Data.Setup;
 using Data.Trade;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,7 +16,7 @@ namespace UI
         [SerializeField]
         private UnityEvent<InventoryCell> inventoryCellClicked;
         
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text fundsText;
 
         [SerializeField, SerializedDictionary("Tier", "Section")]

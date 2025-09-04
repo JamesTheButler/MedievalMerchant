@@ -4,6 +4,7 @@ using Data.Configuration;
 using Data.Setup;
 using Data.Towns;
 using Data.Trade;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,25 +13,25 @@ namespace UI
 {
     public sealed class TradeUI : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text goodAmountText;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Image goodIcon;
 
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text coinAmountText;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Button buyButton;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Button sellButton;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Button cancelButton;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Slider amountSlider;
 
         private readonly Lazy<Model> _model = new(() => Model.Instance);

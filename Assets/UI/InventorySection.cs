@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Data;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace UI
@@ -11,10 +12,10 @@ namespace UI
     /// </summary>
     public sealed class InventorySection : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField, Required]
         private Transform parent;
 
-        [SerializeField]
+        [SerializeField, Required]
         private GameObject cellPrefab;
 
         [SerializeField]
@@ -23,7 +24,7 @@ namespace UI
         [SerializeField]
         private bool resizeDynamically = true;
 
-        [SerializeField]
+        [SerializeField, ShowIf(nameof(resizeDynamically))]
         private int newCellCount = 3;
 
         public event Action<InventoryCell> CellClicked;

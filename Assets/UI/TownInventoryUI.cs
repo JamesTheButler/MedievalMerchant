@@ -5,6 +5,7 @@ using Data;
 using Data.Configuration;
 using Data.Towns;
 using Data.Trade;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,23 +19,23 @@ namespace UI
         private UnityEvent<InventoryCell> inventoryCellClicked;
 
         [Header("Header UI Elements")]
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text townNameText;
 
-        [SerializeField]
+        [SerializeField, Required]
         private DevelopmentSlider developmentScore;
 
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text developmentTrendText;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Image developmentTrendIcon;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Button upgradeButton;
 
         [Header("Inventory UI Elements")]
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text fundsText;
 
         [SerializeField, SerializedDictionary("Tier", "Section")]

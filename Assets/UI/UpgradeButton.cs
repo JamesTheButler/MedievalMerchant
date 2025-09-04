@@ -1,5 +1,6 @@
 using System;
 using Data.Configuration;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,13 +16,13 @@ namespace UI
             Active = 2, // button is fully visible and interactable
         }
 
-        [SerializeField]
+        [SerializeField, Required]
         private CanvasGroup canvasGroup;
 
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text costText;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Button button;
 
         public State ButtonState { get; private set; }

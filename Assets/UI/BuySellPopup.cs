@@ -3,6 +3,7 @@ using Data;
 using Data.Configuration;
 using Data.Setup;
 using Data.Trade;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,19 +16,19 @@ namespace UI
         [SerializeField]
         private UnityEvent<Good, TradeType> tradeInitiated;
 
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text goodNameText;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Button buyButton;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Button sellButton;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Image marketStateIcon;
 
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text marketStateText;
 
         private readonly Lazy<MarketStateConfig> _marketStateConfig =

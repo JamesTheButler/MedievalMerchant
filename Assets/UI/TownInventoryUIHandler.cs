@@ -1,11 +1,12 @@
 using Data.Towns;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace UI
 {
     public sealed class TownInventoryUIHandler : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField, Required]
         private TownInventoryUI inventoryUi;
 
         private void Start()

@@ -2,13 +2,14 @@ using System.Linq;
 using Data;
 using Data.Towns;
 using Data.Trade;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace UI
 {
     public sealed class BuySellPopupHandler : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField, Required]
         private BuySellPopup buySellPopup;
 
         [SerializeField]

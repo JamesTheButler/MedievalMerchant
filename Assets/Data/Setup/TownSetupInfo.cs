@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Data.Setup
@@ -8,10 +9,10 @@ namespace Data.Setup
         [field: SerializeField]
         public int InitialFunds { get; private set; }
 
-        [field: SerializeField]
+        [field: SerializeField, Required]
         public ProductionTable Production { get; private set; }
 
-        [field: SerializeField]
+        [field: SerializeField, Required]
         public TownNameGenerator NameGenerator { get; private set; }
     }
 }

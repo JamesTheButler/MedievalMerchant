@@ -1,10 +1,11 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, Required]
     private new Camera camera;
 
     [SerializeField]

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Data;
 using Data.Towns;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -8,16 +9,16 @@ using UnityEngine.Tilemaps;
 
 public sealed class TilemapManager : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, Required]
     private GameManager gameManager;
 
-    [SerializeField]
+    [SerializeField, Required]
     private Tilemap tilemap;
 
-    [SerializeField]
+    [SerializeField, Required]
     private Grid grid;
 
-    [SerializeField]
+    [SerializeField, Required]
     private Tiles tiles;
 
     [SerializeField]

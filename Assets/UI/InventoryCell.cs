@@ -1,6 +1,7 @@
 using System;
 using Data;
 using Data.Configuration;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,16 +15,16 @@ namespace UI
 
         public Good? Good { get; private set; }
 
-        [SerializeField]
+        [SerializeField, Required]
         private Image goodIcon;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Image disabledIcon;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Image productionIcon;
 
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text amountText;
 
         public void SetGood(Good? good)

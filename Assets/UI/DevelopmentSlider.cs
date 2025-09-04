@@ -1,4 +1,5 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,14 +7,14 @@ namespace UI
 {
     public class DevelopmentSlider : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField, Required]
         private Slider slider;
 
         // TODO: behavior is buggy when switching between towns
         //[SerializeField]
         //private SliderAnimator sliderAnimator;
 
-        [SerializeField]
+        [SerializeField, Required]
         private GameObject handle;
 
         [SerializeField]

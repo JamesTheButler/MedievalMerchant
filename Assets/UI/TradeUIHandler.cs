@@ -1,13 +1,14 @@
 using Data;
 using Data.Towns;
 using Data.Trade;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace UI
 {
     public sealed class TradeUIHandler : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField, Required]
         private TradeUI tradeUI;
 
         private void Start()
