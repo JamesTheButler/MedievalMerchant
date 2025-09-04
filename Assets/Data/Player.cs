@@ -10,6 +10,7 @@ namespace Data
 
         public Inventory Inventory { get; }
         public List<PlayerUpgrade> Upgrades { get; } = new();
+        public PlayerLocation Location { get; } = new();
 
         private readonly SlotBasedInventoryPolicy _inventoryPolicy;
 

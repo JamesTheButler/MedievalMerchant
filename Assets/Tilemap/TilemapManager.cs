@@ -31,6 +31,8 @@ namespace Tilemap
         [SerializeField]
         private UnityEvent onGroundClicked;
 
+        private Model _model;
+        
         private Vector2Int? _selectedCoordinate;
 
         private const int GroundZIndex = 0;
@@ -43,7 +45,8 @@ namespace Tilemap
 
         private void Start()
         {
-            foreach (var town in Model.Instance.Towns.Values)
+            _model = Model.Instance;
+            foreach (var town in _model.Towns.Values)
             {
                 town.TierChanged += _ => UpdateTown(town);
             }
@@ -94,12 +97,22 @@ namespace Tilemap
             {
                 LeftClick();
             }
+            if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
+            {
+                RightClick();
+            }
+        }
+
+        private void RightClick()
+        {
+            var clickedCell = GetCellOnMousePosition();
+
+            _model.Player.Location.CurrentTown = _model.Towns.GetValueOrDefault(clickedCell);
         }
 
         private void LeftClick()
         {
-            var mouseWorldPos = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
-            var cellPos = grid.WorldToCell(mouseWorldPos).XY() - _origin;
+            var cellPos = GetCellOnMousePosition();
 
             if (_selectedCoordinate != null)
             {
@@ -108,7 +121,7 @@ namespace Tilemap
                 _selectedCoordinate = null;
             }
 
-            if (Model.Instance.Towns.TryGetValue(cellPos, out var town))
+            if (_model.Towns.TryGetValue(cellPos, out var town))
             {
                 var pos = cellPos + _origin;
                 _selectedCoordinate = pos;
@@ -119,6 +132,12 @@ namespace Tilemap
             {
                 onGroundClicked?.Invoke();
             }
+        }
+
+        private Vector2Int GetCellOnMousePosition()
+        {
+            var mouseWorldPos = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
+            return grid.WorldToCell(mouseWorldPos).XY() - _origin;
         }
     }
 }

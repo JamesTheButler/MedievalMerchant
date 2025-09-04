@@ -26,7 +26,6 @@ namespace UI
         private void Start()
         {
             Reset();
-
             Selection.Instance.TownSelected += _ => { Reset(); };
         }
 
@@ -59,6 +58,8 @@ namespace UI
             // can buy and sell?
             OnPlayerGoodUpdated(_good, _playerInventory.Get(_good));
             OnTownGoodUpdated(_good, _townInventory.Get(_good));
+            _player.Location.TownEntered += _ => ValidateButtons(); // TODO: need to unbind properly
+            _player.Location.TownExited += _ => ValidateButtons(); // TODO: need to unbind properly
             _playerInventory.GoodUpdated += OnPlayerGoodUpdated;
             _townInventory.GoodUpdated += OnTownGoodUpdated;
 
@@ -87,10 +88,9 @@ namespace UI
             if (_good != good)
                 return;
 
-            var canBuy = _tradeValidator.Validate(TradeType.Buy, good, 1);
-            buySellPopup.CanBuy(canBuy);
             var marketState = _marketStateManager.GetMarketState(good);
             buySellPopup.SetMarketState(marketState);
+            ValidateBuyButton();
         }
 
         private void OnPlayerGoodUpdated(Good good, int amount)
@@ -98,8 +98,25 @@ namespace UI
             if (_good != good)
                 return;
 
-            var tradeResult = _tradeValidator.Validate(TradeType.Sell, good, 1);
-            buySellPopup.CanSell(tradeResult);
+            ValidateSellButton();
+        }
+
+        private void ValidateButtons()
+        {
+            ValidateBuyButton();
+            ValidateSellButton();
+        }
+
+        private void ValidateBuyButton()
+        {
+            var canBuy = _tradeValidator.Validate(TradeType.Buy, _good, 1);
+            buySellPopup.CanBuy(canBuy);
+        }
+
+        private void ValidateSellButton()
+        {
+            var canSell = _tradeValidator.Validate(TradeType.Sell, _good, 1);
+            buySellPopup.CanSell(canSell);
         }
     }
 }

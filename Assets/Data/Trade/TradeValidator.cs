@@ -15,6 +15,12 @@ namespace Data.Trade
 
         public TradeResult Validate(TradeType tradeType, Good good, int amount)
         {
+            if (_town == null)
+                return TradeResult.Failed("Cannot complete the trade without a town.");
+
+            if (_town != _player.Location.CurrentTown)
+                return TradeResult.Failed($"You are not currently in {_town.Name}");
+
             var buyingInventory = tradeType == TradeType.Buy ? _player.Inventory : _town.Inventory;
             var sellingInventory = tradeType == TradeType.Sell ? _player.Inventory : _town.Inventory;
 
