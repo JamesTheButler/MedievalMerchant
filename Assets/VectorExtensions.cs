@@ -6,7 +6,7 @@ public static class VectorExtensions
     {
         return new Vector2Int(vector.x, vector.y);
     }
-    
+
     public static Vector3 Clamp(Vector3 self, Bounds bounds)
     {
         return new Vector3(
@@ -14,5 +14,10 @@ public static class VectorExtensions
             Mathf.Clamp(self.y, bounds.min.y, bounds.max.y),
             Mathf.Clamp(self.z, bounds.min.z, bounds.max.z)
         );
+    }
+
+    public static Vector3Int FromXY(this Vector2Int vector, int z = 0)
+    {
+        return new Vector3Int(vector.x, vector.y, z);
     }
 }
