@@ -31,9 +31,6 @@ namespace UI
         [SerializeField, Required]
         private Image developmentTrendIcon;
 
-        [SerializeField, Required]
-        private Button upgradeButton;
-
         [Header("Inventory UI Elements")]
         [SerializeField, Required]
         private TMP_Text fundsText;
@@ -64,12 +61,21 @@ namespace UI
 
             BindTown(town);
 
-            upgradeButton.onClick.AddListener(() => _boundTown.Upgrade());
-
             // makes sure that the UI is properly inflated after dynamic inventory creation
             Canvas.ForceUpdateCanvases();
         }
 
+        public void Upgrade()
+        {
+            _boundTown.Upgrade();
+        }
+
+        public void TravelHere()
+        {
+            // TODO: we should hide the Travel button if the player is in town
+            Model.Instance.Player.Location.CurrentTown = _boundTown;
+        }
+        
         private void BindTown(Town town)
         {
             _boundTown = town;
@@ -112,8 +118,6 @@ namespace UI
 
         public void Unbind()
         {
-            upgradeButton.onClick.RemoveAllListeners();
-
             UnbindTown();
             UnbindInventory();
         }
