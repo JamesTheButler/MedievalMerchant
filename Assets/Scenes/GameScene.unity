@@ -4342,6 +4342,7 @@ GameObject:
   - component: {fileID: 1986165994}
   - component: {fileID: 1986165991}
   - component: {fileID: 1986165993}
+  - component: {fileID: 1986165995}
   m_Layer: 0
   m_Name: The Everything Manager
   m_TagString: Untagged
@@ -4379,8 +4380,8 @@ MonoBehaviour:
   onTick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1986165994}
-        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+      - m_Target: {fileID: 1986165995}
+        m_TargetAssemblyTypeName: Data.TownTicker, Assembly-CSharp
         m_MethodName: Tick
         m_Mode: 1
         m_Arguments:
@@ -4474,6 +4475,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 138fa5ff4ffcfbe48939e9447e89503b, type: 2}
   - {fileID: 11400000, guid: 229c97ad26039814ebdd09437bd69cbd, type: 2}
   - {fileID: 11400000, guid: 913889fd7195689419b0232a006dddea, type: 2}
+--- !u!114 &1986165995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986165988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa8d10805ed14a55b2573d6580c37e4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1996096075 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8153988726765515731, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}

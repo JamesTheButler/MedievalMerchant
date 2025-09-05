@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Data;
-using Data.Configuration;
 using Data.Setup;
 using Data.Towns;
 using NaughtyAttributes;
@@ -9,7 +8,7 @@ using Tilemap;
 using UnityEngine;
 using UnityEngine.Events;
 
-public sealed class LevelManager : MonoBehaviour
+public sealed class LevelLoader : MonoBehaviour
 {
     [SerializeField]
     private UnityEvent levelLoaded;
@@ -38,13 +37,5 @@ public sealed class LevelManager : MonoBehaviour
         _model.Initialize(player, towns, flagMap);
 
         levelLoaded.Invoke();
-    }
-
-    public void Tick()
-    {
-        foreach (var town in _model.Towns.Values)
-        {
-            town.Tick();
-        }
     }
 }

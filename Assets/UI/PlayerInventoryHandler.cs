@@ -9,13 +9,10 @@ namespace UI
         [SerializeField, Required]
         private PlayerInventoryUI playerInventoryUI;
 
-        private Player _player;
-
         private void Start()
         {
-            _player = Model.Instance.Player;
-
-            playerInventoryUI.Bind(_player);
+            var player = Model.Instance.Player;
+            playerInventoryUI.Bind(player);
         }
 
         private void OnDestroy()
