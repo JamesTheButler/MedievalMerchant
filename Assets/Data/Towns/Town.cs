@@ -20,6 +20,7 @@ namespace Data.Towns
         public event Action<Tier> TierChanged;
         public event Action<float> DevelopmentScoreChanged;
         public event Action<float> DevelopmentTrendChanged;
+        public event Action<GrowthTrend> GrowthTrendChanged;
 
         public Inventory Inventory { get; }
         public string Name { get; }
@@ -29,10 +30,12 @@ namespace Data.Towns
 
         public float DevelopmentScore { get; private set; }
         public float DevelopmentTrend { get; private set; }
+        public GrowthTrend GrowthTrend { get; private set; }
 
         public IEnumerable<Good> Production => _producer.ProducedGoods;
 
         private DevelopmentTable _developmentTable;
+        private GrowthTrendConfig _growthConfig;
 
         public Town(TownSetupInfo setupInfo, Vector2Int gridLocation, Vector2 worldLocation)
         {
@@ -41,6 +44,7 @@ namespace Data.Towns
             GridLocation = gridLocation;
             WorldLocation = worldLocation;
             _developmentConfig = ConfigurationManager.Instance.DevelopmentConfig;
+            _growthConfig = ConfigurationManager.Instance.GrowthTrendConfig;
             _producer = new Producer(setupInfo.Production);
 
             Name = setupInfo.NameGenerator.GenerateName();
@@ -133,8 +137,19 @@ namespace Data.Towns
             }
 
             DevelopmentScore = Mathf.Clamp(DevelopmentScore, 0, 100);
+
+            UpdateGrowthTrend();
             DevelopmentTrendChanged?.Invoke(DevelopmentTrend);
             DevelopmentScoreChanged?.Invoke(DevelopmentScore);
+        }
+
+        private void UpdateGrowthTrend()
+        {
+            var newGrowthTrend = _growthConfig.GetTrend(DevelopmentTrend);
+            if (GrowthTrend == newGrowthTrend) return;
+
+            GrowthTrend = newGrowthTrend;
+            GrowthTrendChanged?.Invoke(GrowthTrend);
         }
 
         private void UpdateDevelopmentTable()

@@ -1,12 +1,13 @@
 using Data;
 using Data.Towns;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Map.Overlays
 {
     public sealed class SelectionOverlay : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField, Required]
         private GameObject visuals;
 
         private Selection _selection;

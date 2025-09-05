@@ -66,6 +66,17 @@ namespace UI
             Canvas.ForceUpdateCanvases();
         }
 
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+
         public void Upgrade()
         {
             _boundTown.Upgrade();
@@ -86,6 +97,7 @@ namespace UI
             _boundTown.TierChanged += TownUpgrade;
             _boundTown.DevelopmentScoreChanged += UpdateDevelopmentScore;
             _boundTown.DevelopmentTrendChanged += UpdateDevelopmentTrend;
+            _boundTown.GrowthTrendChanged += UpdateGrowthTrend;
 
             // upgrade each tier until current tier is reached
             for (var i = Tier.Tier1; i <= _boundTown.Tier; i++)
@@ -95,6 +107,7 @@ namespace UI
 
             UpdateDevelopmentScore(_boundTown.DevelopmentScore);
             UpdateDevelopmentTrend(_boundTown.DevelopmentTrend);
+            UpdateGrowthTrend(_boundTown.GrowthTrend);
         }
 
         private void BindInventory(Inventory inventory)
@@ -130,6 +143,7 @@ namespace UI
             _boundTown.TierChanged -= TownUpgrade;
             _boundTown.DevelopmentScoreChanged -= UpdateDevelopmentScore;
             _boundTown.DevelopmentTrendChanged -= UpdateDevelopmentTrend;
+            _boundTown.GrowthTrendChanged -= UpdateGrowthTrend;
             _boundTown = null;
         }
 
@@ -169,20 +183,11 @@ namespace UI
         {
             var sign = trend > 0 ? "+" : "";
             developmentTrendText.text = $"{sign}{trend}%";
-
-            var growthConfig = _growthConfig.Value;
-            var growthTrend = growthConfig.GetTrend(trend);
-            developmentTrendIcon.sprite = growthConfig.ConfigData[growthTrend].Icon;
         }
 
-        public void Show()
+        private void UpdateGrowthTrend(GrowthTrend obj)
         {
-            gameObject.SetActive(true);
-        }
-
-        public void Hide()
-        {
-            gameObject.SetActive(false);
+            developmentTrendIcon.sprite = _growthConfig.Value.ConfigData[obj].Icon;
         }
 
         private void HideSection(Tier tier)

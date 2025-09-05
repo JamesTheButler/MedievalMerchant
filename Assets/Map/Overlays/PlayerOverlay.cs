@@ -1,15 +1,16 @@
 using Data;
 using Data.Towns;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Map.Overlays
 {
     public sealed class PlayerOverlay : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField, Required]
         private GameObject worldOverlay;
 
-        [SerializeField]
+        [SerializeField, Required]
         private GameObject townOverlay;
 
         private PlayerLocation _playerLocation;
