@@ -94,20 +94,17 @@ namespace UI
 
             BindInventory(_boundTown.Inventory);
 
-            _boundTown.TierChanged += TownUpgrade;
-            _boundTown.DevelopmentScoreChanged += UpdateDevelopmentScore;
-            _boundTown.DevelopmentTrendChanged += UpdateDevelopmentTrend;
-            _boundTown.GrowthTrendChanged += UpdateGrowthTrend;
-
+            // don't invoke directly as we want to go through all tiers manually in the right order
+            _boundTown.Tier.Observe(TownUpgrade, false); 
             // upgrade each tier until current tier is reached
             for (var i = Tier.Tier1; i <= _boundTown.Tier; i++)
             {
                 TownUpgrade(i);
             }
-
-            UpdateDevelopmentScore(_boundTown.DevelopmentScore);
-            UpdateDevelopmentTrend(_boundTown.DevelopmentTrend);
-            UpdateGrowthTrend(_boundTown.GrowthTrend);
+            
+            _boundTown.DevelopmentScore.Observe(UpdateDevelopmentScore);
+            _boundTown.DevelopmentTrend.Observe(UpdateDevelopmentTrend);
+            _boundTown.GrowthTrend.Observe(UpdateGrowthTrend);
         }
 
         private void BindInventory(Inventory inventory)
@@ -140,10 +137,10 @@ namespace UI
         {
             if (_boundTown == null) return;
 
-            _boundTown.TierChanged -= TownUpgrade;
-            _boundTown.DevelopmentScoreChanged -= UpdateDevelopmentScore;
-            _boundTown.DevelopmentTrendChanged -= UpdateDevelopmentTrend;
-            _boundTown.GrowthTrendChanged -= UpdateGrowthTrend;
+            _boundTown.Tier.StopObserving(TownUpgrade);
+            _boundTown.DevelopmentScore.StopObserving(UpdateDevelopmentScore);
+            _boundTown.DevelopmentTrend.StopObserving(UpdateDevelopmentTrend);
+            _boundTown.GrowthTrend.StopObserving(UpdateGrowthTrend);
             _boundTown = null;
         }
 

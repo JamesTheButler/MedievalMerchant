@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common;
 using Data.Configuration;
 using Data.Setup;
 using Data.Trade;
+using Map.Overlays;
 using UnityEngine;
 
 namespace Data.Towns
@@ -13,29 +15,24 @@ namespace Data.Towns
         private readonly DevelopmentConfig _developmentConfig;
         private readonly Producer _producer;
         private readonly TierBasedInventoryPolicy _inventoryPolicy;
+        private readonly GrowthTrendConfig _growthConfig;
 
         private const int StartGoodMultiplier = 25;
         private const int BaseFundsPerTick = 20;
 
-        public event Action<Tier> TierChanged;
-        public event Action<float> DevelopmentScoreChanged;
-        public event Action<float> DevelopmentTrendChanged;
-        public event Action<GrowthTrend> GrowthTrendChanged;
-
         public Inventory Inventory { get; }
         public string Name { get; }
-        public Tier Tier { get; private set; }
         public Vector2Int GridLocation { get; }
         public Vector2 WorldLocation { get; }
 
-        public float DevelopmentScore { get; private set; }
-        public float DevelopmentTrend { get; private set; }
-        public GrowthTrend GrowthTrend { get; private set; }
+        public Observable<Tier> Tier { get; } = new();
+        public Observable<float> DevelopmentScore { get;  } = new();
+        public Observable<float> DevelopmentTrend { get;  } = new();
+        public Observable<GrowthTrend> GrowthTrend { get; } = new();
 
         public IEnumerable<Good> Production => _producer.ProducedGoods;
 
         private DevelopmentTable _developmentTable;
-        private GrowthTrendConfig _growthConfig;
 
         public Town(TownSetupInfo setupInfo, Vector2Int gridLocation, Vector2 worldLocation)
         {
@@ -49,9 +46,8 @@ namespace Data.Towns
 
             Name = setupInfo.NameGenerator.GenerateName();
 
-
-            Tier = Tier.Tier1;
-            _inventoryPolicy.SetTier(Tier.Tier1);
+            Tier.Value = Data.Tier.Tier1;
+            _inventoryPolicy.SetTier(Data.Tier.Tier1);
             UpdateDevelopmentTable();
 
             // initial funds and goods
@@ -72,7 +68,7 @@ namespace Data.Towns
 
         public void Upgrade()
         {
-            var oldTier = Tier;
+            var oldTier = Tier.Value;
             IncreaseTier();
 
             Debug.Log($"{Name} upgraded to {Tier}");
@@ -82,14 +78,13 @@ namespace Data.Towns
             {
                 UpdateDevelopmentTable();
                 _inventoryPolicy.SetTier(Tier);
-                TierChanged?.Invoke(Tier);
             }
         }
 
         private void Produce()
         {
             // update production multiplier
-            var multiplier = DevelopmentScore switch
+            var multiplier = DevelopmentScore.Value switch
             {
                 < 20 => 0.5f,
                 > 80 => 2f,
@@ -99,7 +94,7 @@ namespace Data.Towns
 
             // if development trend is positive, add funds
             var trendFundMultiplier = DevelopmentTrend > 0 ? DevelopmentTrend : 1f;
-            Inventory.AddFunds((int)(BaseFundsPerTick * (int)Tier * trendFundMultiplier));
+            Inventory.AddFunds((int)(BaseFundsPerTick * (int)Tier.Value * trendFundMultiplier));
 
             var production = _producer.Produce();
             foreach (var (good, amount) in production)
@@ -119,28 +114,31 @@ namespace Data.Towns
         private void Develop()
         {
             var goodsPerTier = Inventory.GoodsPerTier();
-            DevelopmentTrend = _developmentTable.GetDevelopmentTrend(
-                goodsPerTier[Tier.Tier1],
-                goodsPerTier[Tier.Tier2],
-                goodsPerTier[Tier.Tier3]) * _developmentConfig.DevelopmentMultiplier;
+            
+            var newDevTrend = _developmentTable.GetDevelopmentTrend(
+                goodsPerTier[Data.Tier.Tier1],
+                goodsPerTier[Data.Tier.Tier2],
+                goodsPerTier[Data.Tier.Tier3]) * _developmentConfig.DevelopmentMultiplier;
 
-            if (DevelopmentScore <= 0 && DevelopmentTrend < 0)
+            if (DevelopmentScore <= 0 && newDevTrend < 0)
             {
-                DevelopmentTrend = 0;
+                newDevTrend = 0;
             }
 
-            DevelopmentScore += DevelopmentTrend;
-            if (DevelopmentScore >= 100 && Tier <= Tier.Tier2)
+            var newDevScore = DevelopmentScore.Value + newDevTrend;
+            
+            if (newDevScore >= 100 && Tier <= Data.Tier.Tier2)
             {
                 Upgrade();
-                DevelopmentScore = 0;
+                newDevScore = 0;
             }
 
-            DevelopmentScore = Mathf.Clamp(DevelopmentScore, 0, 100);
+            newDevScore = Mathf.Clamp(newDevScore, 0, 100);
 
+            DevelopmentTrend.Value = newDevTrend;
+            DevelopmentScore.Value = newDevScore;
+            
             UpdateGrowthTrend();
-            DevelopmentTrendChanged?.Invoke(DevelopmentTrend);
-            DevelopmentScoreChanged?.Invoke(DevelopmentScore);
         }
 
         private void UpdateGrowthTrend()
@@ -148,8 +146,7 @@ namespace Data.Towns
             var newGrowthTrend = _growthConfig.GetTrend(DevelopmentTrend);
             if (GrowthTrend == newGrowthTrend) return;
 
-            GrowthTrend = newGrowthTrend;
-            GrowthTrendChanged?.Invoke(GrowthTrend);
+            GrowthTrend.Value = newGrowthTrend;
         }
 
         private void UpdateDevelopmentTable()
@@ -159,7 +156,7 @@ namespace Data.Towns
 
         private void IncreaseTier()
         {
-            Tier = (Tier)Math.Min((int)Tier + 1, (int)Tier.Tier3);
+            Tier.Value = (Tier)Math.Min((int)Tier.Value + 1, (int)Data.Tier.Tier3);
         }
     }
 }

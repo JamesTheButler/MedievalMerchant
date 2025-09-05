@@ -1,3 +1,4 @@
+using System;
 using Data;
 using Data.Configuration;
 using Data.Towns;
@@ -22,13 +23,13 @@ namespace Map.Overlays
 
             transform.localPosition = town.WorldLocation + model.TileFlagMap.Origin;
 
-            town.GrowthTrendChanged += OnGrowthTrendChanged;
+            _town.GrowthTrend.Observe(OnGrowthTrendChanged);
             OnGrowthTrendChanged(town.GrowthTrend);
         }
 
         public void Unbind()
         {
-            _town.GrowthTrendChanged -= OnGrowthTrendChanged;
+            _town.GrowthTrend.StopObserving(OnGrowthTrendChanged);
         }
 
         private void OnGrowthTrendChanged(GrowthTrend trend)

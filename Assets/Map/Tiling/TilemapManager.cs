@@ -33,7 +33,7 @@ namespace Map.Tiling
             _model = Model.Instance;
             foreach (var town in _model.Towns.Values)
             {
-                town.TierChanged += _ => UpdateTown(town);
+                town.Tier.Observe(_ => UpdateTown(town), false);
             }
 
             _tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
@@ -55,7 +55,7 @@ namespace Map.Tiling
 
         private void UpdateTown(Town town)
         {
-            var tile = town.Tier switch
+            var tile = town.Tier.Value switch
             {
                 Tier.Tier1 => tiles.TownTileT1,
                 Tier.Tier2 => tiles.TownTileT2,
