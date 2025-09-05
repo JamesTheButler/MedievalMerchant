@@ -1,6 +1,7 @@
 using Data.Configuration;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = nameof(LevelInfo), menuName = AssetMenu.ConfigDataFolder + nameof(LevelInfo))]
 public sealed class LevelInfo : ScriptableObject
@@ -11,5 +12,5 @@ public sealed class LevelInfo : ScriptableObject
     [field: SerializeField]
     public int StartPlayerFunds { get; private set; }
     
-    public UnityEngine.Tilemaps.Tilemap Map => mapPrefab.GetComponent<UnityEngine.Tilemaps.Tilemap>();
+    public Tilemap Map => mapPrefab.GetComponent<Tilemap>();
 }

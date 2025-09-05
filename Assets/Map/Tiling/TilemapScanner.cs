@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-namespace Tilemap
+namespace Map.Tiling
 {
     public static class TilemapScanner
     {
-        public static TileFlagMap Scan(UnityEngine.Tilemaps.Tilemap tilemap)
+        public static TileFlagMap Scan(Tilemap tilemap)
         {
             tilemap.CompressBounds();
             var size = tilemap.cellBounds.size; //- new Vector3Int(2, 2, 0); // subtract frame width

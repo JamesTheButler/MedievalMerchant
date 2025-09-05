@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tilemap
+namespace Map.Tiling
 {
     public static class TileFlagMapExtension
     {

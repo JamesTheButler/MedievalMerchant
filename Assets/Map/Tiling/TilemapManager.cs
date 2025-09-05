@@ -5,8 +5,9 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Tilemaps;
 
-namespace Tilemap
+namespace Map.Tiling
 {
     public sealed class TilemapManager : MonoBehaviour
     {
@@ -23,7 +24,7 @@ namespace Tilemap
         private UnityEvent onGroundClicked;
 
         private Model _model;
-        private UnityEngine.Tilemaps.Tilemap _tilemap;
+        private Tilemap _tilemap;
 
         private const int TownZIndex = 3;
 
@@ -35,7 +36,7 @@ namespace Tilemap
                 town.TierChanged += _ => UpdateTown(town);
             }
 
-            _tilemap = grid.gameObject.GetComponentInChildren<UnityEngine.Tilemaps.Tilemap>();
+            _tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
         }
 
         // TODO: should use input system

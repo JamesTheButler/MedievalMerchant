@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Data.Towns;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Data.Travel
 {
     public class RoadTraveler : MonoBehaviour
     {
         private const int RoadZIndex = 1;
-        public UnityEngine.Tilemaps.Tilemap roads;
+        public Tilemap roads;
         public float speedUnitsPerSec = 4f; // tune to your tile/world scale
         public float cornerCut = 0.2f; // 0..0.45 tiles, small value to smooth turns
 

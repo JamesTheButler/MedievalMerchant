@@ -3,7 +3,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Tilemap
+namespace Map.Tiling
 {
     [CreateAssetMenu(fileName = "Tiles", menuName = AssetMenu.RootFolder + "Tiles")]
     public sealed class Tiles : ScriptableObject

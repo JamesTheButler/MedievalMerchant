@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Tilemap
+namespace Map.Tiling
 {
     public class TileInfo : MonoBehaviour
     {

@@ -2,7 +2,7 @@ using Data;
 using Data.Towns;
 using UnityEngine;
 
-namespace Tilemap.Overlays
+namespace Map.Overlays
 {
     public sealed class SelectionOverlay : MonoBehaviour
     {

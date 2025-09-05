@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Data.Travel
 {
@@ -15,7 +16,7 @@ namespace Data.Travel
             Vector3Int.down
         };
 
-        public static RoadGraph Build(UnityEngine.Tilemaps.Tilemap roads)
+        public static RoadGraph Build(Tilemap roads)
         {
             var graph = new RoadGraph();
             var bounds = roads.cellBounds;

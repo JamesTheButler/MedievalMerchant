@@ -1,4 +1,4 @@
-namespace Tilemap
+namespace Map.Tiling
 {
     public enum TileType
     {
