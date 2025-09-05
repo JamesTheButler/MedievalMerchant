@@ -11,12 +11,6 @@ namespace Tilemap
     public sealed class TilemapManager : MonoBehaviour
     {
         [SerializeField, Required]
-        private GameManager gameManager;
-
-        [SerializeField, Required]
-        private UnityEngine.Tilemaps.Tilemap tilemap;
-
-        [SerializeField, Required]
         private Grid grid;
 
         [SerializeField, Required]
@@ -26,55 +20,36 @@ namespace Tilemap
         private UnityEvent<Town> onTownClicked;
 
         [SerializeField]
-        private UnityEvent<float> onMapGenerated;
-
-        [SerializeField]
         private UnityEvent onGroundClicked;
 
         private Model _model;
-        
-        private Vector2Int? _selectedCoordinate;
+        private UnityEngine.Tilemaps.Tilemap _tilemap;
 
-        private const int GroundZIndex = 0;
-        private const int TownZIndex = 5;
-        private const int SelectionZIndex = 10;
-        private const int FrameZIndex = 15;
+        private const int TownZIndex = 3;
 
-        private int _size;
-        private Vector2Int _origin;
-
-        private void Start()
+        public void Initialize()
         {
             _model = Model.Instance;
             foreach (var town in _model.Towns.Values)
             {
                 town.TierChanged += _ => UpdateTown(town);
             }
+
+            _tilemap = grid.gameObject.GetComponentInChildren<UnityEngine.Tilemaps.Tilemap>();
         }
 
-        public void InitTilemap(int size, List<Vector2Int> townLocations)
+        // TODO: should use input system
+        private void Update()
         {
-            _origin = new Vector2Int(-(size / 2), -(size / 2));
-
-            for (var x = -1; x < size + 1; x++)
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
-                for (var y = -1; y < size + 1; y++)
-                {
-                    var pos = _origin + new Vector2Int(x, y);
-                    tilemap.SetTile(new Vector3Int(pos.x, pos.y, FrameZIndex), tiles.FrameTile2);
-
-                    if (x < 0 || x >= size || y < 0 || y >= size) continue;
-
-                    tilemap.SetTile(new Vector3Int(pos.x, pos.y, GroundZIndex), tiles.GrassTile);
-
-                    if (townLocations.Contains(new Vector2Int(x, y)))
-                    {
-                        tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), tiles.TownTileT1);
-                    }
-                }
+                LeftClick();
             }
 
-            onMapGenerated?.Invoke(size);
+            if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
+            {
+                RightClick();
+            }
         }
 
         private void UpdateTown(Town town)
@@ -87,20 +62,8 @@ namespace Tilemap
                 _ => tiles.TownTileT3
             };
 
-            var pos = _origin + town.Location;
-            tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), tile);
-        }
-
-        private void Update()
-        {
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-            {
-                LeftClick();
-            }
-            if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
-            {
-                RightClick();
-            }
+            var pos = _model.TileFlagMap.Origin + town.Location;
+            _tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), tile);
         }
 
         private void RightClick()
@@ -114,18 +77,20 @@ namespace Tilemap
         {
             var cellPos = GetCellOnMousePosition();
 
-            if (_selectedCoordinate != null)
-            {
-                var pos = new Vector3Int(_selectedCoordinate.Value.x, _selectedCoordinate.Value.y, SelectionZIndex);
-                tilemap.SetTile(pos, null);
-                _selectedCoordinate = null;
-            }
+            // TODO: re-implement selection  without using tiles
+            //if (_selectedCoordinate != null)
+            //{
+            //    var pos = new Vector3Int(_selectedCoordinate.Value.x, _selectedCoordinate.Value.y, SelectionZIndex);
+            //    tilemap.SetTile(pos, null);
+            //    _selectedCoordinate = null;
+            //}
 
             if (_model.Towns.TryGetValue(cellPos, out var town))
             {
-                var pos = cellPos + _origin;
-                _selectedCoordinate = pos;
-                tilemap.SetTile(new Vector3Int(pos.x, pos.y, SelectionZIndex), tiles.SelectionTile);
+                // TODO: re-implement selection  without using tiles
+                //var pos = cellPos + _origin;
+                //_selectedCoordinate = pos;
+                //tilemap.SetTile(new Vector3Int(pos.x, pos.y, SelectionZIndex), tiles.SelectionTile);
                 onTownClicked?.Invoke(town);
             }
             else
@@ -137,7 +102,7 @@ namespace Tilemap
         private Vector2Int GetCellOnMousePosition()
         {
             var mouseWorldPos = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
-            return grid.WorldToCell(mouseWorldPos).XY() - _origin;
+            return grid.WorldToCell(mouseWorldPos).XY() - _model.TileFlagMap.Origin;
         }
     }
 }

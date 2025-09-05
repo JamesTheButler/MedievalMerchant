@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public static class CollectionExtensions
 {
@@ -9,7 +11,17 @@ public static class CollectionExtensions
             return default;
         }
 
-        var index = UnityEngine.Random.Range(0, source.Count);
+        var index = Random.Range(0, source.Count);
         return source[index];
+    }
+
+    public static string PrettyPrint<TKey, TValue>(this Dictionary<TKey, TValue> dict)
+    {
+        return "{\n" + string.Join("\n", dict.Select(kvp => $"{kvp.Key}: {kvp.Value}")) + "\n}";
+    }
+
+    public static T GetRandom<T>(this IList<T> list)
+    {
+        return list[Random.Range(0, list.Count)];
     }
 }

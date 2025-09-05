@@ -1,4 +1,5 @@
 using System;
+using Data;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -36,8 +37,10 @@ public class CameraManager : MonoBehaviour
         camera.orthographic = true;
     }
 
-    public void FitMapSize(float mapSize)
+    public void FitMapSize()
     {
+        // TODO: camera size should fit both dimensions. this depends on the aspect ratio & account for ui 
+        var mapSize = Model.Instance.TileFlagMap.Size.y;
         camera.orthographicSize = mapSize * .5f + startupPadding;
         _maxSize = camera.orthographicSize * 1.5f;
 
