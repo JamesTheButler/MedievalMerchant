@@ -1,4 +1,3 @@
-using System;
 using Data;
 using Data.Configuration;
 using Data.Towns;

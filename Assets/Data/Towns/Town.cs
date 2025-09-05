@@ -5,7 +5,6 @@ using Common;
 using Data.Configuration;
 using Data.Setup;
 using Data.Trade;
-using Map.Overlays;
 using UnityEngine;
 
 namespace Data.Towns

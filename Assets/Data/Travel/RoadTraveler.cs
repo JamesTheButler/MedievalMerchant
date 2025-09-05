@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Common;
 using Data.Towns;
 using UnityEngine;
 using UnityEngine.Tilemaps;
