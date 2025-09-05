@@ -9,11 +9,11 @@ namespace Data.Trade
 {
     public sealed class Inventory
     {
-        public event Action<int> FundsUpdated;
         public event Action<Good, int> GoodUpdated;
 
+        public Observable<int> Funds { get; } = new();
+        
         public IInventoryPolicy InventoryPolicy { get; }
-        public int Funds { get; private set; }
         public IReadOnlyDictionary<Good, int> Goods => _goods;
 
         private readonly Lazy<GoodsConfig> _goodsInfoManager = new(() => ConfigurationManager.Instance.GoodsConfig);
@@ -27,14 +27,12 @@ namespace Data.Trade
 
         public void AddFunds(int fundChange)
         {
-            Funds += fundChange;
-            FundsUpdated?.Invoke(Funds);
+            Funds.Value += fundChange;
         }
 
         public void RemoveFunds(int fundChange)
         {
-            Funds -= fundChange;
-            FundsUpdated?.Invoke(Funds);
+            Funds.Value -= fundChange;
         }
 
         public bool HasFunds(int funds)

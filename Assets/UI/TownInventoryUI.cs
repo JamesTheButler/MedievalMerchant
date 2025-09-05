@@ -77,7 +77,6 @@ namespace UI
             gameObject.SetActive(false);
         }
 
-
         public void Upgrade()
         {
             _boundTown.Upgrade();
@@ -96,13 +95,13 @@ namespace UI
             BindInventory(_boundTown.Inventory);
 
             // don't invoke directly as we want to go through all tiers manually in the right order
-            _boundTown.Tier.Observe(TownUpgrade, false); 
+            _boundTown.Tier.Observe(TownUpgrade, false);
             // upgrade each tier until current tier is reached
             for (var i = Tier.Tier1; i <= _boundTown.Tier; i++)
             {
                 TownUpgrade(i);
             }
-            
+
             _boundTown.DevelopmentScore.Observe(UpdateDevelopmentScore);
             _boundTown.DevelopmentTrend.Observe(UpdateDevelopmentTrend);
             _boundTown.GrowthTrend.Observe(UpdateGrowthTrend);
@@ -116,14 +115,12 @@ namespace UI
             HideSection(Tier.Tier3);
 
             inventory.GoodUpdated += OnGoodUpdated;
-            inventory.FundsUpdated += OnFundsUpdated;
+            inventory.Funds.Observe(OnFundsUpdated);
 
             foreach (var (good, amount) in inventory.Goods)
             {
                 OnGoodUpdated(good, amount);
             }
-
-            OnFundsUpdated(inventory.Funds);
 
             _boundInventory = inventory;
         }
@@ -154,7 +151,7 @@ namespace UI
             if (_boundInventory == null) return;
 
             _boundInventory.GoodUpdated -= OnGoodUpdated;
-            _boundInventory.FundsUpdated -= OnFundsUpdated;
+            _boundInventory.Funds.StopObserving(OnFundsUpdated);
             _boundInventory = null;
         }
 

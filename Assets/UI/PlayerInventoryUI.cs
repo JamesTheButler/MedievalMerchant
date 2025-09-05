@@ -15,7 +15,7 @@ namespace UI
     {
         [SerializeField]
         private UnityEvent<InventoryCell> inventoryCellClicked;
-        
+
         [SerializeField, Required]
         private TMP_Text fundsText;
 
@@ -51,13 +51,13 @@ namespace UI
 
         public void Unbind()
         {
-            _playerInventory.FundsUpdated -= OnFundsChanged;
+            _playerInventory.Funds.StopObserving(OnFundsChanged);
             _playerInventory.GoodUpdated -= OnGoodUpdated;
 
             _player.UpgradeAdded -= OnPlayerUpgradeAdded;
-            
-            
-            foreach(var section in inventorySections.Values)
+
+
+            foreach (var section in inventorySections.Values)
             {
                 section.CellClicked -= InvokeCellClicked;
                 section.CleanUp();
@@ -75,10 +75,9 @@ namespace UI
 
         private void SetUpInventory()
         {
+            _playerInventory.Funds.Observe(OnFundsChanged);
             _playerInventory.GoodUpdated += OnGoodUpdated;
-            _playerInventory.FundsUpdated += OnFundsChanged;
 
-            OnFundsChanged(_playerInventory.Funds);
             foreach (var (good, amount) in _playerInventory.Goods)
             {
                 OnGoodUpdated(good, amount);
@@ -87,12 +86,12 @@ namespace UI
 
         private void SetUpUpgradeButtons()
         {
-            foreach(var section in inventorySections.Values)
+            foreach (var section in inventorySections.Values)
             {
                 section.Initialize();
                 section.CellClicked += InvokeCellClicked;
             }
-            
+
             foreach (var (upgrade, button) in upgradeButtons)
             {
                 var upgradeData = _playerUpgradeConfig.InventoryUpgrades[upgrade];
@@ -135,7 +134,7 @@ namespace UI
             _playerInventory.RemoveFunds(price);
             _player.AddUpgrade(upgrade);
         }
-        
+
         private void InvokeCellClicked(InventoryCell cell)
         {
             inventoryCellClicked?.Invoke(cell);

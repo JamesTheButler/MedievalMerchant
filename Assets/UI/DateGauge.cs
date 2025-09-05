@@ -17,17 +17,14 @@ namespace UI
 
         private void Start()
         {
-            _date.Value.DayChanged += OnDayChanged;
-            _date.Value.YearChanged += OnYearChanged;
-            
-            OnDayChanged(_date.Value.Day);
-            OnYearChanged(_date.Value.Year);
+            _date.Value.Day.Observe(OnDayChanged);
+            _date.Value.Year.Observe(OnYearChanged);
         }
 
         private void OnDestroy()
         {
-            _date.Value.DayChanged -= OnDayChanged;
-            _date.Value.YearChanged -= OnYearChanged;
+            _date.Value.Day.StopObserving(OnDayChanged);
+            _date.Value.Year.StopObserving(OnYearChanged);
         }
 
         private void OnYearChanged(int year)

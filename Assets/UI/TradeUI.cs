@@ -85,7 +85,7 @@ namespace UI
 
             amountSlider.onValueChanged.RemoveListener(TradeSliderUpdate);
             _sellingInventory.GoodUpdated -= OnSellingInventoryGoodUpdated;
-            _buyingInventory.FundsUpdated -= OnBuyingInventoryFundsUpdated;
+            _buyingInventory.Funds.StopObserving(OnBuyingInventoryFundsUpdated);
 
             _activeButton.onClick.RemoveAllListeners();
             cancelButton.onClick.RemoveAllListeners();
@@ -129,9 +129,8 @@ namespace UI
             _sellingInventory = _tradeType == TradeType.Sell ? player : town;
 
             _sellingInventory.GoodUpdated += OnSellingInventoryGoodUpdated;
-            _buyingInventory.FundsUpdated += OnBuyingInventoryFundsUpdated;
+            _buyingInventory.Funds.Observe(OnBuyingInventoryFundsUpdated);
 
-            _buyerFunds = _buyingInventory.Funds;
             _sellerGoodAmount = _sellingInventory.Get(_good);
         }
 

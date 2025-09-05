@@ -20,7 +20,7 @@ namespace Data
             _currentTick++;
             if (_currentTick > ticksPerDay)
             {
-                _date.Day++;
+                _date.IncrementDay();
                 _currentTick = 0;
             }
         }

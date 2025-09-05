@@ -1,41 +1,29 @@
-using System;
+using Common;
 
 namespace Data
 {
     public sealed class Date
     {
-        private int _year = 1;
-        private int _day = 1;
+        private readonly Observable<int> _year = new(1);
+        private readonly Observable<int> _day = new(1);
 
-        public event Action<int> YearChanged;
-        public event Action<int> DayChanged;
+        public IReadOnlyObservable<int> Year => _year;
+        public IReadOnlyObservable<int> Day => _day;
 
-        public int Year
+        public void SetDay(int day)
         {
-            get => _year;
-            private set
+            switch (day)
             {
-                _year = value;
-                YearChanged?.Invoke(_year);
-            }
-        }
-
-        public int Day
-        {
-            get => _day;
-            set
-            {
-                if (value > 365)
-                {
-                    _day = 1;
-                    Year++;
-                }
-                else
-                {
-                    _day = value;
-                }
-
-                DayChanged?.Invoke(_day);
+                case < 1:
+                    _day.Value = 1;
+                    break;
+                case > 365:
+                    _day.Value = 1;
+                    _year.Value++;
+                    break;
+                default:
+                    _day.Value = day;
+                    break;
             }
         }
     }
