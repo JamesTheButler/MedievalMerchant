@@ -41,8 +41,8 @@ public sealed class LevelLoader : MonoBehaviour
 
         var startTown = towns.GetRandom();
         player.Location.CurrentTown = startTown;
-        player.Location.WorldLocation = startTown.WorldLocation;
-        
+        player.Location.WorldLocation.Value = startTown.WorldLocation;
+
         levelLoaded.Invoke();
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Data;
 using Data.Towns;
 using NaughtyAttributes;
@@ -23,10 +24,16 @@ namespace Map.Overlays
 
             _playerLocation.TownEntered += OnTownEntered;
             _playerLocation.TownExited += OnTownExited;
-            _playerLocation.WorldLocationChanged += OnWorldLocationChanged;
+            _playerLocation.WorldLocation.Observe(OnWorldLocationChanged);
 
             OnTownEntered(_playerLocation.CurrentTown);
-            OnWorldLocationChanged(_playerLocation.WorldLocation);
+        }
+
+        private void OnDestroy()
+        {
+            _playerLocation.TownEntered -= OnTownEntered;
+            _playerLocation.TownExited -= OnTownExited;
+            _playerLocation.WorldLocation.StopObserving(OnWorldLocationChanged);
         }
 
         private void OnWorldLocationChanged(Vector2 worldLocation)

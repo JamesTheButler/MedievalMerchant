@@ -1,4 +1,5 @@
 using System;
+using Common;
 using Data.Towns;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -9,7 +10,8 @@ namespace Data
     {
         public event Action<Town> TownEntered;
         public event Action<Town> TownExited;
-        public event Action<Vector2> WorldLocationChanged;
+
+        public Observable<Vector2> WorldLocation { get; } = new();
 
         [CanBeNull]
         public Town CurrentTown
@@ -26,19 +28,7 @@ namespace Data
             }
         }
 
-        public Vector2 WorldLocation
-        {
-            get => _worldLocation;
-            set
-            {
-                _worldLocation = value;
-                WorldLocationChanged?.Invoke(_worldLocation);
-            }
-        }
-
         [CanBeNull]
         private Town _currentTown;
-
-        private Vector2 _worldLocation;
     }
 }
