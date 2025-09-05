@@ -5,7 +5,7 @@ using Data.Towns;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Data.Travel
+namespace Map.Pathfinding
 {
     public class RoadTraveler : MonoBehaviour
     {
@@ -42,38 +42,42 @@ namespace Data.Travel
         {
             if (_graph.IsNode(origin)) return origin;
             // simple spiral search up to radius 8
-            const int R = 8;
-            for (var r = 1; r <= R; r++)
+            const int maxRadius = 8;
+            for (var radius = 1; radius <= maxRadius; radius++)
             {
-                for (var dx = -r; dx <= r; dx++)
+                for (var dx = -radius; dx <= radius; dx++)
                 {
-                    int dy1 = r, dy2 = -r;
-                    if (_graph.IsNode(new Vector3Int(origin.x + dx, origin.y + dy1)))
-                        return new(origin.x + dx, origin.y + dy1);
+                    var dy2 = -radius;
+                    
+                    if (_graph.IsNode(new Vector3Int(origin.x + dx, origin.y + radius)))
+                        return new Vector3Int(origin.x + dx, origin.y + radius);
                     if (_graph.IsNode(new Vector3Int(origin.x + dx, origin.y + dy2)))
-                        return new(origin.x + dx, origin.y + dy2);
+                        return new Vector3Int(origin.x + dx, origin.y + dy2);
                 }
 
-                for (var dy = -r + 1; dy <= r - 1; dy++)
+                for (var dy = -radius + 1; dy <= radius - 1; dy++)
                 {
-                    int dx1 = r, dx2 = -r;
-                    if (_graph.IsNode(new Vector3Int(origin.x + dx1, origin.y + dy)))
-                        return new(origin.x + dx1, origin.y + dy);
+                    var dx2 = -radius;
+                    if (_graph.IsNode(new Vector3Int(origin.x + radius, origin.y + dy)))
+                        return new Vector3Int(origin.x + radius, origin.y + dy);
                     if (_graph.IsNode(new Vector3Int(origin.x + dx2, origin.y + dy)))
-                        return new(origin.x + dx2, origin.y + dy);
+                        return new Vector3Int(origin.x + dx2, origin.y + dy);
                 }
             }
 
             return origin; // fallback
         }
 
-        IEnumerator MoveAlongPath(List<Vector3Int> path)
+        private IEnumerator MoveAlongPath(List<Vector3Int> path)
         {
             if (path == null || path.Count == 0) yield break;
 
             // Convert to world points (center of each cell)
             var pts = new List<Vector3>(path.Count);
-            foreach (var c in path) pts.Add(roads.GetCellCenterWorld(c));
+            foreach (var c in path)
+            {
+                pts.Add(roads.GetCellCenterWorld(c));
+            }
 
             // Optional: corner smoothing by shaving a bit off entry/exit of corners
             var smoothed = SmoothCorners(pts, cornerCut);
@@ -99,7 +103,7 @@ namespace Data.Travel
         }
 
         // Creates short "chamfers" at turns so motion doesn't hard-stop then turn
-        List<Vector3> SmoothCorners(List<Vector3> pts, float cut)
+        private static List<Vector3> SmoothCorners(List<Vector3> pts, float cut)
         {
             if (pts.Count <= 2 || cut <= 0f) return pts;
 

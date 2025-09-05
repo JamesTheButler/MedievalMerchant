@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Data.Travel
+namespace Map.Pathfinding
 {
     public class PriorityQueue<T, TPriority> where TPriority : IComparable<TPriority>
     {

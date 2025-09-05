@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Data.Travel
+namespace Map.Pathfinding
 {
     public static class RoadGraphBuilder
     {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Data.Travel
+namespace Map.Pathfinding
 {
     public static class AStar
     {
