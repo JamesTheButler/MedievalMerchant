@@ -14,7 +14,7 @@ namespace Data.Setup
 
         public string GenerateName()
         {
-            return prefixes.PickRandom() + suffixes.PickRandom();
+            return prefixes.GetRandom() + suffixes.GetRandom();
         }
     }
 }

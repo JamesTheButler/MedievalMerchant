@@ -39,8 +39,9 @@ namespace UI
         private SerializedDictionary<Tier, InventorySection> inventorySections;
 
         private Town _boundTown;
-
         private Inventory _boundInventory;
+
+        private readonly Lazy<Model> _model = new(() => Model.Instance);
 
         private readonly Lazy<GrowthTrendConfig> _growthConfig =
             new(() => ConfigurationManager.Instance.GrowthTrendConfig);
@@ -72,10 +73,10 @@ namespace UI
 
         public void TravelHere()
         {
-            // TODO: we should hide the Travel button if the player is in town
-            Model.Instance.Player.Location.CurrentTown = _boundTown;
+            // TODO: we should hide/disable the Travel button if the player is in town
+            _model.Value.Player.Location.CurrentTown = _boundTown;
         }
-        
+
         private void BindTown(Town town)
         {
             _boundTown = town;

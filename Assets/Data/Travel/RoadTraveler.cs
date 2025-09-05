@@ -21,8 +21,8 @@ namespace Data.Travel
 
         public void TravelBetweenTowns(Town from, Town to)
         {
-            var startCell = roads.WorldToCell(from.Location.FromXY(RoadZIndex));
-            var endCell = roads.WorldToCell(to.Location.FromXY(RoadZIndex));
+            var startCell = from.GridLocation.FromXY(RoadZIndex);
+            var endCell = to.GridLocation.FromXY(RoadZIndex);
 
             // Snap to nearest road if the town is slightly off-road
             startCell = NearestRoadCell(startCell);

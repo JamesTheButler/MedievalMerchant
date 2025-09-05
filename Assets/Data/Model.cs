@@ -19,7 +19,7 @@ namespace Data
 
         public void Initialize(Player player, IEnumerable<Town> towns, TileFlagMap tileFlagMap)
         {
-            _towns = towns.ToDictionary(town => town.Location, town => town);
+            _towns = towns.ToDictionary(town => town.GridLocation, town => town);
             Player = player;
             TileFlagMap = tileFlagMap;
         }

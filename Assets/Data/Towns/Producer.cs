@@ -38,15 +38,15 @@ namespace Data.Towns
             switch (tier)
             {
                 case Tier.Tier1:
-                    _producedGoods.Add(_productionTable.Tier1Goods.PickRandom());
+                    _producedGoods.Add(_productionTable.Tier1Goods.GetRandom());
                     break;
                 case Tier.Tier2:
-                    _producedGoods.Add(_productionTable.Tier1Goods.Except(_producedGoods).ToList().PickRandom());
-                    _producedGoods.Add(_productionTable.Tier2Goods.Except(_producedGoods).ToList().PickRandom());
+                    _producedGoods.Add(_productionTable.Tier1Goods.Except(_producedGoods).ToList().GetRandom());
+                    _producedGoods.Add(_productionTable.Tier2Goods.Except(_producedGoods).ToList().GetRandom());
                     break;
                 case Tier.Tier3:
-                    _producedGoods.Add(_productionTable.Tier2Goods.Except(_producedGoods).ToList().PickRandom());
-                    _producedGoods.Add(_productionTable.Tier3Goods.PickRandom());
+                    _producedGoods.Add(_productionTable.Tier2Goods.Except(_producedGoods).ToList().GetRandom());
+                    _producedGoods.Add(_productionTable.Tier3Goods.GetRandom());
                     break;
                 default:
                     Debug.LogError($"Tier {tier} is not supported");

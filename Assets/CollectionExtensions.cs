@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class CollectionExtensions
 {
-    public static T PickRandom<T>(this IList<T> source)
+    public static T GetRandom<T>(this IList<T> source)
     {
         if (source == null || source.Count == 0)
         {
@@ -18,10 +18,5 @@ public static class CollectionExtensions
     public static string PrettyPrint<TKey, TValue>(this Dictionary<TKey, TValue> dict)
     {
         return "{\n" + string.Join("\n", dict.Select(kvp => $"{kvp.Key}: {kvp.Value}")) + "\n}";
-    }
-
-    public static T GetRandom<T>(this IList<T> list)
-    {
-        return list[Random.Range(0, list.Count)];
     }
 }

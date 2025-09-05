@@ -24,7 +24,8 @@ namespace Data.Towns
         public Inventory Inventory { get; }
         public string Name { get; }
         public Tier Tier { get; private set; }
-        public Vector2Int Location { get; }
+        public Vector2Int GridLocation { get; }
+        public Vector2 WorldLocation { get; }
 
         public float DevelopmentScore { get; private set; }
         public float DevelopmentTrend { get; private set; }
@@ -33,11 +34,12 @@ namespace Data.Towns
 
         private DevelopmentTable _developmentTable;
 
-        public Town(TownSetupInfo setupInfo, Vector2Int location)
+        public Town(TownSetupInfo setupInfo, Vector2Int gridLocation, Vector2 worldLocation)
         {
             _inventoryPolicy = new TierBasedInventoryPolicy();
 
-            Location = location;
+            GridLocation = gridLocation;
+            WorldLocation = worldLocation;
             _developmentConfig = ConfigurationManager.Instance.DevelopmentConfig;
             _producer = new Producer(setupInfo.Production);
 

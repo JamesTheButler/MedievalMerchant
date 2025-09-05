@@ -31,11 +31,17 @@ public sealed class LevelLoader : MonoBehaviour
         var tilemap = Instantiate(levelInfo.Map, tileGrid.gameObject.transform);
         var flagMap = TilemapScanner.Scan(tilemap);
         var townPositions = flagMap.GetAllCells(TileType.Town);
-        var towns = townPositions.Select(pos => new Town(townInfos.GetRandom(), pos));
+        var towns = townPositions
+            .Select(pos => new Town(townInfos.GetRandom(), pos, tileGrid.CellToWorld(pos.FromXY())))
+            .ToList();
         var player = new Player(levelInfo.StartPlayerFunds);
 
         _model.Initialize(player, towns, flagMap);
 
+        var startTown = towns.GetRandom();
+        player.Location.CurrentTown = startTown;
+        player.Location.WorldLocation = startTown.WorldLocation;
+        
         levelLoaded.Invoke();
     }
 }
