@@ -8,9 +8,11 @@ using UnityEngine;
 
 namespace Map.Pathfinding
 {
+    // TODO: this is not generic, but it should be. anything that can walk on roads should be able to use this
     public sealed class RoadTraveler : MonoBehaviour
     {
-        public float cornerCut = 0.2f; // 0..0.45 tiles, small value to smooth turns
+        [SerializeField, Range(0, 0.45f)]
+        public float smoothing = 0.2f;
 
         [SerializeField]
         private Grid tileGrid;
@@ -32,14 +34,16 @@ namespace Map.Pathfinding
 
         public void TravelTo(Town town)
         {
-            if (town == Location.CurrentTown)
+            if (town == Location.CurrentTown || town == null)
                 return;
 
             _town = town;
             var startCell = tileGrid.WorldToCell(Location.WorldLocation.Value).XY();
             var endCell = town.GridLocation;
 
-            // Snap to nearest road if the town is slightly off-road
+            // BUG: when changing between target towns mid-travel, we get buggy-ness from this.
+            //   we'd want to continue wherever we are right now, if we are already on a road tile
+
             startCell = NearestRoadCell(startCell);
             endCell = NearestRoadCell(endCell);
 
@@ -96,7 +100,7 @@ namespace Map.Pathfinding
             }
 
             // Optional: corner smoothing by shaving a bit off entry/exit of corners
-            var smoothed = SmoothCorners(pts, cornerCut);
+            var smoothed = SmoothCorners(pts, smoothing);
 
             // Move
             _playLocation.Value.WorldLocation.Value = smoothed[0];
