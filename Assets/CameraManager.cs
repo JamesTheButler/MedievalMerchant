@@ -27,7 +27,7 @@ public class CameraManager : MonoBehaviour
 
     private float _maxSize = 10;
     private Vector2 _lastMousePosition;
-    private bool _isClicked;
+    private bool _isPanning;
 
     private Bounds _bounds;
 
@@ -64,7 +64,7 @@ public class CameraManager : MonoBehaviour
         var oldMousePosition = _lastMousePosition;
         _lastMousePosition = newMousePosition;
 
-        if (!_isClicked) return;
+        if (!_isPanning) return;
 
         var delta = oldMousePosition - newMousePosition;
         Pan(delta * mousePanSpeed);
@@ -77,9 +77,9 @@ public class CameraManager : MonoBehaviour
         Pan(delta * keyboardPanSpeed);
     }
 
-    public void OnClick(InputAction.CallbackContext context)
+    public void InitiateOrAbortPan(InputAction.CallbackContext context)
     {
-        _isClicked = context.ReadValueAsButton();
+        _isPanning = context.ReadValueAsButton();
     }
 
     private void Pan(Vector2 delta)

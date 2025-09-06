@@ -19,6 +19,9 @@ namespace UI
         [SerializeField]
         private UnityEvent<InventoryCell> inventoryCellClicked;
 
+        [SerializeField]
+        private UnityEvent<Town> travelButtonClicked;
+
         [Header("Header UI Elements")]
         [SerializeField, Required]
         private TMP_Text townNameText;
@@ -84,8 +87,7 @@ namespace UI
 
         public void TravelHere()
         {
-            // TODO: we should hide/disable the Travel button if the player is in town
-            _model.Value.Player.Location.CurrentTown = _boundTown;
+            travelButtonClicked?.Invoke(_boundTown);
         }
 
         private void BindTown(Town town)

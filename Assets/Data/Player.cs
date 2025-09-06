@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Common;
 using Data.Trade;
+using UnityEditor;
 
 namespace Data
 {
@@ -8,9 +10,11 @@ namespace Data
     {
         public event Action<PlayerUpgrade> UpgradeAdded;
 
-        public Inventory Inventory { get; }
         public List<PlayerUpgrade> Upgrades { get; } = new();
         public PlayerLocation Location { get; } = new();
+        public Observable<float> MovementSpeed { get; } = new(1);
+
+        public Inventory Inventory { get; }
 
         private readonly SlotBasedInventoryPolicy _inventoryPolicy;
 

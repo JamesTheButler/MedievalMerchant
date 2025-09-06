@@ -40,7 +40,7 @@ namespace Map.Overlays
         {
             if (_playerLocation.CurrentTown != null) return;
 
-            gameObject.transform.position = worldLocation + _origin;
+            gameObject.transform.localPosition = worldLocation + _origin;
         }
 
         private void OnTownEntered(Town town)

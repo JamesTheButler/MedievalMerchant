@@ -1,36 +1,49 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Common;
+using Data;
 using Data.Towns;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Map.Pathfinding
 {
-    public class RoadTraveler : MonoBehaviour
+    public sealed class RoadTraveler : MonoBehaviour
     {
-        private const int RoadZIndex = 1;
-        public Tilemap roads;
-        public float speedUnitsPerSec = 4f; // tune to your tile/world scale
         public float cornerCut = 0.2f; // 0..0.45 tiles, small value to smooth turns
 
-        private RoadGraph _graph;
+        [SerializeField]
+        private Grid tileGrid;
+
+        private readonly Lazy<Model> _model = new(() => Model.Instance);
+
+        private Lazy<RoadGraph> _graph;
+        private Lazy<PlayerLocation> _playLocation;
+
+        private PlayerLocation Location => _model.Value.Player.Location;
+
+        private Town _town;
 
         private void Awake()
         {
-            _graph = RoadGraphBuilder.Build(roads);
+            _graph = new Lazy<RoadGraph>(() => RoadGraphBuilder.Build(_model.Value.TileFlagMap));
+            _playLocation = new Lazy<PlayerLocation>(() => _model.Value.Player.Location);
         }
 
-        public void TravelBetweenTowns(Town from, Town to)
+        public void TravelTo(Town town)
         {
-            var startCell = from.GridLocation.FromXY(RoadZIndex);
-            var endCell = to.GridLocation.FromXY(RoadZIndex);
+            if (town == Location.CurrentTown)
+                return;
+
+            _town = town;
+            var startCell = tileGrid.WorldToCell(Location.WorldLocation.Value).XY();
+            var endCell = town.GridLocation;
 
             // Snap to nearest road if the town is slightly off-road
             startCell = NearestRoadCell(startCell);
             endCell = NearestRoadCell(endCell);
 
-            if (AStar.FindPath(_graph, startCell, endCell, out var path))
+            if (AStar.FindPath(_graph.Value, startCell, endCell, out var path))
             {
                 StopAllCoroutines(); // cancel any current travel
             }
@@ -38,68 +51,76 @@ namespace Map.Pathfinding
             StartCoroutine(MoveAlongPath(path));
         }
 
-        Vector3Int NearestRoadCell(Vector3Int origin)
+        private Vector2Int NearestRoadCell(Vector2Int cell)
         {
-            if (_graph.IsNode(origin)) return origin;
+            var graph = _graph.Value;
+            if (graph.IsNode(cell))
+                return cell;
+
             // simple spiral search up to radius 8
             const int maxRadius = 8;
-            for (var radius = 1; radius <= maxRadius; radius++)
+            for (var radius = 0; radius <= maxRadius; radius++)
             {
                 for (var dx = -radius; dx <= radius; dx++)
                 {
                     var dy2 = -radius;
-                    
-                    if (_graph.IsNode(new Vector3Int(origin.x + dx, origin.y + radius)))
-                        return new Vector3Int(origin.x + dx, origin.y + radius);
-                    if (_graph.IsNode(new Vector3Int(origin.x + dx, origin.y + dy2)))
-                        return new Vector3Int(origin.x + dx, origin.y + dy2);
+
+                    if (graph.IsNode(new Vector2Int(cell.x + dx, cell.y + radius)))
+                        return new Vector2Int(cell.x + dx, cell.y + radius);
+                    if (graph.IsNode(new Vector2Int(cell.x + dx, cell.y + dy2)))
+                        return new Vector2Int(cell.x + dx, cell.y + dy2);
                 }
 
                 for (var dy = -radius + 1; dy <= radius - 1; dy++)
                 {
                     var dx2 = -radius;
-                    if (_graph.IsNode(new Vector3Int(origin.x + radius, origin.y + dy)))
-                        return new Vector3Int(origin.x + radius, origin.y + dy);
-                    if (_graph.IsNode(new Vector3Int(origin.x + dx2, origin.y + dy)))
-                        return new Vector3Int(origin.x + dx2, origin.y + dy);
+                    if (graph.IsNode(new Vector2Int(cell.x + radius, cell.y + dy)))
+                        return new Vector2Int(cell.x + radius, cell.y + dy);
+                    if (graph.IsNode(new Vector2Int(cell.x + dx2, cell.y + dy)))
+                        return new Vector2Int(cell.x + dx2, cell.y + dy);
                 }
             }
 
-            return origin; // fallback
+            return cell; // fallback
         }
 
-        private IEnumerator MoveAlongPath(List<Vector3Int> path)
+        private IEnumerator MoveAlongPath(List<Vector2Int> path)
         {
             if (path == null || path.Count == 0) yield break;
 
             // Convert to world points (center of each cell)
             var pts = new List<Vector3>(path.Count);
-            foreach (var c in path)
+            foreach (var cell in path)
             {
-                pts.Add(roads.GetCellCenterWorld(c));
+                pts.Add(tileGrid.CellToWorld(cell.FromXY()));
             }
 
             // Optional: corner smoothing by shaving a bit off entry/exit of corners
             var smoothed = SmoothCorners(pts, cornerCut);
 
             // Move
-            var t = transform;
-            t.position = smoothed[0];
+            _playLocation.Value.WorldLocation.Value = smoothed[0];
+            _playLocation.Value.CurrentTown = null;
+
             for (var i = 1; i < smoothed.Count; i++)
             {
                 var a = smoothed[i - 1];
                 var b = smoothed[i];
                 var dist = Vector3.Distance(a, b);
-                var dur = dist / Mathf.Max(0.01f, speedUnitsPerSec);
+                var dur = dist / Mathf.Max(0.01f, _model.Value.Player.MovementSpeed);
                 var elapsed = 0f;
                 while (elapsed < dur)
                 {
                     elapsed += Time.deltaTime;
                     var u = Mathf.Clamp01(elapsed / dur);
-                    t.position = Vector3.Lerp(a, b, u);
+                    _playLocation.Value.WorldLocation.Value = Vector3.Lerp(a, b, u);
                     yield return null;
                 }
             }
+
+            // we arrived
+            _playLocation.Value.CurrentTown = _town;
+            _town = null;
         }
 
         // Creates short "chamfers" at turns so motion doesn't hard-stop then turn
@@ -115,8 +136,8 @@ namespace Map.Pathfinding
                 var curr = pts[i];
                 var next = pts[i + 1];
 
-                var v1 = (curr - prev);
-                var v2 = (next - curr);
+                var v1 = curr - prev;
+                var v2 = next - curr;
 
                 if (v1.sqrMagnitude < 1e-6f || v2.sqrMagnitude < 1e-6f ||
                     Vector3.Dot(v1.normalized, v2.normalized) < -0.999f)

@@ -5,12 +5,13 @@ namespace Common
     public sealed class Observable<T> : IReadOnlyObservable<T>
     {
         private event Action<T> ValueChanged;
+
         public T Value
         {
             get => _value;
             set
             {
-                if (_value.Equals(value)) return;
+                if (_value?.Equals(value) ?? false) return;
 
                 _value = value;
                 ValueChanged?.Invoke(value);

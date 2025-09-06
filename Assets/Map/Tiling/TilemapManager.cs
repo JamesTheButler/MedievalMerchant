@@ -22,6 +22,9 @@ namespace Map.Tiling
         private UnityEvent<Town> onTownClicked;
 
         [SerializeField]
+        private UnityEvent<Town> onTownRightClicked;
+
+        [SerializeField]
         private UnityEvent onGroundClicked;
 
         private Model _model;
@@ -71,8 +74,8 @@ namespace Map.Tiling
         private void RightClick()
         {
             var clickedCell = GetCellOnMousePosition();
-
-            _model.Player.Location.CurrentTown = _model.Towns.GetValueOrDefault(clickedCell);
+            var town = _model.Towns.GetValueOrDefault(clickedCell);
+            onTownRightClicked?.Invoke(town);
         }
 
         private void LeftClick()

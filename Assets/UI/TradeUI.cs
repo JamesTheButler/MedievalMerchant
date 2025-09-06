@@ -65,8 +65,8 @@ namespace UI
             _goodBasePrice = (int)_goodConfigData.BasePrice;
             goodIcon.sprite = _goodConfigData.Icon;
 
-            SetUpInventories();
             SetUpButtons();
+            SetUpInventories();
 
             SetAmount(0);
             amountSlider.minValue = 0;

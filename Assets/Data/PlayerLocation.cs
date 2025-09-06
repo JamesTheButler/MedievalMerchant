@@ -11,6 +11,7 @@ namespace Data
         public event Action<Town> TownEntered;
         public event Action<Town> TownExited;
 
+        public Observable<Town> Town { get; } = new();
         public Observable<Vector2> WorldLocation { get; } = new();
 
         [CanBeNull]
@@ -21,10 +22,8 @@ namespace Data
             {
                 _currentTown = value;
 
-                var action = value == null ? TownExited : TownEntered;
+                var action = _currentTown == null ? TownExited : TownEntered;
                 action?.Invoke(_currentTown);
-
-                _currentTown = value;
             }
         }
 

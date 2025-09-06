@@ -5,14 +5,14 @@ namespace Map.Pathfinding
 {
     public static class AStar
     {
-        public static bool FindPath(RoadGraph g, Vector3Int start, Vector3Int goal, out List<Vector3Int> path)
+        public static bool FindPath(RoadGraph g, Vector2Int start, Vector2Int goal, out List<Vector2Int> path)
         {
             path = null;
             if (!g.IsNode(start) || !g.IsNode(goal)) return false;
 
-            var open = new PriorityQueue<Vector3Int, float>();
-            var cameFrom = new Dictionary<Vector3Int, Vector3Int>();
-            var gScore = new Dictionary<Vector3Int, float> { [start] = 0f };
+            var open = new PriorityQueue<Vector2Int, float>();
+            var cameFrom = new Dictionary<Vector2Int, Vector2Int>();
+            var gScore = new Dictionary<Vector2Int, float> { [start] = 0f };
 
             open.Enqueue(start, Heuristic(start, goal));
 
@@ -41,14 +41,14 @@ namespace Map.Pathfinding
             return false;
         }
 
-        private static float Heuristic(Vector3Int a, Vector3Int b)
+        private static float Heuristic(Vector2Int a, Vector2Int b)
         {
             return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
         }
 
-        private static List<Vector3Int> Reconstruct(Dictionary<Vector3Int, Vector3Int> cameFrom, Vector3Int current)
+        private static List<Vector2Int> Reconstruct(Dictionary<Vector2Int, Vector2Int> cameFrom, Vector2Int current)
         {
-            var list = new List<Vector3Int> { current };
+            var list = new List<Vector2Int> { current };
             while (cameFrom.TryGetValue(current, out var prev))
             {
                 current = prev;
