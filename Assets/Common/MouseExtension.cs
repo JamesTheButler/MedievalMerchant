@@ -1,13 +1,16 @@
 using UnityEngine.InputSystem;
 
-public static class MouseExtension
+namespace Common
 {
-    public static bool WasAnyKeyPressedThisFrame(this Mouse mouse)
+    public static class MouseExtension
     {
-        return Mouse.current.leftButton.wasPressedThisFrame ||
-               Mouse.current.rightButton.wasPressedThisFrame ||
-               Mouse.current.middleButton.wasPressedThisFrame ||
-               Mouse.current.forwardButton.wasPressedThisFrame ||
-               Mouse.current.backButton.wasPressedThisFrame;
+        public static bool WasAnyKeyPressedThisFrame(this Mouse mouse)
+        {
+            return mouse.leftButton.wasPressedThisFrame ||
+                   mouse.rightButton.wasPressedThisFrame ||
+                   mouse.middleButton.wasPressedThisFrame ||
+                   mouse.forwardButton.wasPressedThisFrame ||
+                   mouse.backButton.wasPressedThisFrame;
+        }
     }
 }

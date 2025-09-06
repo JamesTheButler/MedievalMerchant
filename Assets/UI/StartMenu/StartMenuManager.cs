@@ -1,3 +1,4 @@
+using Common;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -34,7 +35,7 @@ namespace UI.StartMenu
 
         private void Update()
         {
-            if (Keyboard.current.anyKey.wasPressedThisFrame)
+            if (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.WasAnyKeyPressedThisFrame())
             {
                 OnAnyKey();
             }
