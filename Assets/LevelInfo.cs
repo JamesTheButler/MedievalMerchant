@@ -10,7 +10,10 @@ public sealed class LevelInfo : ScriptableObject
     private GameObject mapPrefab;
 
     [field: SerializeField]
+    public string LevelName { get; private set; }
+
+    [field: SerializeField]
     public int StartPlayerFunds { get; private set; }
-    
+
     public Tilemap Map => mapPrefab.GetComponent<Tilemap>();
 }

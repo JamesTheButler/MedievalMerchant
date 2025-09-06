@@ -43,7 +43,6 @@ namespace Map.Pathfinding
 
             // BUG: when changing between target towns mid-travel, we get buggy-ness from this.
             //   we'd want to continue wherever we are right now, if we are already on a road tile
-
             startCell = NearestRoadCell(startCell);
             endCell = NearestRoadCell(endCell);
 
