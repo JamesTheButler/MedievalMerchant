@@ -23,7 +23,7 @@ namespace Common
             return new Vector3Int(vector.x, vector.y, z);
         }
 
-        public static Vector3 FromXY(this Vector2 vector, int z = 0)
+        public static Vector3 FromXY(this Vector2 vector, float z = 0)
         {
             return new Vector3(vector.x, vector.y, z);
         }

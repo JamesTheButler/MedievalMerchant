@@ -9,7 +9,7 @@ namespace Map.Overlays
     public sealed class TownOverlayManager : MonoBehaviour
     {
         [SerializeField, Required]
-        private GameObject overlaysParent;
+        private GameObject townOverlayParent;
 
         [SerializeField, Required]
         private GameObject townOverlayPrefab;
@@ -23,7 +23,7 @@ namespace Map.Overlays
             var model = _model.Value;
             foreach (var town in model.Towns.Values)
             {
-                var overlayObject = Instantiate(townOverlayPrefab, overlaysParent.transform);
+                var overlayObject = Instantiate(townOverlayPrefab, townOverlayParent.transform);
                 var overlay = overlayObject.GetComponent<TownOverlay>();
                 overlay.Bind(town);
                 _overlays.Add(overlay);

@@ -4922,6 +4922,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9083068851031128905, guid: a0c3a667fb0d2ec40a0abec92b312aaa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9083068851031128905, guid: a0c3a667fb0d2ec40a0abec92b312aaa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -4969,7 +4973,7 @@ Transform:
   m_GameObject: {fileID: 2144832320}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4987,7 +4991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748fd8357f0896d42b27e21059150cb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overlaysParent: {fileID: 982250806}
+  townOverlayParent: {fileID: 2144832320}
   townOverlayPrefab: {fileID: 6439352447913702409, guid: 19d422a746c82ff42b4d0c306a056407, type: 3}
 --- !u!1001 &404866086442109977
 PrefabInstance:
@@ -5118,25 +5122,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: EscapeMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 1582676733529576235, guid: aa21ea928e29d3e4791a8ca16b7b54a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2016899721181229469, guid: aa21ea928e29d3e4791a8ca16b7b54a4, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2016899721181229469, guid: aa21ea928e29d3e4791a8ca16b7b54a4, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2016899721181229469, guid: aa21ea928e29d3e4791a8ca16b7b54a4, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 368
       objectReference: {fileID: 0}
     - target: {fileID: 2016899721181229469, guid: aa21ea928e29d3e4791a8ca16b7b54a4, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 2016899721181229469, guid: aa21ea928e29d3e4791a8ca16b7b54a4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 6829452926438905327, guid: aa21ea928e29d3e4791a8ca16b7b54a4, type: 3}
       propertyPath: m_Pivot.x
