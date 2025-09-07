@@ -23,6 +23,11 @@ namespace UI
         public void SetEnabled(bool isEnabled)
         {
             _isEnabled = isEnabled;
+
+            if (!_isEnabled)
+            {
+                HideTooltip();
+            }
         }
 
         public void SetTooltip(string text)
@@ -36,8 +41,6 @@ namespace UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("Mouse entered: " + gameObject.name);
-
             if (!_isEnabled) return;
 
             if (_activeToolTip == null)
@@ -51,7 +54,11 @@ namespace UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            Debug.Log("Mouse exited: " + gameObject.name);
+            HideTooltip();
+        }
+
+        private void HideTooltip()
+        {
             Destroy(_activeToolTip?.gameObject);
             _activeToolTip = null;
         }
