@@ -7,5 +7,6 @@ namespace Map.Tiling
         Water = 3,
         Town = 4,
         Road = 5,
+        Fields = 6,
     }
 }

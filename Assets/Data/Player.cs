@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Common;
 using Data.Trade;
-using UnityEditor;
 
 namespace Data
 {
