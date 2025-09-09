@@ -1,4 +1,6 @@
 using Common;
+using Data.Configuration;
+using Data.Setup;
 using Map;
 using UnityEngine;
 
@@ -12,8 +14,11 @@ namespace UI
         [SerializeField]
         private Grid grid;
 
+        private RecipeConfig _recipeConfig;
+
         private void Start()
         {
+            _recipeConfig = ConfigurationManager.Instance.RecipeConfig;
             Unbind();
         }
 
@@ -31,9 +36,10 @@ namespace UI
             var screenPosition = Camera.main!.WorldToScreenPoint(worldPosition);
             zonePopup.gameObject.transform.position = screenPosition;
 
-            foreach (var good in zone.AvailableGoods)
+            foreach (var tier1Good in zone.AvailableGoods)
             {
-                zonePopup.AddGood(good, good);
+                var tier2Good = _recipeConfig.Tier2Recipes[tier1Good];
+                zonePopup.AddGood(tier1Good, tier2Good);
             }
 
             zonePopup.Show();

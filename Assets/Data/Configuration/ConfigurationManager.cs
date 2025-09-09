@@ -26,6 +26,9 @@ namespace Data.Configuration
         [field: SerializeField, Required]
         public Colors Colors { get; private set; }
 
+        [field: SerializeField, Required]
+        public RecipeConfig RecipeConfig { get; private set; }
+
         private void Awake()
         {
             if (Instance != null && Instance != this)

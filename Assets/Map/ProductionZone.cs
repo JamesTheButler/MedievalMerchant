@@ -18,9 +18,6 @@ namespace Map
         [SerializeField]
         private Color selectedColor;
 
-        [SerializeField]
-        private LayerMask townLayerMask;
-
         [SerializeField, Required]
         private GameObject origin;
 
