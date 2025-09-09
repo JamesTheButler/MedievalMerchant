@@ -12,14 +12,6 @@ namespace Map.Tiling
             tilemap.CompressBounds();
             var size = tilemap.cellBounds.size; //- new Vector3Int(2, 2, 0); // subtract frame width
             var origin = tilemap.cellBounds.position; //- new Vector3Int(1, 1, 0);
-            var tileCounts = new Dictionary<TileType, int>
-            {
-                { TileType.Forest, 0 },
-                { TileType.Town, 0 },
-                { TileType.Mountain, 0 },
-                { TileType.Road, 0 },
-                { TileType.Water, 0 },
-            };
 
             var flagMap = new TileFlagMap(size.XY(), origin.XY());
 
@@ -35,10 +27,7 @@ namespace Map.Tiling
                 if (tileType == null) continue;
 
                 flagMap.Tiles[x, y].AddType(tileType.Value);
-                tileCounts[tileType.Value]++;
             }
-
-            Debug.Log($"Loaded tile flags: {tileCounts.PrettyPrint()}");
 
             return flagMap;
         }

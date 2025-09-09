@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Common
@@ -26,6 +28,12 @@ namespace Common
         public static Vector3 FromXY(this Vector2 vector, float z = 0)
         {
             return new Vector3(vector.x, vector.y, z);
+        }
+
+        public static Vector3 Average(this IEnumerable<Vector3> vectors)
+        {
+            var enumerable = vectors as Vector3[] ?? vectors.ToArray();
+            return enumerable.Aggregate(Vector3.zero, (current, vector) => current + vector) / enumerable.Length;
         }
     }
 }

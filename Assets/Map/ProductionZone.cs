@@ -1,32 +1,85 @@
 using System.Collections.Generic;
 using Data;
-using Unity.VisualScripting;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.U2D;
 
 namespace Map
 {
-    public sealed class ProductionZone : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public sealed class ProductionZone : MonoBehaviour, IPointerEnterHandler, IPointerMoveHandler, IPointerExitHandler
     {
         [field: SerializeField]
-        public List<Good> AvailableGoods { get; set; }
+        public List<Good> AvailableGoods { get; private set; }
+
+        [SerializeField]
+        private Color defaultColor;
+
+        [SerializeField]
+        private Color selectedColor;
+
+        [SerializeField]
+        private LayerMask townLayerMask;
+
+        [SerializeField, Required]
+        private GameObject origin;
 
         private SpriteShapeRenderer _spriteRenderer;
+        private SpriteShapeController _spriteController;
+
+        public Vector2 Center { get; private set; }
 
         private void Start()
         {
             _spriteRenderer = gameObject.GetComponent<SpriteShapeRenderer>();
+
+            // TODO: use to force points of 2d polygon collider
+            _spriteController = gameObject.GetComponent<SpriteShapeController>();
+            Center = origin.transform.position;
+
+            OnPointerExit(null);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _spriteRenderer.color = Color.red.WithAlpha(0.5f);
+            PointerEnter();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            _spriteRenderer.color = Color.white.WithAlpha(0.5f);
+            PointerExit();
+        }
+
+        private void PointerExit()
+        {
+            FindFirstObjectByType<ProductionZoneManager>()?.OnZoneSelected.Invoke(null);
+            _spriteRenderer.color = defaultColor;
+        }
+
+        public void OnPointerMove(PointerEventData eventData)
+        {
+            if (IsPointerOverTown(eventData.position))
+            {
+                PointerExit();
+            }
+            else
+            {
+                PointerEnter();
+            }
+        }
+
+        private bool IsPointerOverTown(Vector2 eventDataPosition)
+        {
+            // TODO: towns should be clickable through production zones
+            //var world = Camera.main!.ScreenToWorldPoint(eventDataPosition);
+            //return Physics2D.OverlapPoint(world, townLayerMask) != null;
+            return false;
+        }
+
+        private void PointerEnter()
+        {
+            FindFirstObjectByType<ProductionZoneManager>()?.OnZoneSelected.Invoke(this);
+            _spriteRenderer.color = selectedColor;
         }
     }
 }

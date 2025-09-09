@@ -27,6 +27,8 @@ namespace UI
         [SerializeField, Required]
         private TMP_Text amountText;
 
+        private bool _showAmountText = true;
+        
         public void SetGood(Good? good)
         {
             Good = good;
@@ -50,12 +52,18 @@ namespace UI
             }
             else
             {
-                amountText.gameObject.SetActive(true);
+                amountText.gameObject.SetActive(_showAmountText);
                 disabledIcon.gameObject.SetActive(false);
                 amountText.text = amount.ToString();
             }
         }
 
+        public void ShowText(bool show)
+        {
+            _showAmountText = show;
+            amountText.gameObject.SetActive(_showAmountText);
+        }
+        
         public void SetIsProduced(bool isProduced)
         {
             productionIcon.gameObject.SetActive(isProduced);
