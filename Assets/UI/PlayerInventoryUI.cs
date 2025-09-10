@@ -119,7 +119,7 @@ namespace UI
 
         private void OnFundsChanged(int funds)
         {
-            fundsText.text = funds.ToString();
+            fundsText.text = funds.ToString("N0");
 
             foreach (var upgradeButton in upgradeButtons.Values)
             {

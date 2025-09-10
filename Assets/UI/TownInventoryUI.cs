@@ -199,7 +199,7 @@ namespace UI
 
         private void OnFundsUpdated(int funds)
         {
-            fundsText.text = funds.ToString();
+            fundsText.text = funds.ToString("N0");
         }
 
         private void OnGoodUpdated(Good good, int amount)
