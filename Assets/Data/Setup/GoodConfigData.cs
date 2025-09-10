@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Data.Setup
@@ -6,18 +7,12 @@ namespace Data.Setup
     public sealed class GoodConfigData : ScriptableObject
     {
         [field: SerializeField]
-        public Good GoodType { get; private set; }
-
-        [field: SerializeField]
         public string GoodName { get; private set; }
 
         [field: SerializeField]
         public Tier Tier { get; private set; }
 
-        [field: SerializeField]
-        public float BasePrice { get; private set; }
-
-        [field: SerializeField]
+        [field: SerializeField, Required]
         public Sprite Icon { get; private set; }
     }
 }

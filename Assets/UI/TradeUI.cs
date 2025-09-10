@@ -62,7 +62,8 @@ namespace UI
             _tradeType = tradeType;
             _good = good;
             _goodConfigData = _configurationManager.Value.ConfigData[good];
-            _goodBasePrice = (int)_goodConfigData.BasePrice;
+            var tier = _goodConfigData.Tier;
+            _goodBasePrice = _configurationManager.Value.BasePriceData[tier];
             goodIcon.sprite = _goodConfigData.Icon;
 
             SetUpButtons();
