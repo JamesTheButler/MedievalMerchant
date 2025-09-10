@@ -61,7 +61,7 @@ namespace UI
         public void SetCost(int cost)
         {
             _cost = cost;
-            costText.text = cost.ToString();
+            costText.text = cost.ToString("N0");
         }
 
         public void Validate(int availableFunds)
