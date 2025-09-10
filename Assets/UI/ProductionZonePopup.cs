@@ -1,13 +1,10 @@
-using System;
 using Data;
-using Data.Configuration;
-using Data.Setup;
 using NaughtyAttributes;
 using UnityEngine;
 
 namespace UI
 {
-    public sealed class ZonePopup : MonoBehaviour
+    public sealed class ProductionZonePopup : MonoBehaviour
     {
         [SerializeField, Required]
         private GameObject zoneGoodPrefab;

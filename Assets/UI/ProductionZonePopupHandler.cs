@@ -6,15 +6,16 @@ using UnityEngine;
 
 namespace UI
 {
-    public sealed class ZonePopupHandler : MonoBehaviour
+    public sealed class ProductionZonePopupHandler : MonoBehaviour
     {
         [SerializeField]
-        private ZonePopup zonePopup;
+        private ProductionZonePopup productionZonePopup;
 
         [SerializeField]
         private Grid grid;
 
         private RecipeConfig _recipeConfig;
+        private ProductionZone _zone;
 
         private void Start()
         {
@@ -24,31 +25,36 @@ namespace UI
 
         public void Bind(ProductionZone zone)
         {
+            if (_zone == zone)
+                return;
+
             if (zone == null)
             {
                 Unbind();
                 return;
             }
 
-            zonePopup.Reset();
+            _zone = zone;
+            productionZonePopup.Reset();
             var worldPosition = zone.Center.FromXY();
             // BUG: this is not update when we move the camera
             var screenPosition = Camera.main!.WorldToScreenPoint(worldPosition);
-            zonePopup.gameObject.transform.position = screenPosition;
+            productionZonePopup.gameObject.transform.position = screenPosition;
 
             foreach (var tier1Good in zone.AvailableGoods)
             {
                 var tier2Good = _recipeConfig.Tier2Recipes[tier1Good];
-                zonePopup.AddGood(tier1Good, tier2Good);
+                productionZonePopup.AddGood(tier1Good, tier2Good);
             }
 
-            zonePopup.Show();
+            productionZonePopup.Show();
         }
 
         public void Unbind()
         {
-            zonePopup.Reset();
-            zonePopup.Hide();
+            productionZonePopup.Reset();
+            productionZonePopup.Hide();
+            _zone = null;
         }
     }
 }

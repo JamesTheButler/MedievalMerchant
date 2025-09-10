@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Data;
+using Data.Configuration;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,11 +13,8 @@ namespace Map
         [field: SerializeField]
         public List<Good> AvailableGoods { get; private set; }
 
-        [SerializeField]
-        private Color defaultColor;
-
-        [SerializeField]
-        private Color selectedColor;
+        [SerializeField, Required]
+        private ProductionZoneConfig config;
 
         [SerializeField, Required]
         private GameObject origin;
@@ -50,7 +48,7 @@ namespace Map
         private void PointerExit()
         {
             FindFirstObjectByType<ProductionZoneManager>()?.OnZoneSelected.Invoke(null);
-            _spriteRenderer.color = defaultColor;
+            _spriteRenderer.color = config.DefaultColor;
         }
 
         public void OnPointerMove(PointerEventData eventData)
@@ -76,7 +74,7 @@ namespace Map
         private void PointerEnter()
         {
             FindFirstObjectByType<ProductionZoneManager>()?.OnZoneSelected.Invoke(this);
-            _spriteRenderer.color = selectedColor;
+            _spriteRenderer.color = config.SelectedColor;
         }
     }
 }
