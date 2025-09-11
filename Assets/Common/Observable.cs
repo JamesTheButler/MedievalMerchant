@@ -43,5 +43,10 @@ namespace Common
         {
             return observable.Value;
         }
+
+        public override string ToString()
+        {
+            return $"Observable <{Value}>";
+        }
     }
 }
