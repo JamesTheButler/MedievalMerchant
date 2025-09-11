@@ -6,7 +6,7 @@ using NaughtyAttributes;
 using UI.InventoryUI;
 using UnityEngine;
 
-namespace UI
+namespace UI.Popups
 {
     public sealed class BuySellPopupHandler : MonoBehaviour
     {

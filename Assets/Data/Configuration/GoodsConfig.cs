@@ -1,8 +1,7 @@
 using AYellowpaper.SerializedCollections;
-using Data.Configuration;
 using UnityEngine;
 
-namespace Data.Setup
+namespace Data.Configuration
 {
     [CreateAssetMenu(fileName = nameof(GoodsConfig), menuName = AssetMenu.ConfigDataFolder + nameof(GoodsConfig))]
     public sealed class GoodsConfig : ScriptableObject

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Data.Setup
+namespace Data.Configuration
 {
     [Serializable]
     public sealed class Tier3Recipe

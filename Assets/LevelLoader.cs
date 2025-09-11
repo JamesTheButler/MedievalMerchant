@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Data;
-using Data.Setup;
+using Data.Configuration;
 using Data.Towns;
 using Map.Tiling;
 using NaughtyAttributes;

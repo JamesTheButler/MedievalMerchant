@@ -1,4 +1,3 @@
-using Data.Setup;
 using NaughtyAttributes;
 using UnityEngine;
 

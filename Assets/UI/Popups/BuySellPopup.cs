@@ -1,7 +1,6 @@
 using System;
 using Data;
 using Data.Configuration;
-using Data.Setup;
 using Data.Trade;
 using NaughtyAttributes;
 using TMPro;
@@ -9,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.Popups
 {
     public sealed class BuySellPopup : MonoBehaviour
     {

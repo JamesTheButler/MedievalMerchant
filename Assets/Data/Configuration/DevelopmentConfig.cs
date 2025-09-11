@@ -1,10 +1,9 @@
 using AYellowpaper.SerializedCollections;
-using Data.Setup;
 using UnityEngine;
 
 namespace Data.Configuration
 {
-    [CreateAssetMenu(fileName = "DevelopmentConfig", menuName = AssetMenu.ConfigDataFolder + "DevelopmentConfig")]
+    [CreateAssetMenu(fileName = nameof(DevelopmentConfig), menuName = AssetMenu.ConfigDataFolder + nameof(DevelopmentConfig))]
     public sealed class DevelopmentConfig : ScriptableObject
     {
         [field: SerializeField, SerializedDictionary]

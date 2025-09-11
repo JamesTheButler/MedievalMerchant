@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Data.Configuration;
-using Data.Setup;
 
 namespace Data.Trade
 {

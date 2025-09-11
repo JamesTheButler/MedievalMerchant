@@ -1,9 +1,9 @@
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Data.Setup
+namespace Data.Configuration
 {
-    [CreateAssetMenu(fileName = "GoodInfo", menuName = "Data/GoodInfo")]
+    [CreateAssetMenu(fileName = nameof(GoodConfigData), menuName = AssetMenu.ConfigDataFolder + nameof(GoodConfigData))]
     public sealed class GoodConfigData : ScriptableObject
     {
         [field: SerializeField]

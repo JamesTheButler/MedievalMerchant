@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Data.Configuration
 {
-    [CreateAssetMenu(fileName = "GrowthTrendConfig", menuName = AssetMenu.ConfigDataFolder + "GrowthTrendConfig")]
+    [CreateAssetMenu(fileName = nameof(GrowthTrendConfig), menuName = AssetMenu.ConfigDataFolder + nameof(GrowthTrendConfig))]
     public sealed class GrowthTrendConfig : ScriptableObject
     {
         [field: SerializeField, SerializedDictionary("Growth Trend", "Config")]

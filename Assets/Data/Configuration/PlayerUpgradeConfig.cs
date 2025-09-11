@@ -4,8 +4,8 @@ using UnityEngine;
 namespace Data.Configuration
 {
     [CreateAssetMenu(
-        fileName = "PlayerUpgradeConfigData",
-        menuName = AssetMenu.ConfigDataFolder + "PlayerUpgradeConfigData")]
+        fileName = nameof(PlayerUpgradeConfigData),
+        menuName = AssetMenu.ConfigDataFolder + nameof(PlayerUpgradeConfigData))]
     public sealed class PlayerUpgradeConfig : ScriptableObject
     {
         [field: SerializeField, SerializedDictionary("Upgrade", "Data")]

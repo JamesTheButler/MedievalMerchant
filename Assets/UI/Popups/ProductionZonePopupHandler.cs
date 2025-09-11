@@ -1,10 +1,9 @@
 using Common;
 using Data.Configuration;
-using Data.Setup;
 using Map;
 using UnityEngine;
 
-namespace UI
+namespace UI.Popups
 {
     public sealed class ProductionZonePopupHandler : MonoBehaviour
     {

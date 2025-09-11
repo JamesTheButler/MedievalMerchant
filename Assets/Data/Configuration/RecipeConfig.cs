@@ -1,8 +1,7 @@
 using AYellowpaper.SerializedCollections;
-using Data.Configuration;
 using UnityEngine;
 
-namespace Data.Setup
+namespace Data.Configuration
 {
     [CreateAssetMenu(fileName = nameof(RecipeConfig), menuName = AssetMenu.ConfigDataFolder + nameof(RecipeConfig))]
     public sealed class RecipeConfig : ScriptableObject

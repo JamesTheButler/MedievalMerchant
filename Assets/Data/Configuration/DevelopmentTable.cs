@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Data.Setup
+namespace Data.Configuration
 {
     /// <summary>
     /// Table to define which amount of different tier goods results in which development trend modifiers.
     /// </summary>
-    [CreateAssetMenu(fileName = "DevelopmentTable", menuName = "Data/DevelopmentTable")]
+    [CreateAssetMenu(
+        fileName = nameof(DevelopmentTable),
+        menuName = AssetMenu.ConfigDataFolder + nameof(DevelopmentTable))]
     public sealed class DevelopmentTable : ScriptableObject
     {
         [field: SerializeField]

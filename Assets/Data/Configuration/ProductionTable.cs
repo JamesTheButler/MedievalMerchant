@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Data.Setup
+namespace Data.Configuration
 {
     /// <summary>
     /// Table to define which goods CAN be produced. 
     /// </summary>
-    [CreateAssetMenu(fileName = "ProductionTable", menuName = "Data/ProductionTable")]
+    [CreateAssetMenu(
+        fileName = nameof(ProductionTable),
+        menuName = AssetMenu.ConfigDataFolder + nameof(ProductionTable))]
     public sealed class ProductionTable : ScriptableObject
     {
         [field: SerializeField]

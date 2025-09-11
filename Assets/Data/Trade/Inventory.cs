@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Data.Configuration;
-using Data.Setup;
 
 namespace Data.Trade
 {

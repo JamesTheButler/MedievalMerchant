@@ -2,7 +2,7 @@ using Data;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace UI
+namespace UI.Popups
 {
     public sealed class ProductionZonePopup : MonoBehaviour
     {

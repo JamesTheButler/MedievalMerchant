@@ -1,9 +1,9 @@
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Data.Setup
+namespace Data.Configuration
 {
-    [CreateAssetMenu(fileName = "TownSetupInfo", menuName = "Data/TownSetupInfo")]
+    [CreateAssetMenu(fileName = nameof(TownSetupInfo), menuName = AssetMenu.ConfigDataFolder + nameof(TownSetupInfo))]
     public sealed class TownSetupInfo : ScriptableObject
     {
         [field: SerializeField]

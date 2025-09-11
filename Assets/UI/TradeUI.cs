@@ -1,7 +1,6 @@
 using System;
 using Data;
 using Data.Configuration;
-using Data.Setup;
 using Data.Towns;
 using Data.Trade;
 using NaughtyAttributes;

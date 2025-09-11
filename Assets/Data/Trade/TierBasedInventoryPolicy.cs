@@ -1,6 +1,5 @@
 using System;
 using Data.Configuration;
-using Data.Setup;
 
 namespace Data.Trade
 {

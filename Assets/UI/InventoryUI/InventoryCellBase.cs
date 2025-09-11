@@ -1,7 +1,6 @@
 using System;
 using Data;
 using Data.Configuration;
-using Data.Setup;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

@@ -2,7 +2,6 @@ using System.Linq;
 using AYellowpaper.SerializedCollections;
 using Data;
 using Data.Configuration;
-using Data.Setup;
 using Data.Trade;
 using NaughtyAttributes;
 using TMPro;
