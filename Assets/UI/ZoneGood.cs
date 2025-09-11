@@ -14,11 +14,9 @@ namespace UI
 
         private void Start()
         {
-            tier1Cell.SetIsProduced(false);
             tier1Cell.ShowText(false);
             tier1Cell.SetAmount(1);
 
-            tier2Cell.SetIsProduced(false);
             tier2Cell.ShowText(false);
             tier2Cell.SetAmount(1);
         }

@@ -75,7 +75,6 @@ namespace UI
 
             // update good info
             _cellsPerGoods[good].SetAmount(amount);
-            _cellsPerGoods[good].SetIsProduced(isProduced);
         }
 
         private void AddNewCells(int count)

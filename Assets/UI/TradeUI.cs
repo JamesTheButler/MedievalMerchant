@@ -148,8 +148,6 @@ namespace UI
 
             _sellerGoodAmount = amount;
             amountSlider.maxValue = amount;
-
-            Debug.Log($"{Time.frameCount} // {good} - {amount}");
         }
 
         private void AbortTrade()

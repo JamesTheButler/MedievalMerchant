@@ -6,16 +6,15 @@ namespace UI
     [PublicAPI]
     public static class InventoryCellExtensions
     {
-        public static void Update(this InventoryCell cell, Good? good, int amount, bool isProduced)
+        public static void Update(this InventoryCell cell, Good? good, int amount)
         {
             cell.SetGood(good);
             cell.SetAmount(amount);
-            cell.SetIsProduced(isProduced);
         }
 
         public static void Reset(this InventoryCell cell)
         {
-            cell.Update(null, 0, false);
+            cell.Update(null, 0);
         }
 
         public static bool HasGood(this InventoryCell cell)

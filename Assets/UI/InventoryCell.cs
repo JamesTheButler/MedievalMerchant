@@ -22,13 +22,10 @@ namespace UI
         private Image disabledIcon;
 
         [SerializeField, Required]
-        private Image productionIcon;
-
-        [SerializeField, Required]
         private TMP_Text amountText;
 
         private bool _showAmountText = true;
-        
+
         public void SetGood(Good? good)
         {
             Good = good;
@@ -62,11 +59,6 @@ namespace UI
         {
             _showAmountText = show;
             amountText.gameObject.SetActive(_showAmountText);
-        }
-        
-        public void SetIsProduced(bool isProduced)
-        {
-            productionIcon.gameObject.SetActive(isProduced);
         }
 
         public void OnPointerClick(PointerEventData eventData)
