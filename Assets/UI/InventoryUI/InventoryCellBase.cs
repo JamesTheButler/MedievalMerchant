@@ -10,8 +10,7 @@ using UnityEngine.UI;
 
 namespace UI.InventoryUI
 {
-    public abstract class InventoryCellBase : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
-        IPointerExitHandler
+    public abstract class InventoryCellBase : MonoBehaviour, IPointerClickHandler
     {
         public event Action Clicked;
         public event Action RightClicked;
@@ -28,13 +27,16 @@ namespace UI.InventoryUI
         private TMP_Text amountText;
 
         [SerializeField, Required]
-        private TooltipHandler tooltipHandler;
+        protected TooltipHandler tooltipHandler;
 
         private readonly Lazy<GoodsConfig> _goodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
 
         public void SetGood(Good? good)
         {
             Good = good;
+
+            tooltipHandler.SetEnabled(good != null);
+
             if (good == null)
             {
                 goodIcon.gameObject.SetActive(false);
@@ -69,16 +71,6 @@ namespace UI.InventoryUI
                 case PointerEventData.InputButton.Left: Clicked?.Invoke(); break;
                 case PointerEventData.InputButton.Right: RightClicked?.Invoke(); break;
             }
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            tooltipHandler.SetEnabled(Good != null);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            tooltipHandler.SetEnabled(false);
         }
     }
 }
