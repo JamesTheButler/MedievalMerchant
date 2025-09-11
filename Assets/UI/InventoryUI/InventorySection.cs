@@ -5,7 +5,7 @@ using Data;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace UI
+namespace UI.InventoryUI
 {
     /// <summary>
     /// Responsible for a section of cells in an inventory. Controls the display of the given goods.

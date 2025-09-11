@@ -12,7 +12,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.InventoryUI
 {
     public sealed class TownInventoryUI : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 using Data;
 using JetBrains.Annotations;
 
-namespace UI
+namespace UI.InventoryUI
 {
     [PublicAPI]
     public static class InventoryCellExtensions

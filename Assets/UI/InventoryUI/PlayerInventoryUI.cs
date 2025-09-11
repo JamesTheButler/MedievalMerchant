@@ -9,7 +9,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace UI
+namespace UI.InventoryUI
 {
     public class PlayerInventoryUI : MonoBehaviour
     {

@@ -3,6 +3,7 @@ using Data;
 using Data.Towns;
 using Data.Trade;
 using NaughtyAttributes;
+using UI.InventoryUI;
 using UnityEngine;
 
 namespace UI

@@ -1,5 +1,6 @@
 using Data;
 using NaughtyAttributes;
+using UI.InventoryUI;
 using UnityEngine;
 
 namespace UI
@@ -14,10 +15,7 @@ namespace UI
 
         private void Start()
         {
-            tier1Cell.ShowText(false);
             tier1Cell.SetAmount(1);
-
-            tier2Cell.ShowText(false);
             tier2Cell.SetAmount(1);
         }
 

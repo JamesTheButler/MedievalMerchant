@@ -2,7 +2,7 @@ using Data;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace UI
+namespace UI.InventoryUI
 {
     public sealed class PlayerInventoryHandler : MonoBehaviour
     {
