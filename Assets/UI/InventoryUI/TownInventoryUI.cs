@@ -40,7 +40,7 @@ namespace UI.InventoryUI
         private TMP_Text fundsText;
 
         [SerializeField, SerializedDictionary("Tier", "Section")]
-        private SerializedDictionary<Tier, InventorySection> inventorySections;
+        private SerializedDictionary<Tier, TownInventorySection> inventorySections;
 
         private Town _boundTown;
         private Inventory _boundInventory;
@@ -54,7 +54,8 @@ namespace UI.InventoryUI
         {
             foreach (var section in inventorySections.Values)
             {
-                section.CellClicked += InvokeCellClicked;
+                // TODO: implement again
+                //section.CellClicked += InvokeCellClicked;
             }
         }
 
@@ -107,6 +108,11 @@ namespace UI.InventoryUI
             _boundTown.DevelopmentScore.Observe(UpdateDevelopmentScore);
             _boundTown.DevelopmentTrend.Observe(UpdateDevelopmentTrend);
             _boundTown.GrowthTrend.Observe(UpdateGrowthTrend);
+            
+            foreach (var townInventorySection in inventorySections.Values)
+            {
+                townInventorySection.Bind(town);
+            }
         }
 
         private void BindInventory(Inventory inventory)
@@ -161,7 +167,7 @@ namespace UI.InventoryUI
         {
             foreach (var section in inventorySections.Values)
             {
-                section.Initialize();
+                section.Clear();
             }
         }
 
@@ -205,9 +211,7 @@ namespace UI.InventoryUI
         private void OnGoodUpdated(Good good, int amount)
         {
             var tier = ConfigurationManager.Instance.GoodsConfig.ConfigData[good].Tier;
-
-            var isProduced = _boundTown?.Production.Contains(good) ?? false;
-            inventorySections[tier].UpdateGood(good, amount, isProduced);
+            inventorySections[tier].UpdateGood(good, amount);
         }
 
         private void InvokeCellClicked(InventoryCell cell)

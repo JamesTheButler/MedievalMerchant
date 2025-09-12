@@ -14,18 +14,27 @@ namespace Data.Towns
         private readonly Producer _producer;
         private readonly TierBasedInventoryPolicy _inventoryPolicy;
         private readonly GrowthTrendConfig _growthConfig;
+        private readonly GoodsConfig _goodsConfig;
 
-        private const int StartGoodMultiplier = 25;
+        // TODO: should come from config file
+        private const int ProductionLimit = 50;
         private const int BaseFundsPerTick = 20;
+
+        public event Action<Good> ProductionAdded
+        {
+            add => _producer.GoodAdded += value;
+            remove => _producer.GoodAdded -= value;
+        }
 
         public Inventory Inventory { get; }
         public string Name { get; }
         public Vector2Int GridLocation { get; }
-        public Vector2 WorldLocation { get; }
+        public Vector2 WorldLocation { get; }       
+        public HashSet<Good> AvailableGoods { get; } = new () {Good.T1Berries, Good.T1Clay, Good.T1Flax};
 
         public Observable<Tier> Tier { get; } = new();
-        public Observable<float> DevelopmentScore { get;  } = new();
-        public Observable<float> DevelopmentTrend { get;  } = new();
+        public Observable<float> DevelopmentScore { get; } = new();
+        public Observable<float> DevelopmentTrend { get; } = new();
         public Observable<GrowthTrend> GrowthTrend { get; } = new();
 
         public IEnumerable<Good> Production => _producer.ProducedGoods;
@@ -38,9 +47,9 @@ namespace Data.Towns
 
             GridLocation = gridLocation;
             WorldLocation = worldLocation;
+            _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             _developmentConfig = ConfigurationManager.Instance.DevelopmentConfig;
             _growthConfig = ConfigurationManager.Instance.GrowthTrendConfig;
-            _producer = new Producer(setupInfo.Production);
 
             Name = setupInfo.NameGenerator.GenerateName();
 
@@ -50,11 +59,16 @@ namespace Data.Towns
 
             // initial funds and goods
             Inventory = new Inventory(_inventoryPolicy);
+            _producer = new Producer(Inventory);
+
             Inventory.AddFunds(setupInfo.InitialFunds);
-            foreach (var (good, amount) in _producer.Produce())
-            {
-                Inventory.AddGood(good, amount * StartGoodMultiplier);
-            }
+
+            var allT1Goods = _goodsConfig.ConfigData
+                .Where(configPair => configPair.Value.Tier == Data.Tier.Tier1)
+                .Select(configPair => configPair.Key)
+                .ToList();
+
+            AddProduction(allT1Goods.GetRandom());
         }
 
         public void Tick()
@@ -64,13 +78,17 @@ namespace Data.Towns
             Consume();
         }
 
+        public void AddProduction(Good good)
+        {
+            _producer.AddProduction(good, ProductionLimit);
+        }
+
         public void Upgrade()
         {
             var oldTier = Tier.Value;
             IncreaseTier();
 
             Debug.Log($"{Name} upgraded to {Tier}");
-            _producer.UpgradeTier(Tier);
 
             if (oldTier != Tier)
             {
@@ -88,17 +106,12 @@ namespace Data.Towns
                 > 80 => 2f,
                 _ => 1f,
             };
-            _producer.SetProductionMultiplier(multiplier);
+            _producer.SetProductionMultiplier(multiplier * (float)Tier.Value);
+            _producer.Produce();
 
             // if development trend is positive, add funds
             var trendFundMultiplier = DevelopmentTrend > 0 ? DevelopmentTrend : 1f;
             Inventory.AddFunds((int)(BaseFundsPerTick * (int)Tier.Value * trendFundMultiplier));
-
-            var production = _producer.Produce();
-            foreach (var (good, amount) in production)
-            {
-                Inventory.AddGood(good, amount);
-            }
         }
 
         private void Consume()
@@ -112,7 +125,7 @@ namespace Data.Towns
         private void Develop()
         {
             var goodsPerTier = Inventory.GoodsPerTier();
-            
+
             var newDevTrend = _developmentTable.GetDevelopmentTrend(
                 goodsPerTier[Data.Tier.Tier1],
                 goodsPerTier[Data.Tier.Tier2],
@@ -124,7 +137,7 @@ namespace Data.Towns
             }
 
             var newDevScore = DevelopmentScore.Value + newDevTrend;
-            
+
             if (newDevScore >= 100 && Tier <= Data.Tier.Tier2)
             {
                 Upgrade();
@@ -135,7 +148,7 @@ namespace Data.Towns
 
             DevelopmentTrend.Value = newDevTrend;
             DevelopmentScore.Value = newDevScore;
-            
+
             UpdateGrowthTrend();
         }
 

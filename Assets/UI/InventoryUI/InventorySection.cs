@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Data;
 using NaughtyAttributes;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace UI.InventoryUI
@@ -50,7 +51,7 @@ namespace UI.InventoryUI
             _cellsPerGoods.Clear();
         }
 
-        public void UpdateGood(Good good, int amount, bool isProduced)
+        public void UpdateGood(Good good, int amount)
         {
             // free up the cell if
             if (amount <= 0)

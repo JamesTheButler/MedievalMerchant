@@ -1,60 +1,46 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using Common;
-using Data.Configuration;
+using Data.Trade;
 using UnityEngine;
 
 namespace Data.Towns
 {
     public sealed class Producer
     {
-        public IEnumerable<Good> ProducedGoods => _producedGoods;
+        public event Action<Good> GoodAdded;
 
+        private readonly Inventory _inventory;
+        public IEnumerable<Good> ProducedGoods => _producedGoods.Keys;
+
+        // TODO: config file
         private const int BaseProduction = 4;
 
-        private readonly HashSet<Good> _producedGoods = new();
-        private readonly ProductionTable _productionTable;
-
-        private Tier _tier;
+        private readonly Dictionary<Good, int> _producedGoods = new();
         private float _multiplier = 1f;
 
-        public Producer(ProductionTable productionTable)
+        public Producer(Inventory inventory)
         {
-            _productionTable = productionTable;
-            UpgradeTier(Tier.Tier1);
+            _inventory = inventory;
         }
 
-        public IDictionary<Good, int> Produce()
+        public void AddProduction(Good good, int limit)
         {
-            return _producedGoods.ToDictionary(good => good, _ => (int)(BaseProduction * _multiplier * (int)_tier));
-        }
-
-        // Tier 1: 1 Tier1 Good
-        // Tier 2: 2 Tier1 Good + 1 Tier2 Good
-        // Tier 3: 2 Tier1 Good + 2 Tier2 Good + 1 Tier3 Good
-        public void UpgradeTier(Tier tier)
-        {
-            if (_tier >= tier) return;
-
-            switch (tier)
+            if (!_producedGoods.ContainsKey(good))
             {
-                case Tier.Tier1:
-                    _producedGoods.Add(_productionTable.Tier1Goods.GetRandom());
-                    break;
-                case Tier.Tier2:
-                    _producedGoods.Add(_productionTable.Tier1Goods.Except(_producedGoods).ToList().GetRandom());
-                    _producedGoods.Add(_productionTable.Tier2Goods.Except(_producedGoods).ToList().GetRandom());
-                    break;
-                case Tier.Tier3:
-                    _producedGoods.Add(_productionTable.Tier2Goods.Except(_producedGoods).ToList().GetRandom());
-                    _producedGoods.Add(_productionTable.Tier3Goods.GetRandom());
-                    break;
-                default:
-                    Debug.LogError($"Tier {tier} is not supported");
-                    break;
+                GoodAdded?.Invoke(good);
             }
 
-            _tier = tier;
+            _producedGoods[good] = limit;
+        }
+
+        public void Produce()
+        {
+            var amount = (int)(BaseProduction * _multiplier);
+            foreach (var (good, limit) in _producedGoods)
+            {
+                var cappedAmount = Mathf.Min(amount, Mathf.Max(0, limit - _inventory.Goods.GetValueOrDefault(good, 0)));
+                _inventory.AddGood(good, cappedAmount);
+            }
         }
 
         public void SetProductionMultiplier(float multiplier)

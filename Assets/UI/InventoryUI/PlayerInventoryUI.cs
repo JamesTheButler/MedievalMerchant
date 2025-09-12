@@ -113,7 +113,7 @@ namespace UI.InventoryUI
         {
             var tier = _goodsConfig.ConfigData[good].Tier;
             var section = inventorySections[tier];
-            section.UpdateGood(good, amount, false);
+            section.UpdateGood(good, amount);
         }
 
         private void OnFundsChanged(int funds)

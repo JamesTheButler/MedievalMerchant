@@ -6,18 +6,18 @@ namespace UI.InventoryUI
     [PublicAPI]
     public static class InventoryCellExtensions
     {
-        public static void Update(this InventoryCell cell, Good? good, int amount)
+        public static void Update(this InventoryCellBase cell, Good? good, int amount)
         {
             cell.SetGood(good);
             cell.SetAmount(amount);
         }
 
-        public static void Reset(this InventoryCell cell)
+        public static void Reset(this InventoryCellBase cell)
         {
             cell.Update(null, 0);
         }
 
-        public static bool HasGood(this InventoryCell cell)
+        public static bool HasGood(this InventoryCellBase cell)
         {
             return cell.Good != null;
         }
