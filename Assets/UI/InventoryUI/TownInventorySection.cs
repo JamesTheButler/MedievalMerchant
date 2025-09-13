@@ -4,12 +4,16 @@ using Data;
 using Data.Configuration;
 using Data.Towns;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace UI.InventoryUI
 {
     public sealed class TownInventorySection : MonoBehaviour
     {
+        [SerializeField]
+        private UnityEvent<ProductionCell> unlockButtonClicked;
+
         [SerializeField]
         private Tier tier;
 
@@ -49,6 +53,11 @@ namespace UI.InventoryUI
         private void GatherCells()
         {
             _productionCells.AddRange(GetComponentsInChildren<ProductionCell>());
+            foreach (var productionCell in _productionCells)
+            {
+                productionCell.unlockButtonClicked.AddListener(() => unlockButtonClicked?.Invoke(productionCell));
+            }
+
             _inventoryCells.AddRange(GetComponentsInChildren<InventoryCell>());
         }
 
@@ -63,7 +72,7 @@ namespace UI.InventoryUI
             else
             {
                 // TODO: check this case
-                if (_town is null) 
+                if (_town is null)
                     return;
                 // try to find free cell
                 var isProduced = _town.Production.Contains(good);

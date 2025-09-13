@@ -8,25 +8,15 @@ namespace UI
     public sealed class ZoneGood : MonoBehaviour
     {
         [SerializeField, Required]
-        private InventoryCell tier1Cell;
+        private GoodCellBase tier1Cell;
 
         [SerializeField, Required]
-        private InventoryCell tier2Cell;
+        private GoodCellBase tier2Cell;
 
-        private void Start()
+        public void SetUp(Good tier1, Good tier2)
         {
-            tier1Cell.SetAmount(1);
-            tier2Cell.SetAmount(1);
-        }
-
-        public void SetTier1Good(Good good)
-        {
-            tier1Cell.SetGood(good);
-        }
-
-        public void SetTier2Good(Good good)
-        {
-            tier2Cell.SetGood(good);
+            tier1Cell.SetGood(tier1);
+            tier2Cell.SetGood(tier2);
         }
     }
 }

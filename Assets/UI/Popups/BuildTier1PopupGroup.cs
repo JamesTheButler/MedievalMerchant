@@ -1,17 +1,22 @@
+using System;
 using Data;
 using UI.InventoryUI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI.Popups
 {
-    public sealed class BuildTier1PopupGroup : MonoBehaviour
+    public sealed class BuildTier1PopupGroup : MonoBehaviour, IPointerClickHandler
     {
+        public event Action Clicked;
+
         [SerializeField]
         private InventoryCell tier1GoodIcon;
 
         [SerializeField]
         private InventoryCell tier2GoodIcon;
+
         [SerializeField]
         private Image selectionImage;
 
@@ -26,10 +31,15 @@ namespace UI.Popups
         {
             selectionImage.enabled = true;
         }
-        
+
         public void Deselect()
         {
             selectionImage.enabled = false;
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            Clicked?.Invoke();
         }
     }
 }

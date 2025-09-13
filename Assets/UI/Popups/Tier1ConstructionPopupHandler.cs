@@ -1,5 +1,6 @@
 using System;
 using Data.Towns;
+using UI.InventoryUI;
 using UnityEngine;
 
 namespace UI.Popups
@@ -10,10 +11,11 @@ namespace UI.Popups
         private Tier1ConstructionPopup popup;
 
         private readonly Lazy<Selection> _selection = new(() => Selection.Instance);
-        
-        public void Show()
+
+        public void Show(ProductionCell cell)
         {
             popup.gameObject.SetActive(true);
+            popup.transform.position = cell.transform.position;
 
             var town = _selection.Value.SelectedTown;
             popup.Setup(town, 1000);

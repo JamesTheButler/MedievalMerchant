@@ -9,7 +9,7 @@ namespace UI.InventoryUI
         private bool _isLocked = true;
 
         [SerializeField]
-        private UnityEvent unlockButtonClicked;
+        public UnityEvent unlockButtonClicked;
 
         [SerializeField]
         private Button unlockButton;

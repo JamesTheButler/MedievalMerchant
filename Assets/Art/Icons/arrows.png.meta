@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,67 +100,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mountain_tiles_0
+      name: Arrow90
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfa458e7f21d1af4785ab2f7757abb00
+      internalID: 116133106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArrowStraight
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd11c994e2065c84496a9d77a4b290eb
+      internalID: -954607965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArrowT
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 17
-        height: 15
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 2c11fb768f3609950800000000000000
-      internalID: 6453768184565535170
+      spriteID: 5a4e176109d3ac94ea97291f591c4ed1
+      internalID: -753635742
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: mountain_tiles_1
+      name: ArrowU
       rect:
         serializedVersion: 2
         x: 16
-        y: 3
-        width: 16
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0d6012eeac04afee0800000000000000
-      internalID: -1226596708182325552
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: mountain_tiles_2
-      rect:
-        serializedVersion: 2
-        x: 31
         y: 0
-        width: 17
-        height: 12
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: b5068e0b291c12500800000000000000
-      internalID: 369789480198496347
+      spriteID: 429d6c0f9e2d5824b94d34f926fb213d
+      internalID: 463543416
       vertices: []
       indices: 
       edges: []
@@ -179,9 +201,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      mountain_tiles_0: 6453768184565535170
-      mountain_tiles_1: -1226596708182325552
-      mountain_tiles_2: 369789480198496347
+      Arrow90: 116133106
+      ArrowStraight: -954607965
+      ArrowT: -753635742
+      ArrowU: 463543416
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

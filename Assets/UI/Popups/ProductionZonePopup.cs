@@ -24,8 +24,7 @@ namespace UI.Popups
         {
             var goodObject = Instantiate(zoneGoodPrefab, zoneGoodContainer.transform);
             var zoneGood = goodObject.GetComponent<ZoneGood>();
-            zoneGood.SetTier1Good(tier1);
-            zoneGood.SetTier2Good(tier2);
+            zoneGood.SetUp(tier1, tier2);
         }
 
         public void Show()
