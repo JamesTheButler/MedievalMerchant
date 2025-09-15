@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UI.InventoryUI
 {
-    public class InventoryCellBase : GoodCellBase
+    public class InventoryCellBase : GoodCell
     {
         [SerializeField]
         private TMP_Text amountText;

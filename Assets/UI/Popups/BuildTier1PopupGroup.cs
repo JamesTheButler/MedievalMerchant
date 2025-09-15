@@ -1,5 +1,6 @@
 using System;
 using Data;
+using NaughtyAttributes;
 using UI.InventoryUI;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,13 +12,13 @@ namespace UI.Popups
     {
         public event Action Clicked;
 
-        [SerializeField]
-        private InventoryCell tier1GoodIcon;
+        [SerializeField, Required]
+        private GoodCell tier1GoodIcon;
 
-        [SerializeField]
-        private InventoryCell tier2GoodIcon;
+        [SerializeField, Required]
+        private GoodCell tier2GoodIcon;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Image selectionImage;
 
         public void Setup(Good tier1Good, Good tier2Good, bool isAlreadyBuilt)

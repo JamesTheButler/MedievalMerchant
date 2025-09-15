@@ -8,10 +8,10 @@ namespace UI
     public sealed class ZoneGood : MonoBehaviour
     {
         [SerializeField, Required]
-        private GoodCellBase tier1Cell;
+        private GoodCell tier1Cell;
 
         [SerializeField, Required]
-        private GoodCellBase tier2Cell;
+        private GoodCell tier2Cell;
 
         public void SetUp(Good tier1, Good tier2)
         {

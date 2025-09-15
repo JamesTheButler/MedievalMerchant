@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace UI.InventoryUI
 {
-    public class GoodCellBase : MonoBehaviour, IPointerClickHandler
+    public class GoodCell : MonoBehaviour, IPointerClickHandler
     {
         public event Action Clicked;
         public event Action RightClicked;
@@ -35,6 +35,7 @@ namespace UI.InventoryUI
             if (good == null)
             {
                 goodIcon.gameObject.SetActive(false);
+                OnSetGood(null);
                 return;
             }
 
@@ -42,8 +43,14 @@ namespace UI.InventoryUI
             goodIcon.gameObject.SetActive(true);
             goodIcon.sprite = goodConfigData.Icon;
             tooltipHandler.SetTooltip(goodConfigData.GoodName);
+
+            OnSetGood(good);
         }
 
+        protected virtual void OnSetGood(Good? good)
+        {
+        }
+        
         public void SetEnabled(bool isEnabled)
         {
             disabledIcon.gameObject.SetActive(!isEnabled);

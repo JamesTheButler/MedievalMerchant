@@ -74,6 +74,7 @@ namespace UI.InventoryUI
                 // TODO: check this case
                 if (_town is null)
                     return;
+
                 // try to find free cell
                 var isProduced = _town.Production.Contains(good);
                 IEnumerable<InventoryCellBase> cellList = isProduced ? _productionCells : _inventoryCells;
