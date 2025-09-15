@@ -1,3 +1,4 @@
+using Data;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -6,8 +7,6 @@ namespace UI.InventoryUI
 {
     public sealed class ProductionCell : InventoryCellBase
     {
-        private bool _isLocked = true;
-
         [SerializeField]
         public UnityEvent unlockButtonClicked;
 
@@ -16,17 +15,35 @@ namespace UI.InventoryUI
 
         private void Start()
         {
+            Lock();
+        }
+
+        protected override void OnSetGood(Good? good)
+        {
+            base.OnSetGood(good);
+            if (good != null)
+            {
+                Unlock();
+            }
+        }
+
+        public void Unlock()
+        {
+            unlockButton.gameObject.SetActive(false);
+            tooltipHandler.SetEnabled(Good != null);
+        }
+
+        public void Lock()
+        {
+            unlockButton.gameObject.SetActive(true);
             tooltipHandler.SetTooltip("Build production building.");
             tooltipHandler.SetEnabled(true);
         }
 
         public void InvokeUnlockButtonClicked()
         {
-            _isLocked = false;
-            unlockButton.gameObject.SetActive(false);
-            // TODO: this should open a popup to select which good to build
             unlockButtonClicked?.Invoke();
-            tooltipHandler.SetEnabled(false);
+            Unlock();
         }
     }
 }

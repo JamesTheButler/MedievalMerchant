@@ -67,7 +67,7 @@ namespace Map.Tiling
                 _ => tiles.TownTileT3
             };
 
-            var pos = _model.TileFlagMap.Origin + town.GridLocation;
+            var pos = town.GridLocation;
             _tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), tile);
         }
 

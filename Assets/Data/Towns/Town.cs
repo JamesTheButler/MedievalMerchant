@@ -30,7 +30,7 @@ namespace Data.Towns
         public string Name { get; }
         public Vector2Int GridLocation { get; }
         public Vector2 WorldLocation { get; }       
-        public HashSet<Good> AvailableGoods { get; } = new () {Good.T1Berries, Good.T1Clay, Good.T1Flax};
+        public HashSet<Good> AvailableGoods { get; }
 
         public Observable<Tier> Tier { get; } = new();
         public Observable<float> DevelopmentScore { get; } = new();
@@ -41,7 +41,7 @@ namespace Data.Towns
 
         private DevelopmentTable _developmentTable;
 
-        public Town(TownSetupInfo setupInfo, Vector2Int gridLocation, Vector2 worldLocation)
+        public Town(TownSetupInfo setupInfo, Vector2Int gridLocation, Vector2 worldLocation, IEnumerable<Good> availableGoods)
         {
             _inventoryPolicy = new TierBasedInventoryPolicy();
 
@@ -50,6 +50,7 @@ namespace Data.Towns
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             _developmentConfig = ConfigurationManager.Instance.DevelopmentConfig;
             _growthConfig = ConfigurationManager.Instance.GrowthTrendConfig;
+            AvailableGoods = availableGoods.ToHashSet();
 
             Name = setupInfo.NameGenerator.GenerateName();
 
@@ -63,12 +64,7 @@ namespace Data.Towns
 
             Inventory.AddFunds(setupInfo.InitialFunds);
 
-            var allT1Goods = _goodsConfig.ConfigData
-                .Where(configPair => configPair.Value.Tier == Data.Tier.Tier1)
-                .Select(configPair => configPair.Key)
-                .ToList();
-
-            AddProduction(allT1Goods.GetRandom());
+            AddProduction(AvailableGoods.GetRandom());
         }
 
         public void Tick()

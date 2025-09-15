@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Common;
 using Data;
 using Data.Configuration;
 using NaughtyAttributes;
@@ -24,7 +26,7 @@ namespace Map
 
         public Vector2 Center { get; private set; }
 
-        private void Start()
+        private void Awake()
         {
             _spriteRenderer = gameObject.GetComponent<SpriteShapeRenderer>();
 
@@ -75,6 +77,12 @@ namespace Map
         {
             FindFirstObjectByType<ProductionZoneManager>()?.OnZoneSelected.Invoke(this);
             _spriteRenderer.color = config.SelectedColor;
+        }
+
+        public bool IsAdjacentTo(Vector2Int position, float distanceThreshold)
+        {
+            var points = _spriteController.spline.GetPoints();
+            return points.Any(zonePoint => Vector2.Distance(position, zonePoint) <= distanceThreshold);
         }
     }
 }
