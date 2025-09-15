@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace UI.Popups
 {
-    public sealed class BuySellPopup : MonoBehaviour
+    public sealed class BuySellPopup : Popup
     {
         [SerializeField]
         private UnityEvent<Good, TradeType> tradeInitiated;
@@ -57,16 +57,6 @@ namespace UI.Popups
         {
             Hide();
             tradeInitiated?.Invoke(_good, tradeType);
-        }
-
-        public void Show()
-        {
-            gameObject.SetActive(true);
-        }
-
-        public void Hide()
-        {
-            gameObject.SetActive(false);
         }
 
         public void SetGood(Good good)

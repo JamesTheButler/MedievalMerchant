@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI.Popups
 {
-    public sealed class ProductionZonePopup : MonoBehaviour
+    public sealed class ProductionZonePopup : Popup
     {
         [SerializeField, Required]
         private GameObject zoneGoodPrefab;
@@ -25,16 +25,6 @@ namespace UI.Popups
             var goodObject = Instantiate(zoneGoodPrefab, zoneGoodContainer.transform);
             var zoneGood = goodObject.GetComponent<ZoneGood>();
             zoneGood.SetUp(tier1, tier2);
-        }
-
-        public void Show()
-        {
-            gameObject.SetActive(true);
-        }
-
-        public void Hide()
-        {
-            gameObject.SetActive(false);
         }
     }
 }

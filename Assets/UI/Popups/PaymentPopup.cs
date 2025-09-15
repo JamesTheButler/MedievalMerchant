@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace UI.Popups
 {
-    public sealed class PaymentPopup : MonoBehaviour
+    public sealed class PaymentPopup : Popup
     {
         [SerializeField, Required]
         private Button button;

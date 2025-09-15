@@ -14,7 +14,7 @@ namespace UI.Popups
 
         public void Show(ProductionCell cell)
         {
-            popup.gameObject.SetActive(true);
+            popup.Show();
             popup.transform.position = cell.transform.position;
 
             var town = _selection.Value.SelectedTown;
@@ -23,7 +23,7 @@ namespace UI.Popups
 
         public void Hide()
         {
-            popup.gameObject.SetActive(false);
+            popup.Hide();
         }
     }
 }

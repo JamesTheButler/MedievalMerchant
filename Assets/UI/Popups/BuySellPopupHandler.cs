@@ -30,7 +30,7 @@ namespace UI.Popups
             Selection.Instance.TownSelected += _ => { Reset(); };
         }
 
-        public void Initialize(InventoryCell inventoryCell)
+        public void Initialize(InventoryCellBase inventoryCell)
         {
             Reset();
 
@@ -52,8 +52,9 @@ namespace UI.Popups
             var arr = new Vector3[4];
             cellTransform.GetWorldCorners(arr);
             var cellCenter = arr.Aggregate(Vector3.zero, (curr, next) => curr + next / arr.Length);
-            buySellPopup.transform.position = cellCenter + Vector3.up * yOffset;
 
+            buySellPopup.Show();
+            buySellPopup.transform.position = cellCenter + Vector3.up * yOffset;
             buySellPopup.SetGood(_good);
 
             // can buy and sell?
@@ -63,8 +64,6 @@ namespace UI.Popups
             _player.Location.TownExited += _ => ValidateButtons(); // TODO: need to unbind properly
             _playerInventory.GoodUpdated += OnPlayerGoodUpdated;
             _townInventory.GoodUpdated += OnTownGoodUpdated;
-
-            buySellPopup.Show();
         }
 
         public void Reset()

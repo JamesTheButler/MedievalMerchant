@@ -1,3 +1,4 @@
+using UI.Popups;
 using UnityEngine;
 
 namespace UI
@@ -16,6 +17,13 @@ namespace UI
 
         private void OnCancel()
         {
+            // TODO: this is a bit hacky
+            if (PopupManager.Instance.HasActivePopup)
+            {
+                PopupManager.Instance.ActivePopup.Hide();
+                return;
+            }
+
             escapeMenuRoot.SetActive(!IsActive);
         }
     }

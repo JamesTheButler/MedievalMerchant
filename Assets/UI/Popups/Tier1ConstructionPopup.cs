@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace UI.Popups
 {
-    public sealed class Tier1ConstructionPopup : MonoBehaviour
+    public sealed class Tier1ConstructionPopup : Popup
     {
         [SerializeField]
         private Transform goodGroupParent;
