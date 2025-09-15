@@ -17,6 +17,11 @@ namespace Common
             return source[index];
         }
 
+        public static T GetRandom<T>(this IEnumerable<T> source)
+        {
+            return source.ToList().GetRandom();
+        }
+
         public static string PrettyPrint<TKey, TValue>(this Dictionary<TKey, TValue> dict)
         {
             return "{\n" + string.Join("\n", dict.Select(kvp => $"{kvp.Key}: {kvp.Value}")) + "\n}";

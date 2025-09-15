@@ -95,8 +95,7 @@ namespace Map.Tiling
         private Vector2Int GetCellOnMousePosition()
         {
             var mouseWorldPos = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
-            var gridPos = grid.WorldToCell(mouseWorldPos).XY() - _model.TileFlagMap.Origin;
-
+            var gridPos = grid.WorldToCell(mouseWorldPos).XY();
             return gridPos;
         }
     }

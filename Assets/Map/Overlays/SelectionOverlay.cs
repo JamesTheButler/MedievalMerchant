@@ -11,12 +11,10 @@ namespace Map.Overlays
         private GameObject visuals;
 
         private Selection _selection;
-        private Vector2 _origin;
 
         private void Start()
         {
             _selection = Selection.Instance;
-            _origin = Model.Instance.TileFlagMap.Origin;
 
             _selection.TownSelected += Select;
 
@@ -37,7 +35,7 @@ namespace Map.Overlays
             }
 
             visuals.gameObject.SetActive(true);
-            gameObject.transform.localPosition = town.WorldLocation + _origin;
+            gameObject.transform.localPosition = town.WorldLocation;
         }
     }
 }

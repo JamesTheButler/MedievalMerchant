@@ -8,12 +8,16 @@ namespace Map.Tiling
         public static List<Vector2Int> GetAllCells(this TileFlagMap map, TileType tileType)
         {
             var cells = new List<Vector2Int>();
-            for (var x = 0; x < map.Size.x; x++)
-            for (var y = 0; y < map.Size.y; y++)
+            var min = map.Origin;
+            var max = map.Origin + map.Size;
+
+            for (var x = min.x; x < max.x; x++)
+            for (var y = min.y; y < max.y; y++)
             {
-                if (map.Tiles[x, y].Has(tileType))
+                var xyPos = new Vector2Int(x, y);
+                if (map.HasTile(xyPos, tileType))
                 {
-                    cells.Add(new Vector2Int(x, y));
+                    cells.Add(xyPos);
                 }
             }
 

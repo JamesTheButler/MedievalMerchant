@@ -20,7 +20,7 @@ namespace Map.Overlays
             var model = Model.Instance;
             _growthTrendConfig = ConfigurationManager.Instance.GrowthTrendConfig;
 
-            transform.localPosition = town.WorldLocation + model.TileFlagMap.Origin;
+            transform.localPosition = town.WorldLocation;
 
             _town.GrowthTrend.Observe(OnGrowthTrendChanged);
             OnGrowthTrendChanged(town.GrowthTrend);

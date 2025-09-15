@@ -10,8 +10,8 @@ namespace Map.Tiling
         public static TileFlagMap Scan(Tilemap tilemap)
         {
             tilemap.CompressBounds();
-            var size = tilemap.cellBounds.size; //- new Vector3Int(2, 2, 0); // subtract frame width
-            var origin = tilemap.cellBounds.position; //- new Vector3Int(1, 1, 0);
+            var size = tilemap.cellBounds.size; // - new Vector3Int(2, 2, 0); // subtract frame width?
+            var origin = tilemap.cellBounds.position;
 
             var flagMap = new TileFlagMap(size.XY(), origin.XY());
 
@@ -26,7 +26,7 @@ namespace Map.Tiling
 
                 if (tileType == null) continue;
 
-                flagMap.Tiles[x, y].AddType(tileType.Value);
+                flagMap.AddType(pos.XY(), tileType.Value);
             }
 
             return flagMap;

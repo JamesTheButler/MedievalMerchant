@@ -16,13 +16,11 @@ namespace Map.Overlays
         private GameObject townOverlay;
 
         private PlayerLocation _playerLocation;
-        private Vector2 _origin;
         private float _zLevel;
 
         private void Start()
         {
             _playerLocation = Model.Instance.Player.Location;
-            _origin = Model.Instance.TileFlagMap.Origin;
             _zLevel = gameObject.transform.position.z;
 
             _playerLocation.TownEntered += OnTownEntered;
@@ -43,7 +41,7 @@ namespace Map.Overlays
         {
             if (_playerLocation.CurrentTown != null) return;
 
-            gameObject.transform.localPosition = (worldLocation + _origin).FromXY(_zLevel);
+            gameObject.transform.localPosition = worldLocation.FromXY(_zLevel);
         }
 
         private void OnTownEntered(Town town)
@@ -56,7 +54,7 @@ namespace Map.Overlays
 
             townOverlay.SetActive(true);
             worldOverlay.SetActive(false);
-            gameObject.transform.localPosition = (town.WorldLocation + _origin).FromXY(_zLevel);
+            gameObject.transform.localPosition = town.WorldLocation.FromXY(_zLevel);
         }
 
         private void OnTownExited(Town town)
