@@ -10,26 +10,19 @@ namespace Data.Towns
 {
     public sealed class Town
     {
+        // TODO: should come from config file
+        private const int BaseFundsPerTick = 20;
+
         private readonly DevelopmentConfig _developmentConfig;
         private readonly Producer _producer;
         private readonly TierBasedInventoryPolicy _inventoryPolicy;
         private readonly GrowthTrendConfig _growthConfig;
         private readonly GoodsConfig _goodsConfig;
 
-        // TODO: should come from config file
-        private const int ProductionLimit = 50;
-        private const int BaseFundsPerTick = 20;
-
-        public event Action<Good> ProductionAdded
-        {
-            add => _producer.GoodAdded += value;
-            remove => _producer.GoodAdded -= value;
-        }
-
         public Inventory Inventory { get; }
         public string Name { get; }
         public Vector2Int GridLocation { get; }
-        public Vector2 WorldLocation { get; }       
+        public Vector2 WorldLocation { get; }
         public HashSet<Good> AvailableGoods { get; }
 
         public Observable<Tier> Tier { get; } = new();
@@ -37,11 +30,14 @@ namespace Data.Towns
         public Observable<float> DevelopmentTrend { get; } = new();
         public Observable<GrowthTrend> GrowthTrend { get; } = new();
 
-        public IEnumerable<Good> Production => _producer.ProducedGoods;
+        public Producer Producer => _producer;
 
         private DevelopmentTable _developmentTable;
 
-        public Town(TownSetupInfo setupInfo, Vector2Int gridLocation, Vector2 worldLocation, IEnumerable<Good> availableGoods)
+        public Town(TownSetupInfo setupInfo,
+            Vector2Int gridLocation,
+            Vector2 worldLocation,
+            IEnumerable<Good> availableGoods)
         {
             _inventoryPolicy = new TierBasedInventoryPolicy();
 
@@ -60,11 +56,11 @@ namespace Data.Towns
 
             // initial funds and goods
             Inventory = new Inventory(_inventoryPolicy);
-            _producer = new Producer(Inventory);
+            _producer = new Producer(this);
 
             Inventory.AddFunds(setupInfo.InitialFunds);
 
-            AddProduction(AvailableGoods.GetRandom());
+            AddProduction(AvailableGoods.GetRandom(), 0);
         }
 
         public void Tick()
@@ -74,9 +70,9 @@ namespace Data.Towns
             Consume();
         }
 
-        public void AddProduction(Good good)
+        public void AddProduction(Good good, int index)
         {
-            _producer.AddProduction(good, ProductionLimit);
+            _producer.AddProducer(good, index);
         }
 
         public void Upgrade()

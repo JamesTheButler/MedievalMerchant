@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
@@ -6,7 +7,7 @@ namespace Common
 {
     public static class CollectionExtensions
     {
-        public static T GetRandom<T>(this IList<T> source)
+        public static T? GetRandom<T>(this IList<T>? source)
         {
             if (source == null || source.Count == 0)
             {
@@ -17,7 +18,7 @@ namespace Common
             return source[index];
         }
 
-        public static T GetRandom<T>(this IEnumerable<T> source)
+        public static T? GetRandom<T>(this IEnumerable<T> source)
         {
             return source.ToList().GetRandom();
         }
@@ -25,6 +26,16 @@ namespace Common
         public static string PrettyPrint<TKey, TValue>(this Dictionary<TKey, TValue> dict)
         {
             return "{\n" + string.Join("\n", dict.Select(kvp => $"{kvp.Key}: {kvp.Value}")) + "\n}";
+        }
+
+        public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T?> source) where T : struct
+        {
+            return source.Where(item => item != null).Cast<T>();
+        }
+
+        public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T?> source) where T : class
+        {
+            return source.Where(item => item != null).Cast<T>();
         }
     }
 }

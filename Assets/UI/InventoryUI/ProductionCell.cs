@@ -1,19 +1,20 @@
+using System;
 using Data;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace UI.InventoryUI
 {
     public sealed class ProductionCell : InventoryCellBase
     {
-        [SerializeField]
-        public UnityEvent unlockButtonClicked;
+        public event Action UnlockButtonClicked;
 
         [SerializeField]
         private Button unlockButton;
 
-        private void Start()
+        public int Index { get; set; }
+        
+        private void Awake()
         {
             Lock();
         }
@@ -42,8 +43,7 @@ namespace UI.InventoryUI
 
         public void InvokeUnlockButtonClicked()
         {
-            unlockButtonClicked?.Invoke();
-            Unlock();
+            UnlockButtonClicked?.Invoke();
         }
     }
 }

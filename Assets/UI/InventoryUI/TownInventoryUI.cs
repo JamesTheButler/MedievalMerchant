@@ -17,7 +17,10 @@ namespace UI.InventoryUI
     public sealed class TownInventoryUI : MonoBehaviour
     {
         [SerializeField]
-        private UnityEvent<InventoryCell> inventoryCellClicked;
+        private UnityEvent<InventoryCellBase> inventoryCellClicked;
+
+        [SerializeField]
+        private UnityEvent<ProductionCell> upgradeButtonClicked;
 
         [SerializeField]
         private UnityEvent<Town> travelButtonClicked;
@@ -45,17 +48,18 @@ namespace UI.InventoryUI
         private Town _boundTown;
         private Inventory _boundInventory;
 
-        private readonly Lazy<Model> _model = new(() => Model.Instance);
-
         private readonly Lazy<GrowthTrendConfig> _growthConfig =
             new(() => ConfigurationManager.Instance.GrowthTrendConfig);
+
+        private readonly Lazy<GoodsConfig> _goodsConfig =
+            new(() => ConfigurationManager.Instance.GoodsConfig);
 
         public void Initialize()
         {
             foreach (var section in inventorySections.Values)
             {
-                // TODO: implement again
-                //section.CellClicked += InvokeCellClicked;
+                section.UpgradeButtonClicked += productionCell => upgradeButtonClicked.Invoke(productionCell);
+                section.InventoryCellClicked += productionCell => inventoryCellClicked.Invoke(productionCell);
             }
         }
 
@@ -99,28 +103,26 @@ namespace UI.InventoryUI
 
             // don't invoke directly as we want to go through all tiers manually in the right order
             _boundTown.Tier.Observe(TownUpgrade, false);
-            // upgrade each tier until current tier is reached
-            for (var i = Tier.Tier1; i <= _boundTown.Tier; i++)
+            for (var tier = Tier.Tier1; tier <= _boundTown.Tier; tier++)
             {
-                TownUpgrade(i);
+                ShowSection(tier);
             }
+
+            RefreshTownName(_boundTown.Tier);
 
             _boundTown.DevelopmentScore.Observe(UpdateDevelopmentScore);
             _boundTown.DevelopmentTrend.Observe(UpdateDevelopmentTrend);
             _boundTown.GrowthTrend.Observe(UpdateGrowthTrend);
-            
-            foreach (var townInventorySection in inventorySections.Values)
-            {
-                townInventorySection.Bind(town);
-            }
         }
 
         private void BindInventory(Inventory inventory)
         {
-            ResetInventorySections();
-
             HideSection(Tier.Tier2);
             HideSection(Tier.Tier3);
+
+            SetUpInventorySections();
+
+            _boundTown.Producer.ProductionAdded += UnlockProducer;
 
             inventory.GoodUpdated += OnGoodUpdated;
             inventory.Funds.Observe(OnFundsUpdated);
@@ -152,9 +154,9 @@ namespace UI.InventoryUI
 
         private void UnbindInventory()
         {
-            fundsText.text = "0";
-
             ResetInventorySections();
+
+            fundsText.text = "0";
 
             if (_boundInventory == null) return;
 
@@ -167,13 +169,36 @@ namespace UI.InventoryUI
         {
             foreach (var section in inventorySections.Values)
             {
-                section.Clear();
+                section.Reset();
             }
+        }
+
+        private void SetUpInventorySections()
+        {
+            // go through each section and unlock the production buildings
+            foreach (var good in _boundTown.Producer.AllProducers)
+            {
+                UnlockProducer(good);
+            }
+        }
+
+        private void UnlockProducer(Good good)
+        {
+            var goodConfigData = _goodsConfig.Value.ConfigData;
+            var goodTier = goodConfigData[good].Tier;
+            var index = _boundTown.Producer.GetIndexOfProducedGood(good);
+            var section = inventorySections[goodTier];
+            section.UnlockProductionCell(index, good);
+        }
+
+        private void RefreshTownName(Tier tier)
+        {
+            townNameText.text = $"{_boundTown.Name} ({tier.ToRomanNumeral()})";
         }
 
         private void TownUpgrade(Tier tier)
         {
-            townNameText.text = $"{_boundTown.Name} ({tier.ToRomanNumeral()})";
+            RefreshTownName(tier);
             ShowSection(tier);
         }
 
@@ -211,12 +236,17 @@ namespace UI.InventoryUI
         private void OnGoodUpdated(Good good, int amount)
         {
             var tier = ConfigurationManager.Instance.GoodsConfig.ConfigData[good].Tier;
-            inventorySections[tier].UpdateGood(good, amount);
-        }
+            var isProduced = _boundTown.Producer.IsProduced(good);
 
-        private void InvokeCellClicked(InventoryCell cell)
-        {
-            inventoryCellClicked?.Invoke(cell);
+            if (isProduced)
+            {
+                var cellIndex = _boundTown.Producer.GetIndexOfProducedGood(good);
+                inventorySections[tier].UpdateProducedGood(good, amount, cellIndex);
+            }
+            else
+            {
+                inventorySections[tier].UpdateForeignGood(good, amount);
+            }
         }
     }
 }

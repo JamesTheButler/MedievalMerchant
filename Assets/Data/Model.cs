@@ -33,7 +33,6 @@ namespace Data
             }
 
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 }

@@ -40,7 +40,6 @@ namespace Data.Configuration
             }
 
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 }
