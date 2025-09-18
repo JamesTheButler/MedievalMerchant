@@ -96,7 +96,7 @@ namespace Data.Towns
             if (limit != null)
                 return limit.Value;
 
-            Debug.LogError($"No production rate is set for {townTier} and {goodTier}.");
+            Debug.LogError($"No production limit is set for town {townTier} and good {goodTier}.");
             return 0;
         }
 
@@ -107,7 +107,7 @@ namespace Data.Towns
             if (productionRate != null)
                 return Mathf.RoundToInt(productionRate.Value * _multiplier);
 
-            Debug.LogError($"No production rate is set for {townTier} and {goodTier}.");
+            Debug.LogError($"No production rate is set for town {townTier} and good {goodTier}.");
             return 0;
         }
 

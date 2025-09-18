@@ -9,6 +9,9 @@ namespace Data.Configuration
         menuName = AssetMenu.ConfigDataFolder + nameof(TownConfig))]
     public sealed class TownConfig : ScriptableObject
     {
+        [field: SerializeField, SerializedDictionary("Town Tier", "Funds Per Tick")]
+        public SerializedDictionary<Tier, int> FundRate { get; private set; }
+
         [Header("Consumption Rates")]
         [SerializeField, SerializedDictionary("Good Tier", "Consumption Rate")]
         private SerializedDictionary<Tier, int> tier1ConsumptionRate;

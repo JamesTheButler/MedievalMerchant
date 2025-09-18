@@ -10,12 +10,11 @@ namespace Data.Towns
 {
     public sealed class Town
     {
-        // TODO: should come from config file
-        private const int BaseFundsPerTick = 20;
-
         private readonly DevelopmentConfig _developmentConfig;
         private readonly TierBasedInventoryPolicy _inventoryPolicy;
         private readonly GrowthTrendConfig _growthConfig;
+        private readonly TownConfig _townConfig;
+        private readonly GoodsConfig _goodsConfig;
 
         public Observable<Tier> Tier { get; } = new();
         public Observable<float> DevelopmentScore { get; } = new();
@@ -42,6 +41,8 @@ namespace Data.Towns
             WorldLocation = worldLocation;
             _developmentConfig = ConfigurationManager.Instance.DevelopmentConfig;
             _growthConfig = ConfigurationManager.Instance.GrowthTrendConfig;
+            _townConfig = ConfigurationManager.Instance.TownConfig;
+            _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             AvailableGoods = availableGoods.ToHashSet();
 
             Name = setupInfo.NameGenerator.GenerateName();
@@ -100,6 +101,7 @@ namespace Data.Towns
 
         private void Produce()
         {
+            var townTier = Tier.Value;
             // update production multiplier
             var multiplier = DevelopmentScore.Value switch
             {
@@ -107,19 +109,33 @@ namespace Data.Towns
                 > 80 => 2f,
                 _ => 1f,
             };
-            Producer.SetProductionMultiplier(multiplier * (float)Tier.Value);
+            Producer.SetProductionMultiplier(multiplier);
             Producer.Produce();
 
             // if development trend is positive, add funds
             var trendFundMultiplier = DevelopmentTrend > 0 ? DevelopmentTrend : 1f;
-            Inventory.AddFunds((int)(BaseFundsPerTick * (int)Tier.Value * trendFundMultiplier));
+            var fundsPerTick = _townConfig.FundRate[townTier];
+            Inventory.AddFunds(Mathf.RoundToInt(fundsPerTick * trendFundMultiplier));
         }
 
         private void Consume()
         {
+            var townTier = Tier.Value;
             foreach (var good in Inventory.Goods.Keys.ToList())
             {
-                Inventory.RemoveGood(good, 1);
+                // don't consume goods that are produced
+                if (Producer.IsProduced(good)) continue;
+
+                var goodTier = _goodsConfig.ConfigData[good].Tier;
+                var consumptionRate = _townConfig.GetConsumptionRate(townTier, goodTier);
+
+                if (consumptionRate == null)
+                {
+                    Debug.LogError($"No consumption rate is set for town {townTier} and good {goodTier}.");
+                    continue;
+                }
+
+                Inventory.RemoveGood(good, consumptionRate.Value);
             }
         }
 
