@@ -67,19 +67,6 @@ namespace Data.Towns
             Consume();
         }
 
-        // TODO: use config
-        // TODO: be progressive per tier (i.e. Tier1.1: 250, Tier1.2: 500, etc.
-        public int? Get(Tier buildingTier)
-        {
-            return buildingTier switch
-            {
-                Data.Tier.Tier1 => 250,
-                Data.Tier.Tier2 => 500,
-                Data.Tier.Tier3 => 1000,
-                _ => null
-            };
-        }
-
         public void AddProduction(Good good, int index)
         {
             Producer.AddProducer(good, index);
