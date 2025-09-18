@@ -43,6 +43,7 @@ namespace UI.InventoryUI
 
         public void InvokeUnlockButtonClicked()
         {
+            tooltipHandler.SetEnabled(false);
             UnlockButtonClicked?.Invoke();
         }
     }
