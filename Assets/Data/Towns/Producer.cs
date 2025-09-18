@@ -11,17 +11,7 @@ namespace Data.Towns
     {
         public event Action<Good> ProductionAdded;
 
-        // TODO: config file
-        private const int BaseProduction = 4;
-
-        // TODO: config file
-        private readonly Dictionary<Tier, int> _productionLimits = new()
-        {
-            { Tier.Tier1, 100 },
-            { Tier.Tier2, 150 },
-            { Tier.Tier3, 200 },
-        };
-
+        private readonly ProducerConfig _producerConfig;
         private readonly Town _town;
         private readonly Good?[] _tier1Producers = new Good?[3];
         private readonly Good?[] _tier2Producers = new Good?[3];
@@ -32,6 +22,7 @@ namespace Data.Towns
         public Producer(Town town)
         {
             _town = town;
+            _producerConfig = ConfigurationManager.Instance.ProducerConfig;
         }
 
         public IEnumerable<Good> AllProducers => _tier1Producers
@@ -98,21 +89,26 @@ namespace Data.Towns
             _multiplier = multiplier;
         }
 
-        // TODO: should come from config file
         private int GetProductionLimit(Tier townTier, Good good)
         {
-            // TODO: should have different limits based on town and good tier
-            //  T1 town: 50xT1
-            //  T2 town: 100xT1, 25xT2
-            //  T3 town: 150xT1, 50xT2, 25xT3
-            return _productionLimits[townTier];
+            var goodTier = _goodsConfig.ConfigData[good].Tier;
+            var limit = _producerConfig.GetLimit(townTier, goodTier);
+            if (limit != null)
+                return limit.Value;
+
+            Debug.LogError($"No production rate is set for {townTier} and {goodTier}.");
+            return 0;
         }
 
-        // TODO: should come from config file
         private int GetProduction(Tier townTier, Good good)
         {
-            // TODO: should have different productions based on town and good tier
-            return (int)(BaseProduction * _multiplier);
+            var goodTier = _goodsConfig.ConfigData[good].Tier;
+            var productionRate = _producerConfig.GetProductionRate(townTier, goodTier);
+            if (productionRate != null)
+                return Mathf.RoundToInt(productionRate.Value * _multiplier);
+
+            Debug.LogError($"No production rate is set for {townTier} and {goodTier}.");
+            return 0;
         }
 
         private IReadOnlyDictionary<Good, int> GetProductions()
@@ -120,7 +116,7 @@ namespace Data.Towns
             return GetProduction(_tier1Producers, Tier.Tier1)
                 .Concat(GetProduction(_tier2Producers, Tier.Tier2))
                 .Concat(GetProduction(_tier3Producers, Tier.Tier3))
-                .ToDictionary(x => x.Key, x => x.Value);
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         private IReadOnlyDictionary<Good, int> GetProduction(Good?[] producers, Tier tier)
