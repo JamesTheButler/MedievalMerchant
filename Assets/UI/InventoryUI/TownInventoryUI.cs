@@ -7,13 +7,15 @@ using Data.Towns;
 using Data.Trade;
 using NaughtyAttributes;
 using TMPro;
+using UI.Popups;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI.InventoryUI
 {
-    public sealed class TownInventoryUI : MonoBehaviour
+    public sealed class TownInventoryUI : MonoBehaviour, IPointerClickHandler
     {
         [Header("Events")]
         [SerializeField]
@@ -247,6 +249,11 @@ namespace UI.InventoryUI
             {
                 inventorySections[tier].UpdateForeignGood(good, amount);
             }
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            PopupManager.Instance.HideActive();
         }
     }
 }

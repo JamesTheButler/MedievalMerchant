@@ -5,12 +5,14 @@ using Data.Configuration;
 using Data.Trade;
 using NaughtyAttributes;
 using TMPro;
+using UI.Popups;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 namespace UI.InventoryUI
 {
-    public class PlayerInventoryUI : MonoBehaviour
+    public class PlayerInventoryUI : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField]
         private UnityEvent<InventoryCell> inventoryCellClicked;
@@ -137,6 +139,11 @@ namespace UI.InventoryUI
         private void InvokeCellClicked(InventoryCell cell)
         {
             inventoryCellClicked?.Invoke(cell);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            PopupManager.Instance.HideActive();
         }
     }
 }
