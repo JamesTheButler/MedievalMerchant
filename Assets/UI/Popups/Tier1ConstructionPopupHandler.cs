@@ -18,7 +18,7 @@ namespace UI.Popups
             popup.transform.position = cell.transform.position;
 
             var town = _selection.Value.SelectedTown;
-            popup.Setup(town, 1000, cell.Index);
+            popup.Setup(town, cell.Index);
         }
 
         public void Hide()

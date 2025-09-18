@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Common;
 using Data;
 using Data.Configuration;
 using Data.Towns;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,33 +21,70 @@ namespace UI.Popups
         private Button costButton;
 
         private readonly Lazy<RecipeConfig> _recipeConfig = new(() => ConfigurationManager.Instance.RecipeConfig);
+        private readonly Lazy<Colors> _colors = new(() => ConfigurationManager.Instance.Colors);
+        private readonly Lazy<Player> _player = new(() => Model.Instance.Player);
+        private readonly Lazy<ProducerConfig> _producerConfig = new(() => ConfigurationManager.Instance.ProducerConfig);
+
         private readonly Dictionary<BuildTier1PopupGroup, Action> _clickHandlers = new();
 
         private BuildTier1PopupGroup _selectedGroup;
-
         private Town _town;
+        private int _cost;
 
-        public void Setup(Town town, int cost, int cellIndex)
+        private void OnPlayerFundsChanged(int playerFunds)
         {
-            Unbind();
-            Bind(town, cost, cellIndex);
+            if (_town == null)
+            {
+                Debug.LogError($"{nameof(Tier1ConstructionPopup)} shouldn't observe player right now. No town set up.");
+                return;
+            }
+
+            var isInteractable = playerFunds >= _cost;
+            UpdateButtonState(isInteractable);
         }
 
-        private void Bind(Town town, int cost, int cellIndex)
+        private void UpdateButtonState(bool isInteractable)
+        {
+            // button state is right already
+            if (costButton.interactable == isInteractable)
+                return;
+
+            costButton.interactable = isInteractable;
+            costButton.GetText().color = isInteractable ? _colors.Value.FontDark : _colors.Value.Bad;
+        }
+
+        public void Setup(Town town, int cellIndex)
+        {
+            Unbind();
+            Bind(town, cellIndex);
+        }
+
+        private void Bind(Town town, int cellIndex)
         {
             _town = town;
 
-            costButton.GetText().text = cost.ToString("N0");
+            var productionBuildingCount = _town.Producer.GetProducerCount(Tier.Tier1);
+            var cost = _producerConfig.Value.GetUpgradeCost(Tier.Tier1, productionBuildingCount);
+            if (cost == null)
+            {
+                Debug.LogError($"The town has no more empty building slots for {Tier.Tier1}.");
+                return;
+            }
 
-            // TODO: bind to town funds to update button clickability
+            _cost = cost.Value;
+
+            costButton.GetText().text = _cost.ToString("N0");
+
             // TODO: disable button if no group is selected
             costButton.onClick.AddListener(() =>
             {
                 if (_selectedGroup == null) return;
                 town.AddProduction(_selectedGroup.Tier1Good, cellIndex);
-                town.Inventory.RemoveFunds(cost);
+                _player.Value.Inventory.RemoveFunds(_cost);
                 Hide();
             });
+
+            _player.Value.Inventory.Funds.Observe(OnPlayerFundsChanged);
 
             var recipes = _recipeConfig.Value.Tier2Recipes;
             foreach (var good in town.AvailableGoods)
@@ -72,6 +106,7 @@ namespace UI.Popups
             if (_town == null)
                 return;
 
+            _player.Value.Inventory.Funds.StopObserving(OnPlayerFundsChanged);
             costButton.onClick.RemoveAllListeners();
 
             foreach (var (group, handler) in _clickHandlers)

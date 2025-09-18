@@ -46,7 +46,7 @@ namespace Common
 
         public override string ToString()
         {
-            return $"Observable <{Value}>";
+            return $">{Value}<";
         }
     }
 }

@@ -14,23 +14,20 @@ namespace Data.Towns
         private const int BaseFundsPerTick = 20;
 
         private readonly DevelopmentConfig _developmentConfig;
-        private readonly Producer _producer;
         private readonly TierBasedInventoryPolicy _inventoryPolicy;
         private readonly GrowthTrendConfig _growthConfig;
-        private readonly GoodsConfig _goodsConfig;
-
-        public Inventory Inventory { get; }
-        public string Name { get; }
-        public Vector2Int GridLocation { get; }
-        public Vector2 WorldLocation { get; }
-        public HashSet<Good> AvailableGoods { get; }
 
         public Observable<Tier> Tier { get; } = new();
         public Observable<float> DevelopmentScore { get; } = new();
         public Observable<float> DevelopmentTrend { get; } = new();
         public Observable<GrowthTrend> GrowthTrend { get; } = new();
 
-        public Producer Producer => _producer;
+        public Inventory Inventory { get; }
+        public string Name { get; }
+        public Vector2Int GridLocation { get; }
+        public Vector2 WorldLocation { get; }
+        public HashSet<Good> AvailableGoods { get; }
+        public Producer Producer { get; }
 
         private DevelopmentTable _developmentTable;
 
@@ -43,7 +40,6 @@ namespace Data.Towns
 
             GridLocation = gridLocation;
             WorldLocation = worldLocation;
-            _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             _developmentConfig = ConfigurationManager.Instance.DevelopmentConfig;
             _growthConfig = ConfigurationManager.Instance.GrowthTrendConfig;
             AvailableGoods = availableGoods.ToHashSet();
@@ -56,7 +52,7 @@ namespace Data.Towns
 
             // initial funds and goods
             Inventory = new Inventory(_inventoryPolicy);
-            _producer = new Producer(this);
+            Producer = new Producer(this);
 
             Inventory.AddFunds(setupInfo.InitialFunds);
 
@@ -70,9 +66,22 @@ namespace Data.Towns
             Consume();
         }
 
+        // TODO: use config
+        // TODO: be progressive per tier (i.e. Tier1.1: 250, Tier1.2: 500, etc.
+        public int? Get(Tier buildingTier)
+        {
+            return buildingTier switch
+            {
+                Data.Tier.Tier1 => 250,
+                Data.Tier.Tier2 => 500,
+                Data.Tier.Tier3 => 1000,
+                _ => null
+            };
+        }
+
         public void AddProduction(Good good, int index)
         {
-            _producer.AddProducer(good, index);
+            Producer.AddProducer(good, index);
         }
 
         public void Upgrade()
@@ -98,8 +107,8 @@ namespace Data.Towns
                 > 80 => 2f,
                 _ => 1f,
             };
-            _producer.SetProductionMultiplier(multiplier * (float)Tier.Value);
-            _producer.Produce();
+            Producer.SetProductionMultiplier(multiplier * (float)Tier.Value);
+            Producer.Produce();
 
             // if development trend is positive, add funds
             var trendFundMultiplier = DevelopmentTrend > 0 ? DevelopmentTrend : 1f;

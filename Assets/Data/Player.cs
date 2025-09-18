@@ -35,7 +35,7 @@ namespace Data
             Upgrades.Add(upgrade);
             UpgradeAdded?.Invoke(upgrade);
 
-            var tier = upgrade switch
+            Tier? tier = upgrade switch
             {
                 PlayerUpgrade.Tier1Slots3 => Tier.Tier1,
                 PlayerUpgrade.Tier1Slots6 => Tier.Tier1,
@@ -45,9 +45,12 @@ namespace Data
                 PlayerUpgrade.Tier2Slots6 => Tier.Tier2,
                 PlayerUpgrade.Tier3Slots3 => Tier.Tier3,
                 PlayerUpgrade.Tier3Slots6 => Tier.Tier3,
+                _ => null
             };
 
-            _inventoryPolicy.AddSlots(tier, 3);
+            if (tier == null) return;
+
+            _inventoryPolicy.AddSlots(tier.Value, 3);
         }
     }
 }

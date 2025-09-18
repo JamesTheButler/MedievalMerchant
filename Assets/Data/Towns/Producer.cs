@@ -22,13 +22,12 @@ namespace Data.Towns
             { Tier.Tier3, 200 },
         };
 
+        private readonly Town _town;
         private readonly Good?[] _tier1Producers = new Good?[3];
         private readonly Good?[] _tier2Producers = new Good?[3];
         private readonly Good?[] _tier3Producers = new Good?[3];
 
         private float _multiplier = 1f;
-
-        private readonly Town _town;
 
         public Producer(Town town)
         {

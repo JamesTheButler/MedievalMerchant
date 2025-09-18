@@ -27,9 +27,12 @@ namespace Data.Configuration
 
         [field: SerializeField, Required]
         public RecipeConfig RecipeConfig { get; private set; }
-        
+
         [field: SerializeField, Required]
         public TierIconConfig TierIconConfig { get; private set; }
+
+        [field: SerializeField, Required]
+        public ProducerConfig ProducerConfig { get; private set; }
 
         private void Awake()
         {
