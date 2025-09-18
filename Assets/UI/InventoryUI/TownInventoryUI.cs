@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using AYellowpaper.SerializedCollections;
 using Common;
 using Data;
@@ -16,6 +15,7 @@ namespace UI.InventoryUI
 {
     public sealed class TownInventoryUI : MonoBehaviour
     {
+        [Header("Events")]
         [SerializeField]
         private UnityEvent<InventoryCellBase> inventoryCellClicked;
 

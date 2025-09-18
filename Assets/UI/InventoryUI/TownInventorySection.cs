@@ -47,6 +47,7 @@ namespace UI.InventoryUI
                 _productionCells.Add(productionCell);
                 productionCell.Index = i;
                 i++;
+                productionCell.Update(null, 0);
                 productionCell.UnlockButtonClicked += () => UpgradeButtonClicked?.Invoke(productionCell);
                 productionCell.Clicked += () => InventoryCellClicked?.Invoke(productionCell);
             }
@@ -54,6 +55,7 @@ namespace UI.InventoryUI
             foreach (var inventoryCell in GetComponentsInChildren<InventoryCell>())
             {
                 _inventoryCells.Add(inventoryCell);
+                inventoryCell.Update(null, 0);
                 inventoryCell.Clicked += () => InventoryCellClicked?.Invoke(inventoryCell);
             }
         }

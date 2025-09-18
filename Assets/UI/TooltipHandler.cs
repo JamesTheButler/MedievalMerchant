@@ -1,3 +1,4 @@
+using Common;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,6 +9,9 @@ namespace UI
     {
         [SerializeField, Required]
         private GameObject toolTipPrefab;
+
+        [SerializeField]
+        private float offset = 8f;
 
         private Tooltip _activeToolTip;
         private bool _isEnabled;
@@ -49,7 +53,8 @@ namespace UI
                 _activeToolTip.SetText(_text);
             }
 
-            _activeToolTip.transform.position = eventData.position;
+            var topCenter = ((RectTransform)gameObject.transform).GetTopCenter();
+            _activeToolTip.transform.position = topCenter + new Vector3(0, offset, 0);
         }
 
         public void OnPointerExit(PointerEventData eventData)

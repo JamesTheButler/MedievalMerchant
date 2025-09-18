@@ -25,6 +25,8 @@ namespace UI.Popups
         private Image isBuiltImage;
 
         public Good Tier1Good { get; private set; }
+
+        private bool _isAlreadyBuilt;
         
         public void Setup(Good tier1Good, Good tier2Good, bool isAlreadyBuilt)
         {
@@ -32,7 +34,7 @@ namespace UI.Popups
             tier1GoodIcon.SetGood(tier1Good);
             tier2GoodIcon.SetGood(tier2Good);
             isBuiltImage.enabled = isAlreadyBuilt;
-            // TODO: isAlreadyBuilt should make the group unclickable and add a tooltip saying (already built)
+            
             Deselect(); // initially, it shouldn't be selected
         }
 
@@ -48,6 +50,7 @@ namespace UI.Popups
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (_isAlreadyBuilt) return;
             Clicked?.Invoke();
         }
     }
