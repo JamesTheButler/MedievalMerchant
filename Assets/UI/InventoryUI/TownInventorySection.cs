@@ -99,7 +99,9 @@ namespace UI.InventoryUI
 
             foreach (var productionCell in _productionCells)
             {
+                productionCell.EnableUpgradeButton(false);
                 productionCell.Lock();
+                productionCell.Update(null, 0);
             }
         }
 

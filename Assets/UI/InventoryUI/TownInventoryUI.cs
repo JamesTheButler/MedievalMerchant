@@ -160,6 +160,9 @@ namespace UI.InventoryUI
             _boundTown.DevelopmentScore.StopObserving(UpdateDevelopmentScore);
             _boundTown.DevelopmentTrend.StopObserving(UpdateDevelopmentTrend);
             _boundTown.GrowthTrend.StopObserving(UpdateGrowthTrend);
+
+            _boundTown.Producer.ProductionAdded -= OnProducerAdded;
+
             _boundTown = null;
         }
 
@@ -171,7 +174,6 @@ namespace UI.InventoryUI
 
             if (_boundInventory == null) return;
 
-            _boundTown.Producer.ProductionAdded -= OnProducerAdded;
             _boundInventory.GoodUpdated -= OnGoodUpdated;
             _boundInventory.Funds.StopObserving(OnFundsUpdated);
             _boundInventory = null;
@@ -194,7 +196,7 @@ namespace UI.InventoryUI
             }
 
             inventorySections[Tier.Tier1].EnableProductionCellUpgradeButtons(true);
-            
+
             _boundTown.Producer.ProductionAdded += OnProducerAdded;
         }
 
@@ -218,7 +220,7 @@ namespace UI.InventoryUI
 
                 case Tier.Tier2:
                     break;
-                
+
                 case Tier.Tier3:
                     // TBD
                     break;
@@ -271,6 +273,12 @@ namespace UI.InventoryUI
 
         private void OnGoodUpdated(Good good, int amount)
         {
+            if (_boundTown == null)
+            {
+                Debug.LogError($"{nameof(OnGoodUpdated)} was called while no town was bound");
+                return;
+            }
+
             var tier = ConfigurationManager.Instance.GoodsConfig.ConfigData[good].Tier;
             var isProduced = _boundTown.Producer.IsProduced(good);
 
