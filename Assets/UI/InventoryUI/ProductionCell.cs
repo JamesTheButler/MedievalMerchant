@@ -28,6 +28,11 @@ namespace UI.InventoryUI
             }
         }
 
+        public void EnableUpgradeButton(bool isEnabled)
+        {
+            unlockButton.interactable = isEnabled;
+        }
+        
         public void Unlock()
         {
             unlockButton.gameObject.SetActive(false);

@@ -38,8 +38,8 @@ namespace Data.Configuration
             var limitDict = townTier switch
             {
                 Tier.Tier1 => tier1TownProduction,
-                Tier.Tier2 => tier1TownProduction,
-                Tier.Tier3 => tier1TownProduction,
+                Tier.Tier2 => tier2TownProduction,
+                Tier.Tier3 => tier3TownProduction,
                 _ => throw new ArgumentOutOfRangeException(nameof(townTier), townTier, null)
             };
 

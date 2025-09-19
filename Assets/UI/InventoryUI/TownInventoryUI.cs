@@ -68,6 +68,7 @@ namespace UI.InventoryUI
             {
                 section.InventoryCellClicked += productionCell => inventoryCellClicked.Invoke(productionCell);
             }
+
             inventorySections[Tier.Tier1].UpgradeButtonClicked += tier1UpgradeButtonClicked.Invoke;
             inventorySections[Tier.Tier2].UpgradeButtonClicked += tier2UpgradeButtonClicked.Invoke;
             inventorySections[Tier.Tier3].UpgradeButtonClicked += tier3UpgradeButtonClicked.Invoke;
@@ -132,7 +133,7 @@ namespace UI.InventoryUI
 
             SetUpInventorySections();
 
-            _boundTown.Producer.ProductionAdded += UnlockProducer;
+            _boundTown.Producer.ProductionAdded += OnProducerAdded;
 
             inventory.GoodUpdated += OnGoodUpdated;
             inventory.Funds.Observe(OnFundsUpdated);
@@ -170,6 +171,7 @@ namespace UI.InventoryUI
 
             if (_boundInventory == null) return;
 
+            _boundTown.Producer.ProductionAdded -= OnProducerAdded;
             _boundInventory.GoodUpdated -= OnGoodUpdated;
             _boundInventory.Funds.StopObserving(OnFundsUpdated);
             _boundInventory = null;
@@ -188,17 +190,41 @@ namespace UI.InventoryUI
             // go through each section and unlock the production buildings
             foreach (var good in _boundTown.Producer.AllProducers)
             {
-                UnlockProducer(good);
+                OnProducerAdded(good);
             }
+
+            inventorySections[Tier.Tier1].EnableProductionCellUpgradeButtons(true);
+            
+            _boundTown.Producer.ProductionAdded += OnProducerAdded;
         }
 
-        private void UnlockProducer(Good good)
+        private void OnProducerAdded(Good good)
         {
             var goodConfigData = _goodsConfig.Value.ConfigData;
             var goodTier = goodConfigData[good].Tier;
             var index = _boundTown.Producer.GetIndexOfProducedGood(good);
             var section = inventorySections[goodTier];
             section.UnlockProductionCell(index, good);
+
+            switch (goodTier)
+            {
+                case Tier.Tier1:
+                {
+                    var tier2Section = inventorySections[Tier.Tier2];
+                    tier2Section.EnableProductionCellUpgradeButton(index, true);
+
+                    break;
+                }
+
+                case Tier.Tier2:
+                    break;
+                
+                case Tier.Tier3:
+                    // TBD
+                    break;
+
+                default: break;
+            }
         }
 
         private void RefreshTownName(Tier tier)

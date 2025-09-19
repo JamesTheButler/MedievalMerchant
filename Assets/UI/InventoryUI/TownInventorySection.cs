@@ -47,6 +47,7 @@ namespace UI.InventoryUI
                 _productionCells.Add(productionCell);
                 productionCell.Index = i;
                 i++;
+                productionCell.EnableUpgradeButton(false);
                 productionCell.Update(null, 0);
                 productionCell.UnlockButtonClicked += () => UpgradeButtonClicked?.Invoke(productionCell);
                 productionCell.Clicked += () => InventoryCellClicked?.Invoke(productionCell);
@@ -110,6 +111,21 @@ namespace UI.InventoryUI
             cell.Unlock();
             cell.Update(good, 0);
             cell.SetEnabled(true);
+        }
+
+        public void EnableProductionCellUpgradeButton(int index, bool isEnabled)
+        {
+            if (index >= _productionCells.Count) return;
+
+            _productionCells[index].EnableUpgradeButton(isEnabled);
+        }
+
+        public void EnableProductionCellUpgradeButtons(bool isEnabled)
+        {
+            foreach (var cell in _productionCells)
+            {
+                cell.EnableUpgradeButton(isEnabled);
+            }
         }
     }
 }
