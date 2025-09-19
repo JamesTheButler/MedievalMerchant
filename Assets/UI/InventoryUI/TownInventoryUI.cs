@@ -22,7 +22,13 @@ namespace UI.InventoryUI
         private UnityEvent<InventoryCellBase> inventoryCellClicked;
 
         [SerializeField]
-        private UnityEvent<ProductionCell> upgradeButtonClicked;
+        private UnityEvent<ProductionCell> tier1UpgradeButtonClicked;
+
+        [SerializeField]
+        private UnityEvent<ProductionCell> tier2UpgradeButtonClicked;
+
+        [SerializeField]
+        private UnityEvent<ProductionCell> tier3UpgradeButtonClicked;
 
         [SerializeField]
         private UnityEvent<Town> travelButtonClicked;
@@ -60,9 +66,11 @@ namespace UI.InventoryUI
         {
             foreach (var section in inventorySections.Values)
             {
-                section.UpgradeButtonClicked += productionCell => upgradeButtonClicked.Invoke(productionCell);
                 section.InventoryCellClicked += productionCell => inventoryCellClicked.Invoke(productionCell);
             }
+            inventorySections[Tier.Tier1].UpgradeButtonClicked += tier1UpgradeButtonClicked.Invoke;
+            inventorySections[Tier.Tier2].UpgradeButtonClicked += tier2UpgradeButtonClicked.Invoke;
+            inventorySections[Tier.Tier3].UpgradeButtonClicked += tier3UpgradeButtonClicked.Invoke;
         }
 
         public void Bind(Town town)

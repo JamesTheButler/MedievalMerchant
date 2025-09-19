@@ -4,7 +4,7 @@ namespace UI.Popups
     {
         public static void HideActive(this PopupManager self)
         {
-            self.Hide(self.ActivePopup);
+            self.ActivePopup.Hide();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace UI
             // TODO: this is a bit hacky
             if (PopupManager.Instance.HasActivePopup)
             {
-                PopupManager.Instance.ActivePopup.Hide();
+                PopupManager.Instance.HideActive();
                 return;
             }
 

@@ -25,15 +25,15 @@ namespace UI.Popups
         private readonly Lazy<Player> _player = new(() => Model.Instance.Player);
         private readonly Lazy<ProducerConfig> _producerConfig = new(() => ConfigurationManager.Instance.ProducerConfig);
 
-        private readonly Dictionary<BuildTier1PopupGroup, Action> _clickHandlers = new();
+        private readonly Dictionary<Tier1ConstructionElement, Action> _clickHandlers = new();
 
-        private BuildTier1PopupGroup _selectedGroup;
+        private Tier1ConstructionElement _selectedGroup;
         private Town _town;
-        private int _cost;
+        private int _cost = -1;
 
         private void OnPlayerFundsChanged(int playerFunds)
         {
-            if (_town == null)
+            if (_town == null || _cost < 0)
             {
                 Debug.LogError($"{nameof(Tier1ConstructionPopup)} shouldn't observe player right now. No town set up.");
                 return;
@@ -62,6 +62,8 @@ namespace UI.Popups
         private void Bind(Town town, int cellIndex)
         {
             _town = town;
+            // disabled on start, since no element will be selected
+            costButton.interactable = false;
 
             var productionBuildingCount = _town.Producer.GetProducerCount(Tier.Tier1);
             var cost = _producerConfig.Value.GetUpgradeCost(Tier.Tier1, productionBuildingCount);
@@ -92,7 +94,7 @@ namespace UI.Popups
                 var tier2Good = recipes[good];
                 var isAlreadyBuilt = town.Producer.IsProduced(good);
                 var goodGroup = Instantiate(goodGroupPrefab, goodGroupParent);
-                var popupGroup = goodGroup.GetComponent<BuildTier1PopupGroup>();
+                var popupGroup = goodGroup.GetComponent<Tier1ConstructionElement>();
                 popupGroup.Setup(good, tier2Good, isAlreadyBuilt);
 
                 Action popupGroupClickHandler = () => PopupGroupOnClicked(popupGroup);
@@ -118,17 +120,19 @@ namespace UI.Popups
             goodGroupParent.DestroyChildren();
         }
 
-        private void PopupGroupOnClicked(BuildTier1PopupGroup popupGroup)
+        private void PopupGroupOnClicked(Tier1ConstructionElement constructionElement)
         {
-            if (_selectedGroup == popupGroup) return;
+            if (_selectedGroup == constructionElement) return;
+
             if (_selectedGroup)
             {
                 _selectedGroup.Deselect();
             }
 
-            popupGroup.Select();
+            constructionElement.Select();
 
-            _selectedGroup = popupGroup;
+            _selectedGroup = constructionElement;
+            costButton.interactable = true;
         }
     }
 }
