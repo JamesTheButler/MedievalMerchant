@@ -4,5 +4,6 @@ namespace Data.Configuration
     {
         public const string RootFolder = "MedievalMerchant/";
         public const string ConfigDataFolder = RootFolder + "ConfigData/";
+        public const string ConditionsFolder = RootFolder + "Conditions/";
     }
 }

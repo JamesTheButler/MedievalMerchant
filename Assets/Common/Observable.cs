@@ -24,7 +24,7 @@ namespace Common
         {
             Value = value;
         }
-
+        
         public void Observe(Action<T> callback, bool invokeOnObserve = true)
         {
             ValueChanged += callback;

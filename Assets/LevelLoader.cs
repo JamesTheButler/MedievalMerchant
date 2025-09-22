@@ -57,6 +57,10 @@ public sealed class LevelLoader : MonoBehaviour
         player.Location.CurrentTown = startTown;
         player.Location.WorldLocation.Value = startTown.WorldLocation;
 
+        // TODO: this sucks
+        var conditionManager = FindFirstObjectByType<ConditionManager>();
+        conditionManager.Setup(levelInfo.Conditions);
+
         levelLoaded.Invoke();
     }
 

@@ -1,4 +1,5 @@
 using Data.Configuration;
+using Levels.Conditions;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -14,9 +15,9 @@ namespace Levels
         public string LevelName { get; private set; }
 
         [field: SerializeField]
-        public WinCondition[] WinConditions { get; private set; }
-        
-        [field: SerializeField]
-        public LossCondition[] LossConditions { get; private set; }
+        public int StartPlayerFunds { get; private set; }
+
+        [field: SerializeField, NaughtyAttributes.Expandable]
+        public Condition[] Conditions { get; private set; }
     }
 }
