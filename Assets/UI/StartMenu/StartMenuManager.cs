@@ -19,6 +19,9 @@ namespace UI.StartMenu
         [SerializeField, Required]
         private GameObject levelButtonGroup;
 
+        [SerializeField, Required]
+        private LevelInfoBox levelInfoBox;
+
         private bool _initialized;
 
         public void LoadLevel(LevelInfo levelInfo)
@@ -32,6 +35,7 @@ namespace UI.StartMenu
         {
             levelButtonGroup.SetActive(false);
             pressAnyText.gameObject.SetActive(true);
+            levelInfoBox.Clear();
         }
 
         private void Update()
@@ -51,6 +55,16 @@ namespace UI.StartMenu
             levelButtonGroup.SetActive(true);
 
             _initialized = true;
+        }
+
+        public void SetupLevelInfoBox(LevelInfo levelInfo)
+        {
+            levelInfoBox.Setup(levelInfo);
+        }
+
+        public void ClearLevelInfoBox()
+        {
+            levelInfoBox.Clear();
         }
     }
 }
