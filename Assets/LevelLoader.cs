@@ -30,10 +30,12 @@ public sealed class LevelLoader : MonoBehaviour
     private const float ZoneDistance = 1.5f; // account for diagonally adjacent zones (distance here would be sqrt(2))
 
     private Model _model;
+    private PlayerConfig _playerConfig;
 
     private void Start()
     {
         _model = Model.Instance;
+        _playerConfig = ConfigurationManager.Instance.PlayerConfig;
 
         var level = Instantiate(levelInfo.MapPrefab, tileGrid.gameObject.transform);
         var tilemap = level.GetComponent<Tilemap>();
@@ -49,7 +51,7 @@ public sealed class LevelLoader : MonoBehaviour
                 tileGrid.CellToWorld(pos.FromXY()),
                 availableGoodsPerTown[pos]))
             .ToList();
-        var player = new Player(levelInfo.StartPlayerFunds);
+        var player = new Player(levelInfo.StartPlayerFunds, _playerConfig.MovementSpeed);
 
         _model.Initialize(player, towns, flagMap);
 

@@ -11,15 +11,17 @@ namespace Data
 
         public List<PlayerUpgrade> Upgrades { get; } = new();
         public PlayerLocation Location { get; } = new();
-        public Observable<float> MovementSpeed { get; } = new(1);
+        public Observable<float> MovementSpeed { get; } = new();
 
         public Inventory Inventory { get; }
 
         private readonly SlotBasedInventoryPolicy _inventoryPolicy;
 
-        public Player(int startFunds)
+        public Player(int startFunds, float movementSpeed)
         {
             _inventoryPolicy = new SlotBasedInventoryPolicy();
+
+            MovementSpeed.Value = movementSpeed;
 
             Inventory = new Inventory(_inventoryPolicy);
             Inventory.AddFunds(startFunds);
