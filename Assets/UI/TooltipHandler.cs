@@ -13,6 +13,9 @@ namespace UI
         [SerializeField]
         private float offset = 8f;
 
+        [SerializeField]
+        private bool enabledOnStart;
+
         private Tooltip _activeToolTip;
         private bool _isEnabled;
         private string _text = string.Empty;
@@ -22,6 +25,7 @@ namespace UI
         private void Start()
         {
             _canvas = GetComponentInParent<Canvas>();
+            SetEnabled(enabledOnStart);
         }
 
         public void SetEnabled(bool isEnabled)

@@ -13,9 +13,8 @@ namespace Data.Towns
 
         private readonly ProducerConfig _producerConfig;
         private readonly Town _town;
-        private readonly Good?[] _tier1Producers = new Good?[3];
-        private readonly Good?[] _tier2Producers = new Good?[3];
-        private readonly Good?[] _tier3Producers = new Good?[3];
+
+        private readonly Dictionary<Tier, Good?[]> _producers;
 
         private float _multiplier = 1f;
 
@@ -23,32 +22,30 @@ namespace Data.Towns
         {
             _town = town;
             _producerConfig = ConfigurationManager.Instance.ProducerConfig;
+            _producers = new Dictionary<Tier, Good?[]>
+            {
+                { Tier.Tier1, new Good?[] { null, null, null } },
+                { Tier.Tier2, new Good?[] { null, null, null } },
+                { Tier.Tier3, new Good?[] { null, null, null } },
+            };
         }
 
-        public IEnumerable<Good> AllProducers => _tier1Producers
-            .Concat(_tier2Producers)
-            .Concat(_tier3Producers)
+        public IEnumerable<Good> AllProducers => _producers[Tier.Tier1]
+            .Concat(_producers[Tier.Tier2])
+            .Concat(_producers[Tier.Tier3])
             .WhereNotNull();
 
 
         public bool IsProduced(Good good)
         {
-            return _tier1Producers.Contains(good) ||
-                   _tier2Producers.Contains(good) ||
-                   _tier3Producers.Contains(good);
+            return _producers.Any(producer => producer.Value.Contains(good));
         }
 
         private readonly GoodsConfig _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
 
         public Good?[] GetProducers(Tier tier)
         {
-            return tier switch
-            {
-                Tier.Tier1 => _tier1Producers,
-                Tier.Tier2 => _tier2Producers,
-                Tier.Tier3 => _tier3Producers,
-                _ => _tier1Producers
-            };
+            return _producers[tier];
         }
 
         public int GetIndexOfProducedGood(Good good)
@@ -113,14 +110,15 @@ namespace Data.Towns
 
         private IReadOnlyDictionary<Good, int> GetProductions()
         {
-            return GetProduction(_tier1Producers, Tier.Tier1)
-                .Concat(GetProduction(_tier2Producers, Tier.Tier2))
-                .Concat(GetProduction(_tier3Producers, Tier.Tier3))
+            return GetProduction(Tier.Tier1)
+                .Concat(GetProduction(Tier.Tier2))
+                .Concat(GetProduction(Tier.Tier3))
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
-        private IReadOnlyDictionary<Good, int> GetProduction(Good?[] producers, Tier tier)
+        private IReadOnlyDictionary<Good, int> GetProduction(Tier tier)
         {
+            var producers = _producers[tier];
             return producers.WhereNotNull().ToDictionary(good => good, good => GetProduction(tier, good));
         }
     }

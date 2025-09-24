@@ -9,9 +9,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7b3feb936c34942915e30116b826b36, type: 3}
+  m_Script: {fileID: 11500000, guid: bce5e984cc4758641899e2d4967dcfab, type: 3}
   m_Name: DevelopmentConfig
   m_EditorClassIdentifier: 
+  <GrowthTrendConfig>k__BackingField:
+    _serializedList:
+    - Key: -2
+      Value:
+        <Icon>k__BackingField: {fileID: 1783096200, guid: ca3ab9397106f0a4f91e23fe87dd8a4c, type: 3}
+        <Threshold>k__BackingField: -5
+    - Key: -1
+      Value:
+        <Icon>k__BackingField: {fileID: -4972605912960818093, guid: ca3ab9397106f0a4f91e23fe87dd8a4c, type: 3}
+        <Threshold>k__BackingField: -0.1
+    - Key: 0
+      Value:
+        <Icon>k__BackingField: {fileID: 958362572, guid: ca3ab9397106f0a4f91e23fe87dd8a4c, type: 3}
+        <Threshold>k__BackingField: 0
+    - Key: 1
+      Value:
+        <Icon>k__BackingField: {fileID: 4334392369972597103, guid: ca3ab9397106f0a4f91e23fe87dd8a4c, type: 3}
+        <Threshold>k__BackingField: 0.1
+    - Key: 2
+      Value:
+        <Icon>k__BackingField: {fileID: -1193767655, guid: ca3ab9397106f0a4f91e23fe87dd8a4c, type: 3}
+        <Threshold>k__BackingField: 5
+  <ProducerGrowthInfluence>k__BackingField:
+    town1Good1: 1
+    town2Good1: 0.5
+    town2Good2: 1
+    town3Good1: 0.1
+    town3Good2: 0.5
+    town3Good3: 1
   <DevelopmentTables>k__BackingField:
     _serializedList:
     - Key: 1
@@ -20,4 +49,4 @@ MonoBehaviour:
       Value: {fileID: 11400000, guid: ff82d0afeca2f964793152351b4b8455, type: 2}
     - Key: 3
       Value: {fileID: 11400000, guid: 56ccf09a76abcaf4b8c2615d619a4649, type: 2}
-  <DevelopmentMultiplier>k__BackingField: 2
+  <DevelopmentMultiplier>k__BackingField: 1

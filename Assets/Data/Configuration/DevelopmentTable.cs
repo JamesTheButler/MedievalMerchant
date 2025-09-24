@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,15 +21,18 @@ namespace Data.Configuration
         [field: SerializeField]
         public List<int> Tier3Trends { get; private set; }
 
-        public int GetDevelopmentTrend(int tier1Goods, int tier2Goods, int tier3Goods)
+        public int GetDevelopmentTrend(Tier goodTier, int goodCount)
         {
-            return
-                GetTierTrend(tier1Goods, Tier1Trends) +
-                GetTierTrend(tier2Goods, Tier2Trends) +
-                GetTierTrend(tier3Goods, Tier3Trends);
+            return goodTier switch
+            {
+                Tier.Tier1 => GetTierTrend(goodCount, Tier1Trends), 
+                Tier.Tier2 => GetTierTrend(goodCount, Tier2Trends),
+                Tier.Tier3 => GetTierTrend(goodCount, Tier3Trends),
+                _ => throw new ArgumentOutOfRangeException(nameof(goodTier), goodTier, null)
+            };
         }
 
-        private int GetTierTrend(int goodAmount, List<int> trendsList)
+        private static int GetTierTrend(int goodAmount, List<int> trendsList)
         {
             if (trendsList.Count == 0)
                 return 0;
@@ -39,7 +43,7 @@ namespace Data.Configuration
             if (goodAmount > trendsList.Count)
                 return trendsList[^1] * (goodAmount - trendsList.Count + 1);
 
-            return trendsList[goodAmount - 1];
+            return trendsList[goodAmount];
         }
     }
 }

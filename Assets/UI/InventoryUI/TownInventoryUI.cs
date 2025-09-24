@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using AYellowpaper.SerializedCollections;
 using Common;
 using Data;
@@ -46,6 +47,9 @@ namespace UI.InventoryUI
         [SerializeField, Required]
         private Image developmentTrendIcon;
 
+        [SerializeField, Required]
+        private TooltipHandler developmentTrendTooltip;
+
         [Header("Inventory UI Elements")]
         [SerializeField, Required]
         private TMP_Text fundsText;
@@ -53,11 +57,12 @@ namespace UI.InventoryUI
         [SerializeField, SerializedDictionary("Tier", "Section")]
         private SerializedDictionary<Tier, TownInventorySection> inventorySections;
 
-        private Town _boundTown;
-        private Inventory _boundInventory;
+        private Town _town;
+        private DevelopmentManager _developmentManager;
+        private Inventory _inventory;
 
-        private readonly Lazy<GrowthTrendConfig> _growthConfig =
-            new(() => ConfigurationManager.Instance.GrowthTrendConfig);
+        private readonly Lazy<TownDevelopmentConfig> _growthConfig =
+            new(() => ConfigurationManager.Instance.TownDevelopmentConfig);
 
         private readonly Lazy<GoodsConfig> _goodsConfig =
             new(() => ConfigurationManager.Instance.GoodsConfig);
@@ -98,33 +103,35 @@ namespace UI.InventoryUI
 
         public void Upgrade()
         {
-            _boundTown.Upgrade();
+            _town.Upgrade();
         }
 
         public void TravelHere()
         {
-            travelButtonClicked?.Invoke(_boundTown);
+            travelButtonClicked?.Invoke(_town);
         }
 
         private void BindTown(Town town)
         {
-            _boundTown = town;
+            _town = town;
 
-            BindInventory(_boundTown.Inventory);
+            BindInventory(_town.Inventory);
 
             // don't invoke directly as we want to go through all tiers manually in the right order
-            _boundTown.Tier.Observe(TownUpgrade, false);
-            for (var tier = Tier.Tier1; tier <= _boundTown.Tier; tier++)
+            _town.Tier.Observe(TownUpgrade, false);
+            for (var tier = Tier.Tier1; tier <= _town.Tier; tier++)
             {
                 ShowSection(tier);
             }
 
-            RefreshTownName(_boundTown.Tier);
+            RefreshTownName(_town.Tier);
 
-            _boundTown.DevelopmentScore.Observe(UpdateDevelopmentScore);
-            _boundTown.DevelopmentTrend.Observe(UpdateDevelopmentTrend);
-            _boundTown.GrowthTrend.Observe(UpdateGrowthTrend);
+            _developmentManager.GrowthModifiersChanged += UpdateGrowthModifierTooltip;
+            _developmentManager.DevelopmentScore.Observe(UpdateDevelopmentScore);
+            _developmentManager.DevelopmentTrend.Observe(UpdateDevelopmentTrend);
+            _developmentManager.GrowthTrend.Observe(UpdateGrowthTrend);
         }
+
 
         private void BindInventory(Inventory inventory)
         {
@@ -133,7 +140,7 @@ namespace UI.InventoryUI
 
             SetUpInventorySections();
 
-            _boundTown.Producer.ProductionAdded += OnProducerAdded;
+            _town.Producer.ProductionAdded += OnProducerAdded;
 
             inventory.GoodUpdated += OnGoodUpdated;
             inventory.Funds.Observe(OnFundsUpdated);
@@ -143,7 +150,8 @@ namespace UI.InventoryUI
                 OnGoodUpdated(good, amount);
             }
 
-            _boundInventory = inventory;
+            _inventory = inventory;
+            _developmentManager = _town.DevelopmentManager;
         }
 
         public void Unbind()
@@ -154,16 +162,17 @@ namespace UI.InventoryUI
 
         private void UnbindTown()
         {
-            if (_boundTown == null) return;
+            if (_town == null) return;
 
-            _boundTown.Tier.StopObserving(TownUpgrade);
-            _boundTown.DevelopmentScore.StopObserving(UpdateDevelopmentScore);
-            _boundTown.DevelopmentTrend.StopObserving(UpdateDevelopmentTrend);
-            _boundTown.GrowthTrend.StopObserving(UpdateGrowthTrend);
+            _town.Tier.StopObserving(TownUpgrade);
+            _developmentManager.GrowthModifiersChanged -= UpdateGrowthModifierTooltip;
+            _developmentManager.DevelopmentScore.StopObserving(UpdateDevelopmentScore);
+            _developmentManager.DevelopmentTrend.StopObserving(UpdateDevelopmentTrend);
+            _developmentManager.GrowthTrend.StopObserving(UpdateGrowthTrend);
 
-            _boundTown.Producer.ProductionAdded -= OnProducerAdded;
+            _town.Producer.ProductionAdded -= OnProducerAdded;
 
-            _boundTown = null;
+            _town = null;
         }
 
         private void UnbindInventory()
@@ -172,11 +181,11 @@ namespace UI.InventoryUI
 
             fundsText.text = "0";
 
-            if (_boundInventory == null) return;
+            if (_inventory == null) return;
 
-            _boundInventory.GoodUpdated -= OnGoodUpdated;
-            _boundInventory.Funds.StopObserving(OnFundsUpdated);
-            _boundInventory = null;
+            _inventory.GoodUpdated -= OnGoodUpdated;
+            _inventory.Funds.StopObserving(OnFundsUpdated);
+            _inventory = null;
         }
 
         private void ResetInventorySections()
@@ -190,21 +199,21 @@ namespace UI.InventoryUI
         private void SetUpInventorySections()
         {
             // go through each section and unlock the production buildings
-            foreach (var good in _boundTown.Producer.AllProducers)
+            foreach (var good in _town.Producer.AllProducers)
             {
                 OnProducerAdded(good);
             }
 
             inventorySections[Tier.Tier1].EnableProductionCellUpgradeButtons(true);
 
-            _boundTown.Producer.ProductionAdded += OnProducerAdded;
+            _town.Producer.ProductionAdded += OnProducerAdded;
         }
 
         private void OnProducerAdded(Good good)
         {
             var goodConfigData = _goodsConfig.Value.ConfigData;
             var goodTier = goodConfigData[good].Tier;
-            var index = _boundTown.Producer.GetIndexOfProducedGood(good);
+            var index = _town.Producer.GetIndexOfProducedGood(good);
             var section = inventorySections[goodTier];
             section.UnlockProductionCell(index, good);
 
@@ -224,20 +233,30 @@ namespace UI.InventoryUI
                 case Tier.Tier3:
                     // TBD
                     break;
-
                 default: break;
             }
         }
 
         private void RefreshTownName(Tier tier)
         {
-            townNameText.text = $"{_boundTown.Name} ({tier.ToRomanNumeral()})";
+            townNameText.text = $"{_town.Name} ({tier.ToRomanNumeral()})";
         }
 
         private void TownUpgrade(Tier tier)
         {
             RefreshTownName(tier);
             ShowSection(tier);
+        }
+
+        private void UpdateGrowthModifierTooltip()
+        {
+            developmentTrendTooltip.SetEnabled(_developmentManager.GrowthModifiers.Any());
+
+            var modifiersText = string.Join(
+                Environment.NewLine,
+                _developmentManager.GrowthModifiers.Select(modifier => modifier.ToDisplayString()));
+
+            developmentTrendTooltip.SetTooltip(modifiersText);
         }
 
         private void UpdateDevelopmentScore(float score)
@@ -251,9 +270,9 @@ namespace UI.InventoryUI
             developmentTrendText.text = $"{sign}{trend}%";
         }
 
-        private void UpdateGrowthTrend(GrowthTrend obj)
+        private void UpdateGrowthTrend(DevelopmentTrend obj)
         {
-            developmentTrendIcon.sprite = _growthConfig.Value.ConfigData[obj].Icon;
+            developmentTrendIcon.sprite = _growthConfig.Value.GrowthTrendConfig[obj].Icon;
         }
 
         private void HideSection(Tier tier)
@@ -273,18 +292,18 @@ namespace UI.InventoryUI
 
         private void OnGoodUpdated(Good good, int amount)
         {
-            if (_boundTown == null)
+            if (_town == null)
             {
                 Debug.LogError($"{nameof(OnGoodUpdated)} was called while no town was bound");
                 return;
             }
 
             var tier = ConfigurationManager.Instance.GoodsConfig.ConfigData[good].Tier;
-            var isProduced = _boundTown.Producer.IsProduced(good);
+            var isProduced = _town.Producer.IsProduced(good);
 
             if (isProduced)
             {
-                var cellIndex = _boundTown.Producer.GetIndexOfProducedGood(good);
+                var cellIndex = _town.Producer.GetIndexOfProducedGood(good);
                 inventorySections[tier].UpdateProducedGood(good, amount, cellIndex);
             }
             else

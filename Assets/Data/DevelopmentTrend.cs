@@ -1,6 +1,6 @@
 namespace Data
 {
-    public enum GrowthTrend
+    public enum DevelopmentTrend
     {
         VeryDown = -2,
         Down = -1,

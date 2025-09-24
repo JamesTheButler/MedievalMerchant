@@ -14,13 +14,10 @@ namespace Data.Configuration
         public MarketStateConfig MarketStateConfig { get; private set; }
 
         [field: SerializeField, Required]
-        public GrowthTrendConfig GrowthTrendConfig { get; private set; }
+        public TownDevelopmentConfig TownDevelopmentConfig { get; private set; }
 
         [field: SerializeField, Required]
-        public DevelopmentConfig DevelopmentConfig { get; private set; }
-
-        [field: SerializeField, Required]
-        public PlayerUpgradeConfig PlayerUpgradeConfig { get; private set; }
+        public PlayerConfig PlayerConfig { get; private set; }
 
         [field: SerializeField, Required]
         public Colors Colors { get; private set; }

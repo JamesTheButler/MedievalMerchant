@@ -12,30 +12,29 @@ namespace Map.Overlays
         private SpriteRenderer trendIcon;
 
         private Town _town;
-        private GrowthTrendConfig _growthTrendConfig;
+        private TownDevelopmentConfig _townDevelopmentConfig;
 
         public void Bind(Town town)
         {
             _town = town;
-            var model = Model.Instance;
-            _growthTrendConfig = ConfigurationManager.Instance.GrowthTrendConfig;
+            _townDevelopmentConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
 
             transform.localPosition = town.WorldLocation;
 
-            _town.GrowthTrend.Observe(OnGrowthTrendChanged);
-            OnGrowthTrendChanged(town.GrowthTrend);
+            _town.DevelopmentManager.GrowthTrend.Observe(OnGrowthTrendChanged);
+            OnGrowthTrendChanged(town.DevelopmentManager.GrowthTrend);
         }
 
         public void Unbind()
         {
-            _town.GrowthTrend.StopObserving(OnGrowthTrendChanged);
+            _town.DevelopmentManager.GrowthTrend.StopObserving(OnGrowthTrendChanged);
         }
 
-        private void OnGrowthTrendChanged(GrowthTrend trend)
+        private void OnGrowthTrendChanged(DevelopmentTrend trend)
         {
-            trendIcon.sprite = trend == GrowthTrend.Balanced
+            trendIcon.sprite = trend == DevelopmentTrend.Balanced
                 ? null
-                : _growthTrendConfig.ConfigData[trend].Icon;
+                : _townDevelopmentConfig.GrowthTrendConfig[trend].Icon;
         }
     }
 }

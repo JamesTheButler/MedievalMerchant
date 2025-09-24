@@ -29,12 +29,12 @@ namespace UI.InventoryUI
         private Player _player;
         private Inventory _playerInventory;
         private GoodsConfig _goodsConfig;
-        private PlayerUpgradeConfig _playerUpgradeConfig;
+        private PlayerConfig _playerConfig;
 
         public void Bind(Player player)
         {
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
-            _playerUpgradeConfig = ConfigurationManager.Instance.PlayerUpgradeConfig;
+            _playerConfig = ConfigurationManager.Instance.PlayerConfig;
             _player = player;
             _playerInventory = player.Inventory;
 
@@ -68,7 +68,7 @@ namespace UI.InventoryUI
         private void OnPlayerUpgradeAdded(PlayerUpgrade upgrade)
         {
             upgradeButtons[upgrade].SetState(UpgradeButton.State.Hidden);
-            var nextPossibleUpgrade = _playerUpgradeConfig.ProgressionData.GetNext(upgrade);
+            var nextPossibleUpgrade = _playerConfig.ProgressionData.GetNext(upgrade);
             if (nextPossibleUpgrade == PlayerUpgrade.None) return;
 
             upgradeButtons[nextPossibleUpgrade].SetState(UpgradeButton.State.Active);
@@ -95,7 +95,7 @@ namespace UI.InventoryUI
 
             foreach (var (upgrade, button) in upgradeButtons)
             {
-                var upgradeData = _playerUpgradeConfig.InventoryUpgrades[upgrade];
+                var upgradeData = _playerConfig.InventoryUpgrades[upgrade];
                 button.SetCost(upgradeData.Price);
                 button.SetState(UpgradeButton.State.Disabled);
                 button.OnClick.AddListener(() => UpgradePlayer(upgrade, upgradeData.Price));
@@ -103,7 +103,7 @@ namespace UI.InventoryUI
                 button.Validate(_playerInventory.Funds);
             }
 
-            var progressions = _playerUpgradeConfig.ProgressionData.UpgradeProgressions;
+            var progressions = _playerConfig.ProgressionData.UpgradeProgressions;
             foreach (var progression in progressions)
             {
                 var upgrade = progression.First();
