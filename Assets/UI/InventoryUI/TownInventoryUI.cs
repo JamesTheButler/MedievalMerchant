@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using AYellowpaper.SerializedCollections;
 using Common;
 using Data;
@@ -12,7 +11,6 @@ using UI.Popups;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace UI.InventoryUI
 {
@@ -37,18 +35,8 @@ namespace UI.InventoryUI
         [Header("Header UI Elements")]
         [SerializeField, Required]
         private TMP_Text townNameText;
-
         [SerializeField, Required]
-        private DevelopmentSlider developmentScore;
-
-        [SerializeField, Required]
-        private TMP_Text developmentTrendText;
-
-        [SerializeField, Required]
-        private Image developmentTrendIcon;
-
-        [SerializeField, Required]
-        private TooltipHandler developmentTrendTooltip;
+        private DevelopmentGauge developmentGauge;
 
         [Header("Inventory UI Elements")]
         [SerializeField, Required]
@@ -60,9 +48,6 @@ namespace UI.InventoryUI
         private Town _town;
         private DevelopmentManager _developmentManager;
         private Inventory _inventory;
-
-        private readonly Lazy<TownDevelopmentConfig> _growthConfig =
-            new(() => ConfigurationManager.Instance.TownDevelopmentConfig);
 
         private readonly Lazy<GoodsConfig> _goodsConfig =
             new(() => ConfigurationManager.Instance.GoodsConfig);
@@ -126,10 +111,7 @@ namespace UI.InventoryUI
 
             RefreshTownName(_town.Tier);
 
-            _developmentManager.GrowthModifiersChanged += UpdateGrowthModifierTooltip;
-            _developmentManager.DevelopmentScore.Observe(UpdateDevelopmentScore);
-            _developmentManager.DevelopmentTrend.Observe(UpdateDevelopmentTrend);
-            _developmentManager.GrowthTrend.Observe(UpdateGrowthTrend);
+            developmentGauge.Bind(_developmentManager);
         }
 
 
@@ -165,13 +147,9 @@ namespace UI.InventoryUI
             if (_town == null) return;
 
             _town.Tier.StopObserving(TownUpgrade);
-            _developmentManager.GrowthModifiersChanged -= UpdateGrowthModifierTooltip;
-            _developmentManager.DevelopmentScore.StopObserving(UpdateDevelopmentScore);
-            _developmentManager.DevelopmentTrend.StopObserving(UpdateDevelopmentTrend);
-            _developmentManager.GrowthTrend.StopObserving(UpdateGrowthTrend);
-
+            developmentGauge.Unbind();
+           
             _town.Producer.ProductionAdded -= OnProducerAdded;
-
             _town = null;
         }
 
@@ -246,33 +224,6 @@ namespace UI.InventoryUI
         {
             RefreshTownName(tier);
             ShowSection(tier);
-        }
-
-        private void UpdateGrowthModifierTooltip()
-        {
-            developmentTrendTooltip.SetEnabled(_developmentManager.GrowthModifiers.Any());
-
-            var modifiersText = string.Join(
-                Environment.NewLine,
-                _developmentManager.GrowthModifiers.Select(modifier => modifier.ToDisplayString()));
-
-            developmentTrendTooltip.SetTooltip(modifiersText);
-        }
-
-        private void UpdateDevelopmentScore(float score)
-        {
-            developmentScore.SetDevelopment(score);
-        }
-
-        private void UpdateDevelopmentTrend(float trend)
-        {
-            var sign = trend > 0 ? "+" : "";
-            developmentTrendText.text = $"{sign}{trend}%";
-        }
-
-        private void UpdateGrowthTrend(DevelopmentTrend obj)
-        {
-            developmentTrendIcon.sprite = _growthConfig.Value.GrowthTrendConfig[obj].Icon;
         }
 
         private void HideSection(Tier tier)
