@@ -22,7 +22,7 @@ namespace Data.Towns
         private readonly GoodsConfig _goodsConfig;
         private readonly List<IGrowthModifier> _growthModifiers;
 
-        private DevelopmentTable _developmentTable;
+        private TownDevelopmentTable _townDevelopmentTable;
 
         public DevelopmentManager(Town town)
         {
@@ -67,7 +67,7 @@ namespace Data.Towns
 
             foreach (var (tier, count) in foreignGoodCounts)
             {
-                var modifierValue = _developmentTable.GetDevelopmentTrend(tier, count);
+                var modifierValue = _townDevelopmentTable.GetDevelopmentTrend(tier, count);
                 _growthModifiers.Add(new ForeignGoodsModifier(modifierValue, count, tier));
             }
         }
@@ -112,7 +112,7 @@ namespace Data.Towns
 
         private void UpdateDevelopmentTable()
         {
-            _developmentTable = _townDevelopmentConfig.DevelopmentTables[_town.Tier];
+            _townDevelopmentTable = _townDevelopmentConfig.DevelopmentTables[_town.Tier];
         }
     }
 }

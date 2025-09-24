@@ -15,7 +15,7 @@ namespace Data.Configuration
         public TownGoodConfigTable<float> ProducerGrowthInfluence { get; private set; }
 
         [field: SerializeField, SerializedDictionary]
-        public SerializedDictionary<Tier, DevelopmentTable> DevelopmentTables { get; private set; }
+        public SerializedDictionary<Tier, TownDevelopmentTable> DevelopmentTables { get; private set; }
 
         [field: SerializeField]
         public float DevelopmentMultiplier { get; private set; } = 1f;

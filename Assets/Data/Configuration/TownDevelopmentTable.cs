@@ -8,20 +8,20 @@ namespace Data.Configuration
     /// Table to define which amount of different tier goods results in which development trend modifiers.
     /// </summary>
     [CreateAssetMenu(
-        fileName = nameof(DevelopmentTable),
-        menuName = AssetMenu.ConfigDataFolder + nameof(DevelopmentTable))]
-    public sealed class DevelopmentTable : ScriptableObject
+        fileName = nameof(TownDevelopmentTable),
+        menuName = AssetMenu.ConfigDataFolder + nameof(TownDevelopmentTable))]
+    public sealed class TownDevelopmentTable : ScriptableObject
     {
         [field: SerializeField]
-        public List<int> Tier1Trends { get; private set; }
+        public List<float> Tier1Trends { get; private set; }
 
         [field: SerializeField]
-        public List<int> Tier2Trends { get; private set; }
+        public List<float> Tier2Trends { get; private set; }
 
         [field: SerializeField]
-        public List<int> Tier3Trends { get; private set; }
+        public List<float> Tier3Trends { get; private set; }
 
-        public int GetDevelopmentTrend(Tier goodTier, int goodCount)
+        public float GetDevelopmentTrend(Tier goodTier, int goodCount)
         {
             return goodTier switch
             {
@@ -32,7 +32,7 @@ namespace Data.Configuration
             };
         }
 
-        private static int GetTierTrend(int goodAmount, List<int> trendsList)
+        private static float GetTierTrend(int goodAmount, List<float> trendsList)
         {
             if (trendsList.Count == 0)
                 return 0;
