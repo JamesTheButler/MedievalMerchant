@@ -14,5 +14,8 @@ namespace Data.Configuration
 
         [field: SerializeField, Required, ShowAssetPreview]
         public Sprite Icon { get; private set; }
+
+        [field: SerializeField]
+        public Regions Regions { get; private set; }
     }
 }

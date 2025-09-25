@@ -152,6 +152,7 @@ namespace UI
 
             _sellerGoodAmount = amount;
             amountSlider.maxValue = amount;
+            UpdatePrice();
             EvaluateTotalPrice();
         }
 
@@ -174,14 +175,20 @@ namespace UI
         private void SetAmount(int amount)
         {
             _tradeAmount = amount;
-            var goodPrice = _priceCalculator.GetPrice(_good);
-            _totalPrice = amount * goodPrice.FinalPrice;
+            goodAmountText.text = $"x{_tradeAmount}";
 
-            goodAmountText.text = $"x{amount}";
+            UpdatePrice();
+        }
+
+        private void UpdatePrice()
+        {
+            var goodPrice = _priceCalculator.GetPrice(_good, _tradeType);
+            _totalPrice = _tradeAmount * goodPrice.FinalPrice;
+
 
             var priceText = $"{_totalPrice}";
 
-            if (_tradeType == TradeType.Buy && amount > 0)
+            if (_tradeType == TradeType.Buy && _tradeAmount > 0)
             {
                 priceText = "-" + priceText;
             }
@@ -197,7 +204,6 @@ namespace UI
             modifiersText.text = priceDescription.ToString();
         }
 
-        // TODO: we need to update the count amount text when the MarketState changes for the good 
         private void EvaluateTotalPrice()
         {
             var isTradePossible = _buyerFunds >= _totalPrice;

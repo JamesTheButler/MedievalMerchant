@@ -20,5 +20,11 @@ namespace Common
             var result = values.Aggregate(0, (current, value) => current | Convert.ToInt32(value));
             return (TEnum)Enum.ToObject(typeof(TEnum), result);
         }
+
+        public static bool Intersects<TEnum>(this TEnum first, TEnum second)
+            where TEnum : struct, Enum
+        {
+            return (Convert.ToInt64(first) & Convert.ToInt64(second)) != 0;
+        }
     }
 }
