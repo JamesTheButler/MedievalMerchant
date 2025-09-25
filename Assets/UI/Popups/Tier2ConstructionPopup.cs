@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
 using Common;
 using Data;
 using Data.Configuration;
 using Data.Towns;
 using NaughtyAttributes;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.UI;
 
