@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Random = UnityEngine.Random;
 
 namespace Common
@@ -10,6 +12,13 @@ namespace Common
             var values = (T[])Enum.GetValues(typeof(T));
             var index = Random.Range(0, values.Length);
             return values[index];
+        }
+
+        public static TEnum AggregateFlags<TEnum>(this IEnumerable<TEnum> values)
+            where TEnum : struct, Enum
+        {
+            var result = values.Aggregate(0, (current, value) => current | Convert.ToInt32(value));
+            return (TEnum)Enum.ToObject(typeof(TEnum), result);
         }
     }
 }

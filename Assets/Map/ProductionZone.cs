@@ -20,6 +20,9 @@ namespace Map
 
         [SerializeField, Required]
         private GameObject origin;
+        
+        [field: SerializeField]
+        public Regions Regions { get; private set; }
 
         private SpriteShapeRenderer _spriteRenderer;
         private SpriteShapeController _spriteController;

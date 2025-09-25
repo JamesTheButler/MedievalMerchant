@@ -42,15 +42,7 @@ public sealed class LevelLoader : MonoBehaviour
         var flagMap = TilemapScanner.Scan(tilemap);
         var townPositions = flagMap.GetAllCells(TileType.Town);
         var zones = level.GetComponentsInChildren<ProductionZone>();
-        var availableGoodsPerTown = FindAvailableGoodsPerTown(zones, townPositions);
-
-        var towns = townPositions
-            .Select(pos => new Town(
-                townInfos.GetRandom(),
-                pos,
-                tileGrid.CellToWorld(pos.FromXY()),
-                availableGoodsPerTown[pos]))
-            .ToList();
+        var towns = GenerateTowns(townPositions, zones);
         var player = new Player(levelInfo.StartPlayerFunds, _playerConfig.MovementSpeed);
 
         _model.Initialize(player, towns, flagMap);
@@ -66,26 +58,67 @@ public sealed class LevelLoader : MonoBehaviour
         levelLoaded.Invoke();
     }
 
-    private static Dictionary<Vector2Int, HashSet<Good>> FindAvailableGoodsPerTown(ProductionZone[] zones,
-        List<Vector2Int> townPositions)
+    private List<Town> GenerateTowns(List<Vector2Int> townPositions, ProductionZone[] zones)
     {
-        var availableGoodsPerTown = new Dictionary<Vector2Int, HashSet<Good>>();
+        var towns = new List<Town>();
+        var zonesPerTown = GetZonesPerTown(townPositions, zones);
+
         foreach (var townPosition in townPositions)
         {
-            availableGoodsPerTown[townPosition] = new HashSet<Good>();
+            var town = GenerateTown(townPosition, zonesPerTown[townPosition]);
+            towns.Add(town);
         }
 
-        foreach (var zone in zones)
+        return towns;
+    }
+
+    private Town GenerateTown(Vector2Int townPosition, List<ProductionZone> adjacentZones)
+    {
+        // BUG: setup should be derived from neighboring zones
+        var setup = townInfos.GetRandom();
+        var worldPosition = tileGrid.CellToWorld(townPosition.FromXY());
+        var townRegions = adjacentZones.Select(zone => zone.Regions).AggregateFlags();
+        var availableGoods = GetAllZoneGoods(adjacentZones);
+        
+        var town = new Town(
+            setup,
+            townPosition,
+            worldPosition,
+            townRegions,
+            availableGoods);
+        return town;
+    }
+
+    private static Dictionary<Vector2Int, List<ProductionZone>> GetZonesPerTown(
+        List<Vector2Int> townPositions,
+        ProductionZone[] zones)
+    {
+        var zonesPerTown = new Dictionary<Vector2Int, List<ProductionZone>>();
+
+        foreach (var townPosition in townPositions)
         {
-            foreach (var townPosition in townPositions)
+            zonesPerTown.Add(townPosition, new List<ProductionZone>());
+            foreach (var zone in zones)
             {
                 if (zone.IsAdjacentTo(townPosition, ZoneDistance))
                 {
-                    availableGoodsPerTown[townPosition].AddRange(zone.AvailableGoods);
+                    zonesPerTown[townPosition].Add(zone);
                 }
             }
         }
 
-        return availableGoodsPerTown;
+        return zonesPerTown;
+    }
+
+    private static HashSet<Good> GetAllZoneGoods(List<ProductionZone> zones)
+    {
+        var allGoods = new HashSet<Good>();
+
+        foreach (var zone in zones)
+        {
+            allGoods.AddRange(zone.AvailableGoods);
+        }
+
+        return allGoods;
     }
 }

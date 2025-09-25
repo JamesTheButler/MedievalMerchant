@@ -25,17 +25,20 @@ namespace Data.Towns
         public HashSet<Good> AvailableGoods { get; }
         public Producer Producer { get; }
         public DevelopmentManager DevelopmentManager { get; }
-
+        public Regions Regions { get; }
 
         public Town(TownSetupInfo setupInfo,
             Vector2Int gridLocation,
             Vector2 worldLocation,
+            Regions regions,
             IEnumerable<Good> availableGoods)
         {
             _inventoryPolicy = new TierBasedInventoryPolicy();
 
             GridLocation = gridLocation;
             WorldLocation = worldLocation;
+            Regions = regions;
+
             _townDevelopmentConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
             _growthConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
             _townConfig = ConfigurationManager.Instance.TownConfig;
@@ -96,7 +99,8 @@ namespace Data.Towns
             Producer.Produce();
 
             // if development trend is positive, add funds
-            var trendFundMultiplier = DevelopmentManager.DevelopmentTrend > 0 ? DevelopmentManager.DevelopmentTrend : 1f;
+            var trendFundMultiplier =
+                DevelopmentManager.DevelopmentTrend > 0 ? DevelopmentManager.DevelopmentTrend : 1f;
             var fundsPerTick = _townConfig.FundRate[townTier];
             Inventory.AddFunds(Mathf.RoundToInt(fundsPerTick * trendFundMultiplier));
         }
