@@ -11,7 +11,7 @@ namespace Data.Configuration
         public GoodsConfig GoodsConfig { get; private set; }
 
         [field: SerializeField, Required]
-        public MarketStateConfig MarketStateConfig { get; private set; }
+        public AvailabilityConfig AvailabilityConfig { get; private set; }
 
         [field: SerializeField, Required]
         public TownDevelopmentConfig TownDevelopmentConfig { get; private set; }

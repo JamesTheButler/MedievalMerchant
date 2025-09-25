@@ -21,7 +21,7 @@ namespace UI.Popups
         private Town _town;
         private Inventory _townInventory;
         private Inventory _playerInventory;
-        private MarketStateManager _marketStateManager;
+        private AvailabilityCalculator _availabilityCalculator;
         private TradeValidator _tradeValidator;
 
         private void Start()
@@ -46,7 +46,7 @@ namespace UI.Popups
             _townInventory = _town.Inventory;
 
             _tradeValidator = new TradeValidator(_player, _town);
-            _marketStateManager = new MarketStateManager(_townInventory);
+            _availabilityCalculator = new AvailabilityCalculator(_town);
 
             var cellTransform = (RectTransform)inventoryCell.transform;
             var arr = new Vector3[4];
@@ -88,7 +88,7 @@ namespace UI.Popups
             if (_good != good)
                 return;
 
-            var marketState = _marketStateManager.GetMarketState(good);
+            var marketState = _availabilityCalculator.GetAvailability(good);
             buySellPopup.SetMarketState(marketState);
             ValidateBuyButton();
         }

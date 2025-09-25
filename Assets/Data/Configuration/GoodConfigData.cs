@@ -12,7 +12,7 @@ namespace Data.Configuration
         [field: SerializeField]
         public Tier Tier { get; private set; }
 
-        [field: SerializeField, Required]
+        [field: SerializeField, Required, ShowAssetPreview]
         public Sprite Icon { get; private set; }
     }
 }

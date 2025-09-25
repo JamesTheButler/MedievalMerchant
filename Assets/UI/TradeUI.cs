@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Text;
 using Data;
 using Data.Configuration;
 using Data.Towns;
@@ -33,6 +35,9 @@ namespace UI
         [SerializeField, Required]
         private Slider amountSlider;
 
+        [SerializeField, Required]
+        private TMP_Text modifiersText;
+
         private readonly Lazy<Model> _model = new(() => Model.Instance);
         private readonly Lazy<Selection> _selection = new(() => Selection.Instance);
         private readonly Lazy<Colors> _colors = new(() => ConfigurationManager.Instance.Colors);
@@ -42,8 +47,8 @@ namespace UI
 
         private GoodConfigData _goodConfigData;
         private Good _good;
+        private Tier _goodTier;
         private TradeType _tradeType;
-        private int _goodBasePrice;
         private int _sellerGoodAmount;
         private int _buyerFunds;
         private int _tradeAmount;
@@ -54,15 +59,14 @@ namespace UI
         private Inventory _buyingInventory;
         private Inventory _sellingInventory;
 
-        private MarketStateManager _marketStateManager;
+        private PriceCalculator _priceCalculator;
 
         public void Initialize(Good good, TradeType tradeType)
         {
             _tradeType = tradeType;
             _good = good;
             _goodConfigData = _configurationManager.Value.ConfigData[good];
-            var tier = _goodConfigData.Tier;
-            _goodBasePrice = _configurationManager.Value.BasePriceData[tier];
+            _goodTier = _goodConfigData.Tier;
             goodIcon.sprite = _goodConfigData.Icon;
 
             SetUpButtons();
@@ -90,7 +94,7 @@ namespace UI
             _activeButton.onClick.RemoveAllListeners();
             cancelButton.onClick.RemoveAllListeners();
 
-            _marketStateManager = null;
+            _priceCalculator = null;
             _buyingInventory = null;
             _sellingInventory = null;
 
@@ -119,14 +123,15 @@ namespace UI
         private void SetUpInventories()
         {
             var player = _model.Value.Player.Inventory;
-            var town = _selection.Value.SelectedTown?.Inventory;
+            var town = _selection.Value.SelectedTown;
 
             if (town is null) return;
 
-            _marketStateManager = new MarketStateManager(town);
+            var townInventory = town.Inventory;
+            _priceCalculator = new PriceCalculator(town);
 
-            _buyingInventory = _tradeType == TradeType.Buy ? player : town;
-            _sellingInventory = _tradeType == TradeType.Sell ? player : town;
+            _buyingInventory = _tradeType == TradeType.Buy ? player : townInventory;
+            _sellingInventory = _tradeType == TradeType.Sell ? player : townInventory;
 
             _sellingInventory.GoodUpdated += OnSellingInventoryGoodUpdated;
             _buyingInventory.Funds.Observe(OnBuyingInventoryFundsUpdated);
@@ -147,6 +152,7 @@ namespace UI
 
             _sellerGoodAmount = amount;
             amountSlider.maxValue = amount;
+            EvaluateTotalPrice();
         }
 
         private void AbortTrade()
@@ -168,8 +174,8 @@ namespace UI
         private void SetAmount(int amount)
         {
             _tradeAmount = amount;
-            var multiplier = _marketStateManager.GetPriceMultiplier(_good);
-            _totalPrice = (int)(amount * _goodBasePrice * multiplier);
+            var goodPrice = _priceCalculator.GetPrice(_good);
+            _totalPrice = amount * goodPrice.FinalPrice;
 
             goodAmountText.text = $"x{amount}";
 
@@ -181,8 +187,17 @@ namespace UI
             }
 
             coinAmountText.text = priceText;
+
+            var priceDescription = new StringBuilder()
+                .AppendLine($"{goodPrice.FinalPrice} .. price per good")
+                .AppendLine("--------------------")
+                .AppendLine($"{goodPrice.BasePrice} .. base price for {_goodTier} Good")
+                .AppendJoin("\n", goodPrice.Modifiers.Select(modifier => modifier.ToDisplayString()));
+
+            modifiersText.text = priceDescription.ToString();
         }
 
+        // TODO: we need to update the count amount text when the MarketState changes for the good 
         private void EvaluateTotalPrice()
         {
             var isTradePossible = _buyerFunds >= _totalPrice;

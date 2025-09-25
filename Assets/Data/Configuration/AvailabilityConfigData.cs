@@ -1,12 +1,13 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Data.Configuration
 {
     [Serializable]
-    public sealed class MarketStateConfigData
+    public sealed class AvailabilityConfigData
     {
-        [field: SerializeField]
+        [field: SerializeField, ShowAssetPreview]
         public Sprite Icon { get; private set; }
         
         [field: SerializeField]
@@ -15,7 +16,7 @@ namespace Data.Configuration
         [field: SerializeField]
         public float PriceMultiplier { get; private set; }
 
-        [field: SerializeField]
-        public float ActivationThreshold { get; private set; }
+        [field: SerializeField, Tooltip("Percentage of the max amount of the good.")]
+        public float ActivationThresholdInPercent { get; private set; }
     }
 }

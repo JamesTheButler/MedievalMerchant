@@ -36,13 +36,13 @@ namespace UI.Popups
         [SerializeField, Required]
         private TMP_Text marketStateText;
 
-        private readonly Lazy<MarketStateConfig> _marketStateConfig =
-            new(() => ConfigurationManager.Instance.MarketStateConfig);
+        private readonly Lazy<AvailabilityConfig> _marketStateConfig =
+            new(() => ConfigurationManager.Instance.AvailabilityConfig);
 
         private readonly Lazy<GoodsConfig> _goodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
 
         private Good _good;
-        private MarketState? _marketState;
+        private Availability? _marketState;
 
         private void Start()
         {
@@ -79,15 +79,15 @@ namespace UI.Popups
             sellButtonTooltip.SetTooltip(canSell.Error);
         }
 
-        public void SetMarketState(MarketState marketState)
+        public void SetMarketState(Availability availability)
         {
-            if (_marketState == marketState) return;
+            if (_marketState == availability) return;
 
-            var configData = _marketStateConfig.Value.ConfigData[marketState];
+            var configData = _marketStateConfig.Value.ConfigData[availability];
             marketStateIcon.sprite = configData.Icon;
             marketStateText.text = configData.DisplayString;
 
-            _marketState = marketState;
+            _marketState = availability;
         }
     }
 }
