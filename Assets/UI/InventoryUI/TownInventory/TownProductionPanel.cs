@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using AYellowpaper.SerializedCollections;
+using Common;
 using Data;
 using Data.Configuration;
 using Data.Towns;
@@ -35,6 +37,7 @@ namespace UI.InventoryUI.TownInventory
 
         private Town _town;
         private readonly Lazy<GoodsConfig> _goodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
+        private readonly Lazy<RecipeConfig> _recipeConfig = new(() => ConfigurationManager.Instance.RecipeConfig);
 
 
         public void Initialize()
@@ -67,12 +70,12 @@ namespace UI.InventoryUI.TownInventory
 
             tier2Arrows.ClearArrows();
             tier3Arrows.ClearArrows();
-            
+
             HideAllRows();
 
             if (_town == null) return;
 
-            _town.Tier.StopObserving(ShowRow);
+            _town.Tier.StopObserving(OnTierChanged);
             _town.Producer.ProductionAdded -= OnProducerAdded;
             _town.Inventory.GoodUpdated -= UpdateGood;
             _town = null;
@@ -81,10 +84,10 @@ namespace UI.InventoryUI.TownInventory
         private void BindTownTier()
         {
             // don't invoke directly as we want to go through all tiers manually in the right order
-            _town.Tier.Observe(ShowRow, false);
+            _town.Tier.Observe(OnTierChanged, false);
             for (var tier = Tier.Tier1; tier <= _town.Tier; tier++)
             {
-                ShowRow(tier);
+                OnTierChanged(tier);
             }
 
             // TODO: should only enable up to a max amount == town.availableGoods
@@ -131,21 +134,53 @@ namespace UI.InventoryUI.TownInventory
                 {
                     var tier2Section = rows[Tier.Tier2];
                     tier2Section.EnableProductionCellUpgradeButton(index, true);
-                    tier2Arrows.AddArrow(index, index);
+                    RefreshTier2Arrows();
                     break;
                 }
 
                 case Tier.Tier2:
-                    // TODO: if producers contains enough for a Tier3 recipe, set up arrows and enable button
-                    tier3Arrows.AddArrow(index, 0);
-                    tier3Arrows.AddArrow(index, 1);
-                    tier3Arrows.AddArrow(index, 2);
+                    RefreshTier3Arrows();
                     break;
 
                 case Tier.Tier3:
                     break;
 
                 default: break;
+            }
+        }
+
+        public void RefreshTier2Arrows()
+        {
+            tier2Arrows.ClearArrows();
+            if (_town.Tier < Tier.Tier2) return;
+
+            var t1Producers = _town.Producer.GetProducers(Tier.Tier1);
+            for (var i = 0; i < t1Producers.Length; i++)
+            {
+                if (t1Producers[i] == null) continue;
+
+                tier2Arrows.AddArrow(i, i);
+            }
+        }
+
+        // TODO: optimize. GetAllTuples is really expensive
+        public void RefreshTier3Arrows()
+        {
+            tier3Arrows.ClearArrows();
+            if (_town.Tier < Tier.Tier3) return;
+
+            var t2Producers = _town.Producer
+                .GetProducers(Tier.Tier2)
+                .WhereNotNull()
+                .ToList();
+            
+            var possibleRecipes = t2Producers.GetAllTuples();
+            foreach (var (first, second) in possibleRecipes)
+            {
+                var tier3Good = _recipeConfig.Value.TryGetRecipe(first, second);
+                if (tier3Good == null) continue;
+
+                //tier3Arrows.AddArrow();
             }
         }
 
@@ -157,9 +192,12 @@ namespace UI.InventoryUI.TownInventory
             }
         }
 
-        private void ShowRow(Tier tier)
+        private void OnTierChanged(Tier tier)
         {
+            // show row for tier
             rows[tier].gameObject.SetActive(true);
+            RefreshTier2Arrows();
+            RefreshTier3Arrows();
         }
     }
 }

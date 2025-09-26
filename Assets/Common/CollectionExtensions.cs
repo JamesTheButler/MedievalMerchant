@@ -37,5 +37,21 @@ namespace Common
         {
             return source.Where(item => item != null).Cast<T>();
         }
+
+        /// <summary>
+        /// Returns all possible tuples.
+        /// </summary>
+        public static IEnumerable<(T first, T second)> GetAllTuples<T>(this IEnumerable<T> source)
+        {
+            var items = source.ToList();
+
+            for (var i = 0; i < items.Count; i++)
+            {
+                for (var j = i + 1; j < items.Count; j++)
+                {
+                    yield return (items[i], items[j]);
+                }
+            }
+        }
     }
 }
