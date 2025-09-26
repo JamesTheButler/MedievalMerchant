@@ -1,6 +1,7 @@
 using System;
 using Data.Towns;
 using UI.InventoryUI;
+using UI.InventoryUI.TownInventory;
 using UnityEngine;
 
 namespace UI.Popups

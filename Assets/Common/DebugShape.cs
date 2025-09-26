@@ -1,5 +1,4 @@
 using System;
-using NaughtyAttributes;
 using UnityEngine;
 
 namespace Common
@@ -9,10 +8,7 @@ namespace Common
         [SerializeField]
         private DebugShapeType shape;
 
-        [SerializeField, ShowIf(nameof(shape), DebugShapeType.Sphere)]
-        private float radius = 1f;
-
-        [SerializeField, ShowIf(nameof(shape), DebugShapeType.Square)]
+        [SerializeField]
         private float size = 1f;
 
         [SerializeField]
@@ -45,14 +41,15 @@ namespace Common
                 case DebugShapeType.Sphere:
                     if (fill)
                     {
-                        Gizmos.DrawSphere(position, radius);
+                        Gizmos.DrawSphere(position, size);
                     }
                     else
                     {
-                        Gizmos.DrawWireSphere(position, radius);
+                        Gizmos.DrawWireSphere(position, size);
                     }
 
                     break;
+
                 case DebugShapeType.Square:
                     var cubeSize = new Vector3(size, size, size);
                     if (fill)
@@ -65,6 +62,16 @@ namespace Common
                     }
 
                     break;
+
+                case DebugShapeType.X:
+                    Gizmos.DrawLine(
+                        position + (Vector3.left + Vector3.up) * size,
+                        position + (Vector3.right + Vector3.down) * size);
+                    Gizmos.DrawLine(
+                        position + (Vector3.right + Vector3.up) * size,
+                        position + (Vector3.left + Vector3.down) * size);
+                    break;
+
                 default: throw new ArgumentOutOfRangeException();
             }
         }

@@ -4,5 +4,6 @@ namespace Common
     {
         Sphere,
         Square,
+        X,
     }
 }

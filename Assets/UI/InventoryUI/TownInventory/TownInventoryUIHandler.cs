@@ -2,7 +2,7 @@ using Data.Towns;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace UI.InventoryUI
+namespace UI.InventoryUI.TownInventory
 {
     public sealed class TownInventoryUIHandler : MonoBehaviour
     {

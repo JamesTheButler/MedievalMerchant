@@ -3,7 +3,7 @@ using Data;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.InventoryUI
+namespace UI.InventoryUI.TownInventory
 {
     public sealed class ProductionCell : InventoryCellBase
     {
