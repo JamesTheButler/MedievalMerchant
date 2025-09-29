@@ -15,6 +15,8 @@ namespace Levels.Conditions
 
         private Inventory _playerInventory;
 
+        public override ConditionType Type => ConditionType.FundsWinCondition;
+
         public override void Initialize()
         {
             _playerInventory = Model.Instance.Player.Inventory;

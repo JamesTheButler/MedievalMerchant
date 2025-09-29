@@ -51,9 +51,7 @@ public sealed class LevelLoader : MonoBehaviour
         player.Location.CurrentTown = startTown;
         player.Location.WorldLocation.Value = startTown.WorldLocation;
 
-        // TODO: this sucks
-        var conditionManager = FindFirstObjectByType<ConditionManager>();
-        conditionManager.Setup(levelInfo.Conditions);
+        _model.ConditionManager.Setup(levelInfo.Conditions);
 
         levelLoaded.Invoke();
     }
@@ -79,7 +77,7 @@ public sealed class LevelLoader : MonoBehaviour
         var worldPosition = tileGrid.CellToWorld(townPosition.FromXY());
         var townRegions = adjacentZones.Select(zone => zone.Regions).AggregateFlags();
         var availableGoods = GetAllZoneGoods(adjacentZones);
-        
+
         var town = new Town(
             setup,
             townPosition,

@@ -13,6 +13,9 @@ namespace Data
         public TileFlagMap TileFlagMap { get; private set; }
         public Date Date { get; private set; } = new();
         public Player Player { get; private set; }
+
+        public ConditionManager ConditionManager { get; private set; }
+
         public IReadOnlyDictionary<Vector2Int, Town> Towns => _towns;
 
         private Dictionary<Vector2Int, Town> _towns = new();
@@ -22,6 +25,7 @@ namespace Data
             _towns = towns.ToDictionary(town => town.GridLocation, town => town);
             Player = player;
             TileFlagMap = tileFlagMap;
+            ConditionManager = gameObject.GetComponent<ConditionManager>();
         }
 
         private void Awake()

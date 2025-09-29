@@ -17,6 +17,8 @@ namespace Levels.Conditions
 
         private Date _date;
 
+        public override ConditionType Type => ConditionType.DateReachedLossCondition;
+
         public override void Initialize()
         {
             _date = Model.Instance.Date;

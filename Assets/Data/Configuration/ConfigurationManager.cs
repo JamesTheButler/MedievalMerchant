@@ -34,6 +34,9 @@ namespace Data.Configuration
         [field: SerializeField, Required]
         public TownConfig TownConfig { get; private set; }
 
+        [field: SerializeField, Required]
+        public ConditionConfig ConditionConfig { get; private set; }
+
         private void Awake()
         {
             if (Instance != null && Instance != this)

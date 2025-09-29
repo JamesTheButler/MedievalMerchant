@@ -8,6 +8,9 @@ namespace Data
 {
     public sealed class ConditionManager : MonoBehaviour
     {
+        public IReadOnlyList<WinCondition> WinConditions => _winConditions;
+        public IReadOnlyList<LossCondition> LossConditions => _lossConditions;
+
         [SerializeField]
         private UnityEvent levelWon;
 

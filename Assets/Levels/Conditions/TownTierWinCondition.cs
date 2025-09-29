@@ -20,6 +20,8 @@ namespace Levels.Conditions
 
         private Model _model;
 
+        public override ConditionType Type => ConditionType.TownTierWinCondition;
+
         public override void Initialize()
         {
             _model = Model.Instance;
