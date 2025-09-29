@@ -1,3 +1,4 @@
+using System;
 using Data;
 using Data.Configuration;
 using Data.Trade;
@@ -16,6 +17,12 @@ namespace Levels.Conditions
         private Inventory _playerInventory;
 
         public override ConditionType Type => ConditionType.FundsWinCondition;
+        public override string Description { get; protected set; }
+
+        private void Awake()
+        {
+            Description = $"Accumulate {fundsToReach} gold coins.";
+        }
 
         public override void Initialize()
         {

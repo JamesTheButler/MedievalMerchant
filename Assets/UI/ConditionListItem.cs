@@ -21,6 +21,7 @@ namespace UI
             descriptionText.text = description;
             progressText.text = progress;
             iconImage.sprite = icon;
+            progressText.gameObject.SetActive(false);
         }
     }
 }

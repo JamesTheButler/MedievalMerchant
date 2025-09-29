@@ -4,6 +4,8 @@ namespace Data
 {
     public sealed class Date
     {
+        public const int LastDayOfYear = 365;
+        
         private readonly Observable<int> _year = new(1);
         private readonly Observable<int> _day = new(1);
 
@@ -17,7 +19,7 @@ namespace Data
                 case < 1:
                     _day.Value = 1;
                     break;
-                case > 365:
+                case > LastDayOfYear:
                     _day.Value = 1;
                     _year.Value++;
                     break;

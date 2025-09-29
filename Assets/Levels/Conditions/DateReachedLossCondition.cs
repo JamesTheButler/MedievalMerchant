@@ -1,3 +1,4 @@
+using System;
 using Data;
 using Data.Configuration;
 using UnityEngine;
@@ -18,6 +19,18 @@ namespace Levels.Conditions
         private Date _date;
 
         public override ConditionType Type => ConditionType.DateReachedLossCondition;
+
+        public override string Description { get; protected set; }
+
+        private void Awake()
+        {
+            Description = deadlineDay switch
+            {
+                1 => $"Win the game by the start of Year {deadlineYear}",
+                Date.LastDayOfYear => $"Win the game by the end of Year {deadlineYear}",
+                _ => $"Win the game by Day {deadlineDay} of Year {deadlineYear}",
+            };
+        }
 
         public override void Initialize()
         {

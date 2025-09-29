@@ -18,7 +18,6 @@ namespace UI
         private readonly Lazy<ConditionConfig> _conditionConfig =
             new(() => ConfigurationManager.Instance.ConditionConfig);
 
-
         public void Setup(IEnumerable<Condition> conditions)
         {
             Clear();
@@ -28,8 +27,8 @@ namespace UI
                 var listItem = Instantiate(listItemPrefab, listContainer.transform);
                 var listItemScript = listItem.GetComponent<ConditionListItem>();
 
-                var (description, icon) = _conditionConfig.Value.Conditions[condition.Type];
-                listItemScript.Setup(description, "0/100", icon);
+                var icon = _conditionConfig.Value.Conditions[condition.Type].Icon;
+                listItemScript.Setup(condition.Description, "TBD", icon);
             }
         }
 
