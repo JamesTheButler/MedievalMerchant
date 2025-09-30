@@ -1,5 +1,6 @@
 using AYellowpaper.SerializedCollections;
 using Levels.Conditions;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Data.Configuration
@@ -11,5 +12,11 @@ namespace Data.Configuration
     {
         [field: SerializeField, SerializedDictionary("Type", "Condition Data")]
         public SerializedDictionary<ConditionType, ConditionListItemData> Conditions { get; private set; }
+
+        [field: SerializeField, Range(0f, 1f)]
+        public float WarningThresholdPercent { get; private set; }
+
+        [field: SerializeField, Required]
+        public Sprite WarningIcon { get; private set; }
     }
 }

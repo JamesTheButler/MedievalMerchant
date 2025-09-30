@@ -5,20 +5,20 @@ using UnityEngine;
 namespace Levels.Conditions
 {
     [CreateAssetMenu(
-        fileName = nameof(DateReachedLossCondition),
-        menuName = AssetMenu.ConditionsFolder + nameof(DateReachedLossCondition))]
-    public sealed class DateReachedLossCondition : LossCondition
+        fileName = nameof(TimeoutCondition),
+        menuName = AssetMenu.ConditionsFolder + nameof(TimeoutCondition))]
+    public sealed class TimeoutCondition : LossCondition
     {
-        [SerializeField]
+        [SerializeField, Min(1)]
         private int deadlineYear;
 
-        [SerializeField]
+        [SerializeField, Range(1, Date.LastDayOfYear)]
         private int deadlineDay;
 
         private Date _deadlineDate;
         private Date _currentDate;
 
-        public override ConditionType Type => ConditionType.DateReachedLossCondition;
+        public override ConditionType Type => ConditionType.TimeoutCondition;
 
         public override string Description => GetDescription();
 
@@ -39,7 +39,7 @@ namespace Levels.Conditions
             Evaluate();
         }
 
-        private void DayChanged(int obj)
+        private void DayChanged(int day)
         {
             Evaluate();
         }
@@ -53,8 +53,8 @@ namespace Levels.Conditions
         {
             return deadlineDay switch
             {
-                1 => $"Win the game by the start of Year {deadlineYear}",
-                Date.LastDayOfYear => $"Win the game by the end of Year {deadlineYear}",
+                <= 1 => $"Win the game by the start of Year {deadlineYear}",
+                >= Date.LastDayOfYear => $"Win the game by the end of Year {deadlineYear}",
                 _ => $"Win the game by Day {deadlineDay} of Year {deadlineYear}",
             };
         }

@@ -9,7 +9,7 @@ namespace Data
 
         public static int AsDays(this Date date)
         {
-            return date.Day.Value + Date.LastDayOfYear * date.Year.Value;
+            return date.Day.Value + Date.LastDayOfYear * (date.Year.Value - 1);
         }
     }
 }

@@ -29,6 +29,12 @@ namespace UI.Conditions
                 var icon = _conditionConfig.Value.Conditions[condition.Type].Icon;
 
                 listItemScript.Setup(condition.Description, icon, setupProgress ? condition.Progress : null);
+                if (condition is not LossCondition)
+                    continue;
+
+                var warningThreshold = _conditionConfig.Value.WarningThresholdPercent;
+                var warningIcon = _conditionConfig.Value.WarningIcon;
+                listItemScript.AddThreshold(warningThreshold, warningIcon);
             }
         }
 

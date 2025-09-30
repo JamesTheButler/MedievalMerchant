@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common;
+using Data.Configuration;
 using Levels.Conditions;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,8 +11,6 @@ namespace Data
 {
     public sealed class ConditionManager : MonoBehaviour
     {
-        private const float CloseToLossThresholdPercent = .9f;
-
         public IReadOnlyList<WinCondition> WinConditions => _winConditions;
         public IReadOnlyList<LossCondition> LossConditions => _lossConditions;
 
@@ -27,8 +26,15 @@ namespace Data
 
         private List<WinCondition> _winConditions = new();
         private List<LossCondition> _lossConditions = new();
+        private ConditionConfig _conditionManager;
 
         private readonly HashSet<LossCondition> _closeLossConditions = new();
+        
+
+        private void Awake()
+        {
+            _conditionManager = ConfigurationManager.Instance.ConditionConfig;
+        }
 
         public void Setup(IEnumerable<Condition> conditions)
         {
@@ -53,7 +59,7 @@ namespace Data
 
         private void OnLossConditionProgressChanged(float currentProgressPercent, LossCondition condition)
         {
-            if (currentProgressPercent >= CloseToLossThresholdPercent)
+            if (currentProgressPercent >= _conditionManager.WarningThresholdPercent)
             {
                 _closeLossConditions.Add(condition);
             }

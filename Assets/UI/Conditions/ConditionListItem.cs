@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using Data;
 using JetBrains.Annotations;
 using Levels.Conditions;
 using NaughtyAttributes;
@@ -29,6 +32,8 @@ namespace UI.Conditions
 
         private Progress _progress;
 
+        private readonly SortedDictionary<float, Sprite> _thresholdIcons = new();
+
         public void Setup(string description, Sprite icon, [CanBeNull] Progress progress = null)
         {
             descriptionText.text = description;
@@ -43,7 +48,12 @@ namespace UI.Conditions
 
             _progress = progress;
             _progress.CurrentValueText.Observe(OnProgressTextChanged);
-            _progress.IsCompleted.Observe(OnIsCompletedChanged);
+            _progress.CurrentValuePercent.Observe(OnProgressPercentChanged);
+        }
+
+        public void AddThreshold(float threshold, Sprite icon)
+        {
+            _thresholdIcons.Add(threshold, icon);
         }
 
         private void OnDestroy()
@@ -51,7 +61,7 @@ namespace UI.Conditions
             if (_progress is null) return;
 
             _progress.CurrentValueText.StopObserving(OnProgressTextChanged);
-            _progress.IsCompleted.Observe(OnIsCompletedChanged);
+            _progress.CurrentValuePercent.StopObserving(OnProgressPercentChanged);
         }
 
         private void OnProgressTextChanged(string text)
@@ -59,9 +69,34 @@ namespace UI.Conditions
             progressText.text = text;
         }
 
-        private void OnIsCompletedChanged(bool isComplete)
+        private void OnProgressPercentChanged(float progressInPercent)
         {
-            completionImage.sprite = isComplete ? completeIcon : incompleteIcon;
+            Sprite selectedIcon;
+
+            if (progressInPercent.IsApproximately(1f))
+            {
+                selectedIcon = completeIcon;
+            }
+            else
+            {
+                Sprite thresholdIcon = null;
+
+                foreach (var (threshold, icon) in _thresholdIcons)
+                {
+                    if (progressInPercent >= threshold)
+                    {
+                        thresholdIcon = icon;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                selectedIcon = thresholdIcon ?? incompleteIcon;
+            }
+
+            completionImage.sprite = selectedIcon;
         }
     }
 }
