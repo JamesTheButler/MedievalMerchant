@@ -6,6 +6,9 @@ namespace UI
 {
     public class GameOverUI : MonoBehaviour
     {
+        [SerializeField, Scene]
+        private string startScene;
+        
         [SerializeField, Required]
         private GameObject winUI, lossUi;
 
@@ -24,7 +27,7 @@ namespace UI
 
         public void BackToMainMenu()
         {
-            SceneManager.LoadScene("Scenes/StartMenu");
+            SceneManager.LoadScene(startScene);
         }
     }
 }

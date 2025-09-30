@@ -8,6 +8,9 @@ namespace UI
 {
     public sealed class EscapeMenu : MonoBehaviour
     {
+        [SerializeField, Scene]
+        private string startScene;
+        
         [SerializeField]
         private UnityEvent giveUpPressed;
 
@@ -27,7 +30,7 @@ namespace UI
         private void GiveUp()
         {
             giveUpPressed.Invoke();
-            SceneManager.LoadScene("StartMenu");
+            SceneManager.LoadScene(startScene);
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Data;
 using Data.Configuration;
 using UnityEngine;
@@ -16,27 +15,23 @@ namespace Levels.Conditions
         [SerializeField]
         private int deadlineDay;
 
-        private Date _date;
+        private Date _deadlineDate;
+        private Date _currentDate;
 
         public override ConditionType Type => ConditionType.DateReachedLossCondition;
 
-        public override string Description { get; protected set; }
+        public override string Description => GetDescription();
 
-        private void Awake()
-        {
-            Description = deadlineDay switch
-            {
-                1 => $"Win the game by the start of Year {deadlineYear}",
-                Date.LastDayOfYear => $"Win the game by the end of Year {deadlineYear}",
-                _ => $"Win the game by Day {deadlineDay} of Year {deadlineYear}",
-            };
-        }
 
         public override void Initialize()
         {
-            _date = Model.Instance.Date;
-            _date.Day.Observe(DayChanged);
-            _date.Year.Observe(YearChanged);
+            _currentDate = Model.Instance.Date;
+            _deadlineDate = new Date(deadlineDay, deadlineYear);
+
+            Progress = new Progress(_deadlineDate.AsDays(), FormatProgress);
+
+            _currentDate.Day.Observe(DayChanged);
+            _currentDate.Year.Observe(YearChanged);
         }
 
         private void YearChanged(int year)
@@ -51,16 +46,23 @@ namespace Levels.Conditions
 
         private void Evaluate()
         {
-            var day = _date.Day.Value;
-            var year = _date.Year.Value;
+            Progress.SetProgress(_currentDate.AsDays());
+        }
 
-            if (year > deadlineYear || (year == deadlineYear && day > deadlineDay))
+        private string GetDescription()
+        {
+            return deadlineDay switch
             {
-                IsCompleted.Value = true;
+                1 => $"Win the game by the start of Year {deadlineYear}",
+                Date.LastDayOfYear => $"Win the game by the end of Year {deadlineYear}",
+                _ => $"Win the game by Day {deadlineDay} of Year {deadlineYear}",
+            };
+        }
 
-                _date.Day.StopObserving(DayChanged);
-                _date.Year.StopObserving(YearChanged);
-            }
+        private static string FormatProgress(int currentValue, int maxValue)
+        {
+            var daysLeft = maxValue - currentValue;
+            return $"{daysLeft} days left";
         }
     }
 }

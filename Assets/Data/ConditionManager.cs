@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common;
 using Levels.Conditions;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,6 +10,8 @@ namespace Data
 {
     public sealed class ConditionManager : MonoBehaviour
     {
+        private const float CloseToLossThresholdPercent = .9f;
+
         public IReadOnlyList<WinCondition> WinConditions => _winConditions;
         public IReadOnlyList<LossCondition> LossConditions => _lossConditions;
 
@@ -17,8 +21,14 @@ namespace Data
         [SerializeField]
         private UnityEvent levelLost;
 
+        public event Action<int> CompletionCountChanged;
+
+        public Observable<bool> IsLossClose { get; } = new();
+
         private List<WinCondition> _winConditions = new();
         private List<LossCondition> _lossConditions = new();
+
+        private readonly HashSet<LossCondition> _closeLossConditions = new();
 
         public void Setup(IEnumerable<Condition> conditions)
         {
@@ -29,19 +39,39 @@ namespace Data
             foreach (var condition in _winConditions)
             {
                 condition.Initialize();
-                condition.IsCompleted.Observe(_ => OnWinConditionChanged(condition), false);
+                condition.Progress.IsCompleted.Observe(_ => OnWinConditionChanged(condition), false);
             }
 
             foreach (var condition in _lossConditions)
             {
                 condition.Initialize();
-                condition.IsCompleted.Observe(OnLossConditionChanged, false);
+                condition.Progress.IsCompleted.Observe(OnLossConditionChanged, false);
+                condition.Progress.CurrentValuePercent.Observe(
+                    percent => OnLossConditionProgressChanged(percent, condition), false);
             }
+        }
+
+        private void OnLossConditionProgressChanged(float currentProgressPercent, LossCondition condition)
+        {
+            if (currentProgressPercent >= CloseToLossThresholdPercent)
+            {
+                _closeLossConditions.Add(condition);
+            }
+            else
+            {
+                _closeLossConditions.Remove(condition);
+            }
+
+            var anyCloseLossConditions = _closeLossConditions.Any();
+            IsLossClose.Value = anyCloseLossConditions;
         }
 
         private void OnWinConditionChanged(WinCondition _)
         {
-            if (_winConditions.All(condition => condition.IsCompleted))
+            var count = _winConditions.Count(condition => condition.Progress.IsCompleted);
+            CompletionCountChanged?.Invoke(count);
+
+            if (_winConditions.Count == count)
             {
                 levelWon.Invoke();
             }

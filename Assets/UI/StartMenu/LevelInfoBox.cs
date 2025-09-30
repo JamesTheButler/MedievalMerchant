@@ -3,6 +3,7 @@ using Levels;
 using Levels.Conditions;
 using NaughtyAttributes;
 using TMPro;
+using UI.Conditions;
 using UnityEngine;
 
 namespace UI.StartMenu
@@ -22,8 +23,8 @@ namespace UI.StartMenu
         {
             nameText.text = levelInfo.LevelName;
             var conditions = levelInfo.Conditions;
-            winConditionList.Setup(conditions.OfType<WinCondition>());
-            lossConditionList.Setup(conditions.OfType<LossCondition>());
+            winConditionList.Setup(conditions.OfType<WinCondition>(), false);
+            lossConditionList.Setup(conditions.OfType<LossCondition>(), false);
             gameObject.SetActive(true);
         }
 

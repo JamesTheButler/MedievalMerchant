@@ -10,6 +10,9 @@ namespace UI.StartMenu
 {
     public sealed class StartMenuManager : MonoBehaviour
     {
+        [SerializeField, Scene]
+        private string gameScene;
+        
         [SerializeField, Required]
         private Animation logoAnimation;
 
@@ -28,7 +31,7 @@ namespace UI.StartMenu
         {
             Debug.Log($"Loading level {levelInfo.LevelName}...");
 
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene(gameScene);
         }
 
         private void Start()

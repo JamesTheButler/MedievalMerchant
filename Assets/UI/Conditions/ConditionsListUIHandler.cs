@@ -2,7 +2,7 @@ using Data;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace UI
+namespace UI.Conditions
 {
     public sealed class ConditionsListUIHandler : MonoBehaviour
     {
@@ -19,8 +19,8 @@ namespace UI
         {
             var conditionsManager = Model.Instance.ConditionManager;
 
-            winConditionListUI.Setup(conditionsManager.WinConditions);
-            lossConditionListUI.Setup(conditionsManager.LossConditions);
+            winConditionListUI.Setup(conditionsManager.WinConditions, true);
+            lossConditionListUI.Setup(conditionsManager.LossConditions, true);
 
             winConditionsUi.SetActive(false);
         }

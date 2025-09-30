@@ -23,16 +23,13 @@ namespace Levels.Conditions
 
         public override ConditionType Type => ConditionType.TownTierWinCondition;
 
-        public override string Description { get; protected set; }
-
-        private void Awake()
-        {
-            Description = $"Develop {targetCount} towns to Tier {targetTier.ToRomanNumeral()}.";
-        }
+        public override string Description => $"Develop {targetCount} towns to Tier {targetTier.ToRomanNumeral()}.";
 
         public override void Initialize()
         {
             _model = Model.Instance;
+            Progress = new Progress(targetCount, FormatProgress);
+
             foreach (var town in _model.Towns.Values)
             {
                 town.Tier.Observe(_ => Evaluate());
@@ -42,7 +39,12 @@ namespace Levels.Conditions
         private void Evaluate()
         {
             var currentCount = _model.Towns.Values.Count(town => town.Tier.Value >= targetTier);
-            IsCompleted.Value = currentCount >= targetCount;
+            Progress.SetProgress(currentCount);
+        }
+
+        private string FormatProgress(int currentValue, int maxValue)
+        {
+            return $"{currentValue}/{maxValue} Tier {targetTier.ToRomanNumeral()} towns";
         }
     }
 }

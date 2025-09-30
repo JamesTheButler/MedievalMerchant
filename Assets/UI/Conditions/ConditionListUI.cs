@@ -5,7 +5,7 @@ using Data.Configuration;
 using Levels.Conditions;
 using UnityEngine;
 
-namespace UI
+namespace UI.Conditions
 {
     public sealed class ConditionListUI : MonoBehaviour
     {
@@ -18,7 +18,7 @@ namespace UI
         private readonly Lazy<ConditionConfig> _conditionConfig =
             new(() => ConfigurationManager.Instance.ConditionConfig);
 
-        public void Setup(IEnumerable<Condition> conditions)
+        public void Setup(IEnumerable<Condition> conditions, bool setupProgress)
         {
             Clear();
 
@@ -26,9 +26,9 @@ namespace UI
             {
                 var listItem = Instantiate(listItemPrefab, listContainer.transform);
                 var listItemScript = listItem.GetComponent<ConditionListItem>();
-
                 var icon = _conditionConfig.Value.Conditions[condition.Type].Icon;
-                listItemScript.Setup(condition.Description, "TBD", icon);
+
+                listItemScript.Setup(condition.Description, icon, setupProgress ? condition.Progress : null);
             }
         }
 
