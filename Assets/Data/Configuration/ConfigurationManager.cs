@@ -1,3 +1,4 @@
+using Data.Towns.Upgrades;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -36,6 +37,9 @@ namespace Data.Configuration
 
         [field: SerializeField, Required]
         public ConditionConfig ConditionConfig { get; private set; }
+        
+        [field: SerializeField, Required]
+        public UpgradeProgressionConfig UpgradeProgressionConfig { get; private set; }
 
         private void Awake()
         {

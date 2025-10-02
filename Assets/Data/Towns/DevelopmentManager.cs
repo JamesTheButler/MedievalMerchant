@@ -77,17 +77,12 @@ namespace Data.Towns
             GrowthModifiersChanged?.Invoke();
 
             var developmentTrend = _growthModifiers.Sum(modifier => modifier.Value);
-            // reset development trend to 0, if we are at 0 development, mostly for visual purposes
-            if (DevelopmentScore <= 0 && developmentTrend < 0)
-            {
-                developmentTrend = 0;
-            }
-
             var developmentScore = DevelopmentScore.Value + developmentTrend;
 
             // upgrade town if needed
             if (developmentScore >= 100 && _town.Tier.Value < Tier.Tier3)
             {
+                DevelopmentScore.Value = 100; // make sure to update observers
                 _town.Upgrade();
                 UpdateDevelopmentTable();
                 developmentScore = 0;

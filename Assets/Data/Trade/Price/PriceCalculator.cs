@@ -1,12 +1,9 @@
 using System.Collections.Generic;
 using Common;
-using Data;
 using Data.Configuration;
 using Data.Towns;
-using Data.Trade;
-using Data.Trade.Price;
 
-namespace UI
+namespace Data.Trade.Price
 {
     public sealed class PriceCalculator
     {
@@ -40,6 +37,12 @@ namespace UI
                     ? new LocalGoodPriceModifier(_goodsConfig.LocalGoodPriceModifier)
                     : new ForeignGoodPriceModifier(_goodsConfig.ForeignGoodPriceModifier);
                 modifiers.Add(regionModifier);
+            }
+
+            var upgradeModifiers = _town.UpgradeManager.ProductionModifiers;
+            if (!upgradeModifiers.IsApproximately(0f))
+            {
+                modifiers.Add(new TownUpgradePriceModifier(upgradeModifiers));
             }
 
             return new Price(goodBasePrice, modifiers);

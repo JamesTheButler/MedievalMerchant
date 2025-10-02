@@ -5,6 +5,7 @@ using Data;
 using Data.Configuration;
 using Data.Towns;
 using Data.Trade;
+using Data.Trade.Price;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

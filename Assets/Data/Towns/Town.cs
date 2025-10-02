@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Data.Configuration;
+using Data.Towns.Upgrades;
 using Data.Trade;
 using UnityEngine;
 
@@ -25,6 +26,7 @@ namespace Data.Towns
         public HashSet<Good> AvailableGoods { get; }
         public Producer Producer { get; }
         public DevelopmentManager DevelopmentManager { get; }
+        public UpgradeManager UpgradeManager { get; }
         public Regions Regions { get; }
 
         public Town(TownSetupInfo setupInfo,
@@ -54,6 +56,7 @@ namespace Data.Towns
             Inventory = new Inventory(_inventoryPolicy);
             Producer = new Producer(this);
             DevelopmentManager = new DevelopmentManager(this);
+            UpgradeManager = new(this);
 
             Inventory.AddFunds(setupInfo.InitialFunds);
 
@@ -87,22 +90,20 @@ namespace Data.Towns
 
         private void Produce()
         {
+            // goods production
+            // TODO: use modifier system
             var townTier = Tier.Value;
-            // update production multiplier
-            var multiplier = DevelopmentManager.DevelopmentScore.Value switch
-            {
-                < 20 => 0.5f,
-                > 80 => 2f,
-                _ => 1f,
-            };
+            var multiplier = 1 + UpgradeManager.PriceModifiers;
             Producer.SetProductionMultiplier(multiplier);
             Producer.Produce();
 
-            // if development trend is positive, add funds
-            var trendFundMultiplier =
-                DevelopmentManager.DevelopmentTrend > 0 ? DevelopmentManager.DevelopmentTrend : 1f;
-            var fundsPerTick = _townConfig.FundRate[townTier];
-            Inventory.AddFunds(Mathf.RoundToInt(fundsPerTick * trendFundMultiplier));
+            // funds production
+            // TODO: use modifier system
+            var devTrend = DevelopmentManager.DevelopmentTrend;
+            var modifierMultiplier = 1 + UpgradeManager.FundsModifiers;
+            var baseFundsPerTick = _townConfig.FundRate[townTier];
+            var fundChange = Mathf.RoundToInt(baseFundsPerTick * modifierMultiplier);
+            Inventory.AddFunds(fundChange);
         }
 
         private void Consume()
