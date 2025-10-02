@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using Data;
 using Data.Configuration;
+using Data.Modifiable;
 using Data.Towns;
 using Data.Trade;
 using Data.Trade.Price;
@@ -184,8 +185,7 @@ namespace UI
         private void UpdatePrice()
         {
             var goodPrice = _priceCalculator.GetPrice(_good, _tradeType);
-            _totalPrice = _tradeAmount * goodPrice.FinalPrice;
-
+            _totalPrice = Mathf.RoundToInt(_tradeAmount * goodPrice.Value);
 
             var priceText = $"{_totalPrice}";
 
@@ -197,9 +197,9 @@ namespace UI
             coinAmountText.text = priceText;
 
             var priceDescription = new StringBuilder()
-                .AppendLine($"{goodPrice.FinalPrice} .. price per good")
+                .AppendLine($"{goodPrice.Value} .. price per good")
                 .AppendLine("--------------------")
-                .AppendLine($"{goodPrice.BasePrice} .. base price for {_goodTier} Good")
+                .AppendLine($"{goodPrice.BaseValue} .. base price for {_goodTier} Good")
                 .AppendJoin("\n", goodPrice.Modifiers.Select(modifier => modifier.ToDisplayString()));
 
             modifiersText.text = priceDescription.ToString();

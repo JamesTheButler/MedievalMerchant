@@ -1,14 +1,11 @@
+using Data.Modifiable;
+
 namespace Data.Trade.Price
 {
-    public sealed class ForeignGoodPriceModifier : PriceModifier
+    public sealed class ForeignGoodPriceModifier : BasePercentageModifier
     {
-        public override float Value { get; }
-        public override string Description { get; }
-
-        public ForeignGoodPriceModifier(float value)
+        public ForeignGoodPriceModifier(float value) : base(value, "Foreign Good", "Good from foreign region.")
         {
-            Value = value;
-            Description = "Good from foreign region.";
         }
     }
 }

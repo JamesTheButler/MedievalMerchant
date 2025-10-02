@@ -1,19 +1,20 @@
 using Data.Configuration;
+using Data.Modifiable;
 
 namespace Data.Trade.Price
 {
-    public sealed class AvailabilityPriceModifier : PriceModifier
+    public sealed class AvailabilityPriceModifier : BasePercentageModifier
     {
-        public override float Value { get; }
-        public override string Description { get; }
-
         public AvailabilityPriceModifier(float value, Availability availability)
+            : base(value, "Availability", GetDescription(availability))
+        {
+        }
+
+        private static string GetDescription(Availability availability)
         {
             var availabilityConfig = ConfigurationManager.Instance.AvailabilityConfig;
             var availabilityString = availabilityConfig.ConfigData[availability].DisplayString;
-
-            Value = value;
-            Description = $"Availability: {availabilityString}";
+            return $"Availability: {availabilityString}";
         }
     }
 }

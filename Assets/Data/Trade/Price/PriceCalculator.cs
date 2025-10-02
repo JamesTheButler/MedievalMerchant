@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Common;
 using Data.Configuration;
+using Data.Modifiable;
 using Data.Towns;
 
 namespace Data.Trade.Price
@@ -18,34 +18,36 @@ namespace Data.Trade.Price
             _availabilityCalculator = new AvailabilityCalculator(town);
         }
 
-        public Price GetPrice(Good good, TradeType tradeType)
+        public ModifiableVariable GetPrice(Good good, TradeType tradeType)
         {
             var goodTier = _goodsConfig.ConfigData[good].Tier;
             var goodRegions = _goodsConfig.ConfigData[good].Regions;
             var goodBasePrice = _goodsConfig.BasePriceData[goodTier];
 
-            var modifiers = new List<PriceModifier>();
+            var basePriceModifier = new BasePriceModifier(goodBasePrice, goodTier);
+            var price = new ModifiableVariable(basePriceModifier);
+
             var availability = _availabilityCalculator.GetAvailability(good);
             var multiplier = _availabilityCalculator.GetPriceMultiplier(good);
-            modifiers.Add(new AvailabilityPriceModifier(multiplier, availability));
+            price.AddModifier(new AvailabilityPriceModifier(multiplier, availability));
 
             // don't apply region modifier when buying from town
             if (tradeType == TradeType.Sell)
             {
                 var isLocal = _town.Regions.Intersects(goodRegions);
-                PriceModifier regionModifier = isLocal
+                IModifier regionModifier = isLocal
                     ? new LocalGoodPriceModifier(_goodsConfig.LocalGoodPriceModifier)
                     : new ForeignGoodPriceModifier(_goodsConfig.ForeignGoodPriceModifier);
-                modifiers.Add(regionModifier);
+                price.AddModifier(regionModifier);
             }
 
             var upgradeModifiers = _town.UpgradeManager.ProductionModifiers;
             if (!upgradeModifiers.IsApproximately(0f))
             {
-                modifiers.Add(new TownUpgradePriceModifier(upgradeModifiers));
+                price.AddModifier(new TownUpgradePriceModifier(upgradeModifiers));
             }
 
-            return new Price(goodBasePrice, modifiers);
+            return price;
         }
     }
 }

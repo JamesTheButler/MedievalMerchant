@@ -1,14 +1,11 @@
+using Data.Modifiable;
+
 namespace Data.Trade.Price
 {
-    public sealed class LocalGoodPriceModifier : PriceModifier
+    public sealed class LocalGoodPriceModifier : BasePercentageModifier
     {
-        public override float Value { get; }
-        public override string Description { get; }
-
-        public LocalGoodPriceModifier(float value)
+        public LocalGoodPriceModifier(float value) : base(value, "Local Good", "Good from local region.")
         {
-            Value = value;
-            Description = "Good from local region.";
         }
     }
 }
