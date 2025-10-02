@@ -2,7 +2,7 @@ using System;
 
 namespace Common
 {
-    public sealed class Observable<T> : IReadOnlyObservable<T>
+    public class Observable<T> : IReadOnlyObservable<T>
     {
         private event Action<T> ValueChanged;
 

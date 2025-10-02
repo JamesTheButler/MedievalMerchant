@@ -1,0 +1,26 @@
+namespace Data.Modifiable
+{
+    /// <summary>
+    /// Percentage of the current base value that is added.
+    /// 0 .. 0%
+    /// 1 .. 100%
+    /// </summary>
+    public class BasePercentageModifier : IModifier
+    {
+        public float Value { get; }
+        public string Name { get; }
+        public string Description { get; }
+
+        public BasePercentageModifier(float value, string name, string description)
+        {
+            Value = value;
+            Name = name;
+            Description = description;
+        }
+
+        public string ToDisplayString()
+        {
+            return $"{Value.Sign()}{Value * 100}% .. {Description}";
+        }
+    }
+}
