@@ -1,14 +1,15 @@
+using Data.Modifiable;
+
 namespace Data.Towns
 {
-    public sealed record ProducerModifier : IGrowthModifier
+    public sealed class ProducerModifier : FlatModifier
     {
-        public float Value { get; }
-        public string Description { get; }
+        public int ProducerCount { get; }
 
-        public ProducerModifier(float modifiedValue, float producerCount, Tier producerTier)
+        public ProducerModifier(float modifiedValue, int producerCount, Tier producerTier)
+            : base(modifiedValue, $"{producerCount} {producerTier} production buildings.")
         {
-            Value = modifiedValue;
-            Description = $"{producerCount} {producerTier} production buildings.";
+            ProducerCount = producerCount;
         }
     }
 }

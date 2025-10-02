@@ -8,10 +8,11 @@ namespace Data.Trade
 {
     public sealed class Inventory
     {
+        // TODO: should add a "new good added" or "good removed" action
         public event Action<Good, int> GoodUpdated;
 
         public Observable<int> Funds { get; } = new();
-        
+
         public IInventoryPolicy InventoryPolicy { get; }
         public IReadOnlyDictionary<Good, int> Goods => _goods;
 

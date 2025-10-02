@@ -1,11 +1,11 @@
 namespace Data.Modifiable
 {
-    public abstract class BaseValueModifier : IModifier
+    public abstract class FlatModifier : IModifier
     {
         public float Value { get; }
         public string Description { get; }
 
-        protected BaseValueModifier(float value,  string description)
+        protected FlatModifier(float value, string description)
         {
             Value = value;
             Description = description;

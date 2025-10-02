@@ -1,83 +1,102 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Data.Configuration;
+using Data.Modifiable;
 using UnityEngine;
 
 namespace Data.Towns
 {
     public sealed class DevelopmentManager
     {
-        public IReadOnlyList<IGrowthModifier> GrowthModifiers => _growthModifiers;
-
-        public event Action GrowthModifiersChanged;
+        public ModifiableVariable DevelopmentTrend { get; } = new();
 
         public Observable<float> DevelopmentScore { get; } = new();
-        public Observable<float> DevelopmentTrend { get; } = new();
         public Observable<DevelopmentTrend> GrowthTrend { get; } = new();
 
         private readonly Town _town;
         private readonly TownDevelopmentConfig _townDevelopmentConfig;
         private readonly GoodsConfig _goodsConfig;
-        private readonly List<IGrowthModifier> _growthModifiers;
 
         private TownDevelopmentTable _townDevelopmentTable;
+
+        private readonly Dictionary<Tier, ProducerModifier> _producerModifiers = new();
+        private readonly Dictionary<Tier, GoodsInInventoryModifier> _goodsInInventoryModifier = new();
 
         public DevelopmentManager(Town town)
         {
             _town = town;
-            _growthModifiers = new();
             _townDevelopmentConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
+
+            _town.Producer.ProductionAdded += OnProducerAdded;
+            _town.Inventory.GoodUpdated += OnGoodAdded;
+
             UpdateDevelopmentTable();
         }
 
-        public void ComputeDevelopment()
+        ~DevelopmentManager()
         {
-            _growthModifiers.Clear();
-
-            ApplyProducerModifiers();
-            ApplyForeignGoodsModifiers();
-            ApplyModifiers();
+            _town.Producer.ProductionAdded -= OnProducerAdded;
+            _town.Inventory.GoodUpdated -= OnGoodAdded;
         }
 
-        private void ApplyProducerModifiers()
+        private void OnProducerAdded(Good producedGood)
         {
-            var producers = _town.Producer.GetProducerCount();
-
-            foreach (var (tier, count) in producers)
-            {
-                var producerInfluence = _townDevelopmentConfig.ProducerGrowthInfluence.Get(_town.Tier.Value, tier);
-                if (count <= 1)
-                    continue;
-
-                var modifierValue = (count - 1) * producerInfluence;
-                var modifier = new ProducerModifier(modifierValue, count, tier);
-                _growthModifiers.Add(modifier);
-            }
+            var goodTier = _goodsConfig.ConfigData[producedGood].Tier;
+            RefreshProducerModifiers(goodTier);
         }
 
-        private void ApplyForeignGoodsModifiers()
+        private void OnGoodAdded(Good addedGood, int _)
         {
-            var foreignGoodCounts = _town.Inventory.Goods.Keys
-                .Where(good => !_town.Producer.IsProduced(good))
-                .GroupBy(good => _goodsConfig.ConfigData[good].Tier)
-                .ToDictionary(grouping => grouping.Key, kvPair => kvPair.Count());
+            // early out, as we only care about non-produced goods
+            if (_town.Producer.IsProduced(addedGood)) return;
 
-            foreach (var (tier, count) in foreignGoodCounts)
-            {
-                var modifierValue = _townDevelopmentTable.GetDevelopmentTrend(tier, count);
-                _growthModifiers.Add(new ForeignGoodsModifier(modifierValue, count, tier));
-            }
+            var goodTier = _goodsConfig.ConfigData[addedGood].Tier;
+            RefreshGoodsInInventoryModifiers(goodTier);
         }
 
-        private void ApplyModifiers()
+        private void RefreshProducerModifiers(Tier goodTier)
         {
-            GrowthModifiersChanged?.Invoke();
+            var newProducerCount = _town.Producer.GetProducerCount(goodTier);
+            var producerInfluence = _townDevelopmentConfig.ProducerGrowthInfluence.Get(_town.Tier.Value, goodTier);
+            if (newProducerCount <= 1)
+                return;
 
-            var developmentTrend = _growthModifiers.Sum(modifier => modifier.Value);
-            var developmentScore = DevelopmentScore.Value + developmentTrend;
+            // modifier would not change
+            if (_producerModifiers.TryGetValue(goodTier, out var oldModifier) &&
+                oldModifier.ProducerCount == newProducerCount)
+                return;
+
+            DevelopmentTrend.RemoveModifier(oldModifier);
+
+            var modifierValue = (newProducerCount - 1) * producerInfluence;
+            var modifier = new ProducerModifier(modifierValue, newProducerCount, goodTier);
+            DevelopmentTrend.AddModifier(modifier);
+            _producerModifiers[goodTier] = modifier;
+        }
+
+        private void RefreshGoodsInInventoryModifiers(Tier goodTier)
+        {
+            var newCount = _town.Inventory.Goods.Keys
+                .Count(good => !_town.Producer.IsProduced(good) && _goodsConfig.ConfigData[good].Tier == goodTier);
+
+            // modifier would not change
+            if (_goodsInInventoryModifier.TryGetValue(goodTier, out var oldModifier) &&
+                oldModifier.GoodCount == newCount)
+                return;
+
+            DevelopmentTrend.RemoveModifier(oldModifier);
+
+            var modifierValue = _townDevelopmentTable.GetDevelopmentTrend(goodTier, newCount);
+            var modifier = new GoodsInInventoryModifier(modifierValue, newCount, goodTier);
+            DevelopmentTrend.AddModifier(modifier);
+            _goodsInInventoryModifier[goodTier] = modifier;
+        }
+
+        public void UpdateDevelopment()
+        {
+            var developmentScore = DevelopmentScore.Value + DevelopmentTrend.Value;
 
             // upgrade town if needed
             if (developmentScore >= 100 && _town.Tier.Value < Tier.Tier3)
@@ -90,12 +109,10 @@ namespace Data.Towns
 
             developmentScore = Mathf.Clamp(developmentScore, 0, 100);
 
-            DevelopmentTrend.Value = developmentTrend;
             DevelopmentScore.Value = developmentScore;
 
             UpdateGrowthTrend();
         }
-
 
         private void UpdateGrowthTrend()
         {
@@ -108,6 +125,8 @@ namespace Data.Towns
         private void UpdateDevelopmentTable()
         {
             _townDevelopmentTable = _townDevelopmentConfig.DevelopmentTables[_town.Tier];
+
+            RefreshGoodsInInventoryModifiers(_town.Tier);
         }
     }
 }

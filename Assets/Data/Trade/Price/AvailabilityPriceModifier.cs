@@ -6,7 +6,7 @@ namespace Data.Trade.Price
     public sealed class AvailabilityPriceModifier : BasePercentageModifier
     {
         public AvailabilityPriceModifier(float value, Availability availability)
-            : base(value, "Availability", GetDescription(availability))
+            : base(value, GetDescription(availability))
         {
         }
 

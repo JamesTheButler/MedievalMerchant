@@ -66,7 +66,7 @@ namespace Data.Towns
         public void Tick()
         {
             Produce();
-            DevelopmentManager.ComputeDevelopment();
+            DevelopmentManager.UpdateDevelopment();
             Consume();
         }
 

@@ -5,16 +5,14 @@ namespace Data.Modifiable
     /// 0 .. 0%
     /// 1 .. 100%
     /// </summary>
-    public class BasePercentageModifier : IModifier
+    public abstract class BasePercentageModifier : IModifier
     {
         public float Value { get; }
-        public string Name { get; }
         public string Description { get; }
 
-        public BasePercentageModifier(float value, string name, string description)
+        protected BasePercentageModifier(float value, string description)
         {
             Value = value;
-            Name = name;
             Description = description;
         }
 

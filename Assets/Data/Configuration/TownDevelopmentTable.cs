@@ -21,29 +21,29 @@ namespace Data.Configuration
         [field: SerializeField]
         public List<float> Tier3Trends { get; private set; }
 
-        public float GetDevelopmentTrend(Tier goodTier, int goodCount)
+        public float GetDevelopmentTrend(Tier goodTier, int differentGoodCount)
         {
             return goodTier switch
             {
-                Tier.Tier1 => GetTierTrend(goodCount, Tier1Trends), 
-                Tier.Tier2 => GetTierTrend(goodCount, Tier2Trends),
-                Tier.Tier3 => GetTierTrend(goodCount, Tier3Trends),
+                Tier.Tier1 => GetTierTrend(differentGoodCount, Tier1Trends), 
+                Tier.Tier2 => GetTierTrend(differentGoodCount, Tier2Trends),
+                Tier.Tier3 => GetTierTrend(differentGoodCount, Tier3Trends),
                 _ => throw new ArgumentOutOfRangeException(nameof(goodTier), goodTier, null)
             };
         }
 
-        private static float GetTierTrend(int goodAmount, List<float> trendsList)
+        private static float GetTierTrend(int differentGoodCount, List<float> trendsList)
         {
             if (trendsList.Count == 0)
                 return 0;
 
-            if (goodAmount <= 0)
+            if (differentGoodCount <= 0)
                 return trendsList[0];
 
-            if (goodAmount > trendsList.Count)
-                return trendsList[^1] * (goodAmount - trendsList.Count + 1);
+            if (differentGoodCount > trendsList.Count)
+                return trendsList[^1] * (differentGoodCount - trendsList.Count + 1);
 
-            return trendsList[goodAmount];
+            return trendsList[differentGoodCount];
         }
     }
 }

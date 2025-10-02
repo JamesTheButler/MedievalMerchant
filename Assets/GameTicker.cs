@@ -6,7 +6,7 @@ public sealed class GameTicker : MonoBehaviour
     [SerializeField]
     private UnityEvent onTick;
 
-    [SerializeField]
+    [SerializeField, Range(0.1f, 5f)]
     private float secondsPerTick = .5f;
 
     private float _timer;

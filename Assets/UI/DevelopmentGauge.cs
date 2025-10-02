@@ -33,7 +33,7 @@ namespace UI
         {
             _developmentManager = developmentManager;
 
-            developmentManager.GrowthModifiersChanged += UpdateGrowthModifierTooltip;
+            developmentManager.DevelopmentTrend.ModifiersChanged += UpdateGrowthModifierTooltip;
             developmentManager.DevelopmentScore.Observe(UpdateDevelopmentScore);
             developmentManager.DevelopmentTrend.Observe(UpdateDevelopmentTrend);
             developmentManager.GrowthTrend.Observe(UpdateGrowthTrend);
@@ -41,7 +41,7 @@ namespace UI
 
         public void Unbind()
         {
-            _developmentManager.GrowthModifiersChanged -= UpdateGrowthModifierTooltip;
+            _developmentManager.DevelopmentTrend.ModifiersChanged -= UpdateGrowthModifierTooltip;
             _developmentManager.DevelopmentScore.StopObserving(UpdateDevelopmentScore);
             _developmentManager.DevelopmentTrend.StopObserving(UpdateDevelopmentTrend);
             _developmentManager.GrowthTrend.StopObserving(UpdateGrowthTrend);
@@ -49,7 +49,7 @@ namespace UI
 
         private void UpdateGrowthModifierTooltip()
         {
-            var modifiers = _developmentManager.GrowthModifiers;
+            var modifiers = _developmentManager.DevelopmentTrend.Modifiers;
             developmentTrendTooltip.SetEnabled(modifiers.Any());
 
             var modifiersText = string.Join(

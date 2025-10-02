@@ -4,7 +4,7 @@ namespace Data.Trade.Price
 {
     public sealed class ForeignGoodPriceModifier : BasePercentageModifier
     {
-        public ForeignGoodPriceModifier(float value) : base(value, "Foreign Good", "Good from foreign region.")
+        public ForeignGoodPriceModifier(float value) : base(value, "Good from foreign region.")
         {
         }
     }
