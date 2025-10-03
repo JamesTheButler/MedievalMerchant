@@ -2,21 +2,11 @@
 
 namespace Data.Player.Retinue.Logic
 {
-    public sealed class ArchitectCompanionLogic : ICompanionLogic
+    public sealed class ArchitectCompanionLogic : BaseCompanionLogic<ArchitectCompanionData>
     {
-        private readonly ArchitectCompanionData _configData;
+        protected override CompanionType Type => CompanionType.Architect;
 
-        public ArchitectCompanionLogic(ArchitectCompanionData configData)
-        {
-            _configData = configData;
-        }
-
-        public void ApplyLevel(int level)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void RemoveLevel(int level)
+        public override void SetLevel(int level)
         {
             throw new System.NotImplementedException();
         }

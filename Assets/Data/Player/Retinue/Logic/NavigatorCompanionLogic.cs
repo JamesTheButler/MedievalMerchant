@@ -2,21 +2,11 @@
 
 namespace Data.Player.Retinue.Logic
 {
-    public sealed class NavigatorCompanionLogic : ICompanionLogic
+    public sealed class NavigatorCompanionLogic : BaseCompanionLogic<NavigatorCompanionData>
     {
-        private readonly NavigatorCompanionData _configData;
+        protected override CompanionType Type => CompanionType.Navigator;
 
-        public NavigatorCompanionLogic(NavigatorCompanionData configData)
-        {
-            _configData = configData;
-        }
-
-        public void ApplyLevel(int level)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void RemoveLevel(int level)
+        public override void SetLevel(int level)
         {
             throw new System.NotImplementedException();
         }

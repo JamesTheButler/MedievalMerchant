@@ -2,21 +2,11 @@
 
 namespace Data.Player.Retinue.Logic
 {
-    public sealed class DiplomatCompanionLogic : ICompanionLogic
+    public sealed class DiplomatCompanionLogic : BaseCompanionLogic<DiplomatCompanionData>
     {
-        private readonly DiplomatCompanionData _configData;
+        protected override CompanionType Type => CompanionType.Diplomat;
 
-        public DiplomatCompanionLogic(DiplomatCompanionData configData)
-        {
-            _configData = configData;
-        }
-
-        public void ApplyLevel(int level)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void RemoveLevel(int level)
+        public override void SetLevel(int level)
         {
             throw new System.NotImplementedException();
         }

@@ -2,7 +2,6 @@
 {
     public interface ICompanionLogic
     {
-        void ApplyLevel(int level);
-        void RemoveLevel(int level);
+        void SetLevel(int level);
     }
 }

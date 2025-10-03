@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Data.Configuration;
+using Data.Player.Retinue;
 using Data.Towns.Upgrades;
 using Data.Trade;
 using UnityEngine;
@@ -11,9 +12,7 @@ namespace Data.Towns
 {
     public sealed class Town
     {
-        private readonly TownDevelopmentConfig _townDevelopmentConfig;
         private readonly TierBasedInventoryPolicy _inventoryPolicy;
-        private readonly TownDevelopmentConfig _growthConfig;
         private readonly TownConfig _townConfig;
         private readonly GoodsConfig _goodsConfig;
 
@@ -27,6 +26,7 @@ namespace Data.Towns
         public Producer Producer { get; }
         public DevelopmentManager DevelopmentManager { get; }
         public UpgradeManager UpgradeManager { get; }
+        public RetinueManager RetinueManager { get; }
         public Regions Regions { get; }
 
         public Town(TownSetupInfo setupInfo,
@@ -41,8 +41,6 @@ namespace Data.Towns
             WorldLocation = worldLocation;
             Regions = regions;
 
-            _townDevelopmentConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
-            _growthConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
             _townConfig = ConfigurationManager.Instance.TownConfig;
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             AvailableGoods = availableGoods.ToHashSet();
@@ -56,7 +54,8 @@ namespace Data.Towns
             Inventory = new Inventory(_inventoryPolicy);
             Producer = new Producer(this);
             DevelopmentManager = new DevelopmentManager(this);
-            UpgradeManager = new(this);
+            UpgradeManager = new UpgradeManager(this);
+            RetinueManager = new RetinueManager();
 
             Inventory.AddFunds(setupInfo.InitialFunds);
 
@@ -98,8 +97,6 @@ namespace Data.Towns
             Producer.Produce();
 
             // funds production
-            // TODO: use modifier system
-            var devTrend = DevelopmentManager.DevelopmentTrend;
             var modifierMultiplier = 1 + UpgradeManager.FundsModifiers;
             var baseFundsPerTick = _townConfig.FundRate[townTier];
             var fundChange = Mathf.RoundToInt(baseFundsPerTick * modifierMultiplier);
