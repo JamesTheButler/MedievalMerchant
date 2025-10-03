@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Data.Player;
 using Data.Towns;
 using Map.Tiling;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace Data
 
         public TileFlagMap TileFlagMap { get; private set; }
         public Date Date { get; private set; } = new();
-        public Player Player { get; private set; }
+        public PlayerModel Player { get; private set; }
 
         public ConditionManager ConditionManager { get; private set; }
 
@@ -20,7 +21,7 @@ namespace Data
 
         private Dictionary<Vector2Int, Town> _towns = new();
 
-        public void Initialize(Player player, IEnumerable<Town> towns, TileFlagMap tileFlagMap)
+        public void Initialize(PlayerModel player, IEnumerable<Town> towns, TileFlagMap tileFlagMap)
         {
             _towns = towns.ToDictionary(town => town.GridLocation, town => town);
             Player = player;

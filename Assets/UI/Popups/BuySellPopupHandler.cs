@@ -1,5 +1,6 @@
 using System.Linq;
 using Data;
+using Data.Player;
 using Data.Towns;
 using Data.Trade;
 using NaughtyAttributes;
@@ -17,7 +18,7 @@ namespace UI.Popups
         private float yOffset;
 
         private Good _good;
-        private Player _player;
+        private PlayerModel _player;
         private Town _town;
         private Inventory _townInventory;
         private Inventory _playerInventory;

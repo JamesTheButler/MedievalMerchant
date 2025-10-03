@@ -2,6 +2,7 @@ using System.Linq;
 using AYellowpaper.SerializedCollections;
 using Data;
 using Data.Configuration;
+using Data.Player;
 using Data.Trade;
 using NaughtyAttributes;
 using TMPro;
@@ -26,12 +27,12 @@ namespace UI.InventoryUI
         [SerializeField, SerializedDictionary("Upgrade", "Button")]
         private SerializedDictionary<PlayerUpgrade, UpgradeButton> upgradeButtons;
 
-        private Player _player;
+        private PlayerModel _player;
         private Inventory _playerInventory;
         private GoodsConfig _goodsConfig;
         private PlayerConfig _playerConfig;
 
-        public void Bind(Player player)
+        public void Bind(PlayerModel player)
         {
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             _playerConfig = ConfigurationManager.Instance.PlayerConfig;

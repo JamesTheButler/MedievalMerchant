@@ -1,4 +1,5 @@
 using AYellowpaper.SerializedCollections;
+using Data.Player;
 using UnityEngine;
 
 namespace Data.Configuration

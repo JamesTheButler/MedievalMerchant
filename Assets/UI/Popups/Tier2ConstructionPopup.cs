@@ -2,6 +2,7 @@ using System;
 using Common;
 using Data;
 using Data.Configuration;
+using Data.Player;
 using Data.Towns;
 using NaughtyAttributes;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace UI.Popups
 
         private readonly Lazy<RecipeConfig> _recipeConfig = new(() => ConfigurationManager.Instance.RecipeConfig);
         private readonly Lazy<Colors> _colors = new(() => ConfigurationManager.Instance.Colors);
-        private readonly Lazy<Player> _player = new(() => Model.Instance.Player);
+        private readonly Lazy<PlayerModel> _player = new(() => Model.Instance.Player);
         private readonly Lazy<ProducerConfig> _producerConfig = new(() => ConfigurationManager.Instance.ProducerConfig);
 
         private Town _town;

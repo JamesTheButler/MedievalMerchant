@@ -1,13 +1,14 @@
+using Data.Player;
 using Data.Towns;
 
 namespace Data.Trade
 {
     public sealed class TradeValidator
     {
-        private readonly Player _player;
+        private readonly PlayerModel _player;
         private readonly Town _town;
 
-        public TradeValidator(Player player, Town town)
+        public TradeValidator(PlayerModel player, Town town)
         {
             _player = player;
             _town = town;

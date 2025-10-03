@@ -3,6 +3,7 @@ using System.Linq;
 using Common;
 using Data;
 using Data.Configuration;
+using Data.Player;
 using Data.Towns;
 using Levels;
 using Map;
@@ -43,7 +44,7 @@ public sealed class LevelLoader : MonoBehaviour
         var townPositions = flagMap.GetAllCells(TileType.Town);
         var zones = level.GetComponentsInChildren<ProductionZone>();
         var towns = GenerateTowns(townPositions, zones);
-        var player = new Player(levelInfo.StartPlayerFunds, _playerConfig.MovementSpeed);
+        var player = new PlayerModel(levelInfo.StartPlayerFunds, _playerConfig.MovementSpeed);
 
         _model.Initialize(player, towns, flagMap);
 

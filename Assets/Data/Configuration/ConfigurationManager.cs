@@ -1,5 +1,8 @@
+using Data.Player.Retinue;
+using Data.Player.Retinue.Config;
 using Data.Towns.Upgrades;
 using NaughtyAttributes;
+using UI.InventoryUI;
 using UnityEngine;
 
 namespace Data.Configuration
@@ -40,6 +43,9 @@ namespace Data.Configuration
         
         [field: SerializeField, Required]
         public UpgradeProgressionConfig UpgradeProgressionConfig { get; private set; }
+
+        [field: SerializeField, Required]
+        public CompanionConfig CompanionConfig { get; private set; }
 
         private void Awake()
         {

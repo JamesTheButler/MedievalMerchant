@@ -1,5 +1,6 @@
 using Common;
 using Data;
+using Data.Player;
 using Data.Towns;
 using NaughtyAttributes;
 using UnityEngine;
