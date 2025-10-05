@@ -18,7 +18,7 @@ namespace Data.Player.Retinue.Config
         [field: SerializeField] public int Strength { get; private set; }
 
         public override string Description => new StringBuilder()
-            .AppendLine($"{Strength} combat strength")
+            .AppendLine($"- {Strength} combat strength")
             .ToString();
     }
 }

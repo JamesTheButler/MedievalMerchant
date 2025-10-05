@@ -20,8 +20,8 @@ namespace Data.Player.Retinue.Config
 
 
         public override string Description => new StringBuilder()
-            .AppendLine($"{PriceSavings}% better prices")
-            .AppendLine($"{UpgradeCostReduction}% reduction of caravan upgrade costs")
+            .AppendLine($"- {PriceSavings.ToPercentString()} better prices")
+            .AppendLine($"- {UpgradeCostReduction.ToPercentString()} reduction of caravan upgrade costs")
             .ToString();
     }
 }

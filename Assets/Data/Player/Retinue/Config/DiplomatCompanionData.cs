@@ -19,8 +19,8 @@ namespace Data.Player.Retinue.Config
         [field: SerializeField] public float ReputationBoost { get; private set; }
 
         public override string Description => new StringBuilder()
-            .AppendLine($"{TownEntranceReputation} reputation when entering town")
-            .AppendLine($"+{ReputationBoost}% bonus for all reputation gains")
+            .AppendLine($"- +{TownEntranceReputation} reputation when entering town")
+            .AppendLine($"- {ReputationBoost.ToPercentString()} bonus for all reputation gains")
             .ToString();
     }
 }

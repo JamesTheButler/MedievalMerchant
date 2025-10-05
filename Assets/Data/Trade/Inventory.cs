@@ -11,6 +11,7 @@ namespace Data.Trade
         // TODO: should add a "new good added" or "good removed" action
         public event Action<Good, int> GoodUpdated;
 
+        // TODO: should be float, not int (we can change that when we make this a ModifiablVariable)
         public Observable<int> Funds { get; } = new();
 
         public IInventoryPolicy InventoryPolicy { get; }

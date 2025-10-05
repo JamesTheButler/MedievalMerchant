@@ -19,8 +19,8 @@ namespace Data.Player.Retinue.Config
         [field: SerializeField] public float UpkeepReduction { get; private set; }
 
         public override string Description => new StringBuilder()
-            .AppendLine($"{SpeedBonus}% shorter travel times ")
-            .AppendLine($"{UpkeepReduction}% lower caravan upkeep")
+            .AppendLine($"- {SpeedBonus.ToPercentString()} shorter travel times ")
+            .AppendLine($"- {UpkeepReduction.ToPercentString()} lower caravan upkeep")
             .ToString();
     }
 }

@@ -9,13 +9,11 @@ namespace Data.Player.Retinue
     public sealed class RetinueManager
     {
         public Dictionary<CompanionType, Observable<int>> CompanionLevels { get; } = new();
-        
+
         private readonly Dictionary<CompanionType, ICompanionLogic> _companionLogics;
 
         public RetinueManager()
         {
-            var companionConfig = ConfigurationManager.Instance.CompanionConfig;
-            
             foreach (CompanionType companionType in Enum.GetValues(typeof(CompanionType)))
             {
                 CompanionLevels.Add(companionType, new Observable<int>());
@@ -37,13 +35,13 @@ namespace Data.Player.Retinue
             CompanionLevels[companionType].Value++;
             RefreshLogic(companionType);
         }
-        
+
         public void Downgrade(CompanionType companionType)
         {
             CompanionLevels[companionType].Value--;
             RefreshLogic(companionType);
         }
-        
+
         public void SetLevel(CompanionType companionType, int newLevel)
         {
             CompanionLevels[companionType].Value = newLevel;

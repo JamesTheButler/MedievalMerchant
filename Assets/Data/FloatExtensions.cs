@@ -20,5 +20,10 @@ namespace Data
         {
             return Mathf.Abs(self - other) < tolerance;
         }
+
+        public static string ToPercentString(this float f)
+        {
+            return $"{f * 100}%";
+        }
     }
 }

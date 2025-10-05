@@ -3,8 +3,7 @@ using Data.Player.Retinue.Config;
 
 namespace Data.Player.Retinue.Logic
 {
-    public abstract class BaseCompanionLogic<T>
-        : ICompanionLogic
+    public abstract class BaseCompanionLogic<T> : ICompanionLogic
         where T : CompanionConfigData
     {
         protected T ConfigData { get; }

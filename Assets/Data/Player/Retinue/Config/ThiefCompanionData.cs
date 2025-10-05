@@ -21,9 +21,9 @@ namespace Data.Player.Retinue.Config
 
 
         public override string Description => new StringBuilder()
-            .AppendLine($"Steals {TownEntranceGold} coin when entering town")
-            .AppendLine($"{ReputationLossChance}% chance of being caught and losing reputation")
-            .AppendLine($"{ReputationLoss} reputation lost when being caught")
+            .AppendLine($"- Steals {TownEntranceGold} coin when entering town")
+            .AppendLine($"- {ReputationLossChance.ToPercentString()} chance of being caught and losing reputation")
+            .AppendLine($"- {ReputationLoss} reputation lost when being caught")
             .ToString();
     }
 }

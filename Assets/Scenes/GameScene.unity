@@ -973,6 +973,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4524601324185239953, guid: 34389264372acd94d9859848d801c3da, type: 3}
   m_PrefabInstance: {fileID: 8780336678312397557}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &340003742 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2864119581663035942, guid: 0349143ee4845014d9ff08f7bd54b6ae, type: 3}
+  m_PrefabInstance: {fileID: 1655644686}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &429278998 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8490258187983921913, guid: d18ea9f357eebb248a68cf23ab8d64d2, type: 3}
@@ -1465,6 +1470,7 @@ GameObject:
   m_Component:
   - component: {fileID: 575118714}
   - component: {fileID: 575118715}
+  - component: {fileID: 575118716}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1501,6 +1507,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothing: 0.2
   tileGrid: {fileID: 766223028}
+--- !u!114 &575118716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575118713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b26a9e4e424eb88864c30b62502fd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  companionGroup: {fileID: 340003742}
 --- !u!1001 &616094532
 PrefabInstance:
   m_ObjectHideFlags: 0

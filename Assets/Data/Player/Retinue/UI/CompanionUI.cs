@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Data.Configuration;
 using Data.Player.Retinue.Config;
 using NaughtyAttributes;
 using UI;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Data.Player.Retinue.UI
@@ -11,6 +13,7 @@ namespace Data.Player.Retinue.UI
     public sealed class CompanionUI : MonoBehaviour
     {
         [SerializeField] private CompanionType companionType;
+        [SerializeField] public UnityEvent<CompanionType, int> levelUpgradeRequested;
 
         [Header("Set Up")] [SerializeField, Required]
         private Image companionIcon;
@@ -24,7 +27,7 @@ namespace Data.Player.Retinue.UI
 
         private readonly List<CompanionLevelUI> _levelUIs = new();
 
-        private int _currentLevel;
+        private int _currentLevel = -1;
 
         private void Start()
         {
@@ -39,38 +42,67 @@ namespace Data.Player.Retinue.UI
         private void InitializeUI()
         {
             companionIcon.sprite = _configData.Icon;
-            tooltipHandler.SetTooltip($"{_configData.Name}\n{_configData.Description}");
+            UpdateTooltip();
             for (var i = 0; i < _configData.Levels.Count; i++)
             {
                 var levelUi = Instantiate(levelUiPrefab, levelUiParent);
                 var levelUIScript = levelUi.GetComponent<CompanionLevelUI>();
-                levelUIScript.Setup(i + 1, _configData.Levels[i]); // level 0 means nothing is upgraded
+                levelUIScript.Setup(i + 1, _configData.Levels[i], companionType); // level 0 means nothing is upgraded
+                levelUIScript.UnlockRequested += levelUpgradeRequested.Invoke;
+
                 _levelUIs.Add(levelUIScript);
             }
         }
 
-        private void OnCompanionLevelChanged(int level)
+        private void UpdateTooltip()
         {
-            if (level == _currentLevel) return;
+            var tooltip = $"{_configData.Name}(Level {_currentLevel})\n{_configData.Description}";
+            tooltipHandler.SetTooltip(tooltip);
+        }
 
-            if (level > _currentLevel)
+        // TODO: this code is quite cumbersome and funky
+        private void OnCompanionLevelChanged(int newLevel)
+        {
+            if (newLevel == _currentLevel) return;
+
+            if (newLevel > _currentLevel)
             {
-                for (var i = _currentLevel + 1; i <= level; i++)
+                for (var i = _currentLevel + 1; i <= newLevel; i++)
                 {
-                    _levelUIs[level].SetUnlocked(true);
+                    var levelUiId = newLevel - 1; // level 1 is in level ui 0, etc.
+                    if (levelUiId >= 0)
+                    {
+                        _levelUIs[levelUiId].SetUnlocked(true);
+                    }
+
+                    var nextLevelUiId = levelUiId + 1;
+                    if (nextLevelUiId < _levelUIs.Count)
+                    {
+                        _levelUIs[nextLevelUiId].SetUnlockable(true);
+                    }
                 }
-                // TODO: need to sort out unlockability for levels larger than ´level´
             }
             else
             {
-                for (var i = _currentLevel; i > level; i--)
+                for (var i = _currentLevel; i > newLevel; i--)
                 {
-                    _levelUIs[level].SetUnlocked(false);
+                    var levelUiId = newLevel - 1; // level 1 is in level ui 0, etc.
+                    if (levelUiId >= 0)
+                    {
+                        _levelUIs[levelUiId].SetUnlocked(false);
+                    }
+
+                    var nextLevelUiId = levelUiId + 1;
+                    if (nextLevelUiId < _levelUIs.Count)
+                    {
+                        _levelUIs[nextLevelUiId].SetUnlockable(false);
+                    }
                 }
-                // TODO: need to sort out unlockability for levels larger than ´level´
             }
 
-            _currentLevel = level;
+            _currentLevel = newLevel;
+
+            UpdateTooltip();
         }
     }
 }

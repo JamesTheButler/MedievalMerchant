@@ -11,27 +11,29 @@ namespace Data.Player.Retinue.UI
     {
         private const string NotUnlockableTooltip = "Unlock previous levels first.";
 
-        public event Action<CompanionLevelUI> UnlockRequested;
+        public event Action<CompanionType, int> UnlockRequested;
 
         [SerializeField, Required] private Button unlockButton;
         [SerializeField, Required] private TooltipHandler tooltip;
 
-        public int Index { get; private set; }
+        public int Level { get; private set; }
 
         private CompanionLevelData _levelData;
 
         private string _unlockableTooltip;
         private string _unlockedTooltip;
+        private CompanionType _companionType;
 
         private void Awake()
         {
             unlockButton.onClick.AddListener(OnUnlockButtonClicked);
         }
 
-        public void Setup(int levelIndex, CompanionLevelData levelData)
+        public void Setup(int levelIndex, CompanionLevelData levelData, CompanionType companionType)
         {
-            Index = levelIndex;
+            Level = levelIndex;
             _levelData = levelData;
+            _companionType = companionType;
             SetUpTooltipStrings();
             SetUnlocked(false);
             SetUnlockable(false);
@@ -39,13 +41,13 @@ namespace Data.Player.Retinue.UI
 
         private void SetUpTooltipStrings()
         {
-            _unlockableTooltip = $"Level {Index}\n-----\n{_levelData.Cost} coin\n{_levelData.Description}";
-            _unlockedTooltip = $"Level {Index}\n-----\n{_levelData.Description}";
+            _unlockableTooltip = $"Level {Level}: {_levelData.Cost} coin\n-----{_levelData.Description}";
+            _unlockedTooltip = $"Level {Level}\n-----\n{_levelData.Description}";
         }
 
         private void OnUnlockButtonClicked()
         {
-            UnlockRequested?.Invoke(this);
+            UnlockRequested?.Invoke(_companionType, Level);
         }
 
         public void SetUnlocked(bool unlocked)
@@ -59,7 +61,7 @@ namespace Data.Player.Retinue.UI
 
         public void SetUnlockable(bool unlockable)
         {
-            unlockButton.interactable = !unlockable;
+            unlockButton.interactable = unlockable;
 
             tooltip.SetTooltip(unlockable
                 ? _unlockableTooltip

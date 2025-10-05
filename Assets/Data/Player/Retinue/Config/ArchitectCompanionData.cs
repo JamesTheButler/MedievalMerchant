@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Data.Player.Retinue.Config
@@ -19,8 +20,8 @@ namespace Data.Player.Retinue.Config
         [field: SerializeField, Range(0f, 1f)] public float ConstructionPriceReduction { get; private set; }
 
         public override string Description => new StringBuilder()
-            .AppendLine($"-{ConstructionPriceReduction}% reduction to costs of production buildings")
-            .AppendLine($"-{TownUpgradePriceReduction}% reduction of town upgrade costs")
+            .AppendLine($"- {ConstructionPriceReduction.ToPercentString()} reduction to costs of production buildings")
+            .AppendLine($"- {TownUpgradePriceReduction.ToPercentString()} reduction of town upgrade costs")
             .ToString();
     }
 }
