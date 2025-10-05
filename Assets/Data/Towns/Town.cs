@@ -17,6 +17,7 @@ namespace Data.Towns
         private readonly GoodsConfig _goodsConfig;
 
         public Observable<Tier> Tier { get; } = new();
+        public Observable<float> Reputation { get; } = new();
 
         public Inventory Inventory { get; }
         public string Name { get; }
@@ -88,7 +89,6 @@ namespace Data.Towns
         private void Produce()
         {
             // goods production
-            // TODO: use modifier system
             var townTier = Tier.Value;
             var multiplier = 1 + UpgradeManager.ProductionModifiers;
             Producer.SetProductionMultiplier(multiplier);

@@ -7,6 +7,7 @@ namespace Data.Towns
     {
         public static Selection Instance;
 
+        // TODO: use Observable<Town>
         public event Action<Town> TownSelected;
         public Town SelectedTown { get; private set; }
 
