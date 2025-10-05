@@ -2,6 +2,7 @@
 using Data.Configuration;
 using Data.Player.Retinue.Config;
 using NaughtyAttributes;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,10 +11,13 @@ namespace Data.Player.Retinue.UI
     public sealed class CompanionUI : MonoBehaviour
     {
         [SerializeField] private CompanionType companionType;
-        [Header("Set Up")]
-        [SerializeField, Required] private Image companionIcon;
+
+        [Header("Set Up")] [SerializeField, Required]
+        private Image companionIcon;
+
         [SerializeField, Required] private RectTransform levelUiParent;
         [SerializeField, Required] private GameObject levelUiPrefab;
+        [SerializeField, Required] private TooltipHandler tooltipHandler;
 
         private RetinueManager _retinueManager;
         private CompanionConfigData _configData;
@@ -35,6 +39,7 @@ namespace Data.Player.Retinue.UI
         private void InitializeUI()
         {
             companionIcon.sprite = _configData.Icon;
+            tooltipHandler.SetTooltip($"{_configData.Name}\n{_configData.Description}");
             for (var i = 0; i < _configData.Levels.Count; i++)
             {
                 var levelUi = Instantiate(levelUiPrefab, levelUiParent);

@@ -7,14 +7,11 @@ namespace UI
 {
     public sealed class TooltipHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField, Required]
-        private GameObject toolTipPrefab;
+        [SerializeField, Required] private GameObject toolTipPrefab;
 
-        [SerializeField]
-        private float offset = 8f;
+        [SerializeField] private float offset = 8f;
 
-        [SerializeField]
-        private bool enabledOnStart;
+        [SerializeField] private bool enabledOnStart;
 
         private Tooltip _activeToolTip;
         private bool _isEnabled;
@@ -58,7 +55,9 @@ namespace UI
             }
 
             var topCenter = ((RectTransform)gameObject.transform).GetTopCenter();
-            _activeToolTip.transform.position = topCenter + new Vector3(0, offset, 0);
+            _activeToolTip.transform.SetCanvasClampedPosition(
+                topCenter + new Vector3(0, offset, 0),
+                _canvas);
         }
 
         public void OnPointerExit(PointerEventData eventData)
