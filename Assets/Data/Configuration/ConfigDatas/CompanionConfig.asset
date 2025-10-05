@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: CompanionConfig
   m_EditorClassIdentifier: 
   <ThiefData>k__BackingField:
+    <Type>k__BackingField: 0
     <Icon>k__BackingField: {fileID: -558682726, guid: 5c0a124b1892e104ea9ed7f437ade6dc, type: 3}
     <Name>k__BackingField: Thief
     <Description>k__BackingField: Steals ... aqcuires things.
-    <Levels>k__BackingField:
+    <TypedLevels>k__BackingField:
     - <Cost>k__BackingField: 100
       <TownEntranceGold>k__BackingField: 0
       <ReputationLossChance>k__BackingField: 0.25
@@ -30,10 +31,11 @@ MonoBehaviour:
       <ReputationLossChance>k__BackingField: 0.05
       <ReputationLoss>k__BackingField: 3
   <NavigatorData>k__BackingField:
+    <Type>k__BackingField: 0
     <Icon>k__BackingField: {fileID: 1761304294, guid: 5c0a124b1892e104ea9ed7f437ade6dc, type: 3}
     <Name>k__BackingField: Navigator
     <Description>k__BackingField: Gets you places.
-    <Levels>k__BackingField:
+    <TypedLevels>k__BackingField:
     - <Cost>k__BackingField: 100
       <SpeedBonus>k__BackingField: 0.1
       <UpkeepReduction>k__BackingField: 0.1
@@ -44,10 +46,11 @@ MonoBehaviour:
       <SpeedBonus>k__BackingField: 0.5
       <UpkeepReduction>k__BackingField: 0.5
   <NegotiatorData>k__BackingField:
+    <Type>k__BackingField: 0
     <Icon>k__BackingField: {fileID: 255806927, guid: 5c0a124b1892e104ea9ed7f437ade6dc, type: 3}
     <Name>k__BackingField: Negotiator
     <Description>k__BackingField: Gets you more coin for fewer goods.
-    <Levels>k__BackingField:
+    <TypedLevels>k__BackingField:
     - <Cost>k__BackingField: 50
       <PriceSavings>k__BackingField: 0.05
       <UpgradeCostReduction>k__BackingField: 0.05
@@ -58,21 +61,27 @@ MonoBehaviour:
       <PriceSavings>k__BackingField: 0.25
       <UpgradeCostReduction>k__BackingField: 0.25
   <GuardData>k__BackingField:
+    <Type>k__BackingField: 0
     <Icon>k__BackingField: {fileID: -1942871456, guid: 5c0a124b1892e104ea9ed7f437ade6dc, type: 3}
     <Name>k__BackingField: Guard
     <Description>k__BackingField: Gets you out of spicy situations.
-    <Levels>k__BackingField:
+    <TypedLevels>k__BackingField:
     - <Cost>k__BackingField: 150
       <Strength>k__BackingField: 1
     - <Cost>k__BackingField: 300
       <Strength>k__BackingField: 3
     - <Cost>k__BackingField: 600
       <Strength>k__BackingField: 6
+    - <Cost>k__BackingField: 600
+      <Strength>k__BackingField: 8
+    - <Cost>k__BackingField: 600
+      <Strength>k__BackingField: 10
   <DiplomatData>k__BackingField:
+    <Type>k__BackingField: 0
     <Icon>k__BackingField: {fileID: -1216225484, guid: 5c0a124b1892e104ea9ed7f437ade6dc, type: 3}
     <Name>k__BackingField: Diplomat
     <Description>k__BackingField: Rubs shoulders with the locals
-    <Levels>k__BackingField:
+    <TypedLevels>k__BackingField:
     - <Cost>k__BackingField: 100
       <TownEntranceReputation>k__BackingField: 1
       <ReputationBoost>k__BackingField: 0.1
@@ -83,10 +92,11 @@ MonoBehaviour:
       <TownEntranceReputation>k__BackingField: 5
       <ReputationBoost>k__BackingField: 0.5
   <ArchitectData>k__BackingField:
+    <Type>k__BackingField: 0
     <Icon>k__BackingField: {fileID: 824890814, guid: 5c0a124b1892e104ea9ed7f437ade6dc, type: 3}
     <Name>k__BackingField: Architect
     <Description>k__BackingField: Gets stuff done.
-    <Levels>k__BackingField:
+    <TypedLevels>k__BackingField:
     - <Cost>k__BackingField: 50
       <TownUpgradePriceReduction>k__BackingField: 0.1
       <ConstructionPriceReduction>k__BackingField: 0.05

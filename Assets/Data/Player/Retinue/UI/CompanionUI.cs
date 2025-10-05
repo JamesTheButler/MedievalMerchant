@@ -10,6 +10,7 @@ namespace Data.Player.Retinue.UI
     public sealed class CompanionUI : MonoBehaviour
     {
         [SerializeField] private CompanionType companionType;
+        [Header("Set Up")]
         [SerializeField, Required] private Image companionIcon;
         [SerializeField, Required] private RectTransform levelUiParent;
         [SerializeField, Required] private GameObject levelUiPrefab;
@@ -21,7 +22,7 @@ namespace Data.Player.Retinue.UI
 
         private int _currentLevel;
 
-        private void Awake()
+        private void Start()
         {
             _retinueManager = Model.Instance.Player.RetinueManager;
             _configData = ConfigurationManager.Instance.CompanionConfig.Get(companionType);
