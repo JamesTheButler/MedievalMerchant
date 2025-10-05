@@ -90,7 +90,7 @@ namespace Data.Towns
             // goods production
             // TODO: use modifier system
             var townTier = Tier.Value;
-            var multiplier = 1 + UpgradeManager.PriceModifiers;
+            var multiplier = 1 + UpgradeManager.ProductionModifiers;
             Producer.SetProductionMultiplier(multiplier);
             Producer.Produce();
 
