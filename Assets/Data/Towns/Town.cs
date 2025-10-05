@@ -26,7 +26,6 @@ namespace Data.Towns
         public Producer Producer { get; }
         public DevelopmentManager DevelopmentManager { get; }
         public UpgradeManager UpgradeManager { get; }
-        public RetinueManager RetinueManager { get; }
         public Regions Regions { get; }
 
         public Town(TownSetupInfo setupInfo,
@@ -55,7 +54,6 @@ namespace Data.Towns
             Producer = new Producer(this);
             DevelopmentManager = new DevelopmentManager(this);
             UpgradeManager = new UpgradeManager(this);
-            RetinueManager = new RetinueManager();
 
             Inventory.AddFunds(setupInfo.InitialFunds);
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace Data.Player.Retinue.Config
@@ -7,14 +8,19 @@ namespace Data.Player.Retinue.Config
     [Serializable]
     public sealed class NavigatorCompanionData : CompanionConfigData
     {
-        [Serializable]
-        public class LevelData
-        {
-            [field: SerializeField] public float Cost { get; private set; }
-            [field: SerializeField] public float SpeedBonus { get; private set; }
-            [field: SerializeField] public float UpkeepReduction { get; private set; }
-        }
+        [field: SerializeField] public List<NavigatorLevelData> TypedLevels { get; private set; }
+        public override IReadOnlyList<CompanionLevelData> Levels => TypedLevels;
+    }
 
-        [field: SerializeField] public List<LevelData> Levels { get; private set; }
+    [Serializable]
+    public class NavigatorLevelData : CompanionLevelData
+    {
+        [field: SerializeField] public float SpeedBonus { get; private set; }
+        [field: SerializeField] public float UpkeepReduction { get; private set; }
+
+        public override string Description => new StringBuilder()
+            .AppendLine($"{SpeedBonus}% shorter travel times ")
+            .AppendLine($"{UpkeepReduction}% lower caravan upkeep")
+            .ToString();
     }
 }

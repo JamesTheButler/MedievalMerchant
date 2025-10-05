@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Common;
+using Data.Player.Retinue;
 using Data.Trade;
 
 namespace Data.Player
@@ -15,6 +16,8 @@ namespace Data.Player
 
         public Inventory Inventory { get; }
 
+        public RetinueManager RetinueManager { get; }
+        
         private readonly SlotBasedInventoryPolicy _inventoryPolicy;
 
         public PlayerModel(int startFunds, float movementSpeed)
@@ -23,6 +26,7 @@ namespace Data.Player
 
             MovementSpeed.Value = movementSpeed;
 
+            RetinueManager = new RetinueManager();
             Inventory = new Inventory(_inventoryPolicy);
             Inventory.AddFunds(startFunds);
 
