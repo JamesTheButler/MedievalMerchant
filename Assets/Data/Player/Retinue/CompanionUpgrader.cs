@@ -27,7 +27,7 @@ namespace Data.Player.Retinue
         private void LevelUpgradeRequested(CompanionType companionType, int newLevel)
         {
             var companionConfigData = _companionConfig.Get(companionType);
-            var levels = companionConfigData.Levels;
+            var levels = companionConfigData.TypedLevels;
 
             if (newLevel > levels.Count)
             {
@@ -36,7 +36,7 @@ namespace Data.Player.Retinue
                 return;
             }
 
-            var cost = companionConfigData.Levels[newLevel - 1].Cost;
+            var cost = companionConfigData.TypedLevels[newLevel - 1].Cost;
 
             if (!_player.Inventory.HasFunds((int)cost))
             {

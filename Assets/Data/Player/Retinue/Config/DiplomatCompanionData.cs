@@ -6,10 +6,8 @@ using UnityEngine;
 namespace Data.Player.Retinue.Config
 {
     [Serializable]
-    public sealed class DiplomatCompanionData : CompanionConfigData
+    public sealed class DiplomatCompanionData : CompanionConfigData<DiplomatLevelData>
     {
-        [field: SerializeField] public List<DiplomatLevelData> TypedLevels { get; private set; }
-        public override IReadOnlyList<CompanionLevelData> Levels => TypedLevels;
     }
 
     [Serializable]

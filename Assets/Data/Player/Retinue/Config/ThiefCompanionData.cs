@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
 namespace Data.Player.Retinue.Config
 {
     [Serializable]
-    public sealed class ThiefCompanionData : CompanionConfigData
+    public sealed class ThiefCompanionData : CompanionConfigData<ThiefLevelData>
     {
-        [field: SerializeField] public List<ThiefLevelData> TypedLevels { get; private set; }
-        public override IReadOnlyList<CompanionLevelData> Levels => TypedLevels;
     }
 
     [Serializable]

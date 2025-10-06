@@ -2,11 +2,11 @@
 
 namespace Data.Player.Retinue.Logic
 {
-    public sealed class NavigatorCompanionLogic : BaseCompanionLogic<NavigatorCompanionData>
+    public sealed class NavigatorCompanionLogic : BaseCompanionLogic<NavigatorLevelData>
     {
         protected override CompanionType Type => CompanionType.Navigator;
 
-        public override void SetLevel(int level)
+        protected override void OnLevelChanged(int level)
         {
             throw new System.NotImplementedException();
         }

@@ -6,7 +6,8 @@ using UnityEngine;
 namespace Data.Player.Retinue.Config
 {
     [Serializable]
-    public abstract class CompanionConfigData
+    public abstract class CompanionConfigData<TLevelData>
+        where TLevelData : CompanionLevelData
     {
         [field: SerializeField] public CompanionType Type { get; private set; }
 
@@ -16,6 +17,6 @@ namespace Data.Player.Retinue.Config
         [field: SerializeField] public string Name { get; private set; }
         [field: SerializeField] public string Description { get; private set; }
 
-        public abstract IReadOnlyList<CompanionLevelData> Levels { get; }
+        [field: SerializeField] public List<TLevelData> TypedLevels { get; private set; }
     }
 }

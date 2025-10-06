@@ -7,10 +7,8 @@ using UnityEngine;
 namespace Data.Player.Retinue.Config
 {
     [Serializable]
-    public sealed class ArchitectCompanionData : CompanionConfigData
+    public sealed class ArchitectCompanionData : CompanionConfigData<ArchitectLevelData>
     {
-        [field: SerializeField] public List<ArchitectLevelData> TypedLevels { get; private set; }
-        public override IReadOnlyList<CompanionLevelData> Levels => TypedLevels;
     }
 
     [Serializable]

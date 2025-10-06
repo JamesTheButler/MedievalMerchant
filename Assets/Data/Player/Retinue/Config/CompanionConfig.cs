@@ -16,16 +16,17 @@ namespace Data.Player.Retinue.Config
         [field: SerializeField] public DiplomatCompanionData DiplomatData { get; private set; }
         [field: SerializeField] public ArchitectCompanionData ArchitectData { get; private set; }
 
-        public CompanionConfigData Get(CompanionType companionType)
+        public CompanionConfigData<TLevelData> Get<TLevelData>(CompanionType companionType)
+            where TLevelData : CompanionLevelData
         {
             return companionType switch
             {
-                CompanionType.Thief => ThiefData,
-                CompanionType.Navigator => NavigatorData,
-                CompanionType.Negotiator => NegotiatorData,
-                CompanionType.Guard => GuardData,
-                CompanionType.Diplomat => DiplomatData,
-                CompanionType.Architect => ArchitectData,
+                CompanionType.Thief => ThiefData as CompanionConfigData<TLevelData>,
+                CompanionType.Navigator => NavigatorData as CompanionConfigData<TLevelData>,
+                CompanionType.Negotiator => NegotiatorData as CompanionConfigData<TLevelData>,
+                CompanionType.Guard => GuardData as CompanionConfigData<TLevelData>,
+                CompanionType.Diplomat => DiplomatData as CompanionConfigData<TLevelData>,
+                CompanionType.Architect => ArchitectData as CompanionConfigData<TLevelData>,
                 _ => throw new ArgumentOutOfRangeException(nameof(companionType), companionType, null)
             };
         }

@@ -1,33 +1,22 @@
 ﻿using Data.Player.Retinue.Config;
 using Data.Towns;
-using UnityEngine;
 using Selection = Data.Towns.Selection;
 
 namespace Data.Player.Retinue.Logic
 {
-    public sealed class ThiefCompanionLogic : BaseCompanionLogic<ThiefCompanionData>
+    public sealed class ThiefCompanionLogic : BaseCompanionLogic<ThiefLevelData>
     {
         private readonly PlayerModel _player = Model.Instance.Player;
         private readonly Selection _selection = Selection.Instance;
 
         protected override CompanionType Type => CompanionType.Guard;
 
-        private ThiefLevelData _thiefLevelData;
-
         private bool isBound;
 
         // TODO: this seems quite generic
         //   the companion data should have base implementation to get current level data 
-        public override void SetLevel(int level)
+        protected override void OnLevelChanged(int level)
         {
-            if (level > ConfigData.TypedLevels.Count)
-            {
-                Debug.LogError($"could not find level data for {Type}, {level}");
-                return;
-            }
-
-            _thiefLevelData = ConfigData.TypedLevels[level];
-
             if (isBound) return;
             Bind();
         }
@@ -44,13 +33,14 @@ namespace Data.Player.Retinue.Logic
         {
             if (enteredTown == null) return;
 
-            _player.Inventory.AddFunds((int)_thiefLevelData.TownEntranceGold);
-            enteredTown.Inventory.RemoveFunds((int)_thiefLevelData.TownEntranceGold);
+            var stolenCoin = (int)LevelData.TownEntranceGold;
+            _player.Inventory.AddFunds(stolenCoin);
+            enteredTown.Inventory.RemoveFunds(stolenCoin);
 
-            var isThiefCaught = RandomUtility.GetBool(_thiefLevelData.ReputationLossChance);
+            var isThiefCaught = RandomUtility.GetBool(LevelData.ReputationLossChance);
             if (isThiefCaught)
             {
-                _selection.SelectedTown.Reputation.Value -= _thiefLevelData.ReputationLoss;
+                _selection.SelectedTown.Reputation.Value -= LevelData.ReputationLoss;
             }
         }
     }

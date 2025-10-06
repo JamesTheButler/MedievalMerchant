@@ -2,11 +2,11 @@
 
 namespace Data.Player.Retinue.Logic
 {
-    public sealed class NegotiatorCompanionLogic : BaseCompanionLogic<NegotiatorCompanionData>
+    public sealed class NegotiatorCompanionLogic : BaseCompanionLogic<NegotiatorLevelData>
     {
         protected override CompanionType Type => CompanionType.Negotiator;
 
-        public override void SetLevel(int level)
+        protected override void OnLevelChanged(int level)
         {
             throw new System.NotImplementedException();
         }

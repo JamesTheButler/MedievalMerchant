@@ -2,11 +2,11 @@
 
 namespace Data.Player.Retinue.Logic
 {
-    public sealed class GuardCompanionLogic : BaseCompanionLogic<GuardCompanionData>
+    public sealed class GuardCompanionLogic : BaseCompanionLogic<GuardLevelData>
     {
         protected override CompanionType Type => CompanionType.Guard;
 
-        public override void SetLevel(int level)
+        protected override void OnLevelChanged(int level)
         {
             throw new System.NotImplementedException();
         }
