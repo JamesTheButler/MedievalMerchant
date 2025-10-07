@@ -2,8 +2,11 @@ using System;
 using Common;
 using Data;
 using Data.Configuration;
+using Data.Goods;
+using Data.Goods.Recipes.Config;
 using Data.Player;
 using Data.Towns;
+using Data.Towns.Production;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
@@ -60,7 +63,7 @@ namespace UI.Popups
         {
             _town = town;
 
-            var productionBuildingCount = _town.Producer.GetProducerCount(Tier.Tier2);
+            var productionBuildingCount = _town.ProductionManager.GetProducerCount(Tier.Tier2);
             var cost = _producerConfig.Value.GetUpgradeCost(Tier.Tier2, productionBuildingCount);
             if (cost == null)
             {
@@ -70,7 +73,7 @@ namespace UI.Popups
 
             _cost = cost.Value;
 
-            var producedTier1Good = _town.Producer.GetProducers(Tier.Tier1)[cellIndex];
+            var producedTier1Good = _town.ProductionManager.GetProducers(Tier.Tier1)[cellIndex];
             if (producedTier1Good == null)
             {
                 Debug.LogError($"Town {_town.Name} has no producer in slot {cellIndex}.");
@@ -78,8 +81,8 @@ namespace UI.Popups
                 return;
             }
 
-            _tier1Good = producedTier1Good.Value;
-            _tier2Good = _recipeConfig.Value.Tier2Recipes[_tier1Good];
+            _tier1Good = producedTier1Good.ProducedGood;
+            _tier2Good = _recipeConfig.Value.GetTier2Recipe(_tier1Good).Result;
 
             tier2ConstructionElement.Setup(_tier1Good, _tier2Good);
             costButton.GetText().text = _cost.ToString("N0");

@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
@@ -51,6 +52,51 @@ namespace Common
                 {
                     yield return (items[i], items[j]);
                 }
+            }
+        }
+
+        public static int IndexOf<T>(this List<T> source, Func<T, bool> predicate)
+        {
+            var firstFit = source.FirstOrDefault(predicate);
+            if (firstFit == null) return -1;
+            return source.IndexOf(firstFit);
+        }
+
+        public static T[] AsArray<T>(this T value)
+        {
+            return new[] { value };
+        }
+
+        public static List<T> AsList<T>(this T value)
+        {
+            return new List<T> { value };
+        }
+
+        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            this IEnumerable<KeyValuePair<TKey, TValue>> source)
+        {
+            return source.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        }
+
+        public static void AddValues<TKey, TValue>(
+            this Dictionary<TKey, TValue> dict,
+            IEnumerable<TValue> source,
+            Func<TValue, TKey> keySelector)
+        {
+            foreach (var item in source)
+            {
+                dict.Add(keySelector(item), item);
+            }
+        }
+
+        public static void AddKeys<TKey, TValue>(
+            this Dictionary<TKey, TValue> dict,
+            IEnumerable<TKey> source,
+            Func<TKey, TValue> keySelector)
+        {
+            foreach (var item in source)
+            {
+                dict.Add(item, keySelector(item));
             }
         }
     }

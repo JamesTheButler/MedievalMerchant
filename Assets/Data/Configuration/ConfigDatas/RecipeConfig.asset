@@ -7,84 +7,75 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f56f23d17d414f2697fec6d8a0c5e85c, type: 3}
   m_Name: RecipeConfig
   m_EditorClassIdentifier: 
-  <Tier2Recipes>k__BackingField:
-    _serializedList:
-    - Key: 0
-      Value: 3
-    - Key: 1
-      Value: 4
-    - Key: 18
-      Value: 20
-    - Key: 2
-      Value: 19
-    - Key: 6
-      Value: 10
-    - Key: 7
-      Value: 9
-    - Key: 8
-      Value: 23
-    - Key: 21
-      Value: 22
-    - Key: 12
-      Value: 15
-    - Key: 13
-      Value: 16
-    - Key: 14
-      Value: 25
-    - Key: 24
-      Value: 26
-    - Key: 33
-      Value: 39
-    - Key: 34
-      Value: 38
-    - Key: 35
-      Value: 40
-    - Key: 36
-      Value: 39
-  <Tier3Recipes>k__BackingField:
-    _serializedList:
-    - Key: 27
-      Value:
-        <Good1>k__BackingField: 9
-        <Good2>k__BackingField: 3
-    - Key: 28
-      Value:
-        <Good1>k__BackingField: 4
-        <Good2>k__BackingField: 38
-    - Key: 29
-      Value:
-        <Good1>k__BackingField: 20
-        <Good2>k__BackingField: 25
-    - Key: 30
-      Value:
-        <Good1>k__BackingField: 23
-        <Good2>k__BackingField: 37
-    - Key: 31
-      Value:
-        <Good1>k__BackingField: 26
-        <Good2>k__BackingField: 9
-    - Key: 32
-      Value:
-        <Good1>k__BackingField: 39
-        <Good2>k__BackingField: 15
-    - Key: 5
-      Value:
-        <Good1>k__BackingField: 4
-        <Good2>k__BackingField: 3
-    - Key: 11
-      Value:
-        <Good1>k__BackingField: 10
-        <Good2>k__BackingField: 9
-    - Key: 17
-      Value:
-        <Good1>k__BackingField: 16
-        <Good2>k__BackingField: 25
-    - Key: 41
-      Value:
-        <Good1>k__BackingField: 38
-        <Good2>k__BackingField: 40
+  tier2Recipes:
+  - <Component>k__BackingField: 0
+    <Result>k__BackingField: 3
+  - <Component>k__BackingField: 1
+    <Result>k__BackingField: 4
+  - <Component>k__BackingField: 18
+    <Result>k__BackingField: 20
+  - <Component>k__BackingField: 2
+    <Result>k__BackingField: 19
+  - <Component>k__BackingField: 6
+    <Result>k__BackingField: 10
+  - <Component>k__BackingField: 7
+    <Result>k__BackingField: 9
+  - <Component>k__BackingField: 8
+    <Result>k__BackingField: 23
+  - <Component>k__BackingField: 21
+    <Result>k__BackingField: 22
+  - <Component>k__BackingField: 12
+    <Result>k__BackingField: 15
+  - <Component>k__BackingField: 13
+    <Result>k__BackingField: 16
+  - <Component>k__BackingField: 14
+    <Result>k__BackingField: 25
+  - <Component>k__BackingField: 24
+    <Result>k__BackingField: 26
+  - <Component>k__BackingField: 33
+    <Result>k__BackingField: 39
+  - <Component>k__BackingField: 34
+    <Result>k__BackingField: 38
+  - <Component>k__BackingField: 35
+    <Result>k__BackingField: 40
+  - <Component>k__BackingField: 36
+    <Result>k__BackingField: 39
+  tier3Recipes:
+  - <Component1>k__BackingField: 3
+    <Component2>k__BackingField: 4
+    <Result>k__BackingField: 5
+  - <Result>k__BackingField: 27
+    <Component1>k__BackingField: 9
+    <Component2>k__BackingField: 3
+  - <Result>k__BackingField: 28
+    <Component1>k__BackingField: 4
+    <Component2>k__BackingField: 38
+  - <Result>k__BackingField: 29
+    <Component1>k__BackingField: 20
+    <Component2>k__BackingField: 25
+  - <Result>k__BackingField: 30
+    <Component1>k__BackingField: 23
+    <Component2>k__BackingField: 37
+  - <Result>k__BackingField: 31
+    <Component1>k__BackingField: 26
+    <Component2>k__BackingField: 9
+  - <Result>k__BackingField: 32
+    <Component1>k__BackingField: 39
+    <Component2>k__BackingField: 15
+  - <Result>k__BackingField: 5
+    <Component1>k__BackingField: 4
+    <Component2>k__BackingField: 3
+  - <Result>k__BackingField: 11
+    <Component1>k__BackingField: 10
+    <Component2>k__BackingField: 9
+  - <Result>k__BackingField: 17
+    <Component1>k__BackingField: 16
+    <Component2>k__BackingField: 25
+  - <Result>k__BackingField: 41
+    <Component1>k__BackingField: 38
+    <Component2>k__BackingField: 40

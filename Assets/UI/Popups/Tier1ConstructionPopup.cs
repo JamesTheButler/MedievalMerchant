@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common;
 using Data;
 using Data.Configuration;
+using Data.Goods.Recipes.Config;
 using Data.Player;
 using Data.Towns;
+using Data.Towns.Production;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -66,7 +69,7 @@ namespace UI.Popups
             // disabled on start, since no element will be selected
             costButton.interactable = false;
 
-            var productionBuildingCount = _town.Producer.GetProducerCount(Tier.Tier1);
+            var productionBuildingCount = _town.ProductionManager.GetProducerCount(Tier.Tier1);
             var cost = _producerConfig.Value.GetUpgradeCost(Tier.Tier1, productionBuildingCount);
             if (cost == null)
             {
@@ -89,11 +92,10 @@ namespace UI.Popups
 
             _player.Value.Inventory.Funds.Observe(OnPlayerFundsChanged);
 
-            var recipes = _recipeConfig.Value.Tier2Recipes;
             foreach (var good in town.AvailableGoods)
             {
-                var tier2Good = recipes[good];
-                var isAlreadyBuilt = town.Producer.IsProduced(good);
+                var tier2Good = _recipeConfig.Value.GetTier2Recipe(good).Result;
+                var isAlreadyBuilt = town.ProductionManager.IsProduced(good);
                 var goodGroup = Instantiate(goodGroupPrefab, goodGroupParent);
                 var popupGroup = goodGroup.GetComponent<Tier1ConstructionElement>();
                 popupGroup.Setup(good, tier2Good, isAlreadyBuilt);

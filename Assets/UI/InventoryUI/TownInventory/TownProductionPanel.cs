@@ -4,7 +4,10 @@ using AYellowpaper.SerializedCollections;
 using Common;
 using Data;
 using Data.Configuration;
+using Data.Goods;
+using Data.Goods.Recipes.Config;
 using Data.Towns;
+using Data.Towns.Production;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -76,7 +79,7 @@ namespace UI.InventoryUI.TownInventory
             if (_town == null) return;
 
             _town.Tier.StopObserving(OnTierChanged);
-            _town.Producer.ProductionAdded -= OnProducerAdded;
+            _town.ProductionManager.ProductionAdded -= OnProducerAdded;
             _town.Inventory.GoodUpdated -= UpdateGood;
             _town = null;
         }
@@ -102,29 +105,30 @@ namespace UI.InventoryUI.TownInventory
         private void UpdateGood(Good good, int amount)
         {
             // goods NOT produced here, are handled by TownInventoryPanel
-            if (!_town.Producer.IsProduced(good))
+            if (!_town.ProductionManager.IsProduced(good))
                 return;
 
             var goodTier = _goodsConfig.Value.ConfigData[good].Tier;
-            var cellIndex = _town.Producer.GetIndexOfProducedGood(good);
+            var cellIndex = _town.ProductionManager.GetIndexOfProducedGood(good);
             rows[goodTier].UpdateProducedGood(good, amount, cellIndex);
         }
 
         private void BindProducer()
         {
-            foreach (var good in _town.Producer.AllProducers)
+            foreach (var producer in _town.ProductionManager.AllProducers)
             {
-                OnProducerAdded(good);
+                OnProducerAdded(producer);
             }
 
-            _town.Producer.ProductionAdded += OnProducerAdded;
+            _town.ProductionManager.ProductionAdded += OnProducerAdded;
         }
 
-        private void OnProducerAdded(Good good)
+        private void OnProducerAdded(Producer producer)
         {
+            var good = producer.ProducedGood;
             var goodConfigData = _goodsConfig.Value.ConfigData;
             var goodTier = goodConfigData[good].Tier;
-            var index = _town.Producer.GetIndexOfProducedGood(good);
+            var index = _town.ProductionManager.GetIndexOfProducedGood(good);
             var section = rows[goodTier];
             section.UnlockProductionCell(index, good);
 
@@ -144,8 +148,6 @@ namespace UI.InventoryUI.TownInventory
 
                 case Tier.Tier3:
                     break;
-
-                default: break;
             }
         }
 
@@ -154,7 +156,7 @@ namespace UI.InventoryUI.TownInventory
             tier2Arrows.ClearArrows();
             if (_town.Tier < Tier.Tier2) return;
 
-            var t1Producers = _town.Producer.GetProducers(Tier.Tier1);
+            var t1Producers = _town.ProductionManager.GetProducers(Tier.Tier1);
             for (var i = 0; i < t1Producers.Length; i++)
             {
                 if (t1Producers[i] == null) continue;
@@ -169,18 +171,15 @@ namespace UI.InventoryUI.TownInventory
             tier3Arrows.ClearArrows();
             if (_town.Tier < Tier.Tier3) return;
 
-            var t2Producers = _town.Producer
+            var t2Producers = _town.ProductionManager
                 .GetProducers(Tier.Tier2)
                 .WhereNotNull()
                 .ToList();
-            
+
             var possibleRecipes = t2Producers.GetAllTuples();
             foreach (var (first, second) in possibleRecipes)
             {
-                var tier3Good = _recipeConfig.Value.TryGetRecipe(first, second);
-                if (tier3Good == null) continue;
-
-                //tier3Arrows.AddArrow();
+                
             }
         }
 

@@ -14,7 +14,7 @@ namespace Data.Player.Retinue.Logic
 
         private ThiefLevelData _thiefLevelData;
 
-        private bool isBound;
+        private bool _isBound;
 
         // TODO: this seems quite generic
         //   the companion data should have base implementation to get current level data 
@@ -28,7 +28,7 @@ namespace Data.Player.Retinue.Logic
 
             _thiefLevelData = ConfigData.TypedLevels[level];
 
-            if (isBound) return;
+            if (_isBound) return;
             Bind();
         }
 
@@ -36,7 +36,7 @@ namespace Data.Player.Retinue.Logic
         {
             _selection.TownSelected += OnTownChanged;
 
-            isBound = true;
+            _isBound = true;
         }
 
         // TODO: exploit possible: reentering town frequently to get coins fast
