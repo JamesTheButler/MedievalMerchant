@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Data.Configuration;
+using Data.Towns.Production.Logic;
 using UnityEngine;
 
 namespace Data.Goods.Recipes.Config
@@ -30,17 +31,26 @@ namespace Data.Goods.Recipes.Config
                 recipe => recipe.Result);
         }
 
-        /// <summary>
-        /// Gets the recipe that the given Tier1 Good produces.
-        /// </summary>
-        public Tier2Recipe GetTier2Recipe(Good tier1Good)
+        public Tier2Recipe GetTier2RecipeForComponent(Good component)
         {
-            return tier2Recipes.FirstOrDefault(recipe => recipe.Component == tier1Good);
+            return tier2Recipes.FirstOrDefault(recipe => recipe.Component == component);
         }
 
-        public Tier3Recipe GetTier3Recipe(Good tier3Good)
+        public Tier2Recipe GetTier2RecipeForResult(Good result)
         {
-            return tier3Recipes.FirstOrDefault(recipe => recipe.Result == tier3Good);
+            return tier2Recipes.FirstOrDefault(recipe => recipe.Result == result);
+        }
+
+        public Tier3Recipe[] GetTier3RecipeForComponent(Good component)
+        {
+            return tier3Recipes
+                .Where(recipe => recipe.Component1 == component || recipe.Component2 == component)
+                .ToArray();
+        }
+
+        public Tier3Recipe GetTier3RecipeForResult(Good result)
+        {
+            return tier3Recipes.FirstOrDefault(recipe => recipe.Result == result);
         }
 
         public Recipe GetRecipe(Good good)

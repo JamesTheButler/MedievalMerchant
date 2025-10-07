@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace UI.Popups
 {
-    public sealed class Tier1ConstructionPopupHandler : MonoBehaviour
+    public sealed class Tier3ConstructionPopupHandler : MonoBehaviour
     {
         [SerializeField]
-        private Tier1ConstructionPopup popup;
+        private Tier3ConstructionPopup popup;
 
         private readonly Lazy<Selection> _selection = new(() => Selection.Instance);
 

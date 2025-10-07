@@ -15,5 +15,10 @@ namespace Data.Goods.Recipes.Config
 
         [field: SerializeField]
         public Good Component2 { get; private set; }
+
+        public Good GetOther(Good good)
+        {
+            return Component1 == good ? Component2 : Component1;
+        }
     }
 }

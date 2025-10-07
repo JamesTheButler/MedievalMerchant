@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Data.Configuration;
-using Data.Towns.Production.Config;
-using UnityEngine;
 
 namespace Data.Towns.Production.Logic
 {
@@ -12,7 +10,6 @@ namespace Data.Towns.Production.Logic
     {
         public event Action<Producer> ProductionAdded;
 
-        private readonly ProducerConfig _producerConfig;
         private readonly Town _town;
 
         private readonly Dictionary<Tier, Producer[]> _producers;
@@ -20,7 +17,6 @@ namespace Data.Towns.Production.Logic
         public ProductionManager(Town town)
         {
             _town = town;
-            _producerConfig = ConfigurationManager.Instance.ProducerConfig;
 
             _producers = new()
             {

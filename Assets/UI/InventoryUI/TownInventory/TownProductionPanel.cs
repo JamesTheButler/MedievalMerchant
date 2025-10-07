@@ -4,10 +4,8 @@ using AYellowpaper.SerializedCollections;
 using Common;
 using Data;
 using Data.Configuration;
-using Data.Goods;
 using Data.Goods.Recipes.Config;
 using Data.Towns;
-using Data.Towns.Production;
 using Data.Towns.Production.Logic;
 using NaughtyAttributes;
 using UnityEngine;
@@ -144,6 +142,8 @@ namespace UI.InventoryUI.TownInventory
                 }
 
                 case Tier.Tier2:
+                    var tier3Section = rows[Tier.Tier3];
+                    tier3Section.EnableProductionCellUpgradeButton(index, true);
                     RefreshTier3Arrows();
                     break;
 
@@ -172,15 +172,12 @@ namespace UI.InventoryUI.TownInventory
             tier3Arrows.ClearArrows();
             if (_town.Tier < Tier.Tier3) return;
 
-            var t2Producers = _town.ProductionManager
-                .GetProducers(Tier.Tier2)
-                .WhereNotNull()
-                .ToList();
-
-            var possibleRecipes = t2Producers.GetAllTuples();
-            foreach (var (first, second) in possibleRecipes)
+            var t2Producers = _town.ProductionManager.GetProducers(Tier.Tier2);
+            for (var i = 0; i < t2Producers.Length; i++)
             {
-                
+                if (t2Producers[i] == null) continue;
+
+                tier3Arrows.AddArrow(i, i);
             }
         }
 

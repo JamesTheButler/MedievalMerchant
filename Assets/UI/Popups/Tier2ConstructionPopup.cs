@@ -84,7 +84,7 @@ namespace UI.Popups
             }
 
             _tier1Good = producedTier1Good.ProducedGood;
-            _tier2Good = _recipeConfig.Value.GetTier2Recipe(_tier1Good).Result;
+            _tier2Good = _recipeConfig.Value.GetTier2RecipeForComponent(_tier1Good).Result;
 
             tier2ConstructionElement.Setup(_tier1Good, _tier2Good);
             costButton.GetText().text = _cost.ToString("N0");
