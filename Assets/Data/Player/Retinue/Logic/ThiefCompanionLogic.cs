@@ -10,7 +10,7 @@ namespace Data.Player.Retinue.Logic
         private readonly PlayerModel _player = Model.Instance.Player;
         private readonly Selection _selection = Selection.Instance;
 
-        protected override CompanionType Type => CompanionType.Guard;
+        protected override CompanionType Type => CompanionType.Thief;
 
         private ThiefLevelData _thiefLevelData;
 
@@ -50,7 +50,7 @@ namespace Data.Player.Retinue.Logic
             var isThiefCaught = RandomUtility.GetBool(_thiefLevelData.ReputationLossChance);
             if (isThiefCaught)
             {
-                _selection.SelectedTown.Reputation.Value -= _thiefLevelData.ReputationLoss;
+                enteredTown.Reputation.Value -= _thiefLevelData.ReputationLoss;
             }
         }
     }
