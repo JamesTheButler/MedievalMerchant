@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
+using Data.Configuration;
 using UnityEngine;
 
-namespace Data.Configuration
+namespace Data.Towns.Production.Config
 {
     [CreateAssetMenu(
         fileName = nameof(ProducerConfig),
@@ -20,30 +20,20 @@ namespace Data.Configuration
         [SerializeField, SerializedDictionary("Good Tier", "Production Limit")]
         private SerializedDictionary<Tier, int> tier3TownLimits;
 
-        [Header("Production Rates")]
+        [Header("Production Rate")]
         [SerializeField, SerializedDictionary("Good Tier", "Production Rate")]
-        private SerializedDictionary<Tier, int> tier1TownProduction;
+        private SerializedDictionary<Tier, float> baseProductionRates;
 
-        [SerializeField, SerializedDictionary("Good Tier", "Production Rate")]
-        private SerializedDictionary<Tier, int> tier2TownProduction;
-
-        [SerializeField, SerializedDictionary("Good Tier", "Production Rate")]
-        private SerializedDictionary<Tier, int> tier3TownProduction;
-
-        [SerializeField, SerializedDictionary("Building Tier", "Cost")]
+        [Header("Construction Costs")]
+        [SerializeField, SerializedDictionary("Producer Tier", "Cost")]
         private SerializedDictionary<Tier, int[]> upgradeCosts;
 
-        public int? GetProductionRate(Tier townTier, Tier goodTier)
-        {
-            var limitDict = townTier switch
-            {
-                Tier.Tier1 => tier1TownProduction,
-                Tier.Tier2 => tier2TownProduction,
-                Tier.Tier3 => tier3TownProduction,
-                _ => throw new ArgumentOutOfRangeException(nameof(townTier), townTier, null)
-            };
+        [field: SerializeField]
+        public float ConsumptionRate { get; private set; } = 1f;
 
-            return limitDict.TryGetValue(goodTier, out var value) ? value : null;
+        public float GetProductionRate(Tier goodTier)
+        {
+            return baseProductionRates[goodTier];
         }
 
         public int? GetLimit(Tier townTier, Tier goodTier)

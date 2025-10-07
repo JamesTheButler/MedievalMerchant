@@ -8,6 +8,7 @@ using Data.Goods;
 using Data.Goods.Recipes.Config;
 using Data.Towns;
 using Data.Towns.Production;
+using Data.Towns.Production.Logic;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;

@@ -17,7 +17,7 @@ namespace Data.Goods.Recipes.Config
 
         private readonly Dictionary<Good, Recipe> _recipes = new();
 
-        private void Awake()
+        public void Initialize()
         {
             _recipes.Clear();
             _recipes.AddValues(
@@ -30,6 +30,9 @@ namespace Data.Goods.Recipes.Config
                 recipe => recipe.Result);
         }
 
+        /// <summary>
+        /// Gets the recipe that the given Tier1 Good produces.
+        /// </summary>
         public Tier2Recipe GetTier2Recipe(Good tier1Good)
         {
             return tier2Recipes.FirstOrDefault(recipe => recipe.Component == tier1Good);

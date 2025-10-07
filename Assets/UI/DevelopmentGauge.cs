@@ -3,6 +3,7 @@ using System.Linq;
 using Data;
 using Data.Configuration;
 using Data.Towns;
+using Data.Towns.Production;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

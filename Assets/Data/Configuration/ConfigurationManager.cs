@@ -1,6 +1,6 @@
-using Data.Goods;
 using Data.Goods.Recipes.Config;
 using Data.Player.Retinue.Config;
+using Data.Towns.Production.Config;
 using Data.Towns.Upgrades;
 using NaughtyAttributes;
 using UnityEngine;
@@ -47,7 +47,6 @@ namespace Data.Configuration
         [field: SerializeField, Required]
         public UpgradeProgressionConfig UpgradeProgressionConfig { get; private set; }
 
-
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -57,6 +56,8 @@ namespace Data.Configuration
             }
 
             Instance = this;
+            
+            RecipeConfig.Initialize();
         }
     }
 }

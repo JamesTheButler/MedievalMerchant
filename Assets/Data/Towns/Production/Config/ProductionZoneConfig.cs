@@ -1,6 +1,7 @@
+using Data.Configuration;
 using UnityEngine;
 
-namespace Data.Configuration
+namespace Data.Towns.Production.Config
 {
     [CreateAssetMenu(
         fileName = nameof(ProductionZoneConfig),

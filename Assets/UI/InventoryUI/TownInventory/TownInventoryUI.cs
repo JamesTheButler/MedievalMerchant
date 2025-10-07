@@ -1,6 +1,7 @@
 using Common;
 using Data;
 using Data.Towns;
+using Data.Towns.Production;
 using Data.Trade;
 using NaughtyAttributes;
 using TMPro;

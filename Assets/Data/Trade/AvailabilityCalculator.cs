@@ -1,5 +1,6 @@
 using Data.Configuration;
 using Data.Towns;
+using Data.Towns.Production.Config;
 
 namespace Data.Trade
 {

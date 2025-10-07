@@ -8,6 +8,8 @@ using Data.Goods.Recipes.Config;
 using Data.Player;
 using Data.Towns;
 using Data.Towns.Production;
+using Data.Towns.Production.Config;
+using Data.Towns.Production.Logic;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,4 +1,5 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Data.Goods.Recipes.Config
@@ -7,12 +8,12 @@ namespace Data.Goods.Recipes.Config
     public sealed class Tier3Recipe
     {
         [field: SerializeField]
+        public Good Result { get; private set; }
+
+        [field: SerializeField, HorizontalLine]
         public Good Component1 { get; private set; }
 
         [field: SerializeField]
         public Good Component2 { get; private set; }
-
-        [field: SerializeField]
-        public Good Result { get; private set; }
     }
 }

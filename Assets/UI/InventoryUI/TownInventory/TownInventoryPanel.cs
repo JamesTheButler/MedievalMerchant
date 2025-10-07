@@ -64,7 +64,7 @@ namespace UI.InventoryUI.TownInventory
         private void UpdateGood(Good good, int amount)
         {
             // ignore goods produced in this town. ProductionPanel handles that
-            if (_town.Producer.IsProduced(good))
+            if (_town.ProductionManager.IsProduced(good))
                 return;
 
             var goodTier = _goodsConfig.Value.ConfigData[good].Tier;

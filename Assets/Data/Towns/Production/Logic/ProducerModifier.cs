@@ -1,6 +1,6 @@
 using Data.Modifiable;
 
-namespace Data.Towns
+namespace Data.Towns.Production.Logic
 {
     public sealed class ProducerModifier : FlatModifier
     {

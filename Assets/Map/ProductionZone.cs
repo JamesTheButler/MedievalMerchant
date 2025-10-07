@@ -3,6 +3,7 @@ using System.Linq;
 using Common;
 using Data;
 using Data.Configuration;
+using Data.Towns.Production.Config;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;

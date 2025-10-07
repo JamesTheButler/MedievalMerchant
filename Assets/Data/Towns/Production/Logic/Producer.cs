@@ -1,0 +1,69 @@
+using System.Collections.Generic;
+using System.Linq;
+using Data.Configuration;
+using Data.Goods.Recipes;
+using Data.Modifiable;
+using Data.Towns.Production.Config;
+using UnityEngine;
+
+namespace Data.Towns.Production.Logic
+{
+    public sealed class Producer
+    {
+        public ModifiableVariable ProductionRate { get; }
+        public Good ProducedGood { get; }
+
+        private readonly Town _town;
+        private readonly Recipe _recipe;
+
+        private readonly GoodsConfig _goodsConfig;
+        private readonly ProducerConfig _producerConfig;
+
+        public Producer(Good producedGood, Town town)
+        {
+            _town = town;
+            ProducedGood = producedGood;
+
+            _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
+            _producerConfig = ConfigurationManager.Instance.ProducerConfig;
+            var recipeConfig = ConfigurationManager.Instance.RecipeConfig;
+
+            var baseModifier = new BaseProductionValue(producedGood);
+            ProductionRate = new ModifiableVariable(baseModifier);
+
+            _recipe = recipeConfig.GetRecipe(producedGood);
+        }
+
+        public void Produce()
+        {
+            if (!CanProduce()) return;
+
+            var limit = GetProductionLimit(_town.Tier, ProducedGood);
+            var currentInventoryAmount = _town.Inventory.Goods.GetValueOrDefault(ProducedGood, 0);
+            var cappedAmount = Mathf.Min(ProductionRate, Mathf.Max(0, limit - currentInventoryAmount));
+            _town.Inventory.AddGood(ProducedGood, (int)cappedAmount);
+
+            foreach (var component in _recipe.Components)
+            {
+                _town.Inventory.RemoveGood(component, (int)_producerConfig.ConsumptionRate);
+            }
+        }
+
+        private bool CanProduce()
+        {
+            return _recipe.Components?.All(component =>
+                _town.Inventory.HasGood(component, (int)_producerConfig.ConsumptionRate)) ?? false;
+        }
+
+        private int GetProductionLimit(Tier townTier, Good good)
+        {
+            var goodTier = _goodsConfig.ConfigData[good].Tier;
+            var limit = _producerConfig.GetLimit(townTier, goodTier);
+            if (limit != null)
+                return limit.Value;
+
+            Debug.LogError($"No production limit is set for town {townTier} and good {goodTier}.");
+            return 0;
+        }
+    }
+}

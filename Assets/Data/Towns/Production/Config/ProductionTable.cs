@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Data.Configuration;
 using UnityEngine;
 
-namespace Data.Configuration
+namespace Data.Towns.Production.Config
 {
     /// <summary>
     /// Table to define which goods CAN be produced. 

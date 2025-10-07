@@ -1,3 +1,4 @@
+using Data.Towns.Production.Config;
 using NaughtyAttributes;
 using UnityEngine;
 

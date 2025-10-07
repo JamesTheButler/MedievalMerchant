@@ -3,6 +3,8 @@ using System.Linq;
 using Common;
 using Data.Configuration;
 using Data.Modifiable;
+using Data.Towns.Production;
+using Data.Towns.Production.Logic;
 using UnityEngine;
 
 namespace Data.Towns
@@ -29,7 +31,7 @@ namespace Data.Towns
             _townDevelopmentConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
 
-            _town.Producer.ProductionAdded += OnProducerAdded;
+            _town.ProductionManager.ProductionAdded += OnProducerAdded;
             _town.Inventory.GoodUpdated += OnGoodAdded;
 
             UpdateDevelopmentTable();
@@ -37,20 +39,20 @@ namespace Data.Towns
 
         ~DevelopmentManager()
         {
-            _town.Producer.ProductionAdded -= OnProducerAdded;
+            _town.ProductionManager.ProductionAdded -= OnProducerAdded;
             _town.Inventory.GoodUpdated -= OnGoodAdded;
         }
 
-        private void OnProducerAdded(Good producedGood)
+        private void OnProducerAdded(Producer producer)
         {
-            var goodTier = _goodsConfig.ConfigData[producedGood].Tier;
+            var goodTier = _goodsConfig.ConfigData[producer.ProducedGood].Tier;
             RefreshProducerModifiers(goodTier);
         }
 
         private void OnGoodAdded(Good addedGood, int _)
         {
             // early out, as we only care about non-produced goods
-            if (_town.Producer.IsProduced(addedGood)) return;
+            if (_town.ProductionManager.IsProduced(addedGood)) return;
 
             var goodTier = _goodsConfig.ConfigData[addedGood].Tier;
             RefreshGoodsInInventoryModifiers(goodTier);
@@ -58,7 +60,7 @@ namespace Data.Towns
 
         private void RefreshProducerModifiers(Tier goodTier)
         {
-            var newProducerCount = _town.Producer.GetProducerCount(goodTier);
+            var newProducerCount = _town.ProductionManager.GetProducerCount(goodTier);
             var producerInfluence = _townDevelopmentConfig.ProducerGrowthInfluence.Get(_town.Tier.Value, goodTier);
             if (newProducerCount <= 1)
                 return;
@@ -79,7 +81,8 @@ namespace Data.Towns
         private void RefreshGoodsInInventoryModifiers(Tier goodTier)
         {
             var newCount = _town.Inventory.Goods.Keys
-                .Count(good => !_town.Producer.IsProduced(good) && _goodsConfig.ConfigData[good].Tier == goodTier);
+                .Count(good =>
+                    !_town.ProductionManager.IsProduced(good) && _goodsConfig.ConfigData[good].Tier == goodTier);
 
             // modifier would not change
             if (_goodsInInventoryModifier.TryGetValue(goodTier, out var oldModifier) &&

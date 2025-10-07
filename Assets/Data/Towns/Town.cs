@@ -4,6 +4,8 @@ using System.Linq;
 using Common;
 using Data.Configuration;
 using Data.Player.Retinue;
+using Data.Towns.Production;
+using Data.Towns.Production.Logic;
 using Data.Towns.Upgrades;
 using Data.Trade;
 using UnityEngine;
@@ -24,7 +26,7 @@ namespace Data.Towns
         public Vector2Int GridLocation { get; }
         public Vector2 WorldLocation { get; }
         public HashSet<Good> AvailableGoods { get; }
-        public Producer Producer { get; }
+        public ProductionManager ProductionManager { get; }
         public DevelopmentManager DevelopmentManager { get; }
         public UpgradeManager UpgradeManager { get; }
         public Regions Regions { get; }
@@ -52,7 +54,7 @@ namespace Data.Towns
 
             // initial funds and goods
             Inventory = new Inventory(_inventoryPolicy);
-            Producer = new Producer(this);
+            ProductionManager = new ProductionManager(this);
             DevelopmentManager = new DevelopmentManager(this);
             UpgradeManager = new UpgradeManager(this);
 
@@ -70,7 +72,7 @@ namespace Data.Towns
 
         public void AddProduction(Good good, int index)
         {
-            Producer.AddProducer(good, index);
+            ProductionManager.AddProducer(good, index);
         }
 
         public void Upgrade()
@@ -90,9 +92,7 @@ namespace Data.Towns
         {
             // goods production
             var townTier = Tier.Value;
-            var multiplier = 1 + UpgradeManager.ProductionModifiers;
-            Producer.SetProductionMultiplier(multiplier);
-            Producer.Produce();
+            ProductionManager.Produce();
 
             // funds production
             var modifierMultiplier = 1 + UpgradeManager.FundsModifiers;
@@ -107,7 +107,7 @@ namespace Data.Towns
             foreach (var good in Inventory.Goods.Keys.ToList())
             {
                 // don't consume goods that are produced
-                if (Producer.IsProduced(good)) continue;
+                if (ProductionManager.IsProduced(good)) continue;
 
                 var goodTier = _goodsConfig.ConfigData[good].Tier;
                 var consumptionRate = _townConfig.GetConsumptionRate(townTier, goodTier);
