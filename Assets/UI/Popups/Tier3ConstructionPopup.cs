@@ -34,29 +34,8 @@ namespace UI.Popups
         private Tier3UpgradePathElement _selectedElement;
         private Town _town;
         private float _cost = -1;
+        private float _lastPlayerFunds;
 
-        private void OnPlayerFundsChanged(float playerFunds)
-        {
-            if (_town == null || _cost < 0)
-            {
-                Debug.LogError(
-                    $"{nameof(Tier3UpgradePathElement)} shouldn't observe player right now. No town set up.");
-                return;
-            }
-
-            var isInteractable = playerFunds >= _cost && _selectedElement;
-            UpdateButtonState(isInteractable);
-        }
-
-        private void UpdateButtonState(bool isInteractable)
-        {
-            // button state is right already
-            if (costButton.interactable == isInteractable)
-                return;
-
-            costButton.interactable = isInteractable;
-            costButton.GetText().color = isInteractable ? _colors.Value.FontDark : _colors.Value.Bad;
-        }
 
         public void Setup(Town town, int cellIndex)
         {
@@ -84,6 +63,19 @@ namespace UI.Popups
             _player.Value.Inventory.Funds.Observe(OnPlayerFundsChanged);
         }
 
+        private void OnPlayerFundsChanged(float playerFunds)
+        {
+            if (_town == null)
+            {
+                Debug.LogError(
+                    $"{nameof(Tier3UpgradePathElement)} shouldn't observe player right now. No town set up.");
+                return;
+            }
+
+            _lastPlayerFunds = playerFunds;
+            UpdateButtonState();
+        }
+
         private void SetUpButton(Town town, int cellIndex)
         {
             // disabled on start, since no element will be selected
@@ -106,13 +98,13 @@ namespace UI.Popups
             if (tier2Producer == null)
                 return;
 
-            var tier2Component1 = tier2Producer.ProducedGood;
-            var tier3Recipes = _recipeConfig.Value.GetTier3RecipeForComponent(tier2Component1);
+            var primaryTier2Good = tier2Producer.ProducedGood; // T2 good that was clicked in ui that is shown first
+            var tier3Recipes = _recipeConfig.Value.GetTier3RecipeForComponent(primaryTier2Good);
             var initialSelectionFound = false;
             foreach (var recipe in tier3Recipes)
             {
                 var isAlreadyBuilt = town.ProductionManager.IsProduced(recipe.Result);
-                var element = SpawnElement(recipe, tier2Component1, isAlreadyBuilt);
+                var element = SpawnElement(recipe, primaryTier2Good);
 
                 // select the first producer element that isn't built yet
                 if (isAlreadyBuilt || initialSelectionFound)
@@ -123,25 +115,24 @@ namespace UI.Popups
             }
         }
 
-        private Tier3UpgradePathElement SpawnElement(
-            Tier3Recipe recipe,
-            Good tier2Component1,
-            bool isAlreadyBuilt)
+        private Tier3UpgradePathElement SpawnElement(Tier3Recipe recipe, Good tier2Component1)
         {
             var tier2Component2 = recipe.GetOther(tier2Component1);
             var tier1Component1 = _recipeConfig.Value.GetTier2RecipeForResult(tier2Component1).Component;
             var tier1Component2 = _recipeConfig.Value.GetTier2RecipeForResult(tier2Component2).Component;
+            var tier3Result = recipe.Result;
 
             var goodGroup = Instantiate(goodGroupPrefab, goodGroupParent);
             var element = goodGroup.GetComponent<Tier3UpgradePathElement>();
 
+            var productionMgr = _town.ProductionManager;
+
             element.Setup(
-                tier1Component1,
-                tier2Component1,
-                tier1Component2,
-                tier2Component2,
-                recipe.Result,
-                isAlreadyBuilt);
+                new ConstructionCellData(tier1Component1, productionMgr.IsProduced(tier1Component1)),
+                new ConstructionCellData(tier2Component1, productionMgr.IsProduced(tier2Component1)),
+                new ConstructionCellData(tier1Component2, productionMgr.IsProduced(tier1Component2)),
+                new ConstructionCellData(tier2Component2, productionMgr.IsProduced(tier2Component2)),
+                new ConstructionCellData(tier3Result, productionMgr.IsProduced(tier3Result)));
 
             Action popupGroupClickHandler = () => PopupGroupOnClicked(element);
             element.Clicked += popupGroupClickHandler;
@@ -177,7 +168,18 @@ namespace UI.Popups
             constructionElement.Select();
 
             _selectedElement = constructionElement;
-            costButton.interactable = true;
+            UpdateButtonState();
+        }
+
+        private void UpdateButtonState()
+        {
+            var isInteractable = _lastPlayerFunds >= _cost && _selectedElement;
+            // button state is right already
+            if (costButton.interactable == isInteractable)
+                return;
+
+            costButton.interactable = isInteractable;
+            costButton.GetText().color = isInteractable ? _colors.Value.FontDark : _colors.Value.Bad;
         }
     }
 }

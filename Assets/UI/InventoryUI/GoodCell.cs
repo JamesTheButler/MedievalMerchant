@@ -22,9 +22,20 @@ namespace UI.InventoryUI
         private Image disabledIcon;
 
         [SerializeField, Required]
+        private Image cornerIcon;
+
+        [SerializeField, Required]
         protected TooltipHandler tooltipHandler;
 
         protected readonly Lazy<GoodsConfig> GoodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
+
+        private void Awake()
+        {
+            if (cornerIcon.sprite == null)
+            {
+                cornerIcon.gameObject.SetActive(false);
+            }
+        }
 
         public void SetGood(Good? good)
         {
@@ -50,10 +61,16 @@ namespace UI.InventoryUI
         protected virtual void OnSetGood(Good? good)
         {
         }
-        
+
         public void SetEnabled(bool isEnabled)
         {
             disabledIcon.gameObject.SetActive(!isEnabled);
+        }
+
+        public void SetCornerIcon(Sprite icon)
+        {
+            cornerIcon.gameObject.SetActive(true);
+            cornerIcon.sprite = icon;
         }
 
         public void OnPointerClick(PointerEventData eventData)

@@ -13,6 +13,9 @@ namespace UI.Popups
         public event Action Clicked;
 
         [SerializeField, Required]
+        private Sprite isProducedIcon;
+
+        [SerializeField, Required]
         private GoodCell tier1Cell1;
 
         [SerializeField, Required]
@@ -35,32 +38,32 @@ namespace UI.Popups
         private bool _isAlreadyBuilt;
 
         public void Setup(
-            Good tier1Good1,
-            Good tier2Good1,
-            Good tier1Good2,
-            Good tier2Good2,
-            Good tier3Good,
-            bool isAlreadyBuilt)
+            ConstructionCellData tier1Good1,
+            ConstructionCellData tier2Good1,
+            ConstructionCellData tier1Good2,
+            ConstructionCellData tier2Good2,
+            ConstructionCellData tier3Good)
         {
-            tier1Cell1.SetEnabled(true);
-            tier1Cell1.SetGood(tier1Good1);
+            Tier3Good = tier3Good.Good;
+            _isAlreadyBuilt = tier3Good.IsProduced;
 
-            tier2Cell1.SetEnabled(true);
-            tier2Cell1.SetGood(tier2Good1);
-
-            tier1Cell2.SetEnabled(true);
-            tier1Cell2.SetGood(tier1Good2);
-
-            tier2Cell2.SetEnabled(true);
-            tier2Cell2.SetGood(tier2Good2);
-
-            tier3Cell.SetEnabled(true);
-            tier3Cell.SetGood(tier3Good);
-            Tier3Good = tier3Good;
-
-            _isAlreadyBuilt = isAlreadyBuilt;
+            SetCell(tier1Cell1, tier1Good1);
+            SetCell(tier2Cell1, tier2Good1);
+            SetCell(tier1Cell2, tier1Good2);
+            SetCell(tier2Cell2, tier2Good2);
+            SetCell(tier3Cell, tier3Good);
 
             Deselect();
+        }
+
+        private void SetCell(GoodCell cell, ConstructionCellData data)
+        {
+            cell.SetEnabled(true);
+            cell.SetGood(data.Good);
+            if (data.IsProduced)
+            {
+                cell.SetCornerIcon(isProducedIcon);
+            }
         }
 
         public void Reset()

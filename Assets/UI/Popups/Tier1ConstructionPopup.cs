@@ -34,6 +34,7 @@ namespace UI.Popups
         private Tier1ConstructionElement _selectedElement;
         private Town _town;
         private float _cost = -1;
+        private float _lastPlayerFunds;
 
         private void OnPlayerFundsChanged(float playerFunds)
         {
@@ -43,18 +44,8 @@ namespace UI.Popups
                 return;
             }
 
-            var isInteractable = playerFunds >= _cost && _selectedElement;
-            UpdateButtonState(isInteractable);
-        }
-
-        private void UpdateButtonState(bool isInteractable)
-        {
-            // button state is right already
-            if (costButton.interactable == isInteractable)
-                return;
-
-            costButton.interactable = isInteractable;
-            costButton.GetText().color = isInteractable ? _colors.Value.FontDark : _colors.Value.Bad;
+            _lastPlayerFunds = playerFunds;
+            UpdateButtonState();
         }
 
         public void Setup(Town town, int cellIndex)
@@ -159,7 +150,19 @@ namespace UI.Popups
             constructionElement.Select();
 
             _selectedElement = constructionElement;
-            costButton.interactable = true;
+            UpdateButtonState();
+        }
+
+        private void UpdateButtonState()
+        {
+            var isInteractable = _lastPlayerFunds >= _cost && _selectedElement;
+
+            // button state is right already
+            if (costButton.interactable == isInteractable)
+                return;
+
+            costButton.interactable = isInteractable;
+            costButton.GetText().color = isInteractable ? _colors.Value.FontDark : _colors.Value.Bad;
         }
     }
 }
