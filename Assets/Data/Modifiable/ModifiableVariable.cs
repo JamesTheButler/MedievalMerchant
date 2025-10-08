@@ -22,6 +22,11 @@ namespace Data.Modifiable
         public ModifiableVariable()
         {
         }
+        
+        public ModifiableVariable(float baseValue)
+        {
+            AddModifier(new GenericBaseValueModifier(baseValue));
+        }
 
         public ModifiableVariable(BaseValueModifier baseValue)
         {

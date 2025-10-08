@@ -1,4 +1,5 @@
 ﻿using Data.Configuration;
+using Data.Modifiable;
 using Data.Player.Retinue.Config;
 using Data.Player.Retinue.UI;
 using NaughtyAttributes;
@@ -8,7 +9,8 @@ namespace Data.Player.Retinue
 {
     public sealed class CompanionUpgrader : MonoBehaviour
     {
-        [SerializeField, Required] private Transform companionGroup;
+        [SerializeField, Required]
+        private Transform companionGroup;
 
         private CompanionConfig _companionConfig;
         private PlayerModel _player;
@@ -36,7 +38,15 @@ namespace Data.Player.Retinue
                 return;
             }
 
-            var cost = companionConfigData.Levels[newLevel - 1].Cost;
+            var cost = new ModifiableVariable(companionConfigData.GetLevelData(newLevel).Cost);
+
+            var negotiatorLevel = _player.RetinueManager.CompanionLevels[CompanionType.Negotiator];
+            if (negotiatorLevel > 0)
+            {
+                var levelData = _companionConfig.NegotiatorData.GetTypedLevelData(negotiatorLevel);
+                var costReduction = -levelData.UpgradeCostReduction;
+                cost.AddModifier(new GenericBasePercentageModifier(costReduction));
+            }
 
             if (!_player.Inventory.HasFunds((int)cost))
             {

@@ -5,7 +5,7 @@ namespace Data.Modifiable
         public float Value { get; }
         public string Description { get; }
 
-        protected BaseValueModifier(float value,  string description)
+        protected BaseValueModifier(float value, string description)
         {
             Value = value;
             Description = description;

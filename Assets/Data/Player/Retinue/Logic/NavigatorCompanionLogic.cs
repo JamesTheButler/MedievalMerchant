@@ -12,7 +12,7 @@ namespace Data.Player.Retinue.Logic
         {
             var player = Model.Instance.Player;
 
-            var newModifier = new NavigatorSpeedModifier(ConfigData.GetLevelData(level).SpeedBonus, level);
+            var newModifier = new NavigatorSpeedModifier(ConfigData.GetTypedLevelData(level).SpeedBonus, level);
 
             if (_activeSpeedModifier != null)
             {

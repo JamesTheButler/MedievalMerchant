@@ -21,5 +21,13 @@ namespace Data.Player.Retinue.Config
         public string Description { get; private set; }
 
         public abstract IReadOnlyList<CompanionLevelData> Levels { get; }
+
+        public CompanionLevelData GetLevelData(int level)
+        {
+            if (level <= 0 || level > Levels.Count)
+                return null;
+
+            return Levels[level - 1];
+        }
     }
 }

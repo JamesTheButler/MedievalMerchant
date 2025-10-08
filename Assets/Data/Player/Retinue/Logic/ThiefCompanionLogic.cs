@@ -19,7 +19,7 @@ namespace Data.Player.Retinue.Logic
         //   the companion data should have base implementation to get current level data 
         public override void SetLevel(int level)
         {
-            _thiefLevelData = ConfigData.GetLevelData(level);
+            _thiefLevelData = ConfigData.GetTypedLevelData(level);
 
             if (_thiefLevelData is null)
             {

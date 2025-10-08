@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NaughtyAttributes;
 using UnityEngine;
 
 namespace Data.Player.Retinue.Config
@@ -10,15 +9,16 @@ namespace Data.Player.Retinue.Config
         where T : CompanionLevelData
     {
         [SerializeField]
-        private List<T> TypedLevels;
+        private List<T> typedLevels;
 
-        public T GetLevelData(int level)
+        public override IReadOnlyList<CompanionLevelData> Levels => typedLevels;
+
+        public T GetTypedLevelData(int level)
         {
             if (level <= 0 || level > Levels.Count)
                 return null;
-            return TypedLevels[level - 1];
-        }
 
-        public override IReadOnlyList<CompanionLevelData> Levels => TypedLevels;
+            return typedLevels[level - 1];
+        }
     }
 }
