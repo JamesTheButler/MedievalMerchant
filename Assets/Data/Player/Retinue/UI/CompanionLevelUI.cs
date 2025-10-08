@@ -41,7 +41,7 @@ namespace Data.Player.Retinue.UI
 
         private void SetUpTooltipStrings()
         {
-            _unlockableTooltip = $"Level {Level}: {_levelData.Cost} coin\n-----{_levelData.Description}";
+            _unlockableTooltip = $"Level {Level}: {_levelData.Cost} coin\n-----\n{_levelData.Description}";
             _unlockedTooltip = $"Level {Level}\n-----\n{_levelData.Description}";
         }
 

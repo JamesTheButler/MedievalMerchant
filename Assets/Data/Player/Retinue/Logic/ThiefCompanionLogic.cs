@@ -7,8 +7,8 @@ namespace Data.Player.Retinue.Logic
 {
     public sealed class ThiefCompanionLogic : BaseCompanionLogic<ThiefCompanionData>
     {
-        private readonly PlayerModel _player = Model.Instance.Player;
-        private readonly Selection _selection = Selection.Instance;
+        private PlayerModel _player;
+        private Selection _selection;
 
         protected override CompanionType Type => CompanionType.Thief;
 
@@ -26,7 +26,7 @@ namespace Data.Player.Retinue.Logic
                 return;
             }
 
-            _thiefLevelData = ConfigData.TypedLevels[level];
+            _thiefLevelData = ConfigData.TypedLevels[level - 1];
 
             if (_isBound) return;
             Bind();
@@ -34,6 +34,9 @@ namespace Data.Player.Retinue.Logic
 
         private void Bind()
         {
+            _player = Model.Instance.Player;
+            _selection = Selection.Instance;
+
             _selection.TownSelected += OnTownChanged;
 
             _isBound = true;

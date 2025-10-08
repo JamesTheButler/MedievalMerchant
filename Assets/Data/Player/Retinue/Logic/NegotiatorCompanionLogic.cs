@@ -1,4 +1,5 @@
 ﻿using Data.Player.Retinue.Config;
+using UnityEngine;
 
 namespace Data.Player.Retinue.Logic
 {
@@ -8,7 +9,7 @@ namespace Data.Player.Retinue.Logic
 
         public override void SetLevel(int level)
         {
-            throw new System.NotImplementedException();
+            Debug.LogError("The method or operation is not implemented.");
         }
     }
 }
