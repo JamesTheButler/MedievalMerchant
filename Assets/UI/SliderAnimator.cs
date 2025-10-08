@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    // TODO: needs a "reset" or "cancel" method to abort the current animation
+    // TODO - POLISH: needs a "reset" or "cancel" method to abort the current animation
     public class SliderAnimator : MonoBehaviour
     {
         [SerializeField, Required]

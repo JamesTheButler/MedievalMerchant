@@ -2,8 +2,7 @@ namespace Data.Modifiable
 {
     public interface IModifier
     {
-        // TODO: public event Action ValueChanged;
-
+        // TODO - CORE: use ModifiableVariable instead
         public float Value { get; }
         public string Description { get; }
 

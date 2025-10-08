@@ -92,7 +92,7 @@ namespace UI.InventoryUI.TownInventory
                 OnTierChanged(tier);
             }
 
-            // TODO: should only enable up to a max amount == town.availableGoods
+            // TODO - POLISH: should only enable up to a max amount == town.availableGoods
             rows[Tier.Tier1].EnableProductionCellUpgradeButtons(true);
         }
 
@@ -166,7 +166,7 @@ namespace UI.InventoryUI.TownInventory
             }
         }
 
-        // TODO: optimize. GetAllTuples is really expensive
+        // TODO - POLISH: GetAllTuples is really expensive
         public void RefreshTier3Arrows()
         {
             tier3Arrows.ClearArrows();

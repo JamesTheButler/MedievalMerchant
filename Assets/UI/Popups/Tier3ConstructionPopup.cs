@@ -82,7 +82,8 @@ namespace UI.Popups
 
             costButton.GetText().text = _cost.ToString("N0");
 
-            // TODO: disable button if no group is selected
+            // TODO - POLISH: disable button if no group is selected
+            // TODO - POLISH: auto-select first available group
             costButton.onClick.AddListener(() =>
             {
                 if (_selectedElement == null) return;

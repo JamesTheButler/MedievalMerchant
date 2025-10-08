@@ -30,7 +30,6 @@ namespace Data.Player
             AddUpgrade(PlayerUpgrade.Tier1Slots3);
         }
 
-        // TODO: player upgrade config should define which upgrade results in which tier and how many slots they open
         public void AddUpgrade(PlayerUpgrade upgrade)
         {
             if (upgrade == PlayerUpgrade.None) return;

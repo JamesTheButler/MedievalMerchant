@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Data.Player
 {
-    // TODO: make this a ScriptableObject, no?
+    // TODO - STYLE: make this a ScriptableObject, no?
     public sealed class PlayerUpgradeProgression
     {
         public IReadOnlyList<List<PlayerUpgrade>> UpgradeProgressions => _upgradeProgressions;

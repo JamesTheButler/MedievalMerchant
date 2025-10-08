@@ -17,7 +17,7 @@ namespace UI
 
         private void OnCancel()
         {
-            // TODO: this is a bit hacky
+            // TODO - STYLE: this is a bit hacky
             if (PopupManager.Instance.HasActivePopup)
             {
                 PopupManager.Instance.HideActive();

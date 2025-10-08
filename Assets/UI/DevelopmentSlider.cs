@@ -10,7 +10,7 @@ namespace UI
         [SerializeField, Required]
         private Slider slider;
 
-        // TODO: behavior is buggy when switching between towns
+        // TODO - POLISH: behavior is buggy when switching between towns
         //[SerializeField]
         //private SliderAnimator sliderAnimator;
 

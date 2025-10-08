@@ -40,7 +40,7 @@ public class CameraManager : MonoBehaviour
 
     public void FitMapSize()
     {
-        // TODO: camera size should fit both dimensions. this depends on the aspect ratio & account for ui 
+        // TODO - POLISH: camera size should fit both dimensions. this depends on the aspect ratio & account for ui 
         var mapSize = Model.Instance.TileFlagMap.Size.y;
         camera.orthographicSize = mapSize * .5f + startupPadding;
         _maxSize = camera.orthographicSize * 1.5f;
@@ -55,9 +55,9 @@ public class CameraManager : MonoBehaviour
         camera.orthographicSize = Math.Clamp(newSize, minSize, _maxSize);
     }
 
-    // TODO: mousePanSpeed should scale with size so that the mouse seems to be perfectly attached to the
+    // TODO - POLISH: mousePanSpeed should scale with size so that the mouse seems to be perfectly attached to the
     //    map and not have any glide
-    // TODO: vertical and horizontal panning do not have the same speed for some reason
+    // TODO - POLISH: vertical and horizontal panning do not have the same speed for some reason
     public void OnMouseMoved(InputAction.CallbackContext context)
     {
         var newMousePosition = context.ReadValue<Vector2>();
@@ -70,7 +70,7 @@ public class CameraManager : MonoBehaviour
         Pan(delta * mousePanSpeed);
     }
 
-    // TODO: this doesn't work. method is only invoked OnKeyUp and OnKeyDown, not OnKeyHeld
+    // TODO - POLISH: this doesn't work. method is only invoked OnKeyUp and OnKeyDown, not OnKeyHeld
     public void OnMapMovementKeys(InputAction.CallbackContext context)
     {
         var delta = context.ReadValue<Vector2>();

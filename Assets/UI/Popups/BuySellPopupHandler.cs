@@ -61,8 +61,10 @@ namespace UI.Popups
             // can buy and sell?
             OnPlayerGoodUpdated(_good, _playerInventory.Get(_good));
             OnTownGoodUpdated(_good, _townInventory.Get(_good));
-            _player.Location.TownEntered += _ => ValidateButtons(); // TODO: need to unbind properly
-            _player.Location.TownExited += _ => ValidateButtons(); // TODO: need to unbind properly
+            // TODO - STYLE: need to unbind properly
+            _player.Location.TownEntered += _ => ValidateButtons();
+            // TODO - STYLE: need to unbind properly
+            _player.Location.TownExited += _ => ValidateButtons();
             _playerInventory.GoodUpdated += OnPlayerGoodUpdated;
             _townInventory.GoodUpdated += OnTownGoodUpdated;
         }

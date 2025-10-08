@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Map.Pathfinding
 {
-    // TODO: this is not generic, but it should be. anything that can walk on roads should be able to use this
+    // TODO - CORE: this is not generic, but it should be. anything that can walk on roads should be able to use this
     public sealed class RoadTraveler : MonoBehaviour
     {
         [SerializeField, Range(0, 0.45f)]

@@ -34,7 +34,7 @@ namespace Map
         {
             _spriteRenderer = gameObject.GetComponent<SpriteShapeRenderer>();
 
-            // TODO: use to force points of 2d polygon collider
+            // TODO - STYLE: use to force points of 2d polygon collider
             _spriteController = gameObject.GetComponent<SpriteShapeController>();
             Center = origin.transform.position;
 
@@ -71,7 +71,7 @@ namespace Map
 
         private bool IsPointerOverTown(Vector2 eventDataPosition)
         {
-            // TODO: towns should be clickable through production zones
+            // TODO - POLISH: towns should be clickable through production zones
             //var world = Camera.main!.ScreenToWorldPoint(eventDataPosition);
             //return Physics2D.OverlapPoint(world, townLayerMask) != null;
             return false;

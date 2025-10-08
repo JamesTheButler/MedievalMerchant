@@ -68,7 +68,7 @@ namespace Data.Player.Retinue.UI
             tooltipHandler.SetTooltip(tooltip);
         }
 
-        // TODO: this code is quite cumbersome and funky
+        // TODO - STYLE: this code is quite cumbersome and funky
         private void OnCompanionLevelChanged(int newLevel)
         {
             if (newLevel == _currentLevel) return;

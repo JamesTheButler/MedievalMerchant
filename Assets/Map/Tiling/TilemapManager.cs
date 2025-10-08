@@ -43,7 +43,7 @@ namespace Map.Tiling
             _tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
         }
 
-        // TODO: should use input system
+        // TODO - STYLE: should use input system
         private void Update()
         {
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
