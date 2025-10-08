@@ -37,6 +37,8 @@ namespace UI
             developmentManager.DevelopmentScore.Observe(UpdateDevelopmentScore);
             developmentManager.DevelopmentTrend.Observe(UpdateDevelopmentTrend);
             developmentManager.GrowthTrend.Observe(UpdateGrowthTrend);
+
+            UpdateGrowthModifierTooltip();
         }
 
         public void Unbind()
