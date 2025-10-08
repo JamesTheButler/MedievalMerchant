@@ -15,9 +15,9 @@ namespace Levels
         public string LevelName { get; private set; }
 
         [field: SerializeField]
-        public int StartPlayerFunds { get; private set; }
+        public float StartPlayerFunds { get; private set; }
 
-        [field: SerializeField, NaughtyAttributes.Expandable]
+        [field: SerializeField, Expandable]
         public Condition[] Conditions { get; private set; }
     }
 }

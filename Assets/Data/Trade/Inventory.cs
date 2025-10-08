@@ -11,8 +11,7 @@ namespace Data.Trade
         // TODO: should add a "new good added" or "good removed" action
         public event Action<Good, int> GoodUpdated;
 
-        // TODO: should be float, not int (we can change that when we make this a ModifiablVariable)
-        public Observable<int> Funds { get; } = new();
+        public Observable<float> Funds { get; } = new();
 
         public IInventoryPolicy InventoryPolicy { get; }
         public IReadOnlyDictionary<Good, int> Goods => _goods;
@@ -26,17 +25,17 @@ namespace Data.Trade
             inventoryPolicy.SetInventory(this);
         }
 
-        public void AddFunds(int fundChange)
+        public void AddFunds(float fundChange)
         {
             Funds.Value += fundChange;
         }
 
-        public void RemoveFunds(int fundChange)
+        public void RemoveFunds(float fundChange)
         {
             Funds.Value -= fundChange;
         }
 
-        public bool HasFunds(int funds)
+        public bool HasFunds(float funds)
         {
             return Funds >= funds;
         }

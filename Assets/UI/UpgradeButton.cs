@@ -33,7 +33,7 @@ namespace UI
 
         private readonly Lazy<Colors> _colors = new(() => ConfigurationManager.Instance.Colors);
 
-        private int _cost;
+        private float _cost;
 
         public void SetState(State state)
         {
@@ -64,7 +64,7 @@ namespace UI
             costText.text = cost.ToString("N0");
         }
 
-        public void Validate(int availableFunds)
+        public void Validate(float availableFunds)
         {
             var canAfford = availableFunds >= _cost;
             var color = canAfford ? _colors.Value.FontDark : _colors.Value.Bad;

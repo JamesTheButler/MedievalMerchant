@@ -31,9 +31,9 @@ namespace UI.Popups
         private Town _town;
         private Good _tier1Good;
         private Good _tier2Good;
-        private int _cost;
+        private float _cost;
 
-        private void OnPlayerFundsChanged(int playerFunds)
+        private void OnPlayerFundsChanged(float playerFunds)
         {
             if (_town == null)
             {

@@ -46,12 +46,11 @@ namespace UI
 
         private GoodConfigData _goodConfigData;
         private Good _good;
-        private Tier _goodTier;
         private TradeType _tradeType;
         private int _sellerGoodAmount;
-        private int _buyerFunds;
+        private float _buyerFunds;
         private int _tradeAmount;
-        private int _totalPrice;
+        private float _totalPrice;
 
         private Button _activeButton;
 
@@ -65,7 +64,6 @@ namespace UI
             _tradeType = tradeType;
             _good = good;
             _goodConfigData = _configurationManager.Value.ConfigData[good];
-            _goodTier = _goodConfigData.Tier;
             goodIcon.sprite = _goodConfigData.Icon;
 
             SetUpButtons();
@@ -138,7 +136,7 @@ namespace UI
             _sellerGoodAmount = _sellingInventory.Get(_good);
         }
 
-        private void OnBuyingInventoryFundsUpdated(int newFunds)
+        private void OnBuyingInventoryFundsUpdated(float newFunds)
         {
             _buyerFunds = newFunds;
             EvaluateTotalPrice();
@@ -182,9 +180,9 @@ namespace UI
         private void UpdatePrice()
         {
             var goodPrice = _priceCalculator.GetPrice(_good, _tradeType);
-            _totalPrice = Mathf.RoundToInt(_tradeAmount * goodPrice.Value);
+            _totalPrice = _tradeAmount * goodPrice.Value;
 
-            var priceText = $"{_totalPrice}";
+            var priceText = $"{_totalPrice:N2}";
 
             if (_tradeType == TradeType.Buy && _tradeAmount > 0)
             {

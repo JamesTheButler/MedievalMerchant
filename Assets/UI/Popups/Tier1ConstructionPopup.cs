@@ -33,9 +33,9 @@ namespace UI.Popups
 
         private Tier1ConstructionElement _selectedGroup;
         private Town _town;
-        private int _cost = -1;
+        private float _cost = -1;
 
-        private void OnPlayerFundsChanged(int playerFunds)
+        private void OnPlayerFundsChanged(float playerFunds)
         {
             if (_town == null || _cost < 0)
             {
@@ -79,7 +79,7 @@ namespace UI.Popups
 
             _cost = cost.Value;
 
-            costButton.GetText().text = _cost.ToString("N0");
+            costButton.GetText().text = _cost.ToString("N2");
 
             // TODO: disable button if no group is selected
             costButton.onClick.AddListener(() =>

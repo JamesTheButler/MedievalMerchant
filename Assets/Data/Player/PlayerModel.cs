@@ -19,7 +19,7 @@ namespace Data.Player
         
         private readonly SlotBasedInventoryPolicy _inventoryPolicy;
 
-        public PlayerModel(int startFunds, float movementSpeed)
+        public PlayerModel(float startFunds, float movementSpeed)
         {
             _inventoryPolicy = new SlotBasedInventoryPolicy();
             MovementSpeed = new ModifiableVariable(new BaseMovementSpeedModifier(movementSpeed));

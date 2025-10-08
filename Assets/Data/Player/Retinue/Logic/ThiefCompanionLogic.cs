@@ -44,8 +44,8 @@ namespace Data.Player.Retinue.Logic
         {
             if (enteredTown == null) return;
 
-            _player.Inventory.AddFunds((int)_thiefLevelData.TownEntranceGold);
-            enteredTown.Inventory.RemoveFunds((int)_thiefLevelData.TownEntranceGold);
+            _player.Inventory.AddFunds(_thiefLevelData.TownEntranceGold);
+            enteredTown.Inventory.RemoveFunds(_thiefLevelData.TownEntranceGold);
 
             var isThiefCaught = RandomUtility.GetBool(_thiefLevelData.ReputationLossChance);
             if (isThiefCaught)

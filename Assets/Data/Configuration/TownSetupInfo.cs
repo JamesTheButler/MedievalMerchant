@@ -8,7 +8,7 @@ namespace Data.Configuration
     public sealed class TownSetupInfo : ScriptableObject
     {
         [field: SerializeField]
-        public int InitialFunds { get; private set; }
+        public float InitialFunds { get; private set; }
 
         [field: SerializeField, Required]
         public ProductionTable Production { get; private set; }

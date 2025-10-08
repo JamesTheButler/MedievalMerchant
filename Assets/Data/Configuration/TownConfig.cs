@@ -10,7 +10,7 @@ namespace Data.Configuration
     public sealed class TownConfig : ScriptableObject
     {
         [field: SerializeField, SerializedDictionary("Town Tier", "Funds Per Tick")]
-        public SerializedDictionary<Tier, int> FundRate { get; private set; }
+        public SerializedDictionary<Tier, float> FundRate { get; private set; }
 
         [Header("Consumption Rates")]
         [SerializeField, SerializedDictionary("Good Tier", "Consumption Rate")]

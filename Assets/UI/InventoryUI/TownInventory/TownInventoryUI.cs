@@ -141,7 +141,7 @@ namespace UI.InventoryUI.TownInventory
             RefreshTownName(tier);
         }
 
-        private void OnFundsUpdated(int funds)
+        private void OnFundsUpdated(float funds)
         {
             fundsText.text = funds.ToString("N0");
         }

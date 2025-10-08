@@ -100,7 +100,7 @@ namespace Data.Towns
             // funds production
             var modifierMultiplier = 1 + UpgradeManager.FundsModifiers;
             var baseFundsPerTick = _townConfig.FundRate[townTier];
-            var fundChange = Mathf.RoundToInt(baseFundsPerTick * modifierMultiplier);
+            var fundChange = baseFundsPerTick * modifierMultiplier;
             Inventory.AddFunds(fundChange);
         }
 

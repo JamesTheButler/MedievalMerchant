@@ -27,9 +27,9 @@ namespace Levels.Conditions
             _playerInventory.Funds.Observe(Evaluate);
         }
 
-        private void Evaluate(int funds)
+        private void Evaluate(float funds)
         {
-            Progress.SetProgress(funds);
+            Progress.SetProgress(Mathf.FloorToInt(funds));
         }
 
         private static string FormatProgress(int currentValue, int maxValue)

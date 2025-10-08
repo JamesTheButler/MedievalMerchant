@@ -119,7 +119,7 @@ namespace UI.InventoryUI
             section.UpdateGood(good, amount);
         }
 
-        private void OnFundsChanged(int funds)
+        private void OnFundsChanged(float funds)
         {
             fundsText.text = funds.ToString("N0");
 

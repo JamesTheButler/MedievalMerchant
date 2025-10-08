@@ -10,7 +10,7 @@ namespace Data.Configuration
         public SerializedDictionary<Good, GoodConfigData> ConfigData { get; private set; }
 
         [field: SerializeField, SerializedDictionary]
-        public SerializedDictionary<Tier, int> BasePriceData { get; private set; }
+        public SerializedDictionary<Tier, float> BasePriceData { get; private set; }
 
         [field: SerializeField]
         public float ForeignGoodPriceModifier { get; private set; }

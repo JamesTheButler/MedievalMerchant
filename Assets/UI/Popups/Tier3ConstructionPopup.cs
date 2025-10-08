@@ -33,9 +33,9 @@ namespace UI.Popups
 
         private Tier3UpgradePathElement _selectedElement;
         private Town _town;
-        private int _cost = -1;
+        private float _cost = -1;
 
-        private void OnPlayerFundsChanged(int playerFunds)
+        private void OnPlayerFundsChanged(float playerFunds)
         {
             if (_town == null || _cost < 0)
             {
