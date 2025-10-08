@@ -1,14 +1,12 @@
 ﻿using Data.Player.Retinue.Config;
 using Data.Towns;
 using UnityEngine;
-using Selection = Data.Towns.Selection;
 
 namespace Data.Player.Retinue.Logic
 {
     public sealed class ThiefCompanionLogic : BaseCompanionLogic<ThiefCompanionData>
     {
         private PlayerModel _player;
-        private Selection _selection;
 
         protected override CompanionType Type => CompanionType.Thief;
 
@@ -35,9 +33,7 @@ namespace Data.Player.Retinue.Logic
         private void Bind()
         {
             _player = Model.Instance.Player;
-            _selection = Selection.Instance;
-
-            _selection.TownSelected += OnTownChanged;
+            _player.Location.TownEntered += OnTownChanged;
 
             _isBound = true;
         }
