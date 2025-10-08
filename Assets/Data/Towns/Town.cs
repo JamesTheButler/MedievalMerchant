@@ -18,8 +18,11 @@ namespace Data.Towns
         private readonly TownConfig _townConfig;
         private readonly GoodsConfig _goodsConfig;
 
+        private readonly Observable<float> _reputation = new();
+
         public Observable<Tier> Tier { get; } = new();
-        public Observable<float> Reputation { get; } = new();
+
+        public IReadOnlyObservable<float> Reputation => _reputation;
 
         public Inventory Inventory { get; }
         public string Name { get; }
@@ -120,6 +123,20 @@ namespace Data.Towns
 
                 Inventory.RemoveGood(good, consumptionRate.Value);
             }
+        }
+
+        public void AddReputation(float added)
+        {
+            // TODO - 0.4: apply modifiers
+            // TODO - 0.4: set limit
+            _reputation.Value += added;
+        }
+
+        public void RemoveReputation(float removed)
+        {
+            // TODO - 0.4: apply modifiers
+            // TODO - 0.4: set limit
+            _reputation.Value -= removed;
         }
 
         private void IncreaseTier()

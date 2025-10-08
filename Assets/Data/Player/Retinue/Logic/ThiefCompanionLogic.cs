@@ -50,7 +50,7 @@ namespace Data.Player.Retinue.Logic
             var isThiefCaught = RandomUtility.GetBool(_thiefLevelData.ReputationLossChance);
             if (isThiefCaught)
             {
-                enteredTown.Reputation.Value -= _thiefLevelData.ReputationLoss;
+                enteredTown.RemoveReputation(_thiefLevelData.ReputationLoss);
             }
         }
     }
