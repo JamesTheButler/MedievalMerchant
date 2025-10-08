@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using UnityEngine;
 
-namespace Data.Player.Retinue.Config
+namespace Data.Player.Retinue.Config.LevelDatas
 {
     [Serializable]
     public class NegotiatorLevelData : CompanionLevelData
@@ -12,7 +12,6 @@ namespace Data.Player.Retinue.Config
 
         [field: SerializeField]
         public float UpgradeCostReduction { get; private set; }
-
 
         public override string Description => new StringBuilder()
             .AppendLine($"- {PriceSavings.ToPercentString()} better prices")

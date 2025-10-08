@@ -1,5 +1,6 @@
 ﻿using System;
 using Data.Configuration;
+using Data.Player.Retinue.Config.CompanionDatas;
 using UnityEngine;
 
 namespace Data.Player.Retinue.Config

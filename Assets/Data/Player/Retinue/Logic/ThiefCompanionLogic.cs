@@ -1,4 +1,5 @@
-﻿using Data.Player.Retinue.Config;
+﻿using Data.Player.Retinue.Config.CompanionDatas;
+using Data.Player.Retinue.Config.LevelDatas;
 using Data.Towns;
 using UnityEngine;
 
@@ -18,13 +19,13 @@ namespace Data.Player.Retinue.Logic
         //   the companion data should have base implementation to get current level data 
         public override void SetLevel(int level)
         {
-            if (level > ConfigData.TypedLevels.Count)
+            _thiefLevelData = ConfigData.GetLevelData(level);
+
+            if (_thiefLevelData is null)
             {
-                Debug.LogError($"could not find level data for {Type}, {level}");
+                Debug.LogError($"Could not find level data for {Type}, {level}");
                 return;
             }
-
-            _thiefLevelData = ConfigData.TypedLevels[level - 1];
 
             if (_isBound) return;
             Bind();

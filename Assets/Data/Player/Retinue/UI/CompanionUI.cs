@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Data.Configuration;
 using Data.Player.Retinue.Config;
 using NaughtyAttributes;
@@ -12,15 +11,24 @@ namespace Data.Player.Retinue.UI
 {
     public sealed class CompanionUI : MonoBehaviour
     {
-        [SerializeField] private CompanionType companionType;
-        [SerializeField] public UnityEvent<CompanionType, int> levelUpgradeRequested;
+        [SerializeField]
+        private CompanionType companionType;
 
-        [Header("Set Up")] [SerializeField, Required]
+        [SerializeField]
+        public UnityEvent<CompanionType, int> levelUpgradeRequested;
+
+        [Header("Set Up")]
+        [SerializeField, Required]
         private Image companionIcon;
 
-        [SerializeField, Required] private RectTransform levelUiParent;
-        [SerializeField, Required] private GameObject levelUiPrefab;
-        [SerializeField, Required] private TooltipHandler tooltipHandler;
+        [SerializeField, Required]
+        private RectTransform levelUiParent;
+
+        [SerializeField, Required]
+        private GameObject levelUiPrefab;
+
+        [SerializeField, Required]
+        private TooltipHandler tooltipHandler;
 
         private RetinueManager _retinueManager;
         private CompanionConfigData _configData;

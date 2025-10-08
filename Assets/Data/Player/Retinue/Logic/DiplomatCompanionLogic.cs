@@ -1,4 +1,4 @@
-﻿using Data.Player.Retinue.Config;
+﻿using Data.Player.Retinue.Config.CompanionDatas;
 using UnityEngine;
 
 namespace Data.Player.Retinue.Logic

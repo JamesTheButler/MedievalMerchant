@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using UnityEngine;
 
-namespace Data.Player.Retinue.Config
+namespace Data.Player.Retinue.Config.LevelDatas
 {
     [Serializable]
     public class ThiefLevelData : CompanionLevelData

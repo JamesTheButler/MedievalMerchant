@@ -13,16 +13,17 @@ namespace Data.Player.Retinue.UI
 
         public event Action<CompanionType, int> UnlockRequested;
 
-        [SerializeField, Required] private Button unlockButton;
-        [SerializeField, Required] private TooltipHandler tooltip;
+        [SerializeField, Required]
+        private Button unlockButton;
 
-        public int Level { get; private set; }
+        [SerializeField, Required]
+        protected TooltipHandler tooltip;
 
         private CompanionLevelData _levelData;
-
         private string _unlockableTooltip;
         private string _unlockedTooltip;
         private CompanionType _companionType;
+        private int _level;
 
         private void Awake()
         {
@@ -31,7 +32,7 @@ namespace Data.Player.Retinue.UI
 
         public void Setup(int levelIndex, CompanionLevelData levelData, CompanionType companionType)
         {
-            Level = levelIndex;
+            _level = levelIndex;
             _levelData = levelData;
             _companionType = companionType;
             SetUpTooltipStrings();
@@ -41,13 +42,13 @@ namespace Data.Player.Retinue.UI
 
         private void SetUpTooltipStrings()
         {
-            _unlockableTooltip = $"Level {Level}: {_levelData.Cost} coin\n-----\n{_levelData.Description}";
-            _unlockedTooltip = $"Level {Level}\n-----\n{_levelData.Description}";
+            _unlockableTooltip = $"Level {_level}: {_levelData.Cost} coin\n-----\n{_levelData.Description}";
+            _unlockedTooltip = $"Level {_level}\n-----\n{_levelData.Description}";
         }
 
         private void OnUnlockButtonClicked()
         {
-            UnlockRequested?.Invoke(_companionType, Level);
+            UnlockRequested?.Invoke(_companionType, _level);
         }
 
         public void SetUnlocked(bool unlocked)
