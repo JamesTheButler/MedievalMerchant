@@ -13,7 +13,7 @@ namespace UI.InventoryUI.TownInventory
 
         [SerializeField]
         private Tier tier;
-        
+
         private GoodsConfig _goodsConfig;
 
         private readonly Dictionary<Good, InventoryCell> _occupiedCells = new();
@@ -28,7 +28,7 @@ namespace UI.InventoryUI.TownInventory
         {
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
         }
-        
+
         private void GatherCells()
         {
             foreach (var inventoryCell in GetComponentsInChildren<InventoryCell>())
@@ -51,9 +51,17 @@ namespace UI.InventoryUI.TownInventory
             if (_occupiedCells.TryGetValue(good, out var cell))
             {
                 cell.SetAmount(amount);
+                if (amount == 0)
+                {
+                    cell.SetGood(null);
+                    _occupiedCells.Remove(good);
+                }
             }
             else
             {
+                if (amount == 0)
+                    return;
+
                 var freeCell = _inventoryCells.FirstOrDefault(potentiallyFreeCell => !potentiallyFreeCell.HasGood());
                 if (freeCell == null)
                 {

@@ -24,14 +24,16 @@ namespace Data.Towns
 
         public IReadOnlyObservable<float> Reputation => _reputation;
 
+        public ProductionManager ProductionManager { get; }
+        public DevelopmentManager DevelopmentManager { get; }
+        public UpgradeManager UpgradeManager { get; }
+
         public Inventory Inventory { get; }
+
         public string Name { get; }
         public Vector2Int GridLocation { get; }
         public Vector2 WorldLocation { get; }
         public HashSet<Good> AvailableGoods { get; }
-        public ProductionManager ProductionManager { get; }
-        public DevelopmentManager DevelopmentManager { get; }
-        public UpgradeManager UpgradeManager { get; }
         public Regions Regions { get; }
 
         public Town(TownSetupInfo setupInfo,
