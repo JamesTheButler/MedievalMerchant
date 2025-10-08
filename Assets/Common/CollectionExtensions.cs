@@ -99,5 +99,17 @@ namespace Common
                 dict.Add(item, keySelector(item));
             }
         }
+
+        public static T FirstOfType<T, TBase>(this IEnumerable<TBase> source)
+            where T : TBase
+        {
+            return source.OfType<T>().FirstOrDefault();
+        }
+
+        public static T FirstOfType<T, TBase>(this IEnumerable<TBase> source, Func<T, bool> predicate)
+            where T : TBase
+        {
+            return source.OfType<T>().FirstOrDefault(predicate);
+        }
     }
 }
