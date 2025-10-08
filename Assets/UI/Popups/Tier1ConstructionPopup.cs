@@ -31,7 +31,7 @@ namespace UI.Popups
 
         private readonly Dictionary<Tier1ConstructionElement, Action> _clickHandlers = new();
 
-        private Tier1ConstructionElement _selectedGroup;
+        private Tier1ConstructionElement _selectedElement;
         private Town _town;
         private float _cost = -1;
 
@@ -43,7 +43,7 @@ namespace UI.Popups
                 return;
             }
 
-            var isInteractable = playerFunds >= _cost;
+            var isInteractable = playerFunds >= _cost && _selectedElement;
             UpdateButtonState(isInteractable);
         }
 
@@ -66,8 +66,6 @@ namespace UI.Popups
         private void Bind(Town town, int cellIndex)
         {
             _town = town;
-            // disabled on start, since no element will be selected
-            costButton.interactable = false;
 
             var productionBuildingCount = _town.ProductionManager.GetProducerCount(Tier.Tier1);
             var cost = _producerConfig.Value.GetUpgradeCost(Tier.Tier1, productionBuildingCount);
@@ -79,36 +77,57 @@ namespace UI.Popups
 
             _cost = cost.Value;
 
+            SetUpButton(town, cellIndex);
+            SpawnElements(town);
+
+            _player.Value.Inventory.Funds.Observe(OnPlayerFundsChanged);
+        }
+
+        private void SetUpButton(Town town, int cellIndex)
+        {
+            // disabled on start, since no element will be selected
+            costButton.interactable = false;
             costButton.GetText().text = _cost.ToString("N2");
 
             // TODO - POLISH: disable button if no group is selected
             // TODO - POLISH: auto-select first available group
             costButton.onClick.AddListener(() =>
             {
-                if (_selectedGroup == null) return;
-                town.AddProduction(_selectedGroup.Tier1Good, cellIndex);
+                if (_selectedElement == null) return;
+                town.AddProduction(_selectedElement.Tier1Good, cellIndex);
                 _player.Value.Inventory.RemoveFunds(_cost);
                 Hide();
             });
+        }
 
-            _player.Value.Inventory.Funds.Observe(OnPlayerFundsChanged);
-
+        private void SpawnElements(Town town)
+        {
+            var initialSelectionFound = false;
             foreach (var good in town.AvailableGoods)
             {
                 var tier2Good = _recipeConfig.Value.GetTier2RecipeForComponent(good).Result;
                 var isAlreadyBuilt = town.ProductionManager.IsProduced(good);
                 var goodGroup = Instantiate(goodGroupPrefab, goodGroupParent);
-                var popupGroup = goodGroup.GetComponent<Tier1ConstructionElement>();
-                popupGroup.Setup(good, tier2Good, isAlreadyBuilt);
+                var element = goodGroup.GetComponent<Tier1ConstructionElement>();
+                element.Setup(good, tier2Good, isAlreadyBuilt);
 
-                Action popupGroupClickHandler = () => PopupGroupOnClicked(popupGroup);
-                popupGroup.Clicked += popupGroupClickHandler;
-                _clickHandlers.Add(popupGroup, popupGroupClickHandler);
+                Action popupGroupClickHandler = () => PopupGroupOnClicked(element);
+                element.Clicked += popupGroupClickHandler;
+                _clickHandlers.Add(element, popupGroupClickHandler);
+
+                // select the first not-built producer element
+                if (!isAlreadyBuilt && !initialSelectionFound)
+                {
+                    PopupGroupOnClicked(element);
+                    initialSelectionFound = true;
+                }
             }
         }
 
         private void Unbind()
         {
+            _selectedElement = null;
+
             if (_town == null)
                 return;
 
@@ -126,16 +145,16 @@ namespace UI.Popups
 
         private void PopupGroupOnClicked(Tier1ConstructionElement constructionElement)
         {
-            if (_selectedGroup == constructionElement) return;
+            if (_selectedElement == constructionElement) return;
 
-            if (_selectedGroup)
+            if (_selectedElement)
             {
-                _selectedGroup.Deselect();
+                _selectedElement.Deselect();
             }
 
             constructionElement.Select();
 
-            _selectedGroup = constructionElement;
+            _selectedElement = constructionElement;
             costButton.interactable = true;
         }
     }

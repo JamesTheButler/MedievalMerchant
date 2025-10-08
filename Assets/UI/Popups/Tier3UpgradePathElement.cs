@@ -32,7 +32,15 @@ namespace UI.Popups
 
         public Good Tier3Good { get; private set; }
 
-        public void Setup(Good tier1Good1, Good tier2Good1, Good tier1Good2, Good tier2Good2, Good tier3Good)
+        private bool _isAlreadyBuilt;
+
+        public void Setup(
+            Good tier1Good1,
+            Good tier2Good1,
+            Good tier1Good2,
+            Good tier2Good2,
+            Good tier3Good,
+            bool isAlreadyBuilt)
         {
             tier1Cell1.SetEnabled(true);
             tier1Cell1.SetGood(tier1Good1);
@@ -50,6 +58,8 @@ namespace UI.Popups
             tier3Cell.SetGood(tier3Good);
             Tier3Good = tier3Good;
 
+            _isAlreadyBuilt = isAlreadyBuilt;
+
             Deselect();
         }
 
@@ -64,6 +74,9 @@ namespace UI.Popups
 
         public void Select()
         {
+            if (_isAlreadyBuilt)
+                return;
+
             selectionImage.enabled = true;
         }
 
@@ -74,6 +87,9 @@ namespace UI.Popups
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (_isAlreadyBuilt)
+                return;
+
             Clicked?.Invoke();
         }
     }
