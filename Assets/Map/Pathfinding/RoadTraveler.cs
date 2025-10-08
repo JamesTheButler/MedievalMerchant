@@ -21,7 +21,7 @@ namespace Map.Pathfinding
         private readonly Lazy<Model> _model = new(() => Model.Instance);
 
         private Lazy<RoadGraph> _graph;
-        private Lazy<PlayerLocation> _playLocation;
+        private Lazy<PlayerLocation> _playerLocation;
 
         private PlayerLocation Location => _model.Value.Player.Location;
 
@@ -30,7 +30,7 @@ namespace Map.Pathfinding
         private void Awake()
         {
             _graph = new Lazy<RoadGraph>(() => RoadGraphBuilder.Build(_model.Value.TileFlagMap));
-            _playLocation = new Lazy<PlayerLocation>(() => _model.Value.Player.Location);
+            _playerLocation = new Lazy<PlayerLocation>(() => _model.Value.Player.Location);
         }
 
         public void TravelTo(Town town)
@@ -103,8 +103,8 @@ namespace Map.Pathfinding
             var smoothed = SmoothCorners(pts, smoothing);
 
             // Move
-            _playLocation.Value.WorldLocation.Value = smoothed[0];
-            _playLocation.Value.CurrentTown = null;
+            _playerLocation.Value.WorldLocation.Value = smoothed[0];
+            _playerLocation.Value.CurrentTown = null;
 
             for (var i = 1; i < smoothed.Count; i++)
             {
@@ -117,13 +117,13 @@ namespace Map.Pathfinding
                 {
                     elapsed += Time.deltaTime;
                     var u = Mathf.Clamp01(elapsed / dur);
-                    _playLocation.Value.WorldLocation.Value = Vector3.Lerp(a, b, u);
+                    _playerLocation.Value.WorldLocation.Value = Vector3.Lerp(a, b, u);
                     yield return null;
                 }
             }
 
             // we arrived
-            _playLocation.Value.CurrentTown = _town;
+            _playerLocation.Value.CurrentTown = _town;
             _town = null;
         }
 
