@@ -264,7 +264,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 8, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2606778272503083986
 CanvasRenderer:
@@ -287,14 +287,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.23584908, g: 0.2302866, b: 0.2302866, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0.2735849, g: 0.15150408, b: 0.089044146, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 461a7c1ff851c1640a9f24f207383aaf, type: 3}
+  m_Sprite: {fileID: 630690833, guid: 93cdc7244d5a2d849ba2ec017e0e60ea, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 0
@@ -620,7 +620,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 216.84, y: 110.1}
+  m_SizeDelta: {x: 216.84, y: 106.77}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &129732265819153886
 MonoBehaviour:
@@ -744,6 +744,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7734341823394027739}
     m_Modifications:
+    - target: {fileID: 4366156231437555467, guid: 7137e8531ab370e48962ba0582fdd6bb, type: 3}
+      propertyPath: enabledOnStart
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5228330734817415516, guid: 7137e8531ab370e48962ba0582fdd6bb, type: 3}
       propertyPath: m_Name
       value: Tier2Cell_1
@@ -857,6 +861,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5468787597954780907}
     m_Modifications:
+    - target: {fileID: 4366156231437555467, guid: 7137e8531ab370e48962ba0582fdd6bb, type: 3}
+      propertyPath: enabledOnStart
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5228330734817415516, guid: 7137e8531ab370e48962ba0582fdd6bb, type: 3}
       propertyPath: m_Name
       value: Tier2Cell_2
@@ -970,6 +978,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5468787597954780907}
     m_Modifications:
+    - target: {fileID: 4366156231437555467, guid: 7137e8531ab370e48962ba0582fdd6bb, type: 3}
+      propertyPath: enabledOnStart
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5228330734817415516, guid: 7137e8531ab370e48962ba0582fdd6bb, type: 3}
       propertyPath: m_Name
       value: Tier1Cell_2
@@ -1083,6 +1095,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7734341823394027739}
     m_Modifications:
+    - target: {fileID: 4366156231437555467, guid: 7137e8531ab370e48962ba0582fdd6bb, type: 3}
+      propertyPath: enabledOnStart
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5228330734817415516, guid: 7137e8531ab370e48962ba0582fdd6bb, type: 3}
       propertyPath: m_Name
       value: Tier1Cell_1
@@ -1196,6 +1212,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 373496343855738630}
     m_Modifications:
+    - target: {fileID: 4366156231437555467, guid: 7137e8531ab370e48962ba0582fdd6bb, type: 3}
+      propertyPath: enabledOnStart
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5228330734817415516, guid: 7137e8531ab370e48962ba0582fdd6bb, type: 3}
       propertyPath: m_Name
       value: Tier3Cell
