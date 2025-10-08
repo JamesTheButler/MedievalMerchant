@@ -13,6 +13,9 @@ namespace Data.Towns
 
         public void Select(Town town)
         {
+            if (SelectedTown == town)
+                return;
+
             SelectedTown = town;
             TownSelected?.Invoke(town);
         }

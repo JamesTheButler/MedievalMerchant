@@ -47,6 +47,9 @@ namespace UI.InventoryUI.TownInventory
 
         public void Bind(Town town)
         {
+            if (_town == town)
+                return;
+
             Unbind();
 
             if (town == null) return;
