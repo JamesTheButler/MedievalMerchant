@@ -89,8 +89,6 @@ namespace UI.Popups
             costButton.interactable = false;
             costButton.GetText().text = _cost.ToString("N2");
 
-            // TODO - POLISH: disable button if no group is selected
-            // TODO - POLISH: auto-select first available group
             costButton.onClick.AddListener(() =>
             {
                 if (_selectedElement == null) return;
@@ -105,23 +103,29 @@ namespace UI.Popups
             var initialSelectionFound = false;
             foreach (var good in town.AvailableGoods)
             {
-                var tier2Good = _recipeConfig.Value.GetTier2RecipeForComponent(good).Result;
                 var isAlreadyBuilt = town.ProductionManager.IsProduced(good);
-                var goodGroup = Instantiate(goodGroupPrefab, goodGroupParent);
-                var element = goodGroup.GetComponent<Tier1ConstructionElement>();
-                element.Setup(good, tier2Good, isAlreadyBuilt);
+                var element = SpawnElement(good, isAlreadyBuilt);
 
-                Action popupGroupClickHandler = () => PopupGroupOnClicked(element);
-                element.Clicked += popupGroupClickHandler;
-                _clickHandlers.Add(element, popupGroupClickHandler);
+                // select the first producer element that isn't built yet
+                if (isAlreadyBuilt || initialSelectionFound)
+                    continue;
 
-                // select the first not-built producer element
-                if (!isAlreadyBuilt && !initialSelectionFound)
-                {
-                    PopupGroupOnClicked(element);
-                    initialSelectionFound = true;
-                }
+                PopupGroupOnClicked(element);
+                initialSelectionFound = true;
             }
+        }
+
+        private Tier1ConstructionElement SpawnElement(Good good, bool isAlreadyBuilt)
+        {
+            var tier2Good = _recipeConfig.Value.GetTier2RecipeForComponent(good).Result;
+            var goodGroup = Instantiate(goodGroupPrefab, goodGroupParent);
+            var element = goodGroup.GetComponent<Tier1ConstructionElement>();
+            element.Setup(good, tier2Good, isAlreadyBuilt);
+
+            Action popupGroupClickHandler = () => PopupGroupOnClicked(element);
+            element.Clicked += popupGroupClickHandler;
+            _clickHandlers.Add(element, popupGroupClickHandler);
+            return element;
         }
 
         private void Unbind()

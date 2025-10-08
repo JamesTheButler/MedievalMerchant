@@ -90,7 +90,6 @@ namespace UI.Popups
             costButton.interactable = false;
             costButton.GetText().text = _cost.ToString("N0");
 
-            // TODO - POLISH: disable button if no group is selected
             costButton.onClick.AddListener(() =>
             {
                 if (_selectedElement == null) return;
@@ -115,12 +114,12 @@ namespace UI.Popups
                 var isAlreadyBuilt = town.ProductionManager.IsProduced(recipe.Result);
                 var element = SpawnElement(recipe, tier2Component1, isAlreadyBuilt);
 
-                // select the first not-built producer element
-                if (!isAlreadyBuilt && !initialSelectionFound)
-                {
-                    PopupGroupOnClicked(element);
-                    initialSelectionFound = true;
-                }
+                // select the first producer element that isn't built yet
+                if (isAlreadyBuilt || initialSelectionFound)
+                    continue;
+
+                PopupGroupOnClicked(element);
+                initialSelectionFound = true;
             }
         }
 
