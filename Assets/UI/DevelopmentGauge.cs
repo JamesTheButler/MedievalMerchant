@@ -3,7 +3,6 @@ using System.Linq;
 using Data;
 using Data.Configuration;
 using Data.Towns;
-using Data.Towns.Production;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -50,14 +49,10 @@ namespace UI
 
         private void UpdateGrowthModifierTooltip()
         {
-            var modifiers = _developmentManager.DevelopmentTrend.Modifiers;
+            var trend = _developmentManager.DevelopmentTrend;
+            var modifiers = trend.Modifiers;
             developmentTrendTooltip.SetEnabled(modifiers.Any());
-
-            var modifiersText = string.Join(
-                Environment.NewLine,
-                modifiers.Select(modifier => modifier.ToDisplayString()));
-
-            developmentTrendTooltip.SetTooltip(modifiersText);
+            developmentTrendTooltip.SetTooltip(trend.ToString());
         }
 
         private void UpdateDevelopmentScore(float score)

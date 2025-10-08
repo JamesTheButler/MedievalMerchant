@@ -1,9 +1,6 @@
 using System;
-using System.Linq;
-using System.Text;
 using Data;
 using Data.Configuration;
-using Data.Modifiable;
 using Data.Towns;
 using Data.Trade;
 using Data.Trade.Price;
@@ -195,14 +192,7 @@ namespace UI
             }
 
             coinAmountText.text = priceText;
-
-            var priceDescription = new StringBuilder()
-                .AppendLine($"{goodPrice.Value} .. price per good")
-                .AppendLine("--------------------")
-                .AppendLine($"{goodPrice.BaseValue} .. base price for {_goodTier} Good")
-                .AppendJoin("\n", goodPrice.Modifiers.Select(modifier => modifier.ToDisplayString()));
-
-            modifiersText.text = priceDescription.ToString();
+            modifiersText.text = goodPrice.ToString();
         }
 
         private void EvaluateTotalPrice()

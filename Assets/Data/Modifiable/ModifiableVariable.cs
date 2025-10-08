@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Common;
 using UnityEngine;
 
@@ -91,6 +93,27 @@ namespace Data.Modifiable
         private void RefreshValue()
         {
             Value = BaseValue * (1 + _percentageChanges) + _floatChanges;
+        }
+
+        public override string ToString()
+        {
+            var baseModifier = Modifiers.FirstOfType<BaseValueModifier, IModifier>();
+            var allOtherModifiers = Modifiers.Where(modifier => modifier is not BaseValueModifier);
+
+            var builder = new StringBuilder()
+                .AppendLine(Value.ToString("N2"))
+                .AppendLine("====================");
+
+            if (baseModifier is not null)
+            {
+                builder
+                    .AppendLine(baseModifier.ToDisplayString())
+                    .AppendLine("--------------------");
+            }
+
+            builder
+                .AppendJoin("\n", allOtherModifiers.Select(modifier => modifier.ToDisplayString()));
+            return builder.ToString();
         }
     }
 }
