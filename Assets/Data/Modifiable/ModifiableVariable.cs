@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Common;
-using UnityEngine;
 
 namespace Data.Modifiable
 {
@@ -22,7 +21,7 @@ namespace Data.Modifiable
         public ModifiableVariable()
         {
         }
-        
+
         public ModifiableVariable(float baseValue)
         {
             AddModifier(new GenericBaseValueModifier(baseValue));
@@ -80,7 +79,7 @@ namespace Data.Modifiable
             switch (modifier)
             {
                 case BaseValueModifier:
-                    Debug.LogError($"{nameof(BaseValueModifier)} should never be removed");
+                    BaseValue = 0;
                     break;
                 case BasePercentageModifier basePercentageModifier:
                     _percentageChanges -= basePercentageModifier.Value;
@@ -98,6 +97,12 @@ namespace Data.Modifiable
         private void RefreshValue()
         {
             Value = BaseValue * (1 + _percentageChanges) + _floatChanges;
+        }
+
+        // TODO - CORE: remove when changing Modifier.Value to ModifiableValue
+        public void ForceRefresh()
+        {
+            RefreshValue();
         }
 
         public override string ToString()

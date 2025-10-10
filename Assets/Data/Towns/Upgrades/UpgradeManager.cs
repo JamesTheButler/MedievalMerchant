@@ -19,7 +19,7 @@ namespace Data.Towns.Upgrades
 
         private float _previousScore;
         private Tier _currentTier;
-        private UpgradeProgressionData _currentUpgradeProgressionProgression;
+        private TownUpgradeProgressionData _currentTownUpgradeProgressionProgression;
 
         public UpgradeManager(Town town)
         {
@@ -40,13 +40,13 @@ namespace Data.Towns.Upgrades
         private void OnTierChanged(Tier tier)
         {
             _currentTier = tier;
-            _currentUpgradeProgressionProgression = _upgradeProgressionConfig.Progressions[tier];
+            _currentTownUpgradeProgressionProgression = _upgradeProgressionConfig.Progressions[tier];
             _previousScore = 0;
         }
 
         private void OnDevelopmentChanged(float score)
         {
-            foreach (var (threshold, upgrades) in _currentUpgradeProgressionProgression.Upgrades)
+            foreach (var (threshold, upgrades) in _currentTownUpgradeProgressionProgression.Upgrades)
             {
                 if (upgrades is not { Length: > 0 })
                 {

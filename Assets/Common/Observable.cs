@@ -5,6 +5,7 @@ namespace Common
     public class Observable<T> : IReadOnlyObservable<T>
     {
         private event Action<T> ValueChanged;
+        private event Action<T, T> ValueChangedWithOldValue;
 
         public T Value
         {
@@ -13,8 +14,10 @@ namespace Common
             {
                 if (_value?.Equals(value) ?? false) return;
 
+                var oldValue = _value;
                 _value = value;
-                ValueChanged?.Invoke(value);
+                ValueChanged?.Invoke(_value);
+                ValueChangedWithOldValue?.Invoke(oldValue, _value);
             }
         }
 
@@ -24,7 +27,7 @@ namespace Common
         {
             Value = value;
         }
-        
+
         public void Observe(Action<T> callback, bool invokeOnObserve = true)
         {
             ValueChanged += callback;
@@ -34,9 +37,19 @@ namespace Common
             }
         }
 
+        public void Observe(Action<T, T> callback)
+        {
+            ValueChangedWithOldValue += callback;
+        }
+
         public void StopObserving(Action<T> callback)
         {
             ValueChanged -= callback;
+        }
+
+        public void StopObserving(Action<T, T> callback)
+        {
+            ValueChangedWithOldValue -= callback;
         }
 
         public static implicit operator T(Observable<T> observable)

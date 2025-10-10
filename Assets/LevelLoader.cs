@@ -51,6 +51,7 @@ public sealed class LevelLoader : MonoBehaviour
         var startTown = towns.GetRandom();
         player.Location.CurrentTown = startTown;
         player.Location.WorldLocation.Value = startTown.WorldLocation;
+        player.CaravanManager.UpgradeCart(0, 1);
 
         _model.ConditionManager.Setup(levelInfo.Conditions);
 

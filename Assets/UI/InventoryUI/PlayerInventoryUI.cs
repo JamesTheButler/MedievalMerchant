@@ -1,4 +1,3 @@
-using System.Linq;
 using AYellowpaper.SerializedCollections;
 using Data;
 using Data.Configuration;
@@ -24,8 +23,6 @@ namespace UI.InventoryUI
         [SerializeField, SerializedDictionary("Tier", "Section")]
         private SerializedDictionary<Tier, InventorySection> inventorySections;
 
-        [SerializeField, SerializedDictionary("Upgrade", "Button")]
-        private SerializedDictionary<PlayerUpgrade, UpgradeButton> upgradeButtons;
 
         private PlayerModel _player;
         private Inventory _playerInventory;
@@ -34,6 +31,8 @@ namespace UI.InventoryUI
 
         public void Bind(PlayerModel player)
         {
+            return;
+
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             _playerConfig = ConfigurationManager.Instance.PlayerConfig;
             _player = player;
@@ -41,23 +40,14 @@ namespace UI.InventoryUI
 
             SetUpUpgradeButtons();
 
-            _player.UpgradeAdded += OnPlayerUpgradeAdded;
-
-            foreach (var upgrade in _player.Upgrades)
-            {
-                OnPlayerUpgradeAdded(upgrade);
-            }
-
             SetUpInventory();
         }
 
         public void Unbind()
         {
+            return;
+
             _playerInventory.Funds.StopObserving(OnFundsChanged);
-            _playerInventory.GoodUpdated -= OnGoodUpdated;
-
-            _player.UpgradeAdded -= OnPlayerUpgradeAdded;
-
 
             foreach (var section in inventorySections.Values)
             {
@@ -66,24 +56,9 @@ namespace UI.InventoryUI
             }
         }
 
-        private void OnPlayerUpgradeAdded(PlayerUpgrade upgrade)
-        {
-            upgradeButtons[upgrade].SetState(UpgradeButton.State.Hidden);
-            var nextPossibleUpgrade = _playerConfig.ProgressionData.GetNext(upgrade);
-            if (nextPossibleUpgrade == PlayerUpgrade.None) return;
-
-            upgradeButtons[nextPossibleUpgrade].SetState(UpgradeButton.State.Active);
-        }
-
         private void SetUpInventory()
         {
             _playerInventory.Funds.Observe(OnFundsChanged);
-            _playerInventory.GoodUpdated += OnGoodUpdated;
-
-            foreach (var (good, amount) in _playerInventory.Goods)
-            {
-                OnGoodUpdated(good, amount);
-            }
         }
 
         private void SetUpUpgradeButtons()
@@ -93,48 +68,11 @@ namespace UI.InventoryUI
                 section.Initialize();
                 section.CellClicked += InvokeCellClicked;
             }
-
-            foreach (var (upgrade, button) in upgradeButtons)
-            {
-                var upgradeData = _playerConfig.InventoryUpgrades[upgrade];
-                button.SetCost(upgradeData.Price);
-                button.SetState(UpgradeButton.State.Disabled);
-                button.OnClick.AddListener(() => UpgradePlayer(upgrade, upgradeData.Price));
-
-                button.Validate(_playerInventory.Funds);
-            }
-
-            var progressions = _playerConfig.ProgressionData.UpgradeProgressions;
-            foreach (var progression in progressions)
-            {
-                var upgrade = progression.First();
-                upgradeButtons[upgrade].SetState(UpgradeButton.State.Active);
-            }
-        }
-
-        private void OnGoodUpdated(Good good, int amount)
-        {
-            var tier = _goodsConfig.ConfigData[good].Tier;
-            var section = inventorySections[tier];
-            section.UpdateGood(good, amount);
         }
 
         private void OnFundsChanged(float funds)
         {
             fundsText.text = funds.ToString("N0");
-
-            foreach (var upgradeButton in upgradeButtons.Values)
-            {
-                upgradeButton.Validate(funds);
-            }
-        }
-
-        private void UpgradePlayer(PlayerUpgrade upgrade, int price)
-        {
-            if (!_playerInventory.HasFunds(price)) return;
-
-            _playerInventory.RemoveFunds(price);
-            _player.AddUpgrade(upgrade);
         }
 
         private void InvokeCellClicked(InventoryCell cell)

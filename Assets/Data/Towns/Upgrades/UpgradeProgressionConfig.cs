@@ -10,6 +10,6 @@ namespace Data.Towns.Upgrades
     public sealed class UpgradeProgressionConfig : ScriptableObject
     {
         [field: SerializeField, SerializedDictionary]
-        public SerializedDictionary<Tier, UpgradeProgressionData> Progressions { get; private set; }
+        public SerializedDictionary<Tier, TownUpgradeProgressionData> Progressions { get; private set; }
     }
 }

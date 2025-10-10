@@ -1,4 +1,5 @@
 using Data.Goods.Recipes.Config;
+using Data.Player.Caravan.Config;
 using Data.Player.Retinue.Config;
 using Data.Towns.Production.Config;
 using Data.Towns.Upgrades;
@@ -13,6 +14,9 @@ namespace Data.Configuration
 
         [field: SerializeField, Required]
         public AvailabilityConfig AvailabilityConfig { get; private set; }
+
+        [field: SerializeField, Required]
+        public CaravanConfig CaravanConfig { get; private set; }
 
         [field: SerializeField, Required]
         public Colors Colors { get; private set; }
@@ -56,7 +60,7 @@ namespace Data.Configuration
             }
 
             Instance = this;
-            
+
             RecipeConfig.Initialize();
         }
     }

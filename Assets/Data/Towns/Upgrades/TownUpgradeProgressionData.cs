@@ -5,9 +5,9 @@ using UnityEngine;
 namespace Data.Towns.Upgrades
 {
     [CreateAssetMenu(
-        fileName = nameof(UpgradeProgressionData),
-        menuName = AssetMenu.ConfigDataFolder + nameof(UpgradeProgressionData))]
-    public sealed class UpgradeProgressionData : ScriptableObject
+        fileName = nameof(TownUpgradeProgressionData),
+        menuName = AssetMenu.ConfigDataFolder + nameof(TownUpgradeProgressionData))]
+    public sealed class TownUpgradeProgressionData : ScriptableObject
     {
         [field: SerializeField, SerializedDictionary]
         public SerializedDictionary<float, TownUpgradeData[]> Upgrades { get; private set; }
