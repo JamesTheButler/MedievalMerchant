@@ -13,7 +13,7 @@ namespace Data.Modifiable
 
         public string ToDisplayString()
         {
-            return $"{Value.Sign()}{Value} .. {Description}";
+            return $"{Value.Sign()}{Value:0.##} .. {Description}";
         }
     }
 }

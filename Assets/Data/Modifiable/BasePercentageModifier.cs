@@ -18,7 +18,7 @@ namespace Data.Modifiable
 
         public string ToDisplayString()
         {
-            return $"{Value.Sign()}{Value * 100}% .. {Description}";
+            return $"{Value.Sign()}{Value * 100:0.##}% .. {Description}";
         }
     }
 }

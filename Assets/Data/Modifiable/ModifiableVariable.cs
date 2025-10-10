@@ -111,8 +111,12 @@ namespace Data.Modifiable
             var allOtherModifiers = Modifiers.Where(modifier => modifier is not BaseValueModifier);
 
             var builder = new StringBuilder()
-                .AppendLine(Value.ToString("N2"))
-                .AppendLine("====================");
+                .AppendLine(Value.ToString("0.##"));
+
+            if (_modifiers.Count > 1)
+            {
+                builder.AppendLine("====================");
+            }
 
             if (baseModifier is not null)
             {

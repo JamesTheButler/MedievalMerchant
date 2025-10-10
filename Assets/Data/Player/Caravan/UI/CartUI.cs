@@ -5,6 +5,7 @@ using Data.Player.Caravan.Config;
 using Data.Player.Caravan.Logic;
 using NaughtyAttributes;
 using TMPro;
+using UI;
 using UI.InventoryUI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,9 @@ namespace Data.Player.Caravan.UI
         [Header("Header")]
         [SerializeField, Required]
         private TMP_Text moveSpeedText, upkeepText;
+
+        [SerializeField, Required]
+        private TooltipHandler moveSpeedTooltip, upkeepTooltip;
 
         [SerializeField, Required]
         private Image moveSpeedUpgradeIcon, upkeepUpgradeIcon;
@@ -55,8 +59,15 @@ namespace Data.Player.Caravan.UI
             _cart.Upkeep.Observe(OnUpkeepChanged);
             _cart.SlotCount.Observe(OnSlotCountChanged);
 
-            upgradeButton.onClick.AddListener(upgradeAction.Invoke);
+            upgradeButton.onClick.AddListener(() =>
+            {
+                Unhover();
+                upgradeAction.Invoke();
+            });
+
             unlockButton.onClick.AddListener(upgradeAction.Invoke);
+
+            Unhover();
         }
 
         public void Unbind()
@@ -74,7 +85,7 @@ namespace Data.Player.Caravan.UI
         public void HoverNextLevel()
         {
             var level = _cart.Level + 1;
-            if (level >= CaravanConfig.MaxLevel)
+            if (level > CaravanConfig.MaxLevel)
                 return;
 
             var upgradeData = _caravanConfig.GetUpgradeData(level);
@@ -82,8 +93,8 @@ namespace Data.Player.Caravan.UI
             HoverTextfield(moveSpeedText, _cart.MoveSpeed, upgradeData.MoveSpeed, true);
             HoverTextfield(upkeepText, _cart.Upkeep, upgradeData.Upkeep, false);
 
-            moveSpeedUpgradeIcon.gameObject.SetActive(true);
-            upkeepUpgradeIcon.gameObject.SetActive(true);
+            moveSpeedUpgradeIcon.enabled = true;
+            upkeepUpgradeIcon.enabled = true;
         }
 
         public void Unhover()
@@ -91,8 +102,8 @@ namespace Data.Player.Caravan.UI
             UpdateMoveSpeedText();
             UpdateUpkeepText();
 
-            moveSpeedUpgradeIcon.gameObject.SetActive(false);
-            upkeepUpgradeIcon.gameObject.SetActive(false);
+            moveSpeedUpgradeIcon.enabled = false;
+            upkeepUpgradeIcon.enabled = false;
         }
 
         private void SetLocked(bool isLocked)
@@ -144,14 +155,18 @@ namespace Data.Player.Caravan.UI
 
         private void UpdateMoveSpeedText()
         {
-            moveSpeedText.text = _cart.MoveSpeed.Value.ToString("N0");
+            var moveSpeed = _cart.MoveSpeed.Value.ToString("N0");
+            moveSpeedText.text = moveSpeed;
             moveSpeedText.color = _colors.FontDark;
+            moveSpeedTooltip.SetTooltip($"Movement Speed: {moveSpeed}");
         }
 
         private void UpdateUpkeepText()
         {
-            upkeepText.text = _cart.Upkeep.Value.ToString("N0");
+            var upkeep = _cart.Upkeep.Value.ToString("N0");
+            upkeepText.text = upkeep;
             upkeepText.color = _colors.FontDark;
+            upkeepTooltip.SetTooltip($"Upkeep: {upkeep}");
         }
 
         private void HoverTextfield(

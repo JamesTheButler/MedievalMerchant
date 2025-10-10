@@ -9,16 +9,15 @@ namespace Data.Player
     {
         public PlayerLocation Location { get; } = new();
 
-        public ModifiableVariable MovementSpeed { get; }
+        public ModifiableVariable MovementSpeed => CaravanManager.MoveSpeed;
         public Inventory Inventory { get; }
         public RetinueManager RetinueManager { get; }
         public CaravanManager CaravanManager { get; }
 
         private readonly IInventoryPolicy _inventoryPolicy;
 
-        public PlayerModel(float startFunds, float movementSpeed)
+        public PlayerModel(float startFunds)
         {
-            MovementSpeed = new ModifiableVariable(new BaseMovementSpeedModifier(movementSpeed));
             RetinueManager = new RetinueManager();
             CaravanManager = new CaravanManager();
 

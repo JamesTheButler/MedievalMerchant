@@ -33,17 +33,13 @@ namespace UI
         {
             _developmentManager = developmentManager;
 
-            developmentManager.DevelopmentTrend.ModifiersChanged += UpdateGrowthModifierTooltip;
             developmentManager.DevelopmentScore.Observe(UpdateDevelopmentScore);
             developmentManager.DevelopmentTrend.Observe(UpdateDevelopmentTrend);
             developmentManager.GrowthTrend.Observe(UpdateGrowthTrend);
-
-            UpdateGrowthModifierTooltip();
         }
 
         public void Unbind()
         {
-            _developmentManager.DevelopmentTrend.ModifiersChanged -= UpdateGrowthModifierTooltip;
             _developmentManager.DevelopmentScore.StopObserving(UpdateDevelopmentScore);
             _developmentManager.DevelopmentTrend.StopObserving(UpdateDevelopmentTrend);
             _developmentManager.GrowthTrend.StopObserving(UpdateGrowthTrend);
@@ -66,6 +62,8 @@ namespace UI
         {
             var sign = trend > 0 ? "+" : "";
             developmentTrendText.text = $"{sign}{trend}%";
+
+            UpdateGrowthModifierTooltip();
         }
 
         private void UpdateGrowthTrend(DevelopmentTrend obj)

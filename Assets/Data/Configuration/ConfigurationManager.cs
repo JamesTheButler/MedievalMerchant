@@ -31,9 +31,6 @@ namespace Data.Configuration
         public GoodsConfig GoodsConfig { get; private set; }
 
         [field: SerializeField, Required]
-        public PlayerConfig PlayerConfig { get; private set; }
-
-        [field: SerializeField, Required]
         public RecipeConfig RecipeConfig { get; private set; }
 
         [field: SerializeField, Required]

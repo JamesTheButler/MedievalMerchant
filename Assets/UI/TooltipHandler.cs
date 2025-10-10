@@ -7,11 +7,14 @@ namespace UI
 {
     public sealed class TooltipHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField, Required] private GameObject toolTipPrefab;
+        [SerializeField, Required]
+        private GameObject toolTipPrefab;
 
-        [SerializeField] private float offset = 8f;
+        [SerializeField]
+        private float offset = 8f;
 
-        [SerializeField] private bool enabledOnStart;
+        [SerializeField]
+        private bool enabledOnStart;
 
         private Tooltip _activeToolTip;
         private bool _isEnabled;

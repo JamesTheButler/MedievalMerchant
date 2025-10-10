@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Common;
 using Data;
+using Data.Configuration;
 using Data.Player;
+using Data.Player.Caravan.Config;
 using Data.Towns;
 using UnityEngine;
 
@@ -22,6 +24,7 @@ namespace Map.Pathfinding
 
         private Lazy<RoadGraph> _graph;
         private Lazy<PlayerLocation> _playerLocation;
+        private Lazy<CaravanConfig> _caravanConfig;
 
         private PlayerLocation Location => _model.Value.Player.Location;
 
@@ -31,6 +34,7 @@ namespace Map.Pathfinding
         {
             _graph = new Lazy<RoadGraph>(() => RoadGraphBuilder.Build(_model.Value.TileFlagMap));
             _playerLocation = new Lazy<PlayerLocation>(() => _model.Value.Player.Location);
+            _caravanConfig = new Lazy<CaravanConfig>(() => ConfigurationManager.Instance.CaravanConfig);
         }
 
         public void TravelTo(Town town)
@@ -106,12 +110,14 @@ namespace Map.Pathfinding
             _playerLocation.Value.WorldLocation.Value = smoothed[0];
             _playerLocation.Value.CurrentTown = null;
 
+            var moveSpeed = _model.Value.Player.MovementSpeed * _caravanConfig.Value.MovementSpeedMultiplier;
             for (var i = 1; i < smoothed.Count; i++)
             {
                 var a = smoothed[i - 1];
                 var b = smoothed[i];
                 var dist = Vector3.Distance(a, b);
-                var dur = dist / Mathf.Max(0.01f, _model.Value.Player.MovementSpeed);
+
+                var dur = dist / Mathf.Max(0.01f, moveSpeed);
                 var elapsed = 0f;
                 while (elapsed < dur)
                 {
@@ -153,7 +159,7 @@ namespace Map.Pathfinding
 
                 var a = curr - v1.normalized * cut;
                 var b = curr + v2.normalized * cut;
-                // Ensure order and no overcut beyond segment length
+                // Ensure order and no over-cut beyond segment length
                 if ((a - prev).sqrMagnitude > (curr - prev).sqrMagnitude) a = curr;
                 if ((b - next).sqrMagnitude > (curr - next).sqrMagnitude) b = curr;
 

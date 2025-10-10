@@ -13,13 +13,19 @@ namespace Data.Player.Caravan.Config
     {
         public const int MaxCartCount = 4;
         public const int MaxLevel = 4;
-        public const float BaseUpkeep = 5f;
-        
+
         [field: SerializeField, ShowAssetPreview]
         public Sprite DefaultBackgroundImage { get; private set; }
 
         [SerializeField, SerializedDictionary("Level", "Data")]
         private SerializedDictionary<int, CaravanUpgradeData> caravanUpgradeDatas;
+
+        [field: SerializeField]
+        public float MovementSpeedMultiplier { get; private set; }
+
+        [field: SerializeField]
+        public float BaseUpkeep { get; private set; } = 5f;
+
 
         public CaravanUpgradeData GetUpgradeData(int level)
         {

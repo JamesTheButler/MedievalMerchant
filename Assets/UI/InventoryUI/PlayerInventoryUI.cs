@@ -27,14 +27,12 @@ namespace UI.InventoryUI
         private PlayerModel _player;
         private Inventory _playerInventory;
         private GoodsConfig _goodsConfig;
-        private PlayerConfig _playerConfig;
 
         public void Bind(PlayerModel player)
         {
             return;
 
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
-            _playerConfig = ConfigurationManager.Instance.PlayerConfig;
             _player = player;
             _playerInventory = player.Inventory;
 
