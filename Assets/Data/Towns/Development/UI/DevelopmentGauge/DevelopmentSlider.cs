@@ -27,20 +27,25 @@ namespace Data.Towns.Development.UI.DevelopmentGauge
             slider.value = actualValue;
         }
 
-        public void SetMilestones(List<DevelopmentMilestoneUiData> milestones)
+        public void SetMilestones(List<DevelopmentMilestone.Data> milestones)
         {
             ClearMilestones();
 
             var maxWidth = ((RectTransform)slider.transform).rect.width;
-            foreach (var (threshold, sprite) in milestones)
+            foreach (var milestoneData in milestones)
             {
+                var threshold = milestoneData.Threshold;
                 var prefab = threshold.IsApproximately(100) ? endMilestonePrefab : milestonePrefab;
                 var milestone = Instantiate(prefab, milestoneParent);
+
+                // set up logic
+                var milestoneScript = milestone.GetComponent<DevelopmentMilestone>();
+                milestoneScript.SetUp(slider, milestoneData);
+
+                // set up positioning
                 var rectTransform = (milestone.transform as RectTransform)!;
                 var trackPosition = maxWidth * (threshold * .01f);
                 rectTransform.anchoredPosition = new Vector2(trackPosition, rectTransform.anchoredPosition.y);
-                var milestoneScript = milestone.GetComponent<DevelopmentMilestone>();
-                milestoneScript.SetUp(slider, sprite, threshold);
             }
         }
 

@@ -8,6 +8,8 @@ namespace Data.Towns.Development.UI.DevelopmentGauge
 {
     public sealed class DevelopmentMilestone : MonoBehaviour
     {
+        public record Data(float Threshold, Sprite Icon);
+
         [SerializeField, Required]
         private Image milestoneImage;
 
@@ -25,13 +27,13 @@ namespace Data.Towns.Development.UI.DevelopmentGauge
         private bool? _isCompleted;
 
 
-        public void SetUp(Slider newSlider, Sprite icon, float threshold)
+        public void SetUp(Slider newSlider, Data data)
         {
-            _thresholdPercent = threshold;
+            _thresholdPercent = data.Threshold;
 
             _slider = newSlider;
             _slider.onValueChanged.AddListener(SliderValueChanged);
-            milestoneImage.sprite = icon;
+            milestoneImage.sprite = data.Icon;
 
             SliderValueChanged(_slider.value);
         }
@@ -52,8 +54,7 @@ namespace Data.Towns.Development.UI.DevelopmentGauge
             // to accomodate base-less end milestones
             if (baseImage)
             {
-                baseImage.sprite =
-                    isCompleted ? assets.BaseComplete : assets.BaseIncomplete;
+                baseImage.sprite = isCompleted ? assets.BaseComplete : assets.BaseIncomplete;
             }
 
             topImage.sprite = isCompleted ? assets.TopComplete : assets.TopIncomplete;
