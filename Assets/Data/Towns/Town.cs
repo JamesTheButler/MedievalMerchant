@@ -4,9 +4,9 @@ using System.Linq;
 using Common;
 using Data.Configuration;
 using Data.Player.Retinue;
+using Data.Towns.Development.Logic.Upgrades;
 using Data.Towns.Production;
 using Data.Towns.Production.Logic;
-using Data.Towns.Upgrades;
 using Data.Trade;
 using UnityEngine;
 
@@ -26,7 +26,7 @@ namespace Data.Towns
 
         public ProductionManager ProductionManager { get; }
         public DevelopmentManager DevelopmentManager { get; }
-        public UpgradeManager UpgradeManager { get; }
+        public TownUpgradeManager UpgradeManager { get; }
 
         public Inventory Inventory { get; }
 
@@ -42,6 +42,7 @@ namespace Data.Towns
             Regions regions,
             IEnumerable<Good> availableGoods)
         {
+            // TODO - BUG: this is not limiting slot amount
             _inventoryPolicy = new TierBasedInventoryPolicy();
 
             GridLocation = gridLocation;
@@ -61,7 +62,7 @@ namespace Data.Towns
             Inventory = new Inventory(_inventoryPolicy);
             ProductionManager = new ProductionManager(this);
             DevelopmentManager = new DevelopmentManager(this);
-            UpgradeManager = new UpgradeManager(this);
+            UpgradeManager = new TownUpgradeManager(this);
 
             Inventory.AddFunds(setupInfo.InitialFunds);
 

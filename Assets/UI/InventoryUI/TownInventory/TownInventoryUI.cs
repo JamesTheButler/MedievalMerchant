@@ -1,6 +1,7 @@
 using Common;
 using Data;
 using Data.Towns;
+using Data.Towns.Development.UI.DevelopmentGauge;
 using Data.Towns.Production;
 using Data.Trade;
 using NaughtyAttributes;
@@ -93,7 +94,7 @@ namespace UI.InventoryUI.TownInventory
 
             RefreshTownName(_town.Tier);
 
-            developmentGauge.Bind(_developmentManager);
+            developmentGauge.Bind(_town);
         }
 
 

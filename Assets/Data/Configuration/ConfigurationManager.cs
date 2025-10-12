@@ -1,8 +1,9 @@
 using Data.Goods.Recipes.Config;
 using Data.Player.Caravan.Config;
 using Data.Player.Retinue.Config;
+using Data.Towns.Development.Config;
+using Data.Towns.Development.UI.DevelopmentGauge;
 using Data.Towns.Production.Config;
-using Data.Towns.Upgrades;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -31,6 +32,9 @@ namespace Data.Configuration
         public GoodsConfig GoodsConfig { get; private set; }
 
         [field: SerializeField, Required]
+        public DevelopmentMilestoneAssets DevelopmentMilestoneAssets { get; private set; }
+
+        [field: SerializeField, Required]
         public RecipeConfig RecipeConfig { get; private set; }
 
         [field: SerializeField, Required]
@@ -44,9 +48,6 @@ namespace Data.Configuration
 
         [field: SerializeField, Required]
         public TownDevelopmentConfig TownDevelopmentConfig { get; private set; }
-
-        [field: SerializeField, Required]
-        public UpgradeProgressionConfig UpgradeProgressionConfig { get; private set; }
 
         private void Awake()
         {

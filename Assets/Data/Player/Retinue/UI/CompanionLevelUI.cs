@@ -17,7 +17,7 @@ namespace Data.Player.Retinue.UI
         private Button unlockButton;
 
         [SerializeField, Required]
-        protected TooltipHandler tooltip;
+        private TooltipHandler tooltip;
 
         private CompanionLevelData _levelData;
         private string _unlockableTooltip;

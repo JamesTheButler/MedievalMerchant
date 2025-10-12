@@ -1,6 +1,7 @@
 using Data;
 using Data.Configuration;
 using Data.Towns;
+using Data.Towns.Development.Config;
 using NaughtyAttributes;
 using UnityEngine;
 
