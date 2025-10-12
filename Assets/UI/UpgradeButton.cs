@@ -1,5 +1,6 @@
 using System;
-using Data.Configuration;
+using Common;
+using Common.Config;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

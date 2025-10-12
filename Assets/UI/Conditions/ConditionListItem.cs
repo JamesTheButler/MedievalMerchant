@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Data;
+using Common;
+using Features.Levels.Config.Conditions;
 using JetBrains.Annotations;
-using Levels.Conditions;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

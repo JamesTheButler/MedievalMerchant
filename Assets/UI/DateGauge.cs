@@ -1,5 +1,6 @@
 using System;
-using Data;
+using Common;
+using Common.Types;
 using TMPro;
 using UnityEngine;
 

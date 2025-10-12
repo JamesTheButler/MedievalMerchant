@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Common;
-using Data.Configuration;
-using Levels.Conditions;
+using Features.Levels.Config;
+using Features.Levels.Config.Conditions;
 using UnityEngine;
 
 namespace UI.Conditions

@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Data;
-using Data.Configuration;
+using Common;
+using Common.Types;
+using Features.Goods.Config;
 using UnityEngine;
 
 namespace UI.InventoryUI.TownInventory

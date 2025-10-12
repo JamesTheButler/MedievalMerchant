@@ -1,5 +1,5 @@
 using System;
-using Data.Towns;
+using Features.Towns;
 using UI.InventoryUI.TownInventory;
 using UnityEngine;
 

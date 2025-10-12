@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using Common;
-using Data;
-using Data.Configuration;
-using Data.Goods.Recipes.Config;
-using Data.Player;
-using Data.Towns;
-using Data.Towns.Production.Config;
-using Data.Towns.Production.Logic;
+using Common.Config;
+using Common.Types;
+using Common.UI;
+using Features.Goods.Config;
+using Features.Player;
+using Features.Towns;
+using Features.Towns.Production.Config;
+using Features.Towns.Production.Logic;
 using UnityEngine;
 using UnityEngine.UI;
 

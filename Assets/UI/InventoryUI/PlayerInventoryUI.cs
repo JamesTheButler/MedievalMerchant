@@ -1,8 +1,9 @@
 using AYellowpaper.SerializedCollections;
-using Data;
-using Data.Configuration;
-using Data.Player;
-using Data.Trade;
+using Common;
+using Common.Types;
+using Features.Goods.Config;
+using Features.Inventory;
+using Features.Player;
 using NaughtyAttributes;
 using TMPro;
 using UI.Popups;

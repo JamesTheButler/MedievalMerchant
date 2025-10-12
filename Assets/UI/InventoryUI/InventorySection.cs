@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Data;
+using Common.Types;
 using NaughtyAttributes;
 using Unity.VisualScripting;
 using UnityEngine;

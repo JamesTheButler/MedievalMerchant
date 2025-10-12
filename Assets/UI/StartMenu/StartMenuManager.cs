@@ -1,5 +1,5 @@
 using Common;
-using Levels;
+using Features.Levels.Config;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

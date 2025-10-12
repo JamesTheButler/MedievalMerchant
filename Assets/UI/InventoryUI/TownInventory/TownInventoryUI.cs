@@ -1,9 +1,9 @@
 using Common;
-using Data;
-using Data.Towns;
-using Data.Towns.Development.UI.DevelopmentGauge;
-using Data.Towns.Production;
-using Data.Trade;
+using Common.Types;
+using Features.Inventory;
+using Features.Towns;
+using Features.Towns.Development.Logic;
+using Features.Towns.Development.UI.DevelopmentGauge;
 using NaughtyAttributes;
 using TMPro;
 using UI.Popups;

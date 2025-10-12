@@ -1,4 +1,4 @@
-using Levels;
+using Features.Levels.Config;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;

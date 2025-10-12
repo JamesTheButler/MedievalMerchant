@@ -1,5 +1,5 @@
 using System;
-using Data;
+using Common.Types;
 using NaughtyAttributes;
 using UI.InventoryUI;
 using UnityEngine;

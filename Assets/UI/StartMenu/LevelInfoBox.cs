@@ -1,6 +1,6 @@
 using System.Linq;
-using Levels;
-using Levels.Conditions;
+using Features.Levels.Config;
+using Features.Levels.Config.Conditions;
 using NaughtyAttributes;
 using TMPro;
 using UI.Conditions;

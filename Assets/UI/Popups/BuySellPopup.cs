@@ -1,7 +1,8 @@
 using System;
-using Data;
-using Data.Configuration;
-using Data.Trade;
+using Common;
+using Common.Types;
+using Features.Goods.Config;
+using Features.Trade;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

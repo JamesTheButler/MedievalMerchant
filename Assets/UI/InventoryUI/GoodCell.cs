@@ -1,6 +1,7 @@
 using System;
-using Data;
-using Data.Configuration;
+using Common;
+using Common.Types;
+using Features.Goods.Config;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;

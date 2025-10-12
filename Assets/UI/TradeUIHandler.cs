@@ -1,6 +1,7 @@
-using Data;
-using Data.Towns;
-using Data.Trade;
+using Common.Types;
+using Features.Towns;
+using Features.Trade;
+using Features.Trade.UI;
 using NaughtyAttributes;
 using UnityEngine;
 

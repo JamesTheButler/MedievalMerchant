@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Data;
-using Data.Configuration;
+using Common;
+using Common.Config;
+using Common.Types;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;

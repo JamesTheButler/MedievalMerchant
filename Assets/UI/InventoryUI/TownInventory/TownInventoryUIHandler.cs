@@ -1,4 +1,4 @@
-using Data.Towns;
+using Features.Towns;
 using NaughtyAttributes;
 using UnityEngine;
 

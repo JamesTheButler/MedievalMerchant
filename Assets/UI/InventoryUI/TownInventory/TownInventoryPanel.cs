@@ -1,8 +1,9 @@
 using System;
 using AYellowpaper.SerializedCollections;
-using Data;
-using Data.Configuration;
-using Data.Towns;
+using Common;
+using Common.Types;
+using Features.Goods.Config;
+using Features.Towns;
 using UnityEngine;
 using UnityEngine.Events;
 

@@ -1,4 +1,4 @@
-using Data;
+using Common.Types;
 
 namespace UI.Popups
 {

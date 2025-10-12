@@ -1,4 +1,4 @@
-using Data;
+using Common.Types;
 using JetBrains.Annotations;
 
 namespace UI.InventoryUI

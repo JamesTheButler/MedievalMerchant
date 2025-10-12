@@ -1,8 +1,11 @@
 using System.Linq;
-using Data;
-using Data.Player;
-using Data.Towns;
-using Data.Trade;
+using Common;
+using Common.Types;
+using Features.Inventory;
+using Features.Player;
+using Features.Towns;
+using Features.Trade;
+using Features.Trade.Logic;
 using NaughtyAttributes;
 using UI.InventoryUI;
 using UnityEngine;

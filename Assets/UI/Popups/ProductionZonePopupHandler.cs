@@ -1,7 +1,6 @@
 using Common;
-using Data.Configuration;
-using Data.Goods.Recipes.Config;
-using Map;
+using Features.Goods.Config;
+using Features.Map;
 using UnityEngine;
 
 namespace UI.Popups
