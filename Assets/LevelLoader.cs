@@ -7,6 +7,7 @@ using Features.Map;
 using Features.Map.Tiling;
 using Features.Player;
 using Features.Towns;
+using Features.Towns.Flags.Logic;
 using NaughtyAttributes;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -30,10 +31,12 @@ public sealed class LevelLoader : MonoBehaviour
     private const float ZoneDistance = 1.5f; // account for diagonally adjacent zones (distance here would be sqrt(2))
 
     private Model _model;
+    private FlagFactory _flagFactory;
 
     private void Start()
     {
         _model = Model.Instance;
+        _flagFactory = new();
 
         var level = Instantiate(levelInfo.MapPrefab, tileGrid.gameObject.transform);
         var tilemap = level.GetComponent<Tilemap>();
@@ -82,7 +85,8 @@ public sealed class LevelLoader : MonoBehaviour
             townPosition,
             worldPosition,
             townRegions,
-            availableGoods);
+            availableGoods,
+            _flagFactory);
         return town;
     }
 

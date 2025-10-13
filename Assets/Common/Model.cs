@@ -5,6 +5,7 @@ using Features.Levels.Logic;
 using Features.Map.Tiling;
 using Features.Player;
 using Features.Towns;
+using Features.Towns.Flags.Logic;
 using UnityEngine;
 
 namespace Common

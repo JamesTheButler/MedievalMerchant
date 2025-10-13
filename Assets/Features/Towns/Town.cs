@@ -8,6 +8,8 @@ using Features.Inventory;
 using Features.Towns.Config;
 using Features.Towns.Development.Logic;
 using Features.Towns.Development.Logic.Upgrades;
+using Features.Towns.Flags;
+using Features.Towns.Flags.Logic;
 using Features.Towns.Production.Logic;
 using UnityEngine;
 
@@ -32,6 +34,7 @@ namespace Features.Towns
         public Inventory.Inventory Inventory { get; }
 
         public string Name { get; }
+        public FlagInfo FlagInfo { get; private set; }
         public Vector2Int GridLocation { get; }
         public Vector2 WorldLocation { get; }
         public HashSet<Good> AvailableGoods { get; }
@@ -41,7 +44,8 @@ namespace Features.Towns
             Vector2Int gridLocation,
             Vector2 worldLocation,
             Regions regions,
-            IEnumerable<Good> availableGoods)
+            IEnumerable<Good> availableGoods,
+            FlagFactory flagFactory)
         {
             // TODO - BUG: this is not limiting slot amount
             _inventoryPolicy = new TierBasedInventoryPolicy();
@@ -67,7 +71,9 @@ namespace Features.Towns
 
             Inventory.AddFunds(setupInfo.InitialFunds);
 
-            AddProduction(AvailableGoods.GetRandom(), 0);
+            var startGood = AvailableGoods.GetRandom();
+            AddProduction(startGood, 0);
+            FlagInfo = flagFactory.CreateFlagInfo(startGood);
         }
 
         public void Tick()

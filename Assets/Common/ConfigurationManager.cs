@@ -6,12 +6,14 @@ using Features.Player.Retinue.Config;
 using Features.Towns.Config;
 using Features.Towns.Development.Config;
 using Features.Towns.Development.UI.DevelopmentGauge;
+using Features.Towns.Flags.Config;
 using Features.Towns.Production.Config;
 using NaughtyAttributes;
 using UnityEngine;
 
 namespace Common
 {
+    [ExecuteInEditMode]
     public sealed class ConfigurationManager : MonoBehaviour
     {
         public static ConfigurationManager Instance;
@@ -32,10 +34,13 @@ namespace Common
         public ConditionConfig ConditionConfig { get; private set; }
 
         [field: SerializeField, Required]
-        public GoodsConfig GoodsConfig { get; private set; }
+        public DevelopmentMilestoneAssets DevelopmentMilestoneAssets { get; private set; }
 
         [field: SerializeField, Required]
-        public DevelopmentMilestoneAssets DevelopmentMilestoneAssets { get; private set; }
+        public FlagConfig FlagConfig { get; private set; }
+
+        [field: SerializeField, Required]
+        public GoodsConfig GoodsConfig { get; private set; }
 
         [field: SerializeField, Required]
         public RecipeConfig RecipeConfig { get; private set; }
@@ -56,7 +61,15 @@ namespace Common
         {
             if (Instance != null && Instance != this)
             {
-                Destroy(gameObject);
+                if (Application.isPlaying)
+                {
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    DestroyImmediate(gameObject);
+                }
+
                 return;
             }
 

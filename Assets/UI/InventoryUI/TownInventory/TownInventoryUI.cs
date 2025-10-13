@@ -4,6 +4,7 @@ using Features.Inventory;
 using Features.Towns;
 using Features.Towns.Development.Logic;
 using Features.Towns.Development.UI.DevelopmentGauge;
+using Features.Towns.Flags.UI;
 using NaughtyAttributes;
 using TMPro;
 using UI.Popups;
@@ -22,6 +23,9 @@ namespace UI.InventoryUI.TownInventory
         [Header("Header UI Elements")]
         [SerializeField, Required]
         private TMP_Text townNameText;
+
+        [SerializeField, Required]
+        private FlagUI flagUI;
 
         [SerializeField, Required]
         private DevelopmentGauge developmentGauge;
@@ -85,6 +89,7 @@ namespace UI.InventoryUI.TownInventory
         {
             _town = town;
 
+            flagUI.SetFlag(_town.FlagInfo);
             productionPanel.Bind(_town);
             inventoryPanel.Bind(_town);
 
