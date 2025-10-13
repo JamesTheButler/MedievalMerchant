@@ -44,16 +44,21 @@ namespace Features.Player.Caravan.UI
         [SerializeField, Required]
         private Sprite arrowUp, arrowDown;
 
+        public event Action<InventoryCell> OnCellAdded;
+        public event Action<InventoryCell> OnCellClicked;
+
         private Cart _cart;
         private CaravanConfig _caravanConfig;
         private Colors _colors;
 
-        public void Bind(Cart cart, Action upgradeAction)
+        public void Bind(Cart cart, Action upgradeAction, Action<InventoryCell> onCellAdded)
         {
             _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
             _colors = ConfigurationManager.Instance.Colors;
 
             _cart = cart;
+
+            OnCellAdded += onCellAdded;
 
             _cart.Level.Observe(OnLevelChanged);
             _cart.MoveSpeed.Observe(OnMoveSpeedChanged);
@@ -150,7 +155,9 @@ namespace Features.Player.Caravan.UI
                 var cell = inventoryCells[i];
                 var isActive = i < slotCount;
                 cell.gameObject.SetActive(isActive);
-                // TODO: report cell as available so that the inventory manager can use it
+                cell.Reset();
+                OnCellAdded?.Invoke(cell);
+                cell.Clicked += () => OnCellClicked?.Invoke(cell);
             }
         }
 

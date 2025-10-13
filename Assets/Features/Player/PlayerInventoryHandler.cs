@@ -2,7 +2,7 @@ using Common;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace UI.InventoryUI
+namespace Features.Player
 {
     public sealed class PlayerInventoryHandler : MonoBehaviour
     {

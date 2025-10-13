@@ -23,7 +23,7 @@ namespace Features.Inventory
         public TradeResult CanAdd(Good good, int amount)
         {
             var slotCount = _slotCountObservable.Value;
-            var canAdd = _inventory.HasGood(good) || _inventory.Goods.Count > slotCount;
+            var canAdd = _inventory.HasGood(good) || slotCount > _inventory.Goods.Count;
             return canAdd
                 ? TradeResult.Succeeded()
                 : TradeResult.Failed($"All {slotCount} inventory slots are full.");

@@ -2,7 +2,6 @@ using Common;
 using Common.Types;
 using Features.Inventory;
 using Features.Towns;
-using Features.Towns.Development.Logic;
 using Features.Towns.Development.UI.DevelopmentGauge;
 using Features.Towns.Flags.UI;
 using NaughtyAttributes;
@@ -41,7 +40,6 @@ namespace UI.InventoryUI.TownInventory
         private TownInventoryPanel inventoryPanel;
 
         private Town _town;
-        private DevelopmentManager _developmentManager;
         private Inventory _inventory;
 
         public void Initialize()
@@ -108,7 +106,6 @@ namespace UI.InventoryUI.TownInventory
             inventory.Funds.Observe(OnFundsUpdated);
 
             _inventory = inventory;
-            _developmentManager = _town.DevelopmentManager;
         }
 
         public void Unbind()
