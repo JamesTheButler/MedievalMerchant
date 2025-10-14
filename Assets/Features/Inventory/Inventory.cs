@@ -53,6 +53,8 @@ namespace Features.Inventory
 
         public void AddGood(Good good, int amount)
         {
+            if (amount == 0) return;
+
             _goods.TryAdd(good, 0);
             _goods[good] += amount;
             GoodUpdated?.Invoke(good, _goods[good]);
@@ -60,6 +62,7 @@ namespace Features.Inventory
 
         public void RemoveGood(Good good, int amount)
         {
+            if (amount == 0) return;
             if (!HasGood(good)) return;
 
             _goods[good] -= amount;

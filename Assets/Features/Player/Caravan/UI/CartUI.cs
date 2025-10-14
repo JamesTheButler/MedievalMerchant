@@ -29,7 +29,13 @@ namespace Features.Player.Caravan.UI
 
         [Header("Header")]
         [SerializeField, Required]
-        private TMP_Text moveSpeedText, upkeepText, levelText;
+        private TMP_Text moveSpeedText;
+
+        [SerializeField, Required]
+        private TMP_Text upkeepText;
+
+        [SerializeField, Required]
+        private TMP_Text levelText;
 
         [SerializeField, Required]
         private TooltipHandler moveSpeedTooltip, upkeepTooltip;
@@ -51,6 +57,8 @@ namespace Features.Player.Caravan.UI
         private CaravanConfig _caravanConfig;
         private Colors _colors;
 
+        private int _lastActiveSlotCount;
+
         public void Bind(Cart cart, Action upgradeAction, Action<InventoryCell> onCellAdded)
         {
             _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
@@ -60,6 +68,8 @@ namespace Features.Player.Caravan.UI
 
             OnCellAdded += onCellAdded;
 
+            ResetSlots();
+
             _cart.Level.Observe(OnLevelChanged);
             _cart.MoveSpeed.Observe(OnMoveSpeedChanged);
             _cart.Upkeep.Observe(OnUpkeepChanged);
@@ -67,8 +77,8 @@ namespace Features.Player.Caravan.UI
 
             upgradeButton.onClick.AddListener(() =>
             {
-                Unhover();
                 upgradeAction.Invoke();
+                HoverNextLevel();
             });
 
             unlockButton.onClick.AddListener(upgradeAction.Invoke);
@@ -149,17 +159,33 @@ namespace Features.Player.Caravan.UI
             UpdateUpkeepText();
         }
 
+        private void ResetSlots()
+        {
+            foreach (var slot in inventoryCells)
+            {
+                slot.gameObject.SetActive(false);
+                slot.Reset();
+            }
+
+            _lastActiveSlotCount = 0;
+        }
+
         private void OnSlotCountChanged(int slotCount)
         {
-            for (var i = 0; i < inventoryCells.Count; i++)
+            if (slotCount < _lastActiveSlotCount)
             {
-                var cell = inventoryCells[i];
-                var isActive = i < slotCount;
-                cell.gameObject.SetActive(isActive);
-                cell.Reset();
+                Debug.LogError("Slot count reduction is not supported!.");
+            }
+
+            for (var slotIndex = _lastActiveSlotCount; slotIndex < slotCount; slotIndex++)
+            {
+                var cell = inventoryCells[slotIndex];
+                cell.gameObject.SetActive(true);
                 OnCellAdded?.Invoke(cell);
                 cell.Clicked += () => OnCellClicked?.Invoke(cell);
             }
+
+            _lastActiveSlotCount = slotCount;
         }
 
         private void UpdateMoveSpeedText()

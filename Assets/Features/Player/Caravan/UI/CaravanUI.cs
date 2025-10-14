@@ -26,7 +26,7 @@ namespace Features.Player.Caravan.UI
         [SerializeField]
         private List<CartUI> cartUis;
 
-        private readonly List<InventoryCell> _freeCells = new();
+        private readonly HashSet<InventoryCell> _freeCells = new();
         private readonly Dictionary<Good, InventoryCell> _occupiedCells = new();
 
         private CaravanManager _caravanManager;
@@ -49,7 +49,6 @@ namespace Features.Player.Caravan.UI
 
             _playerInventory.GoodUpdated += OnGoodAdded;
         }
-
 
         private void OnGoodAdded(Good good, int amount)
         {
@@ -81,8 +80,8 @@ namespace Features.Player.Caravan.UI
                 }
 
                 _occupiedCells.Add(good, cell);
-                cell.SetGood(good);
-                cell.SetAmount(amount);
+                cell.Update(good, amount);
+                _freeCells.Remove(cell);
             }
         }
 

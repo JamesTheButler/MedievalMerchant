@@ -98,6 +98,10 @@ namespace UI.InventoryUI.TownInventory
         private void BindInventory()
         {
             _town.Inventory.GoodUpdated += UpdateGood;
+            foreach (var (good, amount) in _town.Inventory.Goods)
+            {
+                UpdateGood(good, amount);
+            }
         }
 
         private void UpdateGood(Good good, int amount)

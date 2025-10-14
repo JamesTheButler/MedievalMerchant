@@ -15,7 +15,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
 {
     public sealed class DevelopmentGauge : MonoBehaviour
     {
-        [FormerlySerializedAs("developmentScore"), SerializeField, Required]
+        [SerializeField, Required]
         private DevelopmentSlider developmentSlider;
 
         [SerializeField, Required]

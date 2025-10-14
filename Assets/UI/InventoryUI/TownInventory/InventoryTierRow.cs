@@ -54,7 +54,7 @@ namespace UI.InventoryUI.TownInventory
                 cell.SetAmount(amount);
                 if (amount == 0)
                 {
-                    cell.SetGood(null);
+                    cell.Reset();
                     _occupiedCells.Remove(good);
                 }
             }
