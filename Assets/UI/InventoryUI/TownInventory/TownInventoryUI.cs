@@ -10,6 +10,7 @@ using UI.Popups;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace UI.InventoryUI.TownInventory
 {
@@ -29,10 +30,13 @@ namespace UI.InventoryUI.TownInventory
         [SerializeField, Required]
         private DevelopmentGauge developmentGauge;
 
+        [SerializeField, Required]
+        private Button upgradeButton;
+        
         [Header("Inventory UI Elements")]
         [SerializeField, Required]
         private TMP_Text fundsText;
-
+        
         [SerializeField, Required]
         private TownProductionPanel productionPanel;
 
@@ -93,11 +97,17 @@ namespace UI.InventoryUI.TownInventory
 
             BindInventory(_town.Inventory);
 
+            _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged);
             _town.Tier.Observe(TownUpgrade);
 
             RefreshTownName(_town.Tier);
 
             developmentGauge.Bind(_town);
+        }
+
+        private void OnDevelopmentChanged(float developmentScore)
+        {
+            upgradeButton.interactable = developmentScore.IsApproximately(100f);
         }
 
 
