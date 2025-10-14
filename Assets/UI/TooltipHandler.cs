@@ -17,6 +17,9 @@ namespace UI
         [SerializeField]
         private bool enabledOnStart;
 
+        [SerializeField]
+        private string defaultText;
+
         private Tooltip _activeToolTip;
         private bool _isEnabled;
         private string _text = string.Empty;
@@ -27,6 +30,10 @@ namespace UI
         {
             _canvas = GetComponentInParent<Canvas>();
             SetEnabled(enabledOnStart);
+            if (!string.IsNullOrEmpty(defaultText))
+            {
+                SetTooltip(defaultText);
+            }
         }
 
         public void SetEnabled(bool isEnabled)
