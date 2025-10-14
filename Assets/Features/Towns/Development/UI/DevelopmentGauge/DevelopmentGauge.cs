@@ -52,7 +52,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
             var upgrades = _townDevelopmentConfig.Value.Milestones[tier].MilestoneData;
 
             var milestones = upgrades
-                .Select(pair => new DevelopmentMilestone.Data(pair.Key, pair.Value.Icon))
+                .Select(pair => new DevelopmentMilestone.Data(pair.Key, pair.Value.Icon, pair.Value.Description))
                 .ToList();
 
             developmentSlider.SetMilestones(milestones);

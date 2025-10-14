@@ -34,7 +34,7 @@ namespace Features.Towns.Development.Logic
             _town.ProductionManager.ProductionAdded += OnProducerAdded;
             _town.Inventory.GoodUpdated += OnGoodAdded;
 
-            UpdateDevelopmentTable(_town.Tier);
+            _town.Tier.Observe(OnTierChanged);
         }
 
         ~DevelopmentManager()
@@ -95,6 +95,12 @@ namespace Features.Towns.Development.Logic
             var modifier = new GoodsInInventoryDevelopmentModifier(modifierValue, newCount, goodTier);
             DevelopmentTrend.AddModifier(modifier);
             _goodsInInventoryModifier[goodTier] = modifier;
+        }
+
+        private void OnTierChanged(Tier tier)
+        {
+            DevelopmentScore.Value = 0;
+            UpdateDevelopmentTable(tier);
         }
 
         public void UpdateDevelopment()

@@ -13,5 +13,7 @@ namespace Features.Towns.Development.Logic.Upgrades
     {
         [field: SerializeField]
         public float DividendsPercentage { get; private set; }
+        
+        public override string Description => $"Receive {DividendsPercentage.ToPercentString()} of the towns coin production.";
     }
 }

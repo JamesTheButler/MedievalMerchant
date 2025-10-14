@@ -1,6 +1,7 @@
 using System;
 using Common;
 using NaughtyAttributes;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,16 +9,16 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
 {
     public sealed class DevelopmentMilestone : MonoBehaviour
     {
-        public record Data(float Threshold, Sprite Icon);
+        public record Data(float Threshold, Sprite Icon, string Description);
 
         [SerializeField, Required]
-        private Image milestoneImage;
+        private Image milestoneImage,topImage;
 
         [SerializeField]
         private Image baseImage;
 
         [SerializeField, Required]
-        private Image topImage;
+        private TooltipHandler tooltip;
 
         private readonly Lazy<DevelopmentMilestoneAssets> _milestoneAssets =
             new(() => ConfigurationManager.Instance.DevelopmentMilestoneAssets);
@@ -34,6 +35,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
             _slider = newSlider;
             _slider.onValueChanged.AddListener(SliderValueChanged);
             milestoneImage.sprite = data.Icon;
+            tooltip.SetTooltip(data.Description);
 
             SliderValueChanged(_slider.value);
         }

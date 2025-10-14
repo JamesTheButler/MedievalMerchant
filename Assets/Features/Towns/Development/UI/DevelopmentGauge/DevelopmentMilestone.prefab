@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7465400169020752101}
   - component: {fileID: 3441277273586232456}
   - component: {fileID: 2960143830973086068}
+  - component: {fileID: 6541706387477065123}
   m_Layer: 5
   m_Name: Top
   m_TagString: Untagged
@@ -76,6 +77,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 4
+--- !u!114 &6541706387477065123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243771536758003061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b0d54d24a073ba40b369cd9380b9c69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  offset: 0
+  enabledOnStart: 1
 --- !u!1 &4091708120710270006
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +178,6 @@ GameObject:
   - component: {fileID: 6175526161881398738}
   - component: {fileID: 3543114298593307218}
   - component: {fileID: 6183689073902998937}
-  - component: {fileID: 5052173461640051347}
   m_Layer: 5
   m_Name: Base
   m_TagString: Untagged
@@ -228,21 +243,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 4
---- !u!114 &5052173461640051347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5110592735986030716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b0d54d24a073ba40b369cd9380b9c69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
-  offset: 0
-  enabledOnStart: 1
 --- !u!1 &6834103534211464088
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,9 +277,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: 0}
-  m_SizeDelta: {x: 10, y: 20}
-  m_Pivot: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 85.90997, y: 0}
+  m_SizeDelta: {x: 11.82, y: 20}
+  m_Pivot: {x: 0.5000003, y: 0.5}
 --- !u!114 &3133124849652251419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,5 +293,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   milestoneImage: {fileID: 4924644450112654074}
-  baseImage: {fileID: 6183689073902998937}
   topImage: {fileID: 2960143830973086068}
+  baseImage: {fileID: 6183689073902998937}
+  tooltip: {fileID: 6541706387477065123}

@@ -111,5 +111,10 @@ namespace Common
         {
             return source.OfType<T>().FirstOrDefault(predicate);
         }
+
+        public static string AggregateString<T>(this IEnumerable<T> source, Func<T, string> formatter)
+        {
+            return source.Aggregate("", (result, next) => result + formatter.Invoke(next));
+        }
     }
 }

@@ -10,5 +10,7 @@ namespace Features.Towns.Development.Logic.Upgrades
     {
         [field: SerializeField]
         public float PriceBoostPercent { get; private set; }
+
+        public override string Description => $"Improves the towns prices by {PriceBoostPercent.ToPercentString()}.";
     }
 }

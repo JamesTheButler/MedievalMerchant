@@ -11,5 +11,6 @@ namespace Features.Towns.Development.Logic.Upgrades
         menuName = AssetMenu.TownUpgradesFolder + nameof(SelfSufficienyUpgradeData))]
     public sealed class SelfSufficienyUpgradeData : TownUpgradeData
     {
+        public override string Description => "The town will no longer decline over time.";
     }
 }
