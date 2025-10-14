@@ -46,6 +46,9 @@ namespace Common
         public RecipeConfig RecipeConfig { get; private set; }
 
         [field: SerializeField, Required]
+        public RegionIconConfig RegionIconConfig { get; private set; }
+
+        [field: SerializeField, Required]
         public ProducerConfig ProducerConfig { get; private set; }
 
         [field: SerializeField, Required]
