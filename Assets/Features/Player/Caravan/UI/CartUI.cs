@@ -29,7 +29,7 @@ namespace Features.Player.Caravan.UI
 
         [Header("Header")]
         [SerializeField, Required]
-        private TMP_Text moveSpeedText, upkeepText;
+        private TMP_Text moveSpeedText, upkeepText, levelText;
 
         [SerializeField, Required]
         private TooltipHandler moveSpeedTooltip, upkeepTooltip;
@@ -123,6 +123,7 @@ namespace Features.Player.Caravan.UI
             SetLocked(level <= 0);
             upgradeButton.gameObject.SetActive(level < CaravanConfig.MaxLevel);
             UpdateBackgroundImage();
+            levelText.text = $"Level {level}";
         }
 
         private void UpdateBackgroundImage()
