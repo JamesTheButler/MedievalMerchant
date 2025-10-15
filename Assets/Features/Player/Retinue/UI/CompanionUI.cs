@@ -29,7 +29,7 @@ namespace Features.Player.Retinue.UI
         private GameObject levelUiPrefab;
 
         [SerializeField, Required]
-        private SimpleTooltipHandler tooltipHandler;
+        private CompanionTooltipHandler tooltip;
 
         private RetinueManager _retinueManager;
         private CompanionConfigData _configData;
@@ -56,7 +56,9 @@ namespace Features.Player.Retinue.UI
             {
                 var levelUi = Instantiate(levelUiPrefab, levelUiParent);
                 var levelUIScript = levelUi.GetComponent<CompanionLevelUI>();
-                levelUIScript.Setup(i + 1, _configData.Levels[i], companionType); // level 0 means nothing is upgraded
+
+                // increment index by 1 as lvl 0 means nothing is upgraded
+                levelUIScript.Setup(i + 1, companionType);
                 levelUIScript.UnlockRequested += levelUpgradeRequested.Invoke;
 
                 _levelUIs.Add(levelUIScript);
@@ -65,8 +67,7 @@ namespace Features.Player.Retinue.UI
 
         private void UpdateTooltip()
         {
-            var tooltip = $"{_configData.Name}(Level {_currentLevel})\n{_configData.Description}";
-            tooltipHandler.SetTooltip(tooltip);
+            tooltip.SetTooltip(new CompanionTooltip.Data(companionType, _currentLevel));
         }
 
         // TODO - STYLE: this code is quite cumbersome and funky
@@ -81,13 +82,13 @@ namespace Features.Player.Retinue.UI
                     var levelUiId = newLevel - 1; // level 1 is in level ui 0, etc.
                     if (levelUiId >= 0)
                     {
-                        _levelUIs[levelUiId].SetUnlocked(true);
+                        _levelUIs[levelUiId].SetUpgraded(true);
                     }
 
                     var nextLevelUiId = levelUiId + 1;
                     if (nextLevelUiId < _levelUIs.Count)
                     {
-                        _levelUIs[nextLevelUiId].SetUnlockable(true);
+                        _levelUIs[nextLevelUiId].SetUnlocked(true);
                     }
                 }
             }
@@ -98,13 +99,13 @@ namespace Features.Player.Retinue.UI
                     var levelUiId = newLevel - 1; // level 1 is in level ui 0, etc.
                     if (levelUiId >= 0)
                     {
-                        _levelUIs[levelUiId].SetUnlocked(false);
+                        _levelUIs[levelUiId].SetUpgraded(false);
                     }
 
                     var nextLevelUiId = levelUiId + 1;
                     if (nextLevelUiId < _levelUIs.Count)
                     {
-                        _levelUIs[nextLevelUiId].SetUnlockable(false);
+                        _levelUIs[nextLevelUiId].SetUnlocked(false);
                     }
                 }
             }

@@ -10,41 +10,30 @@ namespace Features.Player.Retinue.UI
 {
     public sealed class CompanionLevelUI : MonoBehaviour
     {
-        private const string NotUnlockableTooltip = "Unlock previous levels first.";
-
         public event Action<CompanionType, int> UnlockRequested;
 
         [SerializeField, Required]
         private Button unlockButton;
 
         [SerializeField, Required]
-        private SimpleTooltipHandler tooltip;
+        private CompanionLevelTooltipHandler tooltip;
 
-        private CompanionLevelData _levelData;
-        private string _unlockableTooltip;
-        private string _unlockedTooltip;
         private CompanionType _companionType;
         private int _level;
+        private bool _isUnlocked, _isUpgraded;
+
 
         private void Awake()
         {
             unlockButton.onClick.AddListener(OnUnlockButtonClicked);
         }
 
-        public void Setup(int levelIndex, CompanionLevelData levelData, CompanionType companionType)
+        public void Setup(int levelIndex, CompanionType companionType)
         {
             _level = levelIndex;
-            _levelData = levelData;
             _companionType = companionType;
-            SetUpTooltipStrings();
+            SetUpgraded(false);
             SetUnlocked(false);
-            SetUnlockable(false);
-        }
-
-        private void SetUpTooltipStrings()
-        {
-            _unlockableTooltip = $"Level {_level}: {_levelData.Cost} coin\n-----\n{_levelData.Description}";
-            _unlockedTooltip = $"Level {_level}\n-----\n{_levelData.Description}";
         }
 
         private void OnUnlockButtonClicked()
@@ -52,22 +41,20 @@ namespace Features.Player.Retinue.UI
             UnlockRequested?.Invoke(_companionType, _level);
         }
 
-        public void SetUnlocked(bool unlocked)
+        public void SetUpgraded(bool isUpgraded)
         {
-            unlockButton.gameObject.SetActive(!unlocked);
+            _isUpgraded = isUpgraded;
+            unlockButton.gameObject.SetActive(!isUpgraded);
 
-            tooltip.SetTooltip(unlocked
-                ? _unlockedTooltip
-                : _unlockableTooltip);
+            tooltip.SetTooltip(new CompanionLevelTooltip.Data(_companionType, _level, _isUnlocked, _isUpgraded));
         }
 
-        public void SetUnlockable(bool unlockable)
+        public void SetUnlocked(bool unlocked)
         {
-            unlockButton.interactable = unlockable;
+            _isUnlocked = unlocked;
+            unlockButton.interactable = unlocked;
 
-            tooltip.SetTooltip(unlockable
-                ? _unlockableTooltip
-                : NotUnlockableTooltip);
+            tooltip.SetTooltip(new CompanionLevelTooltip.Data(_companionType, _level, _isUnlocked, _isUpgraded));
         }
     }
 }
