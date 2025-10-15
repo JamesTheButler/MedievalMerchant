@@ -1,6 +1,8 @@
 using System;
 using Common;
 using Common.Types;
+using Common.UI;
+using Features.Goods;
 using Features.Goods.Config;
 using NaughtyAttributes;
 using UnityEngine;
@@ -26,7 +28,7 @@ namespace UI.InventoryUI
         private Image cornerIcon;
 
         [SerializeField, Required]
-        protected TooltipHandler tooltipHandler;
+        protected SimpleTooltipHandler tooltipHandler;
 
         protected readonly Lazy<GoodsConfig> GoodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
 

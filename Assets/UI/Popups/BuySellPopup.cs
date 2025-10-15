@@ -1,6 +1,7 @@
 using System;
 using Common;
 using Common.Types;
+using Common.UI;
 using Features.Goods.Config;
 using Features.Trade;
 using NaughtyAttributes;
@@ -23,13 +24,13 @@ namespace UI.Popups
         private Button buyButton;
 
         [SerializeField, Required]
-        private TooltipHandler buyButtonTooltip;
+        private SimpleTooltipHandler buyButtonTooltip;
 
         [SerializeField, Required]
         private Button sellButton;
 
         [SerializeField, Required]
-        private TooltipHandler sellButtonTooltip;
+        private SimpleTooltipHandler sellButtonTooltip;
 
         [SerializeField, Required]
         private Image marketStateIcon;
@@ -47,8 +48,8 @@ namespace UI.Popups
 
         private void Start()
         {
-            buyButtonTooltip = buyButton.gameObject.GetComponent<TooltipHandler>();
-            sellButtonTooltip = sellButton.gameObject.GetComponent<TooltipHandler>();
+            buyButtonTooltip = buyButton.gameObject.GetComponent<SimpleTooltipHandler>();
+            sellButtonTooltip = sellButton.gameObject.GetComponent<SimpleTooltipHandler>();
 
             buyButton.onClick.AddListener(() => TradeInitiated(TradeType.Buy));
             sellButton.onClick.AddListener(() => TradeInitiated(TradeType.Sell));

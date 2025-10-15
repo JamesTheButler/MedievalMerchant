@@ -1,6 +1,7 @@
 using System;
 using Common;
 using Common.Config;
+using Common.UI;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace UI
         private Button button;
 
         [SerializeField, Required]
-        private TooltipHandler tooltipHandler;
+        private SimpleTooltipHandler tooltipHandler;
 
         public State ButtonState { get; private set; }
         public Button.ButtonClickedEvent OnClick => button.onClick;

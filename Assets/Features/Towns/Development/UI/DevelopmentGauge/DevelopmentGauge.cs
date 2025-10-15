@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Common;
 using Common.Types;
+using Common.UI;
 using Features.Towns.Development.Config;
 using Features.Towns.Development.Logic;
 using NaughtyAttributes;
@@ -25,7 +26,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
         private Image developmentTrendIcon;
 
         [SerializeField, Required]
-        private TooltipHandler developmentTrendTooltip;
+        private SimpleTooltipHandler developmentTrendTooltip;
 
         private readonly Lazy<TownDevelopmentConfig> _townDevelopmentConfig =
             new(() => ConfigurationManager.Instance.TownDevelopmentConfig);

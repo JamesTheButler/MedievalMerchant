@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.UI;
 using Features.Player.Retinue.Config;
 using NaughtyAttributes;
 using UI;
@@ -17,7 +18,7 @@ namespace Features.Player.Retinue.UI
         private Button unlockButton;
 
         [SerializeField, Required]
-        private TooltipHandler tooltip;
+        private SimpleTooltipHandler tooltip;
 
         private CompanionLevelData _levelData;
         private string _unlockableTooltip;

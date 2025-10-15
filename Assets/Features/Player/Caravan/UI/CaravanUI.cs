@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Common.Types;
+using Common.UI;
 using Features.Player.Caravan.Logic;
 using NaughtyAttributes;
 using TMPro;
@@ -21,7 +22,7 @@ namespace Features.Player.Caravan.UI
         private TMP_Text moveSpeedText, upkeepText;
 
         [SerializeField, Required]
-        private TooltipHandler moveSpeedTooltip, upkeepTooltip;
+        private SimpleTooltipHandler moveSpeedTooltip, upkeepTooltip;
 
         [SerializeField]
         private List<CartUI> cartUis;

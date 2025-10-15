@@ -1,5 +1,6 @@
 using System;
 using Common;
+using Common.UI;
 using NaughtyAttributes;
 using UI;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
         private Image baseImage;
 
         [SerializeField, Required]
-        private TooltipHandler tooltip;
+        private SimpleTooltipHandler tooltip;
 
         private readonly Lazy<DevelopmentMilestoneAssets> _milestoneAssets =
             new(() => ConfigurationManager.Instance.DevelopmentMilestoneAssets);

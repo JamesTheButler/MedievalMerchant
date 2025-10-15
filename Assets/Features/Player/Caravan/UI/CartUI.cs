@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Common;
 using Common.Config;
+using Common.UI;
 using Features.Player.Caravan.Config;
 using Features.Player.Caravan.Logic;
 using NaughtyAttributes;
@@ -38,7 +39,7 @@ namespace Features.Player.Caravan.UI
         private TMP_Text levelText;
 
         [SerializeField, Required]
-        private TooltipHandler moveSpeedTooltip, upkeepTooltip;
+        private SimpleTooltipHandler moveSpeedTooltip, upkeepTooltip;
 
         [SerializeField, Required]
         private Image moveSpeedUpgradeIcon, upkeepUpgradeIcon;

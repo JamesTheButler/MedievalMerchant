@@ -2,16 +2,16 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
-namespace UI
+namespace Common.UI
 {
-    public sealed class Tooltip : MonoBehaviour
+    public sealed class SimpleTooltip : TooltipBase<string>
     {
         [SerializeField, Required]
         private TMP_Text textfield;
 
-        public void SetText(string text)
+        public override void SetData(string data)
         {
-            textfield.text = text;
+            textfield.text = data;
         }
     }
 }

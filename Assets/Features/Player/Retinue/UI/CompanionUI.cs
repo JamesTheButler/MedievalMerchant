@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Common;
+using Common.UI;
 using Features.Player.Retinue.Config;
 using NaughtyAttributes;
 using UI;
@@ -28,7 +29,7 @@ namespace Features.Player.Retinue.UI
         private GameObject levelUiPrefab;
 
         [SerializeField, Required]
-        private TooltipHandler tooltipHandler;
+        private SimpleTooltipHandler tooltipHandler;
 
         private RetinueManager _retinueManager;
         private CompanionConfigData _configData;

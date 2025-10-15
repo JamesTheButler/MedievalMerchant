@@ -1,11 +1,10 @@
-using Common.UI;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace UI
+namespace Common.UI
 {
-    public sealed class TooltipHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public abstract class TooltipHandlerBase<TData> : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField, Required]
         private GameObject toolTipPrefab;
@@ -16,23 +15,15 @@ namespace UI
         [SerializeField]
         private bool enabledOnStart;
 
-        [SerializeField]
-        private string defaultText;
-
-        private Tooltip _activeToolTip;
+        private TooltipBase<TData> _activeToolTip;
         private bool _isEnabled;
-        private string _text = string.Empty;
-
+        private TData _data;
         private Canvas _canvas;
 
-        private void Start()
+        protected virtual void Start()
         {
             _canvas = GetComponentInParent<Canvas>();
             SetEnabled(enabledOnStart);
-            if (!string.IsNullOrEmpty(defaultText))
-            {
-                SetTooltip(defaultText);
-            }
         }
 
         public void SetEnabled(bool isEnabled)
@@ -45,12 +36,12 @@ namespace UI
             }
         }
 
-        public void SetTooltip(string text)
+        public void SetTooltip(TData data)
         {
-            _text = text;
+            _data = data;
             if (_activeToolTip != null)
             {
-                _activeToolTip.SetText(text);
+                _activeToolTip.SetData(data);
             }
         }
 
@@ -60,8 +51,8 @@ namespace UI
 
             if (_activeToolTip == null)
             {
-                _activeToolTip = Instantiate(toolTipPrefab, _canvas.transform).GetComponent<Tooltip>();
-                _activeToolTip.SetText(_text);
+                _activeToolTip = Instantiate(toolTipPrefab, _canvas.transform).GetComponent<TooltipBase<TData>>();
+                _activeToolTip.SetData(_data);
             }
 
             var topCenter = ((RectTransform)gameObject.transform).GetTopCenter();
