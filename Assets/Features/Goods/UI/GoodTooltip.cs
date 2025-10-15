@@ -1,39 +1,47 @@
 using Common;
 using Common.Config;
 using Common.Types;
+using Common.UI;
 using Features.Goods.Config;
 using NaughtyAttributes;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace Features.Goods
+namespace Features.Goods.UI
 {
-    public sealed class GoodTooltipHandler : MonoBehaviour
+    public sealed class GoodTooltip : TooltipBase<Good>
     {
         [SerializeField, Required]
-        private GameObject tooltip;
+        private TMP_Text nameText, priceText;
+
+        [SerializeField, Required]
+        private Image tierImage, regionImage;
 
         private GoodsConfig _goodsConfig;
         private TierIconConfig _tierIcons;
         private RegionIconConfig _regionIcons;
-        private Canvas _canvas;
 
         private void Awake()
         {
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             _tierIcons = ConfigurationManager.Instance.TierIconConfig;
             _regionIcons = ConfigurationManager.Instance.RegionIconConfig;
-            _canvas = GetComponentInParent<Canvas>();
         }
 
-        public void SetGood(Good good)
+        public override void SetData(Good good)
         {
-            var newTooltipObject = Instantiate(tooltip, _canvas.transform);
-            var newTooltip = newTooltipObject.GetComponent<GoodTooltip>();
             var goodData = _goodsConfig.ConfigData[good];
+
             var tier = goodData.Tier;
+            var price = _goodsConfig.BasePriceData[tier];
             var tierIcon = _tierIcons.Icons[tier];
             var regionIcon = _regionIcons.GetIcon(goodData.Regions);
-            newTooltip.SetUp(goodData.GoodName, _goodsConfig.BasePriceData[tier], tierIcon, regionIcon);
+
+            nameText.text = goodData.GoodName;
+            priceText.text = $"{price:0.##}";
+            tierImage.sprite = tierIcon;
+            regionImage.sprite = regionIcon;
         }
     }
 }

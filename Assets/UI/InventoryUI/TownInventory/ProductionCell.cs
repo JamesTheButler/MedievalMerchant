@@ -42,7 +42,6 @@ namespace UI.InventoryUI.TownInventory
         public void Lock()
         {
             unlockButton.gameObject.SetActive(true);
-            tooltipHandler.SetTooltip("Build production building.");
             tooltipHandler.SetEnabled(true);
         }
 

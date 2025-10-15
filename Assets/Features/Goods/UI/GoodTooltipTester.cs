@@ -1,7 +1,7 @@
 using Common.Types;
 using UnityEngine;
 
-namespace Features.Goods
+namespace Features.Goods.UI
 {
     public class GoodTooltipTester : MonoBehaviour
     {
@@ -12,7 +12,7 @@ namespace Features.Goods
 
         private void Start()
         {
-            GetComponent<GoodTooltipHandler>().SetGood(good);
+            GetComponent<GoodTooltipHandler>().SetTooltip(good);
         }
     }
 }

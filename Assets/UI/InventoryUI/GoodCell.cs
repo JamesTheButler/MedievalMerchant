@@ -1,9 +1,8 @@
 using System;
 using Common;
 using Common.Types;
-using Common.UI;
-using Features.Goods;
 using Features.Goods.Config;
+using Features.Goods.UI;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,7 +27,7 @@ namespace UI.InventoryUI
         private Image cornerIcon;
 
         [SerializeField, Required]
-        protected SimpleTooltipHandler tooltipHandler;
+        protected GoodTooltipHandler tooltipHandler;
 
         protected readonly Lazy<GoodsConfig> GoodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
 
@@ -56,14 +55,12 @@ namespace UI.InventoryUI
             var goodConfigData = GoodsConfig.Value.ConfigData[good!.Value];
             goodIcon.gameObject.SetActive(true);
             goodIcon.sprite = goodConfigData.Icon;
-            tooltipHandler.SetTooltip(goodConfigData.GoodName);
+            tooltipHandler.SetTooltip(good.Value);
 
             OnSetGood(good);
         }
 
-        protected virtual void OnSetGood(Good? good)
-        {
-        }
+        protected virtual void OnSetGood(Good? good) { }
 
         public void SetEnabled(bool isEnabled)
         {
