@@ -146,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6929179409471339912}
   - component: {fileID: 2934826169699311009}
-  - component: {fileID: 1234942751506057086}
+  - component: {fileID: 5535003571530305503}
   - component: {fileID: 2159777865156212436}
   m_Layer: 5
   m_Name: DevelopmentGauge
@@ -191,8 +191,8 @@ MonoBehaviour:
   developmentSlider: {fileID: 506826581135148888}
   developmentTrendText: {fileID: 911272740013224417}
   developmentTrendIcon: {fileID: 2986548051916523190}
-  developmentTrendTooltip: {fileID: 1234942751506057086}
---- !u!114 &1234942751506057086
+  developmentTrendTooltip: {fileID: 5535003571530305503}
+--- !u!114 &5535003571530305503
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,12 +201,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6854785629414018311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b0d54d24a073ba40b369cd9380b9c69, type: 3}
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
   offset: 8
-  enabledOnStart: 0
+  enabledOnStart: 1
+  defaultText: 
 --- !u!114 &2159777865156212436
 MonoBehaviour:
   m_ObjectHideFlags: 0

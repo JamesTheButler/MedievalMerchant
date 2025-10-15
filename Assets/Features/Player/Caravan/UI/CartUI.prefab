@@ -413,8 +413,8 @@ MonoBehaviour:
   moveSpeedText: {fileID: 7386974953468810812}
   upkeepText: {fileID: 99198288760885163}
   levelText: {fileID: 5022697919536362038}
-  moveSpeedTooltip: {fileID: 371168912669960586}
-  upkeepTooltip: {fileID: 4587765569775149277}
+  moveSpeedTooltip: {fileID: 1366777133876543310}
+  upkeepTooltip: {fileID: 2304209337858888639}
   moveSpeedUpgradeIcon: {fileID: 6119292984187641907}
   upkeepUpgradeIcon: {fileID: 3100774230104923088}
   upgradeButton: {fileID: 2118116828575942683}
@@ -433,7 +433,7 @@ GameObject:
   - component: {fileID: 8587323417101275924}
   - component: {fileID: 2941449457687253961}
   - component: {fileID: 3666295473956021152}
-  - component: {fileID: 4587765569775149277}
+  - component: {fileID: 2304209337858888639}
   m_Layer: 5
   m_Name: UpkeepGroup
   m_TagString: Untagged
@@ -547,7 +547,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4587765569775149277
+--- !u!114 &2304209337858888639
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -556,12 +556,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3334749035284829851}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b0d54d24a073ba40b369cd9380b9c69, type: 3}
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
-  offset: 4
+  offset: 8
   enabledOnStart: 1
+  defaultText: 
 --- !u!1 &4107930230444622493
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,7 +1258,7 @@ GameObject:
   - component: {fileID: 2609775086565295367}
   - component: {fileID: 2125205959359267327}
   - component: {fileID: 5343145963907739865}
-  - component: {fileID: 371168912669960586}
+  - component: {fileID: 1366777133876543310}
   m_Layer: 5
   m_Name: MoveSpeedGroup
   m_TagString: Untagged
@@ -1371,7 +1372,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &371168912669960586
+--- !u!114 &1366777133876543310
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1380,12 +1381,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8620069233462931267}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b0d54d24a073ba40b369cd9380b9c69, type: 3}
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
-  offset: 4
+  offset: 8
   enabledOnStart: 1
+  defaultText: 
 --- !u!1 &8702696165902428115
 GameObject:
   m_ObjectHideFlags: 0

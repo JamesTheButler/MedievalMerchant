@@ -56,8 +56,8 @@ MonoBehaviour:
       m_Calls: []
   moveSpeedText: {fileID: 7936395345875995176}
   upkeepText: {fileID: 8105782739784979793}
-  moveSpeedTooltip: {fileID: 4952424764357491664}
-  upkeepTooltip: {fileID: 1218351091266532812}
+  moveSpeedTooltip: {fileID: 2135822425973656045}
+  upkeepTooltip: {fileID: 981775401419882935}
   cartUis:
   - {fileID: 8843989410206628319}
   - {fileID: 99772124807130788}
@@ -298,7 +298,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3138047792720970419}
-  - component: {fileID: 4952424764357491664}
+  - component: {fileID: 2135822425973656045}
   - component: {fileID: 3841182751853593488}
   - component: {fileID: 5566972131545605799}
   - component: {fileID: 574878421823111667}
@@ -330,7 +330,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 130, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4952424764357491664
+--- !u!114 &2135822425973656045
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -339,12 +339,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2638863378287551354}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b0d54d24a073ba40b369cd9380b9c69, type: 3}
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
   offset: 8
   enabledOnStart: 1
+  defaultText: 
 --- !u!114 &3841182751853593488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,7 +494,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3010552972641696118}
-  - component: {fileID: 1218351091266532812}
+  - component: {fileID: 981775401419882935}
   - component: {fileID: 8144195562023835938}
   - component: {fileID: 1615212740031494869}
   - component: {fileID: 4220675466925044562}
@@ -526,7 +527,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 139.666, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1218351091266532812
+--- !u!114 &981775401419882935
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -535,12 +536,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5846319150452008254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b0d54d24a073ba40b369cd9380b9c69, type: 3}
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
   offset: 8
   enabledOnStart: 1
+  defaultText: 
 --- !u!114 &8144195562023835938
 MonoBehaviour:
   m_ObjectHideFlags: 0
