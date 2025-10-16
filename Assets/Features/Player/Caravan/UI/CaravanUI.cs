@@ -6,7 +6,6 @@ using Common.UI;
 using Features.Player.Caravan.Logic;
 using NaughtyAttributes;
 using TMPro;
-using UI;
 using UI.InventoryUI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,7 +21,7 @@ namespace Features.Player.Caravan.UI
         private TMP_Text moveSpeedText, upkeepText;
 
         [SerializeField, Required]
-        private SimpleTooltipHandler moveSpeedTooltip, upkeepTooltip;
+        private ModifiableTooltipHandler moveSpeedTooltip, upkeepTooltip;
 
         [SerializeField]
         private List<CartUI> cartUis;
@@ -47,6 +46,9 @@ namespace Features.Player.Caravan.UI
 
             _caravanManager.MoveSpeed.Observe(OnMoveSpeedChanged);
             _caravanManager.Upkeep.Observe(OnUpkeepChanged);
+
+            moveSpeedTooltip.SetTooltip(_caravanManager.MoveSpeed);
+            upkeepTooltip.SetTooltip(_caravanManager.Upkeep);
 
             _playerInventory.GoodUpdated += OnGoodAdded;
         }
@@ -105,13 +107,11 @@ namespace Features.Player.Caravan.UI
         private void OnMoveSpeedChanged(float moveSpeed)
         {
             moveSpeedText.text = moveSpeed.ToString("0.##");
-            moveSpeedTooltip.SetTooltip(_caravanManager.MoveSpeed.ToString());
         }
 
         private void OnUpkeepChanged(float upkeep)
         {
             upkeepText.text = upkeep.ToString("0.##");
-            upkeepTooltip.SetTooltip(_caravanManager.Upkeep.ToString());
         }
     }
 }

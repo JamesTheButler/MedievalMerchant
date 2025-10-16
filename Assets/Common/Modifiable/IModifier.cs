@@ -4,8 +4,8 @@ namespace Common.Modifiable
     {
         // TODO - CORE: use ModifiableVariable instead
         public float Value { get; }
-        public string Description { get; }
 
-        public string ToDisplayString();
+        public string FormattedValue { get; }
+        public string Description { get; }
     }
 }

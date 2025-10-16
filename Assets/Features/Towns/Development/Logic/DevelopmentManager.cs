@@ -12,7 +12,7 @@ namespace Features.Towns.Development.Logic
 {
     public sealed class DevelopmentManager
     {
-        public ModifiableVariable DevelopmentTrend { get; } = new();
+        public ModifiableVariable DevelopmentTrend { get; } = new("Development Trend", null, true);
         public Observable<float> DevelopmentScore { get; } = new();
         public Observable<DevelopmentTrend> GrowthTrend { get; } = new();
 

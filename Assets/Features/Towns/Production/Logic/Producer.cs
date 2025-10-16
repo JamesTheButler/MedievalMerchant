@@ -31,7 +31,7 @@ namespace Features.Towns.Production.Logic
             var recipeConfig = ConfigurationManager.Instance.RecipeConfig;
 
             var baseModifier = new BaseProductionValue(producedGood);
-            ProductionRate = new ModifiableVariable(baseModifier);
+            ProductionRate = new ModifiableVariable("Production Rate",baseModifier);
 
             _recipe = recipeConfig.GetRecipe(producedGood);
         }

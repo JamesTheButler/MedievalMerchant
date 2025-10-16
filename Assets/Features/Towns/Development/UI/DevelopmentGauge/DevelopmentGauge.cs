@@ -7,9 +7,7 @@ using Features.Towns.Development.Config;
 using Features.Towns.Development.Logic;
 using NaughtyAttributes;
 using TMPro;
-using UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Features.Towns.Development.UI.DevelopmentGauge
@@ -26,7 +24,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
         private Image developmentTrendIcon;
 
         [SerializeField, Required]
-        private SimpleTooltipHandler developmentTrendTooltip;
+        private ModifiableTooltipHandler developmentTrendTooltip;
 
         private readonly Lazy<TownDevelopmentConfig> _townDevelopmentConfig =
             new(() => ConfigurationManager.Instance.TownDevelopmentConfig);
@@ -73,7 +71,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
             var trend = _developmentManager.DevelopmentTrend;
             var modifiers = trend.Modifiers;
             developmentTrendTooltip.SetEnabled(modifiers.Any());
-            developmentTrendTooltip.SetTooltip(trend.ToString());
+            developmentTrendTooltip.SetTooltip(trend);
         }
 
         private void UpdateDevelopmentScore(float score)

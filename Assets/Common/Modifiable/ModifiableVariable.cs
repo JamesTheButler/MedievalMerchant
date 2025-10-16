@@ -12,22 +12,19 @@ namespace Common.Modifiable
         public float BaseValue { get; private set; }
         public IReadOnlyList<IModifier> Modifiers => _modifiers;
 
+        public string Description { get; private set; }
+
         private float _percentageChanges;
         private float _floatChanges;
 
+        public bool IsBiggerBetter { get; }
+
         private readonly List<IModifier> _modifiers = new();
 
-        public ModifiableVariable()
+        public ModifiableVariable(string description, BaseValueModifier baseValue = null, bool isBiggerBetter = false)
         {
-        }
-
-        public ModifiableVariable(float baseValue)
-        {
-            AddModifier(new GenericBaseValueModifier(baseValue));
-        }
-
-        public ModifiableVariable(BaseValueModifier baseValue)
-        {
+            Description = description;
+            IsBiggerBetter = isBiggerBetter;
             AddModifier(baseValue);
         }
 
@@ -98,12 +95,6 @@ namespace Common.Modifiable
             Value = BaseValue * (1 + _percentageChanges) + _floatChanges;
         }
 
-        // TODO - CORE: remove when changing Modifier.Value to ModifiableValue
-        public void ForceRefresh()
-        {
-            RefreshValue();
-        }
-
         public override string ToString()
         {
             var baseModifier = Modifiers.FirstOfType<BaseValueModifier, IModifier>();
@@ -120,12 +111,12 @@ namespace Common.Modifiable
             if (baseModifier is not null)
             {
                 builder
-                    .AppendLine(baseModifier.ToDisplayString())
+                    .AppendLine(baseModifier.Description)
                     .AppendLine("--------------------");
             }
 
             builder
-                .AppendJoin("\n", allOtherModifiers.Select(modifier => modifier.ToDisplayString()));
+                .AppendJoin("\n", allOtherModifiers.Select(modifier => modifier.Description));
             return builder.ToString();
         }
     }

@@ -29,8 +29,14 @@ namespace Features.Player.Caravan.Logic
         public CaravanManager()
         {
             _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
-            MoveSpeed = new ModifiableVariable(new AverageBaseValueModifier(0, "Movement Speed"));
-            Upkeep = new ModifiableVariable(new BaseUpkeepModifier(_caravanConfig.BaseUpkeep));
+            MoveSpeed = new ModifiableVariable(
+                "Movement Speed",
+                new AverageBaseValueModifier(0, "Movement Speed"),
+                true);
+
+            Upkeep = new ModifiableVariable(
+                "Caravan Upkeep",
+                new BaseUpkeepModifier(_caravanConfig.BaseUpkeep));
 
             for (var i = 0; i < CaravanConfig.MaxCartCount; i++)
             {
