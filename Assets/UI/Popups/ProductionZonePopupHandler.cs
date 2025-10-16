@@ -1,4 +1,5 @@
 using Common;
+using Common.Types;
 using Features.Goods.Config;
 using Features.Map;
 using UnityEngine;
@@ -41,6 +42,8 @@ namespace UI.Popups
             var screenPosition = Camera.main!.WorldToScreenPoint(worldPosition);
             productionZonePopup.gameObject.transform.position = screenPosition;
 
+            // TODO - HACK: a prod zone should have exactly one associated region.
+            productionZonePopup.SetRegion(zone.Regions.GetRandom());
             foreach (var tier1Good in zone.AvailableGoods)
             {
                 var tier2Good = _recipeConfig.GetTier2RecipeForComponent(tier1Good).Result;

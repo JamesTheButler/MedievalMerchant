@@ -20,13 +20,13 @@ namespace Features.Goods.UI
 
         private GoodsConfig _goodsConfig;
         private TierIconConfig _tierIcons;
-        private RegionIconConfig _regionIcons;
+        private RegionConfig _region;
 
         private void Awake()
         {
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             _tierIcons = ConfigurationManager.Instance.TierIconConfig;
-            _regionIcons = ConfigurationManager.Instance.RegionIconConfig;
+            _region = ConfigurationManager.Instance.RegionConfig;
         }
 
         public override void SetData(Good good)
@@ -36,13 +36,13 @@ namespace Features.Goods.UI
             var tier = goodData.Tier;
             var price = _goodsConfig.BasePriceData[tier];
             var tierIcon = _tierIcons.Icons[tier];
-            // TODO - POLISH: should it take first instead of random?
-            var regionIcon = _regionIcons.Icons[goodData.Regions.GetRandom()];
+            // TODO - HACK: should it take First() instead of random?
+            var regionIcon = _region.Data[goodData.Regions.GetRandom()];
 
             nameText.text = goodData.GoodName;
             priceText.text = $"{price:0.##}";
             tierImage.sprite = tierIcon;
-            regionImage.sprite = regionIcon;
+            regionImage.sprite = regionIcon.Icon;
         }
     }
 }

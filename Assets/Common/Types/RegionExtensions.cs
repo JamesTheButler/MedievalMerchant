@@ -1,5 +1,5 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace Common.Types
 {
@@ -7,19 +7,21 @@ namespace Common.Types
     {
         public static Region GetRandom(this Regions regions)
         {
-            var activeRegions = Enum.GetValues(typeof(Regions))
-                .Cast<Regions>()
-                .Where(region => regions.HasFlag(region))
-                .ToList();
+            var activeRegions = new List<Region>();
 
-            if (activeRegions.Count == 0)
+            foreach (Region region in Enum.GetValues(typeof(Region)))
             {
-                return Region.Forest;
+                var flag = (Regions)(1 << (int)region);
+                if (regions.HasFlag(flag))
+                {
+                    activeRegions.Add(region);
+                }
             }
 
-            return (Region)(int)activeRegions[new Random().Next(activeRegions.Count)];
+            return activeRegions.Count == 0
+                ? Region.Forest
+                : activeRegions[new Random().Next(activeRegions.Count)];
         }
-
 
         public static Regions AsRegions(this Region region)
         {

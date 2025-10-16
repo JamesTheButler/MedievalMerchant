@@ -25,9 +25,6 @@ namespace Features.Towns.Flags.Config
         private SerializedDictionary<FlagColor, Color> goodIconColor;
 
         [SerializeField]
-        private Sprite placeholder;
-
-        [SerializeField]
         private int pixelsPerUnit = 16;
 
         [SerializeField]
