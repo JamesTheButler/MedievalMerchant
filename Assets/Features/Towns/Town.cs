@@ -38,7 +38,7 @@ namespace Features.Towns
         public Vector2Int GridLocation { get; }
         public Vector2 WorldLocation { get; }
         public HashSet<Good> AvailableGoods { get; }
-        public Regions MainRegion { get; }
+        public Region MainRegion { get; }
         public Regions Regions { get; }
 
         public Town(
@@ -60,7 +60,7 @@ namespace Features.Towns
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             AvailableGoods = availableGoods.ToHashSet();
 
-            Name = _townConfig.GetNameGenerator(MainRegion).GenerateName();
+            Name = _townConfig.NameGenerators[MainRegion].GenerateName();
 
             Tier.Value = Common.Types.Tier.Tier1;
             _inventoryPolicy.SetTier(Common.Types.Tier.Tier1);

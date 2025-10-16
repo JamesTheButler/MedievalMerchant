@@ -32,7 +32,7 @@ namespace Features.Towns.Flags.Test
                 var flag = flagObject.GetComponent<FlagUI>();
                 flag.name = $"Flag_{color}_{shape}";
 
-                var info = new FlagInfo(color, shape, Regions.Fields);
+                var info = new FlagInfo(color, shape, Region.Fields);
                 flag.SetFlag(info);
             }
         }

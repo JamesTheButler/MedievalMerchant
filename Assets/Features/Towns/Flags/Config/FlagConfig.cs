@@ -18,10 +18,10 @@ namespace Features.Towns.Flags.Config
         [SerializeField]
         private Texture2D flags;
 
-        [FormerlySerializedAs("goodIcons"), SerializeField, SerializedDictionary]
-        private SerializedDictionary<Regions, Sprite> regionIcons;
+        [SerializeField, SerializedDictionary("Region", "Icon")]
+        private SerializedDictionary<Region, Sprite> regionIcons;
 
-        [SerializeField, SerializedDictionary]
+        [SerializeField, SerializedDictionary("Flag Color", "Icon Color")]
         private SerializedDictionary<FlagColor, Color> goodIconColor;
 
         [SerializeField]
@@ -39,7 +39,7 @@ namespace Features.Towns.Flags.Config
         {
             return new Data(
                 GetFlagSprite(info.Color, info.Shape),
-                GetRegionIcon(info.Region),
+                regionIcons[info.Region],
                 goodIconColor[info.Color]);
         }
 
@@ -57,16 +57,6 @@ namespace Features.Towns.Flags.Config
             var sprite = Sprite.Create(flags, spriteRect, pivot, pixelsPerUnit);
             _cache.Add(index, sprite);
             return sprite;
-        }
-
-        private Sprite GetRegionIcon(Regions region)
-        {
-            foreach (var (_, sprite) in regionIcons.Where(key => region.HasFlag(key.Key)))
-            {
-                return sprite;
-            }
-
-            return regionIcons[Regions.Forest];
         }
     }
 }

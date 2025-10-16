@@ -9,7 +9,7 @@ namespace Features.Towns.Flags.Logic
     {
         private readonly List<FlagInfo> _createdFlags = new();
 
-        public FlagInfo CreateFlagInfo(Regions townRegion)
+        public FlagInfo CreateFlagInfo(Region townRegion)
         {
             FlagInfo candidate;
             do

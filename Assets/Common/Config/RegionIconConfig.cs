@@ -10,19 +10,9 @@ namespace Common.Config
     public sealed class RegionIconConfig : ScriptableObject
     {
         [field: SerializeField, SerializedDictionary("Region", "Icon")]
-        public SerializedDictionary<Regions, Sprite> Icons { get; private set; }
+        public SerializedDictionary<Region, Sprite> Icons { get; private set; }
 
         [SerializeField]
         private Sprite fallbackIcon;
-
-        public Sprite GetIcon(Regions regionFlags)
-        {
-            foreach (var (_, sprite) in Icons.Where(key => regionFlags.HasFlag(key.Key)))
-            {
-                return sprite;
-            }
-
-            return fallbackIcon;
-        }
     }
 }

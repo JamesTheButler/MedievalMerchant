@@ -1,13 +1,10 @@
-using System;
-
 namespace Common.Types
 {
-    [Flags]
-    public enum Regions
+    public enum Region
     {
-        Forest = 1 << 0,
-        Ocean = 1 << 1,
-        Fields = 1 << 2,
-        Mountains = 1 << 3,
+        Forest = 0,
+        Ocean = 1,
+        Fields = 2,
+        Mountains = 3,
     }
 }

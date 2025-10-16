@@ -36,7 +36,8 @@ namespace Features.Goods.UI
             var tier = goodData.Tier;
             var price = _goodsConfig.BasePriceData[tier];
             var tierIcon = _tierIcons.Icons[tier];
-            var regionIcon = _regionIcons.GetIcon(goodData.Regions);
+            // TODO - POLISH: should it take first instead of random?
+            var regionIcon = _regionIcons.Icons[goodData.Regions.GetRandom()];
 
             nameText.text = goodData.GoodName;
             priceText.text = $"{price:0.##}";
