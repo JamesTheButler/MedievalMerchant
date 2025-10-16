@@ -1,8 +1,11 @@
 using System;
+using System.Linq;
 using AYellowpaper.SerializedCollections;
 using Common;
 using Common.Types;
+using NaughtyAttributes;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Features.Towns.Config
 {
@@ -24,6 +27,13 @@ namespace Features.Towns.Config
         [SerializeField, SerializedDictionary("Good Tier", "Consumption Rate")]
         private SerializedDictionary<Tier, int> tier3ConsumptionRate;
 
+        [SerializeField, SerializedDictionary("Region", "Name Generator"), Header("Town Setup")]
+        private SerializedDictionary<Regions, TownNameGenerator> nameGenerators;
+
+        [SerializeField]
+        private float minStartFunds = 300, maxStartFunds = 700;
+
+
         public int? GetConsumptionRate(Tier townTier, Tier goodTier)
         {
             var limitDict = townTier switch
@@ -35,6 +45,21 @@ namespace Features.Towns.Config
             };
 
             return limitDict.TryGetValue(goodTier, out var value) ? value : null;
+        }
+
+        public TownNameGenerator GetNameGenerator(Regions regionFlags)
+        {
+            foreach (var (_, sprite) in nameGenerators.Where(key => regionFlags.HasFlag(key.Key)))
+            {
+                return sprite;
+            }
+
+            return nameGenerators[Regions.Forest];
+        }
+
+        public float GetStartFunds()
+        {
+            return UnityEngine.Random.Range(minStartFunds, maxStartFunds);
         }
     }
 }

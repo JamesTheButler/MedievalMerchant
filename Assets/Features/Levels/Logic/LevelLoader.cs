@@ -27,9 +27,6 @@ namespace Features.Levels.Logic
         [SerializeField, Required]
         private LevelInfo levelInfo;
 
-        [SerializeField]
-        private List<TownSetupInfo> townInfos;
-
         // 1.5 accounts for diagonally adjacent zones (where distance would be sqrt(2))
         private const float ZoneDistance = 1.5f;
 
@@ -77,14 +74,11 @@ namespace Features.Levels.Logic
 
         private Town GenerateTown(Vector2Int townPosition, List<ProductionZone> adjacentZones)
         {
-            // BUG: setup should be derived from neighboring zones
-            var setup = townInfos.GetRandom();
             var worldPosition = tileGrid.CellToWorld(townPosition.FromXY());
             var townRegions = adjacentZones.Select(zone => zone.Regions).AggregateFlags();
             var availableGoods = GetAllZoneGoods(adjacentZones);
 
             var town = new Town(
-                setup,
                 townPosition,
                 worldPosition,
                 townRegions,

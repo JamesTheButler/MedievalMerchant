@@ -1,25 +1,26 @@
 using System.Collections.Generic;
 using Common;
 using Common.Types;
+using Features.Towns.Flags.Config;
 
 namespace Features.Towns.Flags.Logic
 {
     public sealed class FlagFactory
     {
-        private readonly List<(FlagColor Color, FlagShape Shape)> _createdFlags = new();
+        private readonly List<FlagInfo> _createdFlags = new();
 
-        public FlagInfo CreateFlagInfo(Good good)
+        public FlagInfo CreateFlagInfo(Regions townRegion)
         {
-            (FlagColor Color, FlagShape Shape) candidate;
+            FlagInfo candidate;
             do
             {
                 var candidateColor = EnumExtensions.GetRandom<FlagColor>();
                 var candidateShape = EnumExtensions.GetRandom<FlagShape>();
-                candidate = (candidateColor, candidateShape);
+                candidate = new FlagInfo(candidateColor, candidateShape, townRegion);
             } while (_createdFlags.Contains(candidate));
 
             _createdFlags.Add(candidate);
-            return new FlagInfo(candidate.Color, candidate.Shape, good);
+            return candidate;
         }
     }
 }

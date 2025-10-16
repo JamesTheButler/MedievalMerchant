@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using AYellowpaper.SerializedCollections;
 using Common;
 using Common.Types;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Features.Towns.Flags.Config
 {
@@ -11,13 +13,13 @@ namespace Features.Towns.Flags.Config
         menuName = AssetMenu.ConfigDataFolder + nameof(FlagConfig))]
     public sealed class FlagConfig : ScriptableObject
     {
-        public sealed record Data(Sprite Flag, Sprite GoodIcon, Color GoodColor);
+        public sealed record Data(Sprite Flag, Sprite RegionIcon, Color GoodColor);
 
         [SerializeField]
         private Texture2D flags;
 
-        [SerializeField, SerializedDictionary]
-        private SerializedDictionary<Good, Sprite> goodIcons;
+        [FormerlySerializedAs("goodIcons"), SerializeField, SerializedDictionary]
+        private SerializedDictionary<Regions, Sprite> regionIcons;
 
         [SerializeField, SerializedDictionary]
         private SerializedDictionary<FlagColor, Color> goodIconColor;
@@ -35,7 +37,10 @@ namespace Features.Towns.Flags.Config
 
         public Data GetData(FlagInfo info)
         {
-            return new Data(GetFlagSprite(info.Color, info.Shape), GetGoodIcon(info.Good), goodIconColor[info.Color]);
+            return new Data(
+                GetFlagSprite(info.Color, info.Shape),
+                GetRegionIcon(info.Region),
+                goodIconColor[info.Color]);
         }
 
         private Sprite GetFlagSprite(FlagColor color, FlagShape shape)
@@ -54,11 +59,14 @@ namespace Features.Towns.Flags.Config
             return sprite;
         }
 
-        private Sprite GetGoodIcon(Good good)
+        private Sprite GetRegionIcon(Regions region)
         {
-            return goodIcons.ContainsKey(good)
-                ? goodIcons[good]
-                : placeholder;
+            foreach (var (_, sprite) in regionIcons.Where(key => region.HasFlag(key.Key)))
+            {
+                return sprite;
+            }
+
+            return regionIcons[Regions.Forest];
         }
     }
 }

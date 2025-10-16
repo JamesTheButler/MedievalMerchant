@@ -38,9 +38,10 @@ namespace Features.Towns
         public Vector2Int GridLocation { get; }
         public Vector2 WorldLocation { get; }
         public HashSet<Good> AvailableGoods { get; }
+        public Regions MainRegion { get; }
         public Regions Regions { get; }
 
-        public Town(TownSetupInfo setupInfo,
+        public Town(
             Vector2Int gridLocation,
             Vector2 worldLocation,
             Regions regions,
@@ -53,12 +54,13 @@ namespace Features.Towns
             GridLocation = gridLocation;
             WorldLocation = worldLocation;
             Regions = regions;
+            MainRegion = regions.GetRandom();
 
             _townConfig = ConfigurationManager.Instance.TownConfig;
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             AvailableGoods = availableGoods.ToHashSet();
 
-            Name = setupInfo.NameGenerator.GenerateName();
+            Name = _townConfig.GetNameGenerator(MainRegion).GenerateName();
 
             Tier.Value = Common.Types.Tier.Tier1;
             _inventoryPolicy.SetTier(Common.Types.Tier.Tier1);
@@ -69,11 +71,11 @@ namespace Features.Towns
             DevelopmentManager = new DevelopmentManager(this);
             UpgradeManager = new TownUpgradeManager(this);
 
-            Inventory.AddFunds(setupInfo.InitialFunds);
+            Inventory.AddFunds(_townConfig.GetStartFunds());
 
             var startGood = AvailableGoods.GetRandom();
             AddProduction(startGood, 0);
-            FlagInfo = flagFactory.CreateFlagInfo(startGood);
+            FlagInfo = flagFactory.CreateFlagInfo(MainRegion);
         }
 
         public void Tick()

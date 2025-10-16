@@ -19,7 +19,7 @@ namespace Features.Towns.Flags.UI
             var data = _flagConfig.Value.GetData(info);
 
             flagImage.sprite = data.Flag;
-            goodImage.sprite = data.GoodIcon;
+            goodImage.sprite = data.RegionIcon;
             goodImage.color = data.GoodColor;
         }
     }
