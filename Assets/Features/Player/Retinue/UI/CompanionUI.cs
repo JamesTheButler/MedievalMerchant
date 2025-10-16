@@ -67,7 +67,7 @@ namespace Features.Player.Retinue.UI
 
         private void UpdateTooltip()
         {
-            tooltip.SetTooltip(new CompanionTooltip.Data(companionType, _currentLevel));
+            tooltip.SetData(new CompanionTooltip.Data(companionType, _currentLevel));
         }
 
         // TODO - STYLE: this code is quite cumbersome and funky

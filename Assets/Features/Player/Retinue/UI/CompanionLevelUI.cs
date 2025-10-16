@@ -46,7 +46,7 @@ namespace Features.Player.Retinue.UI
             _isUpgraded = isUpgraded;
             unlockButton.gameObject.SetActive(!isUpgraded);
 
-            tooltip.SetTooltip(new CompanionLevelTooltip.Data(_companionType, _level, _isUnlocked, _isUpgraded));
+            tooltip.SetData(new CompanionLevelTooltip.Data(_companionType, _level, _isUnlocked, _isUpgraded));
         }
 
         public void SetUnlocked(bool unlocked)
@@ -54,7 +54,7 @@ namespace Features.Player.Retinue.UI
             _isUnlocked = unlocked;
             unlockButton.interactable = unlocked;
 
-            tooltip.SetTooltip(new CompanionLevelTooltip.Data(_companionType, _level, _isUnlocked, _isUpgraded));
+            tooltip.SetData(new CompanionLevelTooltip.Data(_companionType, _level, _isUnlocked, _isUpgraded));
         }
     }
 }

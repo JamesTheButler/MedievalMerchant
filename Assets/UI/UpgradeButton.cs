@@ -49,7 +49,7 @@ namespace UI
                     Show();
                     button.interactable = false;
                     tooltipHandler.SetEnabled(true);
-                    tooltipHandler.SetTooltip("Unlock previous upgrades first.");
+                    tooltipHandler.SetData("Unlock previous upgrades first.");
                     break;
                 case State.Active:
                     Show();

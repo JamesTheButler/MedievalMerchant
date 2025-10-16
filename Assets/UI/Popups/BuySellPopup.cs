@@ -71,14 +71,14 @@ namespace UI.Popups
         {
             buyButton.interactable = canBuy.Success;
             buyButtonTooltip.SetEnabled(!canBuy.Success);
-            buyButtonTooltip.SetTooltip(canBuy.Error);
+            buyButtonTooltip.SetData(canBuy.Error);
         }
 
         public void CanSell(TradeResult canSell)
         {
             sellButton.interactable = canSell.Success;
             sellButtonTooltip.SetEnabled(!canSell.Success);
-            sellButtonTooltip.SetTooltip(canSell.Error);
+            sellButtonTooltip.SetData(canSell.Error);
         }
 
         public void SetMarketState(Availability availability)

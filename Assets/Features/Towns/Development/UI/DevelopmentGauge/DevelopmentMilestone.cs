@@ -36,7 +36,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
             _slider = newSlider;
             _slider.onValueChanged.AddListener(SliderValueChanged);
             milestoneImage.sprite = data.Icon;
-            tooltip.SetTooltip(data.Description);
+            tooltip.SetData(data.Description);
 
             SliderValueChanged(_slider.value);
         }

@@ -12,7 +12,7 @@ namespace Common.UI
             base.Start();
             if (!string.IsNullOrEmpty(defaultText))
             {
-                SetTooltip(defaultText);
+                SetData(defaultText);
             }
         }
     }

@@ -36,7 +36,7 @@ namespace Common.UI
             }
         }
 
-        public void SetTooltip(TData data)
+        public void SetData(TData data)
         {
             _data = data;
             if (_activeToolTip != null)

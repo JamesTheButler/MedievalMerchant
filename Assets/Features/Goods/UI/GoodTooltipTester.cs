@@ -12,7 +12,7 @@ namespace Features.Goods.UI
 
         private void Start()
         {
-            GetComponent<GoodTooltipHandler>().SetTooltip(good);
+            GetComponent<GoodTooltipHandler>().SetData(good);
         }
     }
 }

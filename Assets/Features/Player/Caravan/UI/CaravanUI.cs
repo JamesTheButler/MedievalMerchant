@@ -47,8 +47,8 @@ namespace Features.Player.Caravan.UI
             _caravanManager.MoveSpeed.Observe(OnMoveSpeedChanged);
             _caravanManager.Upkeep.Observe(OnUpkeepChanged);
 
-            moveSpeedTooltip.SetTooltip(_caravanManager.MoveSpeed);
-            upkeepTooltip.SetTooltip(_caravanManager.Upkeep);
+            moveSpeedTooltip.SetData(_caravanManager.MoveSpeed);
+            upkeepTooltip.SetData(_caravanManager.Upkeep);
 
             _playerInventory.GoodUpdated += OnGoodAdded;
         }

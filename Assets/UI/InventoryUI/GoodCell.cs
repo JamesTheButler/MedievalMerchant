@@ -55,7 +55,7 @@ namespace UI.InventoryUI
             var goodConfigData = GoodsConfig.Value.ConfigData[good!.Value];
             goodIcon.gameObject.SetActive(true);
             goodIcon.sprite = goodConfigData.Icon;
-            tooltipHandler.SetTooltip(good.Value);
+            tooltipHandler.SetData(good.Value);
 
             OnSetGood(good);
         }

@@ -194,7 +194,7 @@ namespace Features.Player.Caravan.UI
             var moveSpeed = _cart.MoveSpeed.Value.ToString("N0");
             moveSpeedText.text = moveSpeed;
             moveSpeedText.color = _colors.FontDark;
-            moveSpeedTooltip.SetTooltip($"Movement Speed: {moveSpeed}");
+            moveSpeedTooltip.SetData($"Movement Speed: {moveSpeed}");
         }
 
         private void UpdateUpkeepText()
@@ -202,7 +202,7 @@ namespace Features.Player.Caravan.UI
             var upkeep = _cart.Upkeep.Value.ToString("N0");
             upkeepText.text = upkeep;
             upkeepText.color = _colors.FontDark;
-            upkeepTooltip.SetTooltip($"Upkeep: {upkeep}");
+            upkeepTooltip.SetData($"Upkeep: {upkeep}");
         }
 
         private void HoverTextfield(

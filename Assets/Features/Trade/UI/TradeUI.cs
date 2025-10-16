@@ -1,8 +1,11 @@
 using System;
 using Common;
 using Common.Config;
+using Common.Modifiable;
 using Common.Types;
+using Common.UI;
 using Features.Goods.Config;
+using Features.Goods.UI;
 using Features.Towns;
 using Features.Trade.Logic.Price;
 using NaughtyAttributes;
@@ -15,28 +18,22 @@ namespace Features.Trade.UI
     public sealed class TradeUI : MonoBehaviour
     {
         [SerializeField, Required]
-        private TMP_Text goodAmountText;
+        private TMP_Text goodAmountText, coinAmountText;
 
         [SerializeField, Required]
         private Image goodIcon;
 
         [SerializeField, Required]
-        private TMP_Text coinAmountText;
-
-        [SerializeField, Required]
-        private Button buyButton;
-
-        [SerializeField, Required]
-        private Button sellButton;
-
-        [SerializeField, Required]
-        private Button cancelButton;
+        private Button buyButton, sellButton, cancelButton;
 
         [SerializeField, Required]
         private Slider amountSlider;
 
         [SerializeField, Required]
-        private TMP_Text modifiersText;
+        private GoodTooltipHandler goodTooltip;
+
+        [SerializeField, Required]
+        private ModifiableTooltipHandler priceTooltip;
 
         private readonly Lazy<Model> _model = new(() => Model.Instance);
         private readonly Lazy<Selection> _selection = new(() => Selection.Instance);
@@ -58,23 +55,31 @@ namespace Features.Trade.UI
         private Inventory.Inventory _buyingInventory;
         private Inventory.Inventory _sellingInventory;
 
+        private ModifiableVariable _goodPrice;
         private PriceCalculator _priceCalculator;
 
         public void Initialize(Good good, TradeType tradeType)
         {
             _tradeType = tradeType;
             _good = good;
+
             _goodConfigData = _configurationManager.Value.ConfigData[good];
             goodIcon.sprite = _goodConfigData.Icon;
 
             SetUpButtons();
             SetUpInventories();
 
+            _goodPrice = _priceCalculator.GetPrice(_good, _tradeType);
+
             SetAmount(0);
             amountSlider.minValue = 0;
             amountSlider.value = 0;
             amountSlider.maxValue = _sellerGoodAmount;
             amountSlider.onValueChanged.AddListener(TradeSliderUpdate);
+
+            // set tooltips            
+            goodTooltip.SetData(_good);
+            priceTooltip.SetData(_goodPrice);
 
             gameObject.SetActive(true);
 
@@ -99,6 +104,12 @@ namespace Features.Trade.UI
             _isInitialized = false;
 
             gameObject.SetActive(false);
+        }
+
+        public void SetMaxPrice()
+        {
+            var maxAffordableGoodAmount = Mathf.FloorToInt(_buyingInventory.Funds.Value / _goodPrice.Value);
+            amountSlider.value = Mathf.Min(maxAffordableGoodAmount, amountSlider.maxValue);
         }
 
         private void TradeSliderUpdate(float amount)
@@ -180,8 +191,7 @@ namespace Features.Trade.UI
 
         private void UpdatePrice()
         {
-            var goodPrice = _priceCalculator.GetPrice(_good, _tradeType);
-            _totalPrice = _tradeAmount * goodPrice.Value;
+            _totalPrice = _tradeAmount * _goodPrice.Value;
 
             var priceText = $"{_totalPrice:N2}";
 
@@ -191,7 +201,6 @@ namespace Features.Trade.UI
             }
 
             coinAmountText.text = priceText;
-            modifiersText.text = goodPrice.ToString();
         }
 
         private void EvaluateTotalPrice()

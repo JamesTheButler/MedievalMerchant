@@ -71,7 +71,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
             var trend = _developmentManager.DevelopmentTrend;
             var modifiers = trend.Modifiers;
             developmentTrendTooltip.SetEnabled(modifiers.Any());
-            developmentTrendTooltip.SetTooltip(trend);
+            developmentTrendTooltip.SetData(trend);
         }
 
         private void UpdateDevelopmentScore(float score)
