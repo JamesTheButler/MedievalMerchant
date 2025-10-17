@@ -17,7 +17,9 @@ namespace Features.Towns
 {
     public sealed class Town
     {
-        private readonly TierBasedInventoryPolicy _inventoryPolicy;
+        private const int DefaultInventorySlots = 3;
+
+        private readonly SlotBasedInventoryPolicy _inventoryPolicy;
         private readonly TownConfig _townConfig;
         private readonly GoodsConfig _goodsConfig;
 
@@ -48,8 +50,7 @@ namespace Features.Towns
             IEnumerable<Good> availableGoods,
             FlagFactory flagFactory)
         {
-            // TODO - BUG: this is not limiting slot amount
-            _inventoryPolicy = new TierBasedInventoryPolicy();
+            _inventoryPolicy = new SlotBasedInventoryPolicy();
 
             GridLocation = gridLocation;
             WorldLocation = worldLocation;
@@ -63,11 +64,12 @@ namespace Features.Towns
             Name = _townConfig.NameGenerators[MainRegion].GenerateName();
 
             Tier.Value = Common.Types.Tier.Tier1;
-            _inventoryPolicy.SetTier(Common.Types.Tier.Tier1);
+            _inventoryPolicy.AddSlots(Tier, DefaultInventorySlots);
 
             // initial funds and goods
             Inventory = new Inventory.Inventory(_inventoryPolicy);
             ProductionManager = new ProductionManager(this);
+            ProductionManager.ProductionAdded += OnProductionManagerOnProductionAdded;
             DevelopmentManager = new DevelopmentManager(this);
             UpgradeManager = new TownUpgradeManager(this);
 
@@ -77,6 +79,7 @@ namespace Features.Towns
             AddProduction(startGood, 0);
             FlagInfo = flagFactory.CreateFlagInfo(MainRegion);
         }
+
 
         public void Tick()
         {
@@ -99,8 +102,27 @@ namespace Features.Towns
 
             if (oldTier != Tier)
             {
-                _inventoryPolicy.SetTier(Tier);
+                _inventoryPolicy.AddSlots(Tier, DefaultInventorySlots);
             }
+        }
+
+        public void AddReputation(float added)
+        {
+            // TODO - 0.4: apply modifiers
+            // TODO - 0.4: set limit
+            _reputation.Value += added;
+        }
+
+        public void RemoveReputation(float removed)
+        {
+            // TODO - 0.4: apply modifiers
+            // TODO - 0.4: set limit
+            _reputation.Value -= removed;
+        }
+
+        private void OnProductionManagerOnProductionAdded(Producer producer)
+        {
+            _inventoryPolicy.AddSlots(producer.Tier, 1);
         }
 
         private void Produce()
@@ -137,19 +159,6 @@ namespace Features.Towns
             }
         }
 
-        public void AddReputation(float added)
-        {
-            // TODO - 0.4: apply modifiers
-            // TODO - 0.4: set limit
-            _reputation.Value += added;
-        }
-
-        public void RemoveReputation(float removed)
-        {
-            // TODO - 0.4: apply modifiers
-            // TODO - 0.4: set limit
-            _reputation.Value -= removed;
-        }
 
         private void IncreaseTier()
         {

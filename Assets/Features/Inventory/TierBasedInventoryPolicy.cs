@@ -10,11 +10,11 @@ namespace Features.Inventory
     {
         private readonly Lazy<GoodsConfig> _goodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
 
-        private Tier _maximumAllowedTier = Tier.Tier3; // by default, all tiers are allowed
+        private Tier _maxTier = Tier.Tier3; // by default, all tiers are allowed
 
         public void SetTier(Tier tier)
         {
-            _maximumAllowedTier = tier;
+            _maxTier = tier;
         }
 
         public void SetInventory(Inventory inventory)
@@ -26,9 +26,9 @@ namespace Features.Inventory
         {
             var goodTier = _goodsConfig.Value.ConfigData[good].Tier;
 
-            return goodTier <= _maximumAllowedTier
+            return goodTier <= _maxTier
                 ? TradeResult.Succeeded()
-                : TradeResult.Failed($"The Tier of the good is too high. Max. allowed Tier: {_maximumAllowedTier}");
+                : TradeResult.Failed($"The Tier of the good is too high. Max. allowed Tier: {_maxTier}");
         }
     }
 }

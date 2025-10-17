@@ -14,6 +14,7 @@ namespace Features.Towns.Production.Logic
     {
         public ModifiableVariable ProductionRate { get; }
         public Good ProducedGood { get; }
+        public Tier Tier { get; }
 
         private readonly Town _town;
         private readonly Recipe _recipe;
@@ -30,6 +31,8 @@ namespace Features.Towns.Production.Logic
             _producerConfig = ConfigurationManager.Instance.ProducerConfig;
             var recipeConfig = ConfigurationManager.Instance.RecipeConfig;
 
+            Tier = _goodsConfig.ConfigData[producedGood].Tier;
+            
             var baseModifier = new BaseProductionValue(producedGood);
             ProductionRate = new ModifiableVariable("Production Rate",baseModifier);
 
