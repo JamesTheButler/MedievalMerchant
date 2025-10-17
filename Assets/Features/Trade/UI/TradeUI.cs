@@ -69,8 +69,6 @@ namespace Features.Trade.UI
             SetUpButtons();
             SetUpInventories();
 
-            _goodPrice = _priceCalculator.GetPrice(_good, _tradeType);
-
             SetAmount(0);
             amountSlider.minValue = 0;
             amountSlider.value = 0;
@@ -191,6 +189,7 @@ namespace Features.Trade.UI
 
         private void UpdatePrice()
         {
+            _goodPrice = _priceCalculator.GetPrice(_good, _tradeType);
             _totalPrice = _tradeAmount * _goodPrice.Value;
 
             var priceText = $"{_totalPrice:N2}";

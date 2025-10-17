@@ -7,14 +7,13 @@ namespace Common.Modifiable
     /// </summary>
     public abstract class BasePercentageModifier : IModifier
     {
-        public float Value { get; }
-        public string FormattedValue { get; }
+        public Observable<float> Value { get; }
+        public string FormattedValue => $"{Value.Value.Sign()}{Value.Value * 100:0.##}%";
         public string Description { get; }
 
         protected BasePercentageModifier(float value, string description)
         {
-            Value = value;
-            FormattedValue = $"{Value.Sign()}{Value * 100:0.##}%";
+            Value = new Observable<float>(value);
             Description = description;
         }
     }

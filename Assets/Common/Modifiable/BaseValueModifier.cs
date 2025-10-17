@@ -2,14 +2,13 @@ namespace Common.Modifiable
 {
     public abstract class BaseValueModifier : IModifier
     {
-        public float Value { get; }
-        public string FormattedValue { get; }
+        public Observable<float> Value { get; }
+        public string FormattedValue => $"{Value.Value:0.##}";
         public string Description { get; }
 
         protected BaseValueModifier(float value, string description)
         {
-            Value = value;
-            FormattedValue = $"{Value:0.##}";
+            Value = new Observable<float>(value);
             Description = description;
         }
     }

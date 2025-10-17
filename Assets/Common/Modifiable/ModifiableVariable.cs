@@ -9,13 +9,13 @@ namespace Common.Modifiable
     {
         public event Action ModifiersChanged;
 
-        public float BaseValue { get; private set; }
+        public Observable<float> BaseValue { get; } = new();
         public IReadOnlyList<IModifier> Modifiers => _modifiers;
 
         public string Description { get; private set; }
 
-        private float _percentageChanges;
-        private float _floatChanges;
+        private readonly ObservableSum _flatModifiers = new();
+        private readonly ObservableSum _percentModifiers = new();
 
         public bool IsBiggerBetter { get; }
 
@@ -25,6 +25,11 @@ namespace Common.Modifiable
         {
             Description = description;
             IsBiggerBetter = isBiggerBetter;
+
+            BaseValue.Observe(OnAnyChanged, false);
+            _flatModifiers.Observe(OnAnyChanged, false);
+            _percentModifiers.Observe(OnAnyChanged, false);
+
             AddModifier(baseValue);
         }
 
@@ -34,6 +39,7 @@ namespace Common.Modifiable
 
             _modifiers.Add(modifier);
             ApplyModifier(modifier);
+
             ModifiersChanged?.Invoke();
         }
 
@@ -53,13 +59,13 @@ namespace Common.Modifiable
             switch (modifier)
             {
                 case BaseValueModifier baseModifier:
-                    BaseValue = baseModifier.Value;
+                    BaseValue.Value = baseModifier.Value;
                     break;
-                case FlatModifier flatModifier:
-                    _floatChanges += flatModifier.Value;
+                case FlatModifier:
+                    _flatModifiers.AddValue(modifier.Value);
                     break;
-                case BasePercentageModifier basePercentageModifier:
-                    _percentageChanges += basePercentageModifier.Value;
+                case BasePercentageModifier:
+                    _percentModifiers.AddValue(modifier.Value);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(modifier));
@@ -75,13 +81,13 @@ namespace Common.Modifiable
             switch (modifier)
             {
                 case BaseValueModifier:
-                    BaseValue = 0;
+                    BaseValue.Value = 0;
                     break;
-                case BasePercentageModifier basePercentageModifier:
-                    _percentageChanges -= basePercentageModifier.Value;
+                case FlatModifier:
+                    _flatModifiers.RemoveValue(modifier.Value);
                     break;
-                case FlatModifier flatModifier:
-                    _floatChanges -= flatModifier.Value;
+                case BasePercentageModifier:
+                    _percentModifiers.RemoveValue(modifier.Value);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(modifier.GetType().FullName);
@@ -90,9 +96,14 @@ namespace Common.Modifiable
             RefreshValue();
         }
 
+        private void OnAnyChanged(float _)
+        {
+            RefreshValue();
+        }
+
         private void RefreshValue()
         {
-            Value = BaseValue * (1 + _percentageChanges) + _floatChanges;
+            Value = (BaseValue.Value + _flatModifiers.Value) * (1 + _percentModifiers.Value);
         }
 
         public override string ToString()
