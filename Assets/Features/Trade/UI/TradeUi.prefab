@@ -678,7 +678,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 160, y: -115.955}
-  m_SizeDelta: {x: 180, y: 0}
+  m_SizeDelta: {x: 212, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8045866308921673740
 MonoBehaviour:
@@ -2585,13 +2585,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3208487402156753914}
+  - component: {fileID: 3589582091688995136}
   - component: {fileID: 3784306536188148571}
   - component: {fileID: 2246250527313900874}
   - component: {fileID: 4984545430961626573}
-  - component: {fileID: 3589582091688995136}
   - component: {fileID: 6585198329739166393}
   - component: {fileID: 356183283108081912}
-  - component: {fileID: 241049389330144491}
   m_Layer: 5
   m_Name: GoodGroup
   m_TagString: Untagged
@@ -2620,6 +2619,21 @@ RectTransform:
   m_AnchoredPosition: {x: 31.755001, y: -12}
   m_SizeDelta: {x: 63.510002, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3589582091688995136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8892526480029306086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 225027c2a55d4aa8ad057091f03dea7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolTipPrefab: {fileID: 7373911500606536191, guid: 4ce1b35bc9d57e54ba7343ab288649a4, type: 3}
+  offset: 8
+  enabledOnStart: 1
 --- !u!114 &3784306536188148571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2680,21 +2694,6 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &3589582091688995136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8892526480029306086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 225027c2a55d4aa8ad057091f03dea7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolTipPrefab: {fileID: 7373911500606536191, guid: 4ce1b35bc9d57e54ba7343ab288649a4, type: 3}
-  offset: 8
-  enabledOnStart: 1
 --- !u!222 &6585198329739166393
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2733,18 +2732,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &241049389330144491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8892526480029306086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 225027c2a55d4aa8ad057091f03dea7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolTipPrefab: {fileID: 7373911500606536191, guid: 4ce1b35bc9d57e54ba7343ab288649a4, type: 3}
-  offset: 8
-  enabledOnStart: 1
