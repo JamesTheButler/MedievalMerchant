@@ -18,6 +18,8 @@ namespace Features.Player.Caravan.Logic
         private readonly List<Cart> _carts = new();
         private readonly CaravanConfig _caravanConfig;
 
+        private readonly AverageBaseValueModifier _averageSpeedModifier;
+
         private readonly List<CartUpkeepModifier> _cartUpkeepModifiers = new()
         {
             null,
@@ -26,12 +28,14 @@ namespace Features.Player.Caravan.Logic
             null,
         };
 
+
         public CaravanManager()
         {
             _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
+            _averageSpeedModifier = new AverageBaseValueModifier("Movement Speed");
             MoveSpeed = new ModifiableVariable(
                 "Movement Speed",
-                new AverageBaseValueModifier(0, "Movement Speed"),
+                _averageSpeedModifier,
                 true);
 
             Upkeep = new ModifiableVariable(
@@ -85,25 +89,31 @@ namespace Features.Player.Caravan.Logic
             }
 
             var upgradeData = _caravanConfig.GetUpgradeData(level);
-            _carts[cartId].Update(level, upgradeData);
+            var cart = _carts[cartId];
+            var oldLevel = cart.Level.Value;
+            if (oldLevel == 0 && level > 0)
+            {
+                _averageSpeedModifier.AddValue(cart.MoveSpeed);
+            }
 
+            _carts[cartId].Update(level, upgradeData);
             RefreshTotals(cartId);
         }
 
         private void RefreshTotals(int cartId)
         {
-            // TODO - CORE: when modifiers are observable, this will become a lot simpler
-            Upkeep.RemoveModifier(_cartUpkeepModifiers[cartId]);
+            var modifier = _cartUpkeepModifiers[cartId];
             var cart = _carts[cartId];
-            var newUpkeepModifier = new CartUpkeepModifier(cart.Upkeep, cart.Level);
-            _cartUpkeepModifiers[cartId] = newUpkeepModifier;
-            Upkeep.AddModifier(newUpkeepModifier);
-
-            // TODO - CORE: when modifiers are observable, this will become a lot simpler
-            var averageMoveSpeedModifier = MoveSpeed.Modifiers.FirstOfType<AverageBaseValueModifier, IModifier>();
-            MoveSpeed.RemoveModifier(averageMoveSpeedModifier);
-            var averageMoveSpeed = _carts.Where(c => c.Level > 0).Average(c => c.MoveSpeed);
-            MoveSpeed.AddModifier(new AverageBaseValueModifier(averageMoveSpeed, "Movement Speed"));
+            if (modifier is null)
+            {
+                var newModifier = new CartUpkeepModifier(cart.Upkeep, cart.Level);
+                _cartUpkeepModifiers[cartId] = newModifier;
+                Upkeep.AddModifier(newModifier);
+            }
+            else
+            {
+                modifier.Update(cart.Upkeep, cart.Level);
+            }
         }
     }
 }

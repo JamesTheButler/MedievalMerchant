@@ -8,13 +8,19 @@ namespace Common.Modifiable
     public abstract class BasePercentageModifier : IModifier
     {
         public Observable<float> Value { get; }
-        public string FormattedValue => $"{Value.Value.Sign()}{Value.Value * 100:0.##}%";
-        public string Description { get; }
+        public Observable<string> FormattedValue { get; } = new();
+        public Observable<string> Description { get; }
 
         protected BasePercentageModifier(float value, string description)
         {
             Value = new Observable<float>(value);
-            Description = description;
+            Description = new Observable<string>(description);
+            Value.Observe(UpdateFormattedValue);
+        }
+
+        private void UpdateFormattedValue(float value)
+        {
+            FormattedValue.Value = $"{value.Sign()}{value * 100:0.##}%";
         }
     }
 }

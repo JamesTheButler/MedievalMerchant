@@ -3,8 +3,7 @@ namespace Common.Modifiable
     public interface IModifier
     {
         public Observable<float> Value { get; }
-
-        public string FormattedValue { get; }
-        public string Description { get; }
+        public Observable<string> FormattedValue { get; }
+        public Observable<string> Description { get; }
     }
 }
