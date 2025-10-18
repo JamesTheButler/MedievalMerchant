@@ -3,11 +3,11 @@ using Common.Types;
 
 namespace Features.Towns.Production.Logic
 {
-    public sealed class ProducerModifier : FlatModifier
+    public sealed class ProducerDevelopmentModifier : FlatModifier
     {
         public int ProducerCount { get; }
 
-        public ProducerModifier(float modifiedValue, int producerCount, Tier producerTier)
+        public ProducerDevelopmentModifier(float modifiedValue, int producerCount, Tier producerTier)
             : base(modifiedValue, $"{producerCount} {producerTier} production buildings.")
         {
             ProducerCount = producerCount;

@@ -16,14 +16,14 @@ namespace Features.Towns.Development.Logic
         public Observable<float> DevelopmentScore { get; } = new();
         public Observable<DevelopmentTrend> GrowthTrend { get; } = new();
 
+        private TownDevelopmentTable _townDevelopmentTable;
+        
         private readonly Town _town;
         private readonly TownDevelopmentConfig _townDevelopmentConfig;
         private readonly GoodsConfig _goodsConfig;
 
-        private TownDevelopmentTable _townDevelopmentTable;
-
-        private readonly Dictionary<Tier, ProducerModifier> _producerModifiers = new();
-        private readonly Dictionary<Tier, GoodsInInventoryDevelopmentModifier> _goodsInInventoryModifier = new();
+        private readonly Dictionary<Tier, ProducerDevelopmentModifier> _producerModifiers = new();
+        private readonly Dictionary<Tier, StoredGoodsDevelopmentModifier> _storedGoodsModifier = new();
 
         public DevelopmentManager(Town town)
         {
@@ -31,6 +31,7 @@ namespace Features.Towns.Development.Logic
             _townDevelopmentConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
 
+            
             _town.ProductionManager.ProductionAdded += OnProducerAdded;
             _town.Inventory.GoodUpdated += OnGoodAdded;
 
@@ -73,7 +74,7 @@ namespace Features.Towns.Development.Logic
             DevelopmentTrend.RemoveModifier(oldModifier);
 
             var modifierValue = (newProducerCount - 1) * producerInfluence;
-            var modifier = new ProducerModifier(modifierValue, newProducerCount, goodTier);
+            var modifier = new ProducerDevelopmentModifier(modifierValue, newProducerCount, goodTier);
             DevelopmentTrend.AddModifier(modifier);
             _producerModifiers[goodTier] = modifier;
         }
@@ -85,16 +86,16 @@ namespace Features.Towns.Development.Logic
                     !_town.ProductionManager.IsProduced(good) && _goodsConfig.ConfigData[good].Tier == goodTier);
 
             // modifier would not change
-            if (_goodsInInventoryModifier.TryGetValue(goodTier, out var oldModifier) &&
+            if (_storedGoodsModifier.TryGetValue(goodTier, out var oldModifier) &&
                 oldModifier.GoodCount == newCount)
                 return;
 
             DevelopmentTrend.RemoveModifier(oldModifier);
 
             var modifierValue = _townDevelopmentTable.GetDevelopmentTrend(goodTier, newCount);
-            var modifier = new GoodsInInventoryDevelopmentModifier(modifierValue, newCount, goodTier);
+            var modifier = new StoredGoodsDevelopmentModifier(modifierValue, newCount, goodTier);
             DevelopmentTrend.AddModifier(modifier);
-            _goodsInInventoryModifier[goodTier] = modifier;
+            _storedGoodsModifier[goodTier] = modifier;
         }
 
         private void OnTierChanged(Tier tier)
