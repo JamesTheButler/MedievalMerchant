@@ -5,7 +5,11 @@ using UnityEngine.UI;
 
 namespace Common.UI
 {
-    public abstract class TooltipHandlerBase<TData> : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public abstract class TooltipHandlerBase<TData> :
+        MonoBehaviour,
+        IPointerEnterHandler,
+        IPointerExitHandler,
+        IPointerClickHandler
     {
         [SerializeField, Required]
         private GameObject toolTipPrefab;
@@ -14,7 +18,7 @@ namespace Common.UI
         private float offset = 8f;
 
         [SerializeField]
-        private bool enabledOnStart;
+        private bool enabledOnStart, hideOnClick;
 
         private TooltipBase<TData> _activeToolTip;
         private bool _isEnabled;
@@ -83,6 +87,14 @@ namespace Common.UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            HideTooltip();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (!hideOnClick)
+                return;
+
             HideTooltip();
         }
 
