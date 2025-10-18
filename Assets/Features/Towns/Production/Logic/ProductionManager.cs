@@ -12,7 +12,7 @@ namespace Features.Towns.Production.Logic
         public event Action<Producer> ProductionAdded;
 
         private readonly Town _town;
-
+        private readonly GoodsConfig _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
         private readonly Dictionary<Tier, Producer[]> _producers;
 
         public ProductionManager(Town town)
@@ -38,7 +38,6 @@ namespace Features.Towns.Production.Logic
             return _producers.Values.Any(producers => producers.Any(producer => producer?.ProducedGood == good));
         }
 
-        private readonly GoodsConfig _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
 
         public Producer[] GetProducers(Tier tier)
         {

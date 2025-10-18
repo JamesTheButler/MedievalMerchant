@@ -29,7 +29,7 @@ namespace Common.Modifiable
 
             _baseValueModifier = baseValue;
 
-            _baseValueModifier?.Value.Observe(OnAnyChanged, false);
+            _baseValueModifier?.Value.Observe(OnAnyChanged);
             _flatModifiers.Observe(OnAnyChanged, false);
             _percentModifiers.Observe(OnAnyChanged, false);
         }
