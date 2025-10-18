@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Common.UI
 {
@@ -53,12 +54,30 @@ namespace Common.UI
             {
                 _activeToolTip = Instantiate(toolTipPrefab, _canvas.transform).GetComponent<TooltipBase<TData>>();
                 _activeToolTip.SetData(_data);
-            }
 
-            var topCenter = ((RectTransform)gameObject.transform).GetTopCenter();
-            _activeToolTip.transform.SetCanvasClampedPosition(
-                topCenter + new Vector3(0, offset, 0),
-                _canvas);
+                var canvasGroup = _activeToolTip.GetComponent<CanvasGroup>();
+                if (canvasGroup == null)
+                {
+                    Debug.LogError("Tooltips should have a CanvasGroup to enforce proper spawning.");
+                }
+                else
+                {
+                    canvasGroup.blocksRaycasts = false;
+                }
+
+                var topCenter = ((RectTransform)gameObject.transform).GetTopCenter();
+                _activeToolTip.transform.SetCanvasClampedPosition(
+                    topCenter + new Vector3(0, offset, 0),
+                    _canvas);
+
+                Canvas.ForceUpdateCanvases();
+                LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)_activeToolTip.transform);
+
+                if (canvasGroup != null)
+                {
+                    canvasGroup.blocksRaycasts = true;
+                }
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
