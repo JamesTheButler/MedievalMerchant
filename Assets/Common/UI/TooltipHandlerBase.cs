@@ -48,35 +48,36 @@ namespace Common.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (!_isEnabled) return;
+            if (!_isEnabled)
+                return;
 
-            if (_activeToolTip == null)
+            if (_activeToolTip != null)
+                return;
+
+            _activeToolTip = Instantiate(toolTipPrefab, _canvas.transform).GetComponent<TooltipBase<TData>>();
+            _activeToolTip.SetData(_data);
+
+            var canvasGroup = _activeToolTip.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
             {
-                _activeToolTip = Instantiate(toolTipPrefab, _canvas.transform).GetComponent<TooltipBase<TData>>();
-                _activeToolTip.SetData(_data);
+                Debug.LogError("Tooltips should have a CanvasGroup to enforce proper spawning.");
+            }
+            else
+            {
+                canvasGroup.blocksRaycasts = false;
+            }
 
-                var canvasGroup = _activeToolTip.GetComponent<CanvasGroup>();
-                if (canvasGroup == null)
-                {
-                    Debug.LogError("Tooltips should have a CanvasGroup to enforce proper spawning.");
-                }
-                else
-                {
-                    canvasGroup.blocksRaycasts = false;
-                }
+            var topCenter = ((RectTransform)gameObject.transform).GetTopCenter();
+            _activeToolTip.transform.SetCanvasClampedPosition(
+                topCenter + new Vector3(0, offset, 0),
+                _canvas);
 
-                var topCenter = ((RectTransform)gameObject.transform).GetTopCenter();
-                _activeToolTip.transform.SetCanvasClampedPosition(
-                    topCenter + new Vector3(0, offset, 0),
-                    _canvas);
+            Canvas.ForceUpdateCanvases();
+            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)_activeToolTip.transform);
 
-                Canvas.ForceUpdateCanvases();
-                LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)_activeToolTip.transform);
-
-                if (canvasGroup != null)
-                {
-                    canvasGroup.blocksRaycasts = true;
-                }
+            if (canvasGroup != null)
+            {
+                canvasGroup.blocksRaycasts = true;
             }
         }
 
