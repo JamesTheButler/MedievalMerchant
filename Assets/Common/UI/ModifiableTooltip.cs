@@ -3,6 +3,7 @@ using Common.Modifiable;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Common.UI
 {
@@ -26,7 +27,7 @@ namespace Common.UI
             _modifiableVariable.ModifiersChanged += RegenerateTooltip;
         }
 
-        private void OnDestroy()
+        public override void Reset()
         {
             _modifiableVariable.StopObserving(OnValueChanged);
             _modifiableVariable.ModifiersChanged -= RegenerateTooltip;
@@ -45,21 +46,28 @@ namespace Common.UI
             finalValueText.text = $"{_modifiableVariable.Value:0.##}";
             finalDescriptionText.text = _modifiableVariable.Description;
 
-            var baseModifier = _modifiableVariable.Modifiers.FirstOfType<BaseValueModifier, IModifier>();
+            var baseModifier = _modifiableVariable.BaseValueModifier;
             if (baseModifier != null)
             {
                 AddModifierElement(flatModifierContainer, baseModifier, false);
             }
 
-            var flatModifiers = _modifiableVariable.Modifiers.OfType<FlatModifier>().ToArray<IModifier>();
+            var flatModifiers = _modifiableVariable.Modifiers
+                .OfType<FlatModifier>()
+                .ToArray<IModifier>();
             AddModifierElements(flatModifiers, flatModifierContainer);
 
-            var percentageModifiers =
-                _modifiableVariable.Modifiers.OfType<BasePercentageModifier>().ToArray<IModifier>();
+            var percentageModifiers = _modifiableVariable.Modifiers
+                .OfType<BasePercentageModifier>()
+                .ToArray<IModifier>();
             percentModifierGroup.SetActive(percentageModifiers.Length > 0);
             AddModifierElements(percentageModifiers, percentModifierContainer);
+
             var sum = percentageModifiers.Sum(modifier => modifier.Value);
-            modifierSumText.text = sum.ToPercentString();
+            modifierSumText.text = sum.ToPercentString(true);
+
+            Canvas.ForceUpdateCanvases();
+            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)transform);
         }
 
         private void AddModifierElements(IModifier[] modifiers, GameObject container)

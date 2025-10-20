@@ -43,5 +43,12 @@ namespace Features.Player.Retinue.UI
             priceText.text = $"{levelData.Cost:0.##}";
             effectsText.text = levelData.Description;
         }
+
+        public override void Reset()
+        {
+            levelText.text = string.Empty;
+            priceText.text = string.Empty;
+            effectsText.text = string.Empty;
+        }
     }
 }

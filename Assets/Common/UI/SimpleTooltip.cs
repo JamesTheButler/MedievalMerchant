@@ -13,5 +13,10 @@ namespace Common.UI
         {
             textfield.text = data;
         }
+
+        public override void Reset()
+        {
+            textfield.text = string.Empty;
+        }
     }
 }

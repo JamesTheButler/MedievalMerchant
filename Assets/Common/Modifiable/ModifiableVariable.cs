@@ -13,13 +13,11 @@ namespace Common.Modifiable
         public IReadOnlyList<IModifier> Modifiers => _modifiers;
 
         public string Description { get; private set; }
+        public bool IsBiggerBetter { get; }
+        public BaseValueModifier BaseValueModifier { get; }
 
         private readonly ObservableSum _flatModifiers = new();
         private readonly ObservableSum _percentModifiers = new();
-
-        public bool IsBiggerBetter { get; }
-
-        private readonly BaseValueModifier _baseValueModifier;
         private readonly List<IModifier> _modifiers = new();
 
         public ModifiableVariable(string description, BaseValueModifier baseValue = null, bool isBiggerBetter = false)
@@ -27,9 +25,9 @@ namespace Common.Modifiable
             Description = description;
             IsBiggerBetter = isBiggerBetter;
 
-            _baseValueModifier = baseValue;
+            BaseValueModifier = baseValue;
 
-            _baseValueModifier?.Value.Observe(OnAnyChanged);
+            BaseValueModifier?.Value.Observe(OnAnyChanged);
             _flatModifiers.Observe(OnAnyChanged, false);
             _percentModifiers.Observe(OnAnyChanged, false);
         }
@@ -59,8 +57,8 @@ namespace Common.Modifiable
 
             switch (modifier)
             {
-                case BaseValueModifier:
-                    Debug.LogError($"Cannot add a {nameof(BaseValueModifier)}.");
+                case Modifiable.BaseValueModifier:
+                    Debug.LogError($"Cannot add a {nameof(Modifiable.BaseValueModifier)}.");
                     break;
                 case FlatModifier:
                     _flatModifiers.AddValue(modifier.Value);
@@ -81,8 +79,8 @@ namespace Common.Modifiable
 
             switch (modifier)
             {
-                case BaseValueModifier:
-                    Debug.LogError($"Cannot remove a {nameof(BaseValueModifier)}.");
+                case Modifiable.BaseValueModifier:
+                    Debug.LogError($"Cannot remove a {nameof(Modifiable.BaseValueModifier)}.");
                     break;
                 case FlatModifier:
                     _flatModifiers.RemoveValue(modifier.Value);
@@ -104,14 +102,14 @@ namespace Common.Modifiable
 
         private void RefreshValue()
         {
-            var baseValue = _baseValueModifier?.Value ?? 0f;
+            var baseValue = BaseValueModifier?.Value ?? 0f;
             Value = (baseValue + _flatModifiers) * (1 + _percentModifiers);
         }
 
         public override string ToString()
         {
             var baseModifier = Modifiers.FirstOfType<BaseValueModifier, IModifier>();
-            var allOtherModifiers = Modifiers.Where(modifier => modifier is not BaseValueModifier);
+            var allOtherModifiers = Modifiers.Where(modifier => modifier is not Modifiable.BaseValueModifier);
 
             var builder = new StringBuilder()
                 .AppendLine(Value.ToString("0.##"));

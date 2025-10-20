@@ -21,9 +21,10 @@ namespace Common
             return Mathf.Abs(self - other) < tolerance;
         }
 
-        public static string ToPercentString(this float f)
+        public static string ToPercentString(this float f, bool forceSign = false)
         {
-            return $"{f * 100}%";
+            var sign = forceSign ? f.Sign() : string.Empty;
+            return $"{sign}{f * 100}%";
         }
     }
 }

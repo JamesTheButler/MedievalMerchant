@@ -34,8 +34,8 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
             var maxWidth = ((RectTransform)slider.transform).rect.width;
             foreach (var milestoneData in milestones)
             {
-                var threshold = milestoneData.Threshold;
-                var prefab = threshold.IsApproximately(100) ? endMilestonePrefab : milestonePrefab;
+                var threshold = milestoneData.ThresholdPercent;
+                var prefab = threshold.IsApproximately(1f) ? endMilestonePrefab : milestonePrefab;
                 var milestone = Instantiate(prefab, milestoneParent);
 
                 // set up logic
@@ -44,7 +44,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
 
                 // set up positioning
                 var rectTransform = (milestone.transform as RectTransform)!;
-                var trackPosition = maxWidth * (threshold * .01f);
+                var trackPosition = maxWidth * threshold;
                 rectTransform.anchoredPosition = new Vector2(trackPosition, rectTransform.anchoredPosition.y);
             }
         }

@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using Common;
-using Features.Towns.Development.Logic.Upgrades;
+using Features.Towns.Development.Config.Milestones;
 using NaughtyAttributes;
 using UnityEngine;
 

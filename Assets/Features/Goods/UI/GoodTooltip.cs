@@ -44,5 +44,7 @@ namespace Features.Goods.UI
             tierImage.sprite = tierIcon;
             regionImage.sprite = regionIcon.Icon;
         }
+
+        public override void Reset() { }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Features.Towns.Development.Logic.Upgrades
+namespace Features.Towns.Development.Config.Milestones
 {
     public abstract class TownUpgradeData : ScriptableObject
     {

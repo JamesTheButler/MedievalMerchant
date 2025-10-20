@@ -1,7 +1,7 @@
 using Common;
 using UnityEngine;
 
-namespace Features.Towns.Development.Logic.Upgrades
+namespace Features.Towns.Development.Config.Milestones
 {
     [CreateAssetMenu(
         fileName = nameof(FundsBoostUpgradeData),

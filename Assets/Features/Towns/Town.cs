@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common;
+using Common.Modifiable;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Inventory;
 using Features.Towns.Config;
 using Features.Towns.Development.Logic;
-using Features.Towns.Development.Logic.Upgrades;
+using Features.Towns.Development.Logic.Milestones;
 using Features.Towns.Flags;
 using Features.Towns.Flags.Logic;
 using Features.Towns.Production.Logic;
@@ -32,8 +33,8 @@ namespace Features.Towns
         public ProductionManager ProductionManager { get; }
         public DevelopmentManager DevelopmentManager { get; }
         public TownUpgradeManager UpgradeManager { get; }
-
         public Inventory.Inventory Inventory { get; }
+        public ModifiableVariable FundsChange { get; }
 
         public string Name { get; }
         public FlagInfo FlagInfo { get; private set; }
@@ -72,14 +73,17 @@ namespace Features.Towns
             ProductionManager.ProductionAdded += OnProductionManagerOnProductionAdded;
             DevelopmentManager = new DevelopmentManager(this);
             UpgradeManager = new TownUpgradeManager(this);
+            UpgradeManager.MilestoneModifierAdded += OnMilestoneModifierAdded;
+            UpgradeManager.MilestoneModifierRemoved += OnMilestoneModifierRemoved;
 
             Inventory.AddFunds(_townConfig.GetStartFunds());
+            var baseModifier = new BaseTownFundsProduction(_townConfig.FundRate[Tier], Tier);
+            FundsChange = new ModifiableVariable("Funds change per day", baseModifier, true);
 
             var startGood = AvailableGoods.GetRandom();
             AddProduction(startGood, 0);
             FlagInfo = flagFactory.CreateFlagInfo(MainRegion);
         }
-
 
         public void Tick()
         {
@@ -127,15 +131,8 @@ namespace Features.Towns
 
         private void Produce()
         {
-            // goods production
-            var townTier = Tier.Value;
             ProductionManager.Produce();
-
-            // funds production
-            var modifierMultiplier = 1 + UpgradeManager.FundsModifiers;
-            var baseFundsPerTick = _townConfig.FundRate[townTier];
-            var fundChange = baseFundsPerTick * modifierMultiplier;
-            Inventory.AddFunds(fundChange);
+            Inventory.AddFunds(FundsChange.Value);
         }
 
         private void Consume()
@@ -159,10 +156,35 @@ namespace Features.Towns
             }
         }
 
-
         private void IncreaseTier()
         {
             Tier.Value = (Tier)Math.Min((int)Tier.Value + 1, (int)Common.Types.Tier.Tier3);
+        }
+
+        private void OnMilestoneModifierAdded(IModifier modifier)
+        {
+            switch (modifier)
+            {
+                case MilestoneFundsBoostModifier:
+                    FundsChange.AddModifier(modifier);
+                    break;
+                default:
+                    Debug.LogError($"Added unhandled modifier: {modifier}");
+                    break;
+            }
+        }
+
+        private void OnMilestoneModifierRemoved(IModifier modifier)
+        {
+            switch (modifier)
+            {
+                case MilestoneFundsBoostModifier:
+                    FundsChange.RemoveModifier(modifier);
+                    break;
+                default:
+                    Debug.LogError($"Removed unhandled modifier: {modifier}");
+                    break;
+            }
         }
     }
 }

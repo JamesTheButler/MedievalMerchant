@@ -31,5 +31,12 @@ namespace Features.Player.Retinue.UI
 
             effectsText.text = levelData?.Description ?? string.Empty;
         }
+
+        public override void Reset()
+        {
+            titleText.text = string.Empty;
+            descriptionText.text = string.Empty;
+            effectsText.text = string.Empty;
+        }
     }
 }

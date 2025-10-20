@@ -1,5 +1,6 @@
 using Common;
 using Common.Types;
+using Common.UI;
 using Features.Inventory;
 using Features.Towns;
 using Features.Towns.Development.UI.DevelopmentGauge;
@@ -32,16 +33,20 @@ namespace UI.InventoryUI.TownInventory
 
         [SerializeField, Required]
         private Button upgradeButton;
-        
+
         [Header("Inventory UI Elements")]
         [SerializeField, Required]
         private TMP_Text fundsText;
-        
+
+        [SerializeField, Required]
+        private ModifiableTooltipHandler fundsTooltip;
+
         [SerializeField, Required]
         private TownProductionPanel productionPanel;
 
         [SerializeField, Required]
         private TownInventoryPanel inventoryPanel;
+
 
         private Town _town;
         private Inventory _inventory;
@@ -99,6 +104,7 @@ namespace UI.InventoryUI.TownInventory
 
             _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged);
             _town.Tier.Observe(TownUpgrade);
+            fundsTooltip.SetData(_town.FundsChange);
 
             RefreshTownName(_town.Tier);
 
@@ -109,7 +115,6 @@ namespace UI.InventoryUI.TownInventory
         {
             upgradeButton.interactable = developmentScore.IsApproximately(100f);
         }
-
 
         private void BindInventory(Inventory inventory)
         {
@@ -130,6 +135,7 @@ namespace UI.InventoryUI.TownInventory
 
             _town.Tier.StopObserving(TownUpgrade);
             developmentGauge.Unbind();
+            fundsTooltip.SetData(_town.FundsChange);
 
             _town = null;
         }

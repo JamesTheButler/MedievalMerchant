@@ -10,10 +10,10 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
 {
     public sealed class DevelopmentMilestone : MonoBehaviour
     {
-        public record Data(float Threshold, Sprite Icon, string Description);
+        public record Data(float ThresholdPercent, Sprite Icon, string Description);
 
         [SerializeField, Required]
-        private Image milestoneImage,topImage;
+        private Image milestoneImage, topImage;
 
         [SerializeField]
         private Image baseImage;
@@ -24,14 +24,14 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
         private readonly Lazy<DevelopmentMilestoneAssets> _milestoneAssets =
             new(() => ConfigurationManager.Instance.DevelopmentMilestoneAssets);
 
-        private float _thresholdPercent;
+        private float _threshold;
         private Slider _slider;
         private bool? _isCompleted;
 
 
         public void SetUp(Slider newSlider, Data data)
         {
-            _thresholdPercent = data.Threshold;
+            _threshold = data.ThresholdPercent * 100f;
 
             _slider = newSlider;
             _slider.onValueChanged.AddListener(SliderValueChanged);
@@ -48,7 +48,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
 
         private void SliderValueChanged(float newValue)
         {
-            var isCompleted = newValue >= _thresholdPercent;
+            var isCompleted = newValue >= _threshold;
             if (_isCompleted == isCompleted)
                 return;
 

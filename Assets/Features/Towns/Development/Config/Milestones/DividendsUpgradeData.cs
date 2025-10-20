@@ -1,7 +1,7 @@
 using Common;
 using UnityEngine;
 
-namespace Features.Towns.Development.Logic.Upgrades
+namespace Features.Towns.Development.Config.Milestones
 {
     /// <summary>
     /// Upgrade for automatically transferring part of the towns fund-production to the player.
