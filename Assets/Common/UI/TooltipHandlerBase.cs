@@ -52,7 +52,7 @@ namespace Common.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (!_isEnabled)
+            if (!_isEnabled || _data == null)
                 return;
 
             if (_activeToolTip != null)
