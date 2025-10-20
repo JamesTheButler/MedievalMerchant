@@ -45,43 +45,63 @@ namespace Features.Trade.UI
         private GoodConfigData _goodConfigData;
         private Good _good;
         private TradeType _tradeType;
+
         private int _sellerGoodAmount;
         private float _buyerFunds;
         private int _tradeAmount;
         private float _totalPrice;
+        private float _singlePrice;
 
         private Button _activeButton;
 
         private Inventory.Inventory _buyingInventory;
         private Inventory.Inventory _sellingInventory;
 
-        private ModifiableVariable _goodPrice;
         private PriceCalculator _priceCalculator;
 
         public void Initialize(Good good, TradeType tradeType)
         {
-            _tradeType = tradeType;
             _good = good;
+            _tradeType = tradeType;
 
             _goodConfigData = _configurationManager.Value.ConfigData[good];
-            goodIcon.sprite = _goodConfigData.Icon;
 
+            SetUpGoodIcon();
             SetUpButtons();
             SetUpInventories();
+            SetUpSlider();
+
+            _priceCalculator = new PriceCalculator(_selection.Value.SelectedTown);
+            _priceCalculator.Initialize(good, tradeType);
+            _priceCalculator.Price.Observe(OnGoodPriceChanged);
+            priceTooltip.SetData(_priceCalculator.Price);
 
             SetAmount(0);
-            amountSlider.minValue = 0;
-            amountSlider.value = 0;
-            amountSlider.maxValue = _sellerGoodAmount;
-            amountSlider.onValueChanged.AddListener(TradeSliderUpdate);
 
-            // set tooltips            
-            goodTooltip.SetData(_good);
-            priceTooltip.SetData(_goodPrice);
 
             gameObject.SetActive(true);
 
             _isInitialized = true;
+        }
+
+        private void OnGoodPriceChanged(float newPrice)
+        {
+            _singlePrice = newPrice;
+            RefreshTotalPrice();
+        }
+
+        private void SetUpGoodIcon()
+        {
+            goodIcon.sprite = _goodConfigData.Icon;
+            goodTooltip.SetData(_good);
+        }
+
+        private void SetUpSlider()
+        {
+            amountSlider.minValue = 0;
+            amountSlider.value = 0;
+            amountSlider.maxValue = _sellerGoodAmount;
+            amountSlider.onValueChanged.AddListener(TradeSliderUpdate);
         }
 
         public void Hide()
@@ -95,6 +115,7 @@ namespace Features.Trade.UI
             _activeButton.onClick.RemoveAllListeners();
             cancelButton.onClick.RemoveAllListeners();
 
+            _priceCalculator.Clear();
             _priceCalculator = null;
             _buyingInventory = null;
             _sellingInventory = null;
@@ -106,14 +127,15 @@ namespace Features.Trade.UI
 
         public void SetMaxPrice()
         {
-            var maxAffordableGoodAmount = Mathf.FloorToInt(_buyingInventory.Funds.Value / _goodPrice.Value);
+            var maxAffordableGoodAmount = Mathf.FloorToInt(_buyingInventory.Funds.Value / _singlePrice);
             amountSlider.value = Mathf.Min(maxAffordableGoodAmount, amountSlider.maxValue);
+            RefreshTotalPrice();
         }
 
         private void TradeSliderUpdate(float amount)
         {
             SetAmount((int)amount);
-            EvaluateTotalPrice();
+            RefreshButtonState();
         }
 
         private void SetUpButtons()
@@ -149,7 +171,7 @@ namespace Features.Trade.UI
         private void OnBuyingInventoryFundsUpdated(float newFunds)
         {
             _buyerFunds = newFunds;
-            EvaluateTotalPrice();
+            RefreshButtonState();
         }
 
         private void OnSellingInventoryGoodUpdated(Good good, int amount)
@@ -159,8 +181,8 @@ namespace Features.Trade.UI
 
             _sellerGoodAmount = amount;
             amountSlider.maxValue = amount;
-            UpdatePrice();
-            EvaluateTotalPrice();
+            RefreshTotalPrice();
+            RefreshButtonState();
         }
 
         private void AbortTrade()
@@ -183,16 +205,14 @@ namespace Features.Trade.UI
         {
             _tradeAmount = amount;
             goodAmountText.text = $"x{_tradeAmount}";
-
-            UpdatePrice();
+            RefreshTotalPrice();
         }
 
-        private void UpdatePrice()
+        private void RefreshTotalPrice()
         {
-            _goodPrice = _priceCalculator.GetPrice(_good, _tradeType);
-            _totalPrice = _tradeAmount * _goodPrice.Value;
+            _totalPrice = _tradeAmount * _singlePrice;
 
-            var priceText = $"{_totalPrice:N2}";
+            var priceText = $"{_totalPrice:0.##}";
 
             if (_tradeType == TradeType.Buy && _tradeAmount > 0)
             {
@@ -202,7 +222,7 @@ namespace Features.Trade.UI
             coinAmountText.text = priceText;
         }
 
-        private void EvaluateTotalPrice()
+        private void RefreshButtonState()
         {
             var isTradePossible = _buyerFunds >= _totalPrice;
 

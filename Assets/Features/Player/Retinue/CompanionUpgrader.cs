@@ -46,7 +46,7 @@ namespace Features.Player.Retinue
             {
                 var levelData = _companionConfig.NegotiatorData.GetTypedLevelData(negotiatorLevel);
                 var costReduction = -levelData.UpgradeCostReduction;
-                // TODO - STYLE:this should be a proper modifier
+                // TODO - STYLE: this should be a proper modifier
                 cost.AddModifier(new GenericBasePercentageModifier(costReduction));
             }
 

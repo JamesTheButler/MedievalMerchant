@@ -11,15 +11,14 @@ namespace Features.Towns.Development.Logic.Milestones
 {
     public sealed class TownUpgradeManager
     {
+        public sealed record UpgradeTime(Tier Tier, float DevelopmentScore);
+
         public event Action<IModifier> MilestoneModifierAdded;
         public event Action<IModifier> MilestoneModifierRemoved;
 
-        public IEnumerable<IModifier> MilestoneModifiers => _milestoneModifiers.Values;
+        public List<IModifier> MilestoneModifiers { get; } = new();
 
-        public sealed record UpgradeTime(Tier Tier, float DevelopmentScore);
-
-        private readonly Dictionary<UpgradeTime, TownUpgradeData[]> _upgradeDatas = new();
-        private readonly Dictionary<UpgradeTime, IModifier> _milestoneModifiers = new();
+        private readonly Dictionary<UpgradeTime, List<IModifier>> _milestoneModifiers = new();
         private readonly Town _town;
         private readonly TownDevelopmentConfig _upgradeProgressionConfig;
 
@@ -37,7 +36,7 @@ namespace Features.Towns.Development.Logic.Milestones
             _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged);
         }
 
-        ~TownUpgradeManager()
+        public void Clear()
         {
             _town.Tier.StopObserving(OnTierChanged);
             _town.DevelopmentManager.DevelopmentScore.StopObserving(OnDevelopmentChanged);
@@ -64,27 +63,37 @@ namespace Features.Towns.Development.Logic.Milestones
                 }
 
                 var upgradeTime = new UpgradeTime(_currentTier, thresholdPercent);
-                // upgrade unlocked
+
+                // milestone unlocked
                 if (_previousScore < thresholdScore && score >= thresholdScore)
                 {
-                    _upgradeDatas[upgradeTime] = upgrades;
                     foreach (var upgrade in upgrades)
                     {
                         ApplyUpgrade(upgradeTime, upgrade);
                     }
                 }
-                // upgrade re-locked
+
+                // milestone re-locked
                 else if (_previousScore >= thresholdScore && score < thresholdScore)
                 {
-                    _upgradeDatas.Remove(upgradeTime);
-                    foreach (var upgrade in upgrades)
-                    {
-                        RemoveUpgrade(upgradeTime, upgrade);
-                    }
+                    RevertMilestone(upgradeTime);
                 }
             }
 
             _previousScore = score;
+        }
+
+        private void RevertMilestone(UpgradeTime upgradeTime)
+        {
+            if (!_milestoneModifiers.TryGetValue(upgradeTime, out var modifiers))
+                return;
+            foreach (var modifier in modifiers)
+            {
+                MilestoneModifierRemoved?.Invoke(modifier);
+                MilestoneModifiers.Remove(modifier);
+            }
+
+            modifiers.Clear();
         }
 
         private void ApplyUpgrade(UpgradeTime upgradeTime, TownUpgradeData upgrade)
@@ -93,60 +102,40 @@ namespace Features.Towns.Development.Logic.Milestones
             switch (upgrade)
             {
                 case FundsBoostUpgradeData upgradeData:
-                    var fundsBoostModifier =
-                        new MilestoneFundsBoostModifier(upgradeData.FundsBoost, upgradeTime);
-                    _milestoneModifiers.Add(upgradeTime, fundsBoostModifier);
-                    MilestoneModifierAdded?.Invoke(fundsBoostModifier);
+                    var fundsBoostModifier = new MilestoneFundsBoostModifier(upgradeData.FundsBoost, upgradeTime);
+                    AddModifier(fundsBoostModifier, upgradeTime);
                     break;
 
                 case PriceBoostUpgradeData upgradeData:
                     var priceBoostModifier =
                         new MilestonePriceBoostModifier(upgradeData.PriceBoostPercent, upgradeTime);
-                    _milestoneModifiers.Add(upgradeTime, priceBoostModifier);
-                    MilestoneModifierAdded?.Invoke(priceBoostModifier);
+                    AddModifier(priceBoostModifier, upgradeTime);
                     break;
 
                 case ProductionBoostUpgradeData upgradeData:
                     var prodBoostModifier =
                         new MilestoneProductionBoostModifier(upgradeData.ProductionBoost, upgradeTime);
-                    _milestoneModifiers.Add(upgradeTime, prodBoostModifier);
-                    MilestoneModifierAdded?.Invoke(prodBoostModifier);
+                    AddModifier(prodBoostModifier, upgradeTime);
                     break;
 
                 case DividendsUpgradeData upgradeData:
                     var dividendsModifier =
                         new DividendsFundsModifier(upgradeData.DividendsPercentage, upgradeTime, _town);
-                    _milestoneModifiers.Add(upgradeTime, dividendsModifier);
-                    MilestoneModifierAdded?.Invoke(dividendsModifier);
+                    AddModifier(dividendsModifier, upgradeTime);
                     break;
 
-                case SelfSufficienyUpgradeData:
+                default:
+                    Debug.LogError($"Failed to apply unhandled upgrade {upgrade.name} at {upgradeTime}");
                     break;
-                default: throw new ArgumentOutOfRangeException(nameof(upgrade));
             }
         }
 
-        // TODO - BUG: this doens't work, because we don't have a list of modifiers per upgrade time (like we have for datas)
-        private void RemoveUpgrade(UpgradeTime upgradeTime, TownUpgradeData upgrade)
+        private void AddModifier(IModifier modifier, UpgradeTime upgradeTime)
         {
-            Debug.LogWarning($"removing {upgrade.name}");
-            var modifier = _milestoneModifiers.GetValueOrDefault(upgradeTime);
-            if (modifier is not null)
-            {
-                _milestoneModifiers.Remove(upgradeTime);
-                MilestoneModifierRemoved?.Invoke(modifier);
-            }
-
-            switch (upgrade)
-            {
-                case FundsBoostUpgradeData:
-                case PriceBoostUpgradeData:
-                case ProductionBoostUpgradeData:
-                case DividendsUpgradeData:
-                case SelfSufficienyUpgradeData: break;
-
-                default: throw new ArgumentOutOfRangeException(nameof(upgrade));
-            }
+            MilestoneModifiers.Add(modifier);
+            _milestoneModifiers.TryAdd(upgradeTime, new List<IModifier>());
+            _milestoneModifiers[upgradeTime].Add(modifier);
+            MilestoneModifierAdded?.Invoke(modifier);
         }
     }
 }

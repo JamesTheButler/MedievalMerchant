@@ -168,9 +168,6 @@ namespace Features.Towns
                 case MilestoneFundsBoostModifier:
                     FundsChange.AddModifier(modifier);
                     break;
-                default:
-                    Debug.LogError($"Added unhandled modifier: {modifier}");
-                    break;
             }
         }
 
@@ -180,9 +177,6 @@ namespace Features.Towns
             {
                 case MilestoneFundsBoostModifier:
                     FundsChange.RemoveModifier(modifier);
-                    break;
-                default:
-                    Debug.LogError($"Removed unhandled modifier: {modifier}");
                     break;
             }
         }
