@@ -24,6 +24,9 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
         private Image developmentTrendIcon;
 
         [SerializeField, Required]
+        private SimpleTooltipHandler developmentTooltip;
+
+        [SerializeField, Required]
         private ModifiableTooltipHandler developmentTrendTooltip;
 
         private readonly Lazy<TownDevelopmentConfig> _townDevelopmentConfig =
@@ -77,6 +80,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
         private void UpdateDevelopmentScore(float score)
         {
             developmentSlider.SetDevelopment(score);
+            developmentTooltip.SetData($"Development: {score:0.#}");
         }
 
         private void UpdateDevelopmentTrend(float trend)

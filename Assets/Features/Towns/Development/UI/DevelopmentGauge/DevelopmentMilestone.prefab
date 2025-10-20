@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7465400169020752101}
-  - component: {fileID: 6066901803433318134}
   - component: {fileID: 3441277273586232456}
   - component: {fileID: 2960143830973086068}
+  - component: {fileID: 6121169643069306709}
   m_Layer: 5
   m_Name: Top
   m_TagString: Untagged
@@ -39,22 +39,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 28}
   m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &6066901803433318134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 243771536758003061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
-  offset: 8
-  enabledOnStart: 1
-  defaultText: 
 --- !u!222 &3441277273586232456
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -93,6 +77,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 4
+--- !u!114 &6121169643069306709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243771536758003061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6005e3bd493473f8aad1d1c0cc8e132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolTipPrefab: {fileID: 7373911500606536191, guid: b10b767745dee1349aef5d87c0d754b6, type: 3}
+  offset: 8
+  enabledOnStart: 1
+  hideOnClick: 0
 --- !u!1 &4091708120710270006
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -296,4 +296,4 @@ MonoBehaviour:
   milestoneImage: {fileID: 4924644450112654074}
   topImage: {fileID: 2960143830973086068}
   baseImage: {fileID: 6183689073902998937}
-  tooltip: {fileID: 6066901803433318134}
+  tooltip: {fileID: 6121169643069306709}

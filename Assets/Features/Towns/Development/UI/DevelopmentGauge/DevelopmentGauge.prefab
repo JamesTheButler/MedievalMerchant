@@ -190,6 +190,7 @@ MonoBehaviour:
   developmentSlider: {fileID: 506826581135148888}
   developmentTrendText: {fileID: 911272740013224417}
   developmentTrendIcon: {fileID: 2986548051916523190}
+  developmentTooltip: {fileID: 6505590044293047243}
   developmentTrendTooltip: {fileID: 1761578485705013489}
 --- !u!114 &2159777865156212436
 MonoBehaviour:
@@ -299,6 +300,7 @@ MonoBehaviour:
   toolTipPrefab: {fileID: 7373911500606536191, guid: 3ac92ddabb6007a4582e8826558d2a2e, type: 3}
   offset: 8
   enabledOnStart: 1
+  hideOnClick: 0
 --- !u!222 &4554375110249233747
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -496,6 +498,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4770757968973125766, guid: df7f2a5ff270d1c42bffbaa4808bd717, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5812116070003372489, guid: df7f2a5ff270d1c42bffbaa4808bd717, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5983798600047075550, guid: df7f2a5ff270d1c42bffbaa4808bd717, type: 3}
+      propertyPath: enabledOnStart
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6149379846862275409, guid: df7f2a5ff270d1c42bffbaa4808bd717, type: 3}
       propertyPath: m_Name
       value: DevelopmentSlider
@@ -529,3 +543,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 432671634356162415, guid: df7f2a5ff270d1c42bffbaa4808bd717, type: 3}
   m_PrefabInstance: {fileID: 667314166220882709}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6505590044293047243 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5983798600047075550, guid: df7f2a5ff270d1c42bffbaa4808bd717, type: 3}
+  m_PrefabInstance: {fileID: 667314166220882709}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,8 +1,6 @@
 using System;
 using Common;
-using Common.UI;
 using NaughtyAttributes;
-using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,11 +17,12 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
         private Image baseImage;
 
         [SerializeField, Required]
-        private SimpleTooltipHandler tooltip;
+        private DevelopmentMilestoneTooltipHandler tooltip;
 
         private readonly Lazy<DevelopmentMilestoneAssets> _milestoneAssets =
             new(() => ConfigurationManager.Instance.DevelopmentMilestoneAssets);
 
+        private Data _data;
         private float _threshold;
         private Slider _slider;
         private bool? _isCompleted;
@@ -31,12 +30,13 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
 
         public void SetUp(Slider newSlider, Data data)
         {
+            _data = data;
             _threshold = data.ThresholdPercent * 100f;
 
             _slider = newSlider;
             _slider.onValueChanged.AddListener(SliderValueChanged);
             milestoneImage.sprite = data.Icon;
-            tooltip.SetData(data.Description);
+            tooltip.SetData(new DevelopmentMilestoneTooltip.Data(data, _isCompleted ?? false));
 
             SliderValueChanged(_slider.value);
         }
@@ -52,6 +52,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
             if (_isCompleted == isCompleted)
                 return;
 
+            tooltip.SetData(new DevelopmentMilestoneTooltip.Data(_data, isCompleted));
             var assets = _milestoneAssets.Value;
 
             // to accomodate base-less end milestones
