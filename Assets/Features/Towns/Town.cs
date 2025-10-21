@@ -78,7 +78,7 @@ namespace Features.Towns
 
             Inventory.AddFunds(_townConfig.GetStartFunds());
             var baseModifier = new BaseTownFundsProduction(_townConfig.FundRate[Tier], Tier);
-            FundsChange = new ModifiableVariable("Funds change per day", baseModifier, true);
+            FundsChange = new ModifiableVariable("Funds change per day", true, baseModifier);
 
             var startGood = AvailableGoods.GetRandom();
             AddProduction(startGood, 0);

@@ -34,7 +34,7 @@ namespace Features.Towns.Production.Logic
             Tier = _goodsConfig.ConfigData[producedGood].Tier;
 
             var baseModifier = new BaseProductionValue(producedGood);
-            ProductionRate = new ModifiableVariable("Production Rate", baseModifier);
+            ProductionRate = new ModifiableVariable("Production Rate", true, baseModifier);
 
             _recipe = recipeConfig.GetRecipe(producedGood);
         }

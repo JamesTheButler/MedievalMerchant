@@ -35,11 +35,11 @@ namespace Features.Player.Caravan.Logic
             _averageSpeedModifier = new AverageBaseValueModifier("Movement Speed");
             MoveSpeed = new ModifiableVariable(
                 "Movement Speed",
-                _averageSpeedModifier,
-                true);
+                true, _averageSpeedModifier);
 
             Upkeep = new ModifiableVariable(
-                "Caravan Upkeep (not implemented yet)",
+                "Caravan Upkeep (coming soon)",
+                false,
                 new BaseUpkeepModifier(_caravanConfig.BaseUpkeep));
 
             for (var i = 0; i < CaravanConfig.MaxCartCount; i++)

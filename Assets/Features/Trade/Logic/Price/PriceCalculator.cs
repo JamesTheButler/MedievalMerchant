@@ -43,7 +43,7 @@ namespace Features.Trade.Logic.Price
             var goodBasePrice = _goodsConfig.BasePriceData[goodTier];
 
             var basePriceModifier = new BasePriceModifier(goodBasePrice, goodTier);
-            Price = new ModifiableVariable("Price per Good", basePriceModifier);
+            Price = new ModifiableVariable("Price per Good", tradeType == TradeType.Sell, basePriceModifier);
 
             AddAvailabilityModifier();
             AddRegionModifiers();
@@ -149,7 +149,7 @@ namespace Features.Trade.Logic.Price
             {
                 Price.RemoveModifier(modifier);
             }
-        } 
+        }
 
         #endregion
     }

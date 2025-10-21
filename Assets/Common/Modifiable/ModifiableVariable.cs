@@ -20,7 +20,7 @@ namespace Common.Modifiable
         private readonly ObservableSum _percentModifiers = new();
         private readonly List<IModifier> _modifiers = new();
 
-        public ModifiableVariable(string description, BaseValueModifier baseValue = null, bool isBiggerBetter = false)
+        public ModifiableVariable(string description, bool isBiggerBetter, BaseValueModifier baseValue = null)
         {
             Description = description;
             IsBiggerBetter = isBiggerBetter;
