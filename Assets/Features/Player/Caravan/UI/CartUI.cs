@@ -7,7 +7,6 @@ using Features.Player.Caravan.Config;
 using Features.Player.Caravan.Logic;
 using NaughtyAttributes;
 using TMPro;
-using UI;
 using UI.InventoryUI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,6 +46,9 @@ namespace Features.Player.Caravan.UI
         [SerializeField, Required]
         private Button upgradeButton;
 
+        [SerializeField, Required]
+        private ModifiableTooltipHandler lockedUpgradeTooltip, unlockedUpgradeTooltip;
+
         [Header("Sprites")]
         [SerializeField, Required]
         private Sprite arrowUp, arrowDown;
@@ -83,7 +85,8 @@ namespace Features.Player.Caravan.UI
             });
 
             unlockButton.onClick.AddListener(upgradeAction.Invoke);
-
+            lockedUpgradeTooltip.SetData(_cart.UpgradeCost);
+            unlockedUpgradeTooltip.SetData(_cart.UpgradeCost);
             Unhover();
         }
 
@@ -135,6 +138,12 @@ namespace Features.Player.Caravan.UI
             upgradeButton.gameObject.SetActive(level < CaravanConfig.MaxLevel);
             UpdateBackgroundImage();
             levelText.text = $"Level {level}";
+
+            if (level >= CaravanConfig.MaxLevel)
+            {
+                Unhover();
+                unlockedUpgradeTooltip.SetEnabled(false);
+            }
         }
 
         private void UpdateBackgroundImage()

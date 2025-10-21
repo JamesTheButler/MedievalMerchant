@@ -1,4 +1,5 @@
 using Common;
+using Common.Modifiable;
 using Features.Player.Caravan.Config;
 
 namespace Features.Player.Caravan.Logic
@@ -9,6 +10,10 @@ namespace Features.Player.Caravan.Logic
         public Observable<int> SlotCount { get; } = new();
         public Observable<float> MoveSpeed { get; } = new();
         public Observable<float> Upkeep { get; } = new();
+
+        public ModifiableVariable UpgradeCost { get; }
+
+        private readonly CartUpgradeBaseCostModifier _baseCostModifier;
 
         public Cart(
             int level = 0,
@@ -21,6 +26,9 @@ namespace Features.Player.Caravan.Logic
             SlotCount.Value = slotCount;
             MoveSpeed.Value = moveSpeed;
             Upkeep.Value = upkeep;
+
+            _baseCostModifier = new CartUpgradeBaseCostModifier(level + 1);
+            UpgradeCost = new ModifiableVariable("Upgrade Cost", false, _baseCostModifier);
         }
 
         public void Update(int level, CaravanUpgradeData upgradeData)
@@ -29,8 +37,8 @@ namespace Features.Player.Caravan.Logic
             SlotCount.Value = upgradeData.SlotCount;
             MoveSpeed.Value = upgradeData.MoveSpeed;
             Upkeep.Value = upgradeData.Upkeep;
-        }
 
-        public static Cart Level0 => new();
+            _baseCostModifier.Update(level + 1);
+        }
     }
 }

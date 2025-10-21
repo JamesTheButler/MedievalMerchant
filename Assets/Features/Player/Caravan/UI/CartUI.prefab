@@ -418,6 +418,8 @@ MonoBehaviour:
   moveSpeedUpgradeIcon: {fileID: 6119292984187641907}
   upkeepUpgradeIcon: {fileID: 3100774230104923088}
   upgradeButton: {fileID: 2118116828575942683}
+  lockedUpgradeTooltip: {fileID: 7160990039938859353}
+  unlockedUpgradeTooltip: {fileID: 5525067518056949866}
   arrowUp: {fileID: -1280818974, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
   arrowDown: {fileID: -1324882022, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
 --- !u!1 &3334749035284829851
@@ -562,6 +564,7 @@ MonoBehaviour:
   toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
   offset: 8
   enabledOnStart: 1
+  hideOnClick: 0
   defaultText: 
 --- !u!1 &4107930230444622493
 GameObject:
@@ -1387,6 +1390,7 @@ MonoBehaviour:
   toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
   offset: 8
   enabledOnStart: 1
+  hideOnClick: 0
   defaultText: 
 --- !u!1 &8702696165902428115
 GameObject:
@@ -2014,6 +2018,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2221790527321945402, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5728498942949668319}
+    - targetCorrespondingSourceObject: {fileID: 2221790527321945402, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5525067518056949866}
   m_SourcePrefab: {fileID: 100100000, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
 --- !u!224 &961364968702039331 stripped
 RectTransform:
@@ -2098,6 +2105,22 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &5525067518056949866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5852145122964318752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf557c3f22ca40eab27cbfb5c00c0582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolTipPrefab: {fileID: 7373911500606536191, guid: 3ac92ddabb6007a4582e8826558d2a2e, type: 3}
+  offset: 8
+  enabledOnStart: 1
+  hideOnClick: 0
 --- !u!1001 &8381572857968709744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2367,14 +2390,17 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 1771189895466160066, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2221790527321945402, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 7160990039938859353}
   m_SourcePrefab: {fileID: 100100000, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
 --- !u!114 &3123231088021761521 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
   m_PrefabInstance: {fileID: 8777936122035387120}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 7423089781407944650}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -2385,3 +2411,24 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4806721880360077881, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
   m_PrefabInstance: {fileID: 8777936122035387120}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7423089781407944650 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2221790527321945402, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+  m_PrefabInstance: {fileID: 8777936122035387120}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7160990039938859353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7423089781407944650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf557c3f22ca40eab27cbfb5c00c0582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolTipPrefab: {fileID: 7373911500606536191, guid: 3ac92ddabb6007a4582e8826558d2a2e, type: 3}
+  offset: 8
+  enabledOnStart: 1
+  hideOnClick: 1
