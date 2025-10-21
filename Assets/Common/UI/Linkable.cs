@@ -1,30 +1,37 @@
-using TMPro;
+using System;
+using Common.Config;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Common.UI
 {
-    public sealed class Linkable : MonoBehaviour, IPointerClickHandler
+    public sealed class Linkable : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        private TMP_Text _tmpText;
-        private Camera _camera;
+        [SerializeField]
+        private string link;
+
+        private Cursors _cursors;
 
         private void Awake()
         {
-            _tmpText = GetComponent<TMP_Text>();
-            _camera = Camera.main;
+            _cursors = ConfigurationManager.Instance.Cursors;
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            var linkIndex = TMP_TextUtilities.FindIntersectingLink(_tmpText, eventData.position, _camera);
-            if (linkIndex == -1)
-                return;
+            Application.OpenURL(link);
+        }
 
-            var linkInfo = _tmpText.textInfo.linkInfo[linkIndex];
-            var linkId = linkInfo.GetLinkID();
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            // Use the system default hand cursor
+            Cursor.SetCursor(_cursors.Pointer, Vector2.zero, CursorMode.Auto);
+        }
 
-            Application.OpenURL(linkId);
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            // Revert to your normal cursor (also system default)
+            Cursor.SetCursor(_cursors.Default, Vector2.zero, CursorMode.Auto);
         }
     }
 }

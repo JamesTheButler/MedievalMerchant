@@ -28,6 +28,9 @@ namespace Common
         public Colors Colors { get; private set; }
 
         [field: SerializeField, Required]
+        public Cursors Cursors { get; private set; }
+
+        [field: SerializeField, Required]
         public CompanionConfig CompanionConfig { get; private set; }
 
         [field: SerializeField, Required]

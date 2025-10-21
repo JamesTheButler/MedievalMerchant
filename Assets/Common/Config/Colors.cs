@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Common.Config
 {
-    [CreateAssetMenu(fileName = "Colors", menuName = AssetMenu.ConfigDataFolder + "Colors")]
+    [CreateAssetMenu(fileName = nameof(Colors), menuName = AssetMenu.ConfigDataFolder + nameof(Colors))]
     public sealed class Colors : ScriptableObject
     {
         [field: SerializeField]
