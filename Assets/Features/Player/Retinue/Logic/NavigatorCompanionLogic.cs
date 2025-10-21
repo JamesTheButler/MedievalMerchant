@@ -7,21 +7,41 @@ namespace Features.Player.Retinue.Logic
     {
         protected override CompanionType Type => CompanionType.Navigator;
 
+        private PlayerModel _player;
+
         private NavigatorSpeedModifier _activeSpeedModifier;
+        private NavigatorUpkeepModifier _activeUpkeepModifier;
 
         public override void SetLevel(int level)
         {
-            var player = Model.Instance.Player;
+            _player = Model.Instance.Player;
 
-            var newModifier = new NavigatorSpeedModifier(ConfigData.GetTypedLevelData(level).SpeedBonus, level);
+            HandleSpeedModifier(level);
+            HandleUpkeepModifier(level);
+        }
 
-            if (_activeSpeedModifier != null)
+        private void HandleSpeedModifier(int level)
+        {
+            if (_activeSpeedModifier == null)
             {
-                player.MovementSpeed.RemoveModifier(_activeSpeedModifier);
+                _activeSpeedModifier = new NavigatorSpeedModifier(level);
+                _player.MovementSpeed.AddModifier(_activeSpeedModifier);
+                return;
             }
 
-            player.MovementSpeed.AddModifier(newModifier);
-            _activeSpeedModifier = newModifier;
+            _activeSpeedModifier.Update(level);
+        }
+
+        private void HandleUpkeepModifier(int level)
+        {
+            if (_activeUpkeepModifier == null)
+            {
+                _activeUpkeepModifier = new NavigatorUpkeepModifier(level);
+                _player.CaravanManager.Upkeep.AddModifier(_activeUpkeepModifier);
+                return;
+            }
+
+            _activeUpkeepModifier.Update(level);
         }
     }
 }

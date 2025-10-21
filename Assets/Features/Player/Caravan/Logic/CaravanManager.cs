@@ -39,7 +39,7 @@ namespace Features.Player.Caravan.Logic
                 true);
 
             Upkeep = new ModifiableVariable(
-                "Caravan Upkeep",
+                "Caravan Upkeep (not implemented yet)",
                 new BaseUpkeepModifier(_caravanConfig.BaseUpkeep));
 
             for (var i = 0; i < CaravanConfig.MaxCartCount; i++)

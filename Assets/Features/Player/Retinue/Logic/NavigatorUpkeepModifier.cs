@@ -4,11 +4,11 @@ using Features.Player.Retinue.Config;
 
 namespace Features.Player.Retinue.Logic
 {
-    public sealed class NavigatorSpeedModifier : BasePercentageModifier
+    public sealed class NavigatorUpkeepModifier : BasePercentageModifier
     {
         private readonly CompanionConfig _companionConfig;
 
-        public NavigatorSpeedModifier(int level) : base(0f, string.Empty)
+        public NavigatorUpkeepModifier(int level) : base(0f, string.Empty)
         {
             _companionConfig = ConfigurationManager.Instance.CompanionConfig;
 
@@ -17,7 +17,7 @@ namespace Features.Player.Retinue.Logic
 
         public void Update(int level)
         {
-            Value.Value = _companionConfig.NavigatorData.GetTypedLevelData(level).SpeedBonus;
+            Value.Value = -_companionConfig.NavigatorData.GetTypedLevelData(level).UpkeepReduction;
             Description.Value = GetDescription(level);
         }
 
