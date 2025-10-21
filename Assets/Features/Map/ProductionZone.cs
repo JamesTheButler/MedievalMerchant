@@ -20,7 +20,7 @@ namespace Features.Map
 
         [SerializeField, Required]
         private GameObject origin;
-        
+
         [field: SerializeField]
         public Regions Regions { get; private set; }
 
@@ -32,8 +32,6 @@ namespace Features.Map
         private void Awake()
         {
             _spriteRenderer = gameObject.GetComponent<SpriteShapeRenderer>();
-
-            // TODO - STYLE: use to force points of 2d polygon collider
             _spriteController = gameObject.GetComponent<SpriteShapeController>();
             Center = origin.transform.position;
 
@@ -58,22 +56,7 @@ namespace Features.Map
 
         public void OnPointerMove(PointerEventData eventData)
         {
-            if (IsPointerOverTown(eventData.position))
-            {
-                PointerExit();
-            }
-            else
-            {
-                PointerEnter();
-            }
-        }
-
-        private bool IsPointerOverTown(Vector2 eventDataPosition)
-        {
-            // TODO - POLISH: towns should be clickable through production zones
-            //var world = Camera.main!.ScreenToWorldPoint(eventDataPosition);
-            //return Physics2D.OverlapPoint(world, townLayerMask) != null;
-            return false;
+            PointerEnter();
         }
 
         private void PointerEnter()
@@ -85,7 +68,8 @@ namespace Features.Map
         public bool IsAdjacentTo(Vector2Int position, float distanceThreshold)
         {
             var points = _spriteController.spline.GetPoints();
-            return points.Any(zonePoint => Vector2.Distance(position, zonePoint) <= distanceThreshold);
+            var zoneOrigin = transform.position;
+            return points.Any(zonePoint => Vector2.Distance(position, zonePoint + zoneOrigin) <= distanceThreshold);
         }
     }
 }
