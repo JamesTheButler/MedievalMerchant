@@ -1,5 +1,6 @@
 using Common;
 using Features.Levels.Config;
+using Features.Levels.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace UI.StartMenu
     {
         [SerializeField, Scene]
         private string gameScene;
-        
+
         [SerializeField, Required]
         private Animation logoAnimation;
 
@@ -31,6 +32,7 @@ namespace UI.StartMenu
         {
             Debug.Log($"Loading level {levelInfo.LevelName}...");
 
+            LevelLoadContext.Instance.SelectedLevel = levelInfo;
             SceneManager.LoadScene(gameScene);
         }
 

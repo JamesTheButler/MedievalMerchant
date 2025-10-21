@@ -12,6 +12,7 @@ using NaughtyAttributes;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 namespace Features.Levels.Logic
@@ -25,26 +26,36 @@ namespace Features.Levels.Logic
         private Grid tileGrid;
 
         [SerializeField, Required]
-        private LevelInfo levelInfo;
+        private LevelInfo debugLevelInfo;
 
-        // 1.5 accounts for diagonally adjacent zones (where distance would be sqrt(2))
+        // 1.5 accounts for diagonally adjacent zones (where distance would be sqrt(2) == 1.41)
         private const float ZoneDistance = 1.5f;
 
         private Model _model;
         private FlagFactory _flagFactory;
+
+        private LevelInfo _levelInfo;
 
         private void Start()
         {
             _model = Model.Instance;
             _flagFactory = new FlagFactory();
 
-            var level = Instantiate(levelInfo.MapPrefab, tileGrid.gameObject.transform);
+            FindLevelInfo();
+
+            if (_levelInfo == null)
+            {
+                Debug.LogError($"Failed to load level. Neither {nameof(LevelLoadContext)} not debug level info found.");
+                return;
+            }
+
+            var level = Instantiate(_levelInfo.MapPrefab, tileGrid.gameObject.transform);
             var tilemap = level.GetComponent<Tilemap>();
             var flagMap = TilemapScanner.Scan(tilemap);
             var townPositions = flagMap.GetAllCells(TileType.Town);
             var zones = level.GetComponentsInChildren<ProductionZone>();
             var towns = GenerateTowns(townPositions, zones);
-            var player = new PlayerModel(levelInfo.StartPlayerFunds);
+            var player = new PlayerModel(_levelInfo.StartPlayerFunds);
 
             _model.Initialize(player, towns, flagMap);
 
@@ -53,9 +64,26 @@ namespace Features.Levels.Logic
             player.Location.WorldLocation.Value = startTown.WorldLocation;
             player.CaravanManager.UpgradeCart(0, 1);
 
-            _model.ConditionManager.Setup(levelInfo.Conditions);
+            _model.ConditionManager.Setup(_levelInfo.Conditions);
 
             levelLoaded.Invoke();
+
+            // clea level load context
+            LevelLoadContext.Instance.SelectedLevel = null;
+        }
+
+        private void FindLevelInfo()
+        {
+            if (LevelLoadContext.Instance.SelectedLevel != null)
+            {
+                Debug.Log($"Loading Level Info from {nameof(LevelLoadContext)}");
+                _levelInfo = LevelLoadContext.Instance.SelectedLevel;
+            }
+            else
+            {
+                Debug.Log("Loading Debug Level Info");
+                _levelInfo = debugLevelInfo;
+            }
         }
 
         private List<Town> GenerateTowns(List<Vector2Int> townPositions, ProductionZone[] zones)

@@ -119,6 +119,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &240420747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 240420749}
+  - component: {fileID: 240420748}
+  m_Layer: 0
+  m_Name: LevelLoadContext
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &240420748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240420747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 712225690c5a6ec4bad595960edda0fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &240420749
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240420747}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &245708765 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9146541134075353176, guid: d760ef7ed0f81c047bc14fa46af503c3, type: 3}
@@ -446,7 +490,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 285.76, y: -92}
-  m_SizeDelta: {x: 0, y: 50}
+  m_SizeDelta: {x: 319.51, y: 50}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &556445820
 MonoBehaviour:
@@ -1759,7 +1803,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Art: <style=Link><link="https://natillodesign.xyz/">Natalie Ille'
+  m_text: 'Art: <style=Link>Natalie Ille'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bc85132037438d045a5113465871a713, type: 2}
   m_sharedMaterial: {fileID: 212432288344278339, guid: bc85132037438d045a5113465871a713, type: 2}
@@ -3121,3 +3165,4 @@ SceneRoots:
   - {fileID: 766747382}
   - {fileID: 661032661}
   - {fileID: 1580690158}
+  - {fileID: 240420749}
