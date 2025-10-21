@@ -28,7 +28,6 @@ namespace Features.Player.Caravan.Logic
             null,
         };
 
-
         public CaravanManager()
         {
             _caravanConfig = ConfigurationManager.Instance.CaravanConfig;

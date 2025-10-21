@@ -1,6 +1,6 @@
 using Common.Modifiable;
 
-namespace Features.Player.Retinue
+namespace Features.Player.Retinue.Logic
 {
     public sealed class CompanionUpgradeBaseCostModifier : BaseValueModifier
     {

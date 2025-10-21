@@ -5,7 +5,7 @@ using Features.Player.Retinue.UI;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Features.Player.Retinue
+namespace Features.Player.Retinue.Logic
 {
     public sealed class CompanionUpgrader : MonoBehaviour
     {

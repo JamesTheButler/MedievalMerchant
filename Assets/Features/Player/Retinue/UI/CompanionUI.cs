@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Common;
-using Common.UI;
 using Features.Player.Retinue.Config;
+using Features.Player.Retinue.Logic;
 using NaughtyAttributes;
-using UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -14,6 +13,9 @@ namespace Features.Player.Retinue.UI
     {
         [SerializeField]
         private CompanionType companionType;
+
+        [SerializeField]
+        private bool isImplemented;
 
         [SerializeField]
         public UnityEvent<CompanionType, int> levelUpgradeRequested;
@@ -58,7 +60,7 @@ namespace Features.Player.Retinue.UI
                 var levelUIScript = levelUi.GetComponent<CompanionLevelUI>();
 
                 // increment index by 1 as lvl 0 means nothing is upgraded
-                levelUIScript.Setup(i + 1, companionType);
+                levelUIScript.Setup(i + 1, companionType, isImplemented);
                 levelUIScript.UnlockRequested += levelUpgradeRequested.Invoke;
 
                 _levelUIs.Add(levelUIScript);
@@ -67,7 +69,7 @@ namespace Features.Player.Retinue.UI
 
         private void UpdateTooltip()
         {
-            tooltip.SetData(new CompanionTooltip.Data(companionType, _currentLevel));
+            tooltip.SetData(new CompanionTooltip.Data(companionType, _currentLevel, isImplemented));
         }
 
         // TODO - STYLE: this code is quite cumbersome and funky
@@ -88,7 +90,7 @@ namespace Features.Player.Retinue.UI
                     var nextLevelUiId = levelUiId + 1;
                     if (nextLevelUiId < _levelUIs.Count)
                     {
-                        _levelUIs[nextLevelUiId].SetUnlocked(true);
+                        _levelUIs[nextLevelUiId].SetUnlocked(isImplemented);
                     }
                 }
             }

@@ -69,12 +69,15 @@ namespace Features.Levels.Logic
             levelLoaded.Invoke();
 
             // clea level load context
-            LevelLoadContext.Instance.SelectedLevel = null;
+            if (LevelLoadContext.Instance)
+            {
+                LevelLoadContext.Instance.SelectedLevel = null;
+            }
         }
 
         private void FindLevelInfo()
         {
-            if (LevelLoadContext.Instance.SelectedLevel != null)
+            if (LevelLoadContext.Instance?.SelectedLevel != null)
             {
                 Debug.Log($"Loading Level Info from {nameof(LevelLoadContext)}");
                 _levelInfo = LevelLoadContext.Instance.SelectedLevel;

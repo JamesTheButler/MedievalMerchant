@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common;
-using Features.Player.Retinue.Logic;
 
-namespace Features.Player.Retinue
+namespace Features.Player.Retinue.Logic
 {
     public sealed class RetinueManager
     {

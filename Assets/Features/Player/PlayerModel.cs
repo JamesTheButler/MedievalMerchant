@@ -2,6 +2,7 @@ using Common.Modifiable;
 using Features.Inventory;
 using Features.Player.Caravan.Logic;
 using Features.Player.Retinue;
+using Features.Player.Retinue.Logic;
 
 namespace Features.Player
 {

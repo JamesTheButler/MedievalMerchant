@@ -9,10 +9,15 @@ namespace Features.Player.Retinue.UI
 {
     public sealed class CompanionLevelTooltip : TooltipBase<CompanionLevelTooltip.Data>
     {
-        public sealed record Data(CompanionType CompanionType, int Level, bool IsUnlocked, bool IsUpgraded);
+        public sealed record Data(
+            CompanionType CompanionType,
+            int Level,
+            bool IsUnlocked,
+            bool IsUpgraded,
+            bool IsImplemented);
 
         [SerializeField, Required]
-        private TMP_Text levelText, priceText, effectsText;
+        private TMP_Text levelText, priceText, effectsText, lockedText;
 
         [SerializeField, Required]
         private GameObject priceGroup, lockedGroup;
@@ -42,6 +47,9 @@ namespace Features.Player.Retinue.UI
 
             priceText.text = $"{levelData.Cost:0.##}";
             effectsText.text = levelData.Description;
+
+
+            lockedText.text = data.IsImplemented ? "Unlock previous levels first" : "(coming soon)";
         }
 
         public override void Reset()

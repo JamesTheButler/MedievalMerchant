@@ -1,8 +1,5 @@
 ﻿using System;
-using Common.UI;
-using Features.Player.Retinue.Config;
 using NaughtyAttributes;
-using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +17,7 @@ namespace Features.Player.Retinue.UI
 
         private CompanionType _companionType;
         private int _level;
-        private bool _isUnlocked, _isUpgraded;
+        private bool _isUnlocked, _isUpgraded,_isImplemented;
 
 
         private void Awake()
@@ -28,8 +25,9 @@ namespace Features.Player.Retinue.UI
             unlockButton.onClick.AddListener(OnUnlockButtonClicked);
         }
 
-        public void Setup(int levelIndex, CompanionType companionType)
+        public void Setup(int levelIndex, CompanionType companionType, bool isImplemented)
         {
+            _isImplemented = isImplemented;
             _level = levelIndex;
             _companionType = companionType;
             SetUpgraded(false);
@@ -46,7 +44,7 @@ namespace Features.Player.Retinue.UI
             _isUpgraded = isUpgraded;
             unlockButton.gameObject.SetActive(!isUpgraded);
 
-            tooltip.SetData(new CompanionLevelTooltip.Data(_companionType, _level, _isUnlocked, _isUpgraded));
+            tooltip.SetData(new CompanionLevelTooltip.Data(_companionType, _level, _isUnlocked, _isUpgraded, _isImplemented));
         }
 
         public void SetUnlocked(bool unlocked)
@@ -54,7 +52,7 @@ namespace Features.Player.Retinue.UI
             _isUnlocked = unlocked;
             unlockButton.interactable = unlocked;
 
-            tooltip.SetData(new CompanionLevelTooltip.Data(_companionType, _level, _isUnlocked, _isUpgraded));
+            tooltip.SetData(new CompanionLevelTooltip.Data(_companionType, _level, _isUnlocked, _isUpgraded, _isImplemented));
         }
     }
 }
