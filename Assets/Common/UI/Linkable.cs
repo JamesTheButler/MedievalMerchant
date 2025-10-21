@@ -24,14 +24,14 @@ namespace Common.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            // Use the system default hand cursor
-            Cursor.SetCursor(_cursors.Pointer, Vector2.zero, CursorMode.Auto);
+            var cursor = _cursors.Pointer;
+            Cursor.SetCursor(cursor.Texture, cursor.HotSpot, CursorMode.Auto);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            // Revert to your normal cursor (also system default)
-            Cursor.SetCursor(_cursors.Default, Vector2.zero, CursorMode.Auto);
+            var cursor = _cursors.Default;
+            Cursor.SetCursor(cursor.Texture, cursor.HotSpot, CursorMode.Auto);
         }
     }
 }

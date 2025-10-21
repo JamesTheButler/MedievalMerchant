@@ -42,7 +42,8 @@ namespace UI.StartMenu
             pressAnyText.gameObject.SetActive(true);
             levelInfoBox.Clear();
 
-            Cursor.SetCursor(ConfigurationManager.Instance.Cursors.Default, Vector2.zero, CursorMode.Auto);
+            var cursor = ConfigurationManager.Instance.Cursors.Default;
+            Cursor.SetCursor(cursor.Texture,cursor.HotSpot, CursorMode.Auto);
         }
 
         private void Update()

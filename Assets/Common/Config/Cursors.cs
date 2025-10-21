@@ -6,9 +6,9 @@ namespace Common.Config
     public sealed class Cursors : ScriptableObject
     {
         [field: SerializeField]
-        public Texture2D Default { get; private set; }
+        public CursorData Default { get; private set; }
 
         [field: SerializeField]
-        public Texture2D Pointer { get; private set; }
+        public CursorData Pointer { get; private set; }
     }
 }
