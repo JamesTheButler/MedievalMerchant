@@ -62,7 +62,7 @@ namespace Features.Levels.Logic
             var startTown = towns.GetRandom();
             player.Location.CurrentTown = startTown;
             player.Location.WorldLocation.Value = startTown.WorldLocation;
-            player.CaravanManager.UpgradeCart(0, 1);
+            player.CaravanManager.UpgradeCart(0);
 
             _model.ConditionManager.Setup(_levelInfo.Conditions);
 

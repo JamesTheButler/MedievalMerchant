@@ -37,10 +37,14 @@ namespace Features.Player.Caravan.UI
             _caravanManager = Model.Instance.Player.CaravanManager;
             _playerInventory = Model.Instance.Player.Inventory;
 
+            // TODO - STYLE: it's not so nice to have a random business logic class in here.
+            //   This would have to be in the view model layer.
+            var caravanUpgrader = new CaravanUpgrader();
+
             for (var i = 0; i < _caravanManager.Carts.Count; i++)
             {
                 var cartId = i;
-                cartUis[i].Bind(_caravanManager.Carts[i], () => _caravanManager.UpgradeCart(cartId), OnCellAdded);
+                cartUis[i].Bind(_caravanManager.Carts[i], () => caravanUpgrader.RequestUpgrade(cartId), OnCellAdded);
                 cartUis[i].OnCellClicked += inventoryCellClicked.Invoke;
             }
 

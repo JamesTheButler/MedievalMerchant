@@ -56,6 +56,7 @@ namespace Features.Player.Caravan.UI
         public event Action<InventoryCell> OnCellAdded;
         public event Action<InventoryCell> OnCellClicked;
 
+        private PlayerModel _player;
         private Cart _cart;
         private CaravanConfig _caravanConfig;
         private Colors _colors;
@@ -64,6 +65,7 @@ namespace Features.Player.Caravan.UI
 
         public void Bind(Cart cart, Action upgradeAction, Action<InventoryCell> onCellAdded)
         {
+            _player = Model.Instance.Player;
             _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
             _colors = ConfigurationManager.Instance.Colors;
 
@@ -78,6 +80,8 @@ namespace Features.Player.Caravan.UI
             _cart.Upkeep.Observe(OnUpkeepChanged);
             _cart.SlotCount.Observe(OnSlotCountChanged);
 
+            _player.Inventory.Funds.Observe(OnPlayerFundsChanged);
+
             upgradeButton.onClick.AddListener(() =>
             {
                 upgradeAction.Invoke();
@@ -88,6 +92,11 @@ namespace Features.Player.Caravan.UI
             lockedUpgradeTooltip.SetData(_cart.UpgradeCost);
             unlockedUpgradeTooltip.SetData(_cart.UpgradeCost);
             Unhover();
+        }
+
+        private void OnPlayerFundsChanged(float funds)
+        {
+            upgradeButton.interactable = _cart.UpgradeCost <= funds;
         }
 
         public void Unbind()

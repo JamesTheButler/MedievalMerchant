@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Common;
 using Common.Modifiable;
 using Features.Player.Caravan.Config;
@@ -27,6 +26,7 @@ namespace Features.Player.Caravan.Logic
             null,
             null,
         };
+
 
         public CaravanManager()
         {
@@ -57,11 +57,6 @@ namespace Features.Player.Caravan.Logic
             }
         }
 
-        private void SlotCountChanged(int oldCount, int newCount)
-        {
-            SlotCount.Value += -oldCount + newCount;
-        }
-
         public void UpgradeCart(int cartId)
         {
             if (cartId is >= CaravanConfig.MaxCartCount or < 0)
@@ -70,35 +65,30 @@ namespace Features.Player.Caravan.Logic
                 return;
             }
 
-            UpgradeCart(cartId, _carts[cartId].Level + 1);
-        }
-
-        public void UpgradeCart(int cartId, int level)
-        {
-            if (cartId is >= CaravanConfig.MaxCartCount or < 0)
+            var nextLevel = _carts[cartId].Level + 1;
+            if (nextLevel is > CaravanConfig.MaxLevel or < 0)
             {
-                Debug.LogError($"Invalid index: {cartId}. There are only {CaravanConfig.MaxCartCount} carts.");
+                Debug.LogError($"Invalid level: {nextLevel}. Max. level is {CaravanConfig.MaxLevel}.");
                 return;
             }
 
-            if (level is > CaravanConfig.MaxLevel or < 0)
-            {
-                Debug.LogError($"Invalid level: {level}. Max. level is {CaravanConfig.MaxLevel}.");
-                return;
-            }
-
-            var upgradeData = _caravanConfig.GetUpgradeData(level);
+            var upgradeData = _caravanConfig.GetUpgradeData(nextLevel);
             var cart = _carts[cartId];
             var oldLevel = cart.Level.Value;
-            if (oldLevel == 0 && level > 0)
+            if (oldLevel == 0 && nextLevel > 0)
             {
                 _averageSpeedModifier.AddValue(cart.MoveSpeed);
             }
 
-            _carts[cartId].Update(level, upgradeData);
+            _carts[cartId].Update(nextLevel, upgradeData);
             RefreshTotals(cartId);
         }
 
+        private void SlotCountChanged(int oldCount, int newCount)
+        {
+            SlotCount.Value += -oldCount + newCount;
+        }
+        
         private void RefreshTotals(int cartId)
         {
             var modifier = _cartUpkeepModifiers[cartId];
