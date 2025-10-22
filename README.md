@@ -1,6 +1,6 @@
 <h1>Medieval Merchant <i>(working title)</i></h1>
 
-Medieval Merchant is a strategy and trading simulation game built in Unity (C#). You manage a traveling caravan, buy and sell goods across a dynamically evolving medieval world, and help towns prosper and grow through trade.
+Medieval Merchant is a strategy and trading simulation game built in Unity (C#). You manage a traveling caravan, buy and sell goods across a dynamically evolving medieval world, and help towns prosper and grow through trade. The game will be realeased on Steam for free once it is ready.
 
 <img width="1719" height="966" alt="image" src="https://github.com/user-attachments/assets/7956372d-4c4e-446f-8ddb-76aa92137e41" />
 
@@ -19,7 +19,7 @@ Medieval Merchant is a strategy and trading simulation game built in Unity (C#).
 
 <h2>Current Focus</h2>
 
-- Expanding town growth and production chains
-- Refining caravan movement and world interactions
-- Balancing trade values and world economy
-- Polishing UI and player feedback
+- Expanding game modifiers, such as level-specific events, in-game events that last a few days/weeks.
+- Adding more detailed gameplay around the needs of towns, such as requirements to allow towns to upgrade or town-specific demands.
+- Balancing trade and growth values as well as the speed of the gameplay.
+- Polishing UI and getting early player feedback
