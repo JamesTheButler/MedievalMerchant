@@ -19,7 +19,7 @@ namespace Features.Towns.Development.UI
         [SerializeField, Required]
         private Image milestoneIcon;
 
-        public override void SetData(Data data)
+        protected override void UpdateUI(Data data)
         {
             milestoneIcon.sprite = data.MilestoneData.Icon;
             descriptionText.text = $"Unlocks at development {data.MilestoneData.ThresholdPercent.ToPercentString()}";

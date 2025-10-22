@@ -18,7 +18,7 @@ namespace Common.UI.Test
         [SerializeField, Required]
         private GameObject testElementPrefab;
 
-        public override void SetData(Data data)
+        protected override void UpdateUI(Data data)
         {
             titleText.text = data.Title;
             dynamicContainer.DestroyChildren();

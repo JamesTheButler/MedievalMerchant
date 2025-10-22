@@ -29,9 +29,9 @@ namespace Features.Goods.UI
             _region = ConfigurationManager.Instance.RegionConfig;
         }
 
-        public override void SetData(Good good)
+        protected override void UpdateUI(Good data)
         {
-            var goodData = _goodsConfig.ConfigData[good];
+            var goodData = _goodsConfig.ConfigData[data];
 
             var tier = goodData.Tier;
             var price = _goodsConfig.BasePriceData[tier];

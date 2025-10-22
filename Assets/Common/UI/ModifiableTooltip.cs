@@ -20,7 +20,7 @@ namespace Common.UI
 
         private ModifiableVariable _modifiableVariable;
 
-        public override void SetData(ModifiableVariable data)
+        protected override void UpdateUI(ModifiableVariable data)
         {
             _modifiableVariable = data;
             _modifiableVariable.Observe(OnValueChanged);

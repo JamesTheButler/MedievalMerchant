@@ -9,7 +9,7 @@ namespace Common.UI
         [SerializeField, Required]
         private TMP_Text textfield;
 
-        public override void SetData(string data)
+        protected override void UpdateUI(string data)
         {
             textfield.text = data;
         }

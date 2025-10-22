@@ -1,7 +1,6 @@
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Common.UI
 {
@@ -15,10 +14,13 @@ namespace Common.UI
         private GameObject toolTipPrefab;
 
         [SerializeField]
-        private float offset = 8f;
+        private bool enabledOnStart, hideOnClick;
 
         [SerializeField]
-        private bool enabledOnStart, hideOnClick;
+        private bool useSelfAsOrigin = true;
+
+        [SerializeField, HideIf(nameof(useSelfAsOrigin))]
+        private RectTransform originTransform;
 
         private TooltipBase<TData> _activeToolTip;
         private bool _isEnabled;
@@ -59,30 +61,9 @@ namespace Common.UI
                 return;
 
             _activeToolTip = Instantiate(toolTipPrefab, _canvas.transform).GetComponent<TooltipBase<TData>>();
+            var origin = useSelfAsOrigin | !originTransform ? (RectTransform)gameObject.transform : originTransform; 
+            _activeToolTip.SetOriginObject(origin);
             _activeToolTip.SetData(_data);
-
-            var canvasGroup = _activeToolTip.GetComponent<CanvasGroup>();
-            if (canvasGroup == null)
-            {
-                Debug.LogError("Tooltips should have a CanvasGroup to enforce proper spawning.");
-            }
-            else
-            {
-                canvasGroup.blocksRaycasts = false;
-            }
-
-            var topCenter = ((RectTransform)gameObject.transform).GetTopCenter();
-            _activeToolTip.transform.SetCanvasClampedPosition(
-                topCenter + new Vector3(0, offset, 0),
-                _canvas);
-
-            Canvas.ForceUpdateCanvases();
-            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)_activeToolTip.transform);
-
-            if (canvasGroup != null)
-            {
-                canvasGroup.blocksRaycasts = true;
-            }
         }
 
         public void OnPointerExit(PointerEventData eventData)

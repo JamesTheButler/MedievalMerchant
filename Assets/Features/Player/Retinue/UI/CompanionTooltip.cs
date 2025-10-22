@@ -21,7 +21,7 @@ namespace Features.Player.Retinue.UI
             _configData = ConfigurationManager.Instance.CompanionConfig;
         }
 
-        public override void SetData(Data data)
+        protected override void UpdateUI(Data data)
         {
             var companionData = _configData.Get(data.CompanionType);
             var levelData = companionData.GetLevelData(data.Level);
