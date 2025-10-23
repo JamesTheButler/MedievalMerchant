@@ -22,7 +22,7 @@ namespace Features.Map
         private GameObject origin;
 
         [field: SerializeField]
-        public Regions Regions { get; private set; }
+        public Region Region { get; private set; }
 
         private SpriteShapeRenderer _spriteRenderer;
         private SpriteShapeController _spriteController;

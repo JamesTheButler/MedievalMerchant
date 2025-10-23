@@ -40,7 +40,6 @@ namespace Features.Map.Tiling
             {
                 town.Tier.Observe(_ => UpdateTown(town));
             }
-
         }
 
         // TODO - STYLE: should use input system

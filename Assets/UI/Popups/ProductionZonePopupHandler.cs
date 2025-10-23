@@ -41,9 +41,7 @@ namespace UI.Popups
             // BUG: this is not updated when we move the camera
             var screenPosition = Camera.main!.WorldToScreenPoint(worldPosition);
             productionZonePopup.gameObject.transform.position = screenPosition;
-
-            // TODO - HACK: a prod zone should have exactly one associated region.
-            productionZonePopup.SetRegion(zone.Regions.GetRandom());
+            productionZonePopup.SetRegion(zone.Region);
             foreach (var tier1Good in zone.AvailableGoods)
             {
                 var tier2Good = _recipeConfig.GetTier2RecipeForComponent(tier1Good).Result;

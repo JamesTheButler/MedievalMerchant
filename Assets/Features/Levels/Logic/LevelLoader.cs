@@ -106,7 +106,7 @@ namespace Features.Levels.Logic
         private Town GenerateTown(Vector2Int townPosition, List<ProductionZone> adjacentZones)
         {
             var worldPosition = tileGrid.CellToWorld(townPosition.FromXY());
-            var townRegions = adjacentZones.Select(zone => zone.Regions).AggregateFlags();
+            var townRegions = adjacentZones.Select(zone => zone.Region.AsRegions()).AggregateFlags();
             var availableGoods = GetAllZoneGoods(adjacentZones);
 
             var town = new Town(
