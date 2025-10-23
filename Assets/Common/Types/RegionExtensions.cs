@@ -27,5 +27,10 @@ namespace Common.Types
         {
             return (Regions)(1 << (int)region);
         }
+        
+        public static bool Contains(this Regions regions, Region region)
+        {
+            return regions.HasFlag(region.AsRegions());
+        }
     }
 }

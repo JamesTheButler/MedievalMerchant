@@ -51,7 +51,7 @@ namespace Common.UI
         {
             foreach (var (rect, color) in _debugRects)
             {
-                DrawRect(rect, color, 0);
+                MyGizmos.DrawRect(rect, color, 0);
             }
         }
 
@@ -155,33 +155,5 @@ namespace Common.UI
             var clampedRect = new Rect(targetBottomPosition, worldRect.size);
             _debugRects.Add(clampedRect, Color.white);
         }
-        
-        // TODO: make static
-        private void DrawRectTransform(RectTransform rectTransform, Color color, float padding)
-        {
-            if (!rectTransform)
-                return;
-
-            var corners = new Vector3[4];
-            rectTransform.GetWorldCorners(corners);
-
-            var bottomLeft = corners[0];
-            var topRight = corners[2];
-            var center = bottomLeft + (topRight - bottomLeft) / 2f;
-            var size = rectTransform.sizeDelta;
-
-            Gizmos.color = color;
-            Gizmos.DrawWireCube(center + Vector3.one * padding, size - Vector2.one * 2 * padding);
-        }
-
-        // TODO: make static
-        private void DrawRect(Rect rect, Color color, float padding)
-        {
-            Gizmos.color = color;
-            Gizmos.DrawWireCube(
-                rect.center + Vector2.one * padding,
-                rect.size - Vector2.one * 2 * padding);
-        }
-
     }
 }

@@ -1,5 +1,4 @@
 using Common;
-using Common.Types;
 using Features.Goods.Config;
 using Features.Map;
 using UnityEngine;

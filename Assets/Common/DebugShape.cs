@@ -64,12 +64,7 @@ namespace Common
                     break;
 
                 case DebugShapeType.X:
-                    Gizmos.DrawLine(
-                        position + (Vector3.left + Vector3.up) * size,
-                        position + (Vector3.right + Vector3.down) * size);
-                    Gizmos.DrawLine(
-                        position + (Vector3.right + Vector3.up) * size,
-                        position + (Vector3.left + Vector3.down) * size);
+                    MyGizmos.DrawX(position, size);
                     break;
 
                 default: throw new ArgumentOutOfRangeException();
