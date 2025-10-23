@@ -30,17 +30,17 @@ namespace Features.Map.Tiling
         private Model _model;
         private Tilemap _tilemap;
 
-        private const int TownZIndex = 3;
-
         public void Initialize()
         {
             _model = Model.Instance;
+            
+            _tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
+            
             foreach (var town in _model.Towns.Values)
             {
-                town.Tier.Observe(_ => UpdateTown(town), false);
+                town.Tier.Observe(_ => UpdateTown(town));
             }
 
-            _tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
         }
 
         // TODO - STYLE: should use input system
@@ -68,7 +68,8 @@ namespace Features.Map.Tiling
             };
 
             var pos = town.GridLocation;
-            _tilemap.SetTile(new Vector3Int(pos.x, pos.y, TownZIndex), tile);
+            var z = _model.TileFlagMap.TownZLevels.GetValueOrDefault(pos, 5);
+            _tilemap.SetTile(new Vector3Int(pos.x, pos.y, z), tile);
         }
 
         private void RightClick()

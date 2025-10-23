@@ -9,7 +9,7 @@ namespace Features.Map.Tiling
         public static TileFlagMap Scan(Tilemap tilemap)
         {
             tilemap.CompressBounds();
-            var size = tilemap.cellBounds.size; // - new Vector3Int(2, 2, 0); // subtract frame width?
+            var size = tilemap.cellBounds.size;
             var origin = tilemap.cellBounds.position;
 
             var flagMap = new TileFlagMap(size.XY(), origin.XY());
@@ -26,6 +26,10 @@ namespace Features.Map.Tiling
                 if (tileType == null) continue;
 
                 flagMap.AddType(pos.XY(), tileType.Value);
+                if(tileType == TileType.Town)
+                {
+                    flagMap.AddTown(pos);
+                }
             }
 
             return flagMap;

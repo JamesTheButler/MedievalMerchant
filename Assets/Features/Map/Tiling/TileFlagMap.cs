@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Common;
 using UnityEngine;
 
 namespace Features.Map.Tiling
@@ -8,6 +10,7 @@ namespace Features.Map.Tiling
         public Vector2Int Size { get; }
 
         private readonly TileFlags[,] _tiles;
+        public readonly Dictionary<Vector2Int, int> TownZLevels = new();
 
         public TileFlagMap(Vector2Int size, Vector2Int origin)
         {
@@ -24,6 +27,11 @@ namespace Features.Map.Tiling
         public void AddType(Vector2Int position, TileType tileType)
         {
             _tiles[position.x - Origin.x, position.y - Origin.y].AddType(tileType);
+        }
+
+        public void AddTown(Vector3Int position)
+        {
+            TownZLevels.Add(position.XY() - Origin, position.z);
         }
     }
 }
