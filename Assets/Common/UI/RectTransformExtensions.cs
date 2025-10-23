@@ -14,9 +14,6 @@ namespace Common.UI
             return corners;
         }
 
-        /// <summary>
-        /// order: 0=bottom-left, 1=top-left, 2=top-right, 3=bottom-right
-        /// </summary>
         public static Rect GetWorldRect(this RectTransform rectTransform)
         {
             var corners = rectTransform.GetCorners();
@@ -26,19 +23,6 @@ namespace Common.UI
                 bottomLeft.y,
                 rectTransform.rect.width,
                 rectTransform.rect.height
-            );
-        }
-
-        public static Vector3 GetTopCenter(this RectTransform rectTransform)
-        {
-            var corners = rectTransform.GetCorners();
-            // order: 0=bottom-left, 1=top-left, 2=top-right, 3=bottom-right
-            var worldTopCenter = (corners[1] + corners[2]) * 0.5f;
-
-            var canvas = rectTransform.GetComponentInParent<Canvas>();
-            return RectTransformUtility.WorldToScreenPoint(
-                canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
-                worldTopCenter
             );
         }
 

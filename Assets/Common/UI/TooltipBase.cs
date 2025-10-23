@@ -1,14 +1,11 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Common.UI
 {
     public abstract class TooltipBase<TData> : MonoBehaviour
     {
-        private const int CanvasPadding = 16;
-        private const int OriginObjectPadding = 16;
+        private const int Padding = 16;
 
         private Canvas _canvas;
         private RectTransform _origin;
@@ -20,7 +17,7 @@ namespace Common.UI
 
         protected abstract void UpdateUI(TData data);
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _rectTransform = (RectTransform)transform;
         }
@@ -52,14 +49,114 @@ namespace Common.UI
 
         private void OnDrawGizmos()
         {
-            DrawRectTransform(_rectTransform, Color.green, 4f);
-
             foreach (var (rect, color) in _debugRects)
             {
                 DrawRect(rect, color, 0);
             }
         }
 
+        private void Justify()
+        {
+            if (!_origin | !_canvas | !_rectTransform)
+                return;
+
+            var canvasRectTransform = _canvas.transform as RectTransform;
+            var canvasRect = canvasRectTransform!.GetWorldRect();
+            var originRect = _origin.GetWorldRect();
+            var worldRect = _rectTransform.GetWorldRect();
+
+            var spaceOnTop = canvasRect.yMax - originRect.yMax - 2 * Padding;
+            var spaceOnRight = canvasRect.xMax - originRect.xMax - Padding - Padding;
+
+            var fitsOnTop = spaceOnTop >= worldRect.height;
+            var fitsOnRight = spaceOnRight >= worldRect.width;
+            var halfSize = new Vector2(worldRect.width / 2f, worldRect.height / 2f);
+
+            // if it fits above origin object, use origins top edge to align
+            // otherwise use the top of the canvas to align
+            var y = fitsOnTop
+                ? originRect.yMax + Padding + halfSize.y
+                : canvasRect.yMax - Padding - halfSize.y;
+
+            float x;
+
+            // if it fits on top, use the origins center to align
+            if (fitsOnTop)
+            {
+                x = Mathf.Clamp(
+                    originRect.center.x,
+                    Padding + halfSize.x,
+                    canvasRect.width - Padding - halfSize.x);
+            }
+            // otherwise place either to the right (preferred) or to the left of the origin object
+            else
+            {
+                x = fitsOnRight
+                    ? originRect.xMax + Padding + halfSize.x
+                    : originRect.xMin - Padding - halfSize.x;
+            }
+
+            var targetCenterPosition = new Vector2(x, y);
+
+            RegisterDebugShapes(originRect, spaceOnTop, fitsOnTop, spaceOnRight, fitsOnRight, targetCenterPosition,
+                halfSize, worldRect);
+
+            // move the actual tooltip
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasRectTransform,
+                RectTransformUtility.WorldToScreenPoint(null, targetCenterPosition),
+                null,
+                out var localPoint
+            );
+            _rectTransform.anchoredPosition = localPoint;
+
+            // this seems to help!
+        //    LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
+        }
+
+        private void RegisterDebugShapes(
+            Rect originRect,
+            float spaceOnTop,
+            bool fitsOnTop,
+            float spaceOnRight,
+            bool fitsOnRight,
+            Vector2 targetCenterPosition,
+            Vector2 halfSize,
+            Rect worldRect)
+        {
+            _debugRects.Clear();
+
+            var paddingSize = new Vector2(Padding, Padding);
+
+            var canvasPaddingRect = new Rect(
+                Vector2.zero + paddingSize,
+                _canvas.pixelRect.size - paddingSize * 2f);
+            _debugRects.Add(canvasPaddingRect, Color.yellow);
+
+            // render padding around origin
+            var objectPaddingRect = new Rect(
+                originRect.position - paddingSize,
+                originRect.size + paddingSize * 2f);
+            _debugRects.Add(objectPaddingRect, Color.yellow);
+
+            // render space between origin.top and canvas.top
+            var topRect = new Rect(
+                new Vector2(originRect.xMin, originRect.yMax + Padding),
+                new Vector2(originRect.width, spaceOnTop));
+            _debugRects.Add(topRect, fitsOnTop ? Color.green : Color.red);
+
+            // render space between origin.right and canvas.right
+            var rightRect = new Rect(
+                new Vector2(originRect.xMax + Padding, originRect.yMin),
+                new Vector2(spaceOnRight, originRect.height));
+            _debugRects.Add(rightRect, fitsOnRight ? Color.green : Color.red);
+
+            var targetBottomPosition = targetCenterPosition - halfSize;
+            var clampedRect = new Rect(targetBottomPosition, worldRect.size);
+            _debugRects.Add(clampedRect, Color.white);
+        }
+        
+        // TODO: make static
         private void DrawRectTransform(RectTransform rectTransform, Color color, float padding)
         {
             if (!rectTransform)
@@ -77,6 +174,7 @@ namespace Common.UI
             Gizmos.DrawWireCube(center + Vector3.one * padding, size - Vector2.one * 2 * padding);
         }
 
+        // TODO: make static
         private void DrawRect(Rect rect, Color color, float padding)
         {
             Gizmos.color = color;
@@ -85,115 +183,5 @@ namespace Common.UI
                 rect.size - Vector2.one * 2 * padding);
         }
 
-        private void Justify()
-        {
-            if (!_origin)
-                return;
-
-            _debugRects.Clear();
-
-            var canvasRectTransform = _canvas.transform as RectTransform;
-            var canvasRect = canvasRectTransform!.GetWorldRect();
-            var originRect = _origin.GetWorldRect();
-            var worldRect = _rectTransform.GetWorldRect();
-
-            // render canvas padding
-            var canvasPaddingSize = new Vector2(CanvasPadding, CanvasPadding);
-            var originPaddingSize = new Vector2(OriginObjectPadding, OriginObjectPadding);
-
-            var canvasPaddingRect = new Rect(
-                Vector2.zero + canvasPaddingSize,
-                _canvas.pixelRect.size - canvasPaddingSize * 2f);
-            _debugRects.Add(canvasPaddingRect, Color.yellow);
-
-            // render padding around origin
-            var objectPaddingRect = new Rect(
-                originRect.position - originPaddingSize,
-                originRect.size + originPaddingSize * 2f);
-            _debugRects.Add(objectPaddingRect, Color.yellow);
-
-            // render space between origin.top and canvas.top
-            var spaceOnTop = canvasRect.yMax - originRect.yMax - CanvasPadding - OriginObjectPadding;
-            var fitsOnTop = spaceOnTop >= worldRect.height;
-            var topRect = new Rect(
-                new Vector2(originRect.xMin, originRect.yMax + OriginObjectPadding),
-                new Vector2(originRect.width, spaceOnTop));
-            _debugRects.Add(topRect, fitsOnTop ? Color.green : Color.red);
-
-            // render space between origin.right and canvas.right
-            var spaceOnRight = canvasRect.xMax - originRect.xMax - CanvasPadding - OriginObjectPadding;
-            var fitsOnRight = spaceOnRight >= worldRect.width;
-            var rightRect = new Rect(
-                new Vector2(originRect.xMax + OriginObjectPadding, originRect.yMin),
-                new Vector2(spaceOnRight, originRect.height));
-            _debugRects.Add(rightRect, fitsOnRight ? Color.green : Color.red);
-
-
-            var bottomCenterAnchor = new Vector2(worldRect.width / 2f, 0);
-            var centerAnchor = new Vector2(worldRect.width / 2f, worldRect.height / 2f);
-            
-            Debug.LogError($"anchor min:{_rectTransform.anchorMin} - max:{_rectTransform.anchorMax}");
-
-            var y = fitsOnTop
-                ? originRect.yMax + OriginObjectPadding + centerAnchor.y
-                : canvasRect.yMax - CanvasPadding - centerAnchor.y;
-
-            float x;
-
-            if (fitsOnTop)
-            {
-                x = Mathf.Clamp(
-                    originRect.center.x,
-                    CanvasPadding + worldRect.width / 2f,
-                    canvasRect.width - CanvasPadding - worldRect.width / 2f);
-            }
-            else
-            {
-                x = 0f;
-            }
-
-            var clampedPosition = new Vector2(0, y);
-/*
-            switch (fitsOnTop, fitsOnRight)
-            {
-                case (fitsOnTop: true, fitsOnRight: true):
-                    var spaceOnLeft = canvasRect.xMin - originRect.xMax - CanvasPadding - OriginObjectPadding;
-                    var fitsOnLeft = spaceOnLeft >= worldRect.width;
-                    Debug.LogWarning("Default Placement");
-                    clampedPosition = new Vector2(
-                        originRect.center.x,
-                        originRect.yMax + OriginObjectPadding);
-                    break;
-                case (fitsOnTop: true, fitsOnRight: false):
-                    Debug.LogWarning("Clamped by the right");
-                    clampedPosition = new Vector2(
-                        canvasRect.xMax - CanvasPadding - worldRect.width / 2f,
-                        originRect.yMax + OriginObjectPadding);
-                    break;
-                case (fitsOnTop: false, fitsOnRight: true):
-                    Debug.LogWarning("Clamped by the top");
-                    clampedPosition = new Vector2(
-                        originRect.xMax + OriginObjectPadding + worldRect.width / 2f,
-                        canvasRect.yMax - CanvasPadding - worldRect.height);
-                    break;
-                case (fitsOnTop: false, fitsOnRight: false):
-                    Debug.LogWarning("Forced to place left");
-                    clampedPosition = new Vector2(
-                        originRect.xMin - OriginObjectPadding - worldRect.width / 2f,
-                        canvasRect.yMax - CanvasPadding - worldRect.height);
-                    break;
-            }*/
-
-
-            var anchoredPos = clampedPosition - centerAnchor;
-            var clampedRect = new Rect(anchoredPos, worldRect.size);
-            _debugRects.Add(clampedRect, Color.blue);
-
-            // this seems to help!
-            LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
-
-            // TODO: this is causing flickering, i think. maybe another ForceRebuild?
-            //_rectTransform.anchoredPosition = new Vector3(clampedPosition.x / 2f, clampedPosition.y, 0);
-        }
     }
 }

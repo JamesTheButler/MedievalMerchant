@@ -22,8 +22,9 @@ namespace Features.Goods.UI
         private TierIconConfig _tierIcons;
         private RegionConfig _region;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             _tierIcons = ConfigurationManager.Instance.TierIconConfig;
             _region = ConfigurationManager.Instance.RegionConfig;

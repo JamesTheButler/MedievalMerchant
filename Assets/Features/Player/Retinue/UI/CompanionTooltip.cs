@@ -16,8 +16,10 @@ namespace Features.Player.Retinue.UI
 
         private CompanionConfig _configData;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             _configData = ConfigurationManager.Instance.CompanionConfig;
         }
 
