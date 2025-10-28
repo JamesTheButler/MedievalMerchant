@@ -5,6 +5,9 @@ namespace Common.UI
 {
     public abstract class TooltipBase<TData> : MonoBehaviour
     {
+        [SerializeField]
+        private bool drawDebugLines;
+
         private const int Padding = 16;
 
         private Canvas _canvas;
@@ -49,9 +52,12 @@ namespace Common.UI
 
         private void OnDrawGizmos()
         {
+            if (!drawDebugLines)
+                return;
+
             foreach (var (rect, color) in _debugRects)
             {
-                MyGizmos.DrawRect(rect, color, 0);
+                MyGizmos.DrawRect(rect, color);
             }
         }
 
@@ -98,7 +104,13 @@ namespace Common.UI
 
             var targetCenterPosition = new Vector2(x, y);
 
-            RegisterDebugShapes(originRect, spaceOnTop, fitsOnTop, spaceOnRight, fitsOnRight, targetCenterPosition,
+            RegisterDebugShapes(
+                originRect,
+                spaceOnTop,
+                fitsOnTop,
+                spaceOnRight,
+                fitsOnRight,
+                targetCenterPosition,
                 halfSize, worldRect);
 
             // move the actual tooltip
@@ -111,7 +123,7 @@ namespace Common.UI
             _rectTransform.anchoredPosition = localPoint;
 
             // this seems to help!
-        //    LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
+            //LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
         }
 
         private void RegisterDebugShapes(
@@ -125,6 +137,9 @@ namespace Common.UI
             Rect worldRect)
         {
             _debugRects.Clear();
+
+            if (!drawDebugLines)
+                return;
 
             var paddingSize = new Vector2(Padding, Padding);
 

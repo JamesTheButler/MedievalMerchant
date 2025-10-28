@@ -61,7 +61,7 @@ namespace Common.UI
                 return;
 
             _activeToolTip = Instantiate(toolTipPrefab, _canvas.transform).GetComponent<TooltipBase<TData>>();
-            var origin = useSelfAsOrigin | !originTransform ? (RectTransform)gameObject.transform : originTransform; 
+            var origin = useSelfAsOrigin | !originTransform ? (RectTransform)gameObject.transform : originTransform;
             _activeToolTip.SetOriginObject(origin);
             _activeToolTip.SetData(_data);
         }

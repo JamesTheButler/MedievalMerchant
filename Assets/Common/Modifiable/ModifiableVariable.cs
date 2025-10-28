@@ -108,21 +108,20 @@ namespace Common.Modifiable
 
         public override string ToString()
         {
-            var baseModifier = Modifiers.FirstOfType<BaseValueModifier, IModifier>();
             var allOtherModifiers = Modifiers.Where(modifier => modifier is not Modifiable.BaseValueModifier);
 
             var builder = new StringBuilder()
-                .AppendLine(Value.ToString("0.##"));
+                .AppendLine($"{BaseValueModifier.FormattedValue} .. {BaseValueModifier.Description}");
 
             if (_modifiers.Count > 1)
             {
                 builder.AppendLine("====================");
             }
 
-            if (baseModifier is not null)
+            if (BaseValueModifier is not null)
             {
                 builder
-                    .AppendLine(baseModifier.Description)
+                    .AppendLine(BaseValueModifier.Description)
                     .AppendLine("--------------------");
             }
 

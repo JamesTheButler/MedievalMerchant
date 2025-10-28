@@ -36,6 +36,7 @@ namespace Common
         {
             if (!rectTransform)
                 return;
+
             DrawRect(rectTransform.GetWorldRect(), color, padding);
         }
     }
