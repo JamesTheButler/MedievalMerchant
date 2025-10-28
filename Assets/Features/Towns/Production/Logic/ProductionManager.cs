@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common;
+using Common.Modifiable;
 using Common.Types;
 using Features.Goods.Config;
+using Features.Towns.Development.Logic.Milestones;
+using JetBrains.Annotations;
 
 namespace Features.Towns.Production.Logic
 {
@@ -14,6 +17,7 @@ namespace Features.Towns.Production.Logic
         private readonly Town _town;
         private readonly GoodsConfig _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
         private readonly Dictionary<Tier, Producer[]> _producers;
+        private readonly List<ProductionBoostModifier> _productionModifiers = new();
 
         public ProductionManager(Town town)
         {
@@ -37,7 +41,6 @@ namespace Features.Towns.Production.Logic
         {
             return _producers.Values.Any(producers => producers.Any(producer => producer?.ProducedGood == good));
         }
-
 
         public Producer[] GetProducers(Tier tier)
         {
@@ -66,6 +69,7 @@ namespace Features.Towns.Production.Logic
             var producers = GetProducers(tier);
             var producer = new Producer(good, _town);
             producers[index] = producer;
+            producer.ProductionRate.AddModifiers(_productionModifiers);
             ProductionAdded?.Invoke(producer);
         }
 
@@ -74,6 +78,24 @@ namespace Features.Towns.Production.Logic
             foreach (var producer in AllProducers)
             {
                 producer.Produce();
+            }
+        }
+
+        public void AddModifier(ProductionBoostModifier prodBoostModifier)
+        {
+            _productionModifiers.Add(prodBoostModifier);
+            foreach (var producer in AllProducers)
+            {
+                producer.ProductionRate.AddModifier(prodBoostModifier);
+            }
+        }
+
+        public void RemoveModifier(ProductionBoostModifier prodBoostModifier)
+        {
+            _productionModifiers.Remove(prodBoostModifier);
+            foreach (var producer in AllProducers)
+            {
+                producer.ProductionRate.RemoveModifier(prodBoostModifier);
             }
         }
     }

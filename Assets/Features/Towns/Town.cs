@@ -168,6 +168,9 @@ namespace Features.Towns
                 case MilestoneFundsBoostModifier:
                     FundsChange.AddModifier(modifier);
                     break;
+                case MilestoneProductionBoostModifier prodBoostModifier:
+                    ProductionManager.AddModifier(prodBoostModifier);
+                    break;
             }
         }
 
@@ -177,6 +180,9 @@ namespace Features.Towns
             {
                 case MilestoneFundsBoostModifier:
                     FundsChange.RemoveModifier(modifier);
+                    break;
+                case MilestoneProductionBoostModifier prodBoostModifier:
+                    ProductionManager.RemoveModifier(prodBoostModifier);
                     break;
             }
         }

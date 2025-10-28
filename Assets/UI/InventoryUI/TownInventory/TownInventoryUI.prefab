@@ -80,9 +80,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolTipPrefab: {fileID: 7373911500606536191, guid: 3ac92ddabb6007a4582e8826558d2a2e, type: 3}
-  offset: 8
   enabledOnStart: 1
   hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
 --- !u!222 &4506792779906704771
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -480,6 +481,7 @@ GameObject:
   - component: {fileID: 4580529474720094216}
   - component: {fileID: 1661751017606061062}
   - component: {fileID: 3482251154883595107}
+  - component: {fileID: 8555443964196216083}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
@@ -601,6 +603,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8555443964196216083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3875585161994546215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 0
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  defaultText: Reach 100% Development for this town to upgrade.
 --- !u!1 &6008887258400622173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1319,6 +1339,7 @@ MonoBehaviour:
   flagUI: {fileID: 2478475703100777485}
   developmentGauge: {fileID: 1727436808603141334}
   upgradeButton: {fileID: 3482251154883595107}
+  upgradeButtonTooltip: {fileID: 8555443964196216083}
   fundsText: {fileID: 2024573309069458658}
   fundsTooltip: {fileID: 2942594599148626821}
   productionPanel: {fileID: 6415451143259150853}

@@ -34,6 +34,9 @@ namespace UI.InventoryUI.TownInventory
         [SerializeField, Required]
         private Button upgradeButton;
 
+        [SerializeField, Required]
+        private SimpleTooltipHandler upgradeButtonTooltip;
+
         [Header("Inventory UI Elements")]
         [SerializeField, Required]
         private TMP_Text fundsText;
@@ -46,7 +49,6 @@ namespace UI.InventoryUI.TownInventory
 
         [SerializeField, Required]
         private TownInventoryPanel inventoryPanel;
-
 
         private Town _town;
         private Inventory _inventory;
@@ -67,9 +69,6 @@ namespace UI.InventoryUI.TownInventory
             if (town == null) return;
 
             BindTown(town);
-
-            // makes sure that the UI is properly inflated after dynamic inventory creation
-            Canvas.ForceUpdateCanvases();
         }
 
         public void Show()
@@ -113,7 +112,10 @@ namespace UI.InventoryUI.TownInventory
 
         private void OnDevelopmentChanged(float developmentScore)
         {
-            upgradeButton.interactable = developmentScore.IsApproximately(100f);
+            var isButtonEnabled = developmentScore.IsApproximately(100f);
+            Debug.LogError($"is enabled {isButtonEnabled}, dev score {developmentScore}");
+            upgradeButton.interactable = isButtonEnabled;
+            upgradeButtonTooltip.SetEnabled(!isButtonEnabled);
         }
 
         private void BindInventory(Inventory inventory)
@@ -133,6 +135,7 @@ namespace UI.InventoryUI.TownInventory
         {
             if (_town == null) return;
 
+            _town.DevelopmentManager.DevelopmentScore.StopObserving(OnDevelopmentChanged);
             _town.Tier.StopObserving(TownUpgrade);
             developmentGauge.Unbind();
             fundsTooltip.SetData(_town.FundsChange);

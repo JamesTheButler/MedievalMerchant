@@ -17,7 +17,7 @@ namespace Features.Towns.Development.Logic
         public Observable<DevelopmentTrend> GrowthTrend { get; } = new();
 
         private TownDevelopmentTable _townDevelopmentTable;
-        
+
         private readonly Town _town;
         private readonly TownDevelopmentConfig _townDevelopmentConfig;
         private readonly GoodsConfig _goodsConfig;
@@ -31,7 +31,7 @@ namespace Features.Towns.Development.Logic
             _townDevelopmentConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
 
-            
+
             _town.ProductionManager.ProductionAdded += OnProducerAdded;
             _town.Inventory.GoodUpdated += OnGoodAdded;
 
@@ -124,7 +124,8 @@ namespace Features.Towns.Development.Logic
         private void UpdateGrowthTrend()
         {
             var newGrowthTrend = _townDevelopmentConfig.GetTrend(DevelopmentTrend);
-            if (GrowthTrend == newGrowthTrend) return;
+            if (GrowthTrend == newGrowthTrend)
+                return;
 
             GrowthTrend.Value = newGrowthTrend;
         }
