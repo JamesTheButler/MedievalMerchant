@@ -66,8 +66,8 @@ namespace Common.UI
             var sum = percentageModifiers.Sum(modifier => modifier.Value);
             modifierSumText.text = sum.ToPercentString(true);
 
-            Canvas.ForceUpdateCanvases();
-            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)transform);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
+            Justify();
         }
 
         private void AddModifierElements(IModifier[] modifiers, GameObject container)

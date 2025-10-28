@@ -1,23 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Common.UI
 {
     public abstract class TooltipBase<TData> : MonoBehaviour
     {
         [SerializeField]
-        private bool drawDebugLines;
+        private bool drawDebugLines = true;
 
         private const int Padding = 16;
 
         private Canvas _canvas;
         private RectTransform _origin;
         private RectTransform _rectTransform;
-
         private Rect _previousRect;
 
         public abstract void Reset();
-
         protected abstract void UpdateUI(TData data);
 
         protected virtual void Awake()
@@ -43,11 +42,6 @@ namespace Common.UI
             Reset();
         }
 
-        private void OnRectTransformDimensionsChange()
-        {
-            Justify();
-        }
-
         private readonly Dictionary<Rect, Color> _debugRects = new();
 
         private void OnDrawGizmos()
@@ -61,7 +55,7 @@ namespace Common.UI
             }
         }
 
-        private void Justify()
+        protected void Justify()
         {
             if (!_origin | !_canvas | !_rectTransform)
                 return;
@@ -123,7 +117,7 @@ namespace Common.UI
             _rectTransform.anchoredPosition = localPoint;
 
             // this seems to help!
-            //LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
         }
 
         private void RegisterDebugShapes(

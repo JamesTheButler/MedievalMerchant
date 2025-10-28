@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Common;
 using Common.Config;
 using Common.Types;
+using Common.UI;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,6 +24,9 @@ namespace UI.InventoryUI.TownInventory
 
         [SerializeField, Required]
         private Image tierIcon;
+        
+        [SerializeField, Required]
+        private SimpleTooltipHandler tierTooltip;
 
         private void Awake()
         {
@@ -34,6 +38,7 @@ namespace UI.InventoryUI.TownInventory
             _tierIconConfig = ConfigurationManager.Instance.TierIconConfig;
 
             tierIcon.sprite = _tierIconConfig.Icons[tier];
+            tierTooltip.SetData(tier.ToDisplayString());
         }
 
         private void GatherCells()
