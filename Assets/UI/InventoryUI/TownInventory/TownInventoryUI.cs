@@ -105,7 +105,7 @@ namespace UI.InventoryUI.TownInventory
             _town.Tier.Observe(TownUpgrade);
             fundsTooltip.SetData(_town.FundsChange);
 
-            RefreshTownName(_town.Tier);
+            RefreshTownName(_town.Tier.Value);
 
             developmentGauge.Bind(_town);
         }
@@ -113,7 +113,6 @@ namespace UI.InventoryUI.TownInventory
         private void OnDevelopmentChanged(float developmentScore)
         {
             var isButtonEnabled = developmentScore.IsApproximately(100f);
-            Debug.LogError($"is enabled {isButtonEnabled}, dev score {developmentScore}");
             upgradeButton.interactable = isButtonEnabled;
             upgradeButtonTooltip.SetEnabled(!isButtonEnabled);
         }

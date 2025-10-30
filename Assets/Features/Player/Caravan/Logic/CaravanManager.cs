@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Common;
 using Common.Modifiable;
 using Features.Player.Caravan.Config;
+using Features.Towns.Development.Config.Milestones;
+using Features.Towns.Development.Logic.Milestones;
 using UnityEngine;
 
 namespace Features.Player.Caravan.Logic
@@ -27,8 +29,7 @@ namespace Features.Player.Caravan.Logic
             null,
         };
 
-
-        public CaravanManager()
+        public CaravanManager(PlayerModel player)
         {
             _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
             _averageSpeedModifier = new AverageBaseValueModifier("Movement Speed");
@@ -40,6 +41,8 @@ namespace Features.Player.Caravan.Logic
                 "Caravan Upkeep (coming soon)",
                 false,
                 new BaseUpkeepModifier(_caravanConfig.BaseUpkeep));
+
+            player.FundsChange.AddModifier(new UpkeepFundsChangeModifier(Upkeep));
 
             for (var i = 0; i < CaravanConfig.MaxCartCount; i++)
             {
@@ -88,7 +91,7 @@ namespace Features.Player.Caravan.Logic
         {
             SlotCount.Value += -oldCount + newCount;
         }
-        
+
         private void RefreshTotals(int cartId)
         {
             var modifier = _cartUpkeepModifiers[cartId];

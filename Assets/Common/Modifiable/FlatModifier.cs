@@ -6,9 +6,11 @@ namespace Common.Modifiable
         public Observable<string> FormattedValue { get; } = new();
         public Observable<string> Description { get; }
 
-        protected FlatModifier(float value, string description)
+        protected FlatModifier(float value, string description) : this(new Observable<float>(value), description) { }
+
+        protected FlatModifier(Observable<float> observable, string description)
         {
-            Value = new Observable<float>(value);
+            Value = observable;
             Description = new Observable<string>(description);
 
             Value.Observe(UpdateFormattedValue);

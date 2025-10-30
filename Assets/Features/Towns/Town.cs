@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common;
@@ -19,20 +18,11 @@ namespace Features.Towns
     public sealed class Town
     {
         private const int DefaultInventorySlots = 3;
-
-        private readonly SlotBasedInventoryPolicy _inventoryPolicy;
-        private readonly TownConfig _townConfig;
-        private readonly GoodsConfig _goodsConfig;
-
-        private readonly Observable<float> _reputation = new();
-
-        public Observable<Tier> Tier { get; } = new();
-
-        public IReadOnlyObservable<float> Reputation => _reputation;
+        private const Tier StartTier = Common.Types.Tier.Tier1;
 
         public ProductionManager ProductionManager { get; }
         public DevelopmentManager DevelopmentManager { get; }
-        public TownUpgradeManager UpgradeManager { get; }
+        public MilestoneManager MilestoneManager { get; }
         public Inventory.Inventory Inventory { get; }
         public ModifiableVariable FundsChange { get; }
 
@@ -43,6 +33,15 @@ namespace Features.Towns
         public HashSet<Good> AvailableGoods { get; }
         public Region MainRegion { get; }
         public Regions Regions { get; }
+
+        private readonly SlotBasedInventoryPolicy _inventoryPolicy;
+        private readonly TownConfig _townConfig;
+        private readonly GoodsConfig _goodsConfig;
+
+        private readonly Observable<float> _reputation = new();
+
+        public IReadOnlyObservable<Tier> Tier => DevelopmentManager.Tier;
+        public IReadOnlyObservable<float> Reputation => _reputation;
 
         public Town(
             Vector2Int gridLocation,
@@ -64,20 +63,21 @@ namespace Features.Towns
 
             Name = _townConfig.NameGenerators[MainRegion].GenerateName();
 
-            Tier.Value = Common.Types.Tier.Tier1;
-            _inventoryPolicy.AddSlots(Tier, DefaultInventorySlots);
+            _inventoryPolicy.AddSlots(StartTier, DefaultInventorySlots);
 
             // initial funds and goods
             Inventory = new Inventory.Inventory(_inventoryPolicy);
             ProductionManager = new ProductionManager(this);
-            ProductionManager.ProductionAdded += OnProductionManagerOnProductionAdded;
             DevelopmentManager = new DevelopmentManager(this);
-            UpgradeManager = new TownUpgradeManager(this);
-            UpgradeManager.MilestoneModifierAdded += OnMilestoneModifierAdded;
-            UpgradeManager.MilestoneModifierRemoved += OnMilestoneModifierRemoved;
+            MilestoneManager = new MilestoneManager(this);
+
+            DevelopmentManager.Tier.Observe(OnTierChanged);
+            ProductionManager.ProductionAdded += OnProductionManagerOnProductionAdded;
+            MilestoneManager.MilestoneModifierAdded += OnMilestoneModifierAdded;
+            MilestoneManager.MilestoneModifierRemoved += OnMilestoneModifierRemoved;
 
             Inventory.AddFunds(_townConfig.GetStartFunds());
-            var baseModifier = new BaseTownFundsProduction(_townConfig.FundRate[Tier], Tier);
+            var baseModifier = new BaseTownFundsProduction(_townConfig.FundRate[StartTier], StartTier);
             FundsChange = new ModifiableVariable("Funds change per day", true, baseModifier);
 
             var startGood = AvailableGoods.GetRandom();
@@ -99,15 +99,12 @@ namespace Features.Towns
 
         public void Upgrade()
         {
-            var oldTier = Tier.Value;
-            IncreaseTier();
+            DevelopmentManager.Upgrade();
+        }
 
-            Debug.Log($"{Name} upgraded to {Tier}");
-
-            if (oldTier != Tier)
-            {
-                _inventoryPolicy.AddSlots(Tier, DefaultInventorySlots);
-            }
+        private void OnTierChanged(Tier tier)
+        {
+            _inventoryPolicy.AddSlots(tier, DefaultInventorySlots);
         }
 
         public void AddReputation(float added)
@@ -154,11 +151,6 @@ namespace Features.Towns
 
                 Inventory.RemoveGood(good, consumptionRate.Value);
             }
-        }
-
-        private void IncreaseTier()
-        {
-            Tier.Value = (Tier)Math.Min((int)Tier.Value + 1, (int)Common.Types.Tier.Tier3);
         }
 
         private void OnMilestoneModifierAdded(IModifier modifier)

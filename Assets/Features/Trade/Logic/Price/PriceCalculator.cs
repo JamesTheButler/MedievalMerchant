@@ -52,16 +52,16 @@ namespace Features.Trade.Logic.Price
 
             _player.RetinueManager.CompanionLevels[CompanionType.Negotiator].Observe(OnCompanionChanged);
             _town.Inventory.GoodUpdated += OnTownInventoryChanged;
-            _town.UpgradeManager.MilestoneModifierAdded += TownModifierAdded;
-            _town.UpgradeManager.MilestoneModifierRemoved += TownModifierRemoved;
+            _town.MilestoneManager.MilestoneModifierAdded += TownModifierAdded;
+            _town.MilestoneManager.MilestoneModifierRemoved += TownModifierRemoved;
         }
 
         public void Clear()
         {
             _player.RetinueManager.CompanionLevels[CompanionType.Negotiator].StopObserving(OnCompanionChanged);
             _town.Inventory.GoodUpdated -= OnTownInventoryChanged;
-            _town.UpgradeManager.MilestoneModifierAdded -= TownModifierAdded;
-            _town.UpgradeManager.MilestoneModifierRemoved -= TownModifierRemoved;
+            _town.MilestoneManager.MilestoneModifierAdded -= TownModifierAdded;
+            _town.MilestoneManager.MilestoneModifierRemoved -= TownModifierRemoved;
         }
 
         #region Adding Modifiers
@@ -75,7 +75,7 @@ namespace Features.Trade.Logic.Price
 
         private void AddDevelopmentMilestoneModifiers()
         {
-            var upgradeModifiers = _town.UpgradeManager.MilestoneModifiers.OfType<MilestonePriceBoostModifier>();
+            var upgradeModifiers = _town.MilestoneManager.MilestoneModifiers.OfType<MilestonePriceBoostModifier>();
             foreach (var upgradeModifier in upgradeModifiers)
             {
                 Price.AddModifier(upgradeModifier);

@@ -43,7 +43,7 @@ namespace Features.Towns.Production.Logic
         {
             if (!CanProduce()) return;
 
-            var limit = GetProductionLimit(_town.Tier, ProducedGood);
+            var limit = GetProductionLimit(_town.Tier.Value, ProducedGood);
             var currentInventoryAmount = _town.Inventory.Goods.GetValueOrDefault(ProducedGood, 0);
             var cappedAmount = Mathf.Min(ProductionRate, Mathf.Max(0, limit - currentInventoryAmount));
             _town.Inventory.AddGood(ProducedGood, (int)cappedAmount);

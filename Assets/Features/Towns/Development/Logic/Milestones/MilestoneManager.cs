@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Features.Towns.Development.Logic.Milestones
 {
-    public sealed class TownUpgradeManager
+    public sealed class MilestoneManager
     {
         public sealed record UpgradeTime(Tier Tier, float DevelopmentScore);
 
@@ -20,17 +20,17 @@ namespace Features.Towns.Development.Logic.Milestones
 
         private readonly Dictionary<UpgradeTime, List<IModifier>> _milestoneModifiers = new();
         private readonly Town _town;
-        private readonly TownDevelopmentConfig _upgradeProgressionConfig;
+        private readonly TownDevelopmentConfig _developmentConfig;
 
         private float _previousScore;
         private Tier _currentTier;
         private DevelopmentMilestoneDataSet _milestones;
 
-        public TownUpgradeManager(Town town)
+        public MilestoneManager(Town town)
         {
             _town = town;
 
-            _upgradeProgressionConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
+            _developmentConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
 
             _town.Tier.Observe(OnTierChanged);
             _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged);
@@ -45,10 +45,12 @@ namespace Features.Towns.Development.Logic.Milestones
         private void OnTierChanged(Tier tier)
         {
             _currentTier = tier;
-            _milestones = _upgradeProgressionConfig.Milestones[tier];
+            _milestones = _developmentConfig.Milestones[tier];
             _previousScore = 0;
         }
 
+        // TODO - BUG: when tier upgrade happens, we reset score to 0 and therefore revert all milestones of this tier
+        //   we need to remember the tier of the milestones so we don't unapply them.
         private void OnDevelopmentChanged(float score)
         {
             foreach (var (thresholdPercent, milestoneData) in _milestones.MilestoneData)
@@ -87,6 +89,7 @@ namespace Features.Towns.Development.Logic.Milestones
         {
             if (!_milestoneModifiers.TryGetValue(upgradeTime, out var modifiers))
                 return;
+
             foreach (var modifier in modifiers)
             {
                 MilestoneModifierRemoved?.Invoke(modifier);
@@ -98,7 +101,7 @@ namespace Features.Towns.Development.Logic.Milestones
 
         private void ApplyUpgrade(UpgradeTime upgradeTime, TownUpgradeData upgrade)
         {
-            Debug.LogWarning($"applying {upgrade.name}");
+            Debug.Log($"applying {upgrade.name} at {upgradeTime}");
             switch (upgrade)
             {
                 case FundsBoostUpgradeData upgradeData:

@@ -1,3 +1,4 @@
+using Common.UI;
 using NaughtyAttributes;
 using TMPro;
 using UI.Popups;
@@ -11,12 +12,15 @@ namespace Features.Player
         [SerializeField, Required]
         private TMP_Text fundsText;
 
+        [SerializeField, Required]
+        private ModifiableTooltipHandler fundsTooltip;
+
         private Features.Inventory.Inventory _playerInventory;
 
         public void Bind(PlayerModel player)
         {
             _playerInventory = player.Inventory;
-
+            fundsTooltip.SetData(player.FundsChange);
             _playerInventory.Funds.Observe(OnFundsChanged);
         }
 

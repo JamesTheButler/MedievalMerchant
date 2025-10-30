@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common;
@@ -12,7 +13,8 @@ namespace Features.Towns.Development.Logic
 {
     public sealed class DevelopmentManager
     {
-        public ModifiableVariable DevelopmentTrend { get; } = new("Development Trend", true, null);
+        public Observable<Tier> Tier { get; } = new(Common.Types.Tier.Tier1);
+        public ModifiableVariable DevelopmentTrend { get; } = new("Development Trend", true);
         public Observable<float> DevelopmentScore { get; } = new();
         public Observable<DevelopmentTrend> GrowthTrend { get; } = new();
 
@@ -31,11 +33,8 @@ namespace Features.Towns.Development.Logic
             _townDevelopmentConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
 
-
             _town.ProductionManager.ProductionAdded += OnProducerAdded;
             _town.Inventory.GoodUpdated += OnGoodAdded;
-
-            _town.Tier.Observe(OnTierChanged);
         }
 
         ~DevelopmentManager()
@@ -90,6 +89,7 @@ namespace Features.Towns.Development.Logic
                 oldModifier.GoodCount == newCount)
                 return;
 
+            // TODO - STYLE: should use observable modifier
             DevelopmentTrend.RemoveModifier(oldModifier);
 
             var modifierValue = _townDevelopmentTable.GetDevelopmentTrend(goodTier, newCount);
@@ -98,27 +98,27 @@ namespace Features.Towns.Development.Logic
             _storedGoodsModifier[goodTier] = modifier;
         }
 
-        private void OnTierChanged(Tier tier)
-        {
-            DevelopmentScore.Value = 0;
-            UpdateDevelopmentTable(tier);
-        }
-
         public void UpdateDevelopment()
         {
-            var developmentScore = DevelopmentScore.Value + DevelopmentTrend.Value;
-
-            // upgrade town if needed
-            if (developmentScore >= 100 && _town.Tier.Value < Tier.Tier3)
-            {
-                DevelopmentScore.Value = 100; // make sure to update observers
-            }
-
+            var multiplier = _townDevelopmentConfig.DevelopmentMultiplier;
+            var developmentScore = DevelopmentScore + DevelopmentTrend * multiplier;
             developmentScore = Mathf.Clamp(developmentScore, 0, 100);
-
             DevelopmentScore.Value = developmentScore;
-
             UpdateGrowthTrend();
+        }
+
+        public void Upgrade()
+        {
+            var oldTier = Tier.Value;
+            var newTier = (Tier)Math.Min((int)Tier.Value + 1, (int)Common.Types.Tier.Tier3);
+
+            if (oldTier == newTier)
+                return;
+
+            Tier.Value = newTier;
+            RefreshDevelopmentTable();
+            DevelopmentScore.Value = 0; // reset dev score
+            Debug.Log($"{_town.Name} upgraded to {Tier}");
         }
 
         private void UpdateGrowthTrend()
@@ -130,11 +130,11 @@ namespace Features.Towns.Development.Logic
             GrowthTrend.Value = newGrowthTrend;
         }
 
-        private void UpdateDevelopmentTable(Tier tier)
+        private void RefreshDevelopmentTable()
         {
-            _townDevelopmentTable = _townDevelopmentConfig.DevelopmentTables[tier];
+            _townDevelopmentTable = _townDevelopmentConfig.DevelopmentTables[Tier];
 
-            RefreshGoodsInInventoryModifiers(tier);
+            RefreshGoodsInInventoryModifiers(Tier);
         }
     }
 }

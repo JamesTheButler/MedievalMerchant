@@ -25,7 +25,7 @@ namespace Features.Trade.Logic
         {
             var goodTier = _goodsConfig.ConfigData[good].Tier;
             // we use production limit for buy and sell right now
-            var maxAmount = _townConfig.GetLimit(_town.Tier, goodTier);
+            var maxAmount = _townConfig.GetLimit(_town.Tier.Value, goodTier);
 
             var amount = _inventory.Get(good);
             var relativeAmount = (float)amount / maxAmount;

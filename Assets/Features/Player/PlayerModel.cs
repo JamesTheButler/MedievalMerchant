@@ -1,7 +1,6 @@
 using Common.Modifiable;
 using Features.Inventory;
 using Features.Player.Caravan.Logic;
-using Features.Player.Retinue;
 using Features.Player.Retinue.Logic;
 
 namespace Features.Player
@@ -15,15 +14,17 @@ namespace Features.Player
         public RetinueManager RetinueManager { get; }
         public CaravanManager CaravanManager { get; }
 
-        private readonly IInventoryPolicy _inventoryPolicy;
+        public ModifiableVariable FundsChange { get; }
 
         public PlayerModel(float startFunds)
         {
-            RetinueManager = new RetinueManager();
-            CaravanManager = new CaravanManager();
+            FundsChange = new ModifiableVariable("Funds per day", true);
 
-            _inventoryPolicy = new SlotCountInventoryPolicy(CaravanManager.SlotCount);
-            Inventory = new Inventory.Inventory(_inventoryPolicy);
+            RetinueManager = new RetinueManager();
+            CaravanManager = new CaravanManager(this);
+
+            var inventoryPolicy = new SlotCountInventoryPolicy(CaravanManager.SlotCount);
+            Inventory = new Inventory.Inventory(inventoryPolicy);
             Inventory.AddFunds(startFunds);
         }
     }

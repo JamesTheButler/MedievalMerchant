@@ -76,7 +76,7 @@ namespace UI.InventoryUI.TownInventory
         {
             // don't invoke directly as we want to go through all tiers manually in the right order
             _town.Tier.Observe(ShowRow, false);
-            for (var tier = Tier.Tier1; tier <= _town.Tier; tier++)
+            for (var tier = Tier.Tier1; tier <= _town.Tier.Value; tier++)
             {
                 ShowRow(tier);
             }

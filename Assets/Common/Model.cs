@@ -23,6 +23,9 @@ namespace Common
         public IReadOnlyDictionary<Vector2Int, Town> Towns => _towns;
 
         private Dictionary<Vector2Int, Town> _towns = new();
+        
+        // TODO - STYLE: Model shouldn't hold systems
+        private DividendsSystem _dividendsSystem;
 
         public void Initialize(PlayerModel player, IEnumerable<Town> towns, TileFlagMap tileFlagMap)
         {
@@ -30,6 +33,9 @@ namespace Common
             Player = player;
             TileFlagMap = tileFlagMap;
             ConditionManager = gameObject.GetComponent<ConditionManager>();
+
+            _dividendsSystem = new DividendsSystem();
+            _dividendsSystem.Initialize();
         }
 
         private void Awake()

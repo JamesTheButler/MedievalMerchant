@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using AYellowpaper.SerializedCollections;
 using Common;
 using Common.Types;
@@ -39,7 +38,6 @@ namespace UI.InventoryUI.TownInventory
         private Town _town;
         private readonly Lazy<GoodsConfig> _goodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
         private readonly Lazy<RecipeConfig> _recipeConfig = new(() => ConfigurationManager.Instance.RecipeConfig);
-
 
         public void Initialize()
         {
@@ -86,7 +84,7 @@ namespace UI.InventoryUI.TownInventory
         {
             // don't invoke directly as we want to go through all tiers manually in the right order
             _town.Tier.Observe(OnTierChanged, false);
-            for (var tier = Tier.Tier1; tier <= _town.Tier; tier++)
+            for (var tier = Tier.Tier1; tier <= _town.Tier.Value; tier++)
             {
                 OnTierChanged(tier);
             }
@@ -151,14 +149,15 @@ namespace UI.InventoryUI.TownInventory
                     break;
 
                 case Tier.Tier3:
+                default:
                     break;
             }
         }
 
-        public void RefreshTier2Arrows()
+        private void RefreshTier2Arrows()
         {
             tier2Arrows.ClearArrows();
-            if (_town.Tier < Tier.Tier2) return;
+            if (_town.Tier.Value < Tier.Tier2) return;
 
             var t1Producers = _town.ProductionManager.GetProducers(Tier.Tier1);
             for (var i = 0; i < t1Producers.Length; i++)
@@ -169,11 +168,10 @@ namespace UI.InventoryUI.TownInventory
             }
         }
 
-        // TODO - POLISH: GetAllTuples is really expensive
         public void RefreshTier3Arrows()
         {
             tier3Arrows.ClearArrows();
-            if (_town.Tier < Tier.Tier3) return;
+            if (_town.Tier.Value < Tier.Tier3) return;
 
             var t2Producers = _town.ProductionManager.GetProducers(Tier.Tier2);
             for (var i = 0; i < t2Producers.Length; i++)

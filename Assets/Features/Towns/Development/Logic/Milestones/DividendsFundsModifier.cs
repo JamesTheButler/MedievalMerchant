@@ -1,5 +1,6 @@
 using Common;
 using Common.Modifiable;
+using Common.Types;
 
 namespace Features.Towns.Development.Logic.Milestones
 {
@@ -8,7 +9,7 @@ namespace Features.Towns.Development.Logic.Milestones
         private readonly float _percentage;
         private readonly Town _town;
 
-        public DividendsFundsModifier(float value, TownUpgradeManager.UpgradeTime upgradeTime, Town town)
+        public DividendsFundsModifier(float value, MilestoneManager.UpgradeTime upgradeTime, Town town)
             : base(value, GetDescription(value, upgradeTime, town))
         {
             _percentage = value;
@@ -24,12 +25,15 @@ namespace Features.Towns.Development.Logic.Milestones
 
         private void OnFundsChangeChanged(float fundsChange)
         {
-            Value.Value = fundsChange * +_percentage;
+            Value.Value = fundsChange * _percentage;
         }
 
-        private static string GetDescription(float value, TownUpgradeManager.UpgradeTime upgradeTime, Town town)
+        private static string GetDescription(float value, MilestoneManager.UpgradeTime upgradeTime, Town town)
         {
-            return $"Dividends: {value.ToPercentString()} of {town.Name}s funds production";
+            var devScoreString = upgradeTime.DevelopmentScore.ToPercentString();
+            var tierString = upgradeTime.Tier.ToDisplayString();
+            var milestoneString = $"(Milestone {devScoreString}, {tierString})";
+            return $"Dividends: {value.ToPercentString()} of {town.Name}s funds production. {milestoneString}";
         }
     }
 }

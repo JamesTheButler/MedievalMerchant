@@ -4,10 +4,10 @@ namespace Features.Towns.Development.Logic.Milestones
 {
     public sealed class MilestoneProductionBoostModifier : ProductionBoostModifier
     {
-        public MilestoneProductionBoostModifier(float value, TownUpgradeManager.UpgradeTime upgradeTime)
+        public MilestoneProductionBoostModifier(float value, MilestoneManager.UpgradeTime upgradeTime)
             : base(value, GetDescription(upgradeTime)) { }
 
-        private static string GetDescription(TownUpgradeManager.UpgradeTime upgradeTime)
+        private static string GetDescription(MilestoneManager.UpgradeTime upgradeTime)
         {
             var percentage = upgradeTime.DevelopmentScore.ToPercentString();
             var tier = upgradeTime.Tier.ToRomanNumeral();
