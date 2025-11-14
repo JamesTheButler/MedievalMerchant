@@ -445,6 +445,7 @@ GameObject:
   - component: {fileID: 148335905}
   - component: {fileID: 148335904}
   - component: {fileID: 148335903}
+  - component: {fileID: 148335906}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -461,8 +462,8 @@ Transform:
   m_GameObject: {fileID: 148335901}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 42.89}
-  m_LocalScale: {x: 50, y: 28.125002, z: 26.041668}
+  m_LocalPosition: {x: 0, y: 0, z: 20}
+  m_LocalScale: {x: 49.77778, y: 28, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 519420032}
@@ -542,6 +543,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148335901}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &148335906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148335901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 690edacad24218543a69789738f12946, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 519420031}
 --- !u!114 &171577212 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3117525020845112267, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
@@ -1418,7 +1432,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 14
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
