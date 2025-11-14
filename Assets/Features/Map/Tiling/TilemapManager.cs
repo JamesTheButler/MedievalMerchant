@@ -27,14 +27,15 @@ namespace Features.Map.Tiling
         [SerializeField]
         private UnityEvent onGroundClicked;
 
+        public Tilemap Tilemap { get; private set; }
+        
         private Model _model;
-        private Tilemap _tilemap;
 
         public void Initialize()
         {
             _model = Model.Instance;
             
-            _tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
+            Tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
             
             foreach (var town in _model.Towns.Values)
             {
@@ -68,7 +69,7 @@ namespace Features.Map.Tiling
 
             var pos = town.GridLocation;
             var z = _model.TileFlagMap.TownZLevels.GetValueOrDefault(pos, 5);
-            _tilemap.SetTile(new Vector3Int(pos.x, pos.y, z), tile);
+            Tilemap.SetTile(new Vector3Int(pos.x, pos.y, z), tile);
         }
 
         private void RightClick()

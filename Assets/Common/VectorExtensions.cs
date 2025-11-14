@@ -11,7 +11,7 @@ namespace Common
             return new Vector2Int(vector.x, vector.y);
         }
 
-        public static Vector3 Clamp(Vector3 self, Bounds bounds)
+        public static Vector3 Clamp(this Vector3 self, Bounds bounds)
         {
             return new Vector3(
                 Mathf.Clamp(self.x, bounds.min.x, bounds.max.x),
@@ -28,6 +28,11 @@ namespace Common
         public static Vector3 FromXY(this Vector2 vector, float z = 0)
         {
             return new Vector3(vector.x, vector.y, z);
+        }
+
+        public static Vector3 WithOverrides(this Vector3 vector, float? x = null, float? y = null, float? z = null)
+        {
+            return new Vector3(x ?? vector.x, y ?? vector.y, z ?? vector.z);
         }
 
         public static Vector3 Average(this IEnumerable<Vector3> vectors)

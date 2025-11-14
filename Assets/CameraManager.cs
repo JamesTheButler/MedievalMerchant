@@ -1,5 +1,6 @@
 using System;
 using Common;
+using Features.Map.Tiling;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,6 +9,9 @@ public class CameraManager : MonoBehaviour
 {
     [SerializeField, Required]
     private new Camera camera;
+
+    [SerializeField, Required]
+    private TilemapManager tilemapManager;
 
     [SerializeField]
     private float startupPadding;
@@ -22,7 +26,13 @@ public class CameraManager : MonoBehaviour
     private float keyboardPanSpeed = 1;
 
     [SerializeField]
+    private float zLevel = -10;
+
+    [SerializeField]
     private float minSize = 1;
+
+    [SerializeField]
+    private Vector2 safeArea;
 
     private float _maxSize = 10;
     private Vector2 _lastMousePosition;
@@ -33,7 +43,9 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         // force orthographic camera
-        if (camera.orthographic) return;
+        if (camera.orthographic)
+            return;
+
         camera.orthographic = true;
     }
 
@@ -43,8 +55,7 @@ public class CameraManager : MonoBehaviour
         var mapSize = Model.Instance.TileFlagMap.Size.y;
         camera.orthographicSize = mapSize * .5f + startupPadding;
         _maxSize = camera.orthographicSize * 1.5f;
-
-        _bounds = new Bounds(Vector3.zero, Vector3.one * _maxSize);
+        _bounds = tilemapManager.Tilemap.localBounds;
     }
 
     public void OnScrollWheel(InputAction.CallbackContext context)
@@ -88,6 +99,15 @@ public class CameraManager : MonoBehaviour
             delta.y / Screen.currentResolution.height,
             0f);
 
-        camera.transform.position = VectorExtensions.Clamp(camera.transform.position + deltaVector, _bounds);
+        var tempPosition = camera.transform.position + deltaVector;
+
+        camera.transform.position = tempPosition
+            .Clamp(_bounds)
+            .WithOverrides(z: zLevel);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireCube(camera.transform.position, safeArea.FromXY(1));
     }
 }
