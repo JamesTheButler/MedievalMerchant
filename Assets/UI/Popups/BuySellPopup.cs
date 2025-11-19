@@ -36,7 +36,7 @@ namespace UI.Popups
         private Image marketStateIcon;
 
         [SerializeField, Required]
-        private TMP_Text marketStateText;
+        private SimpleTooltipHandler marketStateTooltip;
 
         private readonly Lazy<AvailabilityConfig> _marketStateConfig =
             new(() => ConfigurationManager.Instance.AvailabilityConfig);
@@ -83,11 +83,12 @@ namespace UI.Popups
 
         public void SetMarketState(Availability availability)
         {
-            if (_marketState == availability) return;
+            if (_marketState == availability)
+                return;
 
             var configData = _marketStateConfig.Value.ConfigData[availability];
             marketStateIcon.sprite = configData.Icon;
-            marketStateText.text = configData.DisplayString;
+            marketStateTooltip.SetData(configData.DisplayString);
 
             _marketState = availability;
         }
