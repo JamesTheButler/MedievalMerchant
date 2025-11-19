@@ -35,6 +35,8 @@ namespace Features.Towns.Development.Logic
 
             _town.ProductionManager.ProductionAdded += OnProducerAdded;
             _town.Inventory.GoodUpdated += OnGoodAdded;
+            
+            RefreshDevelopmentTable();
         }
 
         ~DevelopmentManager()
