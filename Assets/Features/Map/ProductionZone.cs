@@ -35,7 +35,7 @@ namespace Features.Map
             _spriteController = gameObject.GetComponent<SpriteShapeController>();
             Center = origin.transform.position;
 
-            OnPointerExit(null);
+            PointerExit();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
