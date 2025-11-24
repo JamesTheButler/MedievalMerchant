@@ -33,8 +33,8 @@ namespace Features.Levels.Logic
 
         private Model _model;
         private FlagFactory _flagFactory;
-
         private LevelInfo _levelInfo;
+        private DividendsService _dividendsService;
 
         private void Start()
         {
@@ -66,9 +66,12 @@ namespace Features.Levels.Logic
 
             _model.ConditionManager.Setup(_levelInfo.Conditions);
 
+            _dividendsService = new DividendsService();
+            _dividendsService.Initialize();
+            
             levelLoaded.Invoke();
 
-            // clea level load context
+            // clear level load context
             if (LevelLoadContext.Instance)
             {
                 LevelLoadContext.Instance.SelectedLevel = null;

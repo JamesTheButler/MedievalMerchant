@@ -35,7 +35,8 @@ namespace Features.Player.Caravan.Logic
             _averageSpeedModifier = new AverageBaseValueModifier("Movement Speed");
             MoveSpeed = new ModifiableVariable(
                 "Movement Speed",
-                true, _averageSpeedModifier);
+                true,
+                _averageSpeedModifier);
 
             Upkeep = new ModifiableVariable(
                 "Caravan Upkeep (coming soon)",
