@@ -20,10 +20,7 @@ public class CameraManager : MonoBehaviour
     private float zoomSpeed = 1;
 
     [SerializeField]
-    private float mousePanSpeed = 1;
-
-    [SerializeField]
-    private float keyboardPanSpeed = 1;
+    private float keyboardPanSpeedPixelPerSecond = 1;
 
     [SerializeField]
     private float zLevel = -10;
@@ -36,8 +33,8 @@ public class CameraManager : MonoBehaviour
 
     private float _maxSize = 10;
     private Vector2 _lastMousePosition;
+    private Vector2 _lastKeyInputs = Vector2.zero;
     private bool _isPanning;
-
     private Bounds _bounds;
 
     private void Start()
@@ -47,6 +44,14 @@ public class CameraManager : MonoBehaviour
             return;
 
         camera.orthographic = true;
+    }
+
+    public void FixedUpdate()
+    {
+        if (_lastKeyInputs == Vector2.zero)
+            return;
+
+        ApplyMapMovementKeys();
     }
 
     public void FitMapSize()
@@ -65,43 +70,47 @@ public class CameraManager : MonoBehaviour
         camera.orthographicSize = Math.Clamp(newSize, minSize, _maxSize);
     }
 
-    // TODO - POLISH: mousePanSpeed should scale with size so that the mouse seems to be perfectly attached to the
-    //    map and not have any glide
-    // TODO - POLISH: vertical and horizontal panning do not have the same speed for some reason
     public void OnMouseMoved(InputAction.CallbackContext context)
     {
         var newMousePosition = context.ReadValue<Vector2>();
         var oldMousePosition = _lastMousePosition;
         _lastMousePosition = newMousePosition;
 
-        if (!_isPanning) return;
+        if (!_isPanning)
+            return;
 
         var delta = oldMousePosition - newMousePosition;
-        Pan(delta * mousePanSpeed);
+        Pan(delta);
     }
 
-    // TODO - POLISH: this doesn't work. method is only invoked OnKeyUp and OnKeyDown, not OnKeyHeld
     public void OnMapMovementKeys(InputAction.CallbackContext context)
     {
-        var delta = context.ReadValue<Vector2>();
-        Pan(delta * keyboardPanSpeed);
+        _lastKeyInputs = context.ReadValue<Vector2>(); // -1..1
     }
+
 
     public void InitiateOrAbortPan(InputAction.CallbackContext context)
     {
         _isPanning = context.ReadValueAsButton();
     }
 
+    private void ApplyMapMovementKeys()
+    {
+        Pan(_lastKeyInputs * keyboardPanSpeedPixelPerSecond);
+    }
+    
     private void Pan(Vector2 delta)
     {
-        var deltaVector = new Vector3(
-            delta.x / Screen.currentResolution.width,
-            delta.y / Screen.currentResolution.height,
+        var worldUnitsPerPixel = camera.orthographicSize * 2f / Screen.height;
+
+        var worldDelta = new Vector3(
+            delta.x * worldUnitsPerPixel,
+            delta.y * worldUnitsPerPixel,
             0f);
 
-        var tempPosition = camera.transform.position + deltaVector;
+        var targetPosition = camera.transform.position + worldDelta;
 
-        camera.transform.position = tempPosition
+        camera.transform.position = targetPosition
             .Clamp(_bounds)
             .WithOverrides(z: zLevel);
     }
