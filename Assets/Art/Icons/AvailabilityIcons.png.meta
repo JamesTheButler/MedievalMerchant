@@ -109,11 +109,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Abundant
+      name: Abundant_Buy
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
+        x: 64
+        y: 16
         width: 64
         height: 16
       alignment: 0
@@ -131,11 +131,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VeryAbundant
+      name: VeryAbundant_Buy
       rect:
         serializedVersion: 2
-        x: 0
-        y: 16
+        x: 64
+        y: 0
         width: 64
         height: 16
       alignment: 0
@@ -153,11 +153,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Scarce
+      name: Scarce_Buy
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
+        x: 64
+        y: 48
         width: 64
         height: 16
       alignment: 0
@@ -175,11 +175,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VeryScarce
+      name: VeryScarce_Buy
       rect:
         serializedVersion: 2
-        x: 0
-        y: 80
+        x: 64
+        y: 64
         width: 64
         height: 16
       alignment: 0
@@ -197,11 +197,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NormalAvailability
+      name: NormalAvailability_Buy
       rect:
         serializedVersion: 2
-        x: 0
-        y: 48
+        x: 64
+        y: 32
         width: 64
         height: 16
       alignment: 0
@@ -214,6 +214,226 @@ TextureImporter:
       bones: []
       spriteID: 898d8be4b7c3ef74ba242f60bd645ebf
       internalID: -1388943993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VeryAbundant_Sell
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 702583d9ccf09b442b665d416f13c25a
+      internalID: 1235757875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Abundant_Sell
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 16
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 872f287fa917c87498584705a6edd09c
+      internalID: 408784413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NormalAvailability_Sell
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 434a2a8e08d7c28408b8bc1e1e34f865
+      internalID: -110653787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scarce_Sell
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 48
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b5514935d5b1054b88e56014463bbc3
+      internalID: 802936826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VeryScarce_Sell
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7975d3844b755514d820edfebb3800c6
+      internalID: -16573635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VeryScarce_Default
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60594e1952645f34c9777570c0ddbf7e
+      internalID: 576617819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scarce_Default
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb08160740f470c4da33d3f77143773d
+      internalID: -683073607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VeryAbundant_Default
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6a9ec3f74c7d4543bde0f9e0af702af
+      internalID: 1760036187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NormalAvailability_Default
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 764265fb4631b34438da50f1cae60d55
+      internalID: -1205309764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Abundant_Default
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5a8ff9bcce0dff4da7ea12d5c48a403
+      internalID: 605941475
       vertices: []
       indices: 
       edges: []
@@ -232,11 +452,21 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Abundant: 1538549206
-      NormalAvailability: -1388943993
-      Scarce: 1753360954
-      VeryAbundant: 269222271
-      VeryScarce: -996128525
+      Abundant_Buy: 1538549206
+      Abundant_Default: 605941475
+      Abundant_Sell: 408784413
+      NormalAvailability_Buy: -1388943993
+      NormalAvailability_Default: -1205309764
+      NormalAvailability_Sell: -110653787
+      Scarce_Buy: 1753360954
+      Scarce_Default: -683073607
+      Scarce_Sell: 802936826
+      VeryAbundant_Buy: 269222271
+      VeryAbundant_Default: 1760036187
+      VeryAbundant_Sell: 1235757875
+      VeryScarce_Buy: -996128525
+      VeryScarce_Default: 576617819
+      VeryScarce_Sell: -16573635
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

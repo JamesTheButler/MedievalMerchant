@@ -322,6 +322,7 @@ GameObject:
   - component: {fileID: 4121836191449802529}
   - component: {fileID: 3621634657780705479}
   - component: {fileID: 7583743238612524687}
+  - component: {fileID: 2349722765449225652}
   m_Layer: 5
   m_Name: SellButton
   m_TagString: Untagged
@@ -449,6 +450,24 @@ MonoBehaviour:
   useSelfAsOrigin: 1
   originTransform: {fileID: 0}
   defaultText: 
+--- !u!114 &2349722765449225652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3149282265182796820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ce80d58f075e545a25259e541ad5ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onHoverStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3843390359191213307
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +481,7 @@ GameObject:
   - component: {fileID: 3834149241467900418}
   - component: {fileID: 9032215896422021009}
   - component: {fileID: 363864179776959783}
+  - component: {fileID: 434723142748828073}
   m_Layer: 5
   m_Name: BuyButton
   m_TagString: Untagged
@@ -589,6 +609,24 @@ MonoBehaviour:
   useSelfAsOrigin: 1
   originTransform: {fileID: 0}
   defaultText: 
+--- !u!114 &434723142748828073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843390359191213307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ce80d58f075e545a25259e541ad5ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onHoverStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4755586511365568466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1029,9 +1067,11 @@ MonoBehaviour:
       m_Calls: []
   goodNameText: {fileID: 3055369061214659180}
   buyButton: {fileID: 9032215896422021009}
-  buyButtonTooltip: {fileID: 363864179776959783}
   sellButton: {fileID: 3621634657780705479}
+  buyButtonTooltip: {fileID: 363864179776959783}
   sellButtonTooltip: {fileID: 7583743238612524687}
+  buyButtonHoverable: {fileID: 434723142748828073}
+  sellButtonHoverable: {fileID: 2349722765449225652}
   marketStateIcon: {fileID: 7874953209255644984}
   marketStateTooltip: {fileID: 8982825670882642419}
 --- !u!114 &5132515537927709242

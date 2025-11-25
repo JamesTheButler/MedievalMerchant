@@ -21,16 +21,13 @@ namespace UI.Popups
         private TMP_Text goodNameText;
 
         [SerializeField, Required]
-        private Button buyButton;
+        private Button buyButton, sellButton;
 
         [SerializeField, Required]
-        private SimpleTooltipHandler buyButtonTooltip;
+        private SimpleTooltipHandler buyButtonTooltip, sellButtonTooltip;
 
         [SerializeField, Required]
-        private Button sellButton;
-
-        [SerializeField, Required]
-        private SimpleTooltipHandler sellButtonTooltip;
+        private Hoverable buyButtonHoverable, sellButtonHoverable;
 
         [SerializeField, Required]
         private Image marketStateIcon;
@@ -45,6 +42,7 @@ namespace UI.Popups
 
         private Good _good;
         private Availability? _marketState;
+        private TradeType? _hoveredTradeType;
 
         private void Start()
         {
@@ -52,7 +50,20 @@ namespace UI.Popups
             sellButtonTooltip = sellButton.gameObject.GetComponent<SimpleTooltipHandler>();
 
             buyButton.onClick.AddListener(() => TradeInitiated(TradeType.Buy));
+            
             sellButton.onClick.AddListener(() => TradeInitiated(TradeType.Sell));
+            
+            // TODO: maybe reimplement this. it's not very clear as is
+            //buyButtonHoverable.Hovered += () => SetHoveredTradeType(TradeType.Buy);
+            //buyButtonHoverable.Unhovered += () => SetHoveredTradeType(null);
+            //sellButtonHoverable.Hovered += () => SetHoveredTradeType(TradeType.Sell);
+            //sellButtonHoverable.Unhovered += () => SetHoveredTradeType(null);
+        }
+
+        private void SetHoveredTradeType(TradeType? type)
+        {
+            _hoveredTradeType = type;
+            RefreshIcon();
         }
 
         private void TradeInitiated(TradeType tradeType)
@@ -86,11 +97,25 @@ namespace UI.Popups
             if (_marketState == availability)
                 return;
 
-            var configData = _marketStateConfig.Value.ConfigData[availability];
-            marketStateIcon.sprite = configData.Icon;
-            marketStateTooltip.SetData(configData.DisplayString);
-
             _marketState = availability;
+            RefreshIcon();
+
+            var configData = _marketStateConfig.Value.ConfigData[availability];
+            marketStateTooltip.SetData($"Availability: {configData.DisplayString}.\n{configData.Description}");
+        }
+
+        private void RefreshIcon()
+        {
+            var configData = _marketStateConfig.Value.ConfigData[_marketState!.Value];
+
+            var icon = _hoveredTradeType switch
+            {
+                TradeType.Buy => configData.BuyIcon,
+                TradeType.Sell => configData.SellIcon,
+                _ => configData.DefaultIcon
+            };
+
+            marketStateIcon.sprite = icon;
         }
     }
 }

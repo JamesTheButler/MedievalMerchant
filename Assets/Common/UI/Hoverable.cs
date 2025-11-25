@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -9,14 +10,18 @@ namespace Common.UI
         [SerializeField]
         private UnityEvent onHoverStart, onHoverEnd;
 
+        public event Action Hovered, Unhovered;
+
         public void OnPointerEnter(PointerEventData eventData)
         {
             onHoverStart.Invoke();
+            Hovered?.Invoke();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             onHoverEnd.Invoke();
+            Unhovered?.Invoke();
         }
     }
 }
