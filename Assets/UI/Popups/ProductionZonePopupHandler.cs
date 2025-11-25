@@ -35,11 +35,7 @@ namespace UI.Popups
 
             _zone = zone;
             productionZonePopup.Reset();
-            var worldPosition = zone.Center.FromXY();
-
-            // BUG: this is not updated when we move the camera
-            var screenPosition = Camera.main!.WorldToScreenPoint(worldPosition);
-            productionZonePopup.gameObject.transform.position = screenPosition;
+            RefreshPosition();
             productionZonePopup.SetRegion(zone.Region);
             foreach (var tier1Good in zone.AvailableGoods)
             {
@@ -48,6 +44,16 @@ namespace UI.Popups
             }
 
             productionZonePopup.Show();
+        }
+
+        public void RefreshPosition()
+        {
+            if (_zone == null)
+                return;
+
+            var worldPosition = _zone.Center.FromXY();
+            var screenPosition = Camera.main!.WorldToScreenPoint(worldPosition);
+            productionZonePopup.gameObject.transform.position = screenPosition;
         }
 
         public void Unbind()

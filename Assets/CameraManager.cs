@@ -3,12 +3,16 @@ using Common;
 using Features.Map.Tiling;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour
 {
     [SerializeField, Required]
     private new Camera camera;
+
+    [SerializeField]
+    private UnityEvent cameraMoved, cameraZoomed;
 
     [SerializeField, Required]
     private TilemapManager tilemapManager;
@@ -68,6 +72,7 @@ public class CameraManager : MonoBehaviour
         var scrollValue = -context.ReadValue<Vector2>().y;
         var newSize = camera.orthographicSize + scrollValue * zoomSpeed;
         camera.orthographicSize = Math.Clamp(newSize, minSize, _maxSize);
+        cameraZoomed?.Invoke();
     }
 
     public void OnMouseMoved(InputAction.CallbackContext context)
@@ -98,7 +103,7 @@ public class CameraManager : MonoBehaviour
     {
         Pan(_lastKeyInputs * keyboardPanSpeedPixelPerSecond);
     }
-    
+
     private void Pan(Vector2 delta)
     {
         var worldUnitsPerPixel = camera.orthographicSize * 2f / Screen.height;
@@ -113,6 +118,8 @@ public class CameraManager : MonoBehaviour
         camera.transform.position = targetPosition
             .Clamp(_bounds)
             .WithOverrides(z: zLevel);
+
+        cameraMoved?.Invoke();
     }
 
     private void OnDrawGizmosSelected()
