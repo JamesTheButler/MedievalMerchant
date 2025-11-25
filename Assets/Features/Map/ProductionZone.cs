@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Common;
 using Common.Types;
 using Features.Towns.Production.Config;
@@ -10,8 +10,10 @@ using UnityEngine.U2D;
 
 namespace Features.Map
 {
-    public sealed class ProductionZone : MonoBehaviour, IPointerEnterHandler, IPointerMoveHandler, IPointerExitHandler
+    public sealed class ProductionZone : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
+        public event Action Clicked, Hovered, Unhovered;
+
         [field: SerializeField]
         public List<Good> AvailableGoods { get; private set; }
 
@@ -24,6 +26,9 @@ namespace Features.Map
         [field: SerializeField]
         public Region Region { get; private set; }
 
+        public Vector3[] Points => _spriteController.spline.GetPoints();
+        public Vector3 Position => transform.position;
+
         private SpriteShapeRenderer _spriteRenderer;
         private SpriteShapeController _spriteController;
 
@@ -34,42 +39,29 @@ namespace Features.Map
             _spriteRenderer = gameObject.GetComponent<SpriteShapeRenderer>();
             _spriteController = gameObject.GetComponent<SpriteShapeController>();
             Center = origin.transform.position;
-
-            PointerExit();
+            SetColor(config.DefaultColor);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            PointerEnter();
+            Hovered?.Invoke();
+            SetColor(config.SelectedColor);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            PointerExit();
+            Unhovered?.Invoke();
+            SetColor(config.DefaultColor);
         }
 
-        private void PointerExit()
+        public void OnPointerClick(PointerEventData eventData)
         {
-            FindFirstObjectByType<ProductionZoneManager>()?.OnZoneSelected.Invoke(null);
-            _spriteRenderer.color = config.DefaultColor;
+            Clicked?.Invoke();
         }
 
-        public void OnPointerMove(PointerEventData eventData)
+        private void SetColor(Color color)
         {
-            PointerEnter();
-        }
-
-        private void PointerEnter()
-        {
-            FindFirstObjectByType<ProductionZoneManager>()?.OnZoneSelected.Invoke(this);
-            _spriteRenderer.color = config.SelectedColor;
-        }
-
-        public bool IsAdjacentTo(Vector2Int position, float distanceThreshold)
-        {
-            var points = _spriteController.spline.GetPoints();
-            var zoneOrigin = transform.position;
-            return points.Any(zonePoint => Vector2.Distance(position, zonePoint + zoneOrigin) <= distanceThreshold);
+            _spriteRenderer.color = color;
         }
     }
 }

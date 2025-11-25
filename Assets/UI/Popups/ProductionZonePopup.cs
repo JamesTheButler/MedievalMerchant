@@ -2,6 +2,7 @@ using System;
 using Common;
 using Common.Config;
 using Common.Types;
+using Common.UI;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -23,6 +24,9 @@ namespace UI.Popups
         [SerializeField, Required]
         private GameObject zoneGoodContainer;
 
+        [SerializeField, Required]
+        private SimpleTooltipHandler regionIconTooltip;
+
         private readonly Lazy<RegionConfig> _regionConfig = new(() => ConfigurationManager.Instance.RegionConfig);
 
         public void Reset()
@@ -32,8 +36,10 @@ namespace UI.Popups
 
         public void SetRegion(Region region)
         {
-            regionName.text = _regionConfig.Value.Data[region].Name;
-            regionIcon.sprite = _regionConfig.Value.Data[region].Icon;
+            var regionData = _regionConfig.Value.Data[region];
+            regionName.text = regionData.Name;
+            regionIcon.sprite = regionData.Icon;
+            regionIconTooltip.SetData($"Region: {regionData.Name}");
         }
 
         public void AddGood(Good tier1, Good tier2)

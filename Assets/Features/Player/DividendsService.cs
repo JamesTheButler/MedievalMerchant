@@ -5,7 +5,7 @@ using Features.Towns.Development.Logic.Milestones;
 
 namespace Features.Player
 {
-    public sealed class DividendsService
+    public sealed class DividendsService : IService
     {
         private Model _model;
         private PlayerModel _player;
@@ -20,7 +20,6 @@ namespace Features.Player
             }
         }
 
-        // TODO - STYLE: this is never called but should be
         public void CleanUp()
         {
             foreach (var town in _model.Towns.Values)

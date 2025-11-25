@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2236688858573778080}
   - component: {fileID: 3604343816379787044}
   - component: {fileID: 7215542807272075400}
+  - component: {fileID: 6910305799750289224}
   m_Layer: 0
   m_Name: Region Icon
   m_TagString: Untagged
@@ -96,6 +97,24 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &6910305799750289224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860116942981078996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 1
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  defaultText: 
 --- !u!1 &995175204760591933
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +256,7 @@ GameObject:
   - component: {fileID: 4629401489834659496}
   - component: {fileID: 6624156485965178312}
   - component: {fileID: 9044814962504795487}
+  - component: {fileID: 1148934952439990091}
   m_Layer: 5
   m_Name: Tier1Icon
   m_TagString: Untagged
@@ -316,6 +336,24 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &1148934952439990091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4264128380600114841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 1
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  defaultText: Tier I
 --- !u!1 &4606437290784595112
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +422,7 @@ GameObject:
   - component: {fileID: 1502049645223966539}
   - component: {fileID: 4573709012144980951}
   - component: {fileID: 8698805932650943643}
+  - component: {fileID: 7837397461459981464}
   m_Layer: 5
   m_Name: Tier2Icon
   m_TagString: Untagged
@@ -463,6 +502,24 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &7837397461459981464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5025687785390525107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 1
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  defaultText: Tier II
 --- !u!1 &5519988903361637243
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,6 +823,7 @@ MonoBehaviour:
   regionIcon: {fileID: 3604343816379787044}
   zoneGoodPrefab: {fileID: 5732481338511235017, guid: 3ca5afc7856be8d47bc15893e136a2a2, type: 3}
   zoneGoodContainer: {fileID: 7908450945639963133}
+  regionIconTooltip: {fileID: 6910305799750289224}
 --- !u!114 &7880081150021671417
 MonoBehaviour:
   m_ObjectHideFlags: 0

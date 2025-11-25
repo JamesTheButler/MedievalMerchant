@@ -12,7 +12,6 @@ using NaughtyAttributes;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 namespace Features.Levels.Logic
@@ -33,8 +32,10 @@ namespace Features.Levels.Logic
 
         private Model _model;
         private FlagFactory _flagFactory;
+        private ProductionZoneManager _productionZoneManager;
         private LevelInfo _levelInfo;
-        private DividendsService _dividendsService;
+
+        private readonly ServiceManager _serviceManager = new();
 
         private void Start()
         {
@@ -66,9 +67,11 @@ namespace Features.Levels.Logic
 
             _model.ConditionManager.Setup(_levelInfo.Conditions);
 
-            _dividendsService = new DividendsService();
-            _dividendsService.Initialize();
+            _serviceManager.Initialize();
             
+            _productionZoneManager = FindAnyObjectByType<ProductionZoneManager>();
+            _productionZoneManager.Initialize(zones);
+
             levelLoaded.Invoke();
 
             // clear level load context
