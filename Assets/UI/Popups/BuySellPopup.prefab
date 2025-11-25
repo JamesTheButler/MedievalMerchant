@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3668953883669665614}
   - component: {fileID: 2982311922712719678}
   - component: {fileID: 7874953209255644984}
-  - component: {fileID: 8982825670882642419}
+  - component: {fileID: 6792615640989394833}
   m_Layer: 5
   m_Name: AvailabilityImage
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8982825670882642419
+--- !u!114 &6792615640989394833
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,15 +85,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 98436186302303338}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Script: {fileID: 11500000, guid: e88465961c9b4ea7a3edbec1b7855e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ee04573e8193ad74da8bfd4c1d1826ab, type: 3}
   enabledOnStart: 1
   hideOnClick: 0
   useSelfAsOrigin: 1
   originTransform: {fileID: 0}
-  defaultText: 
 --- !u!1 &763982742513510056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,7 +1072,7 @@ MonoBehaviour:
   buyButtonHoverable: {fileID: 434723142748828073}
   sellButtonHoverable: {fileID: 2349722765449225652}
   marketStateIcon: {fileID: 7874953209255644984}
-  marketStateTooltip: {fileID: 8982825670882642419}
+  availabilityTooltip: {fileID: 6792615640989394833}
 --- !u!114 &5132515537927709242
 MonoBehaviour:
   m_ObjectHideFlags: 0

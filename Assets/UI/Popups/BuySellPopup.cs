@@ -8,6 +8,7 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI.Popups
@@ -32,8 +33,8 @@ namespace UI.Popups
         [SerializeField, Required]
         private Image marketStateIcon;
 
-        [SerializeField, Required]
-        private SimpleTooltipHandler marketStateTooltip;
+        [FormerlySerializedAs("marketStateTooltip"), SerializeField, Required]
+        private TitleDescriptionTooltipHandler availabilityTooltip;
 
         private readonly Lazy<AvailabilityConfig> _marketStateConfig =
             new(() => ConfigurationManager.Instance.AvailabilityConfig);
@@ -50,9 +51,8 @@ namespace UI.Popups
             sellButtonTooltip = sellButton.gameObject.GetComponent<SimpleTooltipHandler>();
 
             buyButton.onClick.AddListener(() => TradeInitiated(TradeType.Buy));
-            
             sellButton.onClick.AddListener(() => TradeInitiated(TradeType.Sell));
-            
+
             // TODO: maybe reimplement this. it's not very clear as is
             //buyButtonHoverable.Hovered += () => SetHoveredTradeType(TradeType.Buy);
             //buyButtonHoverable.Unhovered += () => SetHoveredTradeType(null);
@@ -101,7 +101,7 @@ namespace UI.Popups
             RefreshIcon();
 
             var configData = _marketStateConfig.Value.ConfigData[availability];
-            marketStateTooltip.SetData($"Availability: {configData.DisplayString}.\n{configData.Description}");
+            availabilityTooltip.SetData(($"Availability: {configData.DisplayString}", configData.Description));
         }
 
         private void RefreshIcon()

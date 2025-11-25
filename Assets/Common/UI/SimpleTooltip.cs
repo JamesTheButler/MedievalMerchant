@@ -19,4 +19,5 @@ namespace Common.UI
             textfield.text = string.Empty;
         }
     }
+
 }
