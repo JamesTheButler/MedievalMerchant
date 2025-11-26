@@ -39,6 +39,11 @@ namespace Features.Levels.Logic
 
         private void Start()
         {
+            LoadLevel();
+        }
+
+        private void LoadLevel()
+        {
             _model = Model.Instance;
             _flagFactory = new FlagFactory();
 
@@ -55,10 +60,15 @@ namespace Features.Levels.Logic
             var flagMap = TilemapScanner.Scan(tilemap);
             var townPositions = flagMap.GetAllCells(TileType.Town);
             var zones = level.GetComponentsInChildren<ProductionZone>();
+            _productionZoneManager = FindAnyObjectByType<ProductionZoneManager>();
+            _productionZoneManager.Initialize(zones);
+            
             var towns = GenerateTowns(townPositions, zones);
             var player = new PlayerModel(_levelInfo.StartPlayerFunds);
 
             _model.Initialize(player, towns, flagMap);
+            
+            _serviceManager.Initialize();
 
             var startTown = towns.GetRandom();
             player.Location.CurrentTown = startTown;
@@ -67,11 +77,6 @@ namespace Features.Levels.Logic
 
             _model.ConditionManager.Setup(_levelInfo.Conditions);
 
-            _serviceManager.Initialize();
-            
-            _productionZoneManager = FindAnyObjectByType<ProductionZoneManager>();
-            _productionZoneManager.Initialize(zones);
-
             levelLoaded.Invoke();
 
             // clear level load context
@@ -79,6 +84,11 @@ namespace Features.Levels.Logic
             {
                 LevelLoadContext.Instance.SelectedLevel = null;
             }
+        }
+
+        public void UnloadLevel()
+        {
+            _serviceManager.CleanUp();
         }
 
         private void FindLevelInfo()

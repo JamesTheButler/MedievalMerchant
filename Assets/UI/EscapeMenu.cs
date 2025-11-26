@@ -23,7 +23,6 @@ namespace UI
             bugReportButton.onClick.AddListener(ReportBug);
         }
 
-
         private void OnDestroy()
         {
             giveUpButton.onClick.RemoveListener(GiveUp);
