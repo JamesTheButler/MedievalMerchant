@@ -8,11 +8,17 @@ namespace Features.Levels.Config
     [CreateAssetMenu(fileName = nameof(LevelInfo), menuName = AssetMenu.ConfigDataFolder + nameof(LevelInfo))]
     public sealed class LevelInfo : ScriptableObject
     {
+        [field: SerializeField]
+        public bool IsEnabled { get; private set; }
+
         [field: SerializeField, Required]
         public GameObject MapPrefab { get; private set; }
 
         [field: SerializeField]
         public string LevelName { get; private set; }
+
+        [field: SerializeField]
+        public string Description { get; private set; }
 
         [field: SerializeField]
         public float StartPlayerFunds { get; private set; }

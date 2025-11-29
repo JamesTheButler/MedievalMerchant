@@ -11,7 +11,7 @@ namespace UI.StartMenu
     public sealed class LevelInfoBox : MonoBehaviour
     {
         [SerializeField, Required]
-        private TMP_Text nameText;
+        private TMP_Text nameText, descriptionText;
 
         [SerializeField, Required]
         private ConditionListUI winConditionList;
@@ -22,6 +22,7 @@ namespace UI.StartMenu
         public void Setup(LevelInfo levelInfo)
         {
             nameText.text = levelInfo.LevelName;
+            descriptionText.text = levelInfo.Description;
             var conditions = levelInfo.Conditions;
             winConditionList.Setup(conditions.OfType<WinCondition>(), false);
             lossConditionList.Setup(conditions.OfType<LossCondition>(), false);

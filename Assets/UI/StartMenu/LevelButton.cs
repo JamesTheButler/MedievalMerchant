@@ -26,7 +26,7 @@ namespace UI.StartMenu
 
         private void Start()
         {
-            if (levelInfo == null)
+            if (levelInfo == null || !levelInfo.IsEnabled)
             {
                 button.interactable = false;
             }
