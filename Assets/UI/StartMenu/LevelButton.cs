@@ -1,5 +1,7 @@
+using Common;
 using Features.Levels.Config;
 using NaughtyAttributes;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -9,6 +11,9 @@ namespace UI.StartMenu
 {
     public sealed class LevelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        [SerializeField]
+        private int levelIndex;
+
         [SerializeField]
         private UnityEvent<LevelInfo> mouseEnter;
 
@@ -21,6 +26,12 @@ namespace UI.StartMenu
         [SerializeField, Required]
         private Button button;
 
+        [SerializeField, Required]
+        private Image completeIcon;
+
+        [SerializeField, Required]
+        private TMP_Text label;
+
         [SerializeField]
         private LevelInfo levelInfo;
 
@@ -32,6 +43,9 @@ namespace UI.StartMenu
             }
 
             button.onClick.AddListener(OnClick);
+            label.text = levelIndex.ToString();
+            var isCompleted = ProgressionModel.Instance.CompletedLevels[levelIndex - 1] != null;
+            completeIcon.gameObject.SetActive(isCompleted);
         }
 
         private void OnDestroy()
