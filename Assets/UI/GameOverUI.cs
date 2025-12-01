@@ -8,7 +8,7 @@ namespace UI
     {
         [SerializeField, Scene]
         private string startScene;
-        
+
         [SerializeField, Required]
         private GameObject winUI, lossUi;
 

@@ -12,9 +12,6 @@ namespace UI.StartMenu
     public sealed class LevelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField]
-        private int levelIndex;
-
-        [SerializeField]
         private UnityEvent<LevelInfo> mouseEnter;
 
         [SerializeField]
@@ -43,8 +40,8 @@ namespace UI.StartMenu
             }
 
             button.onClick.AddListener(OnClick);
-            label.text = levelIndex.ToString();
-            var isCompleted = ProgressionModel.Instance.CompletedLevels[levelIndex - 1] != null;
+            label.text = levelInfo.DisplayIndex.ToString();
+            var isCompleted = ProgressionModel.Instance.CompletedLevels[levelInfo.InternalIndex] != null;
             completeIcon.gameObject.SetActive(isCompleted);
         }
 

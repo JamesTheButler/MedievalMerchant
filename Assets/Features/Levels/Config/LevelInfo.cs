@@ -11,6 +11,12 @@ namespace Features.Levels.Config
         [field: SerializeField]
         public bool IsEnabled { get; private set; }
 
+        /// <summary>
+        /// Index for display to the player. 1-based.
+        /// </summary>
+        [field: SerializeField]
+        public int DisplayIndex { get; private set; }
+
         [field: SerializeField, Required]
         public GameObject MapPrefab { get; private set; }
 
@@ -25,5 +31,10 @@ namespace Features.Levels.Config
 
         [field: SerializeField, Expandable]
         public Condition[] Conditions { get; private set; }
+
+        /// <summary>
+        /// Index for internal logic. 0-based.
+        /// </summary>
+        public int InternalIndex => DisplayIndex - 1;
     }
 }

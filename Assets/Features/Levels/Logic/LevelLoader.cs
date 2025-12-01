@@ -66,7 +66,7 @@ namespace Features.Levels.Logic
             var towns = GenerateTowns(townPositions, zones);
             var player = new PlayerModel(_levelInfo.StartPlayerFunds);
 
-            _model.Initialize(player, towns, flagMap);
+            _model.Initialize(player, towns, flagMap, _levelInfo);
             
             _serviceManager.Initialize();
 
