@@ -1,5 +1,6 @@
 using System;
 using Features.Towns;
+using Infrastructure;
 using UI.InventoryUI;
 using UI.InventoryUI.TownInventory;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace UI.Popups
         [SerializeField]
         private Tier2ConstructionPopup popup;
 
-        private readonly Lazy<Selection> _selection = new(() => Selection.Instance);
+        private readonly Lazy<Selection> _selection = new(() => GameplayContext.Selection);
 
         public void Show(ProductionCell cell)
         {

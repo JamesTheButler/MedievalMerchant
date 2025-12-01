@@ -5,6 +5,7 @@ using Common.Config;
 using Common.UI;
 using Features.Player.Caravan.Config;
 using Features.Player.Caravan.Logic;
+using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UI.InventoryUI;
@@ -65,7 +66,7 @@ namespace Features.Player.Caravan.UI
 
         public void Bind(Cart cart, Action upgradeAction, Action<InventoryCell> onCellAdded)
         {
-            _player = GameplayModel.Instance.Player;
+            _player = GameplayContext.Model.Player;
             _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
             _colors = ConfigurationManager.Instance.Colors;
 

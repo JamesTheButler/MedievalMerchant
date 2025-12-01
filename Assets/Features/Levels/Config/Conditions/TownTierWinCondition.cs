@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Common;
 using Common.Types;
+using Infrastructure;
 using UnityEngine;
 
 namespace Features.Levels.Config.Conditions
@@ -26,7 +27,7 @@ namespace Features.Levels.Config.Conditions
 
         public override void Initialize()
         {
-            _model = GameplayModel.Instance;
+            _model = GameplayContext.Model;
             Progress = new Progress(targetCount, FormatProgress);
 
             foreach (var town in _model.Towns.Values)

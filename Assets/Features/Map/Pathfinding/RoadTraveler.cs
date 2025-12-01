@@ -5,6 +5,7 @@ using Common;
 using Features.Player;
 using Features.Player.Caravan.Config;
 using Features.Towns;
+using Infrastructure;
 using UnityEngine;
 
 namespace Features.Map.Pathfinding
@@ -18,7 +19,7 @@ namespace Features.Map.Pathfinding
         [SerializeField]
         private Grid tileGrid;
 
-        private readonly Lazy<GameplayModel> _model = new(() => GameplayModel.Instance);
+        private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Model);
 
         private Lazy<RoadGraph> _graph;
         private Lazy<PlayerLocation> _playerLocation;

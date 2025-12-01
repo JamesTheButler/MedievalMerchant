@@ -1,4 +1,5 @@
 using Common;
+using Infrastructure;
 using UnityEngine;
 
 namespace Features.Levels.Config.Conditions
@@ -19,7 +20,7 @@ namespace Features.Levels.Config.Conditions
 
         public override void Initialize()
         {
-            _playerInventory = GameplayModel.Instance.Player.Inventory;
+            _playerInventory = GameplayContext.Model.Player.Inventory;
             Progress = new Progress(fundsToReach, FormatProgress);
 
             _playerInventory.Funds.Observe(Evaluate);

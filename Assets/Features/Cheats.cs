@@ -3,6 +3,7 @@ using Common;
 using Common.Types;
 using Features.Player;
 using Features.Player.Caravan.Config;
+using Infrastructure;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -11,8 +12,8 @@ namespace Features
 {
     public sealed class Cheats : MonoBehaviour
     {
-        private readonly Lazy<GameplayModel> _model = new(() => GameplayModel.Instance);
-        private readonly Lazy<PlayerModel> _playerModel = new(() => GameplayModel.Instance.Player);
+        private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Model);
+        private readonly Lazy<PlayerModel> _playerModel = new(() => GameplayContext.Model.Player);
 
         public void AddFunds(InputAction.CallbackContext context)
         {

@@ -1,6 +1,7 @@
 using Common;
 using Features.Player;
 using Features.Towns;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace Features.Map.Overlays
 
         private void Start()
         {
-            _playerLocation = GameplayModel.Instance.Player.Location;
+            _playerLocation = GameplayContext.Model.Player.Location;
             _zLevel = gameObject.transform.position.z;
 
             _playerLocation.TownEntered += OnTownEntered;

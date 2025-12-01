@@ -2,6 +2,7 @@
 using Common;
 using Features.Player.Retinue.Config;
 using Features.Player.Retinue.Logic;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -42,7 +43,7 @@ namespace Features.Player.Retinue.UI
 
         private void Start()
         {
-            _retinueManager = GameplayModel.Instance.Player.RetinueManager;
+            _retinueManager = GameplayContext.Model.Player.RetinueManager;
             _configData = ConfigurationManager.Instance.CompanionConfig.Get(companionType);
 
             InitializeUI();

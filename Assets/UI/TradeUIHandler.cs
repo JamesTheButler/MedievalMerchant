@@ -2,6 +2,7 @@ using Common.Types;
 using Features.Towns;
 using Features.Trade;
 using Features.Trade.UI;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace UI
         {
             tradeUI.gameObject.SetActive(false);
 
-            Selection.Instance.TownSelected += OnSelectedTownChanged;
+            GameplayContext.Selection.TownSelected += OnSelectedTownChanged;
         }
 
         private void OnSelectedTownChanged(Town town)

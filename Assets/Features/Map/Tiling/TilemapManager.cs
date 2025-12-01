@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Common;
 using Common.Types;
 using Features.Towns;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -33,7 +34,7 @@ namespace Features.Map.Tiling
 
         public void Initialize()
         {
-            _model = GameplayModel.Instance;
+            _model = GameplayContext.Model;
             
             Tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
             

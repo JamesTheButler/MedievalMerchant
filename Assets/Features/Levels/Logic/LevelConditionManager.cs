@@ -4,21 +4,16 @@ using System.Linq;
 using Common;
 using Features.Levels.Config;
 using Features.Levels.Config.Conditions;
-using UnityEngine;
-using UnityEngine.Events;
+using Infrastructure;
 
 namespace Features.Levels.Logic
 {
-    public sealed class ConditionManager : MonoBehaviour
+    public sealed class LevelConditionManager : ISystem
     {
         public IReadOnlyList<WinCondition> WinConditions => _winConditions;
         public IReadOnlyList<LossCondition> LossConditions => _lossConditions;
 
-        [SerializeField]
-        private UnityEvent levelWon;
-
-        [SerializeField]
-        private UnityEvent levelLost;
+        public event Action LevelWon, LevelLost;
 
         public event Action<int> CompletionCountChanged;
 
@@ -26,21 +21,16 @@ namespace Features.Levels.Logic
 
         private List<WinCondition> _winConditions = new();
         private List<LossCondition> _lossConditions = new();
-        private ConditionConfig _conditionManager;
+        private ConditionConfig _conditionConfig;
 
         private readonly HashSet<LossCondition> _closeLossConditions = new();
-        
 
-        private void Awake()
+        public void Initialize()
         {
-            _conditionManager = ConfigurationManager.Instance.ConditionConfig;
-        }
-
-        public void Setup(IEnumerable<Condition> conditions)
-        {
-            var enumeratedConditions = conditions as Condition[] ?? conditions.ToArray();
-            _winConditions = enumeratedConditions.OfType<WinCondition>().ToList();
-            _lossConditions = enumeratedConditions.OfType<LossCondition>().ToList();
+            _conditionConfig = ConfigurationManager.Instance.ConditionConfig;
+            var conditions = GlobalContext.CurrentLevelInfo!.Conditions;
+            _winConditions = conditions.OfType<WinCondition>().ToList();
+            _lossConditions = conditions.OfType<LossCondition>().ToList();
 
             foreach (var condition in _winConditions)
             {
@@ -57,9 +47,11 @@ namespace Features.Levels.Logic
             }
         }
 
+        public void CleanUp() { }
+
         private void OnLossConditionProgressChanged(float currentProgressPercent, LossCondition condition)
         {
-            if (currentProgressPercent >= _conditionManager.WarningThresholdPercent)
+            if (currentProgressPercent >= _conditionConfig.WarningThresholdPercent)
             {
                 _closeLossConditions.Add(condition);
             }
@@ -79,7 +71,7 @@ namespace Features.Levels.Logic
 
             if (_winConditions.Count == count)
             {
-                levelWon.Invoke();
+                LevelWon?.Invoke();
             }
         }
 
@@ -87,7 +79,7 @@ namespace Features.Levels.Logic
         {
             if (isCompleted)
             {
-                levelLost.Invoke();
+                LevelLost?.Invoke();
             }
         }
     }

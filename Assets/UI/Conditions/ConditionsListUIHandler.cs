@@ -1,4 +1,4 @@
-using Common;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -17,7 +17,7 @@ namespace UI.Conditions
 
         public void Initialize()
         {
-            var conditionsManager = GameplayModel.Instance.ConditionManager;
+            var conditionsManager = GameplayContext.Systems.LevelConditionManager;
 
             winConditionListUI.Setup(conditionsManager.WinConditions, true);
             lossConditionListUI.Setup(conditionsManager.LossConditions, true);

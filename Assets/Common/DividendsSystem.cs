@@ -7,12 +7,14 @@ namespace Common
 {
     public sealed class DividendsSystem : ISystem
     {
+        private GameplayModel _model;
         private PlayerModel _player;
 
         public void Initialize()
         {
-            _player = GameplayModel.Instance.Player;
-            foreach (var town in GameplayModel.Instance.Towns.Values)
+            _model = GameplayContext.Model;
+            _player = _model.Player;
+            foreach (var town in _model.Towns.Values)
             {
                 town.MilestoneManager.MilestoneModifierAdded += OnMilestoneModifierAdded;
                 town.MilestoneManager.MilestoneModifierRemoved += OnMilestoneModifierRemoved;
@@ -21,7 +23,7 @@ namespace Common
 
         public void CleanUp()
         {
-            foreach (var town in GameplayModel.Instance.Towns.Values)
+            foreach (var town in _model.Towns.Values)
             {
                 town.MilestoneManager.MilestoneModifierAdded += OnMilestoneModifierAdded;
                 town.MilestoneManager.MilestoneModifierRemoved += OnMilestoneModifierRemoved;

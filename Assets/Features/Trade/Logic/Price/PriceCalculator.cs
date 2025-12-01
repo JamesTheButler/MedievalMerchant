@@ -8,6 +8,7 @@ using Features.Player;
 using Features.Player.Retinue;
 using Features.Player.Retinue.Logic;
 using Features.Towns;
+using Infrastructure;
 
 namespace Features.Trade.Logic.Price
 {
@@ -28,7 +29,7 @@ namespace Features.Trade.Logic.Price
 
         public PriceCalculator(Town town)
         {
-            _player = GameplayModel.Instance.Player;
+            _player = GameplayContext.Model.Player;
             _town = town;
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             _availabilityCalculator = new AvailabilityCalculator(town);

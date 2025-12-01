@@ -1,12 +1,13 @@
 using System;
 using Common;
+using Infrastructure;
 using UnityEngine;
 
 namespace Features.Towns
 {
     public sealed class TownTicker : MonoBehaviour
     {
-        private readonly Lazy<GameplayModel> _model = new(() => GameplayModel.Instance);
+        private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Model);
 
         public void Tick()
         {

@@ -1,5 +1,6 @@
 using Common;
 using Features.Player.Caravan.Config;
+using Infrastructure;
 
 namespace Features.Player.Caravan.Logic
 {
@@ -11,7 +12,7 @@ namespace Features.Player.Caravan.Logic
 
         public CaravanUpgrader()
         {
-            _player = GameplayModel.Instance.Player;
+            _player = GameplayContext.Model.Player;
             _caravanManager = _player.CaravanManager;
             _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
         }

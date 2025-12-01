@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace Features.Map
 {
-    public sealed class ProductionZoneManager : MonoBehaviour
+    public sealed class ProductionZoneInteractions : MonoBehaviour
     {
         [field: SerializeField]
         public UnityEvent<ProductionZone> ZoneHovered { get; private set; }

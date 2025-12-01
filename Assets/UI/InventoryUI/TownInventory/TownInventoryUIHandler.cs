@@ -1,4 +1,5 @@
 using Features.Towns;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace UI.InventoryUI.TownInventory
             inventoryUi.Hide();
             inventoryUi.Initialize();
 
-            Selection.Instance.TownSelected += SelectTown;
+            GameplayContext.Selection.TownSelected += SelectTown;
         }
 
         private void SelectTown(Town town)

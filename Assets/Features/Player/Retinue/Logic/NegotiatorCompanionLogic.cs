@@ -1,5 +1,6 @@
 ﻿using Common;
 using Features.Player.Retinue.Config.CompanionDatas;
+using Infrastructure;
 
 namespace Features.Player.Retinue.Logic
 {
@@ -16,7 +17,7 @@ namespace Features.Player.Retinue.Logic
             if (_negotiatorCostModifier == null)
             {
                 _negotiatorCostModifier = new NegotiatorUpgradeCostModifier(level);
-                var caravanManager = GameplayModel.Instance.Player.CaravanManager;
+                var caravanManager = GameplayContext.Model.Player.CaravanManager;
                 foreach (var cart in caravanManager.Carts)
                 {
                     cart.UpgradeCost.AddModifier(_negotiatorCostModifier);

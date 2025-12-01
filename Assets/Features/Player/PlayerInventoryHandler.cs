@@ -1,4 +1,4 @@
-using Common;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ namespace Features.Player
 
         private void Start()
         {
-            var player = GameplayModel.Instance.Player;
+            var player = GameplayContext.Model.Player;
             playerInventoryUI.Bind(player);
         }
 

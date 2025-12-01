@@ -1,5 +1,6 @@
 using Common;
 using Common.Types;
+using Infrastructure;
 using UnityEngine;
 
 namespace Features.Levels.Config.Conditions
@@ -25,7 +26,7 @@ namespace Features.Levels.Config.Conditions
 
         public override void Initialize()
         {
-            _currentDate = GameplayModel.Instance.Date;
+            _currentDate = GameplayContext.Model.Date;
             _deadlineDate = new Date(deadlineDay, deadlineYear);
 
             Progress = new Progress(_deadlineDate.AsDays(), FormatProgress);

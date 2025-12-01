@@ -1,14 +1,12 @@
 using System;
-using UnityEngine;
 
 namespace Features.Towns
 {
-    public sealed class Selection : MonoBehaviour
+    public sealed class Selection
     {
-        public static Selection Instance;
-
         // TODO - STYLE: use Observable<Town>
         public event Action<Town> TownSelected;
+
         public Town SelectedTown { get; private set; }
 
         public void Select(Town town)
@@ -23,18 +21,6 @@ namespace Features.Towns
         public void Deselect()
         {
             Select(null);
-        }
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 }

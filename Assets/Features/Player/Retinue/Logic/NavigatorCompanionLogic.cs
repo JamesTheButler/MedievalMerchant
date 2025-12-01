@@ -1,5 +1,6 @@
 ﻿using Common;
 using Features.Player.Retinue.Config.CompanionDatas;
+using Infrastructure;
 
 namespace Features.Player.Retinue.Logic
 {
@@ -14,7 +15,7 @@ namespace Features.Player.Retinue.Logic
 
         public override void SetLevel(int level)
         {
-            _player = GameplayModel.Instance.Player;
+            _player = GameplayContext.Model.Player;
 
             HandleSpeedModifier(level);
             HandleUpkeepModifier(level);

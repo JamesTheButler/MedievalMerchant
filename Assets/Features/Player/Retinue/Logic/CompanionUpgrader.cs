@@ -2,6 +2,7 @@
 using Common.Modifiable;
 using Features.Player.Retinue.Config;
 using Features.Player.Retinue.UI;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Features.Player.Retinue.Logic
         private void Start()
         {
             _companionConfig = ConfigurationManager.Instance.CompanionConfig;
-            _player = GameplayModel.Instance.Player;
+            _player = GameplayContext.Model.Player;
 
             foreach (var companionUi in companionGroup.GetComponentsInChildren<CompanionUI>())
             {

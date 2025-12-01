@@ -4,6 +4,7 @@ using Common;
 using Common.Types;
 using Common.UI;
 using Features.Player.Caravan.Logic;
+using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UI.InventoryUI;
@@ -34,8 +35,8 @@ namespace Features.Player.Caravan.UI
 
         private void Start()
         {
-            _caravanManager = GameplayModel.Instance.Player.CaravanManager;
-            _playerInventory = GameplayModel.Instance.Player.Inventory;
+            _caravanManager = GameplayContext.Model.Player.CaravanManager;
+            _playerInventory = GameplayContext.Model.Player.Inventory;
 
             // TODO - STYLE: it's not so nice to have a random business logic class in here.
             //   This would have to be in the view model layer.

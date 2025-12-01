@@ -556,6 +556,116 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 519420031}
+--- !u!1 &160027145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 160027146}
+  - component: {fileID: 160027147}
+  m_Layer: 0
+  m_Name: Bootstrapper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &160027146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160027145}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1011025417}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &160027147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160027145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3c1d4f3016347e6b5ad00bdc200b481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  completed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 766223030}
+        m_TargetAssemblyTypeName: Features.Map.Tiling.TilemapManager, Assembly-CSharp
+        m_MethodName: Initialize
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 519420035}
+        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+        m_MethodName: FitMapSize
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2144832322}
+        m_TargetAssemblyTypeName: Features.Map.Overlays.TownOverlayManager, Assembly-CSharp
+        m_MethodName: Initialize
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1663364003}
+        m_TargetAssemblyTypeName: GameTicker, Assembly-CSharp
+        m_MethodName: StartTicking
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 48834452}
+        m_TargetAssemblyTypeName: UI.Conditions.ConditionsListUIHandler, Assembly-CSharp
+        m_MethodName: Initialize
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  tileGrid: {fileID: 766223028}
+  debugLevelInfo: {fileID: 11400000, guid: 406e5533c0148174aa731ffb8924d766, type: 2}
+  productionZoneInteractions: {fileID: 766223031}
 --- !u!114 &171577212 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3117525020845112267, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
@@ -762,40 +872,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 218633805}
-  - component: {fileID: 218633804}
-  - component: {fileID: 218633802}
-  - component: {fileID: 218633807}
+  - component: {fileID: 218633806}
   m_Layer: 0
-  m_Name: Data
+  m_Name: Level Events
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &218633802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 218633801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1c6bb8637ee4f39a511ab3e1b6aa49b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &218633804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 218633801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f391721e6cb40ec8a69d162417d773f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &218633805
 Transform:
   m_ObjectHideFlags: 0
@@ -811,7 +895,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1011025417}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &218633807
+--- !u!114 &218633806
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -820,7 +904,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 218633801}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2284ae0d348d43ac9f21e28508a8d2da, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d88ab4d40eb4bc98695d2e55da00c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   levelWon:
@@ -839,7 +923,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1570456899}
-        m_TargetAssemblyTypeName: Features.Levels.Serialization.GamePersistenceUpdater,
+        m_TargetAssemblyTypeName: Features.Levels.Serialization.ProgressionUpdater,
           Assembly-CSharp
         m_MethodName: LevelCompleted
         m_Mode: 1
@@ -3712,8 +3796,8 @@ MonoBehaviour:
   onTownClicked:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 218633802}
-        m_TargetAssemblyTypeName: Data.SelectionModel, Assembly-CSharp
+      - m_Target: {fileID: 1616901943}
+        m_TargetAssemblyTypeName: Features.Towns.SelectionEvents, Assembly-CSharp
         m_MethodName: Select
         m_Mode: 0
         m_Arguments:
@@ -3739,8 +3823,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 218633802}
-        m_TargetAssemblyTypeName: Data.Towns.Selection, Assembly-CSharp
+      - m_Target: {fileID: 1616901943}
+        m_TargetAssemblyTypeName: Features.Towns.SelectionEvents, Assembly-CSharp
         m_MethodName: Select
         m_Mode: 0
         m_Arguments:
@@ -3754,8 +3838,8 @@ MonoBehaviour:
   onGroundClicked:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 218633802}
-        m_TargetAssemblyTypeName: Data.SelectionModel, Assembly-CSharp
+      - m_Target: {fileID: 1616901943}
+        m_TargetAssemblyTypeName: Features.Towns.SelectionEvents, Assembly-CSharp
         m_MethodName: Deselect
         m_Mode: 1
         m_Arguments:
@@ -3902,13 +3986,14 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 160027146}
   - {fileID: 429278998}
   - {fileID: 218633805}
-  - {fileID: 1986165989}
   - {fileID: 1663364000}
   - {fileID: 575118714}
   - {fileID: 1446609089}
   - {fileID: 1570456898}
+  - {fileID: 1616901942}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1137422854
@@ -4617,6 +4702,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67694918914e4c6b9ba876dd49c5723a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1616901941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1616901942}
+  - component: {fileID: 1616901943}
+  m_Layer: 0
+  m_Name: Selection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1616901942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616901941}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1011025417}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1616901943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616901941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d23e61c3de4b7791c03758658de8e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1655644686
@@ -12658,115 +12787,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8326209924126617475, guid: 2a99490a4c59b754c9b410aa50bd1d63, type: 3}
   m_PrefabInstance: {fileID: 7052847780212407455}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1986165988
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1986165989}
-  - component: {fileID: 1986165994}
-  m_Layer: 0
-  m_Name: LevelLoader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1986165989
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1986165988}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1011025417}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1986165994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1986165988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5898140cdb854e73ab42e5c718436877, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelLoaded:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 766223030}
-        m_TargetAssemblyTypeName: Tilemap.TilemapManager, Assembly-CSharp
-        m_MethodName: Initialize
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 519420035}
-        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-        m_MethodName: FitMapSize
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2144832322}
-        m_TargetAssemblyTypeName: Map.Overlays.TownOverlayManager, Assembly-CSharp
-        m_MethodName: Initialize
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1663364003}
-        m_TargetAssemblyTypeName: GameTicker, Assembly-CSharp
-        m_MethodName: StartTicking
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 48834452}
-        m_TargetAssemblyTypeName: UI.ConditionsListUIHandler, Assembly-CSharp
-        m_MethodName: Initialize
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  tileGrid: {fileID: 766223028}
-  debugLevelInfo: {fileID: 11400000, guid: 406e5533c0148174aa731ffb8924d766, type: 2}
 --- !u!114 &1996096075 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8153988726765515731, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
@@ -13054,7 +13074,7 @@ PrefabInstance:
     - target: {fileID: 6583390507034786093, guid: aa21ea928e29d3e4791a8ca16b7b54a4, type: 3}
       propertyPath: giveUpPressed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1986165994}
+      objectReference: {fileID: 0}
     - target: {fileID: 6583390507034786093, guid: aa21ea928e29d3e4791a8ca16b7b54a4, type: 3}
       propertyPath: giveUpPressed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2

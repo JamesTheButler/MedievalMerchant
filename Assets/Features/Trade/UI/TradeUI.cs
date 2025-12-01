@@ -8,6 +8,7 @@ using Features.Goods.Config;
 using Features.Goods.UI;
 using Features.Towns;
 using Features.Trade.Logic.Price;
+using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -35,8 +36,8 @@ namespace Features.Trade.UI
         [SerializeField, Required]
         private ModifiableTooltipHandler priceTooltip;
 
-        private readonly Lazy<GameplayModel> _model = new(() => GameplayModel.Instance);
-        private readonly Lazy<Selection> _selection = new(() => Selection.Instance);
+        private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Model);
+        private readonly Lazy<Selection> _selection = new(() => GameplayContext.Selection);
         private readonly Lazy<Colors> _colors = new(() => ConfigurationManager.Instance.Colors);
         private readonly Lazy<GoodsConfig> _configurationManager = new(() => ConfigurationManager.Instance.GoodsConfig);
 

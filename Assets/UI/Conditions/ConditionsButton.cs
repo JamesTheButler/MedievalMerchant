@@ -1,5 +1,5 @@
-using Common;
 using Features.Levels.Logic;
+using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -16,15 +16,15 @@ namespace UI.Conditions
         private Image warningIcon;
 
         private int _winConditionCount;
-        private ConditionManager _conditionManager;
+        private LevelConditionManager _levelConditionManager;
 
         private void Start()
         {
-            _conditionManager = GameplayModel.Instance.ConditionManager;
+            _levelConditionManager = GameplayContext.Systems.LevelConditionManager;
 
-            _winConditionCount = _conditionManager.WinConditions.Count;
-            _conditionManager.CompletionCountChanged += UpdateText;
-            _conditionManager.IsLossClose.Observe(UpdateIcon);
+            _winConditionCount = _levelConditionManager.WinConditions.Count;
+            _levelConditionManager.CompletionCountChanged += UpdateText;
+            _levelConditionManager.IsLossClose.Observe(UpdateIcon);
 
             UpdateText(0);
             UpdateIcon(false);
@@ -32,8 +32,8 @@ namespace UI.Conditions
 
         private void OnDestroy()
         {
-            _conditionManager.CompletionCountChanged -= UpdateText;
-            _conditionManager.IsLossClose.StopObserving(UpdateIcon);
+            _levelConditionManager.CompletionCountChanged -= UpdateText;
+            _levelConditionManager.IsLossClose.StopObserving(UpdateIcon);
         }
 
         private void UpdateText(int conditionCount)

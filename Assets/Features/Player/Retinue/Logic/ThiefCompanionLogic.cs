@@ -2,6 +2,7 @@
 using Features.Player.Retinue.Config.CompanionDatas;
 using Features.Player.Retinue.Config.LevelDatas;
 using Features.Towns;
+using Infrastructure;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Logic
@@ -32,7 +33,7 @@ namespace Features.Player.Retinue.Logic
 
         private void Bind()
         {
-            _player = GameplayModel.Instance.Player;
+            _player = GameplayContext.Model.Player;
             _player.Location.TownEntered += OnTownChanged;
 
             _isBound = true;

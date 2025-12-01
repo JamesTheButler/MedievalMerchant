@@ -1,4 +1,5 @@
 using Common.Types;
+using Infrastructure;
 using UnityEngine;
 
 namespace Common
@@ -13,7 +14,7 @@ namespace Common
 
         private void Start()
         {
-            _date = GameplayModel.Instance.Date;
+            _date = GameplayContext.Model.Date;
         }
 
         public void Tick()

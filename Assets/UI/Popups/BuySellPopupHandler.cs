@@ -6,6 +6,7 @@ using Features.Player;
 using Features.Towns;
 using Features.Trade;
 using Features.Trade.Logic;
+using Infrastructure;
 using NaughtyAttributes;
 using UI.InventoryUI;
 using UnityEngine;
@@ -31,20 +32,21 @@ namespace UI.Popups
         private void Start()
         {
             Reset();
-            Selection.Instance.TownSelected += _ => { Reset(); };
+            GameplayContext.Selection.TownSelected += _ => { Reset(); };
         }
 
         public void Initialize(InventoryCellBase inventoryCell)
         {
             Reset();
 
-            if (Selection.Instance.SelectedTown is null) return;
+            var selection = GameplayContext.Selection;
+            if (selection.SelectedTown is null) return;
             if (inventoryCell.Good == null) return;
 
             _good = inventoryCell.Good.Value;
 
-            _player = GameplayModel.Instance.Player;
-            _town = Selection.Instance.SelectedTown;
+            _player = GameplayContext.Model.Player;
+            _town = selection.SelectedTown;
 
             _playerInventory = _player.Inventory;
             _townInventory = _town.Inventory;

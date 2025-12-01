@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Common;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Features.Map.Overlays
         [SerializeField, Required]
         private GameObject townOverlayPrefab;
 
-        private readonly Lazy<GameplayModel> _model = new(() => GameplayModel.Instance);
+        private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Model);
 
         private readonly List<TownOverlay> _overlays = new();
 
