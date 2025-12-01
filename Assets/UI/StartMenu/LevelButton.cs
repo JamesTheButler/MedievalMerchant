@@ -1,5 +1,5 @@
-using Common;
 using Features.Levels.Config;
+using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -41,7 +41,7 @@ namespace UI.StartMenu
 
             button.onClick.AddListener(OnClick);
             label.text = levelInfo.DisplayIndex.ToString();
-            var isCompleted = ProgressionModel.Instance.CompletedLevels[levelInfo.InternalIndex] != null;
+            var isCompleted = GlobalContext.ProgressModel.CompletedLevels[levelInfo.InternalIndex] != null;
             completeIcon.gameObject.SetActive(isCompleted);
         }
 

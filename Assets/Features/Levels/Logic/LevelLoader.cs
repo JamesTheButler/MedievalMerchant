@@ -51,7 +51,7 @@ namespace Features.Levels.Logic
 
             if (_levelInfo == null)
             {
-                Debug.LogError($"Failed to load level. Neither {nameof(LevelLoadContext)} not debug level info found.");
+                Debug.LogError($"Failed to load level from both {nameof(GlobalContext)} and debug level info.");
                 return;
             }
 
@@ -67,7 +67,6 @@ namespace Features.Levels.Logic
             var player = new PlayerModel(_levelInfo.StartPlayerFunds);
 
             _model.Initialize(player, towns, flagMap, _levelInfo);
-            
             _serviceManager.Initialize();
 
             var startTown = towns.GetRandom();
@@ -78,12 +77,6 @@ namespace Features.Levels.Logic
             _model.ConditionManager.Setup(_levelInfo.Conditions);
 
             levelLoaded.Invoke();
-
-            // clear level load context
-            if (LevelLoadContext.Instance)
-            {
-                LevelLoadContext.Instance.SelectedLevel = null;
-            }
         }
 
         public void UnloadLevel()
@@ -93,10 +86,10 @@ namespace Features.Levels.Logic
 
         private void FindLevelInfo()
         {
-            if (LevelLoadContext.Instance?.SelectedLevel != null)
+            if (GlobalContext.CurrentLevelInfo != null)
             {
-                Debug.Log($"Loading Level Info from {nameof(LevelLoadContext)}");
-                _levelInfo = LevelLoadContext.Instance.SelectedLevel;
+                Debug.Log($"Loading Level Info from {nameof(GlobalContext)}");
+                _levelInfo = GlobalContext.CurrentLevelInfo;
             }
             else
             {

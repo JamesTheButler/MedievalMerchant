@@ -18,7 +18,7 @@ namespace Features.Levels.Serialization
             var levelSaveData = new CompletedLevelSaveData(completionDate);
             var levelIndex = _model.LevelInfo.InternalIndex;
             
-            ProgressionModel.Instance.UpdateCompletedLevel(levelIndex, levelSaveData);
+            GlobalContext.ProgressModel.UpdateCompletedLevel(levelIndex, levelSaveData);
         }
     }
 }

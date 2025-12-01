@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Common
 {
-    public static class SaveJsonUtility
+    public static class SafeJsonUtility
     {
         public static T FromJson<T>(string json, T defaultValue = default)
         {

@@ -1,6 +1,7 @@
 using Common;
 using Features.Levels.Config;
 using Features.Levels.Logic;
+using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -28,14 +29,6 @@ namespace UI.StartMenu
 
         private bool _initialized;
 
-        public void LoadLevel(LevelInfo levelInfo)
-        {
-            Debug.Log($"Loading level {levelInfo.LevelName}...");
-
-            LevelLoadContext.Instance.SelectedLevel = levelInfo;
-            SceneManager.LoadScene(gameScene);
-        }
-
         private void Start()
         {
             levelButtonGroup.SetActive(false);
@@ -43,15 +36,24 @@ namespace UI.StartMenu
             levelInfoBox.Clear();
 
             var cursor = ConfigurationManager.Instance.Cursors.Default;
-            Cursor.SetCursor(cursor.Texture,cursor.HotSpot, CursorMode.Auto);
+            Cursor.SetCursor(cursor.Texture, cursor.HotSpot, CursorMode.Auto);
         }
 
         private void Update()
         {
+            // TODO - STYLE: use input system event, i.e. AnyKey through PlayerInput
             if (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.WasAnyKeyPressedThisFrame())
             {
                 OnAnyKey();
             }
+        }
+
+        public void LoadLevel(LevelInfo levelInfo)
+        {
+            Debug.Log($"Loading level {levelInfo.LevelName}...");
+
+            GlobalContext.CurrentLevelInfo = levelInfo;
+            SceneManager.LoadScene(gameScene);
         }
 
         private void OnAnyKey()

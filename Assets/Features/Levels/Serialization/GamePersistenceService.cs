@@ -1,7 +1,7 @@
 #nullable enable
 
 using System.IO;
-using Common;
+using Infrastructure;
 using UnityEngine;
 
 namespace Features.Levels.Serialization
@@ -16,6 +16,8 @@ namespace Features.Levels.Serialization
         private static readonly string CompletedLevelFilenameTemplate =
             Path.Combine(CompletedLevelPath, "Level{0}.txt");
 
+        private readonly ISerializer _serializer = GlobalContext.Services.Serializer;
+
         public CompletedLevelSaveData? GetCompletedLevelData(int levelId)
         {
             var filePath = string.Format(CompletedLevelPath, levelId);
@@ -23,7 +25,7 @@ namespace Features.Levels.Serialization
                 return null;
 
             var fileContent = File.ReadAllText(filePath);
-            return SaveJsonUtility.FromJson<CompletedLevelSaveData>(fileContent);
+            return _serializer.Deserialize<CompletedLevelSaveData>(fileContent);
         }
 
         public OngoingLevelSaveData? GetOngoingLevelData(int levelId)
@@ -33,13 +35,13 @@ namespace Features.Levels.Serialization
                 return null;
 
             var fileContent = File.ReadAllText(filePath);
-            return SaveJsonUtility.FromJson<OngoingLevelSaveData>(fileContent);
+            return _serializer.Deserialize<OngoingLevelSaveData>(fileContent);
         }
 
         public void SaveCompletedLevel(int levelId, CompletedLevelSaveData saveData)
         {
             EnsureFoldersExist();
-            var serializedSaveData = JsonUtility.ToJson(saveData);
+            var serializedSaveData = _serializer.Serialize(saveData);
             var filePath = string.Format(CompletedLevelFilenameTemplate, levelId);
             File.WriteAllText(filePath, serializedSaveData);
         }
@@ -53,7 +55,7 @@ namespace Features.Levels.Serialization
         public void SaveOngoingLevel(int levelId, OngoingLevelSaveData saveData)
         {
             EnsureFoldersExist();
-            var serializedSaveData = JsonUtility.ToJson(saveData);
+            var serializedSaveData = _serializer.Serialize(saveData);
             var filePath = string.Format(OngoingLevelFilenameTemplate, levelId);
             File.WriteAllText(filePath, serializedSaveData);
         }

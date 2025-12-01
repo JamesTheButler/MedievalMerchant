@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Features.Levels.Serialization;
-using UnityEngine;
 
 namespace Common
 {
-    public sealed class ProgressionModel : MonoBehaviour
+    public sealed class ProgressModel
     {
         private const int LevelCount = 5;
-
-        public static ProgressionModel Instance;
 
         public Action<int> OngoingLevelStatusChanged;
         public Action<int> CompletedLevelStatusChanged;
@@ -17,23 +14,13 @@ namespace Common
         public IReadOnlyList<OngoingLevelSaveData> OngoingLevels => _ongoingLevels;
         public IReadOnlyList<CompletedLevelSaveData> CompletedLevels => _completedLevels;
 
-        private IGamePersistenceService _gamePersistenceService;
+        private readonly IGamePersistenceService _persistenceService = new GamePersistenceService();
 
         private readonly List<OngoingLevelSaveData> _ongoingLevels = new(new OngoingLevelSaveData[5]);
         private readonly List<CompletedLevelSaveData> _completedLevels = new(new CompletedLevelSaveData[5]);
 
-        private void Awake()
+        public void Initialize()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-
-            _gamePersistenceService = new GamePersistenceService();
             LoadSaveGame();
         }
 
@@ -41,36 +28,36 @@ namespace Common
         {
             for (var i = 0; i < LevelCount; i++)
             {
-                _completedLevels[i] = _gamePersistenceService.GetCompletedLevelData(i);
-                _ongoingLevels[i] = _gamePersistenceService.GetOngoingLevelData(i);
+                _completedLevels[i] = _persistenceService.GetCompletedLevelData(i);
+                _ongoingLevels[i] = _persistenceService.GetOngoingLevelData(i);
             }
         }
 
         public void UpdateOngoingLevel(int levelId, OngoingLevelSaveData saveData)
         {
             _ongoingLevels[levelId] = saveData;
-            _gamePersistenceService.SaveOngoingLevel(levelId, saveData);
+            _persistenceService.SaveOngoingLevel(levelId, saveData);
             OngoingLevelStatusChanged?.Invoke(levelId);
         }
 
         public void UpdateCompletedLevel(int levelId, CompletedLevelSaveData saveData)
         {
             _completedLevels[levelId] = saveData;
-            _gamePersistenceService.SaveCompletedLevel(levelId, saveData);
+            _persistenceService.SaveCompletedLevel(levelId, saveData);
             CompletedLevelStatusChanged?.Invoke(levelId);
         }
 
         public void ResetOngoingLevel(int levelId)
         {
             _ongoingLevels[levelId] = null;
-            _gamePersistenceService.ResetOngoingLevel(levelId);
+            _persistenceService.ResetOngoingLevel(levelId);
             OngoingLevelStatusChanged?.Invoke(levelId);
         }
 
         public void ResetCompletedLevel(int levelId)
         {
             _completedLevels[levelId] = null;
-            _gamePersistenceService.ResetCompletedLevel(levelId);
+            _persistenceService.ResetCompletedLevel(levelId);
             CompletedLevelStatusChanged?.Invoke(levelId);
         }
 
@@ -91,7 +78,7 @@ namespace Common
                 }
             }
 
-            _gamePersistenceService.ResetAllSaveData();
+            _persistenceService.ResetAllSaveData();
         }
     }
 }
