@@ -20,7 +20,7 @@ namespace UI.Conditions
 
         private void Start()
         {
-            _conditionManager = Model.Instance.ConditionManager;
+            _conditionManager = GameplayModel.Instance.ConditionManager;
 
             _winConditionCount = _conditionManager.WinConditions.Count;
             _conditionManager.CompletionCountChanged += UpdateText;

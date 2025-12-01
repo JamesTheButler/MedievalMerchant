@@ -10,9 +10,9 @@ using UnityEngine;
 
 namespace Common
 {
-    public sealed class Model : MonoBehaviour
+    public sealed class GameplayModel : MonoBehaviour
     {
-        public static Model Instance;
+        public static GameplayModel Instance;
 
         public LevelInfo LevelInfo { get; private set; }
         public TileFlagMap TileFlagMap { get; private set; }

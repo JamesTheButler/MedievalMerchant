@@ -17,7 +17,7 @@ namespace UI.Conditions
 
         public void Initialize()
         {
-            var conditionsManager = Model.Instance.ConditionManager;
+            var conditionsManager = GameplayModel.Instance.ConditionManager;
 
             winConditionListUI.Setup(conditionsManager.WinConditions, true);
             lossConditionListUI.Setup(conditionsManager.LossConditions, true);

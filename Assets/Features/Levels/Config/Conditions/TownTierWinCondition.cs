@@ -18,7 +18,7 @@ namespace Features.Levels.Config.Conditions
         [SerializeField]
         private int targetCount;
 
-        private Model _model;
+        private GameplayModel _model;
 
         public override ConditionType Type => ConditionType.TownTierWinCondition;
 
@@ -26,7 +26,7 @@ namespace Features.Levels.Config.Conditions
 
         public override void Initialize()
         {
-            _model = Model.Instance;
+            _model = GameplayModel.Instance;
             Progress = new Progress(targetCount, FormatProgress);
 
             foreach (var town in _model.Towns.Values)

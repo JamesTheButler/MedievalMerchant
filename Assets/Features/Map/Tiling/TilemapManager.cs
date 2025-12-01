@@ -29,11 +29,11 @@ namespace Features.Map.Tiling
 
         public Tilemap Tilemap { get; private set; }
         
-        private Model _model;
+        private GameplayModel _model;
 
         public void Initialize()
         {
-            _model = Model.Instance;
+            _model = GameplayModel.Instance;
             
             Tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
             

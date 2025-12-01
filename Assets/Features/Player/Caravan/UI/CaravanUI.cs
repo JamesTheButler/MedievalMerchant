@@ -34,8 +34,8 @@ namespace Features.Player.Caravan.UI
 
         private void Start()
         {
-            _caravanManager = Model.Instance.Player.CaravanManager;
-            _playerInventory = Model.Instance.Player.Inventory;
+            _caravanManager = GameplayModel.Instance.Player.CaravanManager;
+            _playerInventory = GameplayModel.Instance.Player.Inventory;
 
             // TODO - STYLE: it's not so nice to have a random business logic class in here.
             //   This would have to be in the view model layer.

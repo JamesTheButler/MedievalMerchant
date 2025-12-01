@@ -43,7 +43,7 @@ namespace UI.Popups
 
             _good = inventoryCell.Good.Value;
 
-            _player = Model.Instance.Player;
+            _player = GameplayModel.Instance.Player;
             _town = Selection.Instance.SelectedTown;
 
             _playerInventory = _player.Inventory;

@@ -11,7 +11,7 @@ namespace Features.Player.Caravan.Logic
 
         public CaravanUpgrader()
         {
-            _player = Model.Instance.Player;
+            _player = GameplayModel.Instance.Player;
             _caravanManager = _player.CaravanManager;
             _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
         }

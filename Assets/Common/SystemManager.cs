@@ -1,13 +1,13 @@
 using System.Collections.Generic;
-using Features.Player;
+using Infrastructure;
 
 namespace Common
 {
-    public sealed class ServiceManager
+    public sealed class SystemManager
     {
-        private readonly List<IService> _services = new()
+        private readonly List<ISystem> _services = new()
         {
-            new DividendsService(),
+            new DividendsSystem(),
         };
 
         public void Initialize()

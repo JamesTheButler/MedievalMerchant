@@ -11,8 +11,8 @@ namespace Features
 {
     public sealed class Cheats : MonoBehaviour
     {
-        private readonly Lazy<Model> _model = new(() => Model.Instance);
-        private readonly Lazy<PlayerModel> _playerModel = new(() => Model.Instance.Player);
+        private readonly Lazy<GameplayModel> _model = new(() => GameplayModel.Instance);
+        private readonly Lazy<PlayerModel> _playerModel = new(() => GameplayModel.Instance.Player);
 
         public void AddFunds(InputAction.CallbackContext context)
         {

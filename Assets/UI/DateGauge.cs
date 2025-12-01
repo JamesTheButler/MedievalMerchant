@@ -11,7 +11,7 @@ namespace UI
         [SerializeField]
         private TMP_Text dateText;
 
-        private readonly Lazy<Date> _date = new(() => Model.Instance.Date);
+        private readonly Lazy<Date> _date = new(() => GameplayModel.Instance.Date);
 
         private const string DateFormat = "Year {0}. Day {1}";
         private int _day, _year;

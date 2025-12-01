@@ -14,7 +14,7 @@ namespace Features.Player.Retinue.Logic
 
         public override void SetLevel(int level)
         {
-            _player = Model.Instance.Player;
+            _player = GameplayModel.Instance.Player;
 
             HandleSpeedModifier(level);
             HandleUpkeepModifier(level);

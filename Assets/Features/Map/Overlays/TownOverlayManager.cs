@@ -14,7 +14,7 @@ namespace Features.Map.Overlays
         [SerializeField, Required]
         private GameObject townOverlayPrefab;
 
-        private readonly Lazy<Model> _model = new(() => Model.Instance);
+        private readonly Lazy<GameplayModel> _model = new(() => GameplayModel.Instance);
 
         private readonly List<TownOverlay> _overlays = new();
 

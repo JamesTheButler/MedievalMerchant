@@ -32,7 +32,7 @@ namespace Features.Player.Retinue.Logic
 
         private void Bind()
         {
-            _player = Model.Instance.Player;
+            _player = GameplayModel.Instance.Player;
             _player.Location.TownEntered += OnTownChanged;
 
             _isBound = true;

@@ -5,14 +5,14 @@ using Features.Towns.Development.Logic.Milestones;
 
 namespace Features.Player
 {
-    public sealed class DividendsService : IService
+    public sealed class DividendsSystem : IService
     {
-        private Model _model;
+        private GameplayModel _model;
         private PlayerModel _player;
 
         public void Initialize()
         {
-            _model = Model.Instance;
+            _model = GameplayModel.Instance;
             _player = _model.Player;
             foreach (var town in _model.Towns.Values)
             {

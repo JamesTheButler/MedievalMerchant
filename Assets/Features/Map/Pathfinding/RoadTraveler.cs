@@ -18,7 +18,7 @@ namespace Features.Map.Pathfinding
         [SerializeField]
         private Grid tileGrid;
 
-        private readonly Lazy<Model> _model = new(() => Model.Instance);
+        private readonly Lazy<GameplayModel> _model = new(() => GameplayModel.Instance);
 
         private Lazy<RoadGraph> _graph;
         private Lazy<PlayerLocation> _playerLocation;

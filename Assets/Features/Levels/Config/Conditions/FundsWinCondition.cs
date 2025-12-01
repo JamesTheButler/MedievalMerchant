@@ -19,7 +19,7 @@ namespace Features.Levels.Config.Conditions
 
         public override void Initialize()
         {
-            _playerInventory = Model.Instance.Player.Inventory;
+            _playerInventory = GameplayModel.Instance.Player.Inventory;
             Progress = new Progress(fundsToReach, FormatProgress);
 
             _playerInventory.Funds.Observe(Evaluate);

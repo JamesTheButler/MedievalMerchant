@@ -18,7 +18,7 @@ namespace Features.Player.Retinue.Logic
         private void Start()
         {
             _companionConfig = ConfigurationManager.Instance.CompanionConfig;
-            _player = Model.Instance.Player;
+            _player = GameplayModel.Instance.Player;
 
             foreach (var companionUi in companionGroup.GetComponentsInChildren<CompanionUI>())
             {

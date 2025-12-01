@@ -24,7 +24,7 @@ namespace UI.Popups
 
         private readonly Lazy<RecipeConfig> _recipeConfig = new(() => ConfigurationManager.Instance.RecipeConfig);
         private readonly Lazy<Colors> _colors = new(() => ConfigurationManager.Instance.Colors);
-        private readonly Lazy<PlayerModel> _player = new(() => Model.Instance.Player);
+        private readonly Lazy<PlayerModel> _player = new(() => GameplayModel.Instance.Player);
         private readonly Lazy<ProducerConfig> _producerConfig = new(() => ConfigurationManager.Instance.ProducerConfig);
 
         private Town _town;

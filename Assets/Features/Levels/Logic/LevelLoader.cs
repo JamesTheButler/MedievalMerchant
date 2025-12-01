@@ -8,6 +8,7 @@ using Features.Map.Tiling;
 using Features.Player;
 using Features.Towns;
 using Features.Towns.Flags.Logic;
+using Infrastructure;
 using NaughtyAttributes;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -30,12 +31,12 @@ namespace Features.Levels.Logic
         // 1.5 accounts for diagonally adjacent zones (where distance would be sqrt(2) == 1.41)
         private const float ZoneDistance = 1.5f;
 
-        private Model _model;
+        private GameplayModel _model;
         private FlagFactory _flagFactory;
         private ProductionZoneManager _productionZoneManager;
         private LevelInfo _levelInfo;
 
-        private readonly ServiceManager _serviceManager = new();
+        private readonly SystemManager _systemManager = new();
 
         private void Start()
         {
@@ -44,7 +45,7 @@ namespace Features.Levels.Logic
 
         private void LoadLevel()
         {
-            _model = Model.Instance;
+            _model = GameplayModel.Instance;
             _flagFactory = new FlagFactory();
 
             FindLevelInfo();
@@ -67,7 +68,7 @@ namespace Features.Levels.Logic
             var player = new PlayerModel(_levelInfo.StartPlayerFunds);
 
             _model.Initialize(player, towns, flagMap, _levelInfo);
-            _serviceManager.Initialize();
+            _systemManager.Initialize();
 
             var startTown = towns.GetRandom();
             player.Location.CurrentTown = startTown;
@@ -81,7 +82,7 @@ namespace Features.Levels.Logic
 
         public void UnloadLevel()
         {
-            _serviceManager.CleanUp();
+            _systemManager.CleanUp();
         }
 
         private void FindLevelInfo()

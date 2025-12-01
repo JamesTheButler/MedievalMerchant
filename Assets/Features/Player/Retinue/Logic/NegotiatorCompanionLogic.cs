@@ -16,7 +16,7 @@ namespace Features.Player.Retinue.Logic
             if (_negotiatorCostModifier == null)
             {
                 _negotiatorCostModifier = new NegotiatorUpgradeCostModifier(level);
-                var caravanManager = Model.Instance.Player.CaravanManager;
+                var caravanManager = GameplayModel.Instance.Player.CaravanManager;
                 foreach (var cart in caravanManager.Carts)
                 {
                     cart.UpgradeCost.AddModifier(_negotiatorCostModifier);

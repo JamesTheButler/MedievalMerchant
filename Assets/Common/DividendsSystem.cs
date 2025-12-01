@@ -1,17 +1,18 @@
 using Common.Modifiable;
 using Features.Player;
 using Features.Towns.Development.Logic.Milestones;
+using Infrastructure;
 
 namespace Common
 {
-    public sealed class DividendsSystem
+    public sealed class DividendsSystem : ISystem
     {
         private PlayerModel _player;
 
         public void Initialize()
         {
-            _player = Model.Instance.Player;
-            foreach (var town in Model.Instance.Towns.Values)
+            _player = GameplayModel.Instance.Player;
+            foreach (var town in GameplayModel.Instance.Towns.Values)
             {
                 town.MilestoneManager.MilestoneModifierAdded += OnMilestoneModifierAdded;
                 town.MilestoneManager.MilestoneModifierRemoved += OnMilestoneModifierRemoved;
@@ -20,7 +21,7 @@ namespace Common
 
         public void CleanUp()
         {
-            foreach (var town in Model.Instance.Towns.Values)
+            foreach (var town in GameplayModel.Instance.Towns.Values)
             {
                 town.MilestoneManager.MilestoneModifierAdded += OnMilestoneModifierAdded;
                 town.MilestoneManager.MilestoneModifierRemoved += OnMilestoneModifierRemoved;
