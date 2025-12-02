@@ -27,7 +27,7 @@ namespace UI.Popups
         private Button costButton;
 
         private readonly Lazy<RecipeConfig> _recipeConfig = new(() => ConfigurationManager.Instance.RecipeConfig);
-        private readonly Lazy<Colors> _colors = new(() => ConfigurationManager.Instance.Colors);
+        private readonly Lazy<Colors> _colors = new(() => ResourceManager.Instance.Colors);
         private readonly Lazy<PlayerModel> _player = new(() => GameplayContext.Instance.Model.Player);
         private readonly Lazy<ProducerConfig> _producerConfig = new(() => ConfigurationManager.Instance.ProducerConfig);
 

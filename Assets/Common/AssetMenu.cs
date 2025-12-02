@@ -4,6 +4,7 @@ namespace Common
     {
         public const string RootFolder = "MedievalMerchant/";
         public const string ConfigDataFolder = RootFolder + "ConfigData/";
+        public const string ResourceFolder = RootFolder + "Resources/";
         public const string ConditionsFolder = RootFolder + "Conditions/";
         public const string TownUpgradesFolder = RootFolder + "TownUpgrades/";
     }

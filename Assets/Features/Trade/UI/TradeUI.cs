@@ -37,7 +37,7 @@ namespace Features.Trade.UI
 
         private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Instance.Model);
         private readonly Lazy<Selection> _selection = new(() => GameplayContext.Instance.Selection);
-        private readonly Lazy<Colors> _colors = new(() => ConfigurationManager.Instance.Colors);
+        private readonly Lazy<Colors> _colors = new(() => ResourceManager.Instance.Colors);
         private readonly Lazy<GoodsConfig> _configurationManager = new(() => ConfigurationManager.Instance.GoodsConfig);
 
         private bool _isInitialized;

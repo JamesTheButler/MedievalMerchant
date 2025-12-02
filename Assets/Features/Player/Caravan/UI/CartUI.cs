@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Common;
 using Common.Config;
 using Common.UI;
+using Features.Goods.Config;
 using Features.Player.Caravan.Config;
 using Features.Player.Caravan.Logic;
 using Infrastructure;
@@ -60,6 +61,7 @@ namespace Features.Player.Caravan.UI
         private PlayerModel _player;
         private Cart _cart;
         private CaravanConfig _caravanConfig;
+        private CaravanResources _caravanResources;
         private Colors _colors;
 
         private int _lastActiveSlotCount;
@@ -68,7 +70,8 @@ namespace Features.Player.Caravan.UI
         {
             _player = GameplayContext.Instance.Model.Player;
             _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
-            _colors = ConfigurationManager.Instance.Colors;
+            _caravanResources = ResourceManager.Instance.CaravanResources;
+            _colors = ResourceManager.Instance.Colors;
 
             _cart = cart;
 
@@ -161,12 +164,12 @@ namespace Features.Player.Caravan.UI
             var level = _cart.Level.Value;
             if (level <= 0)
             {
-                backgroundImage.sprite = _caravanConfig.DefaultBackgroundImage;
+                backgroundImage.sprite = _caravanResources.DefaultBackgroundImage;
                 return;
             }
 
-            var upgradeData = _caravanConfig.GetUpgradeData(level);
-            backgroundImage.sprite = upgradeData.BackgroundImage;
+            var backgroundSprite = _caravanResources.BackgroundImages[level];
+            backgroundImage.sprite = backgroundSprite;
         }
 
         private void OnMoveSpeedChanged(float moveSpeed)

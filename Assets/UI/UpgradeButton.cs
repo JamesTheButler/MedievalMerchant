@@ -2,6 +2,7 @@ using System;
 using Common;
 using Common.Config;
 using Common.UI;
+using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace UI
         public State ButtonState { get; private set; }
         public Button.ButtonClickedEvent OnClick => button.onClick;
 
-        private readonly Lazy<Colors> _colors = new(() => ConfigurationManager.Instance.Colors);
+        private readonly Lazy<Colors> _colors = new(() => ResourceManager.Instance.Colors);
 
         private float _cost;
 

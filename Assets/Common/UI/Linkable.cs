@@ -1,5 +1,6 @@
 using System;
 using Common.Config;
+using Infrastructure;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -14,7 +15,7 @@ namespace Common.UI
 
         private void Awake()
         {
-            _cursors = ConfigurationManager.Instance.Cursors;
+            _cursors = ResourceManager.Instance.Cursors;
         }
 
         public void OnPointerClick(PointerEventData eventData)

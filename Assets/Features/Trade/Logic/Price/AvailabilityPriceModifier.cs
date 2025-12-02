@@ -2,6 +2,7 @@ using Common;
 using Common.Modifiable;
 using Common.Types;
 using Features.Goods.Config;
+using Infrastructure;
 
 namespace Features.Trade.Logic.Price
 {
@@ -11,6 +12,7 @@ namespace Features.Trade.Logic.Price
     public sealed class AvailabilityPriceModifier : BasePercentageModifier
     {
         private readonly AvailabilityConfig _config = ConfigurationManager.Instance.AvailabilityConfig;
+        private readonly AvailabilityResources _resources = ResourceManager.Instance.AvailabilityResources;
 
         public AvailabilityPriceModifier(Availability availability)
             : base(0, string.Empty)
@@ -26,7 +28,7 @@ namespace Features.Trade.Logic.Price
 
         private string GetDescription(Availability availability)
         {
-            var availabilityString = _config.ConfigData[availability].DisplayString;
+            var availabilityString = _resources.Resources[availability].DisplayString;
             return $"Availability: {availabilityString}";
         }
     }

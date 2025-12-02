@@ -35,7 +35,7 @@ namespace UI.StartMenu
             pressAnyText.gameObject.SetActive(true);
             levelInfoBox.Clear();
 
-            var cursor = ConfigurationManager.Instance.Cursors.Default;
+            var cursor = ResourceManager.Instance.Cursors.Default;
             Cursor.SetCursor(cursor.Texture, cursor.HotSpot, CursorMode.Auto);
         }
 

@@ -1,7 +1,6 @@
 using System;
 using AYellowpaper.SerializedCollections;
 using Common;
-using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Player.Caravan.Config
@@ -14,9 +13,6 @@ namespace Features.Player.Caravan.Config
         public const int MaxCartCount = 4;
         public const int MaxLevel = 4;
 
-        [field: SerializeField, ShowAssetPreview]
-        public Sprite DefaultBackgroundImage { get; private set; }
-
         [SerializeField, SerializedDictionary("Level", "Data")]
         private SerializedDictionary<int, CaravanUpgradeData> caravanUpgradeDatas;
 
@@ -25,7 +21,6 @@ namespace Features.Player.Caravan.Config
 
         [field: SerializeField]
         public float BaseUpkeep { get; private set; } = 5f;
-
 
         public CaravanUpgradeData GetUpgradeData(int level)
         {

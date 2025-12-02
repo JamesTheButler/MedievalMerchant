@@ -4,6 +4,7 @@ using Common.Types;
 using Common.UI;
 using Features.Goods.Config;
 using Features.Trade;
+using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -36,8 +37,8 @@ namespace UI.Popups
         [FormerlySerializedAs("marketStateTooltip"), SerializeField, Required]
         private TitleDescriptionTooltipHandler availabilityTooltip;
 
-        private readonly Lazy<AvailabilityConfig> _marketStateConfig =
-            new(() => ConfigurationManager.Instance.AvailabilityConfig);
+        private readonly Lazy<AvailabilityResources> _availabilityResources =
+            new(() => ResourceManager.Instance.AvailabilityResources);
 
         private readonly Lazy<GoodsConfig> _goodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
 
@@ -100,13 +101,13 @@ namespace UI.Popups
             _marketState = availability;
             RefreshIcon();
 
-            var configData = _marketStateConfig.Value.ConfigData[availability];
+            var configData = _availabilityResources.Value.Resources[availability];
             availabilityTooltip.SetData(($"Availability: {configData.DisplayString}", configData.Description));
         }
 
         private void RefreshIcon()
         {
-            var configData = _marketStateConfig.Value.ConfigData[_marketState!.Value];
+            var configData = _availabilityResources.Value.Resources[_marketState!.Value];
 
             var icon = _hoveredTradeType switch
             {
