@@ -1,7 +1,6 @@
 using System;
 using Common;
 using Common.Config;
-using Common.Modifiable;
 using Common.Types;
 using Common.UI;
 using Features.Goods.Config;
@@ -78,7 +77,6 @@ namespace Features.Trade.UI
             priceTooltip.SetData(_priceCalculator.Price);
 
             SetAmount(0);
-
 
             gameObject.SetActive(true);
 
@@ -194,9 +192,9 @@ namespace Features.Trade.UI
         private void CompleteTrade()
         {
             _buyingInventory.RemoveFunds(_totalPrice);
-            _buyingInventory.AddGood(_good, _tradeAmount);
-
             _sellingInventory.AddFunds(_totalPrice);
+            
+            _buyingInventory.AddGood(_good, _tradeAmount);
             _sellingInventory.RemoveGood(_good, _tradeAmount);
 
             Hide();
