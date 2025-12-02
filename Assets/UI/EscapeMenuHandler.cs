@@ -15,7 +15,7 @@ namespace UI
             escapeMenuRoot.SetActive(false);
         }
 
-        private void OnCancel()
+        public void OnCancel()
         {
             // TODO - STYLE: this is a bit hacky
             if (PopupManager.Instance.HasActivePopup)
