@@ -19,6 +19,7 @@ namespace Features.Trade.Logic.Price
         private readonly PlayerModel _player;
         private readonly Town _town;
         private readonly AvailabilityCalculator _availabilityCalculator;
+        private readonly GoodsResources _goodsResources;
         private readonly GoodsConfig _goodsConfig;
 
         private AvailabilityPriceModifier _availabilityModifier;
@@ -31,6 +32,7 @@ namespace Features.Trade.Logic.Price
         {
             _player = GameplayContext.Instance.Model.Player;
             _town = town;
+            _goodsResources = ResourceManager.Instance.GoodsResources;
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             _availabilityCalculator = new AvailabilityCalculator(town);
         }
@@ -40,7 +42,7 @@ namespace Features.Trade.Logic.Price
             _good = good;
             _tradeType = tradeType;
 
-            var goodTier = _goodsConfig.ConfigData[_good].Tier;
+            var goodTier = _goodsResources.ConfigData[_good].Tier;
             var goodBasePrice = _goodsConfig.BasePriceData[goodTier];
 
             var basePriceModifier = new BasePriceModifier(goodBasePrice, goodTier);
@@ -89,7 +91,7 @@ namespace Features.Trade.Logic.Price
             if (_tradeType != TradeType.Sell)
                 return;
 
-            var goodRegions = _goodsConfig.ConfigData[_good].Regions;
+            var goodRegions = _goodsResources.ConfigData[_good].Regions;
             var isLocal = _town.Regions.Intersects(goodRegions);
 
             IModifier regionModifier = isLocal

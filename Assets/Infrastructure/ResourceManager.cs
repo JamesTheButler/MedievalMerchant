@@ -32,6 +32,9 @@ namespace Infrastructure
         public FlagResources FlagResources { get; private set; }
 
         [field: SerializeField, Required]
+        public GoodsResources GoodsResources { get; private set; }
+
+        [field: SerializeField, Required]
         public RecipeResources RecipeResources { get; private set; }
 
         [field: SerializeField, Required]

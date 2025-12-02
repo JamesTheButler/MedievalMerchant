@@ -4,6 +4,7 @@ using System.Linq;
 using Common;
 using Common.Types;
 using Features.Goods.Config;
+using Infrastructure;
 using UnityEngine;
 
 namespace UI.InventoryUI.TownInventory
@@ -15,7 +16,7 @@ namespace UI.InventoryUI.TownInventory
         [SerializeField]
         private Tier tier;
 
-        private GoodsConfig _goodsConfig;
+        private GoodsResources _goodsResources;
 
         private readonly Dictionary<Good, InventoryCell> _occupiedCells = new();
         private readonly List<InventoryCell> _inventoryCells = new();
@@ -27,7 +28,7 @@ namespace UI.InventoryUI.TownInventory
 
         private void Start()
         {
-            _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
+            _goodsResources = ResourceManager.Instance.GoodsResources;
         }
 
         private void GatherCells()
@@ -42,7 +43,7 @@ namespace UI.InventoryUI.TownInventory
 
         public void UpdateGood(Good good, int amount)
         {
-            var goodTier = _goodsConfig.ConfigData[good].Tier;
+            var goodTier = _goodsResources.ConfigData[good].Tier;
             if (goodTier != tier)
             {
                 Debug.LogError($"Tried adding {good} to {nameof(InventoryTierRow)} ({goodTier}) for Tier {tier}.");

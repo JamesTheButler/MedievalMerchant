@@ -6,6 +6,7 @@ using Common.Modifiable;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Towns.Development.Logic.Milestones;
+using Infrastructure;
 using JetBrains.Annotations;
 
 namespace Features.Towns.Production.Logic
@@ -15,7 +16,7 @@ namespace Features.Towns.Production.Logic
         public event Action<Producer> ProductionAdded;
 
         private readonly Town _town;
-        private readonly GoodsConfig _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
+        private readonly GoodsResources _goodsResources = ResourceManager.Instance.GoodsResources;
         private readonly Dictionary<Tier, Producer[]> _producers;
         private readonly List<ProductionBoostModifier> _productionModifiers = new();
 
@@ -49,7 +50,7 @@ namespace Features.Towns.Production.Logic
 
         public int GetIndexOfProducedGood(Good good)
         {
-            var tier = _goodsConfig.ConfigData[good].Tier;
+            var tier = _goodsResources.ConfigData[good].Tier;
             return GetProducers(tier)
                 .ToList()
                 .IndexOf(producer => producer?.ProducedGood == good);
@@ -57,7 +58,7 @@ namespace Features.Towns.Production.Logic
 
         public bool CanAddProducer(Good good, int index)
         {
-            var tier = _goodsConfig.ConfigData[good].Tier;
+            var tier = _goodsResources.ConfigData[good].Tier;
             return GetProducers(tier)[index] == null;
         }
 
@@ -65,7 +66,7 @@ namespace Features.Towns.Production.Logic
         {
             if (!CanAddProducer(good, index)) return;
 
-            var tier = _goodsConfig.ConfigData[good].Tier;
+            var tier = _goodsResources.ConfigData[good].Tier;
             var producers = GetProducers(tier);
             var producer = new Producer(good, _town);
             producers[index] = producer;

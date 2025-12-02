@@ -19,6 +19,7 @@ namespace Features.Goods.UI
         [SerializeField, Required]
         private Image tierImage, regionImage;
 
+        private GoodsResources _goodsResources;
         private GoodsConfig _goodsConfig;
         private TierResources _tierIcons;
         private RegionResources _region;
@@ -27,14 +28,14 @@ namespace Features.Goods.UI
         {
             base.Awake();
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
+            _goodsResources = ResourceManager.Instance.GoodsResources;
             _tierIcons = ResourceManager.Instance.TierResources;
             _region = ResourceManager.Instance.RegionResources;
         }
 
         protected override void UpdateUI(Good data)
         {
-            var goodData = _goodsConfig.ConfigData[data];
-
+            var goodData = _goodsResources.ConfigData[data];
             var tier = goodData.Tier;
             var price = _goodsConfig.BasePriceData[tier];
             var tierIcon = _tierIcons.Icons[tier];

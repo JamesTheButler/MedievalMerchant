@@ -4,12 +4,13 @@ using Common;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Trade;
+using Infrastructure;
 
 namespace Features.Inventory
 {
     public sealed class SlotBasedInventoryPolicy : IInventoryPolicy
     {
-        private readonly Lazy<GoodsConfig> _goodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
+        private readonly Lazy<GoodsResources> _goodsConfig = new(() => ResourceManager.Instance.GoodsResources);
 
         private readonly Dictionary<Tier, int> _slotsPerTier = new()
         {

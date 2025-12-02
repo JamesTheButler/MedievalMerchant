@@ -3,12 +3,13 @@ using Common;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Trade;
+using Infrastructure;
 
 namespace Features.Inventory
 {
     public sealed class TierBasedInventoryPolicy : IInventoryPolicy
     {
-        private readonly Lazy<GoodsConfig> _goodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
+        private readonly Lazy<GoodsResources> _goodsConfig = new(() => ResourceManager.Instance.GoodsResources);
 
         private Tier _maxTier = Tier.Tier3; // by default, all tiers are allowed
 

@@ -3,6 +3,7 @@ using Common.Types;
 using Features.Goods.Config;
 using Features.Towns;
 using Features.Towns.Production.Config;
+using Infrastructure;
 
 namespace Features.Trade.Logic
 {
@@ -13,7 +14,7 @@ namespace Features.Trade.Logic
 
         private readonly AvailabilityConfig _availabilityConfig = ConfigurationManager.Instance.AvailabilityConfig;
         private readonly ProducerConfig _townConfig = ConfigurationManager.Instance.ProducerConfig;
-        private readonly GoodsConfig _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
+        private readonly GoodsResources _goodsResources = ResourceManager.Instance.GoodsResources;
 
         public AvailabilityCalculator(Town town)
         {
@@ -23,7 +24,7 @@ namespace Features.Trade.Logic
 
         public Availability GetAvailability(Good good)
         {
-            var goodTier = _goodsConfig.ConfigData[good].Tier;
+            var goodTier = _goodsResources.ConfigData[good].Tier;
             // we use production limit for buy and sell right now
             var maxAmount = _townConfig.GetLimit(_town.Tier.Value, goodTier);
 

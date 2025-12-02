@@ -3,6 +3,7 @@ using Common;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Goods.UI;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -29,7 +30,7 @@ namespace UI.InventoryUI
         [SerializeField, Required]
         protected GoodTooltipHandler tooltipHandler;
 
-        protected readonly Lazy<GoodsConfig> GoodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
+        protected readonly Lazy<GoodsResources> GoodsConfig = new(() => ResourceManager.Instance.GoodsResources);
 
         private void Awake()
         {

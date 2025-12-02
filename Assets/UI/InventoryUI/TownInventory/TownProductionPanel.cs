@@ -37,7 +37,7 @@ namespace UI.InventoryUI.TownInventory
         private UnityEvent<ProductionCell> tier3UpgradeButtonClicked;
 
         private Town _town;
-        private readonly Lazy<GoodsConfig> _goodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
+        private readonly Lazy<GoodsResources> _goodsConfig = new(() => ResourceManager.Instance.GoodsResources);
 
         public void Initialize()
         {

@@ -38,11 +38,11 @@ namespace Features.Trade.UI
         private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Instance.Model);
         private readonly Lazy<Selection> _selection = new(() => GameplayContext.Instance.Selection);
         private readonly Lazy<Colors> _colors = new(() => ResourceManager.Instance.Colors);
-        private readonly Lazy<GoodsConfig> _configurationManager = new(() => ConfigurationManager.Instance.GoodsConfig);
+        private readonly Lazy<GoodsResources> _configurationManager = new(() => ResourceManager.Instance.GoodsResources);
 
         private bool _isInitialized;
 
-        private GoodConfigData _goodConfigData;
+        private GoodResourceData _goodResourceData;
         private Good _good;
         private TradeType _tradeType;
 
@@ -64,7 +64,7 @@ namespace Features.Trade.UI
             _good = good;
             _tradeType = tradeType;
 
-            _goodConfigData = _configurationManager.Value.ConfigData[good];
+            _goodResourceData = _configurationManager.Value.ConfigData[good];
 
             SetUpGoodIcon();
             SetUpButtons();
@@ -91,7 +91,7 @@ namespace Features.Trade.UI
 
         private void SetUpGoodIcon()
         {
-            goodIcon.sprite = _goodConfigData.Icon;
+            goodIcon.sprite = _goodResourceData.Icon;
             goodTooltip.SetData(_good);
         }
 

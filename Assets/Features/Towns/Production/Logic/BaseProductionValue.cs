@@ -1,6 +1,7 @@
 using Common;
 using Common.Modifiable;
 using Common.Types;
+using Infrastructure;
 
 namespace Features.Towns.Production.Logic
 {
@@ -19,7 +20,7 @@ namespace Features.Towns.Production.Logic
 
         private static Tier GetTier(Good good)
         {
-            return ConfigurationManager.Instance.GoodsConfig.ConfigData[good].Tier;
+            return ResourceManager.Instance.GoodsResources.ConfigData[good].Tier;
         }
     }
 }

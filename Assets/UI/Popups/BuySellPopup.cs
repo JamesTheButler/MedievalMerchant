@@ -40,7 +40,7 @@ namespace UI.Popups
         private readonly Lazy<AvailabilityResources> _availabilityResources =
             new(() => ResourceManager.Instance.AvailabilityResources);
 
-        private readonly Lazy<GoodsConfig> _goodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
+        private readonly Lazy<GoodsResources> _goodsConfig = new(() => ResourceManager.Instance.GoodsResources);
 
         private Good _good;
         private Availability? _marketState;

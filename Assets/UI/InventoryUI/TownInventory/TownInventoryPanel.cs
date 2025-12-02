@@ -4,6 +4,7 @@ using Common;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Towns;
+using Infrastructure;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,7 +18,7 @@ namespace UI.InventoryUI.TownInventory
         [SerializeField, SerializedDictionary("Tier", "Section")]
         private SerializedDictionary<Tier, InventoryTierRow> rows;
 
-        private readonly Lazy<GoodsConfig> _goodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
+        private readonly Lazy<GoodsResources> _goodsConfig = new(() => ResourceManager.Instance.GoodsResources);
 
         private Town _town;
 

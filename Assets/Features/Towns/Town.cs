@@ -37,7 +37,7 @@ namespace Features.Towns
 
         private readonly SlotBasedInventoryPolicy _inventoryPolicy;
         private readonly TownConfig _townConfig;
-        private readonly GoodsConfig _goodsConfig;
+        private readonly GoodsResources _goodsResources;
 
         private readonly Observable<float> _reputation = new();
 
@@ -60,7 +60,7 @@ namespace Features.Towns
 
             _townConfig = ConfigurationManager.Instance.TownConfig;
             var townResources = ResourceManager.Instance.TownResources;
-            _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
+            _goodsResources = ResourceManager.Instance.GoodsResources;
             AvailableGoods = availableGoods.ToHashSet();
 
             Name = townResources.NameGenerators[MainRegion].GenerateName();
@@ -142,7 +142,7 @@ namespace Features.Towns
                 // don't consume goods that are produced
                 if (ProductionManager.IsProduced(good)) continue;
 
-                var goodTier = _goodsConfig.ConfigData[good].Tier;
+                var goodTier = _goodsResources.ConfigData[good].Tier;
                 var consumptionRate = _townConfig.GetConsumptionRate(townTier, goodTier);
 
                 if (consumptionRate == null)

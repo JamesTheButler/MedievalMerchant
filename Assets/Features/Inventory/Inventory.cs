@@ -4,6 +4,7 @@ using System.Linq;
 using Common;
 using Common.Types;
 using Features.Goods.Config;
+using Infrastructure;
 
 namespace Features.Inventory
 {
@@ -17,7 +18,7 @@ namespace Features.Inventory
         public IInventoryPolicy InventoryPolicy { get; }
         public IReadOnlyDictionary<Good, int> Goods => _goods;
 
-        private readonly Lazy<GoodsConfig> _goodsInfoManager = new(() => ConfigurationManager.Instance.GoodsConfig);
+        private readonly Lazy<GoodsResources> _goodsInfoManager = new(() => ResourceManager.Instance.GoodsResources);
         private readonly Dictionary<Good, int> _goods = new();
 
         public Inventory(IInventoryPolicy inventoryPolicy)

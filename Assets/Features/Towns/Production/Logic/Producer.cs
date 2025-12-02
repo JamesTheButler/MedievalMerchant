@@ -20,7 +20,7 @@ namespace Features.Towns.Production.Logic
         private readonly Town _town;
         private readonly Recipe _recipe;
 
-        private readonly GoodsConfig _goodsConfig;
+        private readonly GoodsResources _goodsResources;
         private readonly ProducerConfig _producerConfig;
 
         public Producer(Good producedGood, Town town)
@@ -28,11 +28,11 @@ namespace Features.Towns.Production.Logic
             _town = town;
             ProducedGood = producedGood;
 
-            _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
+            _goodsResources = ResourceManager.Instance.GoodsResources;
             _producerConfig = ConfigurationManager.Instance.ProducerConfig;
             var recipeConfig = ResourceManager.Instance.RecipeResources;
 
-            Tier = _goodsConfig.ConfigData[producedGood].Tier;
+            Tier = _goodsResources.ConfigData[producedGood].Tier;
 
             var baseModifier = new BaseProductionValue(producedGood);
             ProductionRate = new ModifiableVariable("Production Rate", true, baseModifier);
@@ -63,7 +63,7 @@ namespace Features.Towns.Production.Logic
 
         private int GetProductionLimit(Tier townTier, Good good)
         {
-            var goodTier = _goodsConfig.ConfigData[good].Tier;
+            var goodTier = _goodsResources.ConfigData[good].Tier;
             var limit = _producerConfig.GetLimit(townTier, goodTier);
             if (limit != null)
                 return limit.Value;
