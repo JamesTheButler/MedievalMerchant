@@ -26,7 +26,7 @@ namespace Features.Levels.Config.Conditions
 
         public override void Initialize()
         {
-            _currentDate = GameplayContext.Model.Date;
+            _currentDate = GameplayContext.Instance.Model.Date;
             _deadlineDate = new Date(deadlineDay, deadlineYear);
 
             Progress = new Progress(_deadlineDate.AsDays(), FormatProgress);

@@ -34,7 +34,7 @@ namespace Features.Map.Tiling
 
         public void Initialize()
         {
-            _model = GameplayContext.Model;
+            _model = GameplayContext.Instance.Model;
             
             Tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
             

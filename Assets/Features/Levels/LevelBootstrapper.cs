@@ -26,9 +26,6 @@ namespace Features.Levels
         [SerializeField, Required]
         private ProductionZoneInteractions productionZoneInteractions;
 
-        [SerializeField, Required]
-        private LevelConditionManager levelConditionManager;
-
         private void Start()
         {
             var levelInfo = GlobalContext.CurrentLevelInfo ?? debugLevelInfo;
@@ -43,8 +40,8 @@ namespace Features.Levels
             var towns = townFactory.GenerateTowns(townPositions, zones, tileGrid);
             var player = new PlayerModel(levelInfo.StartPlayerFunds);
 
-            GameplayContext.Model.Initialize(player, towns, flagMap);
-            GameplayContext.Systems.Initialize();
+            GameplayContext.Instance.Model.Initialize(player, towns, flagMap);
+            GameplayContext.Instance.Systems.Initialize();
 
             var startTown = towns.GetRandom();
             player.Location.CurrentTown = startTown;
@@ -52,11 +49,6 @@ namespace Features.Levels
             player.CaravanManager.UpgradeCart(0);
 
             completed.Invoke();
-        }
-
-        public void CleanUp()
-        {
-            GameplayContext.Systems.CleanUp();
         }
     }
 }

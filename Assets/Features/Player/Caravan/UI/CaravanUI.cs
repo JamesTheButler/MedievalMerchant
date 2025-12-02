@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Common;
 using Common.Types;
 using Common.UI;
 using Features.Player.Caravan.Logic;
@@ -35,8 +34,8 @@ namespace Features.Player.Caravan.UI
 
         private void Start()
         {
-            _caravanManager = GameplayContext.Model.Player.CaravanManager;
-            _playerInventory = GameplayContext.Model.Player.Inventory;
+            _caravanManager = GameplayContext.Instance.Model.Player.CaravanManager;
+            _playerInventory = GameplayContext.Instance.Model.Player.Inventory;
 
             // TODO - STYLE: it's not so nice to have a random business logic class in here.
             //   This would have to be in the view model layer.

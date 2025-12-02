@@ -36,8 +36,8 @@ namespace Features.Trade.UI
         [SerializeField, Required]
         private ModifiableTooltipHandler priceTooltip;
 
-        private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Model);
-        private readonly Lazy<Selection> _selection = new(() => GameplayContext.Selection);
+        private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Instance.Model);
+        private readonly Lazy<Selection> _selection = new(() => GameplayContext.Instance.Selection);
         private readonly Lazy<Colors> _colors = new(() => ConfigurationManager.Instance.Colors);
         private readonly Lazy<GoodsConfig> _configurationManager = new(() => ConfigurationManager.Instance.GoodsConfig);
 

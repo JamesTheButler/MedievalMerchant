@@ -41,7 +41,7 @@ namespace UI.StartMenu
 
             button.onClick.AddListener(OnClick);
             label.text = levelInfo.DisplayIndex.ToString();
-            var isCompleted = GlobalContext.ProgressModel.CompletedLevels[levelInfo.InternalIndex] != null;
+            var isCompleted = GlobalContext.Instance.ProgressModel.CompletedLevels[levelInfo.InternalIndex] != null;
             completeIcon.gameObject.SetActive(isCompleted);
         }
 

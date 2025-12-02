@@ -15,7 +15,7 @@ namespace UI.InventoryUI.TownInventory
             inventoryUi.Hide();
             inventoryUi.Initialize();
 
-            GameplayContext.Selection.TownSelected += SelectTown;
+            GameplayContext.Instance.Selection.TownSelected += SelectTown;
         }
 
         private void SelectTown(Town town)

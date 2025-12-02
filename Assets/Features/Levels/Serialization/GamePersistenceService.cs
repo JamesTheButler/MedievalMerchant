@@ -1,5 +1,6 @@
 #nullable enable
 
+using System;
 using System.IO;
 using Infrastructure;
 using UnityEngine;
@@ -16,16 +17,16 @@ namespace Features.Levels.Serialization
         private static readonly string CompletedLevelFilenameTemplate =
             Path.Combine(CompletedLevelPath, "Level{0}.txt");
 
-        private readonly ISerializer _serializer = GlobalContext.Services.Serializer;
+        private readonly Lazy<ISerializer> _serializer = new(() => GlobalContext.Instance.Services.Serializer);
 
         public CompletedLevelSaveData? GetCompletedLevelData(int levelId)
         {
-            var filePath = string.Format(CompletedLevelPath, levelId);
+            var filePath = string.Format(CompletedLevelFilenameTemplate, levelId);
             if (!File.Exists(filePath))
                 return null;
 
             var fileContent = File.ReadAllText(filePath);
-            return _serializer.Deserialize<CompletedLevelSaveData>(fileContent);
+            return _serializer.Value.Deserialize<CompletedLevelSaveData>(fileContent);
         }
 
         public OngoingLevelSaveData? GetOngoingLevelData(int levelId)
@@ -35,13 +36,13 @@ namespace Features.Levels.Serialization
                 return null;
 
             var fileContent = File.ReadAllText(filePath);
-            return _serializer.Deserialize<OngoingLevelSaveData>(fileContent);
+            return _serializer.Value.Deserialize<OngoingLevelSaveData>(fileContent);
         }
 
         public void SaveCompletedLevel(int levelId, CompletedLevelSaveData saveData)
         {
             EnsureFoldersExist();
-            var serializedSaveData = _serializer.Serialize(saveData);
+            var serializedSaveData = _serializer.Value.Serialize(saveData);
             var filePath = string.Format(CompletedLevelFilenameTemplate, levelId);
             File.WriteAllText(filePath, serializedSaveData);
         }
@@ -55,7 +56,7 @@ namespace Features.Levels.Serialization
         public void SaveOngoingLevel(int levelId, OngoingLevelSaveData saveData)
         {
             EnsureFoldersExist();
-            var serializedSaveData = _serializer.Serialize(saveData);
+            var serializedSaveData = _serializer.Value.Serialize(saveData);
             var filePath = string.Format(OngoingLevelFilenameTemplate, levelId);
             File.WriteAllText(filePath, serializedSaveData);
         }
@@ -73,7 +74,7 @@ namespace Features.Levels.Serialization
 
         public void ResetAllCompletedLevels()
         {
-            Directory.Delete(CompletedLevelPath, true);
+            Directory.Delete(CompletedLevelPath + "/", true);
         }
 
         public void ResetAllSaveData()

@@ -14,7 +14,7 @@ namespace Features.Map.Overlays
 
         private void Start()
         {
-            _selection = GameplayContext.Selection;
+            _selection = GameplayContext.Instance.Selection;
 
             _selection.TownSelected += Select;
 

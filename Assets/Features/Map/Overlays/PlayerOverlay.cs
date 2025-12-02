@@ -20,7 +20,7 @@ namespace Features.Map.Overlays
 
         private void Start()
         {
-            _playerLocation = GameplayContext.Model.Player.Location;
+            _playerLocation = GameplayContext.Instance.Model.Player.Location;
             _zLevel = gameObject.transform.position.z;
 
             _playerLocation.TownEntered += OnTownEntered;

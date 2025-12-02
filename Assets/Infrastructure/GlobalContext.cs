@@ -1,18 +1,44 @@
 using Common;
 using Features.Levels.Config;
 using JetBrains.Annotations;
+using UnityEngine;
 
 namespace Infrastructure
 {
     /// <summary>
     /// Manages global models and services.
     /// </summary>
-    public static class GlobalContext
+    public sealed class GlobalContext : MonoBehaviour
     {
-        public static GlobalServices Services { get; } = new();
-        public static ProgressModel ProgressModel { get; } = new();
-        
+        public static GlobalContext Instance { get; private set; }
+
+        public GlobalServices Services { get; private set; }
+        public ProgressModel ProgressModel { get; private set; }
+
         [CanBeNull]
-        public static LevelInfo CurrentLevelInfo { get; set; } 
+        public static LevelInfo CurrentLevelInfo { get; set; }
+
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            Services = new GlobalServices();
+            ProgressModel = new ProgressModel();
+
+            Services.Initialize();
+            ProgressModel.Initialize();
+        }
     }
 }

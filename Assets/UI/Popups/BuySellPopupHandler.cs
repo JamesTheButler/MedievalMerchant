@@ -32,20 +32,20 @@ namespace UI.Popups
         private void Start()
         {
             Reset();
-            GameplayContext.Selection.TownSelected += _ => { Reset(); };
+            GameplayContext.Instance.Selection.TownSelected += _ => { Reset(); };
         }
 
         public void Initialize(InventoryCellBase inventoryCell)
         {
             Reset();
 
-            var selection = GameplayContext.Selection;
+            var selection = GameplayContext.Instance.Selection;
             if (selection.SelectedTown is null) return;
             if (inventoryCell.Good == null) return;
 
             _good = inventoryCell.Good.Value;
 
-            _player = GameplayContext.Model.Player;
+            _player = GameplayContext.Instance.Model.Player;
             _town = selection.SelectedTown;
 
             _playerInventory = _player.Inventory;

@@ -11,7 +11,7 @@ namespace Features.Player
 
         private void Start()
         {
-            var player = GameplayContext.Model.Player;
+            var player = GameplayContext.Instance.Model.Player;
             playerInventoryUI.Bind(player);
         }
 

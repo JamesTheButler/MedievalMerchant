@@ -1,4 +1,4 @@
-using Common;
+using Newtonsoft.Json;
 
 namespace Infrastructure
 {
@@ -6,12 +6,12 @@ namespace Infrastructure
     {
         public T Deserialize<T>(string input)
         {
-            return SafeJsonUtility.FromJson<T>(input);
+            return JsonConvert.DeserializeObject<T>(input);
         }
-        
+
         public string Serialize<T>(T input)
         {
-            return "";
+            return JsonConvert.SerializeObject(input);
         }
     }
 }

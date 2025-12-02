@@ -7,7 +7,7 @@ namespace Features.Towns
 {
     public sealed class TownTicker : MonoBehaviour
     {
-        private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Model);
+        private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Instance.Model);
 
         public void Tick()
         {

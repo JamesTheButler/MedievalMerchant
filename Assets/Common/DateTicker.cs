@@ -14,7 +14,7 @@ namespace Common
 
         private void Start()
         {
-            _date = GameplayContext.Model.Date;
+            _date = GameplayContext.Instance.Model.Date;
         }
 
         public void Tick()

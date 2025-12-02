@@ -61,7 +61,7 @@ namespace Common
             CompletedLevelStatusChanged?.Invoke(levelId);
         }
 
-        public void Reset()
+        public void ResetCompletedLevels()
         {
             for (var i = 0; i < LevelCount; i++)
             {
@@ -70,7 +70,15 @@ namespace Common
                     _completedLevels[i] = null;
                     CompletedLevelStatusChanged?.Invoke(i);
                 }
+            }
 
+            _persistenceService.ResetAllCompletedLevels();
+        }
+
+        public void ResetOngoingLevels()
+        {
+            for (var i = 0; i < LevelCount; i++)
+            {
                 if (_ongoingLevels[i] != null)
                 {
                     _ongoingLevels[i] = null;
@@ -78,6 +86,13 @@ namespace Common
                 }
             }
 
+            _persistenceService.ResetAllOngoingLevels();
+        }
+
+        public void Reset()
+        {
+            ResetCompletedLevels();
+            ResetOngoingLevels();
             _persistenceService.ResetAllSaveData();
         }
     }

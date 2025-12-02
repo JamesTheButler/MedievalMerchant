@@ -17,7 +17,7 @@ namespace UI
         {
             tradeUI.gameObject.SetActive(false);
 
-            GameplayContext.Selection.TownSelected += OnSelectedTownChanged;
+            GameplayContext.Instance.Selection.TownSelected += OnSelectedTownChanged;
         }
 
         private void OnSelectedTownChanged(Town town)

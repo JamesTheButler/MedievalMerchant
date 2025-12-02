@@ -12,7 +12,7 @@ namespace Common
 
         public void Initialize()
         {
-            _model = GameplayContext.Model;
+            _model = GameplayContext.Instance.Model;
             _player = _model.Player;
             foreach (var town in _model.Towns.Values)
             {

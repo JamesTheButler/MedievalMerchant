@@ -7,11 +7,17 @@ namespace Features.Levels.Serialization
     {
         public void LevelCompleted()
         {
-            var completionDate = GameplayContext.Model.Date;
+            var completionDate = GameplayContext.Instance.Model.Date;
             var levelSaveData = new CompletedLevelSaveData(completionDate);
             var levelIndex = GlobalContext.CurrentLevelInfo!.InternalIndex;
 
-            GlobalContext.ProgressModel.UpdateCompletedLevel(levelIndex, levelSaveData);
+            var progressModel = GlobalContext.Instance.ProgressModel;
+            var previousFinishDate = progressModel.CompletedLevels[levelIndex]?.CompletionDate;
+
+            if (previousFinishDate == null || completionDate < previousFinishDate)
+            {
+                progressModel.UpdateCompletedLevel(levelIndex, levelSaveData);
+            }
         }
     }
 }

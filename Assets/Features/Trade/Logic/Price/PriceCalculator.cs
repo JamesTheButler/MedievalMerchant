@@ -29,7 +29,7 @@ namespace Features.Trade.Logic.Price
 
         public PriceCalculator(Town town)
         {
-            _player = GameplayContext.Model.Player;
+            _player = GameplayContext.Instance.Model.Player;
             _town = town;
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             _availabilityCalculator = new AvailabilityCalculator(town);

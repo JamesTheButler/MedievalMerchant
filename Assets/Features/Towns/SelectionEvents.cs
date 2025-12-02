@@ -7,12 +7,12 @@ namespace Features.Towns
     {
         public void Select(Town town)
         {
-            GameplayContext.Selection.Select(town);
+            GameplayContext.Instance.Selection.Select(town);
         }
 
         public void Deselect()
         {
-            GameplayContext.Selection.Deselect();
+            GameplayContext.Instance.Selection.Deselect();
         }
     }
 }

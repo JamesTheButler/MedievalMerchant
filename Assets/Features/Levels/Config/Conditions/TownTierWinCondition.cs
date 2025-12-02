@@ -27,7 +27,7 @@ namespace Features.Levels.Config.Conditions
 
         public override void Initialize()
         {
-            _model = GameplayContext.Model;
+            _model = GameplayContext.Instance.Model;
             Progress = new Progress(targetCount, FormatProgress);
 
             foreach (var town in _model.Towns.Values)

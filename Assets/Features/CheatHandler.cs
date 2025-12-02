@@ -22,8 +22,8 @@ namespace Features
         [SerializeField, Required]
         private TMP_InputField cheatInput;
 
-        private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Model);
-        private readonly Lazy<PlayerModel> _playerModel = new(() => GameplayContext.Model.Player);
+        private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Instance.Model);
+        private readonly Lazy<PlayerModel> _playerModel = new(() => GameplayContext.Instance.Model.Player);
 
         private Dictionary<string, Action> _simpleCommands;
         private Dictionary<string, Action<string>> _paramCommands;
@@ -33,11 +33,13 @@ namespace Features
             _simpleCommands = new Dictionary<string, Action>
             {
                 { "funds", AddFunds },
+                { "win", CompleteTownUpgrade },
                 { "player.upgrade.random", RandomPlayerUpgrade },
                 { "player.upgrade.full", CompletePlayerUpgrade },
                 { "town.upgrade.random", RandomTownUpgrade },
                 { "town.upgrade.full", CompleteTownUpgrade },
-                { "reset.progress", ResetGameProgress },
+                { "reset", ResetAllProgress },
+                { "reset.progress", ResetCompletedLevels },
             };
 
             _paramCommands = new Dictionary<string, Action<string>>
@@ -76,7 +78,7 @@ namespace Features
             if (!enabled) return;
 
             cheatInput.text = string.Empty;
-            ParseCheat(cheat);
+            ParseCheat(cheat.ToLowerInvariant());
             cheatUI.SetActive(false);
         }
 
@@ -209,14 +211,19 @@ namespace Features
             }
         }
 
-        private void ResetGameProgress()
+        private void ResetAllProgress()
         {
-            GlobalContext.Services.PersistenceService.ResetAllCompletedLevels();
+            GlobalContext.Instance.ProgressModel.Reset();
+        }
+
+        private void ResetCompletedLevels()
+        {
+            GlobalContext.Instance.ProgressModel.ResetCompletedLevels();
         }
 
         private void ResetLevelProgress(string levelIndex)
         {
-            GlobalContext.Services.PersistenceService.ResetCompletedLevel(int.Parse(levelIndex));
+            GlobalContext.Instance.ProgressModel.ResetCompletedLevel(int.Parse(levelIndex));
         }
 
         private static void ReportSuccess(string message)

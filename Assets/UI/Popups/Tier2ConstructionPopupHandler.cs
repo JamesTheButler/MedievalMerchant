@@ -12,7 +12,7 @@ namespace UI.Popups
         [SerializeField]
         private Tier2ConstructionPopup popup;
 
-        private readonly Lazy<Selection> _selection = new(() => GameplayContext.Selection);
+        private readonly Lazy<Selection> _selection = new(() => GameplayContext.Instance.Selection);
 
         public void Show(ProductionCell cell)
         {

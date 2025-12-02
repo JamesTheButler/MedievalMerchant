@@ -10,9 +10,7 @@ namespace Common.Types
         public IReadOnlyObservable<int> Year => _year;
         public IReadOnlyObservable<int> Day => _day;
 
-        public Date() : this(1, 1)
-        {
-        }
+        public Date() : this(1, 1) { }
 
         public Date(int day, int year)
         {
@@ -35,6 +33,35 @@ namespace Common.Types
                     _day.Value = day;
                     break;
             }
+        }
+
+        public static bool operator >(Date left, Date right)
+        {
+            if (left.Year.Value > right.Year.Value) return true;
+            if (left.Year.Value < right.Year.Value) return false;
+            return left.Day.Value > right.Day.Value;
+        }
+
+        public static bool operator <(Date left, Date right)
+        {
+            if (left.Year.Value < right.Year.Value) return true;
+            if (left.Year.Value > right.Year.Value) return false;
+            return left.Day.Value < right.Day.Value;
+        }
+
+        public static bool operator >=(Date left, Date right)
+        {
+            return !(left < right);
+        }
+
+        public static bool operator <=(Date left, Date right)
+        {
+            return !(left > right);
+        }
+
+        public override string ToString()
+        {
+            return $"Year: {_year.Value}, Day: {_day.Value}";
         }
     }
 }

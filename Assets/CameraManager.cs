@@ -62,7 +62,7 @@ public class CameraManager : MonoBehaviour
     public void FitMapSize()
     {
         // TODO - POLISH: camera size should fit both dimensions. this depends on the aspect ratio & account for ui 
-        var mapSize = GameplayContext.Model.TileFlagMap.Size.y;
+        var mapSize = GameplayContext.Instance.Model.TileFlagMap.Size.y;
         camera.orthographicSize = mapSize * .5f + startupPadding;
         _maxSize = camera.orthographicSize * 1.5f;
         _bounds = tilemapManager.Tilemap.localBounds;

@@ -20,7 +20,7 @@ namespace UI.Conditions
 
         private void Start()
         {
-            _levelConditionManager = GameplayContext.Systems.LevelConditionManager;
+            _levelConditionManager = GameplayContext.Instance.Systems.LevelConditionManager;
 
             _winConditionCount = _levelConditionManager.WinConditions.Count;
             _levelConditionManager.CompletionCountChanged += UpdateText;
