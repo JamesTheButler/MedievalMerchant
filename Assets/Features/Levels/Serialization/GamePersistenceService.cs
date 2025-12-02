@@ -19,6 +19,11 @@ namespace Features.Levels.Serialization
 
         private readonly Lazy<ISerializer> _serializer = new(() => GlobalContext.Instance.Services.Serializer);
 
+        public GamePersistenceService()
+        {
+            EnsureFoldersExist();
+        }
+
         public CompletedLevelSaveData? GetCompletedLevelData(int levelId)
         {
             var filePath = string.Format(CompletedLevelFilenameTemplate, levelId);
