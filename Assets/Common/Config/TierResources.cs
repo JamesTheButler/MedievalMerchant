@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Common.Config
 {
-    [CreateAssetMenu(fileName = nameof(TierIconConfig), menuName = AssetMenu.ConfigDataFolder + nameof(TierIconConfig))]
-    public sealed class TierIconConfig : ScriptableObject
+    [CreateAssetMenu(fileName = nameof(TierResources), menuName = AssetMenu.ResourceFolder + nameof(TierResources))]
+    public sealed class TierResources : ScriptableObject
     {
         [field: SerializeField, SerializedDictionary("Tier", "Icon")]
         public SerializedDictionary<Tier, Sprite> Icons { get; set; }

@@ -11,6 +11,7 @@ using Features.Towns.Development.Logic.Milestones;
 using Features.Towns.Flags;
 using Features.Towns.Flags.Logic;
 using Features.Towns.Production.Logic;
+using Infrastructure;
 using UnityEngine;
 
 namespace Features.Towns
@@ -58,10 +59,11 @@ namespace Features.Towns
             MainRegion = regions.GetRandom();
 
             _townConfig = ConfigurationManager.Instance.TownConfig;
+            var townResources = ResourceManager.Instance.TownResources;
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             AvailableGoods = availableGoods.ToHashSet();
 
-            Name = _townConfig.NameGenerators[MainRegion].GenerateName();
+            Name = townResources.NameGenerators[MainRegion].GenerateName();
 
             _inventoryPolicy.AddSlots(StartTier, DefaultInventorySlots);
 

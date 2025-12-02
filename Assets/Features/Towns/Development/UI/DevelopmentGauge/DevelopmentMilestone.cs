@@ -1,5 +1,5 @@
 using System;
-using Common;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,8 +19,8 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
         [SerializeField, Required]
         private DevelopmentMilestoneTooltipHandler tooltip;
 
-        private readonly Lazy<DevelopmentMilestoneAssets> _milestoneAssets =
-            new(() => ConfigurationManager.Instance.DevelopmentMilestoneAssets);
+        private readonly Lazy<DevelopmentMilestoneResources> _milestoneAssets =
+            new(() => ResourceManager.Instance.DevelopmentMilestoneResources);
 
         private Data _data;
         private float _threshold;

@@ -4,6 +4,7 @@ using Common;
 using Common.Config;
 using Common.Types;
 using Common.UI;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +18,7 @@ namespace UI.InventoryUI.TownInventory
 
         private readonly List<ProductionCell> _productionCells = new();
 
-        private TierIconConfig _tierIconConfig;
+        private TierResources _tierResources;
 
         [SerializeField]
         private Tier tier;
@@ -35,9 +36,9 @@ namespace UI.InventoryUI.TownInventory
 
         private void Start()
         {
-            _tierIconConfig = ConfigurationManager.Instance.TierIconConfig;
+            _tierResources = ResourceManager.Instance.TierResources;
 
-            tierIcon.sprite = _tierIconConfig.Icons[tier];
+            tierIcon.sprite = _tierResources.Icons[tier];
             tierTooltip.SetData(tier.ToDisplayString());
         }
 

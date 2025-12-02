@@ -3,6 +3,7 @@ using Common.Config;
 using Common.Types;
 using Common.UI;
 using Features.Goods.Config;
+using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -19,15 +20,15 @@ namespace Features.Goods.UI
         private Image tierImage, regionImage;
 
         private GoodsConfig _goodsConfig;
-        private TierIconConfig _tierIcons;
-        private RegionConfig _region;
+        private TierResources _tierIcons;
+        private RegionResources _region;
 
         protected override void Awake()
         {
             base.Awake();
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
-            _tierIcons = ConfigurationManager.Instance.TierIconConfig;
-            _region = ConfigurationManager.Instance.RegionConfig;
+            _tierIcons = ResourceManager.Instance.TierResources;
+            _region = ResourceManager.Instance.RegionResources;
         }
 
         protected override void UpdateUI(Good data)

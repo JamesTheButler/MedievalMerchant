@@ -5,6 +5,7 @@ using Common.Types;
 using Features.Goods.Config;
 using Features.Towns;
 using Features.Towns.Production.Logic;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -37,7 +38,6 @@ namespace UI.InventoryUI.TownInventory
 
         private Town _town;
         private readonly Lazy<GoodsConfig> _goodsConfig = new(() => ConfigurationManager.Instance.GoodsConfig);
-        private readonly Lazy<RecipeConfig> _recipeConfig = new(() => ConfigurationManager.Instance.RecipeConfig);
 
         public void Initialize()
         {

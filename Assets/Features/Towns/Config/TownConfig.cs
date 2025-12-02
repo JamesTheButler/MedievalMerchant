@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using AYellowpaper.SerializedCollections;
 using Common;
 using Common.Types;
@@ -25,12 +24,8 @@ namespace Features.Towns.Config
         [SerializeField, SerializedDictionary("Good Tier", "Consumption Rate")]
         private SerializedDictionary<Tier, int> tier3ConsumptionRate;
 
-        [field: SerializeField, SerializedDictionary("Region", "Name Generator"), Header("Town Setup")]
-        public SerializedDictionary<Region, TownNameGenerator> NameGenerators { get; private set; }
-
         [SerializeField]
         private float minStartFunds = 300, maxStartFunds = 700;
-
 
         public int? GetConsumptionRate(Tier townTier, Tier goodTier)
         {

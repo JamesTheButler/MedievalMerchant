@@ -5,8 +5,6 @@ using Features.Player.Caravan.Config;
 using Features.Player.Retinue.Config;
 using Features.Towns.Config;
 using Features.Towns.Development.Config;
-using Features.Towns.Development.UI.DevelopmentGauge;
-using Features.Towns.Flags.Config;
 using Features.Towns.Production.Config;
 using NaughtyAttributes;
 using UnityEngine;
@@ -31,25 +29,10 @@ namespace Common
         public ConditionConfig ConditionConfig { get; private set; }
 
         [field: SerializeField, Required]
-        public DevelopmentMilestoneAssets DevelopmentMilestoneAssets { get; private set; }
-
-        [field: SerializeField, Required]
-        public FlagConfig FlagConfig { get; private set; }
-
-        [field: SerializeField, Required]
         public GoodsConfig GoodsConfig { get; private set; }
 
         [field: SerializeField, Required]
-        public RecipeConfig RecipeConfig { get; private set; }
-
-        [field: SerializeField, Required]
-        public RegionConfig RegionConfig { get; private set; }
-
-        [field: SerializeField, Required]
         public ProducerConfig ProducerConfig { get; private set; }
-
-        [field: SerializeField, Required]
-        public TierIconConfig TierIconConfig { get; private set; }
 
         [field: SerializeField, Required]
         public TownConfig TownConfig { get; private set; }
@@ -75,7 +58,6 @@ namespace Common
 
             Instance = this;
 
-            RecipeConfig.Initialize();
         }
     }
 }

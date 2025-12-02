@@ -9,9 +9,9 @@ using UnityEngine.Serialization;
 namespace Features.Towns.Flags.Config
 {
     [CreateAssetMenu(
-        fileName = nameof(FlagConfig),
-        menuName = AssetMenu.ConfigDataFolder + nameof(FlagConfig))]
-    public sealed class FlagConfig : ScriptableObject
+        fileName = nameof(FlagResources),
+        menuName = AssetMenu.ResourceFolder + nameof(FlagResources))]
+    public sealed class FlagResources : ScriptableObject
     {
         public sealed record Data(Sprite Flag, Sprite RegionIcon, Color GoodColor);
 

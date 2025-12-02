@@ -6,6 +6,7 @@ using Common.Types;
 using Features.Goods;
 using Features.Goods.Config;
 using Features.Towns.Production.Config;
+using Infrastructure;
 using UnityEngine;
 
 namespace Features.Towns.Production.Logic
@@ -29,7 +30,7 @@ namespace Features.Towns.Production.Logic
 
             _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
             _producerConfig = ConfigurationManager.Instance.ProducerConfig;
-            var recipeConfig = ConfigurationManager.Instance.RecipeConfig;
+            var recipeConfig = ResourceManager.Instance.RecipeResources;
 
             Tier = _goodsConfig.ConfigData[producedGood].Tier;
 

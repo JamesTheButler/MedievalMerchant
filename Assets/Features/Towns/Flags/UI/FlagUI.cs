@@ -1,6 +1,7 @@
 using System;
 using Common;
 using Features.Towns.Flags.Config;
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ namespace Features.Towns.Flags.UI
         [SerializeField, Required]
         private Image flagImage, goodImage;
 
-        private readonly Lazy<FlagConfig> _flagConfig = new(() => ConfigurationManager.Instance.FlagConfig);
+        private readonly Lazy<FlagResources> _flagConfig = new(() => ResourceManager.Instance.FlagResources);
 
         public void SetFlag(FlagInfo info)
         {

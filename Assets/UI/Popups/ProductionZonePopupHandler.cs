@@ -1,6 +1,7 @@
 using Common;
 using Features.Goods.Config;
 using Features.Map;
+using Infrastructure;
 using UnityEngine;
 
 namespace UI.Popups
@@ -13,12 +14,12 @@ namespace UI.Popups
         [SerializeField]
         private Grid grid;
 
-        private RecipeConfig _recipeConfig;
+        private RecipeResources _recipeResources;
         private ProductionZone _zone;
 
         private void Start()
         {
-            _recipeConfig = ConfigurationManager.Instance.RecipeConfig;
+            _recipeResources = ResourceManager.Instance.RecipeResources;
             Unbind();
         }
 
@@ -39,7 +40,7 @@ namespace UI.Popups
             productionZonePopup.SetRegion(zone.Region);
             foreach (var tier1Good in zone.AvailableGoods)
             {
-                var tier2Good = _recipeConfig.GetTier2RecipeForComponent(tier1Good).Result;
+                var tier2Good = _recipeResources.GetTier2RecipeForComponent(tier1Good).Result;
                 productionZonePopup.AddGood(tier1Good, tier2Good);
             }
 

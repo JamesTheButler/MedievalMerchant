@@ -3,6 +3,7 @@ using Common;
 using Common.Config;
 using Common.Types;
 using Common.UI;
+using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace UI.Popups
         [SerializeField, Required]
         private SimpleTooltipHandler regionIconTooltip;
 
-        private readonly Lazy<RegionConfig> _regionConfig = new(() => ConfigurationManager.Instance.RegionConfig);
+        private readonly Lazy<RegionResources> _regionConfig = new(() => ResourceManager.Instance.RegionResources);
 
         public void Reset()
         {

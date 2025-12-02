@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace Features.Goods.Config
 {
-    [CreateAssetMenu(fileName = nameof(RecipeConfig), menuName = AssetMenu.ConfigDataFolder + nameof(RecipeConfig))]
-    public sealed class RecipeConfig : ScriptableObject
+    [CreateAssetMenu(fileName = nameof(RecipeResources), menuName = AssetMenu.ConfigDataFolder + nameof(RecipeResources))]
+    public sealed class RecipeResources : ScriptableObject
     {
         [SerializeField]
         private List<Tier2Recipe> tier2Recipes;
