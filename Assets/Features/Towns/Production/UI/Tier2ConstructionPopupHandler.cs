@@ -3,12 +3,12 @@ using Infrastructure;
 using UI.InventoryUI.TownInventory;
 using UnityEngine;
 
-namespace Features.Towns.UI
+namespace Features.Towns.Production.UI
 {
-    public sealed class Tier1ConstructionPopupHandler : MonoBehaviour
+    public sealed class Tier2ConstructionPopupHandler : MonoBehaviour
     {
         [SerializeField]
-        private Tier1ConstructionPopup popup;
+        private Tier2ConstructionPopup popup;
 
         private readonly Lazy<Selection> _selection = new(() => GameplayContext.Instance.Selection);
 
@@ -19,7 +19,7 @@ namespace Features.Towns.UI
 
             var town = _selection.Value.SelectedTown;
             popup.Setup(town, cell.Index);
-
+            
             _selection.Value.TownSelected += _ => Hide();
         }
 

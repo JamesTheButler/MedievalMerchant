@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Features.Towns.UI
+namespace Features.Towns.Production.UI
 {
     public sealed class Tier3UpgradePathElement : MonoBehaviour, IPointerClickHandler
     {

@@ -3,12 +3,12 @@ using Infrastructure;
 using UI.InventoryUI.TownInventory;
 using UnityEngine;
 
-namespace Features.Towns.UI
+namespace Features.Towns.Production.UI
 {
-    public sealed class Tier3ConstructionPopupHandler : MonoBehaviour
+    public sealed class Tier1ConstructionPopupHandler : MonoBehaviour
     {
         [SerializeField]
-        private Tier3ConstructionPopup popup;
+        private Tier1ConstructionPopup popup;
 
         private readonly Lazy<Selection> _selection = new(() => GameplayContext.Instance.Selection);
 
