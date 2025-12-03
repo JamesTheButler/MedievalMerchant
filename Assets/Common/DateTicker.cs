@@ -6,25 +6,23 @@ namespace Common
 {
     public sealed class DateTicker : MonoBehaviour
     {
-        [SerializeField]
-        private int ticksPerDay = 1;
-
         private Date _date;
+        private int _ticksPerDay;
         private int _currentTick;
 
         private void Start()
         {
             _date = GameplayContext.Instance.Model.Date;
+            _ticksPerDay = ConfigurationManager.Configurations.TickConfig.TicksPerDay;
         }
 
         public void Tick()
         {
-            _currentTick++;
-            if (_currentTick > ticksPerDay)
-            {
-                _date.IncrementDay();
-                _currentTick = 0;
-            }
+            if (++_currentTick <= _ticksPerDay)
+                return;
+
+            _date.IncrementDay();
+            _currentTick = 0;
         }
     }
 }

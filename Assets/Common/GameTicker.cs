@@ -8,12 +8,9 @@ namespace Common
         [SerializeField]
         private UnityEvent onTick;
 
-        [SerializeField, Range(0.1f, 5f)]
-        private float secondsPerTick = .5f;
-
         private float _timer;
-
         private bool _isTicking;
+        private float _secondsPerTick;
 
         public void StartTicking()
         {
@@ -25,15 +22,20 @@ namespace Common
             _isTicking = false;
         }
 
+        private void Start()
+        {
+            _secondsPerTick = ConfigurationManager.Configurations.TickConfig.SecondsPerTick;
+        }
+
         private void FixedUpdate()
         {
             if (!_isTicking) return;
 
             _timer += Time.fixedDeltaTime;
 
-            while (_timer >= secondsPerTick)
+            while (_timer >= _secondsPerTick)
             {
-                _timer -= secondsPerTick;
+                _timer -= _secondsPerTick;
                 onTick?.Invoke();
             }
         }
