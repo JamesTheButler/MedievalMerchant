@@ -2,7 +2,7 @@ using Common;
 using Common.Modifiable;
 using Common.Types;
 
-namespace Features.Towns
+namespace Features.Towns.Production.Logic
 {
     public sealed class BaseTownFundsProduction : BaseValueModifier
     {

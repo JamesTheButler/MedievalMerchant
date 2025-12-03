@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace UI.Popups
+namespace Features.Towns.UI
 {
     public sealed class Tier1ConstructionElement : MonoBehaviour, IPointerClickHandler
     {

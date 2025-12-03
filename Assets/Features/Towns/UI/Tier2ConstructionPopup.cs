@@ -5,15 +5,15 @@ using Common.Types;
 using Common.UI;
 using Features.Goods.Config;
 using Features.Player;
-using Features.Towns;
 using Features.Towns.Production.Config;
 using Features.Towns.Production.Logic;
 using Infrastructure;
 using NaughtyAttributes;
+using UI.Popups;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Popups
+namespace Features.Towns.UI
 {
     public sealed class Tier2ConstructionPopup : Popup
     {

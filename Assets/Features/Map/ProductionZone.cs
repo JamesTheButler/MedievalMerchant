@@ -56,6 +56,9 @@ namespace Features.Map
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (eventData.button != PointerEventData.InputButton.Left)
+                return;
+
             Clicked?.Invoke();
         }
 

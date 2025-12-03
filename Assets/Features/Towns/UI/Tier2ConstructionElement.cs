@@ -3,7 +3,7 @@ using NaughtyAttributes;
 using UI.InventoryUI;
 using UnityEngine;
 
-namespace UI.Popups
+namespace Features.Towns.UI
 {
     public sealed class Tier2ConstructionElement : MonoBehaviour
     {
