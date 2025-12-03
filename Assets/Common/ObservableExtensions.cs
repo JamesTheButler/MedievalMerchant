@@ -10,5 +10,15 @@ namespace Common
             observable.Observe(value => result.Value = transform.Invoke(value));
             return result;
         }
+
+        public static Observable<int> Invert(this Observable<int> observable)
+        {
+            return observable.Transform(value => -value);
+        }
+
+        public static Observable<float> Invert(this Observable<float> observable)
+        {
+            return observable.Transform(value => -value);
+        }
     }
 }
