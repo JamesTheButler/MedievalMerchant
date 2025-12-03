@@ -13,7 +13,7 @@ namespace Features.Player
         public Inventory.Inventory Inventory { get; }
         public RetinueManager RetinueManager { get; }
         public CaravanManager CaravanManager { get; }
-
+        
         public ModifiableVariable FundsChange { get; }
 
         public PlayerModel(float startFunds)
@@ -26,6 +26,11 @@ namespace Features.Player
             var inventoryPolicy = new SlotCountInventoryPolicy(CaravanManager.SlotCount);
             Inventory = new Inventory.Inventory(inventoryPolicy);
             Inventory.AddFunds(startFunds);
+        }
+
+        public void Tick()
+        {
+            Inventory.AddFunds(FundsChange);
         }
     }
 }

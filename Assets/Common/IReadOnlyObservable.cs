@@ -5,7 +5,7 @@ namespace Common
     public interface IReadOnlyObservable<out T>
     {
         T Value { get; }
-
+        
         void Observe(Action<T> callback, bool invokeOnObserve = true);
         void StopObserving(Action<T> callback);
 

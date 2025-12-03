@@ -39,7 +39,7 @@ namespace Features.Player.Caravan.Logic
                 _averageSpeedModifier);
 
             Upkeep = new ModifiableVariable(
-                "Caravan Upkeep (coming soon)",
+                "Caravan Upkeep",
                 false,
                 new BaseUpkeepModifier(_caravanConfig.BaseUpkeep));
 
