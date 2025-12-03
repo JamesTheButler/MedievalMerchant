@@ -86,7 +86,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
         private void UpdateDevelopmentTrend(float trend)
         {
             var sign = trend > 0 ? "+" : "";
-            developmentTrendText.text = $"{sign}{trend}%";
+            developmentTrendText.text = $"{sign}{trend:0.0#}%";
 
             UpdateGrowthModifierTooltip();
         }

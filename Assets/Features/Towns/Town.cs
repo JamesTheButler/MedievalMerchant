@@ -84,6 +84,8 @@ namespace Features.Towns
 
             var startGood = AvailableGoods.GetRandom();
             AddProduction(startGood, 0);
+           Inventory.AddGood(startGood, _townConfig.GetStartGoods());
+            
             FlagInfo = flagFactory.CreateFlagInfo(MainRegion);
         }
 

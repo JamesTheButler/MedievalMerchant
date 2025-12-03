@@ -25,7 +25,10 @@ namespace Features.Towns.Config
         private SerializedDictionary<Tier, int> tier3ConsumptionRate;
 
         [SerializeField]
-        private float minStartFunds = 300, maxStartFunds = 700;
+        private int minStartFunds = 300, maxStartFunds = 700;
+
+        [SerializeField]
+        private int minStartGoods = 5, maxStartGoods = 25;
 
         public int? GetConsumptionRate(Tier townTier, Tier goodTier)
         {
@@ -40,9 +43,14 @@ namespace Features.Towns.Config
             return limitDict.TryGetValue(goodTier, out var value) ? value : null;
         }
 
-        public float GetStartFunds()
+        public int GetStartFunds()
         {
             return UnityEngine.Random.Range(minStartFunds, maxStartFunds);
+        }
+
+        public int GetStartGoods()
+        {
+            return UnityEngine.Random.Range(minStartGoods, maxStartGoods);
         }
     }
 }
