@@ -7,7 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace UI.StartMenu
+namespace Features.StartMenu.UI
 {
     public sealed class LevelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {

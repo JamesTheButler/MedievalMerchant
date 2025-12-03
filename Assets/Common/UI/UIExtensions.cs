@@ -9,5 +9,10 @@ namespace Common.UI
         {
             return button.GetComponentInChildren<TMP_Text>();
         }
+
+        public static void Clear(this TMP_InputField inputField)
+        {
+            inputField.text = string.Empty;
+        }
     }
 }

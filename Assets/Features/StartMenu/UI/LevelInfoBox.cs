@@ -7,7 +7,7 @@ using TMPro;
 using UI.Conditions;
 using UnityEngine;
 
-namespace UI.StartMenu
+namespace Features.StartMenu.UI
 {
     public sealed class LevelInfoBox : MonoBehaviour
     {

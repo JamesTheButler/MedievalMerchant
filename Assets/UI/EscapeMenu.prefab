@@ -103,6 +103,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -265,8 +266,11 @@ MonoBehaviour:
   giveUpPressed:
     m_PersistentCalls:
       m_Calls: []
+  feedbackButtonPressed:
+    m_PersistentCalls:
+      m_Calls: []
   giveUpButton: {fileID: 8636263832565882511}
-  bugReportButton: {fileID: 1886749845936752246}
+  feedbackButton: {fileID: 1886749845936752246}
 --- !u!1 &2787402749910719439
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +446,7 @@ GameObject:
   - component: {fileID: 1886749845936752246}
   - component: {fileID: 1148437230363634888}
   m_Layer: 5
-  m_Name: Bug Button
+  m_Name: Feedback Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -673,6 +677,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

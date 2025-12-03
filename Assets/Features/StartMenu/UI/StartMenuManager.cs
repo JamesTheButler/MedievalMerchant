@@ -1,6 +1,5 @@
 using Common;
 using Features.Levels.Config;
-using Features.Levels.Logic;
 using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
@@ -8,7 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-namespace UI.StartMenu
+namespace Features.StartMenu.UI
 {
     public sealed class StartMenuManager : MonoBehaviour
     {

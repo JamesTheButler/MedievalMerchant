@@ -14,24 +14,30 @@ namespace UI
         [SerializeField]
         private UnityEvent giveUpPressed;
 
+        [SerializeField]
+        private UnityEvent feedbackButtonPressed;
+
         [SerializeField, Required]
-        private Button giveUpButton, bugReportButton;
+        private Button giveUpButton;
+
+        [SerializeField, Required]
+        private Button feedbackButton;
 
         private void Start()
         {
             giveUpButton.onClick.AddListener(GiveUp);
-            bugReportButton.onClick.AddListener(ReportBug);
+            feedbackButton.onClick.AddListener(ReportBug);
         }
 
         private void OnDestroy()
         {
             giveUpButton.onClick.RemoveListener(GiveUp);
-            bugReportButton.onClick.RemoveListener(ReportBug);
+            feedbackButton.onClick.RemoveListener(ReportBug);
         }
 
         private void ReportBug()
         {
-            Debug.LogError("Bug Report Feature is not implemented.");
+            feedbackButtonPressed.Invoke();
         }
 
         private void GiveUp()
