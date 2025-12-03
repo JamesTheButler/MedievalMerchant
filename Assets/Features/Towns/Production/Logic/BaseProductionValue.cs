@@ -15,7 +15,7 @@ namespace Features.Towns.Production.Logic
         private static float GetProductionRate(Good good)
         {
             var tier = GetTier(good);
-            return ConfigurationManager.Instance.ProducerConfig.GetProductionRate(tier);
+            return ConfigurationManager.Configurations.ProducerConfig.GetProductionRate(tier);
         }
 
         private static Tier GetTier(Good good)

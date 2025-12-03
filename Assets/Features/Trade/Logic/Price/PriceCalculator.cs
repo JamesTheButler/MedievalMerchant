@@ -33,7 +33,7 @@ namespace Features.Trade.Logic.Price
             _player = GameplayContext.Instance.Model.Player;
             _town = town;
             _goodsResources = ResourceManager.Instance.GoodsResources;
-            _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
+            _goodsConfig = ConfigurationManager.Configurations.GoodsConfig;
             _availabilityCalculator = new AvailabilityCalculator(town);
         }
 

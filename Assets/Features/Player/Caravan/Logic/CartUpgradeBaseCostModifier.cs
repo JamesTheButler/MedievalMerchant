@@ -10,7 +10,7 @@ namespace Features.Player.Caravan.Logic
 
         public CartUpgradeBaseCostModifier(int level) : base(0, string.Empty)
         {
-            _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
+            _caravanConfig = ConfigurationManager.Configurations.CaravanConfig;
             Update(level);
         }
 

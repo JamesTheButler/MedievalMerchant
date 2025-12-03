@@ -27,7 +27,7 @@ namespace Features.Levels.Logic
 
         public void Initialize()
         {
-            _conditionConfig = ConfigurationManager.Instance.ConditionConfig;
+            _conditionConfig = ConfigurationManager.Configurations.ConditionConfig;
             var conditions = GlobalContext.CurrentLevelInfo!.Conditions;
             _winConditions = conditions.OfType<WinCondition>().ToList();
             _lossConditions = conditions.OfType<LossCondition>().ToList();

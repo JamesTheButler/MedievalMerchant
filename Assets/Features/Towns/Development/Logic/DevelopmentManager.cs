@@ -31,7 +31,7 @@ namespace Features.Towns.Development.Logic
         public DevelopmentManager(Town town)
         {
             _town = town;
-            _townDevelopmentConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
+            _townDevelopmentConfig = ConfigurationManager.Configurations.TownDevelopmentConfig;
             _goodsResources = ResourceManager.Instance.GoodsResources;
 
             _town.ProductionManager.ProductionAdded += OnProducerAdded;

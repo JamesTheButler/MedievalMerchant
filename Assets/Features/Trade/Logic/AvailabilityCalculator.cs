@@ -12,8 +12,8 @@ namespace Features.Trade.Logic
         private readonly Town _town;
         private readonly Inventory.Inventory _inventory;
 
-        private readonly AvailabilityConfig _availabilityConfig = ConfigurationManager.Instance.AvailabilityConfig;
-        private readonly ProducerConfig _townConfig = ConfigurationManager.Instance.ProducerConfig;
+        private readonly AvailabilityConfig _availabilityConfig = ConfigurationManager.Configurations.AvailabilityConfig;
+        private readonly ProducerConfig _townConfig = ConfigurationManager.Configurations.ProducerConfig;
         private readonly GoodsResources _goodsResources = ResourceManager.Instance.GoodsResources;
 
         public AvailabilityCalculator(Town town)

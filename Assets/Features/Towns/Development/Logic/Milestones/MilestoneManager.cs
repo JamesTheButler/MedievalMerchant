@@ -30,7 +30,7 @@ namespace Features.Towns.Development.Logic.Milestones
         {
             _town = town;
 
-            _developmentConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
+            _developmentConfig = ConfigurationManager.Configurations.TownDevelopmentConfig;
 
             _town.Tier.Observe(OnTierChanged);
             _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged);

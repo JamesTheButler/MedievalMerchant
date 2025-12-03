@@ -69,7 +69,7 @@ namespace Features.Player.Caravan.UI
         public void Bind(Cart cart, Action upgradeAction, Action<InventoryCell> onCellAdded)
         {
             _player = GameplayContext.Instance.Model.Player;
-            _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
+            _caravanConfig = ConfigurationManager.Configurations.CaravanConfig;
             _caravanResources = ResourceManager.Instance.CaravanResources;
             _colors = ResourceManager.Instance.Colors;
 

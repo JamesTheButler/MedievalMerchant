@@ -64,6 +64,11 @@ namespace Infrastructure
 
             Instance = this;
 
+            if (Application.isPlaying)
+            {
+                DontDestroyOnLoad(gameObject);
+            }
+
             RecipeResources.Initialize();
         }
     }

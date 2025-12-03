@@ -9,7 +9,7 @@ namespace Features.Player.Retinue.Logic
     public sealed class NegotiatorPriceModifier : BasePercentageModifier
     {
         private readonly TradeType _tradeType;
-        private readonly CompanionConfig _companionConfig = ConfigurationManager.Instance.CompanionConfig;
+        private readonly CompanionConfig _companionConfig = ConfigurationManager.Configurations.CompanionConfig;
 
         private int _currentLevel;
 

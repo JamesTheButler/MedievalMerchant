@@ -29,7 +29,7 @@ namespace Features.Towns.Production.Logic
             ProducedGood = producedGood;
 
             _goodsResources = ResourceManager.Instance.GoodsResources;
-            _producerConfig = ConfigurationManager.Instance.ProducerConfig;
+            _producerConfig = ConfigurationManager.Configurations.ProducerConfig;
             var recipeConfig = ResourceManager.Instance.RecipeResources;
 
             Tier = _goodsResources.ConfigData[producedGood].Tier;

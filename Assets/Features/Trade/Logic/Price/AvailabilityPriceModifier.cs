@@ -11,7 +11,7 @@ namespace Features.Trade.Logic.Price
     /// </summary>
     public sealed class AvailabilityPriceModifier : BasePercentageModifier
     {
-        private readonly AvailabilityConfig _config = ConfigurationManager.Instance.AvailabilityConfig;
+        private readonly AvailabilityConfig _config = ConfigurationManager.Configurations.AvailabilityConfig;
         private readonly AvailabilityResources _resources = ResourceManager.Instance.AvailabilityResources;
 
         public AvailabilityPriceModifier(Availability availability)

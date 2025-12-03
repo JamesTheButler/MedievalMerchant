@@ -30,7 +30,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
         private ModifiableTooltipHandler developmentTrendTooltip;
 
         private readonly Lazy<TownDevelopmentConfig> _townDevelopmentConfig =
-            new(() => ConfigurationManager.Instance.TownDevelopmentConfig);
+            new(() => ConfigurationManager.Configurations.TownDevelopmentConfig);
 
         private Town _town;
         private DevelopmentManager _developmentManager;

@@ -33,7 +33,7 @@ namespace Features.Map.Pathfinding
         {
             _graph = new Lazy<RoadGraph>(() => RoadGraphBuilder.Build(_model.Value.TileFlagMap));
             _playerLocation = new Lazy<PlayerLocation>(() => _model.Value.Player.Location);
-            _caravanConfig = new Lazy<CaravanConfig>(() => ConfigurationManager.Instance.CaravanConfig);
+            _caravanConfig = new Lazy<CaravanConfig>(() => ConfigurationManager.Configurations.CaravanConfig);
         }
 
         public void TravelTo(Town town)

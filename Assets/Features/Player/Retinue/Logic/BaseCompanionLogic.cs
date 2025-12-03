@@ -12,7 +12,7 @@ namespace Features.Player.Retinue.Logic
 
         protected BaseCompanionLogic()
         {
-            ConfigData = (T)ConfigurationManager.Instance.CompanionConfig.Get(Type);
+            ConfigData = (T)ConfigurationManager.Configurations.CompanionConfig.Get(Type);
         }
 
         public abstract void SetLevel(int level);

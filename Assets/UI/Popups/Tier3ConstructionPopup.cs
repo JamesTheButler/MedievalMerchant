@@ -29,7 +29,7 @@ namespace UI.Popups
         private readonly Lazy<RecipeResources> _recipeConfig = new(() => ResourceManager.Instance.RecipeResources);
         private readonly Lazy<Colors> _colors = new(() => ResourceManager.Instance.Colors);
         private readonly Lazy<PlayerModel> _player = new(() => GameplayContext.Instance.Model.Player);
-        private readonly Lazy<ProducerConfig> _producerConfig = new(() => ConfigurationManager.Instance.ProducerConfig);
+        private readonly Lazy<ProducerConfig> _producerConfig = new(() => ConfigurationManager.Configurations.ProducerConfig);
 
         private readonly Dictionary<Tier3UpgradePathElement, Action> _clickHandlers = new();
 

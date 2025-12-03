@@ -18,7 +18,7 @@ namespace Features.Map.Overlays
         public void Bind(Town town)
         {
             _town = town;
-            _townDevelopmentConfig = ConfigurationManager.Instance.TownDevelopmentConfig;
+            _townDevelopmentConfig = ConfigurationManager.Configurations.TownDevelopmentConfig;
 
             transform.localPosition = town.WorldLocation;
 

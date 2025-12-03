@@ -10,7 +10,7 @@ namespace Features.Player.Retinue.Logic
 
         public NegotiatorUpgradeCostModifier(int level) : base(0f, string.Empty)
         {
-            _companionConfig = ConfigurationManager.Instance.CompanionConfig;
+            _companionConfig = ConfigurationManager.Configurations.CompanionConfig;
             Update(level);
         }
 

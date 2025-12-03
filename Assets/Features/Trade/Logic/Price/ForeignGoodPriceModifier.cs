@@ -13,7 +13,7 @@ namespace Features.Trade.Logic.Price
     {
         public ForeignGoodPriceModifier() : base(0, "Foreign good price modifier")
         {
-            Value.Value = ConfigurationManager.Instance.GoodsConfig.ForeignGoodPriceModifier;
+            Value.Value = ConfigurationManager.Configurations.GoodsConfig.ForeignGoodPriceModifier;
         }
     }
 }

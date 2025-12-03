@@ -16,7 +16,7 @@ namespace UI.Conditions
         private GameObject listContainer;
 
         private readonly Lazy<ConditionConfig> _conditionConfig =
-            new(() => ConfigurationManager.Instance.ConditionConfig);
+            new(() => ConfigurationManager.Configurations.ConditionConfig);
 
         public void Setup(IEnumerable<Condition> conditions, bool setupProgress)
         {

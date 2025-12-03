@@ -58,7 +58,7 @@ namespace Features.Towns
             Regions = regions;
             MainRegion = regions.GetRandom();
 
-            _townConfig = ConfigurationManager.Instance.TownConfig;
+            _townConfig = ConfigurationManager.Configurations.TownConfig;
             var townResources = ResourceManager.Instance.TownResources;
             _goodsResources = ResourceManager.Instance.GoodsResources;
             AvailableGoods = availableGoods.ToHashSet();

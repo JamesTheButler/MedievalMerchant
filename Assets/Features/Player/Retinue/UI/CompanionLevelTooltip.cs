@@ -28,7 +28,7 @@ namespace Features.Player.Retinue.UI
         {
             base.Awake();
 
-            _configData = ConfigurationManager.Instance.CompanionConfig;
+            _configData = ConfigurationManager.Configurations.CompanionConfig;
         }
 
         protected override void UpdateUI(Data data)

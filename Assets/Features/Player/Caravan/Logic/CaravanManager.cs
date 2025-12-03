@@ -31,7 +31,7 @@ namespace Features.Player.Caravan.Logic
 
         public CaravanManager(PlayerModel player)
         {
-            _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
+            _caravanConfig = ConfigurationManager.Configurations.CaravanConfig;
             _averageSpeedModifier = new AverageBaseValueModifier("Movement Speed");
             MoveSpeed = new ModifiableVariable(
                 "Movement Speed",

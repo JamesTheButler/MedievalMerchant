@@ -44,7 +44,7 @@ namespace Features.Player.Retinue.UI
         private void Start()
         {
             _retinueManager = GameplayContext.Instance.Model.Player.RetinueManager;
-            _configData = ConfigurationManager.Instance.CompanionConfig.Get(companionType);
+            _configData = ConfigurationManager.Configurations.CompanionConfig.Get(companionType);
 
             InitializeUI();
 

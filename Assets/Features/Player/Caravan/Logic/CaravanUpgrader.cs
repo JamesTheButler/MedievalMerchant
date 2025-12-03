@@ -14,7 +14,7 @@ namespace Features.Player.Caravan.Logic
         {
             _player = GameplayContext.Instance.Model.Player;
             _caravanManager = _player.CaravanManager;
-            _caravanConfig = ConfigurationManager.Instance.CaravanConfig;
+            _caravanConfig = ConfigurationManager.Configurations.CaravanConfig;
         }
 
         public void RequestUpgrade(int cartId)

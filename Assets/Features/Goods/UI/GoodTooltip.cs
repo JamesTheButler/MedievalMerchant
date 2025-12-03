@@ -27,7 +27,7 @@ namespace Features.Goods.UI
         protected override void Awake()
         {
             base.Awake();
-            _goodsConfig = ConfigurationManager.Instance.GoodsConfig;
+            _goodsConfig = ConfigurationManager.Configurations.GoodsConfig;
             _goodsResources = ResourceManager.Instance.GoodsResources;
             _tierIcons = ResourceManager.Instance.TierResources;
             _region = ResourceManager.Instance.RegionResources;
