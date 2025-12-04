@@ -7,6 +7,7 @@ namespace Common
     [ExecuteInEditMode]
     public sealed class ConfigurationManager : MonoBehaviour
     {
+        private static ConfigurationManager _instance;
         public static Configurations Configurations;
 
         [SerializeField, Required, Expandable]
@@ -14,7 +15,7 @@ namespace Common
 
         private void Awake()
         {
-            if (Configurations != null)
+            if (_instance != null && _instance != this)
             {
                 if (Application.isPlaying)
                 {
@@ -33,6 +34,7 @@ namespace Common
                 DontDestroyOnLoad(gameObject);
             }
 
+            _instance = this;
             Configurations = IsDebug() ? debugConfigs : releaseConfigs;
         }
 

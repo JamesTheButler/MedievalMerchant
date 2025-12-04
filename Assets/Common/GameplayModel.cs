@@ -13,6 +13,7 @@ namespace Common
         public TileFlagMap TileFlagMap { get; private set; }
         public Date Date { get; private set; } = new();
         public PlayerModel Player { get; private set; }
+        public LevelModifiers Modifiers { get; private set; } = new();
 
         public IReadOnlyDictionary<Vector2Int, Town> Towns => _towns;
 
