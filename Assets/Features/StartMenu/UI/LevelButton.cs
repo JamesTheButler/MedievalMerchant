@@ -29,7 +29,7 @@ namespace Features.StartMenu.UI
         [SerializeField, Required]
         private TMP_Text label;
 
-        [SerializeField]
+        [SerializeField, Expandable]
         private LevelInfo levelInfo;
 
         private void Start()
