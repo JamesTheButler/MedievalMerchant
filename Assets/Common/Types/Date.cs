@@ -14,9 +14,7 @@ namespace Common.Types
         public IReadOnlyObservable<int> Year => _year;
         public IReadOnlyObservable<int> Day => _day;
 
-        public Date() : this(1, 1)
-        {
-        }
+        public Date() : this(1, 1) { }
 
         public Date(int day, int year)
         {
