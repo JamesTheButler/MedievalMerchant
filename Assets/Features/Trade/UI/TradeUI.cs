@@ -191,12 +191,15 @@ namespace Features.Trade.UI
 
         private void CompleteTrade()
         {
+            var tradeInfo = new TradeInfo(_tradeType, _good, _tradeAmount, _totalPrice, 1);
+            
             _buyingInventory.RemoveFunds(_totalPrice);
             _sellingInventory.AddFunds(_totalPrice);
             
             _buyingInventory.AddGood(_good, _tradeAmount);
             _sellingInventory.RemoveGood(_good, _tradeAmount);
-
+            _selection.Value.SelectedTown.ResolveTrade(tradeInfo);
+            
             Hide();
         }
 

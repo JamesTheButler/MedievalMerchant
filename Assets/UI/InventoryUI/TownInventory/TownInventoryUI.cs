@@ -23,7 +23,7 @@ namespace UI.InventoryUI.TownInventory
 
         [Header("Header UI Elements")]
         [SerializeField, Required]
-        private TMP_Text townNameText;
+        private TMP_Text townNameText, reputationText;
 
         [SerializeField, Required]
         private FlagUI flagUI;
@@ -103,11 +103,26 @@ namespace UI.InventoryUI.TownInventory
 
             _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged);
             _town.Tier.Observe(TownUpgrade);
+            _town.ReputationManager.Reputation.Observe(OnReputationChanged);
+            _town.ReputationManager.IsNeglected.Observe(OnNeglectedChanged);
             fundsTooltip.SetData(_town.FundsChange);
 
             RefreshTownName(_town.Tier.Value);
 
             developmentGauge.Bind(_town);
+        }
+
+        private void OnReputationChanged(float reputation)
+        {
+            var neglectedIcon = !_town.ReputationManager.IsNeglected  ? "" : " :(";
+            reputationText.text = $"Rep: {reputation:0.#}{neglectedIcon}";
+        }
+
+        private void OnNeglectedChanged(bool isNeglected)
+        {
+            var neglectedIcon = !isNeglected ? "" : " :(";
+            var reputation = _town.ReputationManager.Reputation.Value;
+            reputationText.text = $"Rep: {reputation:0.#}{neglectedIcon}";
         }
 
         private void OnDevelopmentChanged(float developmentScore)

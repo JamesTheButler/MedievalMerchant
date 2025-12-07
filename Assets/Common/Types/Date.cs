@@ -1,8 +1,12 @@
+using System;
+
 namespace Common.Types
 {
     public sealed class Date
     {
         public const int LastDayOfYear = 365;
+
+        public event Action<Date> Changed;
 
         private readonly Observable<int> _year;
         private readonly Observable<int> _day;
@@ -10,12 +14,15 @@ namespace Common.Types
         public IReadOnlyObservable<int> Year => _year;
         public IReadOnlyObservable<int> Day => _day;
 
-        public Date() : this(1, 1) { }
+        public Date() : this(1, 1)
+        {
+        }
 
         public Date(int day, int year)
         {
             _year = new Observable<int>(year);
-            _day = new Observable<int>(day);
+            _day = new Observable<int>();
+            SetDay(day);
         }
 
         public void SetDay(int day)
@@ -33,6 +40,8 @@ namespace Common.Types
                     _day.Value = day;
                     break;
             }
+
+            Changed?.Invoke(this);
         }
 
         public static bool operator >(Date left, Date right)
@@ -57,6 +66,16 @@ namespace Common.Types
         public static bool operator <=(Date left, Date right)
         {
             return !(left > right);
+        }
+
+        public static Date operator +(Date left, Date right)
+        {
+            return new Date(left.Day.Value + right.Day.Value, left.Year.Value + right.Year.Value);
+        }
+
+        public static Date operator +(Date left, int days)
+        {
+            return new Date(left.Day.Value + days, left.Year.Value);
         }
 
         public override string ToString()

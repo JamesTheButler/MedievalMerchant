@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common;
@@ -11,6 +12,8 @@ using Features.Towns.Development.Logic.Milestones;
 using Features.Towns.Flags;
 using Features.Towns.Flags.Logic;
 using Features.Towns.Production.Logic;
+using Features.Towns.Reputation.Logic;
+using Features.Trade;
 using Infrastructure;
 using UnityEngine;
 
@@ -21,9 +24,12 @@ namespace Features.Towns
         private const int DefaultInventorySlots = 3;
         private const Tier StartTier = Common.Types.Tier.Tier1;
 
+        public event Action<TradeInfo> TradeCompleted;
+
         public ProductionManager ProductionManager { get; }
         public DevelopmentManager DevelopmentManager { get; }
         public MilestoneManager MilestoneManager { get; }
+        public ReputationManager ReputationManager { get; }
         public Inventory.Inventory Inventory { get; }
         public ModifiableVariable FundsChange { get; }
 
@@ -39,10 +45,7 @@ namespace Features.Towns
         private readonly TownConfig _townConfig;
         private readonly GoodsResources _goodsResources;
 
-        private readonly Observable<float> _reputation = new();
-
         public IReadOnlyObservable<Tier> Tier => DevelopmentManager.Tier;
-        public IReadOnlyObservable<float> Reputation => _reputation;
 
         public Town(
             Vector2Int gridLocation,
@@ -72,6 +75,7 @@ namespace Features.Towns
             ProductionManager = new ProductionManager(this);
             DevelopmentManager = new DevelopmentManager(this);
             MilestoneManager = new MilestoneManager(this);
+            ReputationManager = new ReputationManager(this);
 
             DevelopmentManager.Tier.Observe(OnTierChanged);
             ProductionManager.ProductionAdded += OnProductionManagerOnProductionAdded;
@@ -84,8 +88,8 @@ namespace Features.Towns
 
             var startGood = AvailableGoods.GetRandom();
             AddProduction(startGood, 0);
-           Inventory.AddGood(startGood, _townConfig.GetStartGoods());
-            
+            Inventory.AddGood(startGood, _townConfig.GetStartGoods());
+
             FlagInfo = flagFactory.CreateFlagInfo(MainRegion);
         }
 
@@ -111,18 +115,9 @@ namespace Features.Towns
             _inventoryPolicy.AddSlots(tier, DefaultInventorySlots);
         }
 
-        public void AddReputation(float added)
+        public void ResolveTrade(TradeInfo tradeInfo)
         {
-            // TODO - 0.4: apply modifiers
-            // TODO - 0.4: set limit
-            _reputation.Value += added;
-        }
-
-        public void RemoveReputation(float removed)
-        {
-            // TODO - 0.4: apply modifiers
-            // TODO - 0.4: set limit
-            _reputation.Value -= removed;
+            TradeCompleted?.Invoke(tradeInfo);
         }
 
         private void OnProductionManagerOnProductionAdded(Producer producer)

@@ -39,7 +39,6 @@ namespace Features.Player.Retinue.Logic
             _isBound = true;
         }
 
-        // TODO - POLISH: reentering town frequently to get coins fast
         private void OnTownChanged(Town enteredTown)
         {
             if (enteredTown == null || _thiefLevelData == null) return;
@@ -50,7 +49,7 @@ namespace Features.Player.Retinue.Logic
             var isThiefCaught = RandomUtility.GetBool(_thiefLevelData.ReputationLossChance);
             if (isThiefCaught)
             {
-                enteredTown.RemoveReputation(_thiefLevelData.ReputationLoss);
+                enteredTown.ReputationManager.ApplyCaughtThief(_thiefLevelData.ReputationLoss);
             }
         }
     }

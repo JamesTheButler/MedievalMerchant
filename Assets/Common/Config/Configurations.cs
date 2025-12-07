@@ -5,6 +5,8 @@ using Features.Player.Retinue.Config;
 using Features.Towns.Config;
 using Features.Towns.Development.Config;
 using Features.Towns.Production.Config;
+using Features.Towns.Reputation;
+using Features.Towns.Reputation.Config;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -34,6 +36,9 @@ namespace Common.Config
         [field: SerializeField, Required]
         public ProducerConfig ProducerConfig { get; private set; }
 
+        [field: SerializeField, Required]
+        public ReputationConfig ReputationConfig { get; private set; }
+        
         [field: SerializeField, Required]
         public TickConfig TickConfig { get; private set; }
 
