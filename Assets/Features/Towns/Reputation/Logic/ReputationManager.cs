@@ -24,7 +24,7 @@ namespace Features.Towns.Reputation.Logic
 
         private readonly GameplayModel _model;
         private readonly ReputationConfig _config;
-        private readonly GoodsResources _goodConfig;
+        private readonly GoodsResources _goodResources;
 
         private readonly List<IModifier> _modifiers = new();
         private readonly Dictionary<DateTime, ReputationLogEntry> _reputationLog = new();
@@ -35,6 +35,7 @@ namespace Features.Towns.Reputation.Logic
         {
             _model = GameplayContext.Instance.Model;
             _config = ConfigurationManager.Configurations.ReputationConfig;
+            _goodResources = ResourceManager.Instance.GoodsResources;
 
             _town = town;
 
@@ -80,7 +81,7 @@ namespace Features.Towns.Reputation.Logic
             var repChangeFloat = tradeInfo.FinalPrice / tradeVolumePerRep;
             // round to 1 digit after comma
             var finalRepChange = Mathf.Floor(repChangeFloat * 10f) * .1f * tradeInfo.HaggleLevel;
-            var goodName = _goodConfig.ConfigData[tradeInfo.Good].GoodName;
+            var goodName = _goodResources.ConfigData[tradeInfo.Good].GoodName;
             var message =
                 $"Traded {tradeInfo.Amount}x{goodName} worth {tradeInfo.FinalPrice} coin at haggle level {tradeInfo.HaggleLevel}";
             UpdateReputation(finalRepChange, message);
