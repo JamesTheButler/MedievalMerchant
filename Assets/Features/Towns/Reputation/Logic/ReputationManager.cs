@@ -107,7 +107,7 @@ namespace Features.Towns.Reputation.Logic
             var isNeglectDateReached = date >= _neglectActivationDate;
             var isAboveNeglectThreshold = Reputation.Value >= _config.NeglectData.ReputationThreshold;
 
-            if (isAboveNeglectThreshold || !isNeglectDateReached)
+            if (isAboveNeglectThreshold || !isNeglectDateReached && Reputation.Value <= 0)
                 return;
 
             IsNeglected.Value = true;
@@ -131,6 +131,7 @@ namespace Features.Towns.Reputation.Logic
         private void ResetNeglectDate()
         {
             _neglectActivationDate = _model.Date + _config.NeglectData.ActivationDelayInDays;
+            IsNeglected.Value = false;
         }
 
         private void UpdateReputation(float repChange, string reason)

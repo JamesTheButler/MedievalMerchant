@@ -1,6 +1,5 @@
 using System.Linq;
 using Common;
-using Features.Towns.Development.Logic.Milestones;
 using Common.Modifiable;
 using Common.Types;
 using Features.Goods.Config;
@@ -8,7 +7,7 @@ using Features.Player;
 using Features.Player.Retinue;
 using Features.Player.Retinue.Logic;
 using Features.Towns;
-using Features.Towns.Reputation.Config;
+using Features.Towns.Development.Logic.Milestones;
 using Infrastructure;
 
 namespace Features.Trade.Logic.Price
@@ -25,6 +24,7 @@ namespace Features.Trade.Logic.Price
 
         private AvailabilityPriceModifier _availabilityModifier;
         private NegotiatorPriceModifier _negotiatorModifier;
+        private ReputationPriceModifier _reputationModifier;
 
         private Good _good;
         private TradeType _tradeType;
@@ -59,8 +59,8 @@ namespace Features.Trade.Logic.Price
             _town.Inventory.GoodUpdated += OnTownInventoryChanged;
             _town.MilestoneManager.MilestoneModifierAdded += TownModifierAdded;
             _town.MilestoneManager.MilestoneModifierRemoved += TownModifierRemoved;
+            _town.ReputationManager.Reputation.Observe(OnReputationChanged);
         }
-
 
         public void Clear()
         {
@@ -68,6 +68,7 @@ namespace Features.Trade.Logic.Price
             _town.Inventory.GoodUpdated -= OnTownInventoryChanged;
             _town.MilestoneManager.MilestoneModifierAdded -= TownModifierAdded;
             _town.MilestoneManager.MilestoneModifierRemoved -= TownModifierRemoved;
+            _town.ReputationManager.Reputation.StopObserving(OnReputationChanged);
         }
 
         #region Adding Modifiers
@@ -105,7 +106,8 @@ namespace Features.Trade.Logic.Price
 
         private void AddReputationModifier()
         {
-            Price.AddModifier(new ReputationPriceModifier(_town, _tradeType));
+            _reputationModifier = new ReputationPriceModifier(_town, _tradeType);
+            Price.AddModifier(_reputationModifier);
         }
 
         private void AddNegotiatorModifier()
@@ -160,6 +162,11 @@ namespace Features.Trade.Logic.Price
             {
                 Price.RemoveModifier(modifier);
             }
+        }
+
+        private void OnReputationChanged(float reputation)
+        {
+            _reputationModifier.Update(reputation);
         }
 
         #endregion

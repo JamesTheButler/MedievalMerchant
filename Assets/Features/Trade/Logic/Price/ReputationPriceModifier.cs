@@ -18,11 +18,10 @@ namespace Features.Trade.Logic.Price
         {
             _tradeType = tradeType;
             _townName = town.Name;
-
-            town.ReputationManager.Reputation.Observe(OnReputationChange);
+            Update(town.ReputationManager.Reputation);
         }
 
-        private void OnReputationChange(float reputation)
+        public void Update(float reputation)
         {
             Description.Value = GetDescription(reputation);
             Value.Value = GetValue(reputation);
