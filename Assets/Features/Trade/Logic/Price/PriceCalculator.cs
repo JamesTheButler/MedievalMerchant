@@ -8,6 +8,7 @@ using Features.Player;
 using Features.Player.Retinue;
 using Features.Player.Retinue.Logic;
 using Features.Towns;
+using Features.Towns.Reputation.Config;
 using Infrastructure;
 
 namespace Features.Trade.Logic.Price
@@ -50,6 +51,7 @@ namespace Features.Trade.Logic.Price
 
             AddAvailabilityModifier();
             AddRegionModifiers();
+            AddReputationModifier();
             AddDevelopmentMilestoneModifiers();
             AddNegotiatorModifier();
 
@@ -58,6 +60,7 @@ namespace Features.Trade.Logic.Price
             _town.MilestoneManager.MilestoneModifierAdded += TownModifierAdded;
             _town.MilestoneManager.MilestoneModifierRemoved += TownModifierRemoved;
         }
+
 
         public void Clear()
         {
@@ -98,6 +101,11 @@ namespace Features.Trade.Logic.Price
                 ? new LocalGoodPriceModifier()
                 : new ForeignGoodPriceModifier();
             Price.AddModifier(regionModifier);
+        }
+
+        private void AddReputationModifier()
+        {
+            Price.AddModifier(new ReputationPriceModifier(_town, _tradeType));
         }
 
         private void AddNegotiatorModifier()

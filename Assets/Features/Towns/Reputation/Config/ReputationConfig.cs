@@ -13,5 +13,8 @@ namespace Features.Towns.Reputation.Config
 
         [field: SerializeField]
         public ReputationRewardData RewardData { get; private set; }
+
+        [field: SerializeField]
+        public int ReputationPerPricePercent { get; private set; } = 10;
     }
 }
