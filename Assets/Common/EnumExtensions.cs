@@ -43,5 +43,12 @@ namespace Common
 
             return list;
         }
+
+        public static IDictionary<TEnum, TValue> MakeDictionary<TEnum, TValue>(TValue defaultValue) where TEnum : Enum
+        {
+            return ((TEnum[])Enum
+                .GetValues(typeof(TEnum)))
+                .ToDictionary(e => e, _ => defaultValue);
+        }
     }
 }

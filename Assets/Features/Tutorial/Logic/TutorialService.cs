@@ -1,14 +1,69 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Features.Tutorial.Logic
 {
     public sealed class TutorialService
     {
+        public event Action<TutorialTopic, bool> TopicCompletionChanged;
         public event Action<TutorialTopic> OpenTutorialRequest;
-        
+
+        public IReadOnlyDictionary<TutorialTopic, bool> CompletedChapters => _completedChapters;
+
+        // TODO - BUG: MUST INITIALIZE THIS
+        private TutorialPersistenceService _tutorialPersistenceService;
+        private Dictionary<TutorialTopic, bool> _completedChapters = new();
+
+        public void Initialize()
+        {
+            var persistedTopics = _tutorialPersistenceService.ReadCompletedTopics();
+            _completedChapters = new Dictionary<TutorialTopic, bool>(persistedTopics);
+            foreach (var (chapter, isCompleted) in persistedTopics)
+            {
+                TopicCompletionChanged?.Invoke(chapter, isCompleted);
+            }
+        }
+
+        private void CleanUp()
+        {
+            _completedChapters.Clear();
+        }
+
+        public void ResetCompletedTopics()
+        {
+            foreach (var (topic, isCompleted) in _completedChapters)
+            {
+                if (!isCompleted)
+                    continue;
+
+                _completedChapters[topic] = false;
+                TopicCompletionChanged?.Invoke(topic, false);
+            }
+
+            Persist();
+        }
+
         public void OpenTutorial(TutorialTopic topic)
         {
             OpenTutorialRequest?.Invoke(topic);
+
+            CompleteTopic(topic);
+        }
+
+        private void CompleteTopic(TutorialTopic topic)
+        {
+            // skip if already completed
+            if (_completedChapters[topic])
+                return;
+
+            _completedChapters[topic] = true;
+            TopicCompletionChanged?.Invoke(topic, true);
+            Persist();
+        }
+
+        private void Persist()
+        {
+            _tutorialPersistenceService.WriteCompletedTopics(_completedChapters);
         }
     }
 }

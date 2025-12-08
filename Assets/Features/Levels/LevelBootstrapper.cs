@@ -1,6 +1,5 @@
 using Common;
 using Features.Levels.Config;
-using Features.Levels.Logic;
 using Features.Map;
 using Features.Map.Tiling;
 using Features.Player;

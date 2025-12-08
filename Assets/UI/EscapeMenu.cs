@@ -1,3 +1,4 @@
+using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,26 +19,30 @@ namespace UI
         private UnityEvent feedbackButtonPressed;
 
         [SerializeField, Required]
-        private Button giveUpButton;
-
-        [SerializeField, Required]
-        private Button feedbackButton;
+        private Button giveUpButton, resetTutorialButton, feedbackButton;
 
         private void Start()
         {
             giveUpButton.onClick.AddListener(GiveUp);
+            resetTutorialButton.onClick.AddListener(ResetTutorialState);
             feedbackButton.onClick.AddListener(ReportBug);
         }
 
         private void OnDestroy()
         {
             giveUpButton.onClick.RemoveListener(GiveUp);
+            resetTutorialButton.onClick.RemoveListener(ResetTutorialState);
             feedbackButton.onClick.RemoveListener(ReportBug);
         }
 
         private void ReportBug()
         {
             feedbackButtonPressed.Invoke();
+        }
+
+        private void ResetTutorialState()
+        {
+            GameplayContext.Instance.Services.TutorialService.ResetCompletedTopics();
         }
 
         private void GiveUp()
