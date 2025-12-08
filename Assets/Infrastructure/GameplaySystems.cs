@@ -1,5 +1,6 @@
 using Common;
 using Features.Levels.Logic;
+using Features.Tutorial;
 
 namespace Infrastructure
 {

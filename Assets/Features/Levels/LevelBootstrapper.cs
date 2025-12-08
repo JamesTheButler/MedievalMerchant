@@ -41,6 +41,7 @@ namespace Features.Levels
             var player = new PlayerModel(levelInfo.StartPlayerFunds);
 
             GameplayContext.Instance.Model.Initialize(player, towns, flagMap);
+            GameplayContext.Instance.Services.Initialize();
             GameplayContext.Instance.Systems.Initialize();
 
             var startTown = towns.GetRandom();

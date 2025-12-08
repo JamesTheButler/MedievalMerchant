@@ -14,6 +14,7 @@ namespace Infrastructure
         public GameplayModel Model { get; private set; } = new();
         public GameplaySystems Systems { get; private set; } = new();
         public Selection Selection { get; private set; } = new();
+        public GameplayServices Services { get; private set; } = new();
 
         private void Awake()
         {
@@ -29,6 +30,7 @@ namespace Infrastructure
         private void OnDestroy()
         {
             Systems.CleanUp();
+            Services.CleanUp();
         }
     }
 }

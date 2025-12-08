@@ -3,6 +3,7 @@ using Features.Goods.Config;
 using Features.Towns.Config;
 using Features.Towns.Development.UI.DevelopmentGauge;
 using Features.Towns.Flags.Config;
+using Features.Tutorial.Data;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -45,6 +46,9 @@ namespace Infrastructure
 
         [field: SerializeField, Required]
         public TownResources TownResources { get; private set; }
+
+        [field: SerializeField, Required]
+        public TutorialResources TutorialResources { get; private set; }
 
         private void Awake()
         {
