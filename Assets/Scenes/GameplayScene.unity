@@ -867,7 +867,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1663364003}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameTicker, Assembly-CSharp
         m_MethodName: StartTicking
         m_Mode: 1
@@ -3541,6 +3541,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7805269043494467498, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: af5c96b5aa1b04a48ac5088cd78efe52, type: 3}
     - target: {fileID: 7805269043494467498, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -12068,12 +12072,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1663364000}
-  - component: {fileID: 1663364003}
-  - component: {fileID: 1663364002}
+  - component: {fileID: 1663364005}
   - component: {fileID: 1663364001}
   - component: {fileID: 1663364004}
   m_Layer: 0
-  m_Name: Tickers
+  m_Name: Tick Service Handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12106,69 +12109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa8d10805ed14a55b2573d6580c37e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1663364002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1663363999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe97491aab04347b984a1379ed5982f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1663364003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1663363999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48915643e82a4d278af8ec5973547160, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onTick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1663364002}
-        m_TargetAssemblyTypeName: Data.DateTicker, Assembly-CSharp
-        m_MethodName: Tick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1663364001}
-        m_TargetAssemblyTypeName: Data.TownTicker, Assembly-CSharp
-        m_MethodName: Tick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1663364004}
-        m_TargetAssemblyTypeName: Features.Player.PlayerTicker, Assembly-CSharp
-        m_MethodName: Tick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1663364004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12181,6 +12121,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f1902371a84aa986e3c7d61309194d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1663364005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663363999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ff8f4625a04a15880266efdec21c13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.TickingServiceUpdater
 --- !u!1001 &1786801732
 PrefabInstance:
   m_ObjectHideFlags: 0

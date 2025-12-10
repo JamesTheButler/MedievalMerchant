@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common;
 
 namespace Features.Tutorial.Logic
 {
-    public sealed class TutorialService
+    public sealed class TutorialService : IService
     {
         public event Action<TutorialTopic, bool> TopicCompletionChanged;
         public event Action<TutorialTopic> OpenTutorialRequest;
 
         public IReadOnlyDictionary<TutorialTopic, bool> CompletedChapters => _completedChapters;
 
-        // TODO - BUG: MUST INITIALIZE THIS
-        private TutorialPersistenceService _tutorialPersistenceService;
+        private readonly TutorialPersistenceService _persistenceService;
         private Dictionary<TutorialTopic, bool> _completedChapters = new();
+
+        public TutorialService(TutorialPersistenceService persistenceService)
+        {
+            _persistenceService = persistenceService;
+        }
 
         public void Initialize()
         {
-            var persistedTopics = _tutorialPersistenceService.ReadCompletedTopics();
+            var persistedTopics = _persistenceService.ReadCompletedTopics();
             _completedChapters = new Dictionary<TutorialTopic, bool>(persistedTopics);
             foreach (var (chapter, isCompleted) in persistedTopics)
             {
@@ -24,7 +29,7 @@ namespace Features.Tutorial.Logic
             }
         }
 
-        private void CleanUp()
+        public void CleanUp()
         {
             _completedChapters.Clear();
         }
@@ -63,7 +68,7 @@ namespace Features.Tutorial.Logic
 
         private void Persist()
         {
-            _tutorialPersistenceService.WriteCompletedTopics(_completedChapters);
+            _persistenceService.WriteCompletedTopics(_completedChapters);
         }
     }
 }
