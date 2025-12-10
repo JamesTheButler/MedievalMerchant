@@ -13,7 +13,6 @@ namespace Features.Player
         public Inventory.Inventory Inventory { get; }
         public RetinueManager RetinueManager { get; }
         public CaravanManager CaravanManager { get; }
-
         public ModifiableVariable FundsChange { get; }
 
         public PlayerModel(float startFunds)
@@ -21,25 +20,11 @@ namespace Features.Player
             FundsChange = new ModifiableVariable("Funds per day", true);
 
             RetinueManager = new RetinueManager();
-            CaravanManager = new CaravanManager(this);
+            CaravanManager = new CaravanManager();
 
             var inventoryPolicy = new SlotCountInventoryPolicy(CaravanManager.SlotCount);
             Inventory = new Inventory.Inventory(inventoryPolicy);
             Inventory.AddFunds(startFunds);
-        }
-
-        public void Tick()
-        {
-            // apply upkeep only while traveling, not resting
-            if (Location.CurrentTown == null)
-            {
-                ApplyUpkeep();
-            }
-        }
-
-        private void ApplyUpkeep()
-        {
-            Inventory.AddFunds(FundsChange);
         }
     }
 }

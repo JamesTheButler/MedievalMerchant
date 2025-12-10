@@ -42,7 +42,7 @@ namespace Features.Towns.Development.Config
             if (differentGoodCount <= 0)
                 return trendsList[0];
 
-            if (differentGoodCount > trendsList.Count)
+            if (differentGoodCount >= trendsList.Count)
                 return trendsList[^1] * (differentGoodCount - trendsList.Count + 1);
 
             return trendsList[differentGoodCount];

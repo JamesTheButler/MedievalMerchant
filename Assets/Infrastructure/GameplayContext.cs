@@ -11,10 +11,10 @@ namespace Infrastructure
     {
         public static GameplayContext Instance { get; private set; }
 
-        public GameplayModel Model { get; private set; } = new();
-        public GameplaySystems Systems { get; private set; } = new();
-        public Selection Selection { get; private set; } = new();
-        public GameplayServices Services { get; private set; } = new();
+        public GameplayModel Model { get; } = new();
+        public GameplaySystems Systems { get; } = new();
+        public Selection Selection { get; } = new();
+        public GameplayServices Services { get; } = new();
 
         private void Awake()
         {
