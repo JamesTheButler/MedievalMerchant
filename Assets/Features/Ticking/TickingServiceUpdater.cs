@@ -7,7 +7,7 @@ namespace Features.Ticking
     {
         private TickingService _tickingService;
 
-        private void Awake()
+        private void Start()
         {
             _tickingService = GameplayContext.Instance.Services.TickingService;
         }

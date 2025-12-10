@@ -23,9 +23,6 @@ namespace Features.Towns.Development.Config
         [field: SerializeField, SerializedDictionary]
         public SerializedDictionary<Tier, DevelopmentMilestoneDataSet> Milestones { get; private set; }
 
-        [field: SerializeField]
-        public float DevelopmentMultiplier { get; private set; } = 1f;
-
         public DevelopmentTrend GetTrend(float trend)
         {
             if (trend < GrowthTrendConfig[DevelopmentTrend.VeryDown].Threshold) return DevelopmentTrend.VeryDown;

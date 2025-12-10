@@ -3,6 +3,7 @@ using Common;
 using Features.Levels.Logic;
 using Features.Player;
 using Features.Ticking;
+using Features.Towns;
 
 namespace Infrastructure
 {
@@ -23,6 +24,11 @@ namespace Infrastructure
                 new PlayerUpkeepSystem(),
                 LevelConditionManager
             };
+
+            foreach (var town in GameplayContext.Instance.Model.Towns.Values)
+            {
+                _systems.Add(new TownTickSystem(town));
+            }
 
             foreach (var system in _systems)
             {

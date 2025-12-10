@@ -20,6 +20,9 @@ namespace Features.Player
             get => _currentTown;
             set
             {
+                if (_currentTown == value)
+                    return;
+
                 _currentTown = value;
 
                 var action = _currentTown == null ? TownExited : TownEntered;

@@ -1,15 +1,23 @@
+using System.Collections.Generic;
+
 namespace Common.Modifiable
 {
     public sealed class ObservableSum : Observable<float>
     {
+        private readonly List<Observable<float>> _observables = new();
+
         public void AddValue(Observable<float> value)
         {
+            _observables.Add(value);
             value.Observe(Refresh);
             Value += value.Value;
         }
 
         public void RemoveValue(Observable<float> value)
         {
+            if (!_observables.Contains(value))
+                return;
+
             value.StopObserving(Refresh);
             Value -= value.Value;
         }

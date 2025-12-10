@@ -96,7 +96,6 @@ namespace Features.Towns
         public void Tick()
         {
             Produce();
-            DevelopmentManager.UpdateDevelopment();
             Consume();
         }
 

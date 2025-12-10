@@ -36,7 +36,7 @@ namespace Features.Towns.Development.Logic
 
             _town.ProductionManager.ProductionAdded += OnProducerAdded;
             _town.Inventory.GoodUpdated += OnGoodAdded;
-            
+
             RefreshDevelopmentTable();
         }
 
@@ -55,7 +55,8 @@ namespace Features.Towns.Development.Logic
         private void OnGoodAdded(Good addedGood, int _)
         {
             // early out, as we only care about non-produced goods
-            if (_town.ProductionManager.IsProduced(addedGood)) return;
+            if (_town.ProductionManager.IsProduced(addedGood))
+                return;
 
             var goodTier = _goodsResources.ConfigData[addedGood].Tier;
             RefreshGoodsInInventoryModifiers(goodTier);
@@ -101,10 +102,9 @@ namespace Features.Towns.Development.Logic
             _storedGoodsModifier[goodTier] = modifier;
         }
 
-        public void UpdateDevelopment()
+        public void AddDevelopmentChange(float developmentChange)
         {
-            var multiplier = _townDevelopmentConfig.DevelopmentMultiplier;
-            var developmentScore = DevelopmentScore + DevelopmentTrend * multiplier;
+            var developmentScore = DevelopmentScore + developmentChange;
             developmentScore = Mathf.Clamp(developmentScore, 0, 100);
             DevelopmentScore.Value = developmentScore;
             UpdateGrowthTrend();
@@ -120,7 +120,7 @@ namespace Features.Towns.Development.Logic
 
             Tier.Value = newTier;
             RefreshDevelopmentTable();
-            DevelopmentScore.Value = 0; // reset dev score
+            DevelopmentScore.Value = 0;
             Debug.Log($"{_town.Name} upgraded to {Tier}");
         }
 
