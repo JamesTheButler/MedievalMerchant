@@ -9,8 +9,11 @@ namespace Common.Config
     {
         [field: SerializeField, Min(0.05f)]
         public float SecondsPerTick  { get; private set; } = .1f;
-    
+
         [field: SerializeField, Min(1)]
-        public int TicksPerDay { get; private set; }
+        public int TicksPerDay { get; private set; } = 10;
+
+        [field: SerializeField, Min(0.1f)]
+        public float SecondsPerDay { get; private set; } = 2.5f;
     }
 }
