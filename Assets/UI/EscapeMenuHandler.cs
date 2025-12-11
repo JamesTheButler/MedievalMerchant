@@ -1,3 +1,6 @@
+using Features.Ticking;
+using Infrastructure;
+using NaughtyAttributes.Test;
 using UI.Popups;
 using UnityEngine;
 
@@ -8,11 +11,14 @@ namespace UI
         [SerializeField]
         private GameObject escapeMenuRoot;
 
+        private TickingService _tickingService;
+
         private bool IsActive => escapeMenuRoot.activeSelf;
 
         private void Start()
         {
-            escapeMenuRoot.SetActive(false);
+            _tickingService = GameplayContext.Instance.Services.TickingService;
+            ToggleEscMenu(false);
         }
 
         public void OnCancel()
@@ -24,7 +30,20 @@ namespace UI
                 return;
             }
 
-            escapeMenuRoot.SetActive(!IsActive);
+            ToggleEscMenu(!IsActive);
+        }
+
+        private void ToggleEscMenu(bool isActive)
+        {
+            escapeMenuRoot.SetActive(isActive);
+            if (isActive)
+            {
+                _tickingService.Pause();
+            }
+            else
+            {
+                _tickingService.Resume();
+            }
         }
     }
 }

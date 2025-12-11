@@ -1,3 +1,4 @@
+using Features.Ticking;
 using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
