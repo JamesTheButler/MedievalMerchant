@@ -27,7 +27,10 @@ namespace Features.Towns
         {
             // something weird happened in this case
             if (_consumptionTickers.ContainsKey(good))
+            {
+                Debug.LogWarning($"A production ticker has already been added for '{good}'");
                 return;
+            }
 
             // don't consume goods that are produced
             if (_town.ProductionManager.IsProduced(good))

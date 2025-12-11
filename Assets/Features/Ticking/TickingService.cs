@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common;
 using Common.Config;
 
@@ -75,7 +76,8 @@ namespace Features.Ticking
                 DayPassed?.Invoke();
             }
 
-            foreach (var ticker in _tickers)
+            // .toArray() avoids CollectionModifiedExceptions
+            foreach (var ticker in _tickers.ToArray())
             {
                 ticker.Tick();
             }
