@@ -7,14 +7,14 @@ namespace Features.Towns
     // - development
     // - consumption
     // - production
-    public sealed class TownTickSystem : ISystem
+    public sealed class TownDevelopmentSystem : ISystem
     {
         private readonly Town _town;
 
         private FloatBasedTicker _developmentTicker;
         private TickingService _tickingService;
 
-        public TownTickSystem(Town town)
+        public TownDevelopmentSystem(Town town)
         {
             _town = town;
         }

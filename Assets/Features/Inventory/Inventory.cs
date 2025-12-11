@@ -10,7 +10,7 @@ namespace Features.Inventory
 {
     public sealed class Inventory
     {
-        // TODO - STYLE: should add a "new good added" or "good removed" action
+        public event Action<Good> GoodAdded, GoodRemoved;
         public event Action<Good, int> GoodUpdated;
 
         public Observable<float> Funds { get; } = new();
@@ -56,6 +56,11 @@ namespace Features.Inventory
         {
             if (amount == 0) return;
 
+            if (!_goods.ContainsKey(good))
+            {
+                GoodAdded?.Invoke(good);
+            }
+            
             _goods.TryAdd(good, 0);
             _goods[good] += amount;
             GoodUpdated?.Invoke(good, _goods[good]);
@@ -71,6 +76,7 @@ namespace Features.Inventory
             if (_goods[good] <= 0)
             {
                 _goods.Remove(good);
+                GoodRemoved?.Invoke(good);
             }
 
             GoodUpdated?.Invoke(good, _goods.GetValueOrDefault(good, 0));
