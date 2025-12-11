@@ -11,18 +11,18 @@ namespace Features.Towns.Config
         menuName = AssetMenu.ConfigDataFolder + nameof(TownConfig))]
     public sealed class TownConfig : ScriptableObject
     {
-        [field: SerializeField, SerializedDictionary("Town Tier", "Funds Per Tick")]
+        [field: SerializeField, SerializedDictionary("Town Tier", "Funds /day")]
         public SerializedDictionary<Tier, float> FundRate { get; private set; }
 
         [Header("Consumption Rates")]
-        [SerializeField, SerializedDictionary("Good Tier", "Consumption Rate")]
-        private SerializedDictionary<Tier, int> tier1ConsumptionRate;
+        [SerializeField, SerializedDictionary("Good Tier", "Consumption /day")]
+        private SerializedDictionary<Tier, float> tier1ConsumptionRate;
 
-        [SerializeField, SerializedDictionary("Good Tier", "Consumption Rate")]
-        private SerializedDictionary<Tier, int> tier2ConsumptionRate;
+        [SerializeField, SerializedDictionary("Good Tier", "Consumption /day")]
+        private SerializedDictionary<Tier, float> tier2ConsumptionRate;
 
-        [SerializeField, SerializedDictionary("Good Tier", "Consumption Rate")]
-        private SerializedDictionary<Tier, int> tier3ConsumptionRate;
+        [SerializeField, SerializedDictionary("Good Tier", "Consumption /day")]
+        private SerializedDictionary<Tier, float> tier3ConsumptionRate;
 
         [SerializeField]
         private int minStartFunds = 300, maxStartFunds = 700;
@@ -30,7 +30,7 @@ namespace Features.Towns.Config
         [SerializeField]
         private int minStartGoods = 5, maxStartGoods = 25;
 
-        public int? GetConsumptionRate(Tier townTier, Tier goodTier)
+        public float? GetConsumptionRate(Tier townTier, Tier goodTier)
         {
             var limitDict = townTier switch
             {

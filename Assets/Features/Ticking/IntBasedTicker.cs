@@ -45,9 +45,9 @@ namespace Features.Ticking
             }
 
             _ticksPerDay = ticksPerDay;
-            RecalculateRates();
-
             _isInitialized = true;
+            
+            RecalculateRates();
         }
 
         public void Tick()

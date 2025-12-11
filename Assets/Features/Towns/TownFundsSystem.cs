@@ -6,8 +6,8 @@ namespace Features.Towns
     public sealed class TownFundsSystem : ISystem
     {
         private readonly Town _town;
-        private readonly TickingService _tickingService;
 
+        private TickingService _tickingService;
         private FloatBasedTicker _fundsChangeTicker;
 
         public TownFundsSystem(Town town)
@@ -17,6 +17,8 @@ namespace Features.Towns
 
         public void Initialize()
         {
+            _tickingService = GameplayContext.Instance.Services.TickingService;
+
             _fundsChangeTicker = new FloatBasedTicker(OnFundsChangeTick, _town.FundsChange);
             _town.FundsChange.Observe(OnFundsRateChanged);
             _tickingService.RegisterTicker(_fundsChangeTicker);

@@ -6,17 +6,18 @@ using UnityEngine;
 
 namespace Features.Towns
 {
-    public sealed class ConsumptionSystem : ISystem
+    public sealed class TownConsumptionSystem : ISystem
     {
         private readonly Town _town;
         private readonly TickingService _tickingService;
-        private readonly Dictionary<Good, IntBasedTicker> _consumptionTickers = new();
-        
         private readonly Inventory.Inventory _townInventory;
 
-        public ConsumptionSystem(Town town)
+        private readonly Dictionary<Good, IntBasedTicker> _consumptionTickers = new();
+
+        public TownConsumptionSystem(Town town)
         {
             _town = town;
+            _tickingService = GameplayContext.Instance.Services.TickingService;
             _townInventory = _town.Inventory;
             // TODO MED-55
             //  _town.ProductionManager.ProducerAdded => might need to remove the ticker
@@ -33,7 +34,10 @@ namespace Features.Towns
                 return;
 
             // TODO: towns need to keep a list of observable<floats> for all the consumption rates => they should be modifiable
-            var consumptionTicker = new IntBasedTicker(amount => OnConsumptionTick(good, amount), _town.ConsumptionRate);
+            var consumptionTicker = new IntBasedTicker(
+                amount => OnConsumptionTick(good, amount),
+                _town.ConsumptionRate);
+
             _tickingService.RegisterTicker(consumptionTicker);
             _consumptionTickers.Add(good, consumptionTicker);
         }
@@ -45,12 +49,16 @@ namespace Features.Towns
 
         private void OnGoodRemoved(Good good)
         {
-            var ticker = _consumptionTickers[good];
-            if (ticker == null)
+            // don't consume goods that are produced
+            if (_town.ProductionManager.IsProduced(good))
+                return;
+
+            if (!_consumptionTickers.TryGetValue(good, out var ticker))
             {
                 Debug.LogWarning($"Could not find consumption ticker for good '{good}'");
                 return;
             }
+
             _tickingService.UnregisterTicker(ticker);
             _consumptionTickers.Remove(good);
         }

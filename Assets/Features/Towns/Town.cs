@@ -4,9 +4,7 @@ using System.Linq;
 using Common;
 using Common.Modifiable;
 using Common.Types;
-using Features.Goods.Config;
 using Features.Inventory;
-using Features.Towns.Config;
 using Features.Towns.Development.Logic;
 using Features.Towns.Development.Logic.Milestones;
 using Features.Towns.Flags;
@@ -39,13 +37,15 @@ namespace Features.Towns
         public Vector2 WorldLocation { get; }
         public HashSet<Good> AvailableGoods { get; }
         public Region MainRegion { get; }
+
         public Regions Regions { get; }
 
-        private readonly SlotBasedInventoryPolicy _inventoryPolicy;
-        private readonly TownConfig _townConfig;
-        private readonly GoodsResources _goodsResources;
+        // TODO - Feature: each good needs an Observable<float> consumption rate once implement consumption modifiers
+        public Observable<float> ConsumptionRate { get; }
 
         public IReadOnlyObservable<Tier> Tier => DevelopmentManager.Tier;
+
+        private readonly SlotBasedInventoryPolicy _inventoryPolicy;
 
         public Town(
             Vector2Int gridLocation,
@@ -61,9 +61,8 @@ namespace Features.Towns
             Regions = regions;
             MainRegion = regions.GetRandom();
 
-            _townConfig = ConfigurationManager.Configurations.TownConfig;
+            var townConfig = ConfigurationManager.Configurations.TownConfig;
             var townResources = ResourceManager.Instance.TownResources;
-            _goodsResources = ResourceManager.Instance.GoodsResources;
             AvailableGoods = availableGoods.ToHashSet();
 
             Name = townResources.NameGenerators[MainRegion].GenerateName();
@@ -77,26 +76,24 @@ namespace Features.Towns
             MilestoneManager = new MilestoneManager(this);
             ReputationManager = new ReputationManager(this);
 
+            const Tier tempTier = Common.Types.Tier.Tier1;
+            var consumptionRate = townConfig.GetConsumptionRate(tempTier, tempTier) ?? 0f;
+            ConsumptionRate = new Observable<float>(consumptionRate);
+
             DevelopmentManager.Tier.Observe(OnTierChanged);
             ProductionManager.ProductionAdded += OnProductionManagerOnProductionAdded;
             MilestoneManager.MilestoneModifierAdded += OnMilestoneModifierAdded;
             MilestoneManager.MilestoneModifierRemoved += OnMilestoneModifierRemoved;
 
-            Inventory.AddFunds(_townConfig.GetStartFunds());
-            var baseModifier = new BaseTownFundsProduction(_townConfig.FundRate[StartTier], StartTier);
+            Inventory.AddFunds(townConfig.GetStartFunds());
+            var baseModifier = new BaseTownFundsProduction(townConfig.FundRate[StartTier], StartTier);
             FundsChange = new ModifiableVariable("Funds change per day", true, baseModifier);
 
             var startGood = AvailableGoods.GetRandom();
             AddProduction(startGood, 0);
-            Inventory.AddGood(startGood, _townConfig.GetStartGoods());
+            Inventory.AddGood(startGood, townConfig.GetStartGoods());
 
             FlagInfo = flagFactory.CreateFlagInfo(MainRegion);
-        }
-
-        public void Tick()
-        {
-            Produce();
-            Consume();
         }
 
         public void AddProduction(Good good, int index)
@@ -127,28 +124,6 @@ namespace Features.Towns
         private void Produce()
         {
             ProductionManager.Produce();
-            Inventory.AddFunds(FundsChange.Value);
-        }
-
-        private void Consume()
-        {
-            var townTier = Tier.Value;
-            foreach (var good in Inventory.Goods.Keys.ToList())
-            {
-                // don't consume goods that are produced
-                if (ProductionManager.IsProduced(good)) continue;
-
-                var goodTier = _goodsResources.ConfigData[good].Tier;
-                var consumptionRate = _townConfig.GetConsumptionRate(townTier, goodTier);
-
-                if (consumptionRate == null)
-                {
-                    Debug.LogError($"No consumption rate is set for town {townTier} and good {goodTier}.");
-                    continue;
-                }
-
-                Inventory.RemoveGood(good, consumptionRate.Value);
-            }
         }
 
         private void OnMilestoneModifierAdded(IModifier modifier)

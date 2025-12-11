@@ -4,6 +4,8 @@ using Features.Levels.Logic;
 using Features.Player;
 using Features.Ticking;
 using Features.Towns;
+using Features.Towns.Development.Logic;
+using Features.Towns.Production.Logic;
 
 namespace Infrastructure
 {
@@ -12,29 +14,19 @@ namespace Infrastructure
         // TODO - cleanup: this should not be here
         public LevelConditionManager LevelConditionManager { get; } = new();
 
-        private List<ISystem> _systems;
+        private List<ISystem> _systems = new();
 
         public void Initialize()
         {
-            _systems = new List<ISystem>
-            {
-                new DividendsSystem(),
-                new PlayerTickSystem(),
-                new DateSystem(),
-                new PlayerUpkeepSystem(),
-                LevelConditionManager
-            };
-
-            foreach (var town in GameplayContext.Instance.Model.Towns.Values)
-            {
-                _systems.Add(new TownTickSystem(town));
-            }
+            AddGlobalSystems();
+            AddTownSystems();
 
             foreach (var system in _systems)
             {
                 system.Initialize();
             }
         }
+
 
         public void CleanUp()
         {
@@ -44,6 +36,27 @@ namespace Infrastructure
             }
 
             _systems.Clear();
+        }
+
+        private void AddGlobalSystems()
+        {
+            _systems.Add(new DividendsSystem());
+            _systems.Add(new PlayerTickSystem());
+            _systems.Add(new DateSystem());
+            _systems.Add(new PlayerUpkeepSystem());
+            _systems.Add(LevelConditionManager);
+        }
+
+        private void AddTownSystems()
+        {
+            var model = GameplayContext.Instance.Model;
+            foreach (var town in model.Towns.Values)
+            {
+                _systems.Add(new TownFundsSystem(town));
+                _systems.Add(new TownProductionSystem(town));
+                _systems.Add(new TownDevelopmentSystem(town));
+                _systems.Add(new TownConsumptionSystem(town));
+            }
         }
     }
 }

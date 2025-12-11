@@ -1,12 +1,8 @@
 using Features.Ticking;
 using Infrastructure;
 
-namespace Features.Towns
+namespace Features.Towns.Development.Logic
 {
-    // takes care of
-    // - development
-    // - consumption
-    // - production
     public sealed class TownDevelopmentSystem : ISystem
     {
         private readonly Town _town;
