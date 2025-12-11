@@ -1,6 +1,6 @@
-﻿using Common;
+﻿using AYellowpaper.SerializedCollections;
+using Common;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace Features.Tutorial.Data
 {
@@ -9,7 +9,7 @@ namespace Features.Tutorial.Data
         menuName = AssetMenu.ResourceFolder + nameof(TutorialResources))]
     public sealed class TutorialResources : ScriptableObject
     {
-        [field: SerializeField]
+        [field: SerializeField, SerializedDictionary("Topic", "Data")]
         public SerializedDictionary<TutorialTopic, TutorialTopicData> Topics { get; private set; }
     }
 }
