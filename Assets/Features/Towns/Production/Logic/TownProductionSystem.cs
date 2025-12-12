@@ -45,7 +45,7 @@ namespace Features.Towns.Production.Logic
             }
 
             RegisterProductionTicker(producer);
-            //RegisterIngredientTickers(producer);
+            RegisterIngredientTickers(producer);
         }
 
         private void RegisterProductionTicker(Producer producer)
