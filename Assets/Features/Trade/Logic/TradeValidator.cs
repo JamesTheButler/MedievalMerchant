@@ -26,6 +26,9 @@ namespace Features.Trade.Logic
             var buyingInventory = tradeType == TradeType.Buy ? _player.Inventory : _town.Inventory;
             var sellingInventory = tradeType == TradeType.Sell ? _player.Inventory : _town.Inventory;
 
+            if (tradeType == TradeType.Sell && _town.ProductionManager.IsProduced(good))
+                return TradeResult.Failed($"This is produced {_town.Name}. They aren't interested in buying it.");
+
             // check if inventory policy prevents the purchase of the good
             var relevantInventoryPolicy = buyingInventory.InventoryPolicy;
             var inventoryPolicyResult = relevantInventoryPolicy.CanAdd(good, amount);
