@@ -1,12 +1,10 @@
 using Common.Types;
 using Features.Towns;
-using Features.Trade;
-using Features.Trade.UI;
 using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace UI
+namespace Features.Trade.UI
 {
     public sealed class TradeUIHandler : MonoBehaviour
     {
@@ -27,6 +25,7 @@ namespace UI
 
         public void Show(Good good, TradeType tradeType)
         {
+            tradeUI.Hide();
             tradeUI.gameObject.SetActive(true);
             tradeUI.Initialize(good, tradeType);
         }
