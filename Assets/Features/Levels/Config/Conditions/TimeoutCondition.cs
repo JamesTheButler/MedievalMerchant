@@ -23,7 +23,6 @@ namespace Features.Levels.Config.Conditions
 
         public override string Description => GetDescription();
 
-
         public override void Initialize()
         {
             _currentDate = GameplayContext.Instance.Model.Date;

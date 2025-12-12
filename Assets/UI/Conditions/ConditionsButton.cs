@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace UI.Conditions
 {
-    public class ConditionsButton : MonoBehaviour
+    public sealed class ConditionsButton : MonoBehaviour
     {
         [SerializeField, Required]
         private TMP_Text text;

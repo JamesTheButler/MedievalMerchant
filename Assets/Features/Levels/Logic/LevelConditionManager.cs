@@ -14,9 +14,7 @@ namespace Features.Levels.Logic
         public IReadOnlyList<LossCondition> LossConditions => _lossConditions;
 
         public event Action LevelWon, LevelLost;
-
         public event Action<int> CompletionCountChanged;
-
         public Observable<bool> IsLossClose { get; } = new();
 
         private List<WinCondition> _winConditions = new();
