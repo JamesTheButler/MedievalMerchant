@@ -38,7 +38,9 @@ namespace Features.Trade.UI
         private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Instance.Model);
         private readonly Lazy<Selection> _selection = new(() => GameplayContext.Instance.Selection);
         private readonly Lazy<Colors> _colors = new(() => ResourceManager.Instance.Colors);
-        private readonly Lazy<GoodsResources> _configurationManager = new(() => ResourceManager.Instance.GoodsResources);
+
+        private readonly Lazy<GoodsResources>
+            _configurationManager = new(() => ResourceManager.Instance.GoodsResources);
 
         private bool _isInitialized;
 
@@ -76,9 +78,9 @@ namespace Features.Trade.UI
             _priceCalculator.Price.Observe(OnGoodPriceChanged);
             priceTooltip.SetData(_priceCalculator.Price);
 
-            SetAmount(0);
-
             gameObject.SetActive(true);
+
+            SetMaxPrice();
 
             _isInitialized = true;
         }
@@ -192,14 +194,14 @@ namespace Features.Trade.UI
         private void CompleteTrade()
         {
             var tradeInfo = new TradeInfo(_tradeType, _good, _tradeAmount, _totalPrice, 1);
-            
+
             _buyingInventory.RemoveFunds(_totalPrice);
             _sellingInventory.AddFunds(_totalPrice);
-            
+
             _buyingInventory.AddGood(_good, _tradeAmount);
             _sellingInventory.RemoveGood(_good, _tradeAmount);
             _selection.Value.SelectedTown.ResolveTrade(tradeInfo);
-            
+
             Hide();
         }
 

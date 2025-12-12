@@ -20,7 +20,7 @@ namespace Features.Towns.Reputation.Logic
 
         public IReadOnlyDictionary<DateTime, ReputationLogEntry> ReputationLog => _reputationLog;
         public IReadOnlyList<IModifier> Modifiers => _modifiers;
-        public Observable<bool> IsNeglected { get; private set; } = new();
+        public Observable<bool> IsNeglected { get; set; } = new();
 
         private readonly GameplayModel _model;
         private readonly ReputationConfig _config;
@@ -28,8 +28,6 @@ namespace Features.Towns.Reputation.Logic
 
         private readonly List<IModifier> _modifiers = new();
         private readonly Dictionary<DateTime, ReputationLogEntry> _reputationLog = new();
-
-        private Date _neglectActivationDate = new();
 
         public ReputationManager(Town town)
         {
@@ -39,7 +37,6 @@ namespace Features.Towns.Reputation.Logic
 
             _town = town;
 
-            ResetNeglectDate();
             Bind();
         }
 
@@ -48,9 +45,21 @@ namespace Features.Towns.Reputation.Logic
             UpdateReputation(reputationLoss, "Your thief was caught stealing!");
         }
 
+        public void ApplyNeglect()
+        {
+            var currentReputation = Reputation.Value;
+            if (currentReputation <= 0)
+                return;
+
+            var activationDelay = _config.NeglectData.ActivationDelayInDays;
+            var message = $"The town has been neglected for more than {activationDelay} days.";
+            var clampedNeglect = Mathf.Min(_config.NeglectData.ReputationCost,
+                currentReputation - _config.NeglectData.ReputationCost);
+            UpdateReputation(clampedNeglect, message);
+        }
+
         private void Bind()
         {
-            _model.Date.Changed += OnDateChanged;
             _town.TradeCompleted += OnTradeCompleted;
             _town.DevelopmentManager.Tier.Observe(OnTownUpgrade, false);
             _town.ProductionManager.ProductionAdded += OnProductionBuildingBuilt;
@@ -61,7 +70,6 @@ namespace Features.Towns.Reputation.Logic
 
         private void Unbind()
         {
-            _model.Date.Changed -= OnDateChanged;
             _town.TradeCompleted -= OnTradeCompleted;
             _town.DevelopmentManager.Tier.StopObserving(OnTownUpgrade);
             _town.ProductionManager.ProductionAdded -= OnProductionBuildingBuilt;
@@ -72,11 +80,6 @@ namespace Features.Towns.Reputation.Logic
 
         private void OnTradeCompleted(TradeInfo tradeInfo)
         {
-            if (tradeInfo.HaggleLevel >= 0)
-            {
-                ResetNeglectDate();
-            }
-
             var tradeVolumePerRep = _config.RewardData.TradeVolumePerReputationPoint;
             var repChangeFloat = tradeInfo.FinalPrice / tradeVolumePerRep;
             // round to 1 digit after comma
@@ -102,21 +105,6 @@ namespace Features.Towns.Reputation.Logic
             UpdateReputation(repChange, message);
         }
 
-        private void OnDateChanged(Date date)
-        {
-            var isNeglectDateReached = date >= _neglectActivationDate;
-            var isAboveNeglectThreshold = Reputation.Value >= _config.NeglectData.ReputationThreshold;
-
-            if (isAboveNeglectThreshold || !isNeglectDateReached && Reputation.Value <= 0)
-                return;
-
-            IsNeglected.Value = true;
-            _neglectActivationDate.AddDays(_config.NeglectData.IntervalInDays);
-            var message =
-                $"The town has been neglected for more than {_config.NeglectData.ActivationDelayInDays} days.";
-            UpdateReputation(_config.NeglectData.ReputationCost, message);
-        }
-
         private void OnTownUpgrade(Tier tier)
         {
             var repChange = tier switch
@@ -129,22 +117,10 @@ namespace Features.Towns.Reputation.Logic
             UpdateReputation(repChange, $"{_town.Name} was upgrade to {tier.ToDisplayString()}");
         }
 
-        private void ResetNeglectDate()
-        {
-            _neglectActivationDate = _model.Date + _config.NeglectData.ActivationDelayInDays;
-            IsNeglected.Value = false;
-        }
-
         private void UpdateReputation(float repChange, string reason)
         {
             // TODO - bug: apply modifiers
             Reputation.Value = Mathf.Clamp(Reputation.Value + repChange, -100, 100);
-
-            if (repChange > 0)
-            {
-                ResetNeglectDate();
-            }
-
 
             var date = _model.Date;
             var logEntry = new ReputationLogEntry(date, repChange, Reputation.Value, reason);

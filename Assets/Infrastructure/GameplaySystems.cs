@@ -6,6 +6,7 @@ using Features.Ticking;
 using Features.Towns;
 using Features.Towns.Development.Logic;
 using Features.Towns.Production.Logic;
+using Features.Towns.Reputation.Logic;
 
 namespace Infrastructure
 {
@@ -56,6 +57,7 @@ namespace Infrastructure
                 _systems.Add(new TownProductionSystem(town));
                 _systems.Add(new TownDevelopmentSystem(town));
                 _systems.Add(new TownConsumptionSystem(town));
+                //_systems.Add(new TownNeglectSystem(town)); // TODO - Milestone 0.2.0
             }
         }
     }

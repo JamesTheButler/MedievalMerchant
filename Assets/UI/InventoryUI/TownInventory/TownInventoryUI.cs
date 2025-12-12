@@ -114,7 +114,7 @@ namespace UI.InventoryUI.TownInventory
 
         private void OnReputationChanged(float reputation)
         {
-            var neglectedIcon = _town.ReputationManager.IsNeglected  ? " :(" : "";
+            var neglectedIcon = _town.ReputationManager.IsNeglected ? " :(" : "";
             reputationText.text = $"Rep: {reputation:0.#}{neglectedIcon}";
         }
 
@@ -151,6 +151,10 @@ namespace UI.InventoryUI.TownInventory
 
             _town.DevelopmentManager.DevelopmentScore.StopObserving(OnDevelopmentChanged);
             _town.Tier.StopObserving(TownUpgrade);
+
+            _town.ReputationManager.Reputation.StopObserving(OnReputationChanged);
+            _town.ReputationManager.IsNeglected.StopObserving(OnNeglectedChanged);
+
             developmentGauge.Unbind();
             fundsTooltip.SetData(_town.FundsChange);
 
