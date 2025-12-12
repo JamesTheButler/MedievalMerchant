@@ -1,9 +1,9 @@
 using System;
 using AYellowpaper.SerializedCollections;
-using Common;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Towns;
+using Features.Trade;
 using Infrastructure;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,7 +13,7 @@ namespace UI.InventoryUI.TownInventory
     public sealed class TownInventoryPanel : MonoBehaviour
     {
         [SerializeField]
-        private UnityEvent<InventoryCellBase> inventoryCellClicked;
+        private UnityEvent<InventoryCellBase, TradeType> inventoryCellClicked;
 
         [SerializeField, SerializedDictionary("Tier", "Section")]
         private SerializedDictionary<Tier, InventoryTierRow> rows;
@@ -26,7 +26,7 @@ namespace UI.InventoryUI.TownInventory
         {
             foreach (var row in rows.Values)
             {
-                row.InventoryCellClicked += cell => inventoryCellClicked.Invoke(cell);
+                row.InventoryCellClicked += OnInventoryCellClicked;
             }
         }
 
@@ -44,7 +44,6 @@ namespace UI.InventoryUI.TownInventory
             {
                 UpdateGood(good, amount);
             }
-
             _town.Inventory.GoodUpdated += UpdateGood;
         }
 
@@ -94,6 +93,11 @@ namespace UI.InventoryUI.TownInventory
         private void ShowRow(Tier tier)
         {
             rows[tier].gameObject.SetActive(true);
+        }
+
+        private void OnInventoryCellClicked(InventoryCellBase cell)
+        {
+            inventoryCellClicked.Invoke(cell, TradeType.Sell);
         }
     }
 }

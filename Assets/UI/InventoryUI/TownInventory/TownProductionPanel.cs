@@ -1,10 +1,10 @@
 using System;
 using AYellowpaper.SerializedCollections;
-using Common;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Towns;
 using Features.Towns.Production.Logic;
+using Features.Trade;
 using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
@@ -25,7 +25,7 @@ namespace UI.InventoryUI.TownInventory
 
         [Header("Events")]
         [SerializeField]
-        private UnityEvent<ProductionCell> productionCellClicked;
+        private UnityEvent<ProductionCell, TradeType> productionCellClicked;
 
         [SerializeField]
         private UnityEvent<ProductionCell> tier1UpgradeButtonClicked;
@@ -47,9 +47,10 @@ namespace UI.InventoryUI.TownInventory
 
             foreach (var section in rows.Values)
             {
-                section.ProductionCellClicked += productionCell => productionCellClicked.Invoke(productionCell);
+                section.ProductionCellClicked += OnProductionCellClicked;
             }
         }
+
 
         public void Bind(Town town)
         {
@@ -78,6 +79,11 @@ namespace UI.InventoryUI.TownInventory
             _town.ProductionManager.ProductionAdded -= OnProducerAdded;
             _town.Inventory.GoodUpdated -= UpdateGood;
             _town = null;
+        }
+
+        private void OnProductionCellClicked(ProductionCell productionCell)
+        {
+            productionCellClicked.Invoke(productionCell, TradeType.Buy);
         }
 
         private void BindTownTier()

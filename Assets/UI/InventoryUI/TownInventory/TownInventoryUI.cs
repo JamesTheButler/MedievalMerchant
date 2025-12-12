@@ -114,7 +114,7 @@ namespace UI.InventoryUI.TownInventory
 
         private void OnReputationChanged(float reputation)
         {
-            var neglectedIcon = !_town.ReputationManager.IsNeglected  ? "" : " :(";
+            var neglectedIcon = _town.ReputationManager.IsNeglected  ? " :(" : "";
             reputationText.text = $"Rep: {reputation:0.#}{neglectedIcon}";
         }
 

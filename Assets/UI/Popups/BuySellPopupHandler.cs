@@ -1,6 +1,5 @@
-using System.Linq;
-using Common;
 using Common.Types;
+using Common.UI;
 using Features.Inventory;
 using Features.Player;
 using Features.Towns;
@@ -32,10 +31,10 @@ namespace UI.Popups
         private void Start()
         {
             Reset();
-            GameplayContext.Instance.Selection.TownSelected += _ => { Reset(); };
+            GameplayContext.Instance.Selection.TownSelected += _ => Reset();
         }
 
-        public void Initialize(InventoryCellBase inventoryCell)
+        public void Initialize(InventoryCellBase inventoryCell, TradeType tradeType)
         {
             Reset();
 
@@ -55,21 +54,18 @@ namespace UI.Popups
             _availabilityCalculator = new AvailabilityCalculator(_town);
 
             var cellTransform = (RectTransform)inventoryCell.transform;
-            var arr = new Vector3[4];
-            cellTransform.GetWorldCorners(arr);
-            var cellCenter = arr.Aggregate(Vector3.zero, (curr, next) => curr + next / arr.Length);
+            var cellCenter = cellTransform.GetCenter();
 
             buySellPopup.Show();
             buySellPopup.transform.position = cellCenter + Vector3.up * yOffset;
             buySellPopup.SetGood(_good);
+            buySellPopup.SetTradeType(tradeType);
 
             // can buy and sell?
             OnPlayerGoodUpdated(_good, _playerInventory.Get(_good));
             OnTownGoodUpdated(_good, _townInventory.Get(_good));
-            // TODO - STYLE: need to unbind properly
-            _player.Location.TownEntered += _ => ValidateButtons();
-            // TODO - STYLE: need to unbind properly
-            _player.Location.TownExited += _ => ValidateButtons();
+            _player.Location.TownEntered += OnTownChanged;
+            _player.Location.TownExited += OnTownChanged;
             _playerInventory.GoodUpdated += OnPlayerGoodUpdated;
             _townInventory.GoodUpdated += OnTownGoodUpdated;
         }
@@ -91,13 +87,18 @@ namespace UI.Popups
             }
         }
 
+        private void OnTownChanged(Town town)
+        {
+            ValidateButtons();
+        }
+
         private void OnTownGoodUpdated(Good good, int amount)
         {
             if (_good != good)
                 return;
 
-            var marketState = _availabilityCalculator.GetAvailability(good);
-            buySellPopup.SetMarketState(marketState);
+            var availability = _availabilityCalculator.GetAvailability(good);
+            buySellPopup.SetAvailability(availability);
             ValidateBuyButton();
         }
 

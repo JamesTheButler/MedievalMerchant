@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Common.UI
@@ -12,6 +13,14 @@ namespace Common.UI
             var corners = new Vector3[4];
             rectTransform.GetWorldCorners(corners);
             return corners;
+        }
+
+        public static Vector3 GetCenter(this RectTransform rectTransform)
+        {
+            var corners = rectTransform.GetWorldCorners();
+            var center = corners.Aggregate(Vector3.zero, (curr, next) => curr + next / corners.Length);
+
+            return center;
         }
 
         public static Rect GetWorldRect(this RectTransform rectTransform)

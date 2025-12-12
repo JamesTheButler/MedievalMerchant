@@ -3,6 +3,7 @@ using System.Linq;
 using Common.Types;
 using Common.UI;
 using Features.Player.Caravan.Logic;
+using Features.Trade;
 using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
@@ -15,7 +16,7 @@ namespace Features.Player.Caravan.UI
     public sealed class CaravanUI : MonoBehaviour
     {
         [SerializeField]
-        private UnityEvent<InventoryCell> inventoryCellClicked;
+        private UnityEvent<InventoryCell, TradeType> inventoryCellClicked;
 
         [SerializeField, Required]
         private TMP_Text moveSpeedText, upkeepText;
@@ -45,7 +46,7 @@ namespace Features.Player.Caravan.UI
             {
                 var cartId = i;
                 cartUis[i].Bind(_caravanManager.Carts[i], () => caravanUpgrader.RequestUpgrade(cartId), OnCellAdded);
-                cartUis[i].OnCellClicked += inventoryCellClicked.Invoke;
+                cartUis[i].OnCellClicked += OnCellClicked;
             }
 
             _caravanManager.MoveSpeed.Observe(OnMoveSpeedChanged);
@@ -55,6 +56,11 @@ namespace Features.Player.Caravan.UI
             upkeepTooltip.SetData(_caravanManager.Upkeep);
 
             _playerInventory.GoodUpdated += OnGoodAdded;
+        }
+
+        private void OnCellClicked(InventoryCell cell)
+        {
+            inventoryCellClicked.Invoke(cell, TradeType.Sell);
         }
 
         private void OnGoodAdded(Good good, int amount)

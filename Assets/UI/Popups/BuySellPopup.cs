@@ -34,7 +34,7 @@ namespace UI.Popups
         [SerializeField, Required]
         private Image marketStateIcon;
 
-        [FormerlySerializedAs("marketStateTooltip"), SerializeField, Required]
+        [SerializeField, Required]
         private TitleDescriptionTooltipHandler availabilityTooltip;
 
         private readonly Lazy<AvailabilityResources> _availabilityResources =
@@ -43,7 +43,7 @@ namespace UI.Popups
         private readonly Lazy<GoodsResources> _goodsConfig = new(() => ResourceManager.Instance.GoodsResources);
 
         private Good _good;
-        private Availability? _marketState;
+        private Availability? _availability;
         private TradeType? _hoveredTradeType;
 
         private void Start()
@@ -53,17 +53,13 @@ namespace UI.Popups
 
             buyButton.onClick.AddListener(() => TradeInitiated(TradeType.Buy));
             sellButton.onClick.AddListener(() => TradeInitiated(TradeType.Sell));
-
-            // TODO: maybe reimplement this. it's not very clear as is
-            //buyButtonHoverable.Hovered += () => SetHoveredTradeType(TradeType.Buy);
-            //buyButtonHoverable.Unhovered += () => SetHoveredTradeType(null);
-            //sellButtonHoverable.Hovered += () => SetHoveredTradeType(TradeType.Sell);
-            //sellButtonHoverable.Unhovered += () => SetHoveredTradeType(null);
         }
 
-        private void SetHoveredTradeType(TradeType? type)
+        public void SetTradeType(TradeType? tradeType)
         {
-            _hoveredTradeType = type;
+            _hoveredTradeType = tradeType;
+            buyButton.gameObject.SetActive(tradeType is null or TradeType.Buy);
+            sellButton.gameObject.SetActive(tradeType is null or TradeType.Sell);
             RefreshIcon();
         }
 
@@ -93,12 +89,12 @@ namespace UI.Popups
             sellButtonTooltip.SetData(canSell.Error);
         }
 
-        public void SetMarketState(Availability availability)
+        public void SetAvailability(Availability availability)
         {
-            if (_marketState == availability)
+            if (_availability == availability)
                 return;
 
-            _marketState = availability;
+            _availability = availability;
             RefreshIcon();
 
             var configData = _availabilityResources.Value.Resources[availability];
@@ -107,7 +103,11 @@ namespace UI.Popups
 
         private void RefreshIcon()
         {
-            var configData = _availabilityResources.Value.Resources[_marketState!.Value];
+            // the popup is likely not set up completely yet. this will be called again in a bit.
+            if (_availability is null)
+                return;
+
+            var configData = _availabilityResources.Value.Resources[_availability.Value];
 
             var icon = _hoveredTradeType switch
             {

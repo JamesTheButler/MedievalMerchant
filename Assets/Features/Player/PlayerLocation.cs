@@ -11,7 +11,6 @@ namespace Features.Player
         public event Action<Town> TownEntered;
         public event Action<Town> TownExited;
 
-        public Observable<Town> Town { get; } = new();
         public Observable<Vector2> WorldLocation { get; } = new();
 
         [CanBeNull]
