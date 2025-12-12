@@ -14,7 +14,7 @@ namespace Features.Ticking
 
         private void FixedUpdate()
         {
-            _tickingService.Update(Time.deltaTime);
+            _tickingService.Update(Time.fixedDeltaTime);
         }
     }
 }

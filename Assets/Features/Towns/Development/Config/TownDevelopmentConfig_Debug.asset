@@ -36,19 +36,26 @@ MonoBehaviour:
         <Threshold>k__BackingField: 5
   <ProducerGrowthInfluence>k__BackingField:
     town1Good1: 1
+    town2Good1: 0.75
+    town2Good2: 1
+    town3Good1: 0.5
+    town3Good2: 0.75
+    town3Good3: 1
+  <SoldGoodsGrowthInfluence>k__BackingField:
+    town1Good1: 1
     town2Good1: 0.5
     town2Good2: 1
-    town3Good1: 0.1
+    town3Good1: 0.25
     town3Good2: 0.5
     town3Good3: 1
-  <DevelopmentTables>k__BackingField:
+  <BaseDegrowth>k__BackingField:
     _serializedList:
     - Key: 1
-      Value: {fileID: 11400000, guid: aa57fe65de96fc74f84ad059b639c168, type: 2}
+      Value: -0.25
     - Key: 2
-      Value: {fileID: 11400000, guid: ff82d0afeca2f964793152351b4b8455, type: 2}
+      Value: -0.5
     - Key: 3
-      Value: {fileID: 11400000, guid: 56ccf09a76abcaf4b8c2615d619a4649, type: 2}
+      Value: -0.75
   <Milestones>k__BackingField:
     _serializedList:
     - Key: 1
@@ -109,4 +116,3 @@ MonoBehaviour:
               <Icon>k__BackingField: {fileID: 609887302, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
               <Upgrades>k__BackingField:
               - {fileID: 11400000, guid: 80f2f995d9e67de4b8bfd38687a6a94b, type: 2}
-  <DevelopmentMultiplier>k__BackingField: 1

@@ -68,7 +68,9 @@ namespace UI.Popups
             _player.Location.TownExited += OnTownChanged;
             _playerInventory.GoodUpdated += OnPlayerGoodUpdated;
             _townInventory.GoodUpdated += OnTownGoodUpdated;
+            _player.CaravanManager.SlotCount.Observe(OnTotalSlotCountChanged, false);
         }
+
 
         public void Reset()
         {
@@ -85,6 +87,13 @@ namespace UI.Popups
                 _townInventory.GoodUpdated -= OnTownGoodUpdated;
                 _townInventory = null;
             }
+
+            if (_player != null)
+            {
+                _player.Location.TownEntered -= OnTownChanged;
+                _player.Location.TownExited -= OnTownChanged;
+                _player.CaravanManager.SlotCount.StopObserving(OnTotalSlotCountChanged);
+            }
         }
 
         private void OnTownChanged(Town town)
@@ -100,6 +109,11 @@ namespace UI.Popups
             var availability = _availabilityCalculator.GetAvailability(good);
             buySellPopup.SetAvailability(availability);
             ValidateBuyButton();
+        }
+
+        private void OnTotalSlotCountChanged(int slotCount)
+        {
+            ValidateButtons();
         }
 
         private void OnPlayerGoodUpdated(Good good, int amount)

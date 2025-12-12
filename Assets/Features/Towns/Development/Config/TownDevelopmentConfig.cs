@@ -17,9 +17,12 @@ namespace Features.Towns.Development.Config
         [field: SerializeField]
         public TownGoodConfigTable<float> ProducerGrowthInfluence { get; private set; }
 
+        [field: SerializeField]
+        public TownGoodConfigTable<float> SoldGoodsGrowthInfluence { get; private set; }
+
         [field: SerializeField, SerializedDictionary]
-        public SerializedDictionary<Tier, TownDevelopmentTable> DevelopmentTables { get; private set; }
-        
+        public SerializedDictionary<Tier, float> BaseDegrowth { get; private set; }
+
         [field: SerializeField, SerializedDictionary]
         public SerializedDictionary<Tier, DevelopmentMilestoneDataSet> Milestones { get; private set; }
 

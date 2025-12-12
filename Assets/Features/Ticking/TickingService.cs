@@ -10,7 +10,7 @@ namespace Features.Ticking
     {
         public event Action DayPassed;
 
-        public bool IsPaused { get; private set; }
+        public bool IsPaused { get; private set; } = true;
 
         private readonly HashSet<ITicker> _tickers = new();
         private TickConfig _tickConfig;
@@ -25,7 +25,8 @@ namespace Features.Ticking
             _tickers.Clear();
             _tickConfig = ConfigurationManager.Configurations.TickConfig;
             _ticksPerDay = _tickConfig.TicksPerDay;
-            _secondsPerTick = _tickConfig.SecondsPerTick;
+            _secondsPerTick = _tickConfig.SecondsPerDay / _ticksPerDay;
+            IsPaused = false;
         }
 
         public void CleanUp()

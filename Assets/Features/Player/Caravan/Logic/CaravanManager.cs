@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Common;
 using Common.Modifiable;
@@ -45,6 +46,7 @@ namespace Features.Player.Caravan.Logic
             {
                 var cart = new Cart();
                 _carts.Add(cart);
+                
                 cart.SlotCount.Observe(SlotCountChanged);
             }
         }

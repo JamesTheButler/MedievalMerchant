@@ -19,8 +19,6 @@ namespace Features.Towns.Development.Logic
         public Observable<float> DevelopmentScore { get; } = new();
         public Observable<DevelopmentTrend> GrowthTrend { get; } = new();
 
-        private TownDevelopmentTable _townDevelopmentTable;
-
         private readonly Town _town;
         private readonly TownDevelopmentConfig _townDevelopmentConfig;
         private readonly GoodsResources _goodsResources;
@@ -37,7 +35,7 @@ namespace Features.Towns.Development.Logic
             _town.ProductionManager.ProductionAdded += OnProducerAdded;
             _town.Inventory.GoodUpdated += OnGoodAdded;
 
-            RefreshDevelopmentTable();
+            DevelopmentTrend.AddModifier(new BaseDegrowthModifier(Tier));
         }
 
         ~DevelopmentManager()
@@ -96,7 +94,7 @@ namespace Features.Towns.Development.Logic
             // TODO - STYLE: should use observable modifier
             DevelopmentTrend.RemoveModifier(oldModifier);
 
-            var modifierValue = _townDevelopmentTable.GetDevelopmentTrend(goodTier, newCount);
+            var modifierValue = _townDevelopmentConfig.SoldGoodsGrowthInfluence.Get(Tier, goodTier)*newCount;
             var modifier = new StoredGoodsDevelopmentModifier(modifierValue, newCount, goodTier);
             DevelopmentTrend.AddModifier(modifier);
             _storedGoodsModifier[goodTier] = modifier;
@@ -119,7 +117,6 @@ namespace Features.Towns.Development.Logic
                 return;
 
             Tier.Value = newTier;
-            RefreshDevelopmentTable();
             DevelopmentScore.Value = 0;
             Debug.Log($"{_town.Name} upgraded to {Tier}");
         }
@@ -131,13 +128,6 @@ namespace Features.Towns.Development.Logic
                 return;
 
             GrowthTrend.Value = newGrowthTrend;
-        }
-
-        private void RefreshDevelopmentTable()
-        {
-            _townDevelopmentTable = _townDevelopmentConfig.DevelopmentTables[Tier];
-
-            RefreshGoodsInInventoryModifiers(Tier);
         }
     }
 }
