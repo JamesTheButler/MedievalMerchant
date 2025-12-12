@@ -74,14 +74,6 @@ namespace Features.Towns.Production.Logic
             ProductionAdded?.Invoke(producer);
         }
 
-        public void Produce()
-        {
-            foreach (var producer in AllProducers)
-            {
-                producer.Produce();
-            }
-        }
-
         public void AddModifier(ProductionBoostModifier prodBoostModifier)
         {
             _productionModifiers.Add(prodBoostModifier);

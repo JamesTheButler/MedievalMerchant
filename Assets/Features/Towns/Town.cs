@@ -121,11 +121,6 @@ namespace Features.Towns
             _inventoryPolicy.AddSlots(producer.Tier, 1);
         }
 
-        private void Produce()
-        {
-            ProductionManager.Produce();
-        }
-
         private void OnMilestoneModifierAdded(IModifier modifier)
         {
             switch (modifier)

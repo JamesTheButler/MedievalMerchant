@@ -39,15 +39,15 @@ namespace Features.Towns.Reputation.Logic
 
             _town = town;
 
-            Bind();
             ResetNeglectDate();
+            Bind();
         }
 
         public void ApplyCaughtThief(float reputationLoss)
         {
             UpdateReputation(reputationLoss, "Your thief was caught stealing!");
         }
-        
+
         private void Bind()
         {
             _model.Date.Changed += OnDateChanged;
@@ -76,7 +76,7 @@ namespace Features.Towns.Reputation.Logic
             {
                 ResetNeglectDate();
             }
-            
+
             var tradeVolumePerRep = _config.RewardData.TradeVolumePerReputationPoint;
             var repChangeFloat = tradeInfo.FinalPrice / tradeVolumePerRep;
             // round to 1 digit after comma
@@ -112,7 +112,8 @@ namespace Features.Towns.Reputation.Logic
 
             IsNeglected.Value = true;
             _neglectActivationDate.AddDays(_config.NeglectData.IntervalInDays);
-            var message = $"The town has been neglected for more than {_config.NeglectData.ActivationDelayInDays}";
+            var message =
+                $"The town has been neglected for more than {_config.NeglectData.ActivationDelayInDays} days.";
             UpdateReputation(_config.NeglectData.ReputationCost, message);
         }
 
@@ -144,9 +145,20 @@ namespace Features.Towns.Reputation.Logic
                 ResetNeglectDate();
             }
 
+
             var date = _model.Date;
             var logEntry = new ReputationLogEntry(date, repChange, Reputation.Value, reason);
-            _reputationLog.Add(DateTime.Now, logEntry);
+
+            var logTime = DateTime.Now;
+            // TODO - MED-59
+            if (_reputationLog.TryGetValue(logTime, out var oldEntry))
+            {
+                Debug.LogError($"There is already a log entry at {logTime}. (old: {oldEntry}, new:{logEntry})");
+            }
+            else
+            {
+                _reputationLog.Add(DateTime.Now, logEntry);
+            }
         }
     }
 }

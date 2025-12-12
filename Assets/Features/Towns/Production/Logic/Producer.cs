@@ -3,7 +3,6 @@ using System.Linq;
 using Common;
 using Common.Modifiable;
 using Common.Types;
-using Features.Goods;
 using Features.Goods.Config;
 using Features.Towns.Production.Config;
 using Infrastructure;
@@ -13,19 +12,20 @@ namespace Features.Towns.Production.Logic
 {
     public sealed class Producer
     {
-        public ModifiableVariable ProductionRate { get; }
         public Good ProducedGood { get; }
         public Tier Tier { get; }
+        public int ProductionLimit { get; private set; }
+        public ModifiableVariable ProductionRate { get; }
 
-        private readonly Town _town;
-        private readonly Recipe _recipe;
+        public IReadOnlyDictionary<Good, ModifiableVariable> IngredientConsumptionRates => _ingredientConsumptionRates;
 
         private readonly GoodsResources _goodsResources;
         private readonly ProducerConfig _producerConfig;
 
+        private readonly Dictionary<Good, ModifiableVariable> _ingredientConsumptionRates = new();
+
         public Producer(Good producedGood, Town town)
         {
-            _town = town;
             ProducedGood = producedGood;
 
             _goodsResources = ResourceManager.Instance.GoodsResources;
@@ -34,42 +34,23 @@ namespace Features.Towns.Production.Logic
 
             Tier = _goodsResources.ConfigData[producedGood].Tier;
 
-            var baseModifier = new BaseProductionValue(producedGood);
-            ProductionRate = new ModifiableVariable("Production Rate", true, baseModifier);
+            var baseProductionRate = new BaseProductionValue(producedGood);
+            ProductionRate = new ModifiableVariable("Production Rate", true, baseProductionRate);
+            recipeConfig.GetRecipe(producedGood);
 
-            _recipe = recipeConfig.GetRecipe(producedGood);
+            town.Tier.Observe(OnTownTierChanged);
         }
 
-        public void Produce()
+        private void OnTownTierChanged(Tier townTier)
         {
-            if (!CanProduce()) return;
-
-            var limit = GetProductionLimit(_town.Tier.Value, ProducedGood);
-            var currentInventoryAmount = _town.Inventory.Goods.GetValueOrDefault(ProducedGood, 0);
-            var cappedAmount = Mathf.Min(ProductionRate, Mathf.Max(0, limit - currentInventoryAmount));
-            _town.Inventory.AddGood(ProducedGood, (int)cappedAmount);
-
-            foreach (var component in _recipe.Components)
+            var goodTier = _goodsResources.ConfigData[ProducedGood].Tier;
+            var configLimit = _producerConfig.GetLimit(townTier, goodTier);
+            ProductionLimit = configLimit ?? 0;
+            
+            if (configLimit == null)
             {
-                _town.Inventory.RemoveGood(component, (int)_producerConfig.ConsumptionRate);
+                Debug.LogError($"No production limit is set for town {townTier} and good {goodTier}.");
             }
-        }
-
-        private bool CanProduce()
-        {
-            return _recipe.Components?.All(component =>
-                _town.Inventory.HasGood(component, (int)_producerConfig.ConsumptionRate)) ?? false;
-        }
-
-        private int GetProductionLimit(Tier townTier, Good good)
-        {
-            var goodTier = _goodsResources.ConfigData[good].Tier;
-            var limit = _producerConfig.GetLimit(townTier, goodTier);
-            if (limit != null)
-                return limit.Value;
-
-            Debug.LogError($"No production limit is set for town {townTier} and good {goodTier}.");
-            return 0;
         }
     }
 }
