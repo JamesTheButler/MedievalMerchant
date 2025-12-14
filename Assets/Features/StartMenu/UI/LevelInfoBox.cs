@@ -18,7 +18,7 @@ namespace Features.StartMenu.UI
         private string gameScene;
 
         [SerializeField, Required]
-        private TMP_Text nameText, completionDateText, descriptionText, difficultyText;
+        private TMP_Text levelIdText, nameText, completionDateText, descriptionText, difficultyText;
 
         [SerializeField, Required]
         private ConditionListUI winConditionList, lossConditionList;
@@ -32,6 +32,7 @@ namespace Features.StartMenu.UI
         {
             _currentLevelInfo = levelInfo;
 
+            levelIdText.text = levelInfo.LevelNumberText;
             nameText.text = levelInfo.LevelName;
             descriptionText.text = levelInfo.Description;
             var completionDate = GlobalContext.Instance.ProgressModel.CompletedLevels[levelInfo.InternalIndex];
