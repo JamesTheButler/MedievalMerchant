@@ -1,47 +1,39 @@
+using System;
 using Features.Levels.Config;
 using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Features.StartMenu.UI
 {
-    public sealed class LevelButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public sealed class LevelButton : MonoBehaviour
     {
-        [SerializeField]
-        private UnityEvent<LevelInfo> mouseEnter;
-
-        [SerializeField]
-        private UnityEvent mouseExit;
-
-        [SerializeField, Required]
-        private StartMenuManager startMenuManager;
+        public event Action<LevelInfo> Clicked;
 
         [SerializeField, Required]
         private Button button;
 
         [SerializeField, Required]
-        private Image completeIcon;
+        private Image completeIcon, lockedIcon;
 
         [SerializeField, Required]
-        private TMP_Text label;
+        private TMP_Text numberText, nameText;
 
-        [SerializeField, Expandable]
-        private LevelInfo levelInfo;
+        [field: SerializeField, Expandable, Required]
+        public LevelInfo LevelInfo { get; private set; }
 
         private void Start()
         {
-            if (levelInfo == null || !levelInfo.IsEnabled)
-            {
-                button.interactable = false;
-            }
+            var isEnabled = LevelInfo != null && LevelInfo.IsEnabled;
+            button.interactable = isEnabled;
+            lockedIcon.gameObject.SetActive(!isEnabled);
 
             button.onClick.AddListener(OnClick);
-            label.text = levelInfo.DisplayIndex.ToString();
-            var isCompleted = GlobalContext.Instance.ProgressModel.CompletedLevels[levelInfo.InternalIndex] != null;
+            numberText.text = LevelInfo.LevelNumberText;
+            nameText.text = LevelInfo.LevelName;
+            var isCompleted = GlobalContext.Instance.ProgressModel.CompletedLevels[LevelInfo.InternalIndex] != null;
             completeIcon.gameObject.SetActive(isCompleted);
         }
 
@@ -52,19 +44,7 @@ namespace Features.StartMenu.UI
 
         private void OnClick()
         {
-            startMenuManager.LoadLevel(levelInfo);
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            if (!levelInfo) return;
-            mouseEnter.Invoke(levelInfo);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            if (!levelInfo) return;
-            mouseExit.Invoke();
+            Clicked?.Invoke(LevelInfo);
         }
     }
 }

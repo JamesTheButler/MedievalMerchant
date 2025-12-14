@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Common.UI
 {
     public static class TMP
@@ -10,6 +12,11 @@ namespace Common.UI
         public static string ColorBad(string content)
         {
             return $"<style=\"Color_Bad\">{content}</style>";
+        }
+
+        public static string WithColor(this string content, Color color)
+        {
+            return $"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{content}</color>";
         }
     }
 }

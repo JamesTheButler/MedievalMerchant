@@ -1,3 +1,4 @@
+using System.Linq;
 using Common;
 using Features.Levels.Config;
 using Infrastructure;
@@ -5,15 +6,11 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 namespace Features.StartMenu.UI
 {
     public sealed class StartMenuManager : MonoBehaviour
     {
-        [SerializeField, Scene]
-        private string gameScene;
-
         [SerializeField, Required]
         private Animation logoAnimation;
 
@@ -21,7 +18,7 @@ namespace Features.StartMenu.UI
         private TMP_Text pressAnyText;
 
         [SerializeField, Required]
-        private GameObject levelButtonGroup;
+        private GameObject startScreenGO, levelSelectionGO;
 
         [SerializeField, Required]
         private LevelInfoBox levelInfoBox;
@@ -30,9 +27,17 @@ namespace Features.StartMenu.UI
 
         private void Start()
         {
-            levelButtonGroup.SetActive(false);
-            pressAnyText.gameObject.SetActive(true);
-            levelInfoBox.Clear();
+            ToggleLevelSelection(false);
+            // set up first level button
+            var levelButtons = levelSelectionGO.GetComponentsInChildren<LevelButton>();
+            var firstLevelButton = levelButtons.First();
+            SetupLevelInfoBox(firstLevelButton.LevelInfo);
+
+            // set up click events
+            foreach (var button in levelButtons)
+            {
+                button.Clicked += SetupLevelInfoBox;
+            }
 
             var cursor = ResourceManager.Instance.Cursors.Default;
             Cursor.SetCursor(cursor.Texture, cursor.HotSpot, CursorMode.Auto);
@@ -47,12 +52,14 @@ namespace Features.StartMenu.UI
             }
         }
 
-        public void LoadLevel(LevelInfo levelInfo)
+        public void SetupLevelInfoBox(LevelInfo levelInfo)
         {
-            Debug.Log($"Loading level {levelInfo.LevelName}...");
+            levelInfoBox.Setup(levelInfo);
+        }
 
-            GlobalContext.CurrentLevelInfo = levelInfo;
-            SceneManager.LoadScene(gameScene);
+        private void OnEscapeKey()
+        {
+            ToggleLevelSelection(false);
         }
 
         private void OnAnyKey()
@@ -61,19 +68,15 @@ namespace Features.StartMenu.UI
 
             logoAnimation.Play();
             pressAnyText.gameObject.SetActive(false);
-            levelButtonGroup.SetActive(true);
+            ToggleLevelSelection(true);
 
             _initialized = true;
         }
 
-        public void SetupLevelInfoBox(LevelInfo levelInfo)
+        private void ToggleLevelSelection(bool on)
         {
-            levelInfoBox.Setup(levelInfo);
-        }
-
-        public void ClearLevelInfoBox()
-        {
-            levelInfoBox.Clear();
+            startScreenGO.SetActive(!on);
+            levelSelectionGO.SetActive(on);
         }
     }
 }
