@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using Common;
 using Features.Player;
 using Features.Player.Caravan.Config;
+using Features.Ticking;
 using Features.Towns;
 using Infrastructure;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 namespace Features.Map.Pathfinding
@@ -24,6 +26,7 @@ namespace Features.Map.Pathfinding
         private Lazy<RoadGraph> _graph;
         private Lazy<PlayerLocation> _playerLocation;
         private Lazy<CaravanConfig> _caravanConfig;
+        private Lazy<TickingService> _tickingService;
 
         private PlayerLocation Location => _model.Value.Player.Location;
 
@@ -33,6 +36,7 @@ namespace Features.Map.Pathfinding
         {
             _graph = new Lazy<RoadGraph>(() => RoadGraphBuilder.Build(_model.Value.TileFlagMap));
             _playerLocation = new Lazy<PlayerLocation>(() => _model.Value.Player.Location);
+            _tickingService = new Lazy<TickingService>(() => GameplayContext.Instance.Services.TickingService);
             _caravanConfig = new Lazy<CaravanConfig>(() => ConfigurationManager.Configurations.CaravanConfig);
         }
 
@@ -93,36 +97,42 @@ namespace Features.Map.Pathfinding
 
         private IEnumerator MoveAlongPath(List<Vector2Int> path)
         {
-            if (path == null || path.Count == 0) yield break;
+            if (path == null || path.Count == 0)
+                yield break;
 
-            // Convert to world points (center of each cell)
-            var pts = new List<Vector3>(path.Count);
+            // use center of each tile as navigation points
+            var points = new List<Vector3>(path.Count);
             foreach (var cell in path)
             {
-                pts.Add(tileGrid.CellToWorld(cell.FromXY()));
+                points.Add(tileGrid.CellToWorld(cell.FromXY()));
             }
 
-            // Optional: corner smoothing by shaving a bit off entry/exit of corners
-            var smoothed = SmoothCorners(pts, smoothing);
+            var smoothed = SmoothCorners(points, smoothing);
 
             // Move
             _playerLocation.Value.WorldLocation.Value = smoothed[0];
             _playerLocation.Value.CurrentTown = null;
 
-            var moveSpeed = _model.Value.Player.MovementSpeed * _caravanConfig.Value.MovementSpeedMultiplier;
             for (var i = 1; i < smoothed.Count; i++)
             {
                 var a = smoothed[i - 1];
                 var b = smoothed[i];
                 var dist = Vector3.Distance(a, b);
 
+                // TODO - Optimization: would be cheaper to observe model and have local _moveSpeed
+                var moveSpeed = _model.Value.Player.MovementSpeed * _caravanConfig.Value.MovementSpeedMultiplier;
                 var dur = dist / Mathf.Max(0.01f, moveSpeed);
                 var elapsed = 0f;
                 while (elapsed < dur)
                 {
+                    // TODO - Optimization: would be cheaper to observe _tickingService and have local _isPaused
+                    // pause movement when game is paused
+                    yield return new WaitUntil(() => !_tickingService.Value.IsPaused);
+
                     elapsed += Time.deltaTime;
                     var u = Mathf.Clamp01(elapsed / dur);
                     _playerLocation.Value.WorldLocation.Value = Vector3.Lerp(a, b, u);
+
                     yield return null;
                 }
             }
@@ -132,7 +142,6 @@ namespace Features.Map.Pathfinding
             _town = null;
         }
 
-        // Creates short "chamfers" at turns so motion doesn't hard-stop then turn
         private static List<Vector3> SmoothCorners(List<Vector3> pts, float cut)
         {
             if (pts.Count <= 2 || cut <= 0f) return pts;
@@ -141,26 +150,34 @@ namespace Features.Map.Pathfinding
 
             for (var i = 1; i < pts.Count - 1; i++)
             {
-                var prev = pts[i - 1];
-                var curr = pts[i];
+                var previous = pts[i - 1];
+                var current = pts[i];
                 var next = pts[i + 1];
 
-                var v1 = curr - prev;
-                var v2 = next - curr;
+                var v1 = current - previous;
+                var v2 = next - current;
 
-                if (v1.sqrMagnitude < 1e-6f || v2.sqrMagnitude < 1e-6f ||
+                if (v1.sqrMagnitude < 0.001f ||
+                    v2.sqrMagnitude < 0.001f ||
                     Vector3.Dot(v1.normalized, v2.normalized) < -0.999f)
                 {
                     // straight or 180* turn—don’t cut
-                    outPoints.Add(curr);
+                    outPoints.Add(current);
                     continue;
                 }
 
-                var a = curr - v1.normalized * cut;
-                var b = curr + v2.normalized * cut;
+                var a = current - v1.normalized * cut;
+                var b = current + v2.normalized * cut;
                 // Ensure order and no over-cut beyond segment length
-                if ((a - prev).sqrMagnitude > (curr - prev).sqrMagnitude) a = curr;
-                if ((b - next).sqrMagnitude > (curr - next).sqrMagnitude) b = curr;
+                if ((a - previous).sqrMagnitude > (current - previous).sqrMagnitude)
+                {
+                    a = current;
+                }
+
+                if ((b - next).sqrMagnitude > (current - next).sqrMagnitude)
+                {
+                    b = current;
+                }
 
                 outPoints.Add(a);
                 outPoints.Add(b);
