@@ -21,7 +21,7 @@ namespace Features.StartMenu.UI
         private TMP_Text levelIdText, nameText, completionDateText, descriptionText, difficultyText;
 
         [SerializeField, Required]
-        private ConditionListUI winConditionList, lossConditionList;
+        private ConditionListUI winConditionList, lossConditionList, gameConditionList;
 
         [SerializeField, Required]
         private Button continueButton, startButton;

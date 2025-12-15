@@ -789,7 +789,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.50980395, g: 0.39607847, b: 0.24313727, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -969,6 +969,7 @@ MonoBehaviour:
   difficultyText: {fileID: 7677002857318782428}
   winConditionList: {fileID: 1261599661993003729}
   lossConditionList: {fileID: 4071257322777040453}
+  gameConditionList: {fileID: 4705198469226684381}
   continueButton: {fileID: 5551238596806349670}
   startButton: {fileID: 2540296841025494823}
 --- !u!1 &4120077337043888458
@@ -2943,6 +2944,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5190890891921594968, guid: 31db9f854f0ca4d4688a87616100a711, type: 3}
   m_PrefabInstance: {fileID: 7096931872051272125}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4705198469226684381 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2535919097191089760, guid: 31db9f854f0ca4d4688a87616100a711, type: 3}
+  m_PrefabInstance: {fileID: 7096931872051272125}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328028621535331373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c85403591c764443b46f4dacfb0c3d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8198379539862931494
 PrefabInstance:
   m_ObjectHideFlags: 0
