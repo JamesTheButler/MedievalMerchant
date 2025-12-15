@@ -1,6 +1,5 @@
 using Features.Ticking;
 using Infrastructure;
-using NaughtyAttributes.Test;
 using UI.Popups;
 using UnityEngine;
 
