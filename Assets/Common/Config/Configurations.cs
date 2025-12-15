@@ -28,9 +28,6 @@ namespace Common.Config
         public CompanionConfig CompanionConfig { get; private set; }
 
         [field: SerializeField, Required]
-        public ConditionConfig ConditionConfig { get; private set; }
-
-        [field: SerializeField, Required]
         public GoodsConfig GoodsConfig { get; private set; }
 
         [field: SerializeField, Required]

@@ -1,5 +1,6 @@
 using Common.Config;
 using Features.Goods.Config;
+using Features.Levels.Config;
 using Features.Towns.Config;
 using Features.Towns.Development.UI.DevelopmentGauge;
 using Features.Towns.Flags.Config;
@@ -22,6 +23,9 @@ namespace Infrastructure
 
         [field: SerializeField, Required]
         public Colors Colors { get; private set; }
+
+        [field: SerializeField, Required]
+        public ConditionResources ConditionResources { get; private set; }
 
         [field: SerializeField, Required]
         public Cursors Cursors { get; private set; }

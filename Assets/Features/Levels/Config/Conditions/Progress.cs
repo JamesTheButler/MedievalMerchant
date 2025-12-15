@@ -29,5 +29,10 @@ namespace Features.Levels.Config.Conditions
             IsCompleted.Value = currentValue >= _maxValue;
             CurrentValueText.Value = _formatter.Invoke(CurrentValue.Value, _maxValue);
         }
+
+        public void Complete()
+        {
+            SetProgress(_maxValue);
+        }
     }
 }

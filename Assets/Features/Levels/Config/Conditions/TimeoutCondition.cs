@@ -19,6 +19,7 @@ namespace Features.Levels.Config.Conditions
         private Date _deadlineDate;
         private Date _currentDate;
 
+        public override string CompletionMessage => "You've run out of time!";
         public override ConditionType Type => ConditionType.TimeoutCondition;
 
         public override string Description => GetDescription();
@@ -64,5 +65,6 @@ namespace Features.Levels.Config.Conditions
             var daysLeft = maxValue - currentValue;
             return $"{daysLeft} days left";
         }
+
     }
 }

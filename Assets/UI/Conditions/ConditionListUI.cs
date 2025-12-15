@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Common;
 using Features.Levels.Config;
 using Features.Levels.Config.Conditions;
+using Infrastructure;
 using UnityEngine;
 
 namespace UI.Conditions
@@ -15,8 +16,8 @@ namespace UI.Conditions
         [SerializeField]
         private GameObject listContainer;
 
-        private readonly Lazy<ConditionConfig> _conditionConfig =
-            new(() => ConfigurationManager.Configurations.ConditionConfig);
+        private readonly Lazy<ConditionResources> _conditionConfig =
+            new(() => ResourceManager.Instance.ConditionResources);
 
         public void Setup(IEnumerable<Condition> conditions, bool setupProgress)
         {

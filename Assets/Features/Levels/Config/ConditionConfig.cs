@@ -6,9 +6,9 @@ using UnityEngine;
 namespace Features.Levels.Config
 {
     [CreateAssetMenu(
-        fileName = nameof(ConditionConfig),
-        menuName = AssetMenu.ConfigDataFolder + nameof(ConditionConfig))]
-    public sealed class ConditionConfig : ScriptableObject
+        fileName = nameof(ConditionResources),
+        menuName = AssetMenu.ResourceFolder + nameof(ConditionResources))]
+    public sealed class ConditionResources : ScriptableObject
     {
         [field: SerializeField, SerializedDictionary("Type", "Condition Data")]
         public SerializedDictionary<ConditionType, ConditionListItemData> Conditions { get; private set; }

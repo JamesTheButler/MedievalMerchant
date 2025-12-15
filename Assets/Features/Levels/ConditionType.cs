@@ -4,6 +4,7 @@ namespace Features.Levels
     {
         TimeoutCondition = 0,
         TownTierWinCondition = 1,
-        FundsWinCondition = 2
+        FundsWinCondition = 2,
+        BankruptcyLossCondition = 3,
     }
 }

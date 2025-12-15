@@ -19,13 +19,13 @@ namespace Features.Levels.Logic
 
         private List<WinCondition> _winConditions = new();
         private List<LossCondition> _lossConditions = new();
-        private ConditionConfig _conditionConfig;
+        private ConditionResources _conditionResources;
 
         private readonly HashSet<LossCondition> _closeLossConditions = new();
 
         public void Initialize()
         {
-            _conditionConfig = ConfigurationManager.Configurations.ConditionConfig;
+            _conditionResources = ResourceManager.Instance.ConditionResources;
             var conditions = GlobalContext.CurrentLevelInfo!.Conditions;
             _winConditions = conditions.OfType<WinCondition>().ToList();
             _lossConditions = conditions.OfType<LossCondition>().ToList();
@@ -49,7 +49,7 @@ namespace Features.Levels.Logic
 
         private void OnLossConditionProgressChanged(float currentProgressPercent, LossCondition condition)
         {
-            if (currentProgressPercent >= _conditionConfig.WarningThresholdPercent)
+            if (currentProgressPercent >= _conditionResources.WarningThresholdPercent)
             {
                 _closeLossConditions.Add(condition);
             }

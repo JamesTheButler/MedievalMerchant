@@ -63,6 +63,8 @@ namespace Features.StartMenu.UI
 
         private void LoadCurrentLevel()
         {
+            startButton.onClick.RemoveListener(LoadCurrentLevel);
+
             Debug.Log($"Loading level {_currentLevelInfo.LevelName}...");
 
             GlobalContext.CurrentLevelInfo = _currentLevelInfo;

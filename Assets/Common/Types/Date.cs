@@ -25,13 +25,15 @@ namespace Common.Types
 
         public void SetDay(int day)
         {
+            // NOTE: this does not support operations where day is > 365 * 2
             switch (day)
             {
                 case < 1:
-                    _day.Value = 1;
+                    _day.Value = LastDayOfYear - day;
+                    _year.Value--;
                     break;
                 case > LastDayOfYear:
-                    _day.Value = 1;
+                    _day.Value = day - LastDayOfYear;
                     _year.Value++;
                     break;
                 default:
@@ -69,6 +71,11 @@ namespace Common.Types
         public static Date operator +(Date left, Date right)
         {
             return new Date(left.Day.Value + right.Day.Value, left.Year.Value + right.Year.Value);
+        }
+        
+        public static Date operator -(Date left, Date right)
+        {
+            return new Date(left.Day.Value - right.Day.Value, left.Year.Value - right.Year.Value);
         }
 
         public static Date operator +(Date left, int days)
