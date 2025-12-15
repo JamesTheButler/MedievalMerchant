@@ -16,7 +16,7 @@ namespace UI.Conditions
         [SerializeField]
         private GameObject listContainer;
 
-        private readonly Lazy<ConditionResources> _conditionConfig =
+        private readonly Lazy<ConditionResources> _conditionResources =
             new(() => ResourceManager.Instance.ConditionResources);
 
         public void Setup(IEnumerable<Condition> conditions, bool setupProgress)
@@ -27,14 +27,14 @@ namespace UI.Conditions
             {
                 var listItem = Instantiate(listItemPrefab, listContainer.transform);
                 var listItemScript = listItem.GetComponent<ConditionListItem>();
-                var icon = _conditionConfig.Value.Conditions[condition.Type].Icon;
+                var icon = _conditionResources.Value.Conditions[condition.Type].Icon;
 
                 listItemScript.Setup(condition.Description, icon, setupProgress ? condition.Progress : null);
                 if (condition is not LossCondition)
                     continue;
 
-                var warningThreshold = _conditionConfig.Value.WarningThresholdPercent;
-                var warningIcon = _conditionConfig.Value.WarningIcon;
+                var warningThreshold = _conditionResources.Value.WarningThresholdPercent;
+                var warningIcon = _conditionResources.Value.WarningIcon;
                 listItemScript.AddThreshold(warningThreshold, warningIcon);
             }
         }

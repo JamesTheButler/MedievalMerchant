@@ -28,6 +28,7 @@ namespace Features.Levels.Config.Conditions
 
         public override void Initialize()
         {
+            _isBankrupt = false;
             _currentDate = GameplayContext.Instance.Model.Date;
             _playerModel = GameplayContext.Instance.Model.Player;
 
@@ -90,7 +91,7 @@ namespace Features.Levels.Config.Conditions
         private string GetDescription()
         {
             return
-                $"You lose if you stay have less than {bankruptcyFundsThreshold} coin for more than {maxBankruptcyDurationInDays} days.";
+                $"You lose if you have less than {bankruptcyFundsThreshold} coin for more than {maxBankruptcyDurationInDays} days.";
         }
     }
 }
