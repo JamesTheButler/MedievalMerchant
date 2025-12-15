@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Common.UI;
 using Features.Levels.Config;
@@ -7,6 +8,8 @@ using NaughtyAttributes;
 using TMPro;
 using UI.Conditions;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -28,6 +31,13 @@ namespace Features.StartMenu.UI
 
         private LevelInfo _currentLevelInfo;
 
+        private void Awake()
+        {
+            startButton.onClick.AddListener(LoadCurrentLevel);
+            // relevant later, when i add serialization of ongoing games
+            continueButton.gameObject.SetActive(false);
+        }
+
         public void Setup(LevelInfo levelInfo)
         {
             _currentLevelInfo = levelInfo;
@@ -48,23 +58,10 @@ namespace Features.StartMenu.UI
             var conditions = levelInfo.Conditions;
             winConditionList.Setup(conditions.OfType<WinCondition>(), false);
             lossConditionList.Setup(conditions.OfType<LossCondition>(), false);
-            gameObject.SetActive(true);
-
-            // relevant later, when i add serialization of ongoing games
-            continueButton.gameObject.SetActive(false);
-            startButton.onClick.AddListener(LoadCurrentLevel);
-        }
-
-        public void Clear()
-        {
-            nameText.text = string.Empty;
-            gameObject.SetActive(false);
         }
 
         private void LoadCurrentLevel()
         {
-            startButton.onClick.RemoveListener(LoadCurrentLevel);
-
             Debug.Log($"Loading level {_currentLevelInfo.LevelName}...");
 
             GlobalContext.CurrentLevelInfo = _currentLevelInfo;

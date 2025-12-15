@@ -11,7 +11,7 @@ namespace Features.Trade.Logic.Price
     public sealed class ReputationPriceModifier : BasePercentageModifier
     {
         private readonly TradeType _tradeType;
-        private readonly ReputationConfig reputationConfig = ConfigurationManager.Configurations.ReputationConfig;
+        private readonly ReputationConfig _reputationConfig = ConfigurationManager.Configurations.ReputationConfig;
         private readonly string _townName;
 
         public ReputationPriceModifier(Town town, TradeType tradeType) : base(0f, string.Empty)
@@ -31,16 +31,14 @@ namespace Features.Trade.Logic.Price
         {
             var townLikesPlayer = reputation >= 0;
             var likesOrDislikes = townLikesPlayer ? "likes" : "dislikes";
-            var repPerPricePercent = reputationConfig.ReputationPerPricePercent;
-            return
-                $"{_townName} {likesOrDislikes} you! Your reputation: {(int)reputation} (1% per {repPerPricePercent} reputation points)";
+            return $"{_townName} {likesOrDislikes} you! Your reputation: {reputation:0.#}";
         }
 
         private float GetValue(float reputation)
         {
             // buying from a town, with positive rep should lower prices
             var sign = _tradeType == TradeType.Buy ? -1 : 1;
-            var repPerPricePercent = reputationConfig.ReputationPerPricePercent;
+            var repPerPricePercent = _reputationConfig.ReputationPerPricePercent;
             return reputation * 0.01f * sign / repPerPricePercent;
         }
     }
