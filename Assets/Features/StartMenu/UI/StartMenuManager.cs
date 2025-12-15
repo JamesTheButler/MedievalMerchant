@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Common;
 using Features.Levels.Config;
@@ -24,19 +25,21 @@ namespace Features.StartMenu.UI
         private LevelInfoBox levelInfoBox;
 
         private bool _initialized;
+        private LevelButton[] _levelButtons;
 
         private void Start()
         {
             ToggleLevelSelection(false);
             // set up first level button
-            var levelButtons = levelSelectionGO.GetComponentsInChildren<LevelButton>();
-            var firstLevelButton = levelButtons.First();
-            SetupLevelInfoBox(firstLevelButton.LevelInfo);
+            _levelButtons = levelSelectionGO.GetComponentsInChildren<LevelButton>();
+            var firstLevelButton = _levelButtons.First();
+
+            OnButtonClick(firstLevelButton);
 
             // set up click events
-            foreach (var button in levelButtons)
+            foreach (var button in _levelButtons)
             {
-                button.Clicked += SetupLevelInfoBox;
+                button.Clicked += OnButtonClick;
             }
 
             var cursor = ResourceManager.Instance.Cursors.Default;
@@ -52,9 +55,19 @@ namespace Features.StartMenu.UI
             }
         }
 
-        public void SetupLevelInfoBox(LevelInfo levelInfo)
+        private void OnButtonClick(LevelButton clickedButton)
         {
-            levelInfoBox.Setup(levelInfo);
+            foreach (var otherButton in _levelButtons)
+            {
+                if (otherButton == clickedButton)
+                    continue;
+
+                otherButton.Deselect();
+            }
+
+            clickedButton.Select();
+
+            levelInfoBox.Setup(clickedButton.LevelInfo);
         }
 
         private void OnAnyKey()

@@ -34,7 +34,7 @@ namespace Features.StartMenu.UI
         private void Awake()
         {
             startButton.onClick.AddListener(LoadCurrentLevel);
-            // relevant later, when i add serialization of ongoing games
+            // relevant later, when I add serialization of ongoing games
             continueButton.gameObject.SetActive(false);
         }
 

@@ -10,7 +10,7 @@ namespace Features.StartMenu.UI
 {
     public sealed class LevelButton : MonoBehaviour
     {
-        public event Action<LevelInfo> Clicked;
+        public event Action<LevelButton> Clicked;
 
         [SerializeField, Required]
         private Button button;
@@ -24,8 +24,14 @@ namespace Features.StartMenu.UI
         [field: SerializeField, Expandable, Required]
         public LevelInfo LevelInfo { get; private set; }
 
+        [SerializeField]
+        private Color selectedColor;
+
+        private Color _defaultColor;
+
         private void Start()
         {
+            _defaultColor = button.GetComponent<Image>().color;
             var isEnabled = LevelInfo != null && LevelInfo.IsEnabled;
             button.interactable = isEnabled;
             lockedIcon.gameObject.SetActive(!isEnabled);
@@ -42,9 +48,20 @@ namespace Features.StartMenu.UI
             button.onClick.RemoveListener(OnClick);
         }
 
+        public void Select()
+        {
+            button.GetComponent<Image>().color = selectedColor;
+        }
+
+        public void Deselect()
+        {
+            button.GetComponent<Image>().color = _defaultColor;
+        }
+
         private void OnClick()
         {
-            Clicked?.Invoke(LevelInfo);
+            Clicked?.Invoke(this);
+            Select();
         }
     }
 }
