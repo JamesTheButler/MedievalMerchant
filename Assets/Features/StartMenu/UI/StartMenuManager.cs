@@ -57,11 +57,6 @@ namespace Features.StartMenu.UI
             levelInfoBox.Setup(levelInfo);
         }
 
-        private void OnEscapeKey()
-        {
-            ToggleLevelSelection(false);
-        }
-
         private void OnAnyKey()
         {
             if (_initialized) return;

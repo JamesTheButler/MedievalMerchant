@@ -80,5 +80,10 @@ namespace Common.Types
         {
             return $"Year: {_year.Value}, Day: {_day.Value}";
         }
+
+        public string ToDisplayString()
+        {
+            return $"Day {_day.Value} of Year {_year.Value}";
+        }
     }
 }

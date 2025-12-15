@@ -38,7 +38,11 @@ namespace Features.StartMenu.UI
             var completionDate = GlobalContext.Instance.ProgressModel.CompletedLevels[levelInfo.InternalIndex];
             var isCompleted = completionDate != null;
             completionDateText.enabled = isCompleted;
-            completionDateText.text = $"Fastest Win: {completionDate?.CompletionDate}";
+            if (isCompleted)
+            {
+                completionDateText.text = $"Fastest Win: {completionDate!.CompletionDate.ToDisplayString()}";
+            }
+
             difficultyText.text = $"Difficulty: {levelInfo.Difficulty.WithColor(levelInfo.DifficultyColor)}";
 
             var conditions = levelInfo.Conditions;
