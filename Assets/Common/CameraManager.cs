@@ -1,5 +1,4 @@
 using System;
-using Common;
 using Features.Map.Tiling;
 using Infrastructure;
 using NaughtyAttributes;
@@ -7,124 +6,134 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class CameraManager : MonoBehaviour
+namespace Common
 {
-    [SerializeField, Required]
-    private new Camera camera;
-
-    [SerializeField]
-    private UnityEvent cameraMoved, cameraZoomed;
-
-    [SerializeField, Required]
-    private TilemapManager tilemapManager;
-
-    [SerializeField]
-    private float startupPadding;
-
-    [SerializeField]
-    private float zoomSpeed = 1;
-
-    [SerializeField]
-    private float keyboardPanSpeedPixelPerSecond = 1;
-
-    [SerializeField]
-    private float zLevel = -10;
-
-    [SerializeField]
-    private float minSize = 1;
-
-    [SerializeField]
-    private Vector2 safeArea;
-
-    private float _maxSize = 10;
-    private Vector2 _lastMousePosition;
-    private Vector2 _lastKeyInputs = Vector2.zero;
-    private bool _isPanning;
-    private Bounds _bounds;
-
-    private void Start()
+    public sealed class CameraManager : MonoBehaviour
     {
-        // force orthographic camera
-        if (camera.orthographic)
-            return;
+        [SerializeField, Required]
+        private new Camera camera;
 
-        camera.orthographic = true;
-    }
+        [SerializeField]
+        private UnityEvent cameraMoved, cameraZoomed;
 
-    public void FixedUpdate()
-    {
-        if (_lastKeyInputs == Vector2.zero)
-            return;
+        [SerializeField, Required]
+        private TilemapManager tilemapManager;
 
-        ApplyMapMovementKeys();
-    }
+        [SerializeField]
+        private float startupPadding;
 
-    public void FitMapSize()
-    {
-        // TODO - POLISH: camera size should fit both dimensions. this depends on the aspect ratio & account for ui 
-        var mapSize = GameplayContext.Instance.Model.TileFlagMap.Size.y;
-        camera.orthographicSize = mapSize * .5f + startupPadding;
-        _maxSize = camera.orthographicSize * 1.5f;
-        _bounds = tilemapManager.Tilemap.localBounds;
-    }
+        [SerializeField]
+        private float zoomSpeed = 1;
 
-    public void OnScrollWheel(InputAction.CallbackContext context)
-    {
-        var scrollValue = -context.ReadValue<Vector2>().y;
-        var newSize = camera.orthographicSize + scrollValue * zoomSpeed;
-        camera.orthographicSize = Math.Clamp(newSize, minSize, _maxSize);
-        cameraZoomed?.Invoke();
-    }
+        [SerializeField]
+        private float keyboardPanSpeedMinZoom = 10, keyboardPanSpeedMaxZoom = 1;
 
-    public void OnMouseMoved(InputAction.CallbackContext context)
-    {
-        var newMousePosition = context.ReadValue<Vector2>();
-        var oldMousePosition = _lastMousePosition;
-        _lastMousePosition = newMousePosition;
+        [SerializeField]
+        private float zLevel = -10;
 
-        if (!_isPanning)
-            return;
+        [SerializeField]
+        private float minSize = 1;
 
-        var delta = oldMousePosition - newMousePosition;
-        Pan(delta);
-    }
+        [SerializeField]
+        private Vector2 safeArea;
 
-    public void OnMapMovementKeys(InputAction.CallbackContext context)
-    {
-        _lastKeyInputs = context.ReadValue<Vector2>(); // -1..1
-    }
+        private float _maxSize = 10;
+        private float _keyboardPanSpeed = 1;
+        private Vector2 _lastMousePosition;
+        private Vector2 _lastKeyInputs = Vector2.zero;
+        private bool _isPanning;
+        private Bounds _bounds;
 
+        private void Start()
+        {
+            // force orthographic camera
+            if (camera.orthographic)
+                return;
 
-    public void InitiateOrAbortPan(InputAction.CallbackContext context)
-    {
-        _isPanning = context.ReadValueAsButton();
-    }
+            camera.orthographic = true;
+        }
 
-    private void ApplyMapMovementKeys()
-    {
-        Pan(_lastKeyInputs * keyboardPanSpeedPixelPerSecond);
-    }
+        public void FixedUpdate()
+        {
+            if (_lastKeyInputs == Vector2.zero)
+                return;
 
-    private void Pan(Vector2 delta)
-    {
-        var worldUnitsPerPixel = camera.orthographicSize * 2f / Screen.height;
+            ApplyMapMovementKeys();
+        }
 
-        var worldDelta = new Vector3(
-            delta.x * worldUnitsPerPixel,
-            delta.y * worldUnitsPerPixel,
-            0f);
+        public void FitMapSize()
+        {
+            // TODO - POLISH: camera size should fit both dimensions. this depends on the aspect ratio & account for ui 
+            var mapSize = GameplayContext.Instance.Model.TileFlagMap.Size.y;
+            camera.orthographicSize = mapSize * .5f + startupPadding;
+            _maxSize = camera.orthographicSize * 1.5f;
+            _bounds = tilemapManager.Tilemap.localBounds;
+        }
 
-        var targetPosition = camera.transform.position + worldDelta;
+        public void OnScrollWheel(InputAction.CallbackContext context)
+        {
+            var scrollValue = -context.ReadValue<Vector2>().y;
+            var newSize = camera.orthographicSize + scrollValue * zoomSpeed;
+            camera.orthographicSize = Math.Clamp(newSize, minSize, _maxSize);
+            RefreshKeyboardPanSpeed();
+            cameraZoomed?.Invoke();
+        }
 
-        camera.transform.position = targetPosition
-            .Clamp(_bounds)
-            .WithOverrides(z: zLevel);
+        public void OnMouseMoved(InputAction.CallbackContext context)
+        {
+            var newMousePosition = context.ReadValue<Vector2>();
+            var oldMousePosition = _lastMousePosition;
+            _lastMousePosition = newMousePosition;
 
-        cameraMoved?.Invoke();
-    }
+            if (!_isPanning)
+                return;
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireCube(camera.transform.position, safeArea.FromXY(1));
+            var delta = oldMousePosition - newMousePosition;
+            Pan(delta);
+        }
+
+        public void OnMapMovementKeys(InputAction.CallbackContext context)
+        {
+            _lastKeyInputs = context.ReadValue<Vector2>(); // -1..1
+        }
+
+        public void InitiateOrAbortPan(InputAction.CallbackContext context)
+        {
+            _isPanning = context.ReadValueAsButton();
+        }
+        
+        private void RefreshKeyboardPanSpeed()
+        {
+            var cameraSizeT = Mathf.InverseLerp(minSize, _maxSize, camera.orthographicSize);
+            _keyboardPanSpeed = Mathf.Lerp(keyboardPanSpeedMaxZoom, keyboardPanSpeedMinZoom, cameraSizeT);
+        }
+
+        private void ApplyMapMovementKeys()
+        {
+            Pan(_lastKeyInputs * _keyboardPanSpeed);
+        }
+
+        private void Pan(Vector2 delta)
+        {
+            var worldUnitsPerPixel = camera.orthographicSize * 2f / Screen.height;
+
+            var worldDelta = new Vector3(
+                delta.x * worldUnitsPerPixel,
+                delta.y * worldUnitsPerPixel,
+                0f);
+
+            var targetPosition = camera.transform.position + worldDelta;
+
+            camera.transform.position = targetPosition
+                .Clamp(_bounds)
+                .WithOverrides(z: zLevel);
+
+            cameraMoved?.Invoke();
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireCube(camera.transform.position, safeArea.FromXY(1));
+        }
     }
 }
