@@ -14,10 +14,9 @@ namespace UI
 
         private bool IsActive => escapeMenuRoot.activeSelf;
 
-        private void Start()
+        public void OpenMenu()
         {
-            _tickingService = GameplayContext.Instance.Services.TickingService;
-            ToggleEscMenu(false);
+            ToggleEscMenu(true);
         }
 
         public void OnCancel()
@@ -32,6 +31,11 @@ namespace UI
             ToggleEscMenu(!IsActive);
         }
 
+        private void Start()
+        {
+            _tickingService = GameplayContext.Instance.Services.TickingService;
+            ToggleEscMenu(false);
+        }
         private void ToggleEscMenu(bool isActive)
         {
             escapeMenuRoot.SetActive(isActive);
