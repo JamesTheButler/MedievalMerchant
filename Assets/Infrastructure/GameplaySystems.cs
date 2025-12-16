@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Common;
+using Features.Levels.Conditions.Logic;
+using Features.Levels.Conditions.Model;
 using Features.Levels.Logic;
 using Features.Player;
 using Features.Ticking;
@@ -12,9 +14,6 @@ namespace Infrastructure
 {
     public sealed class GameplaySystems
     {
-        // TODO - cleanup: this should not be here
-        public LevelConditionManager LevelConditionManager { get; } = new();
-
         private readonly List<ISystem> _systems = new();
 
         public void Initialize()
@@ -45,7 +44,7 @@ namespace Infrastructure
             _systems.Add(new PlayerTickSystem());
             _systems.Add(new DateSystem());
             _systems.Add(new PlayerUpkeepSystem());
-            _systems.Add(LevelConditionManager);
+            _systems.Add(new ConditionSystem());
         }
 
         private void AddTownSystems()

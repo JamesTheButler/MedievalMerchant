@@ -14,8 +14,9 @@ namespace Features.Levels.Logic
 
         private void Awake()
         {
-            GameplayContext.Instance.Systems.LevelConditionManager.LevelWon += levelWon.Invoke;
-            GameplayContext.Instance.Systems.LevelConditionManager.LevelLost += levelLost.Invoke;
+            var conditions = GameplayContext.Instance.Model.Conditions;
+            conditions.LevelWon += levelWon.Invoke;
+            conditions.LevelLost += levelLost.Invoke;
         }
     }
 }

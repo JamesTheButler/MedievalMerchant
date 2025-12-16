@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Common.Types;
+using Features.Levels.Conditions.Model;
 using Features.Map.Tiling;
 using Features.Player;
 using Features.Towns;
@@ -14,6 +15,7 @@ namespace Common
         public Date Date { get; private set; } = new();
         public PlayerModel Player { get; private set; }
         public LevelModifiers Modifiers { get; private set; } = new();
+        public LevelConditions Conditions { get; private set; } = new();
 
         public IReadOnlyDictionary<Vector2Int, Town> Towns => _towns;
 

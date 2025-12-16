@@ -1,15 +1,13 @@
-using System;
 using System.Linq;
 using Common.UI;
+using Features.Levels.Conditions.Data;
+using Features.Levels.Conditions.Model;
+using Features.Levels.Conditions.UI;
 using Features.Levels.Config;
-using Features.Levels.Config.Conditions;
 using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
-using UI.Conditions;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -56,8 +54,8 @@ namespace Features.StartMenu.UI
             difficultyText.text = $"Difficulty: {levelInfo.Difficulty.WithColor(levelInfo.DifficultyColor)}";
 
             var conditions = levelInfo.Conditions;
-            winConditionList.Setup(conditions.OfType<WinCondition>(), false);
-            lossConditionList.Setup(conditions.OfType<LossCondition>(), false);
+            winConditionList.Setup(conditions.OfType<WinConditionData>());
+            lossConditionList.Setup(conditions.OfType<LossConditionData>());
         }
 
         private void LoadCurrentLevel()

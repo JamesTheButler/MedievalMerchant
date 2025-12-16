@@ -7,6 +7,7 @@ using Features.Towns.Flags.Config;
 using Features.Tutorial.Data;
 using NaughtyAttributes;
 using UnityEngine;
+using ConditionResources = Features.Levels.Conditions.Config.ConditionResources;
 
 namespace Infrastructure
 {
