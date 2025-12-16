@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Common;
 using Common.Modifiable;
 using Common.Types;
@@ -18,7 +17,7 @@ namespace Features.Towns.Reputation.Logic
 
         public Observable<float> Reputation { get; private set; } = new();
 
-        public IReadOnlyDictionary<DateTime, ReputationLogEntry> ReputationLog => _reputationLog;
+        public IReadOnlyList<ReputationLogEntry> ReputationLog => _reputationLog;
         public IReadOnlyList<IModifier> Modifiers => _modifiers;
         public Observable<bool> IsNeglected { get; set; } = new();
 
@@ -27,7 +26,7 @@ namespace Features.Towns.Reputation.Logic
         private readonly GoodsResources _goodResources;
 
         private readonly List<IModifier> _modifiers = new();
-        private readonly Dictionary<DateTime, ReputationLogEntry> _reputationLog = new();
+        private readonly List<ReputationLogEntry> _reputationLog = new();
 
         public ReputationManager(Town town)
         {
@@ -124,17 +123,7 @@ namespace Features.Towns.Reputation.Logic
 
             var date = _model.Date;
             var logEntry = new ReputationLogEntry(date, repChange, Reputation.Value, reason);
-
-            var logTime = DateTime.Now;
-            // TODO - MED-59: circumvented an exception here
-            if (_reputationLog.TryGetValue(logTime, out var oldEntry))
-            {
-                Debug.LogError($"There is already a log entry at {logTime}. (old: {oldEntry}, new:{logEntry})");
-            }
-            else
-            {
-                _reputationLog.Add(DateTime.Now, logEntry);
-            }
+            _reputationLog.Add(logEntry);
         }
     }
 }
