@@ -7,7 +7,6 @@ using Features.Player.Caravan.Config;
 using Features.Ticking;
 using Features.Towns;
 using Infrastructure;
-using NUnit.Framework.Constraints;
 using UnityEngine;
 
 namespace Features.Map.Pathfinding

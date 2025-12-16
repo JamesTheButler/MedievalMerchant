@@ -10,7 +10,6 @@ namespace Common.UI
         IPointerExitHandler,
         IPointerClickHandler
     {
-        // TODO - STYLE: this is cumbersome, as we need to set up each handler+tooltip combo EVERY time. should be automatic.
         [SerializeField, Required]
         private GameObject toolTipPrefab;
 

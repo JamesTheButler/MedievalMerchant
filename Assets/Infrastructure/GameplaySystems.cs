@@ -15,7 +15,7 @@ namespace Infrastructure
         // TODO - cleanup: this should not be here
         public LevelConditionManager LevelConditionManager { get; } = new();
 
-        private List<ISystem> _systems = new();
+        private readonly List<ISystem> _systems = new();
 
         public void Initialize()
         {

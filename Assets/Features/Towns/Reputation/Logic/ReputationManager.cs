@@ -63,7 +63,7 @@ namespace Features.Towns.Reputation.Logic
             _town.TradeCompleted += OnTradeCompleted;
             _town.DevelopmentManager.Tier.Observe(OnTownUpgrade, false);
             _town.ProductionManager.ProductionAdded += OnProductionBuildingBuilt;
-            // TODO - Feature: Missions Completion and Failure support
+            // TODO - MED-72: Missions Completion and Failure support
             //_town.MissionManager.MissionResolved += OnMissionResolved
             //_town.MissionManager.MissionExpired += OnMissionExpired
         }
@@ -73,7 +73,7 @@ namespace Features.Towns.Reputation.Logic
             _town.TradeCompleted -= OnTradeCompleted;
             _town.DevelopmentManager.Tier.StopObserving(OnTownUpgrade);
             _town.ProductionManager.ProductionAdded -= OnProductionBuildingBuilt;
-            // TODO - Feature: Missions Completion and Failure support
+            // TODO - MED-72: Missions Completion and Failure support
             //_town.MissionManager.MissionResolved -= OnMissionResolved
             //_town.MissionManager.MissionExpired -= OnMissionExpired
         }
@@ -119,14 +119,14 @@ namespace Features.Towns.Reputation.Logic
 
         private void UpdateReputation(float repChange, string reason)
         {
-            // TODO - bug: apply modifiers
+            // TODO - MED-73: apply modifiers
             Reputation.Value = Mathf.Clamp(Reputation.Value + repChange, -100, 100);
 
             var date = _model.Date;
             var logEntry = new ReputationLogEntry(date, repChange, Reputation.Value, reason);
 
             var logTime = DateTime.Now;
-            // TODO - MED-59
+            // TODO - MED-59: circumvented an exception here
             if (_reputationLog.TryGetValue(logTime, out var oldEntry))
             {
                 Debug.LogError($"There is already a log entry at {logTime}. (old: {oldEntry}, new:{logEntry})");
