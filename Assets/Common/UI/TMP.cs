@@ -14,6 +14,11 @@ namespace Common.UI
             return $"<style=\"Color_Bad\">{content}</style>";
         }
 
+        public static string WithStyle(this string content, string style)
+        {
+            return $"<style=\"{style}\">{content}</style>";
+        }
+
         public static string WithColor(this string content, Color color)
         {
             return $"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{content}</color>";
