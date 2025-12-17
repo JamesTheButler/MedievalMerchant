@@ -155,8 +155,9 @@ GameObject:
   - component: {fileID: 2061553904268519214}
   - component: {fileID: 4890942972278885054}
   - component: {fileID: 9180337923716317129}
+  - component: {fileID: 3697784413889046846}
   m_Layer: 5
-  m_Name: RetinueTopUI
+  m_Name: RetinueMiniUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,6 +249,32 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &3697784413889046846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8729310594904343300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c477807dc891ed847b885fae77be5db7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniUI
+  progressGroups:
+    _serializedList:
+    - Key: 0
+      Value: {fileID: 4076831232989665153}
+    - Key: 1
+      Value: {fileID: 6731504032855871421}
+    - Key: 2
+      Value: {fileID: 2623570573227565569}
+    - Key: 3
+      Value: {fileID: 5609356719611767667}
+    - Key: 4
+      Value: {fileID: 4927153801123127556}
+    - Key: 5
+      Value: {fileID: 4085270255100093050}
 --- !u!1001 &698104681080358629
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -292,6 +319,38 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -801688143222565767, guid: d8b4956ecf829384592e10c6ab772b5c, type: 3}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4784715280774464074, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -358,7 +417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6640128380452165109, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_Name
-      value: RetinueProgressItem (5)
+      value: GuardProgressGroup
       objectReference: {fileID: 0}
     - target: {fileID: 7570015611735104856, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
@@ -490,9 +549,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6238999792602164306}
+    - targetCorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3568406357036796434}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+--- !u!114 &6731504032855871421 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+  m_PrefabInstance: {fileID: 698104681080358629}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
 --- !u!224 &8106618594898077312 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
@@ -542,6 +618,38 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 1108227175906358213, guid: d8b4956ecf829384592e10c6ab772b5c, type: 3}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4784715280774464074, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -608,7 +716,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6640128380452165109, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_Name
-      value: RetinueProgressItem (4)
+      value: NegotiatorProgressGroup
       objectReference: {fileID: 0}
     - target: {fileID: 7570015611735104856, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
@@ -743,6 +851,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+--- !u!114 &4927153801123127556 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+  m_PrefabInstance: {fileID: 1205827274214352988}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
 --- !u!224 &7605350169032968249 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
@@ -792,6 +911,38 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -2228723787521024663, guid: d8b4956ecf829384592e10c6ab772b5c, type: 3}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4784715280774464074, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -858,7 +1009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6640128380452165109, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_Name
-      value: RetinueProgressItem (2)
+      value: DiplomatProgressGroup
       objectReference: {fileID: 0}
     - target: {fileID: 7570015611735104856, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
@@ -993,10 +1144,123 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+--- !u!114 &5609356719611767667 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+  m_PrefabInstance: {fileID: 1802356796456051243}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
 --- !u!224 &6931908296675344974 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
   m_PrefabInstance: {fileID: 1802356796456051243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2310872779464697110
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8106618594898077312}
+    m_Modifications:
+    - target: {fileID: 1468999810486969060, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_Name
+      value: RetinueMiniProgressElement (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+--- !u!224 &6238999792602164306 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+  m_PrefabInstance: {fileID: 2310872779464697110}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3513905644284574748
 PrefabInstance:
@@ -1132,6 +1396,108 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2107574365829696210, guid: 1e9719a1b242fc44ba0b4861bd9ef37f, type: 3}
   m_PrefabInstance: {fileID: 3513905644284574748}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5116433741513343830
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8106618594898077312}
+    m_Modifications:
+    - target: {fileID: 1468999810486969060, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_Name
+      value: RetinueMiniProgressElement (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+--- !u!224 &3568406357036796434 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8540161684127697220, guid: 1877134e9f451b84e8de3c0a3d86425d, type: 3}
+  m_PrefabInstance: {fileID: 5116433741513343830}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7802734476999515865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1176,6 +1542,38 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 376932548318145934, guid: d8b4956ecf829384592e10c6ab772b5c, type: 3}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4784715280774464074, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1242,7 +1640,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6640128380452165109, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_Name
-      value: RetinueProgressItem (3)
+      value: NavigatorProgressGroup
       objectReference: {fileID: 0}
     - target: {fileID: 7570015611735104856, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1382,6 +1780,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
   m_PrefabInstance: {fileID: 7802734476999515865}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4076831232989665153 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+  m_PrefabInstance: {fileID: 7802734476999515865}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
 --- !u!1001 &7812331813163707170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1419,6 +1828,38 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1254362560166110057, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -1488,7 +1929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6640128380452165109, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_Name
-      value: RetinueProgressItem (1)
+      value: ArchitectProgressGroup
       objectReference: {fileID: 0}
     - target: {fileID: 7570015611735104856, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1628,6 +2069,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
   m_PrefabInstance: {fileID: 7812331813163707170}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4085270255100093050 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+  m_PrefabInstance: {fileID: 7812331813163707170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
 --- !u!1001 &8121109756292852569
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1672,6 +2124,38 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 4552513776562212294, guid: d8b4956ecf829384592e10c6ab772b5c, type: 3}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2220746497792710395, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566869247387124529, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4784715280774464074, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1738,7 +2222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6640128380452165109, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_Name
-      value: RetinueProgressItem
+      value: ThiefProgressGroup
       objectReference: {fileID: 0}
     - target: {fileID: 7570015611735104856, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1878,3 +2362,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
   m_PrefabInstance: {fileID: 8121109756292852569}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2623570573227565569 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+  m_PrefabInstance: {fileID: 8121109756292852569}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
