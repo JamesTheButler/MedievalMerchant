@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Common;
 using Common.Config;
+using Common.Types;
 using Common.UI;
 using Features.Goods.Config;
 using Features.Player.Caravan.Config;
@@ -31,19 +32,13 @@ namespace Features.Player.Caravan.UI
 
         [Header("Header")]
         [SerializeField, Required]
-        private TMP_Text moveSpeedText;
-
-        [SerializeField, Required]
-        private TMP_Text upkeepText;
-
-        [SerializeField, Required]
-        private TMP_Text levelText;
+        private TMP_Text moveSpeedText, upkeepText;
 
         [SerializeField, Required]
         private SimpleTooltipHandler moveSpeedTooltip, upkeepTooltip;
 
         [SerializeField, Required]
-        private Image moveSpeedUpgradeIcon, upkeepUpgradeIcon;
+        private Image tierIcon, moveSpeedUpgradeIcon, upkeepUpgradeIcon;
 
         [SerializeField, Required]
         private Button upgradeButton;
@@ -55,8 +50,7 @@ namespace Features.Player.Caravan.UI
         [SerializeField, Required]
         private Sprite arrowUp, arrowDown;
 
-        public event Action<InventoryCell> OnCellAdded;
-        public event Action<InventoryCell> OnCellClicked;
+        public event Action<InventoryCell> OnCellAdded, OnCellClicked;
 
         private PlayerModel _player;
         private Cart _cart;
@@ -150,7 +144,10 @@ namespace Features.Player.Caravan.UI
             SetLocked(level <= 0);
             upgradeButton.gameObject.SetActive(level < CaravanConfig.MaxLevel);
             UpdateBackgroundImage();
-            levelText.text = $"Level {level}";
+            var sprite = _caravanResources.TierIcons.GetValueOrDefault(level, null);
+            tierIcon.sprite = sprite;
+            // hide make icon transparent if not shown
+            tierIcon.color = sprite == null ? new Color(0, 0, 0, 0) : Color.white;
 
             if (level >= CaravanConfig.MaxLevel)
             {

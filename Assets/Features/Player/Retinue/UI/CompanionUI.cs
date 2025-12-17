@@ -5,7 +5,6 @@ using Features.Player.Retinue.Logic;
 using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Features.Player.Retinue.UI
@@ -17,9 +16,6 @@ namespace Features.Player.Retinue.UI
 
         [SerializeField]
         private bool isImplemented;
-
-        [SerializeField]
-        public UnityEvent<CompanionType, int> levelUpgradeRequested;
 
         [Header("Set Up")]
         [SerializeField, Required]
@@ -36,6 +32,7 @@ namespace Features.Player.Retinue.UI
 
         private RetinueManager _retinueManager;
         private CompanionConfigData _configData;
+        private CompanionUpgradeService _companionUpgradeService;
 
         private readonly List<CompanionLevelUI> _levelUIs = new();
 
@@ -45,6 +42,7 @@ namespace Features.Player.Retinue.UI
         {
             _retinueManager = GameplayContext.Instance.Model.Player.RetinueManager;
             _configData = ConfigurationManager.Configurations.CompanionConfig.Get(companionType);
+            _companionUpgradeService = GameplayContext.Instance.Services.CompanionUpgradeService;
 
             InitializeUI();
 
@@ -62,7 +60,7 @@ namespace Features.Player.Retinue.UI
 
                 // increment index by 1 as lvl 0 means nothing is upgraded
                 levelUIScript.Setup(i + 1, companionType, isImplemented);
-                levelUIScript.UnlockRequested += levelUpgradeRequested.Invoke;
+                levelUIScript.UnlockRequested += _companionUpgradeService.LevelUpgradeRequested;
 
                 _levelUIs.Add(levelUIScript);
             }

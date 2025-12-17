@@ -15,5 +15,8 @@ namespace Features.Goods.Config
         
         [field: SerializeField, SerializedDictionary("Level", "Cart Images")]
         public SerializedDictionary<int, Sprite> BackgroundImages { get; private set; }
+        
+        [field: SerializeField, SerializedDictionary("Cart Level", "Cart Tier Icon")]
+        public SerializedDictionary<int, Sprite> TierIcons { get; private set; }
     }
 }

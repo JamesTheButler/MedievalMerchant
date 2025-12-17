@@ -1,33 +1,26 @@
 ﻿using Common;
 using Common.Modifiable;
 using Features.Player.Retinue.Config;
-using Features.Player.Retinue.UI;
 using Infrastructure;
-using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Logic
 {
-    public sealed class CompanionUpgrader : MonoBehaviour
+    public sealed class CompanionUpgradeService : IService
     {
-        [SerializeField, Required]
-        private Transform companionGroup;
-
         private CompanionConfig _companionConfig;
         private PlayerModel _player;
 
-        private void Start()
+
+        public void Initialize()
         {
             _companionConfig = ConfigurationManager.Configurations.CompanionConfig;
             _player = GameplayContext.Instance.Model.Player;
-
-            foreach (var companionUi in companionGroup.GetComponentsInChildren<CompanionUI>())
-            {
-                companionUi.levelUpgradeRequested.AddListener(LevelUpgradeRequested);
-            }
         }
 
-        private void LevelUpgradeRequested(CompanionType companionType, int newLevel)
+        public void CleanUp() { }
+
+        public void LevelUpgradeRequested(CompanionType companionType, int newLevel)
         {
             var companionConfigData = _companionConfig.Get(companionType);
             var levels = companionConfigData.Levels;

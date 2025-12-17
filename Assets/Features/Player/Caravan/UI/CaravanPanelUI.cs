@@ -13,7 +13,7 @@ using UnityEngine.Events;
 
 namespace Features.Player.Caravan.UI
 {
-    public sealed class CaravanUI : MonoBehaviour
+    public sealed class CaravanPanelUI : MonoBehaviour
     {
         [SerializeField]
         private UnityEvent<InventoryCell, TradeType> inventoryCellClicked;
@@ -56,6 +56,22 @@ namespace Features.Player.Caravan.UI
             upkeepTooltip.SetData(_caravanManager.Upkeep);
 
             _playerInventory.GoodUpdated += OnGoodAdded;
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var cartUI in cartUis)
+            {
+                cartUI.Unbind();
+            }
+
+            _caravanManager.MoveSpeed.StopObserving(OnMoveSpeedChanged);
+            _caravanManager.Upkeep.StopObserving(OnUpkeepChanged);
+        }
+
+        public void Toggle()
+        {
+            gameObject.SetActive(gameObject.activeSelf);
         }
 
         private void OnCellClicked(InventoryCell cell)
@@ -101,17 +117,6 @@ namespace Features.Player.Caravan.UI
         private void OnCellAdded(InventoryCell cell)
         {
             _freeCells.Add(cell);
-        }
-
-        private void OnDestroy()
-        {
-            foreach (var cartUI in cartUis)
-            {
-                cartUI.Unbind();
-            }
-
-            _caravanManager.MoveSpeed.StopObserving(OnMoveSpeedChanged);
-            _caravanManager.Upkeep.StopObserving(OnUpkeepChanged);
         }
 
         private void OnMoveSpeedChanged(float moveSpeed)

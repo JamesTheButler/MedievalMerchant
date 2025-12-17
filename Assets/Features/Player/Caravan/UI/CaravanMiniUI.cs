@@ -15,7 +15,7 @@ namespace Features.Player.Caravan.UI
         private string _currentStyleTag;
         private float _cachedUpkeep;
 
-        private void Start()
+        private void Awake()
         {
             _currentStyleTag = defaultStyleTag;
         }
