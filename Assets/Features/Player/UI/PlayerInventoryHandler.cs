@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Features.Player
 {
-    public sealed class PlayerInventoryHandler : MonoBehaviour
+    public sealed class PlayerInventoryUIHandler : MonoBehaviour
     {
         [SerializeField, Required]
         private PlayerInventoryUI playerInventoryUI;

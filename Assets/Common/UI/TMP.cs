@@ -4,12 +4,17 @@ namespace Common.UI
 {
     public static class TMP
     {
-        public static string ColorGood(string content)
+        public static string WithDefaultStyle(this string content)
+        {
+            return $"<style=\"Title\">{content}</style>";
+        }
+
+        public static string WithGoodStyle(this string content)
         {
             return $"<style=\"Color_Good\">{content}</style>";
         }
 
-        public static string ColorBad(string content)
+        public static string WithBadStyle(this string content)
         {
             return $"<style=\"Color_Bad\">{content}</style>";
         }

@@ -21,9 +21,11 @@ namespace Common.UI
             }
 
             var isGood = isBiggerBetter ? modifier.Value > 0 : modifier.Value < 0;
+
+            var modifierValue = modifier.FormattedValue.Value;
             var coloredText = isGood
-                ? TMP.ColorGood(modifier.FormattedValue)
-                : TMP.ColorBad(modifier.FormattedValue);
+                ? modifierValue.WithGoodStyle()
+                : modifierValue.WithBadStyle();
             valueText.text = coloredText;
         }
     }
