@@ -10,7 +10,7 @@ namespace Features.Tutorial.Data
         [field: SerializeField]
         public string Title { get; private set; }
 
-        [field: SerializeField]
+        [field: SerializeField, Multiline]
         public string Description { get; private set; }
 
         [field: SerializeField, ShowAssetPreview(128,128)]

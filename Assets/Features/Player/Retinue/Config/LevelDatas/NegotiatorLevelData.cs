@@ -19,6 +19,6 @@ namespace Features.Player.Retinue.Config.LevelDatas
             .AppendLine($"- {PriceSavings.ToPercentString()} better prices")
             .AppendLine($"- {UpgradeCostReduction.ToPercentString()} reduction of caravan upgrade costs")
             .ToString()
-            .WithGoodStyle();
+            .WithStyle(Style.Good);
     }
 }

@@ -31,18 +31,21 @@ namespace Features.Player.UI
         {
             var formattedText = $"{fundsChange.Sign()}{fundsChange:0.#}";
 
+            Style style;
             if (fundsChange.IsApproximately(0f))
             {
-                fundsChangeText.text = formattedText.WithDefaultStyle();
-            }
-            else if (fundsChange < 0)
-            {
-                fundsChangeText.text = formattedText.WithBadStyle();
+                style = Style.Default;
             }
             else if (fundsChange > 0)
             {
-                fundsChangeText.text = formattedText.WithGoodStyle();
+                style = Style.Good;
             }
+            else
+            {
+                style = Style.Bad;
+            }
+
+            fundsChangeText.text = formattedText.WithStyle(style);
         }
     }
 }

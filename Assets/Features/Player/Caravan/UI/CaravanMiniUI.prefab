@@ -640,8 +640,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Caravan.UI.CaravanMiniUI
   moveSpeedText: {fileID: 2857510867510519479}
   upkeepText: {fileID: 5688480111299071363}
-  defaultStyleTag: Title
-  disabledStyleTag: Subtitle
+  defaultStyleTag: 0
+  disabledStyleTag: 1
 --- !u!114 &2364741831243801725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1086,6 +1086,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 575120186941358199}
     m_Modifications:
+    - target: {fileID: 966664133756839976, guid: 1e9719a1b242fc44ba0b4861bd9ef37f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 966664133756839976, guid: 1e9719a1b242fc44ba0b4861bd9ef37f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 966664133756839976, guid: 1e9719a1b242fc44ba0b4861bd9ef37f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 966664133756839976, guid: 1e9719a1b242fc44ba0b4861bd9ef37f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2107574365829696210, guid: 1e9719a1b242fc44ba0b4861bd9ef37f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

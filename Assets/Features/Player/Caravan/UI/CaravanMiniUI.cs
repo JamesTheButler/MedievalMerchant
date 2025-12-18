@@ -10,9 +10,9 @@ namespace Features.Player.Caravan.UI
         private TMP_Text moveSpeedText, upkeepText;
 
         [SerializeField]
-        private string defaultStyleTag, disabledStyleTag;
+        private Style defaultStyleTag, disabledStyleTag;
 
-        private string _currentStyleTag;
+        private Style _currentStyleTag;
         private float _cachedUpkeep;
 
         private void Awake()

@@ -19,6 +19,6 @@ namespace Features.Player.Retinue.Config.LevelDatas
             .AppendLine($"- +{TownEntranceReputation} reputation when entering town")
             .AppendLine($"- {ReputationBoost.ToPercentString()} bonus for all reputation gains")
             .ToString()
-            .WithGoodStyle();
+            .WithStyle(Style.Good);
     }
 }

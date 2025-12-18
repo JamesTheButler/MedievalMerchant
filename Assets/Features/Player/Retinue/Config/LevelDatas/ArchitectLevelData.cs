@@ -19,6 +19,6 @@ namespace Features.Player.Retinue.Config.LevelDatas
             .AppendLine($"- {ConstructionPriceReduction.ToPercentString()} reduction to costs of production buildings")
             .AppendLine($"- {TownUpgradePriceReduction.ToPercentString()} reduction of town upgrade costs")
             .ToString()
-            .WithGoodStyle();
+            .WithStyle(Style.Good);
     }
 }

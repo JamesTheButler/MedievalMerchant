@@ -24,9 +24,8 @@ namespace Common.UI.Elements
             var isGood = isBiggerBetter ? modifier.Value > 0 : modifier.Value < 0;
 
             var modifierValue = modifier.FormattedValue.Value;
-            var coloredText = isGood
-                ? modifierValue.WithGoodStyle()
-                : modifierValue.WithBadStyle();
+            var style = isGood ? Style.Good : Style.Bad;
+            var coloredText = modifierValue.WithStyle(style);
             valueText.text = coloredText;
         }
     }

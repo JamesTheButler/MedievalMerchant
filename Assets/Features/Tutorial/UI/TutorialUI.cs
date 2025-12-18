@@ -70,7 +70,7 @@ namespace Features.Tutorial.UI
             tutorialImage.texture = chapterData.Image;
 
             leftButton.gameObject.SetActive(_currentChapterIndex > 0);
-            rightButton.gameObject.SetActive(_currentChapterIndex < _chapterCount);
+            rightButton.gameObject.SetActive(_currentChapterIndex < _chapterCount - 1);
         }
 
         private void OnRightButtonClicked()

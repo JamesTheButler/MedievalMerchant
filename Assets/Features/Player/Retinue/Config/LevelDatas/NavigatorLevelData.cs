@@ -19,6 +19,6 @@ namespace Features.Player.Retinue.Config.LevelDatas
             .AppendLine($"- {SpeedBonus.ToPercentString()} shorter travel times ")
             .AppendLine($"- {UpkeepReduction.ToPercentString()} lower caravan upkeep")
             .ToString()
-            .WithGoodStyle();
+            .WithStyle(Style.Good);
     }
 }

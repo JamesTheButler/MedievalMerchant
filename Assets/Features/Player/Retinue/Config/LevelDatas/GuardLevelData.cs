@@ -14,6 +14,6 @@ namespace Features.Player.Retinue.Config.LevelDatas
         public override string Description => new StringBuilder()
             .AppendLine($"- {Strength} combat strength")
             .ToString()
-            .WithGoodStyle();
+            .WithStyle(Style.Good);
     }
 }
