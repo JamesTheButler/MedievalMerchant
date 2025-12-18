@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using Common;
+using Common.UI;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Config.LevelDatas
@@ -17,6 +18,7 @@ namespace Features.Player.Retinue.Config.LevelDatas
         public override string Description => new StringBuilder()
             .AppendLine($"- {SpeedBonus.ToPercentString()} shorter travel times ")
             .AppendLine($"- {UpkeepReduction.ToPercentString()} lower caravan upkeep")
-            .ToString();
+            .ToString()
+            .WithGoodStyle();
     }
 }

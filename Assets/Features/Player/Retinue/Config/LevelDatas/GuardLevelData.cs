@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using Common.UI;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Config.LevelDatas
@@ -12,6 +13,7 @@ namespace Features.Player.Retinue.Config.LevelDatas
 
         public override string Description => new StringBuilder()
             .AppendLine($"- {Strength} combat strength")
-            .ToString();
+            .ToString()
+            .WithGoodStyle();
     }
 }

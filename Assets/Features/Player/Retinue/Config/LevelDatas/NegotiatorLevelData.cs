@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using Common;
+using Common.UI;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Config.LevelDatas
@@ -17,6 +18,7 @@ namespace Features.Player.Retinue.Config.LevelDatas
         public override string Description => new StringBuilder()
             .AppendLine($"- {PriceSavings.ToPercentString()} better prices")
             .AppendLine($"- {UpgradeCostReduction.ToPercentString()} reduction of caravan upgrade costs")
-            .ToString();
+            .ToString()
+            .WithGoodStyle();
     }
 }

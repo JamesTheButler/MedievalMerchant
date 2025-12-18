@@ -51,6 +51,7 @@ namespace Features.Player.Retinue.UI
 
         private void InitializeUI()
         {
+            levelUiParent.DestroyChildren();
             companionIcon.sprite = _configData.Icon;
             UpdateTooltip();
             for (var i = 0; i < _configData.Levels.Count; i++)
@@ -74,7 +75,8 @@ namespace Features.Player.Retinue.UI
         // TODO - STYLE: this code is quite cumbersome and funky
         private void OnCompanionLevelChanged(int newLevel)
         {
-            if (newLevel == _currentLevel) return;
+            if (newLevel == _currentLevel)
+                return;
 
             if (newLevel > _currentLevel)
             {

@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using Common;
+using Common.UI;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Config.LevelDatas
@@ -19,9 +20,9 @@ namespace Features.Player.Retinue.Config.LevelDatas
 
 
         public override string Description => new StringBuilder()
-            .AppendLine($"- Steals {TownEntranceGold} coin when entering town")
-            .AppendLine($"- {ReputationLossChance.ToPercentString()} chance of getting caught")
-            .AppendLine($"- {ReputationLoss} reputation lost when being caught")
+            .AppendLine($"- Steals {TownEntranceGold} coin when entering town".WithGoodStyle())
+            .AppendLine($"- {ReputationLossChance.ToPercentString()} chance of getting caught".WithBadStyle())
+            .AppendLine($"- {ReputationLoss} reputation lost when being caught".WithBadStyle())
             .ToString();
     }
 }
