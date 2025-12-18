@@ -33,6 +33,11 @@ namespace Common.UI
             SetEnabled(enabledOnStart);
         }
 
+        public void OnDisable()
+        {
+            HideTooltip();
+        }
+
         public void SetEnabled(bool isEnabled)
         {
             _isEnabled = isEnabled;

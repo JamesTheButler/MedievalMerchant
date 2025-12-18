@@ -71,7 +71,7 @@ namespace Features.Player.Caravan.UI
 
         public void Toggle()
         {
-            gameObject.SetActive(gameObject.activeSelf);
+            gameObject.SetActive(!gameObject.activeSelf);
         }
 
         private void OnCellClicked(InventoryCell cell)

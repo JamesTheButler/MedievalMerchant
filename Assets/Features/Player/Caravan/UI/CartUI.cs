@@ -28,7 +28,7 @@ namespace Features.Player.Caravan.UI
         private Button unlockButton;
 
         [SerializeField, Required]
-        private Image backgroundImage;
+        private Image backgroundImage, cartImage;
 
         [Header("Header")]
         [SerializeField, Required]
@@ -38,7 +38,7 @@ namespace Features.Player.Caravan.UI
         private SimpleTooltipHandler moveSpeedTooltip, upkeepTooltip;
 
         [SerializeField, Required]
-        private Image tierIcon, moveSpeedUpgradeIcon, upkeepUpgradeIcon;
+        private Image tierIcon, moveSpeedUpgradeIcon, upkeepUpgradeIcon, faderImage;
 
         [SerializeField, Required]
         private Button upgradeButton;
@@ -92,11 +92,6 @@ namespace Features.Player.Caravan.UI
             Unhover();
         }
 
-        private void OnPlayerFundsChanged(float funds)
-        {
-            upgradeButton.interactable = _cart.UpgradeCost <= funds;
-        }
-
         public void Unbind()
         {
             if (_cart == null)
@@ -133,17 +128,30 @@ namespace Features.Player.Caravan.UI
             upkeepUpgradeIcon.enabled = false;
         }
 
+        private void OnPlayerFundsChanged(float funds)
+        {
+            upgradeButton.interactable = _cart.UpgradeCost <= funds;
+        }
+
         private void SetLocked(bool isLocked)
         {
             unlockButton.gameObject.SetActive(isLocked);
             unlockedParent.gameObject.SetActive(!isLocked);
+            Fade(isLocked);
+        }
+
+        private void Fade(bool isFaded)
+        {
+            faderImage.enabled = isFaded;
+            backgroundImage.color = isFaded ? new Color(1, 1, 1, 0.5f) : new Color(1, 1, 1, 1);
+
         }
 
         private void OnLevelChanged(int level)
         {
             SetLocked(level <= 0);
             upgradeButton.gameObject.SetActive(level < CaravanConfig.MaxLevel);
-            UpdateBackgroundImage();
+            UpdateCartImage();
             var sprite = _caravanResources.TierIcons.GetValueOrDefault(level, null);
             tierIcon.sprite = sprite;
             // hide make icon transparent if not shown
@@ -156,17 +164,19 @@ namespace Features.Player.Caravan.UI
             }
         }
 
-        private void UpdateBackgroundImage()
+        private void UpdateCartImage()
         {
             var level = _cart.Level.Value;
             if (level <= 0)
             {
-                backgroundImage.sprite = _caravanResources.DefaultBackgroundImage;
+                cartImage.sprite = null;
+                cartImage.enabled = false;
                 return;
             }
 
             var backgroundSprite = _caravanResources.BackgroundImages[level];
-            backgroundImage.sprite = backgroundSprite;
+            cartImage.sprite = backgroundSprite;
+            cartImage.enabled = true;
         }
 
         private void OnMoveSpeedChanged(float moveSpeed)
