@@ -35,7 +35,7 @@ namespace Features.Player.Retinue.UI
             var levelData = companionData.GetLevelData(data.Level);
 
             priceGroup.gameObject.SetActive(data.State != CompanionLevelUI.State.Unlocked);
-            lockedGroup.gameObject.SetActive(data.State != CompanionLevelUI.State.Unlockable);
+            lockedGroup.gameObject.SetActive(data.State == CompanionLevelUI.State.Locked);
 
             levelText.text = $"{companionData.Name} lvl. {data.Level}";
 
