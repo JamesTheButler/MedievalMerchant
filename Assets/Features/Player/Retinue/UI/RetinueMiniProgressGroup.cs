@@ -4,6 +4,9 @@ namespace Features.Player.Retinue.UI
 {
     public sealed class RetinueMiniProgressGroup : MonoBehaviour
     {
+        [field: SerializeField]
+        public CompanionType CompanionType { get; private set; }
+
         private RetinueMiniProgressElement[] _elements;
 
         private void Start()
@@ -11,11 +14,11 @@ namespace Features.Player.Retinue.UI
             _elements = GetComponentsInChildren<RetinueMiniProgressElement>();
         }
 
-        public void SetProgress(int count)
+        public void SetProgress(int level)
         {
             for (var i = 0; i < _elements.Length; i++)
             {
-                _elements[i].SetCompleted(i < count);
+                _elements[i].SetCompleted(i < level);
             }
         }
     }

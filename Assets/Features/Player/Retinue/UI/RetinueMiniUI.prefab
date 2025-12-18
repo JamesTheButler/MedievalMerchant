@@ -30,11 +30,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 685583298992769852}
-  - {fileID: 1538733877205912391}
-  - {fileID: 6931908296675344974}
   - {fileID: 1547186041945013948}
+  - {fileID: 685583298992769852}
+  - {fileID: 6931908296675344974}
   - {fileID: 7605350169032968249}
+  - {fileID: 1538733877205912391}
   - {fileID: 8106618594898077312}
   m_Father: {fileID: 3428135891934740650}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -153,9 +153,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3428135891934740650}
   - component: {fileID: 2061553904268519214}
+  - component: {fileID: 3697784413889046846}
   - component: {fileID: 4890942972278885054}
   - component: {fileID: 9180337923716317129}
-  - component: {fileID: 3697784413889046846}
   - component: {fileID: 6291137226414444723}
   m_Layer: 5
   m_Name: RetinueMiniUI
@@ -194,6 +194,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8729310594904343300}
   m_CullTransparentMesh: 1
+--- !u!114 &3697784413889046846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8729310594904343300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c477807dc891ed847b885fae77be5db7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniUI
 --- !u!114 &4890942972278885054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,32 +262,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &3697784413889046846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8729310594904343300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c477807dc891ed847b885fae77be5db7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniUI
-  progressGroups:
-    _serializedList:
-    - Key: 0
-      Value: {fileID: 4076831232989665153}
-    - Key: 1
-      Value: {fileID: 6731504032855871421}
-    - Key: 2
-      Value: {fileID: 2623570573227565569}
-    - Key: 3
-      Value: {fileID: 5609356719611767667}
-    - Key: 4
-      Value: {fileID: 4927153801123127556}
-    - Key: 5
-      Value: {fileID: 4085270255100093050}
 --- !u!114 &6291137226414444723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,6 +400,10 @@ PrefabInstance:
     - target: {fileID: 5251768651421796045, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: <CompanionType>k__BackingField
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6588556197158502899, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
@@ -574,17 +564,6 @@ PrefabInstance:
       addedObject: {fileID: 3568406357036796434}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
---- !u!114 &6731504032855871421 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
-  m_PrefabInstance: {fileID: 698104681080358629}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
 --- !u!224 &8106618594898077312 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
@@ -713,6 +692,10 @@ PrefabInstance:
     - target: {fileID: 5251768651421796045, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: <CompanionType>k__BackingField
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6588556197158502899, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
@@ -867,17 +850,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
---- !u!114 &4927153801123127556 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
-  m_PrefabInstance: {fileID: 1205827274214352988}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
 --- !u!224 &7605350169032968249 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
@@ -1006,6 +978,10 @@ PrefabInstance:
     - target: {fileID: 5251768651421796045, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: <CompanionType>k__BackingField
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6588556197158502899, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1160,17 +1136,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
---- !u!114 &5609356719611767667 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
-  m_PrefabInstance: {fileID: 1802356796456051243}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
 --- !u!224 &6931908296675344974 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
@@ -1286,6 +1251,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3428135891934740650}
     m_Modifications:
+    - target: {fileID: 966664133756839976, guid: 1e9719a1b242fc44ba0b4861bd9ef37f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 966664133756839976, guid: 1e9719a1b242fc44ba0b4861bd9ef37f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 966664133756839976, guid: 1e9719a1b242fc44ba0b4861bd9ef37f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 966664133756839976, guid: 1e9719a1b242fc44ba0b4861bd9ef37f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2107574365829696210, guid: 1e9719a1b242fc44ba0b4861bd9ef37f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1792,17 +1773,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
   m_PrefabInstance: {fileID: 7802734476999515865}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4076831232989665153 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
-  m_PrefabInstance: {fileID: 7802734476999515865}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
 --- !u!1001 &7812331813163707170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1922,6 +1892,10 @@ PrefabInstance:
     - target: {fileID: 5251768651421796045, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: <CompanionType>k__BackingField
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6588556197158502899, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2081,17 +2055,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
   m_PrefabInstance: {fileID: 7812331813163707170}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4085270255100093050 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
-  m_PrefabInstance: {fileID: 7812331813163707170}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
 --- !u!1001 &8121109756292852569
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2215,6 +2178,10 @@ PrefabInstance:
     - target: {fileID: 5251768651421796045, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
+      propertyPath: <CompanionType>k__BackingField
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6588556197158502899, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2374,14 +2341,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8732572223105982565, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
   m_PrefabInstance: {fileID: 8121109756292852569}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2623570573227565569 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6114535630554712408, guid: 35d381281e1cc344b8978dd33e0fe223, type: 3}
-  m_PrefabInstance: {fileID: 8121109756292852569}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup

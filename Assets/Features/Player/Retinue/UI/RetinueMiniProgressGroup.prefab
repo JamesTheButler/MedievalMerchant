@@ -212,8 +212,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8732572223105982565}
-  - component: {fileID: 1126222291393056933}
   - component: {fileID: 6114535630554712408}
+  - component: {fileID: 1642585894196529864}
+  - component: {fileID: 1126222291393056933}
   m_Layer: 5
   m_Name: RetinueMiniProgressGroup
   m_TagString: Untagged
@@ -244,6 +245,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 71, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6114535630554712408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6640128380452165109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
+  <CompanionType>k__BackingField: 0
+--- !u!114 &1642585894196529864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6640128380452165109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98cf785ee6dc43deb48d0ece92e836f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.CompanionTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: 578beddb423253448805a6166881e92c, type: 3}
+  enabledOnStart: 1
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
 --- !u!114 &1126222291393056933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,18 +301,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &6114535630554712408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6640128380452165109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0c108be9f0449c6bac66500b3c4c108, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
 --- !u!1001 &3556621989174822251
 PrefabInstance:
   m_ObjectHideFlags: 0
