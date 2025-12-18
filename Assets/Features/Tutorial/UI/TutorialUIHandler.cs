@@ -34,6 +34,7 @@ namespace Features.Tutorial.UI
             }
 
             tutorialUI.Setup(topicData);
+            tutorialUI.Open();
         }
     }
 }

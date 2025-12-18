@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1250444299599388396}
   - component: {fileID: 8426571495350572948}
+  - component: {fileID: 9093364358724925311}
   - component: {fileID: 1824106752835291162}
   - component: {fileID: 8356589580207703137}
-  - component: {fileID: 9093364358724925311}
   m_Layer: 5
   m_Name: TutorialButton
   m_TagString: Untagged
@@ -48,6 +48,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712211888973967066}
   m_CullTransparentMesh: 1
+--- !u!114 &9093364358724925311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712211888973967066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71a8a9199d424cc08ce1488ea3c76a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Tutorial.UI.TutorialOpener
+  tutorialTopic: 0
 --- !u!114 &1824106752835291162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,19 +147,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &9093364358724925311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1712211888973967066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71a8a9199d424cc08ce1488ea3c76a88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Tutorial.UI.TutorialOpener
-  tutorialTopic: 0
 --- !u!1 &8969229566213223849
 GameObject:
   m_ObjectHideFlags: 0
