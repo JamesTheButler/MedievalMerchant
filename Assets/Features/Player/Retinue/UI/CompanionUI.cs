@@ -65,7 +65,7 @@ namespace Features.Player.Retinue.UI
                 var levelUIScript = levelUi.GetComponent<CompanionLevelUI>();
 
                 // increment index by 1 as lvl 0 means nothing is upgraded
-                levelUIScript.Setup(i + 1, companionType, _configData.IsImplemented);
+                levelUIScript.Setup(i + 1, companionType);
                 levelUIScript.UnlockRequested += _companionUpgradeService.LevelUpgradeRequested;
 
                 _levelUIs.Add(levelUIScript);
@@ -77,45 +77,31 @@ namespace Features.Player.Retinue.UI
             tooltip.SetData(new CompanionTooltip.Data(companionType, _currentLevel));
         }
 
-        // TODO - STYLE: this code is quite cumbersome and funky
         private void OnCompanionLevelChanged(int newLevel)
         {
             if (newLevel == _currentLevel)
                 return;
 
-            if (newLevel > _currentLevel)
-            {
-                for (var i = _currentLevel + 1; i <= newLevel; i++)
-                {
-                    var levelUiId = newLevel - 1; // level 1 is in level ui 0, etc.
-                    if (levelUiId >= 0)
-                    {
-                        _levelUIs[levelUiId].SetUpgraded(true);
-                    }
+            // level 1 is in level ui 0, etc.
+            var newLevelUiId = newLevel - 1;
 
-                    var nextLevelUiId = levelUiId + 1;
-                    if (nextLevelUiId < _levelUIs.Count)
-                    {
-                        _levelUIs[nextLevelUiId].SetUnlocked(_configData.IsImplemented);
-                    }
-                }
-            }
-            else
+            for (var i = 0; i < _levelUIs.Count; i++)
             {
-                for (var i = _currentLevel; i > newLevel; i--)
+                CompanionLevelUI.State state;
+                if (i <= newLevelUiId)
                 {
-                    var levelUiId = newLevel - 1; // level 1 is in level ui 0, etc.
-                    if (levelUiId >= 0)
-                    {
-                        _levelUIs[levelUiId].SetUpgraded(false);
-                    }
-
-                    var nextLevelUiId = levelUiId + 1;
-                    if (nextLevelUiId < _levelUIs.Count)
-                    {
-                        _levelUIs[nextLevelUiId].SetUnlocked(false);
-                    }
+                    state = CompanionLevelUI.State.Unlocked;
                 }
+                else if (i == newLevelUiId + 1)
+                {
+                    state = CompanionLevelUI.State.Unlockable;
+                }
+                else
+                {
+                    state = CompanionLevelUI.State.Locked;
+                }
+
+                _levelUIs[i].SetState(state);
             }
 
             _currentLevel = newLevel;

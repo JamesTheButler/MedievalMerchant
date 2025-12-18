@@ -12,9 +12,7 @@ namespace Features.Player.Retinue.UI
         public sealed record Data(
             CompanionType CompanionType,
             int Level,
-            bool IsUnlocked,
-            bool IsUpgraded,
-            bool IsImplemented);
+            CompanionLevelUI.State State);
 
         [SerializeField, Required]
         private TMP_Text levelText, priceText, effectsText, lockedText;
@@ -36,8 +34,8 @@ namespace Features.Player.Retinue.UI
             var companionData = _configData.Get(data.CompanionType);
             var levelData = companionData.GetLevelData(data.Level);
 
-            priceGroup.gameObject.SetActive(!data.IsUpgraded);
-            lockedGroup.gameObject.SetActive(!data.IsUnlocked);
+            priceGroup.gameObject.SetActive(data.State != CompanionLevelUI.State.Unlocked);
+            lockedGroup.gameObject.SetActive(data.State != CompanionLevelUI.State.Unlockable);
 
             levelText.text = $"{companionData.Name} lvl. {data.Level}";
 
@@ -50,8 +48,7 @@ namespace Features.Player.Retinue.UI
             priceText.text = $"{levelData.Cost:0.##}";
             effectsText.text = levelData.Description;
 
-
-            lockedText.text = data.IsImplemented ? "Unlock previous levels first" : "(coming soon)";
+            lockedText.text = companionData.IsImplemented ? "Unlock previous levels first" : "(coming soon)";
         }
 
         public override void Reset()

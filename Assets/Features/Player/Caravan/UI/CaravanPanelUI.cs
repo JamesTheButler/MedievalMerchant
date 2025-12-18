@@ -5,6 +5,7 @@ using Common.Types;
 using Common.UI.Elements;
 using Common.UI.Tooltips;
 using Features.Player.Caravan.Logic;
+using Features.Towns;
 using Features.Trade;
 using NaughtyAttributes;
 using TMPro;
@@ -38,6 +39,8 @@ namespace Features.Player.Caravan.UI
             _caravanManager = GameplayContext.Instance.Model.Player.CaravanManager;
             _playerInventory = GameplayContext.Instance.Model.Player.Inventory;
 
+            GameplayContext.Instance.Selection.TownSelected += OnTownSelected;
+
             // TODO - STYLE: it's not so nice to have a random business logic class in here.
             //   This would have to be in the view model layer.
             var caravanUpgrader = new CaravanUpgrader();
@@ -58,6 +61,11 @@ namespace Features.Player.Caravan.UI
             _playerInventory.GoodUpdated += OnGoodAdded;
         }
 
+        private void OnTownSelected(Town _)
+        {
+            Toggle(true);
+        }
+
         private void OnDestroy()
         {
             foreach (var cartUI in cartUis)
@@ -71,7 +79,12 @@ namespace Features.Player.Caravan.UI
 
         public void Toggle()
         {
-            gameObject.SetActive(!gameObject.activeSelf);
+            Toggle(!gameObject.activeSelf);
+        }
+
+        private void Toggle(bool isOn)
+        {
+            gameObject.SetActive(isOn);
         }
 
         private void OnCellClicked(InventoryCell cell)

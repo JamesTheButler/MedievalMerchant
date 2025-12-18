@@ -7,6 +7,13 @@ namespace Features.Player.Retinue.UI
 {
     public sealed class CompanionLevelUI : MonoBehaviour
     {
+        public enum State
+        {
+            Locked,
+            Unlockable,
+            Unlocked,
+        }
+
         public event Action<CompanionType, int> UnlockRequested;
 
         [SerializeField, Required]
@@ -23,54 +30,52 @@ namespace Features.Player.Retinue.UI
 
         private CompanionType _companionType;
         private int _level;
-        private bool _isUnlocked, _isUpgraded, _isImplemented;
 
         private void Awake()
         {
             unlockButton.onClick.AddListener(OnUnlockButtonClicked);
         }
 
-        public void Setup(int levelIndex, CompanionType companionType, bool isImplemented)
+        public void Setup(int levelIndex, CompanionType companionType)
         {
-            _isImplemented = isImplemented;
             _level = levelIndex;
             _companionType = companionType;
-            SetUpgraded(false);
-            SetUnlocked(false);
+            SetState(State.Locked);
         }
 
+        public void SetState(State state)
+        {
+            switch (state)
+            {
+                case State.Locked:
+                    levelIcon.sprite = defaultIcon;
+                    unlockButton.gameObject.SetActive(false);
+                    break;
+                case State.Unlockable: 
+                    levelIcon.sprite = defaultIcon;
+                    unlockButton.gameObject.SetActive(true);
+                    break;
+                case State.Unlocked: 
+                    levelIcon.sprite = completedIcon;
+                    unlockButton.gameObject.SetActive(false);
+                    break;
+            }
+            
+            var tooltipData = CreateTooltipData(state);
+            tooltip.SetData(tooltipData);
+        }
+        
         private void OnUnlockButtonClicked()
         {
             UnlockRequested?.Invoke(_companionType, _level);
         }
 
-        public void SetUpgraded(bool isUpgraded)
-        {
-            _isUpgraded = isUpgraded;
-            levelIcon.sprite = isUpgraded ? completedIcon : defaultIcon;
-            unlockButton.gameObject.SetActive(!isUpgraded);
-
-            var tooltipData = CreateTooltipData();
-            tooltip.SetData(tooltipData);
-        }
-
-        public void SetUnlocked(bool unlocked)
-        {
-            _isUnlocked = unlocked;
-            unlockButton.interactable = unlocked;
-
-            var tooltipData = CreateTooltipData();
-            tooltip.SetData(tooltipData);
-        }
-
-        private CompanionLevelTooltip.Data CreateTooltipData()
+        private CompanionLevelTooltip.Data CreateTooltipData(State state)
         {
             return new CompanionLevelTooltip.Data(
                 _companionType,
                 _level,
-                _isUnlocked,
-                _isUpgraded,
-                _isImplemented);
+                state);
         }
     }
 }
