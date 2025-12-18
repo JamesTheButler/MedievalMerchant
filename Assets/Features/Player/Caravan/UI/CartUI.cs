@@ -10,6 +10,7 @@ using Features.Player.Caravan.Config;
 using Features.Player.Caravan.Logic;
 using NaughtyAttributes;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -142,8 +143,7 @@ namespace Features.Player.Caravan.UI
         private void Fade(bool isFaded)
         {
             faderImage.enabled = isFaded;
-            backgroundImage.color = isFaded ? new Color(1, 1, 1, 0.5f) : new Color(1, 1, 1, 1);
-
+            backgroundImage.color = isFaded ? Color.white.WithAlpha(0.5f) : Color.white;
         }
 
         private void OnLevelChanged(int level)
@@ -154,7 +154,7 @@ namespace Features.Player.Caravan.UI
             var sprite = _caravanResources.TierIcons.GetValueOrDefault(level, null);
             tierIcon.sprite = sprite;
             // hide make icon transparent if not shown
-            tierIcon.color = sprite == null ? new Color(0, 0, 0, 0) : Color.white;
+            tierIcon.color = sprite == null ? Color.clear : Color.white;
 
             if (level >= CaravanConfig.MaxLevel)
             {

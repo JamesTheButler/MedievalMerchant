@@ -20,6 +20,9 @@ namespace Features.Player.Retinue.Config
         [field: SerializeField]
         public string Description { get; private set; }
 
+        [field: SerializeField]
+        public bool IsImplemented { get; private set; }
+
         public abstract IReadOnlyList<CompanionLevelData> Levels { get; }
 
         public CompanionLevelData GetLevelData(int level)

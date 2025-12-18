@@ -15,12 +15,9 @@ namespace Features.Player.Retinue.UI
         [SerializeField]
         private CompanionType companionType;
 
-        [SerializeField]
-        private bool isImplemented;
-
         [Header("Set Up")]
         [SerializeField, Required]
-        private Image companionIcon;
+        private Image companionIcon, fadeOutImage;
 
         [SerializeField, Required]
         private RectTransform levelUiParent;
@@ -57,6 +54,9 @@ namespace Features.Player.Retinue.UI
         {
             levelUiParent.DestroyChildren();
             companionIcon.sprite = _configData.Icon;
+            companionIcon.color = _configData.IsImplemented ? Color.white : Color.white.WithAlpha(0.5f);
+            fadeOutImage.enabled = !_configData.IsImplemented;
+
             UpdateTooltip();
             UpdateEffectsText();
             for (var i = 0; i < _configData.Levels.Count; i++)
@@ -65,7 +65,7 @@ namespace Features.Player.Retinue.UI
                 var levelUIScript = levelUi.GetComponent<CompanionLevelUI>();
 
                 // increment index by 1 as lvl 0 means nothing is upgraded
-                levelUIScript.Setup(i + 1, companionType, isImplemented);
+                levelUIScript.Setup(i + 1, companionType, _configData.IsImplemented);
                 levelUIScript.UnlockRequested += _companionUpgradeService.LevelUpgradeRequested;
 
                 _levelUIs.Add(levelUIScript);
@@ -74,7 +74,7 @@ namespace Features.Player.Retinue.UI
 
         private void UpdateTooltip()
         {
-            tooltip.SetData(new CompanionTooltip.Data(companionType, _currentLevel, isImplemented));
+            tooltip.SetData(new CompanionTooltip.Data(companionType, _currentLevel));
         }
 
         // TODO - STYLE: this code is quite cumbersome and funky
@@ -96,7 +96,7 @@ namespace Features.Player.Retinue.UI
                     var nextLevelUiId = levelUiId + 1;
                     if (nextLevelUiId < _levelUIs.Count)
                     {
-                        _levelUIs[nextLevelUiId].SetUnlocked(isImplemented);
+                        _levelUIs[nextLevelUiId].SetUnlocked(_configData.IsImplemented);
                     }
                 }
             }

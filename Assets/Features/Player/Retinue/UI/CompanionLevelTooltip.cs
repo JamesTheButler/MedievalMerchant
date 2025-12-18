@@ -39,7 +39,7 @@ namespace Features.Player.Retinue.UI
             priceGroup.gameObject.SetActive(!data.IsUpgraded);
             lockedGroup.gameObject.SetActive(!data.IsUnlocked);
 
-            levelText.text = $"Level {data.Level}";
+            levelText.text = $"{companionData.Name} lvl. {data.Level}";
 
             if (levelData == null)
             {
