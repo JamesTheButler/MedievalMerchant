@@ -1,9 +1,8 @@
-using Common;
 using Common.Config;
+using Common.Infrastructure;
 using Common.Types;
-using Common.UI;
+using Common.UI.Tooltips;
 using Features.Goods.Config;
-using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

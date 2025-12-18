@@ -1,6 +1,5 @@
-using Common;
+using Common.Infrastructure;
 using Common.Types;
-using Infrastructure;
 
 namespace Features.Ticking
 {

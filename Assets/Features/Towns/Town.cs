@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common;
-using Common.Modifiable;
+using Common.Infrastructure;
+using Common.Infrastructure.Modifiable;
+using Common.Infrastructure.Observation;
 using Common.Types;
+using Common.Utility;
 using Features.Inventory;
 using Features.Towns.Development.Logic;
 using Features.Towns.Development.Logic.Milestones;
@@ -12,7 +14,6 @@ using Features.Towns.Flags.Logic;
 using Features.Towns.Production.Logic;
 using Features.Towns.Reputation.Logic;
 using Features.Trade;
-using Infrastructure;
 using UnityEngine;
 
 namespace Features.Towns

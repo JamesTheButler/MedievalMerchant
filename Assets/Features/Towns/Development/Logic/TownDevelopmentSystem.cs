@@ -1,5 +1,5 @@
+using Common.Infrastructure;
 using Features.Ticking;
-using Infrastructure;
 
 namespace Features.Towns.Development.Logic
 {

@@ -1,5 +1,5 @@
 using System;
-using Common;
+using Common.Infrastructure.Observation;
 using Features.Towns;
 using JetBrains.Annotations;
 using UnityEngine;

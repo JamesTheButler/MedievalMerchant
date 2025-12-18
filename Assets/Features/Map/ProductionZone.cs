@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Common;
 using Common.Types;
+using Common.Utility;
 using Features.Towns.Production.Config;
 using NaughtyAttributes;
 using UnityEngine;

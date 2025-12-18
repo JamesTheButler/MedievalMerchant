@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Common;
 using Common.Types;
+using Common.Utility;
 using UnityEngine;
 
 namespace Features.Towns.Production.Config

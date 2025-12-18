@@ -1,6 +1,6 @@
 using Common.Types;
+using Common.UI.Elements;
 using NaughtyAttributes;
-using UI.InventoryUI;
 using UnityEngine;
 
 namespace Features.Towns.Production.UI

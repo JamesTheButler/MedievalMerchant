@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using Common;
+using Common.Infrastructure;
 using Common.Types;
-using Common.UI;
+using Common.UI.Tooltips;
 using Features.Towns.Development.Config;
 using Features.Towns.Development.Logic;
 using NaughtyAttributes;

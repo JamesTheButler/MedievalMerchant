@@ -1,7 +1,6 @@
 using System;
-using Common;
+using Common.Infrastructure;
 using Features.Towns.Flags.Config;
-using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;

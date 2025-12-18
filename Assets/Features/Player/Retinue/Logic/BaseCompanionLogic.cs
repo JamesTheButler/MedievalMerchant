@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Common.Infrastructure;
 using Features.Player.Retinue.Config;
 
 namespace Features.Player.Retinue.Logic

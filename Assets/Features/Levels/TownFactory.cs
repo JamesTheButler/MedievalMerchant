@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Common;
 using Common.Types;
+using Common.Utility;
 using Features.Map;
 using Features.Towns;
 using Features.Towns.Flags.Logic;

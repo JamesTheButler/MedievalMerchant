@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Common;
+using Common.Infrastructure.Observation;
 
 namespace Features.Player.Retinue.Logic
 {

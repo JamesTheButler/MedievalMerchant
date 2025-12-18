@@ -1,6 +1,6 @@
+using Common.Infrastructure;
 using Common.Types;
 using Features.Towns;
-using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 

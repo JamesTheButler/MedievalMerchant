@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Common.Utility;
 using Features.Tutorial.Data;
 using TMPro;
 using UnityEngine;

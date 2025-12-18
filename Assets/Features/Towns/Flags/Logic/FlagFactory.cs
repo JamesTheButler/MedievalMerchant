@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Common;
 using Common.Types;
-using Features.Towns.Flags.Config;
+using Common.Utility;
 
 namespace Features.Towns.Flags.Logic
 {

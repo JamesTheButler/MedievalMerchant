@@ -1,6 +1,7 @@
-using Common;
-using Common.Modifiable;
-using Common.UI;
+using Common.Infrastructure.Modifiable;
+using Common.UI.Tooltips;
+using Common.UI.Utility;
+using Common.Utility;
 using TMPro;
 using UnityEngine;
 

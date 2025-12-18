@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common;
-using Common.Modifiable;
+using Common.Infrastructure;
+using Common.Infrastructure.Modifiable;
+using Common.Infrastructure.Observation;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Towns.Development.Config;
 using Features.Towns.Production.Logic;
-using Infrastructure;
 using UnityEngine;
 
 namespace Features.Towns.Development.Logic

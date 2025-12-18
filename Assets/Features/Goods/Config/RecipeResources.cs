@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Common;
 using Common.Types;
+using Common.Utility;
 using UnityEngine;
 
 namespace Features.Goods.Config

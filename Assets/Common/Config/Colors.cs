@@ -1,3 +1,4 @@
+using Common.Utility;
 using UnityEngine;
 
 namespace Common.Config

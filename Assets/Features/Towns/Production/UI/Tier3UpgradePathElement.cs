@@ -1,8 +1,8 @@
 using System;
 using Common.Types;
+using Common.UI.Elements;
+using Common.UI.Popups;
 using NaughtyAttributes;
-using UI.InventoryUI;
-using UI.Popups;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

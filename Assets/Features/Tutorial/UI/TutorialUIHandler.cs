@@ -1,6 +1,6 @@
-﻿using Features.Tutorial.Data;
+﻿using Common.Infrastructure;
+using Features.Tutorial.Data;
 using Features.Tutorial.Logic;
-using Infrastructure;
 using UnityEngine;
 
 namespace Features.Tutorial.UI

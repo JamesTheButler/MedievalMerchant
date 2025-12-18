@@ -1,7 +1,6 @@
-﻿using Common;
-using Common.Modifiable;
+﻿using Common.Infrastructure;
+using Common.Infrastructure.Modifiable;
 using Features.Player.Retinue.Config;
-using Infrastructure;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Logic

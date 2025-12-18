@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Common;
+using Common.Infrastructure;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Trade;
-using Infrastructure;
 
 namespace Features.Inventory
 {

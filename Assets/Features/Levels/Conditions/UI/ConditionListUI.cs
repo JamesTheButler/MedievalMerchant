@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Common;
+using Common.Infrastructure;
+using Common.Utility;
 using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.Model;
-using Infrastructure;
 using UnityEngine;
 using ConditionResources = Features.Levels.Conditions.Config.ConditionResources;
 

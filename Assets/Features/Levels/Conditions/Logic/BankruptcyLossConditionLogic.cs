@@ -1,7 +1,7 @@
+using Common.Infrastructure;
 using Common.Types;
 using Features.Levels.Conditions.Model;
 using Features.Player;
-using Infrastructure;
 
 namespace Features.Levels.Conditions.Logic
 {

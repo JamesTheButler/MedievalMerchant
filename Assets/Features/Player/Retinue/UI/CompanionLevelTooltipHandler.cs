@@ -1,4 +1,4 @@
-using Common.UI;
+using Common.UI.Tooltips;
 
 namespace Features.Player.Retinue.UI
 {

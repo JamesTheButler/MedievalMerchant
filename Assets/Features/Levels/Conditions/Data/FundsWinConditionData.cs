@@ -1,4 +1,4 @@
-using Common;
+using Common.Utility;
 using UnityEngine;
 
 namespace Features.Levels.Conditions.Data

@@ -1,5 +1,5 @@
+using Common.Infrastructure;
 using Features.Levels.Conditions.Model;
-using Infrastructure;
 using UnityEngine;
 
 namespace Features.Levels.Conditions.Logic

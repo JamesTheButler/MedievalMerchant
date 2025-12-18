@@ -1,5 +1,5 @@
-using Common;
-using Common.UI;
+using Common.Infrastructure;
+using Common.UI.Tooltips;
 using Features.Player.Retinue.Config;
 using NaughtyAttributes;
 using TMPro;

@@ -1,4 +1,4 @@
-using Common.UI;
+using Common.UI.Utility;
 using TMPro;
 using UnityEngine;
 

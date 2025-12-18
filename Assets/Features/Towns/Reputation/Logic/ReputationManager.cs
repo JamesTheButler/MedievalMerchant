@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using Common;
-using Common.Modifiable;
+using Common.Infrastructure;
+using Common.Infrastructure.Modifiable;
+using Common.Infrastructure.Observation;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Towns.Production.Logic;
 using Features.Towns.Reputation.Config;
 using Features.Trade;
-using Infrastructure;
 using UnityEngine;
 
 namespace Features.Towns.Reputation.Logic

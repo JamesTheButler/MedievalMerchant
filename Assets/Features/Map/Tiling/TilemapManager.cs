@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Common;
+using Common.Infrastructure;
 using Common.Types;
+using Common.Utility;
 using Features.Towns;
-using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;

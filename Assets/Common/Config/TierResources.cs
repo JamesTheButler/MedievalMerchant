@@ -1,5 +1,6 @@
 using AYellowpaper.SerializedCollections;
 using Common.Types;
+using Common.Utility;
 using UnityEngine;
 
 namespace Common.Config

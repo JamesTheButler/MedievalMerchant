@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using Common;
-using Common.Modifiable;
+using Common.Infrastructure;
+using Common.Infrastructure.Modifiable;
+using Common.Infrastructure.Observation;
 using Features.Player.Caravan.Config;
 using UnityEngine;
 

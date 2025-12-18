@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Common;
-using Infrastructure;
+using Common.Infrastructure;
+using Common.Utility;
 using UnityEngine;
 
 namespace Features.Tutorial.Logic

@@ -1,4 +1,4 @@
-using Infrastructure;
+using Common.Infrastructure;
 
 namespace Features.Levels.Conditions.Logic
 {

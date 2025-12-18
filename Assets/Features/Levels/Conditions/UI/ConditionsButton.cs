@@ -1,6 +1,5 @@
+using Common.Infrastructure;
 using Features.Levels.Conditions.Model;
-using Features.Levels.Logic;
-using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

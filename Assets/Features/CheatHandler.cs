@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Common;
+using Common.Infrastructure;
 using Common.Types;
 using Features.Player;
 using Features.Player.Caravan.Config;
-using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

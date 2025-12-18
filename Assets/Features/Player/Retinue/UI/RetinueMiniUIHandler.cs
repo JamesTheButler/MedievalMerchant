@@ -1,5 +1,5 @@
+using Common.Infrastructure;
 using Features.Player.Retinue.Logic;
-using Infrastructure;
 using UnityEngine;
 
 namespace Features.Player.Retinue.UI

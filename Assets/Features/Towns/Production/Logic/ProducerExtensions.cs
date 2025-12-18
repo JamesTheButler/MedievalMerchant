@@ -1,6 +1,6 @@
 using System.Linq;
-using Common;
 using Common.Types;
+using Common.Utility;
 
 namespace Features.Towns.Production.Logic
 {

@@ -1,4 +1,4 @@
-using Common;
+using Common.Infrastructure;
 using Common.Types;
 using Features.Towns;
 using Features.Towns.Development.Config;

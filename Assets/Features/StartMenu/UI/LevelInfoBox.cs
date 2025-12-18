@@ -1,10 +1,9 @@
 using System.Linq;
-using Common.UI;
+using Common.Infrastructure;
+using Common.UI.Utility;
 using Features.Levels.Conditions.Data;
-using Features.Levels.Conditions.Model;
 using Features.Levels.Conditions.UI;
 using Features.Levels.Config;
-using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

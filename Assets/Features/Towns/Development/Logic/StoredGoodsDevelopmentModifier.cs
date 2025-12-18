@@ -1,4 +1,4 @@
-using Common.Modifiable;
+using Common.Infrastructure.Modifiable;
 using Common.Types;
 
 namespace Features.Towns.Development.Logic

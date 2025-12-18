@@ -1,7 +1,7 @@
 using System;
 using System.Text;
-using Common;
-using Common.UI;
+using Common.UI.Utility;
+using Common.Utility;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Config.LevelDatas

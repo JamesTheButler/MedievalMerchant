@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using Common.Infrastructure;
 using Common.Types;
-using Common.UI;
+using Common.UI.Elements;
+using Common.UI.Tooltips;
 using Features.Player.Caravan.Logic;
 using Features.Trade;
-using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
-using UI.InventoryUI;
 using UnityEngine;
 using UnityEngine.Events;
 

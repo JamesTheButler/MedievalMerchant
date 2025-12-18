@@ -1,5 +1,5 @@
+using Common.Infrastructure;
 using Features.Towns;
-using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 

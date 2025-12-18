@@ -1,8 +1,7 @@
 using System.Linq;
-using Common;
+using Common.Infrastructure;
 using Common.Types;
 using Features.Levels.Conditions.Model;
-using Infrastructure;
 
 namespace Features.Levels.Conditions.Logic
 {

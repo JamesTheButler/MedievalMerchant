@@ -1,8 +1,6 @@
-using System;
 using System.Linq;
-using Common;
-using Features.Levels.Config;
-using Infrastructure;
+using Common.Infrastructure;
+using Common.Utility;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

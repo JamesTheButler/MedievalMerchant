@@ -1,5 +1,5 @@
-using Common;
-using Common.Modifiable;
+using Common.Infrastructure;
+using Common.Infrastructure.Modifiable;
 using Features.Player.Caravan.Config;
 
 namespace Features.Player.Caravan.Logic

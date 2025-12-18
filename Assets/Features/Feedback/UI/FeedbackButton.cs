@@ -1,4 +1,3 @@
-using Features.StartMenu.UI;
 using UnityEngine;
 
 namespace Features.Feedback.UI

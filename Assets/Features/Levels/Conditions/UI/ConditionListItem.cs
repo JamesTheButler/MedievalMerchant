@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Common;
+using Common.Utility;
 using Features.Levels.Conditions.Logic;
 using JetBrains.Annotations;
 using NaughtyAttributes;

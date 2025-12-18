@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Common;
-using Common.Modifiable;
+using Common.Infrastructure;
+using Common.Infrastructure.Modifiable;
 using Common.Types;
 using Features.Towns.Development.Config;
 using Features.Towns.Development.Config.Milestones;

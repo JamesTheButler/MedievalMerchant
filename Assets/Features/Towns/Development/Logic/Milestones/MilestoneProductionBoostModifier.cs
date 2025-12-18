@@ -1,4 +1,4 @@
-using Common;
+using Common.Utility;
 
 namespace Features.Towns.Development.Logic.Milestones
 {

@@ -1,7 +1,7 @@
-using Common;
+using Common.Infrastructure;
+using Common.Utility;
 using Features.Player;
 using Features.Towns;
-using Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 

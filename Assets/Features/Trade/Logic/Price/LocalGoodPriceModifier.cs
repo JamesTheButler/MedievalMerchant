@@ -1,5 +1,5 @@
-using Common;
-using Common.Modifiable;
+using Common.Infrastructure;
+using Common.Infrastructure.Modifiable;
 
 namespace Features.Trade.Logic.Price
 {

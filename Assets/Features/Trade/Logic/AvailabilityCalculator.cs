@@ -1,9 +1,8 @@
-using Common;
+using Common.Infrastructure;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Towns;
 using Features.Towns.Production.Config;
-using Infrastructure;
 
 namespace Features.Trade.Logic
 {

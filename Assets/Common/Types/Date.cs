@@ -1,4 +1,5 @@
 using System;
+using Common.Infrastructure.Observation;
 
 namespace Common.Types
 {

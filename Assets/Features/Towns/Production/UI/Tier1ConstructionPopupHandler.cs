@@ -1,6 +1,6 @@
 using System;
-using Infrastructure;
-using UI.InventoryUI.TownInventory;
+using Common.Infrastructure;
+using Features.Towns.UI.Inventory;
 using UnityEngine;
 
 namespace Features.Towns.Production.UI

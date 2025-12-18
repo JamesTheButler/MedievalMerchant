@@ -1,16 +1,15 @@
 using System;
 using System.Collections.Generic;
-using Common;
 using Common.Config;
-using Common.Types;
-using Common.UI;
+using Common.Infrastructure;
+using Common.UI.Elements;
+using Common.UI.Tooltips;
+using Common.Utility;
 using Features.Goods.Config;
 using Features.Player.Caravan.Config;
 using Features.Player.Caravan.Logic;
-using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
-using UI.InventoryUI;
 using UnityEngine;
 using UnityEngine.UI;
 

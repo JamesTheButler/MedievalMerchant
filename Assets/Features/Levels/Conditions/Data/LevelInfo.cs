@@ -1,4 +1,4 @@
-using Common;
+using Common.Utility;
 using Features.Levels.Conditions.Data;
 using NaughtyAttributes;
 using UnityEngine;

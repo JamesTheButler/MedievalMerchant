@@ -1,5 +1,5 @@
 ﻿using System;
-using Common;
+using Common.Utility;
 using Features.Player.Retinue.Config.CompanionDatas;
 using UnityEngine;
 

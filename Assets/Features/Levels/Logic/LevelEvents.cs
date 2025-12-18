@@ -1,4 +1,4 @@
-using Infrastructure;
+using Common.Infrastructure;
 using UnityEngine;
 using UnityEngine.Events;
 

@@ -1,4 +1,4 @@
-using Common;
+using Common.Infrastructure.Observation;
 using Common.Types;
 using Features.Trade;
 

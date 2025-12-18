@@ -1,3 +1,5 @@
+using Common.Utility;
+
 namespace Common.Types
 {
     public static class TierExtensions

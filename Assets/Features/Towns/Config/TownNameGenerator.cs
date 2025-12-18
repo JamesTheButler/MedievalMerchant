@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Common;
+using Common.Utility;
 using UnityEngine;
 
 namespace Features.Towns.Config

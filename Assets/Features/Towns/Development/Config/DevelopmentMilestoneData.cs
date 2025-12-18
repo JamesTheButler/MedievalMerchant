@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Common;
+using Common.Utility;
 using Features.Towns.Development.Config.Milestones;
 using NaughtyAttributes;
 using UnityEngine;

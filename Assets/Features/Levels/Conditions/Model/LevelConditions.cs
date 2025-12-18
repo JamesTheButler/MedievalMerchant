@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common;
+using Common.Infrastructure;
+using Common.Infrastructure.Observation;
 using Features.Levels.Conditions.Data;
-using Infrastructure;
 using ConditionResources = Features.Levels.Conditions.Config.ConditionResources;
 
 namespace Features.Levels.Conditions.Model

@@ -1,8 +1,7 @@
-using Common;
-using Common.Modifiable;
+using Common.Infrastructure;
+using Common.Infrastructure.Modifiable;
 using Features.Player.Retinue.Config;
 using Features.Trade;
-using UnityEngine.PlayerLoop;
 
 namespace Features.Player.Retinue.Logic
 {

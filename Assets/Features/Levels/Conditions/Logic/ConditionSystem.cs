@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using Common.Infrastructure;
 using Features.Levels.Conditions.Model;
-using Infrastructure;
 
 namespace Features.Levels.Conditions.Logic
 {

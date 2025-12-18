@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common;
+using Common.Infrastructure;
+using Common.Infrastructure.Observation;
 using Common.Types;
 using Features.Goods.Config;
-using Infrastructure;
 
 namespace Features.Inventory
 {

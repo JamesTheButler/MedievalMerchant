@@ -1,5 +1,5 @@
-﻿using Common;
-using Common.Modifiable;
+﻿using Common.Infrastructure;
+using Common.Infrastructure.Modifiable;
 using Features.Towns;
 using Features.Towns.Reputation.Config;
 

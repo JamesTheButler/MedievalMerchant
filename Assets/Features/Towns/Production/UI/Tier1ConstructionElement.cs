@@ -1,7 +1,7 @@
 using System;
 using Common.Types;
+using Common.UI.Elements;
 using NaughtyAttributes;
-using UI.InventoryUI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

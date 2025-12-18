@@ -1,6 +1,5 @@
-using Common;
-using Common.UI;
-using Features.Towns.Development.Config;
+using Common.UI.Tooltips;
+using Common.Utility;
 using Features.Towns.Development.UI.DevelopmentGauge;
 using NaughtyAttributes;
 using TMPro;

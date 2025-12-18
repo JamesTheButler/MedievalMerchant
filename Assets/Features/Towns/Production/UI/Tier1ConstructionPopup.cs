@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
-using Common;
 using Common.Config;
+using Common.Infrastructure;
 using Common.Types;
-using Common.UI;
+using Common.UI.Popups;
+using Common.UI.Utility;
+using Common.Utility;
 using Features.Goods.Config;
 using Features.Player;
 using Features.Towns.Production.Config;
 using Features.Towns.Production.Logic;
-using Infrastructure;
-using UI.Popups;
 using UnityEngine;
 using UnityEngine.UI;
 

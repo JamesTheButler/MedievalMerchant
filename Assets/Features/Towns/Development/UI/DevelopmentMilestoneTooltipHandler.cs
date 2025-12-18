@@ -1,5 +1,4 @@
-using Common.UI;
-using Features.Towns.Development.UI.DevelopmentGauge;
+using Common.UI.Tooltips;
 
 namespace Features.Towns.Development.UI
 {

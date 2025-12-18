@@ -1,6 +1,6 @@
 using System;
+using Common.Infrastructure;
 using Features.Levels.Config;
-using Infrastructure;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

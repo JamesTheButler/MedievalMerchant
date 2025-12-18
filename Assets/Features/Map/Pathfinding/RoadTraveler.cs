@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Common;
+using Common.Infrastructure;
+using Common.Utility;
 using Features.Player;
 using Features.Player.Caravan.Config;
 using Features.Ticking;
 using Features.Towns;
-using Infrastructure;
 using UnityEngine;
 
 namespace Features.Map.Pathfinding

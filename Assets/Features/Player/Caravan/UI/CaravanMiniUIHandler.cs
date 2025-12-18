@@ -1,6 +1,6 @@
+using Common.Infrastructure;
 using Features.Player.Caravan.Logic;
 using Features.Towns;
-using Infrastructure;
 using UnityEngine;
 
 namespace Features.Player.Caravan.UI

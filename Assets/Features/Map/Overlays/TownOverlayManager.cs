@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Common;
-using Infrastructure;
+using Common.Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 

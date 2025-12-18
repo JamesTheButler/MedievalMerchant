@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using Common;
+using Common.Infrastructure;
+using Common.Utility;
 using Features.Player.Retinue.Config;
 using Features.Player.Retinue.Logic;
-using Infrastructure;
 using NaughtyAttributes;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +31,9 @@ namespace Features.Player.Retinue.UI
         [SerializeField, Required]
         private CompanionTooltipHandler tooltip;
 
+        [SerializeField, Required]
+        private TMP_Text effectsText;
+
         private RetinueManager _retinueManager;
         private CompanionConfigData _configData;
         private CompanionUpgradeService _companionUpgradeService;
@@ -54,6 +58,7 @@ namespace Features.Player.Retinue.UI
             levelUiParent.DestroyChildren();
             companionIcon.sprite = _configData.Icon;
             UpdateTooltip();
+            UpdateEffectsText();
             for (var i = 0; i < _configData.Levels.Count; i++)
             {
                 var levelUi = Instantiate(levelUiPrefab, levelUiParent);
@@ -116,6 +121,13 @@ namespace Features.Player.Retinue.UI
             _currentLevel = newLevel;
 
             UpdateTooltip();
+            UpdateEffectsText();
+        }
+
+        private void UpdateEffectsText()
+        {
+            var levelData = _configData.GetLevelData(_currentLevel);
+            effectsText.text = levelData?.Description ?? string.Empty;
         }
     }
 }

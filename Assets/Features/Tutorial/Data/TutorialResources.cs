@@ -1,5 +1,5 @@
 ﻿using AYellowpaper.SerializedCollections;
-using Common;
+using Common.Utility;
 using UnityEngine;
 
 namespace Features.Tutorial.Data

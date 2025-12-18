@@ -1,4 +1,4 @@
-using Common.Modifiable;
+using Common.Infrastructure.Modifiable;
 using Features.Inventory;
 using Features.Player.Caravan.Logic;
 using Features.Player.Retinue.Logic;

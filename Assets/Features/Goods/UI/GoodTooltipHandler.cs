@@ -1,5 +1,5 @@
 using Common.Types;
-using Common.UI;
+using Common.UI.Tooltips;
 
 namespace Features.Goods.UI
 {

@@ -1,4 +1,4 @@
-using Common.Modifiable;
+using Common.Infrastructure.Modifiable;
 
 namespace Features.Towns.Development.Logic.Milestones
 {

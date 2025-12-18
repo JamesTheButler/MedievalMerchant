@@ -1,8 +1,7 @@
-using Common;
-using Common.Modifiable;
+using Common.Infrastructure;
+using Common.Infrastructure.Modifiable;
 using Common.Types;
 using Features.Goods.Config;
-using Infrastructure;
 
 namespace Features.Trade.Logic.Price
 {

@@ -1,7 +1,7 @@
 using System;
 using AYellowpaper.SerializedCollections;
-using Common;
 using Common.Types;
+using Common.Utility;
 using UnityEngine;
 
 namespace Features.Towns.Production.Config
