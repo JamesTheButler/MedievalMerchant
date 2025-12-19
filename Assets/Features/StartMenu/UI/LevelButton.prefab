@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 2775043241047504384}
   - component: {fileID: 3535024903831170673}
   - component: {fileID: 931209570834878358}
+  - component: {fileID: 1218046554434541027}
   m_Layer: 5
   m_Name: LevelButton
   m_TagString: Untagged
@@ -334,7 +335,9 @@ MonoBehaviour:
   numberText: {fileID: 3114522364347992255}
   nameText: {fileID: 2606695545736739954}
   <LevelInfo>k__BackingField: {fileID: 0}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
   selectedColor: {r: 1, g: 0.92941177, b: 0.84705883, a: 1}
+  tooltip: {fileID: 1218046554434541027}
 --- !u!222 &1354227010182702311
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -443,6 +446,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1218046554434541027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2477675654091795367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 0
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  defaultText: Coming soon
 --- !u!1 &3040114887169520047
 GameObject:
   m_ObjectHideFlags: 0

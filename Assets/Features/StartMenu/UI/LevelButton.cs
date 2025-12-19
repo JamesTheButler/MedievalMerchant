@@ -1,5 +1,6 @@
 using System;
 using Common.Infrastructure;
+using Common.UI.Tooltips;
 using Features.Levels.Config;
 using NaughtyAttributes;
 using TMPro;
@@ -25,16 +26,17 @@ namespace Features.StartMenu.UI
         public LevelInfo LevelInfo { get; private set; }
 
         [SerializeField]
-        private Color selectedColor;
+        private Color defaultColor, selectedColor;
 
-        private Color _defaultColor;
+        [SerializeField, Required]
+        private SimpleTooltipHandler tooltip;
 
         private void Start()
         {
-            _defaultColor = button.GetComponent<Image>().color;
             var isEnabled = LevelInfo != null && LevelInfo.IsEnabled;
             button.interactable = isEnabled;
             lockedIcon.gameObject.SetActive(!isEnabled);
+            tooltip.SetEnabled(!isEnabled);
 
             button.onClick.AddListener(OnClick);
             numberText.text = LevelInfo.LevelNumberText;
@@ -55,7 +57,7 @@ namespace Features.StartMenu.UI
 
         public void Deselect()
         {
-            button.GetComponent<Image>().color = _defaultColor;
+            button.GetComponent<Image>().color = defaultColor;
         }
 
         private void OnClick()
