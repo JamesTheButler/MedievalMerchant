@@ -4073,6 +4073,7 @@ GameObject:
   - component: {fileID: 806354485}
   - component: {fileID: 806354486}
   - component: {fileID: 806354487}
+  - component: {fileID: 806354488}
   m_Layer: 5
   m_Name: UI Handlers
   m_TagString: Untagged
@@ -4166,6 +4167,19 @@ MonoBehaviour:
   winConditionsUi: {fileID: 313162313}
   winConditionListUI: {fileID: 651612871}
   lossConditionListUI: {fileID: 1567062658}
+--- !u!114 &806354488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806354481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3e43d3d037a4808855e75d1ea99f2de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Caravan.UI.CaravanPanelUIHandler
+  caravanPanelUI: {fileID: 1922933587}
 --- !u!1 &842924769
 GameObject:
   m_ObjectHideFlags: 0
@@ -6421,18 +6435,18 @@ PrefabInstance:
     - target: {fileID: 2364741831243801725, guid: 862af5da03dcb7e4197dbd6a731665cf, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1922933587}
+      objectReference: {fileID: 806354488}
     - target: {fileID: 2364741831243801725, guid: 862af5da03dcb7e4197dbd6a731665cf, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2364741831243801725, guid: 862af5da03dcb7e4197dbd6a731665cf, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Toggle
+      value: TogglePanel
       objectReference: {fileID: 0}
     - target: {fileID: 2364741831243801725, guid: 862af5da03dcb7e4197dbd6a731665cf, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Features.Player.Caravan.UI.CaravanPanelUI, Assembly-CSharp
+      value: Features.Player.Caravan.UI.CaravanPanelUIHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2364741831243801725, guid: 862af5da03dcb7e4197dbd6a731665cf, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName

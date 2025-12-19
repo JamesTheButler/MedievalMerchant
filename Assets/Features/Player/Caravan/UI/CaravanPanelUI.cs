@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Infrastructure;
@@ -34,40 +35,47 @@ namespace Features.Player.Caravan.UI
         private CaravanManager _caravanManager;
         private Inventory.Inventory _playerInventory;
 
-        private void Start()
+        public void Setup(CaravanManager caravanManager)
         {
-            _caravanManager = GameplayContext.Instance.Model.Player.CaravanManager;
-            _playerInventory = GameplayContext.Instance.Model.Player.Inventory;
-
-            GameplayContext.Instance.Selection.TownSelected += OnTownSelected;
+            _caravanManager = caravanManager;
 
             // TODO - STYLE: it's not so nice to have a random business logic class in here.
             //   This would have to be in the view model layer.
             var caravanUpgrader = new CaravanUpgrader();
 
-            for (var i = 0; i < _caravanManager.Carts.Count; i++)
+            for (var i = 0; i < caravanManager.Carts.Count; i++)
             {
                 var cartId = i;
                 cartUis[i].Bind(
-                    _caravanManager.Carts[i],
+                    caravanManager.Carts[i],
                     () => caravanUpgrader.RequestUpgrade(cartId),
-                    () => caravanUpgrader.RequestUpgrade(_caravanManager.UnlockedCartCount),
+                    () => caravanUpgrader.RequestUpgrade(caravanManager.UnlockedCartCount),
                     OnCellAdded);
                 cartUis[i].OnCellClicked += OnCellClicked;
             }
 
-            _caravanManager.MoveSpeed.Observe(OnMoveSpeedChanged);
-            _caravanManager.Upkeep.Observe(OnUpkeepChanged);
+            caravanManager.MoveSpeed.Observe(OnMoveSpeedChanged);
+            caravanManager.Upkeep.Observe(OnUpkeepChanged);
 
-            moveSpeedTooltip.SetData(_caravanManager.MoveSpeed);
-            upkeepTooltip.SetData(_caravanManager.Upkeep);
-
-            _playerInventory.GoodUpdated += OnGoodAdded;
+            moveSpeedTooltip.SetData(caravanManager.MoveSpeed);
+            upkeepTooltip.SetData(caravanManager.Upkeep);
         }
 
-        private void OnTownSelected(Town _)
+        public void Toggle(bool isOn)
         {
-            Toggle(true);
+            gameObject.SetActive(isOn);
+        }
+
+        public void UpdateGood(Good good, int amount)
+        {
+            if (_occupiedCells.ContainsKey(good))
+            {
+                UpdateExistingGood(good, amount);
+            }
+            else
+            {
+                AddNewGood(good, amount);
+            }
         }
 
         private void OnDestroy()
@@ -81,53 +89,41 @@ namespace Features.Player.Caravan.UI
             _caravanManager.Upkeep.StopObserving(OnUpkeepChanged);
         }
 
-        public void Toggle()
-        {
-            Toggle(!gameObject.activeSelf);
-        }
-
-        private void Toggle(bool isOn)
-        {
-            gameObject.SetActive(isOn);
-        }
-
         private void OnCellClicked(InventoryCell cell)
         {
             inventoryCellClicked.Invoke(cell, TradeType.Sell);
         }
 
-        private void OnGoodAdded(Good good, int amount)
+        private void AddNewGood(Good good, int amount)
         {
-            if (_occupiedCells.ContainsKey(good))
-            {
-                var cell = _occupiedCells[good];
+            if (amount <= 0)
+                return;
 
-                if (amount > 0)
-                {
-                    cell.SetAmount(amount);
-                }
-                else
-                {
-                    cell.Reset();
-                    _occupiedCells.Remove(good);
-                    _freeCells.Add(cell);
-                }
+            var cell = _freeCells.FirstOrDefault();
+            if (cell == null)
+            {
+                Debug.LogError("No more free inventory cells found!");
+                return;
+            }
+
+            _occupiedCells.Add(good, cell);
+            cell.Update(good, amount);
+            _freeCells.Remove(cell);
+        }
+
+        private void UpdateExistingGood(Good good, int amount)
+        {
+            var cell = _occupiedCells[good];
+
+            if (amount > 0)
+            {
+                cell.SetAmount(amount);
             }
             else
             {
-                if (amount <= 0)
-                    return;
-
-                var cell = _freeCells.FirstOrDefault();
-                if (cell == null)
-                {
-                    Debug.LogError("No more free inventory cells found!");
-                    return;
-                }
-
-                _occupiedCells.Add(good, cell);
-                cell.Update(good, amount);
-                _freeCells.Remove(cell);
+                cell.Reset();
+                _occupiedCells.Remove(good);
+                _freeCells.Add(cell);
             }
         }
 
