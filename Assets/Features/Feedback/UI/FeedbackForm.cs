@@ -1,4 +1,5 @@
 using System;
+using Common.Infrastructure;
 using Common.UI.Utility;
 using Features.Feedback.Logic;
 using NaughtyAttributes;
@@ -10,7 +11,7 @@ namespace Features.Feedback.UI
 {
     public sealed class FeedbackForm : MonoBehaviour
     {
-        private readonly FeedbackService _feedbackService = new();
+        private FeedbackService _feedbackService;
 
         [SerializeField, Required]
         private TMP_InputField nameInput, messageInput;
@@ -20,8 +21,10 @@ namespace Features.Feedback.UI
 
         private void Awake()
         {
-            submitButton.onClick.AddListener(Open);
+            submitButton.onClick.AddListener(Submit);
             cancelButton.onClick.AddListener(Close);
+
+            _feedbackService = GlobalContext.Instance.Services.FeedbackService;
         }
 
         public void Submit()

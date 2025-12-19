@@ -1,3 +1,4 @@
+using Features.Feedback.Logic;
 using Features.Levels.Serialization;
 
 namespace Common.Infrastructure
@@ -6,11 +7,13 @@ namespace Common.Infrastructure
     {
         public ISerializer Serializer { get; private set; }
         public IGamePersistenceService PersistenceService { get; private set; }
+        public FeedbackService FeedbackService { get; private set; }
 
         public void Initialize()
         {
             Serializer = new Serializer();
             PersistenceService = new GamePersistenceService();
+            FeedbackService = new FeedbackService();
         }
 
         public void CleanUp() { }
