@@ -17,9 +17,6 @@ namespace Features.Tutorial.UI
         [SerializeField]
         private RawImage tutorialImage;
 
-        [SerializeField]
-        private TutorialTopicData debugData;
-
         private TutorialTopicData _currentTopic;
         private int _currentChapterIndex = -1;
         private int _chapterCount;
@@ -29,8 +26,6 @@ namespace Features.Tutorial.UI
             leftButton.onClick.AddListener(OnLeftButtonClicked);
             rightButton.onClick.AddListener(OnRightButtonClicked);
             closeButton.onClick.AddListener(OnCloseButtonClicked);
-
-            Setup(debugData);
         }
 
         public void Setup(TutorialTopicData topicData)

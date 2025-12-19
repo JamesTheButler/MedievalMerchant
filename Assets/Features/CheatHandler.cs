@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Types;
+using Common.Utility;
 using Features.Player;
 using Features.Player.Caravan.Config;
+using Features.Tutorial;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -46,6 +48,7 @@ namespace Features
             {
                 { "funds", AddFunds },
                 { "reset.level", ResetLevelProgress },
+                { "tutorial", OpenTutorial },
             };
 
             cheatUI.SetActive(false);
@@ -244,6 +247,11 @@ namespace Features
             GlobalContext.Instance.ProgressModel.ResetCompletedLevel(int.Parse(levelIndex));
         }
 
+        private void OpenTutorial(string topic)
+        {
+            GameplayContext.Instance.Services.TutorialService.OpenTutorial(Enum.Parse<TutorialTopic>(topic, true));
+        }
+            
         private static void ReportSuccess(string message)
         {
             Debug.Log(message);
@@ -253,5 +261,6 @@ namespace Features
         {
             Debug.LogError(message);
         }
+        
     }
 }
