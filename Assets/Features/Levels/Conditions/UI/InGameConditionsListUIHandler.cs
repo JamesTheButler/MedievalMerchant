@@ -4,16 +4,16 @@ using UnityEngine;
 
 namespace Features.Levels.Conditions.UI
 {
-    public sealed class ConditionsListUIHandler : MonoBehaviour
+    public sealed class InGameConditionsListUIHandler : MonoBehaviour
     {
         [SerializeField, Required]
         private GameObject winConditionsUi;
 
         [SerializeField, Required]
-        private ConditionListUI winConditionListUI;
+        private InGameConditionListUI winConditionListUI;
 
         [SerializeField, Required]
-        private ConditionListUI lossConditionListUI;
+        private InGameConditionListUI lossConditionListUI;
 
         public void Initialize()
         {

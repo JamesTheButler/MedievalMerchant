@@ -2,14 +2,13 @@ using System;
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Utility;
-using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.Model;
 using UnityEngine;
 using ConditionResources = Features.Levels.Conditions.Config.ConditionResources;
 
 namespace Features.Levels.Conditions.UI
 {
-    public sealed class ConditionListUI : MonoBehaviour
+    public sealed class InGameConditionListUI : MonoBehaviour
     {
         [SerializeField]
         private GameObject listItemPrefab;
@@ -19,20 +18,6 @@ namespace Features.Levels.Conditions.UI
 
         private readonly Lazy<ConditionResources> _conditionResources =
             new(() => ResourceManager.Instance.ConditionResources);
-
-        public void Setup(IEnumerable<ConditionData> conditionDatas)
-        {
-            Clear();
-
-            foreach (var condition in conditionDatas)
-            {
-                var listItem = Instantiate(listItemPrefab, listContainer.transform);
-                var listItemScript = listItem.GetComponent<ConditionListItem>();
-                var icon = _conditionResources.Value.Conditions[condition.Type].Icon;
-
-                listItemScript.Setup(condition.Description, icon);
-            }
-        }
         
         public void Setup(IEnumerable<ICondition> conditions)
         {
@@ -41,7 +26,7 @@ namespace Features.Levels.Conditions.UI
             foreach (var condition in conditions)
             {
                 var listItem = Instantiate(listItemPrefab, listContainer.transform);
-                var listItemScript = listItem.GetComponent<ConditionListItem>();
+                var listItemScript = listItem.GetComponent<InGameConditionListItem>();
                 var icon = _conditionResources.Value.Conditions[condition.Type].Icon;
 
                 listItemScript.Setup(condition.Description, icon, condition.Progress);
@@ -54,7 +39,7 @@ namespace Features.Levels.Conditions.UI
             }
         }
 
-        public void Clear()
+        private void Clear()
         {
             listContainer.DestroyChildren();
         }

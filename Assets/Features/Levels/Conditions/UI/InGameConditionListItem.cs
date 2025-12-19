@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Common.Utility;
 using Features.Levels.Conditions.Logic;
-using JetBrains.Annotations;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -9,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Features.Levels.Conditions.UI
 {
-    public sealed class ConditionListItem : MonoBehaviour
+    public sealed class InGameConditionListItem : MonoBehaviour
     {
         [SerializeField, Required]
         private TMP_Text descriptionText;
@@ -33,7 +32,7 @@ namespace Features.Levels.Conditions.UI
 
         private readonly SortedDictionary<float, Sprite> _thresholdIcons = new();
 
-        public void Setup(string description, Sprite icon, [CanBeNull] Progress progress = null)
+        public void Setup(string description, Sprite icon, Progress progress)
         {
             descriptionText.text = description;
             iconImage.sprite = icon;

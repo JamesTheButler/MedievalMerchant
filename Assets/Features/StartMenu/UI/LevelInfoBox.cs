@@ -8,6 +8,7 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Features.StartMenu.UI
@@ -21,7 +22,13 @@ namespace Features.StartMenu.UI
         private TMP_Text levelIdText, nameText, completionDateText, descriptionText, difficultyText;
 
         [SerializeField, Required]
-        private ConditionListUI winConditionList, lossConditionList, gameConditionList;
+        private PreGameConditionListUI winConditionList;
+
+        [SerializeField, Required]
+        private PreGameConditionListUI lossConditionList;
+
+        [SerializeField, Required]
+        private PreGameConditionListUI gameConditionList;
 
         [SerializeField, Required]
         private Button continueButton, startButton;

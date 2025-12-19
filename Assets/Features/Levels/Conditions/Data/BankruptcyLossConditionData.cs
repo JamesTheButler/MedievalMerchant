@@ -16,7 +16,6 @@ namespace Features.Levels.Conditions.Data
 
         public override ConditionType Type => ConditionType.BankruptcyLossCondition;
 
-        public override string Description =>
-            $"You lose if you have less than {BankruptcyFundsThreshold} coin for more than {MaxBankruptcyDurationInDays} days.";
+        public override string Description => "Don't run out of coin!";
     }
 }
