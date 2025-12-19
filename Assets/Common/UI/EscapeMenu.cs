@@ -19,13 +19,19 @@ namespace Common.UI
         private UnityEvent feedbackButtonPressed;
 
         [SerializeField, Required]
-        private Button giveUpButton, resetTutorialButton, feedbackButton;
+        private Button giveUpButton, resetTutorialButton, feedbackButton, cancelButton;
 
         private void Start()
         {
+            cancelButton.onClick.AddListener(CloseSelf);
             giveUpButton.onClick.AddListener(GiveUp);
             resetTutorialButton.onClick.AddListener(ResetTutorialState);
             feedbackButton.onClick.AddListener(ReportBug);
+        }
+
+        private void CloseSelf()
+        {
+            gameObject.SetActive(false);
         }
 
         private void OnDestroy()

@@ -17,18 +17,18 @@ namespace Features.Levels.Conditions.Model
         public event Action<int> CompletionCountChanged;
         public Observable<bool> IsLossClose { get; } = new();
 
-        private readonly ConditionResources _conditionResources;
         private readonly ConditionModelFactory _factory = new();
 
         private readonly List<IWinCondition> _winConditions = new();
         private readonly List<ILossCondition> _lossConditions = new();
         private readonly HashSet<ILossCondition> _closeLossConditions = new();
 
-        public LevelConditions()
+        private ConditionResources _conditionResources;
+
+        public void Initialize(ConditionData[] conditions)
         {
             _conditionResources = ResourceManager.Instance.ConditionResources;
-            var conditionDatas = GlobalContext.CurrentLevelInfo!.Conditions;
-            PopulateConditions(conditionDatas);
+            PopulateConditions(conditions);
         }
 
         private void PopulateConditions(ConditionData[] conditionDatas)

@@ -15,7 +15,17 @@ namespace Features.Levels.Conditions.UI
         [SerializeField, Required]
         private InGameConditionListUI lossConditionListUI;
 
-        public void Initialize()
+        public void Toggle()
+        {
+            winConditionsUi.SetActive(!winConditionsUi.activeSelf);
+        }
+
+        private void Start()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
         {
             var conditions = GameplayContext.Instance.Model.Conditions;
 
@@ -23,11 +33,6 @@ namespace Features.Levels.Conditions.UI
             lossConditionListUI.Setup(conditions.LossConditions);
 
             winConditionsUi.SetActive(false);
-        }
-
-        public void Toggle()
-        {
-            winConditionsUi.SetActive(!winConditionsUi.activeSelf);
         }
     }
 }

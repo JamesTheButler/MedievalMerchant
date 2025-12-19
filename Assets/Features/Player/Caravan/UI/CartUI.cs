@@ -10,7 +10,6 @@ using Features.Player.Caravan.Config;
 using Features.Player.Caravan.Logic;
 using NaughtyAttributes;
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 

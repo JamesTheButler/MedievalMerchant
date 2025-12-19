@@ -39,7 +39,7 @@ namespace Features.Levels
             var towns = townFactory.GenerateTowns(townPositions, zones, tileGrid);
             var player = new PlayerModel(levelInfo.StartPlayerFunds);
 
-            GameplayContext.Instance.Model.Initialize(player, towns, flagMap);
+            GameplayContext.Instance.Model.Initialize(player, towns, flagMap, levelInfo.Conditions);
             GameplayContext.Instance.Services.Initialize();
             GameplayContext.Instance.Systems.Initialize();
 
