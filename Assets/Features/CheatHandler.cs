@@ -37,8 +37,9 @@ namespace Features
                 { "player.upgrade.full", CompletePlayerUpgrade },
                 { "town.upgrade.random", RandomTownUpgrade },
                 { "town.upgrade.full", CompleteTownUpgrade },
-                { "reset", ResetAllProgress },
-                { "reset.progress", ResetCompletedLevels },
+                { "reset.levels", ResetCompletedLevels },
+                { "reset.tutorial", ResetCompletedLevels },
+                { "reset.all", ResetAllProgress },
             };
 
             _paramCommands = new Dictionary<string, Action<string>>
@@ -230,6 +231,7 @@ namespace Features
         private void ResetAllProgress()
         {
             GlobalContext.Instance.ProgressModel.Reset();
+            GameplayContext.Instance.Services.TutorialService.ResetCompletedTopics();
         }
 
         private void ResetCompletedLevels()

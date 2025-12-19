@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9093364358724925311}
   - component: {fileID: 1824106752835291162}
   - component: {fileID: 8356589580207703137}
+  - component: {fileID: 8647866067070292855}
   m_Layer: 5
   m_Name: TutorialButton
   m_TagString: Untagged
@@ -150,6 +151,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8647866067070292855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712211888973967066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 1
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  defaultText: Tutorial
 --- !u!1 &8969229566213223849
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +261,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 22.4
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1

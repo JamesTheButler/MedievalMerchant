@@ -24,7 +24,6 @@ namespace Features.Tutorial.UI
         private int _currentChapterIndex = -1;
         private int _chapterCount;
 
-
         private void Awake()
         {
             leftButton.onClick.AddListener(OnLeftButtonClicked);

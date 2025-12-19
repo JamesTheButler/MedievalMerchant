@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common.Infrastructure;
 
 namespace Features.Tutorial.Logic
@@ -36,7 +37,7 @@ namespace Features.Tutorial.Logic
 
         public void ResetCompletedTopics()
         {
-            foreach (var (topic, isCompleted) in _completedChapters)
+            foreach (var (topic, isCompleted) in _completedChapters.ToArray())
             {
                 if (!isCompleted)
                     continue;

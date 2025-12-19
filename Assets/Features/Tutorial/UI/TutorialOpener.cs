@@ -27,8 +27,11 @@ namespace Features.Tutorial.UI
         private void Start()
         {
             button.onClick.AddListener(Open);
+            _buttonImage = button.GetComponentInChildren<Image>();
+            _buttonText = button.GetComponentInChildren<TMP_Text>();
             _tutorialService = GameplayContext.Instance.Services.TutorialService;
             _tutorialService.TopicCompletionChanged += OnTopicCompleted;
+            MarkAsCompleted(_tutorialService.CompletedChapters[tutorialTopic]);
         }
 
         private void OnDestroy()
@@ -47,9 +50,18 @@ namespace Features.Tutorial.UI
             if (topic != tutorialTopic)
                 return;
 
+            MarkAsCompleted(isCompleted);
+        }
+
+        private void MarkAsCompleted(bool isCompleted)
+        {
             _buttonText.text = isCompleted
-                ? "?".WithStyle(Style.TutorialHighlight)
-                : "?".WithStyle(Style.Default);
+                ? "?".WithStyle(Style.Default)
+                : "?".WithStyle(Style.TutorialHighlight);
+
+            _buttonImage.sprite = isCompleted
+                ? defaultBackground
+                : highlightedBackground;
         }
     }
 }
