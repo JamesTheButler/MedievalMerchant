@@ -29,7 +29,7 @@ namespace Features.Player.Logic
             }
         }
 
-        private void OnMilestoneModifierRemoved(IModifier modifier)
+        private void OnMilestoneModifierAdded(IModifier modifier)
         {
             if (modifier is not DividendsFundsModifier dividendsFundsModifier)
                 return;
@@ -37,7 +37,7 @@ namespace Features.Player.Logic
             _player.FundsChange.AddModifier(dividendsFundsModifier);
         }
 
-        private void OnMilestoneModifierAdded(IModifier modifier)
+        private void OnMilestoneModifierRemoved(IModifier modifier)
         {
             if (modifier is not DividendsFundsModifier dividendsFundsModifier)
                 return;

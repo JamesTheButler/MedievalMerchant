@@ -10,7 +10,7 @@ namespace Features.Towns.Development.Logic.Milestones
         private readonly Town _town;
 
         public DividendsFundsModifier(float value, MilestoneManager.UpgradeTime upgradeTime, Town town)
-            : base(value, GetDescription(value, upgradeTime, town))
+            : base(value, GetDescription(value, town))
         {
             _percentage = value;
             _town = town;
@@ -28,12 +28,9 @@ namespace Features.Towns.Development.Logic.Milestones
             Value.Value = fundsChange * _percentage;
         }
 
-        private static string GetDescription(float value, MilestoneManager.UpgradeTime upgradeTime, Town town)
+        private static string GetDescription(float value, Town town)
         {
-            var devScoreString = upgradeTime.DevelopmentScore.ToPercentString();
-            var tierString = upgradeTime.Tier.ToDisplayString();
-            var milestoneString = $"(Milestone {devScoreString}, {tierString})";
-            return $"Dividends: {value.ToPercentString()} of {town.Name}s funds production. {milestoneString}";
+            return $"Dividends: {value.ToPercentString()} of {town.Name}s funds";
         }
     }
 }
