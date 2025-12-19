@@ -462,6 +462,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FeedbackForm
   nameInput: {fileID: 1961801037023603436}
   messageInput: {fileID: 2199928587567877824}
+  submitButton: {fileID: 5514701561303220037}
+  cancelButton: {fileID: 1368406395225580246}
 --- !u!222 &194592059522898218
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1839,7 +1841,7 @@ PrefabInstance:
       objectReference: {fileID: 1961801037023603436}
     - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2094,7 +2096,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2135,6 +2137,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4806721880360077881, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
   m_PrefabInstance: {fileID: 4646309744708449751}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1368406395225580246 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+  m_PrefabInstance: {fileID: 4646309744708449751}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6822496790039904493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6822496790039904493 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2221790527321945402, guid: 60380833e0ea23f40877d37250ce3015, type: 3}

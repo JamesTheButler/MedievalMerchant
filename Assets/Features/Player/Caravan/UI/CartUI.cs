@@ -60,7 +60,7 @@ namespace Features.Player.Caravan.UI
 
         private int _lastActiveSlotCount;
 
-        public void Bind(Cart cart, Action upgradeAction, Action<InventoryCell> onCellAdded)
+        public void Bind(Cart cart, Action upgradeAction, Action unlockAction, Action<InventoryCell> onCellAdded)
         {
             _player = GameplayContext.Instance.Model.Player;
             _caravanConfig = ConfigurationManager.Configurations.CaravanConfig;
@@ -86,7 +86,7 @@ namespace Features.Player.Caravan.UI
                 HoverNextLevel();
             });
 
-            unlockButton.onClick.AddListener(upgradeAction.Invoke);
+            unlockButton.onClick.AddListener(unlockAction.Invoke);
             lockedUpgradeTooltip.SetData(_cart.UpgradeCost);
             unlockedUpgradeTooltip.SetData(_cart.UpgradeCost);
             Unhover();

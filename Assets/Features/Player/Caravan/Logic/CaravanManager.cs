@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
@@ -11,6 +12,7 @@ namespace Features.Player.Caravan.Logic
     {
         public ModifiableVariable Upkeep { get; }
         public ModifiableVariable MoveSpeed { get; }
+        public int UnlockedCartCount => Carts.Count(cart => cart.Level > 0);
 
         public Observable<int> SlotCount { get; } = new();
         public IReadOnlyList<Cart> Carts => _carts;
@@ -46,7 +48,7 @@ namespace Features.Player.Caravan.Logic
             {
                 var cart = new Cart();
                 _carts.Add(cart);
-                
+
                 cart.SlotCount.Observe(SlotCountChanged);
             }
         }

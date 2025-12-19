@@ -14,21 +14,14 @@ namespace Common.UI
 
         private bool IsActive => escapeMenuRoot.activeSelf;
 
+        public void ToggleMenu()
+        {
+            ToggleEscMenu(!IsActive);
+        }
+
         public void OpenMenu()
         {
             ToggleEscMenu(true);
-        }
-
-        public void OnCancel()
-        {
-            // TODO - STYLE: this is a bit hacky
-            if (PopupManager.Instance.HasActivePopup)
-            {
-                PopupManager.Instance.HideActive();
-                return;
-            }
-
-            ToggleEscMenu(!IsActive);
         }
 
         private void Start()
@@ -36,6 +29,7 @@ namespace Common.UI
             _tickingService = GameplayContext.Instance.Services.TickingService;
             ToggleEscMenu(false);
         }
+
         private void ToggleEscMenu(bool isActive)
         {
             escapeMenuRoot.SetActive(isActive);

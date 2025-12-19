@@ -50,14 +50,10 @@ namespace Features
             cheatUI.SetActive(false);
         }
 
-        public void OnCancel()
-        {
-            cheatUI.SetActive(false);
-        }
-
         public void Toggle(InputAction.CallbackContext context)
         {
-            if (!enabled || !context.performed) return;
+            if (!enabled || !context.performed)
+                return;
 
             var isEnabled = !cheatUI.activeSelf;
 
@@ -72,12 +68,33 @@ namespace Features
             }
         }
 
-        public void CheatInputConfirmed(string cheat)
+        public void ConfirmInput(InputAction.CallbackContext context)
+        {
+            if (!context.performed)
+                return;
+
+            CheatInputConfirmed(cheatInput.text);
+        }
+
+        public void Cancel(InputAction.CallbackContext context)
+        {
+            if (!context.performed)
+                return;
+
+            Clear();
+        }
+
+        private void CheatInputConfirmed(string cheat)
         {
             if (!enabled) return;
 
-            cheatInput.text = string.Empty;
             ParseCheat(cheat.ToLowerInvariant());
+            Clear();
+        }
+
+        private void Clear()
+        {
+            cheatInput.text = string.Empty;
             cheatUI.SetActive(false);
         }
 
