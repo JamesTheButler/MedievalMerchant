@@ -5,13 +5,16 @@ using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.Model;
 using Features.Map.Tiling;
 using Features.Player;
+using Features.Stats;
 using Features.Towns;
+using Features.Trade.UI;
 using UnityEngine;
 
 namespace Common.Infrastructure
 {
     public sealed class GameplayModel
     {
+        public StatsModel Stats { get; set; } = new();
         public TileFlagMap TileFlagMap { get; private set; }
         public PlayerModel Player { get; private set; }
 

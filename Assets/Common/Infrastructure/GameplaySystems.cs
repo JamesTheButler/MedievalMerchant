@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Features.Levels.Conditions.Logic;
 using Features.Player;
 using Features.Player.Logic;
+using Features.Stats;
 using Features.Ticking;
 using Features.Towns;
 using Features.Towns.Development.Logic;
@@ -42,6 +43,7 @@ namespace Common.Infrastructure
             _systems.Add(new DateSystem());
             _systems.Add(new PlayerUpkeepSystem());
             _systems.Add(new ConditionSystem());
+            _systems.Add(new StatSystem());
         }
 
         private void AddTownSystems()
