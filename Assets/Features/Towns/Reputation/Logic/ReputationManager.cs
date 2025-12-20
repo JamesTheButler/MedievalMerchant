@@ -80,12 +80,12 @@ namespace Features.Towns.Reputation.Logic
         private void OnTradeCompleted(TradeInfo tradeInfo)
         {
             var tradeVolumePerRep = _config.RewardData.TradeVolumePerReputationPoint;
-            var repChangeFloat = tradeInfo.FinalPrice / tradeVolumePerRep;
+            var repChangeFloat = tradeInfo.TotalPrice / tradeVolumePerRep;
             // round to 1 digit after comma
             var finalRepChange = Mathf.Floor(repChangeFloat * 10f) * .1f * tradeInfo.HaggleLevel;
             var goodName = _goodResources.ConfigData[tradeInfo.Good].GoodName;
             var message =
-                $"Traded {tradeInfo.Amount}x{goodName} worth {tradeInfo.FinalPrice} coin at haggle level {tradeInfo.HaggleLevel}";
+                $"Traded {tradeInfo.Amount}x{goodName} worth {tradeInfo.TotalPrice} coin at haggle level {tradeInfo.HaggleLevel}";
             UpdateReputation(finalRepChange, message);
         }
 

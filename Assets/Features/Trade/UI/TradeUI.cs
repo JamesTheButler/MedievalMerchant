@@ -6,6 +6,7 @@ using Common.UI.Tooltips;
 using Features.Goods.Config;
 using Features.Goods.UI;
 using Features.Towns;
+using Features.Trade.Logic;
 using Features.Trade.Logic.Price;
 using NaughtyAttributes;
 using TMPro;
@@ -14,6 +15,7 @@ using UnityEngine.UI;
 
 namespace Features.Trade.UI
 {
+
     public sealed class TradeUI : MonoBehaviour
     {
         [SerializeField, Required]
@@ -35,6 +37,7 @@ namespace Features.Trade.UI
         private ModifiableTooltipHandler priceTooltip;
 
         private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Instance.Model);
+        private readonly Lazy<TradeService> _tradeService = new(() => GameplayContext.Instance.Services.TradeService);
         private readonly Lazy<Selection> _selection = new(() => GameplayContext.Instance.Selection);
         private readonly Lazy<Colors> _colors = new(() => ResourceManager.Instance.Colors);
 
@@ -200,7 +203,9 @@ namespace Features.Trade.UI
             _buyingInventory.AddGood(_good, _tradeAmount);
             _sellingInventory.RemoveGood(_good, _tradeAmount);
             _selection.Value.SelectedTown.ResolveTrade(tradeInfo);
-
+            // this should replace the line above
+            _tradeService.Value.CompleteTrade(tradeInfo);
+            
             Hide();
         }
 

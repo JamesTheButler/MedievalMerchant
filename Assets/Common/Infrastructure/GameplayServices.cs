@@ -1,5 +1,7 @@
 using Features.Player.Retinue.Logic;
 using Features.Ticking;
+using Features.Trade.Logic;
+using Features.Trade.UI;
 using Features.Tutorial.Logic;
 
 namespace Common.Infrastructure
@@ -10,6 +12,7 @@ namespace Common.Infrastructure
         public TutorialService TutorialService { get; private set; }
         public TickingService TickingService { get; private set; }
         public CompanionUpgradeService CompanionUpgradeService { get; private set; }
+        public TradeService TradeService { get; private set; }
 
         public void Initialize()
         {
@@ -21,6 +24,8 @@ namespace Common.Infrastructure
             TickingService.Initialize();
             CompanionUpgradeService = new CompanionUpgradeService();
             CompanionUpgradeService.Initialize();
+            TradeService = new TradeService();
+            TradeService.Initialize();
         }
 
         public void CleanUp()

@@ -2,5 +2,5 @@
 
 namespace Features.Trade
 {
-    public sealed record TradeInfo(TradeType Type, Good Good, int Amount, float FinalPrice, int HaggleLevel);
+    public sealed record TradeInfo(TradeType Type, Good Good, int Amount, float TotalPrice, int HaggleLevel);
 }
