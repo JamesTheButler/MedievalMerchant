@@ -20,7 +20,7 @@ namespace Features.Player.Retinue.Config.LevelDatas
 
 
         public override string Description => new StringBuilder()
-            .AppendLine($"- Steals {TownEntranceGold} coin when entering town".WithStyle(Style.TutorialHighlight))
+            .AppendLine($"- Steals {TownEntranceGold} coin when entering town".WithStyle(Style.Good))
             .AppendLine($"- {ReputationLossChance.ToPercentString()} chance of getting caught".WithStyle(Style.Bad))
             .AppendLine($"- {ReputationLoss} reputation lost when being caught".WithStyle(Style.Bad))
             .ToString();

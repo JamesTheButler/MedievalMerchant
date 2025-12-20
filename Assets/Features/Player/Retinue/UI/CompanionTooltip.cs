@@ -29,7 +29,7 @@ namespace Features.Player.Retinue.UI
             var levelData = companionData.GetLevelData(data.Level);
 
             var comingSoonSuffix = companionData.IsImplemented ? string.Empty : " - (coming soon)";
-            titleText.text = $"{companionData.Name} (Level {data.Level}){comingSoonSuffix}";
+            titleText.text = $"{companionData.Name} lvl. {data.Level} {comingSoonSuffix}";
             descriptionText.text = companionData.Description;
 
             effectsText.text = levelData?.Description ?? string.Empty;
