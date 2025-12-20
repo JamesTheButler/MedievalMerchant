@@ -1,4 +1,5 @@
-﻿using Common.Utility;
+﻿using System;
+using Common.Utility;
 using Features.Tutorial.Data;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,8 @@ namespace Features.Tutorial.UI
 {
     public sealed class TutorialUI : MonoBehaviour
     {
+        public event Action Closed;
+
         [SerializeField]
         private TMP_Text topicTitleText, chapterTitleText, descriptionText, chapterCountText;
 
@@ -25,7 +28,7 @@ namespace Features.Tutorial.UI
         {
             leftButton.onClick.AddListener(OnLeftButtonClicked);
             rightButton.onClick.AddListener(OnRightButtonClicked);
-            closeButton.onClick.AddListener(OnCloseButtonClicked);
+            closeButton.onClick.AddListener(Close);
         }
 
         public void Setup(TutorialTopicData topicData)
@@ -51,7 +54,13 @@ namespace Features.Tutorial.UI
 
         public void Close()
         {
+            Closed?.Invoke();
             gameObject.SetActive(false);
+        }
+
+        private void OnDisable()
+        {
+            Closed?.Invoke();
         }
 
         private void SetChapter(int index)
@@ -81,11 +90,6 @@ namespace Features.Tutorial.UI
                 return;
 
             SetChapter(_currentChapterIndex - 1);
-        }
-
-        private void OnCloseButtonClicked()
-        {
-            Close();
         }
     }
 }

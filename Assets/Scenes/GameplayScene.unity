@@ -721,7 +721,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2236913949556327770, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2236913949556327770, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -730,18 +730,18 @@ PrefabInstance:
     - target: {fileID: 2236913949556327770, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 806354487}
     - target: {fileID: 2236913949556327770, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2236913949556327770, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Initialize
+      value: Toggle
       objectReference: {fileID: 0}
     - target: {fileID: 2236913949556327770, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Features.Levels.Conditions.UI.ConditionsListUIHandler, Assembly-CSharp
+      value: Features.Levels.Conditions.UI.InGameConditionsListUIHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2236913949556327770, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -3975,6 +3975,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 766223031}
+        m_TargetAssemblyTypeName: Features.Map.ProductionZoneInteractions, Assembly-CSharp
+        m_MethodName: DeselectActiveZone
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onTownRightClicked:
     m_PersistentCalls:
       m_Calls:
@@ -4002,6 +4014,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 766223031}
+        m_TargetAssemblyTypeName: Features.Map.ProductionZoneInteractions, Assembly-CSharp
+        m_MethodName: DeselectActiveZone
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onGroundClicked:
     m_PersistentCalls:
       m_Calls:
@@ -4020,6 +4044,19 @@ MonoBehaviour:
       - m_Target: {fileID: 766223031}
         m_TargetAssemblyTypeName: Features.Map.ProductionZoneManager, Assembly-CSharp
         m_MethodName: DeselectActiveZone
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 806354487}
+        m_TargetAssemblyTypeName: Features.Levels.Conditions.UI.InGameConditionsListUIHandler,
+          Assembly-CSharp
+        m_MethodName: Close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

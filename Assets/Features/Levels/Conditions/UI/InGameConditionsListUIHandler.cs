@@ -20,6 +20,11 @@ namespace Features.Levels.Conditions.UI
             winConditionsUi.SetActive(!winConditionsUi.activeSelf);
         }
 
+        public void Close()
+        {
+            winConditionsUi.SetActive(false);
+        }
+
         private void Start()
         {
             Initialize();
