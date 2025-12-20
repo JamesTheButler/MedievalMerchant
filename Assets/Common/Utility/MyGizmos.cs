@@ -20,24 +20,26 @@ namespace Common.Utility
                 position + (Vector3.left + Vector3.down) * size);
         }
 
-        public static void DrawRect(Rect rect, Color? color = null, float padding = 0)
+        public static void DrawRectOnCanvas(Canvas canvas, Rect rect, Color color)
         {
-            if (color != null)
+            var canvasRectTransform = canvas.GetComponent<RectTransform>();
+            if (canvasRectTransform == null)
             {
-                Gizmos.color = color.Value;
+                Debug.LogError("Canvas.RectTransform is null!");
+                return;
             }
 
-            Gizmos.DrawWireCube(
-                rect.center + Vector2.one * padding,
-                rect.size - Vector2.one * 2 * padding);
-        }
+            Gizmos.color = color;
 
-        public static void DrawRect(RectTransform rectTransform, Color? color = null, float padding = 0)
-        {
-            if (!rectTransform)
-                return;
+            var bottomLeft = canvasRectTransform.TransformPoint(new Vector3(rect.xMin, rect.yMin, 0));
+            var topLeft = canvasRectTransform.TransformPoint(new Vector3(rect.xMin, rect.yMax, 0));
+            var topRight = canvasRectTransform.TransformPoint(new Vector3(rect.xMax, rect.yMax, 0));
+            var bottomRight = canvasRectTransform.TransformPoint(new Vector3(rect.xMax, rect.yMin, 0));
 
-            DrawRect(rectTransform.GetWorldRect(), color, padding);
+            Gizmos.DrawLine(bottomLeft, topLeft);
+            Gizmos.DrawLine(topLeft, topRight);
+            Gizmos.DrawLine(topRight, bottomRight);
+            Gizmos.DrawLine(bottomRight, bottomLeft);
         }
     }
 }

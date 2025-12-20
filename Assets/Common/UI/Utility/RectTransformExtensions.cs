@@ -19,7 +19,6 @@ namespace Common.UI.Utility
         {
             var corners = rectTransform.GetWorldCorners();
             var center = corners.Aggregate(Vector3.zero, (curr, next) => curr + next / corners.Length);
-
             return center;
         }
 

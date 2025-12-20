@@ -14,9 +14,12 @@ namespace Common.UI.Tooltips
         private const int Padding = 16;
 
         private Canvas _canvas;
+        private RectTransform _canvasRectTransform;
         private RectTransform _origin;
         private RectTransform _rectTransform;
         private Rect _previousRect;
+
+        private readonly Dictionary<Rect, Color> _debugRects = new();
 
         public abstract void Reset();
         protected abstract void UpdateUI(TData data);
@@ -30,13 +33,14 @@ namespace Common.UI.Tooltips
         {
             _origin = origin;
             _canvas = _origin.GetComponentInParent<Canvas>();
-            Justify();
+            _canvasRectTransform = (RectTransform)_canvas.transform;
+            RequestJustify();
         }
 
         public void SetData(TData data)
         {
             UpdateUI(data);
-            Justify();
+            RequestJustify();
         }
 
         private void OnDestroy()
@@ -44,82 +48,101 @@ namespace Common.UI.Tooltips
             Reset();
         }
 
-        private readonly Dictionary<Rect, Color> _debugRects = new();
+        private const int JustifyMaxIterations = 4;
+        private int _justifyTriesLeft;
+        private Vector2 _lastSize;
+
+        private void RequestJustify()
+        {
+            _justifyTriesLeft = JustifyMaxIterations;
+            _lastSize = Vector2.zero;
+        }
+
+        private void LateUpdate()
+        {
+            if (_justifyTriesLeft <= 0)
+                return;
+
+            Canvas.ForceUpdateCanvases();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
+
+            var sizeNow = _rectTransform.rect.size;
+
+            Justify();
+
+            _justifyTriesLeft--;
+
+            // Stop early if size has stabilized
+            if (Vector2.Distance(sizeNow, _lastSize) < 0.1f)
+                _justifyTriesLeft = 0;
+
+            _lastSize = sizeNow;
+        }
 
         private void OnDrawGizmos()
         {
-            if (!drawDebugLines)
+            if (!drawDebugLines || _canvasRectTransform == null)
                 return;
 
             foreach (var (rect, color) in _debugRects)
             {
-                MyGizmos.DrawRect(rect, color);
+                MyGizmos.DrawRectOnCanvas(_canvas, rect, color);
             }
         }
 
         protected void Justify()
         {
-            if (!_origin | !_canvas | !_rectTransform)
+            if (_origin == null || _canvas == null || _rectTransform == null || _canvasRectTransform == null)
                 return;
 
-            var canvasRectTransform = _canvas.transform as RectTransform;
-            var canvasRect = canvasRectTransform!.GetWorldRect();
-            var originRect = _origin.GetWorldRect();
-            var worldRect = _rectTransform.GetWorldRect();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
 
-            var spaceOnTop = canvasRect.yMax - originRect.yMax - 2 * Padding;
-            var spaceOnRight = canvasRect.xMax - originRect.xMax - Padding - Padding;
+            var tooltipSize = _rectTransform.rect.size;
+            var tooltipHalfSize = tooltipSize * 0.5f;
 
-            var fitsOnTop = spaceOnTop >= worldRect.height;
-            var fitsOnRight = spaceOnRight >= worldRect.width;
-            var halfSize = new Vector2(worldRect.width / 2f, worldRect.height / 2f);
+            var originBounds = RectTransformUtility.CalculateRelativeRectTransformBounds(_canvasRectTransform, _origin);
+            var originRect = new Rect(originBounds.min, originBounds.size);
 
-            // if it fits above origin object, use origins top edge to align
-            // otherwise use the top of the canvas to align
-            var y = fitsOnTop
-                ? originRect.yMax + Padding + halfSize.y
-                : canvasRect.yMax - Padding - halfSize.y;
+            var canvasRect = _canvasRectTransform.rect;
 
-            float x;
+            var spaceOnTop = canvasRect.yMax - originRect.yMax - 2f * Padding;
+            var spaceOnRight = canvasRect.xMax - originRect.xMax - 2f * Padding;
 
-            // if it fits on top, use the origins center to align
+            var fitsOnTop = spaceOnTop >= tooltipSize.y;
+            var fitsOnRight = spaceOnRight >= tooltipSize.x;
+
+            var targetY = fitsOnTop
+                ? originRect.yMax + Padding + tooltipHalfSize.y
+                : canvasRect.yMax - Padding - tooltipHalfSize.y;
+
+            float targetX;
             if (fitsOnTop)
             {
-                x = Mathf.Clamp(
+                targetX = Mathf.Clamp(
                     originRect.center.x,
-                    Padding + halfSize.x,
-                    canvasRect.width - Padding - halfSize.x);
+                    canvasRect.xMin + Padding + tooltipHalfSize.x,
+                    canvasRect.xMax - Padding - tooltipHalfSize.x);
             }
-            // otherwise place either to the right (preferred) or to the left of the origin object
             else
             {
-                x = fitsOnRight
-                    ? originRect.xMax + Padding + halfSize.x
-                    : originRect.xMin - Padding - halfSize.x;
+                targetX = fitsOnRight
+                    ? originRect.xMax + Padding + tooltipHalfSize.x
+                    : originRect.xMin - Padding - tooltipHalfSize.x;
             }
 
-            var targetCenterPosition = new Vector2(x, y);
-
+            var tooltipCenterPosition = new Vector2(targetX, targetY);
             RegisterDebugShapes(
                 originRect,
                 spaceOnTop,
                 fitsOnTop,
                 spaceOnRight,
                 fitsOnRight,
-                targetCenterPosition,
-                halfSize, worldRect);
+                tooltipCenterPosition,
+                tooltipHalfSize,
+                _rectTransform.rect,
+                _canvasRectTransform.rect);
 
-            // move the actual tooltip
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRectTransform,
-                RectTransformUtility.WorldToScreenPoint(null, targetCenterPosition),
-                null,
-                out var localPoint
-            );
-            _rectTransform.anchoredPosition = localPoint;
-
-            // this seems to help!
-            LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
+            _rectTransform.anchoredPosition = new Vector2(targetX, targetY);
         }
 
         private void RegisterDebugShapes(
@@ -128,9 +151,10 @@ namespace Common.UI.Tooltips
             bool fitsOnTop,
             float spaceOnRight,
             bool fitsOnRight,
-            Vector2 targetCenterPosition,
-            Vector2 halfSize,
-            Rect worldRect)
+            Vector2 tooltipCenterPosition,
+            Vector2 tooltipHalfSize,
+            Rect worldRect,
+            Rect canvasRect)
         {
             _debugRects.Clear();
 
@@ -140,9 +164,9 @@ namespace Common.UI.Tooltips
             var paddingSize = new Vector2(Padding, Padding);
 
             var canvasPaddingRect = new Rect(
-                Vector2.zero + paddingSize,
-                _canvas.pixelRect.size - paddingSize * 2f);
-            _debugRects.Add(canvasPaddingRect, Color.yellow);
+                canvasRect.min + paddingSize,
+                canvasRect.size - paddingSize * 2f);
+            _debugRects.Add(canvasPaddingRect, Color.blue);
 
             // render padding around origin
             var objectPaddingRect = new Rect(
@@ -162,7 +186,7 @@ namespace Common.UI.Tooltips
                 new Vector2(spaceOnRight, originRect.height));
             _debugRects.Add(rightRect, fitsOnRight ? Color.green : Color.red);
 
-            var targetBottomPosition = targetCenterPosition - halfSize;
+            var targetBottomPosition = tooltipCenterPosition - tooltipHalfSize;
             var clampedRect = new Rect(targetBottomPosition, worldRect.size);
             _debugRects.Add(clampedRect, Color.white);
         }
