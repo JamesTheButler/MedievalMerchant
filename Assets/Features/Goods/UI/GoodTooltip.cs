@@ -13,10 +13,13 @@ namespace Features.Goods.UI
     public class GoodTooltip : TooltipBase<Good>
     {
         [SerializeField, Required]
-        protected TMP_Text nameText, priceText, currentPriceText;
+        private TMP_Text nameText, priceText;
+        
+        [SerializeField, Required] 
+        private GameObject currentPriceLine;
 
         [SerializeField, Required]
-        protected Image tierImage, regionImage;
+        private Image tierImage, regionImage;
 
         private GoodsResources _goodsResources;
         private GoodsConfig _goodsConfig;
@@ -46,7 +49,7 @@ namespace Features.Goods.UI
             tierImage.sprite = tierIcon;
             regionImage.sprite = regionIcon.Icon;
 
-            currentPriceText.gameObject.SetActive(false);
+            currentPriceLine.SetActive(false);
         }
 
         public override void Reset() { }
