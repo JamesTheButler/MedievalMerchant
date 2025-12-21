@@ -6,8 +6,7 @@ namespace Common.UI
     public sealed class BackgroundQuadScaler : MonoBehaviour
     {
         [SerializeField]
-        private Camera cam;
-
+        private UnityEngine.Camera cam;
 
         private void Start()
         {

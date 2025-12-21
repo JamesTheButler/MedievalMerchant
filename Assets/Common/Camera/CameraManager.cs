@@ -1,4 +1,5 @@
 using System;
+using Common.Infrastructure;
 using Common.Utility;
 using Features.Map.Tiling;
 using NaughtyAttributes;
@@ -6,12 +7,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-namespace Common.Infrastructure
+namespace Common.Camera
 {
     public sealed class CameraManager : MonoBehaviour
     {
         [SerializeField, Required]
-        private new Camera camera;
+        private new UnityEngine.Camera camera;
 
         [SerializeField]
         private UnityEvent cameraMoved, cameraZoomed;
@@ -20,7 +21,7 @@ namespace Common.Infrastructure
         private TilemapManager tilemapManager;
 
         [SerializeField]
-        private float startupPadding;
+        private float startSize;
 
         [SerializeField]
         private float zoomSpeed = 1;
@@ -37,6 +38,9 @@ namespace Common.Infrastructure
         [SerializeField]
         private Vector2 safeArea;
 
+        [SerializeField]
+        private float cameraFitPaddingFactor = 1.5f;
+
         private float _maxSize = 10;
         private float _keyboardPanSpeed = 1;
         private Vector2 _lastMousePosition;
@@ -46,9 +50,7 @@ namespace Common.Infrastructure
 
         private void Start()
         {
-            // force orthographic camera
-            if (camera.orthographic)
-                return;
+            RefreshKeyboardPanSpeed();
 
             camera.orthographic = true;
         }
@@ -63,10 +65,9 @@ namespace Common.Infrastructure
 
         public void FitMapSize()
         {
-            // TODO - POLISH: camera size should fit both dimensions. this depends on the aspect ratio & account for ui 
-            var mapSize = GameplayContext.Instance.Model.TileFlagMap.Size.y;
-            camera.orthographicSize = mapSize * .5f + startupPadding;
-            _maxSize = camera.orthographicSize * 1.5f;
+            var mapHalfSize = GameplayContext.Instance.Model.TileFlagMap.Size.y * .5f;
+            camera.orthographicSize = mapHalfSize;
+            _maxSize = mapHalfSize * 1.5f;
             _bounds = tilemapManager.Tilemap.localBounds;
         }
 
@@ -101,7 +102,12 @@ namespace Common.Infrastructure
         {
             _isPanning = context.ReadValueAsButton();
         }
-        
+
+        public void FocusCamera(Vector2 worldPosition)
+        {
+            camera.transform.position = worldPosition.FromXY(camera.transform.position.z);
+        }
+
         private void RefreshKeyboardPanSpeed()
         {
             var cameraSizeT = Mathf.InverseLerp(minSize, _maxSize, camera.orthographicSize);

@@ -53,7 +53,7 @@ namespace Common.UI.Popups
                 return;
 
             var worldPosition = _zone.Center.FromXY();
-            var screenPosition = Camera.main!.WorldToScreenPoint(worldPosition);
+            var screenPosition = UnityEngine.Camera.main!.WorldToScreenPoint(worldPosition);
             productionZonePopup.gameObject.transform.position = screenPosition;
         }
 
