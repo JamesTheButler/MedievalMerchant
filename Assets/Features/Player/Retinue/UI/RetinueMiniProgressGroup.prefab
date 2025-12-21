@@ -215,6 +215,8 @@ GameObject:
   - component: {fileID: 6114535630554712408}
   - component: {fileID: 1642585894196529864}
   - component: {fileID: 1126222291393056933}
+  - component: {fileID: 5158771973967866856}
+  - component: {fileID: 3151175796133552835}
   m_Layer: 5
   m_Name: RetinueMiniProgressGroup
   m_TagString: Untagged
@@ -258,6 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniProgressGroup
   <CompanionType>k__BackingField: 0
+  tooltip: {fileID: 1642585894196529864}
 --- !u!114 &1642585894196529864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,7 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98cf785ee6dc43deb48d0ece92e836f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.CompanionTooltipHandler
-  toolTipPrefab: {fileID: 7373911500606536191, guid: 578beddb423253448805a6166881e92c, type: 3}
+  toolTipPrefab: {fileID: 7373911500606536191, guid: 7cf8e226125534743b70fe2da3496077, type: 3}
   enabledOnStart: 1
   hideOnClick: 0
   useSelfAsOrigin: 1
@@ -301,6 +304,44 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!222 &5158771973967866856
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6640128380452165109}
+  m_CullTransparentMesh: 1
+--- !u!114 &3151175796133552835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6640128380452165109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1001 &3556621989174822251
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,11 +7,16 @@ namespace Features.Player.Retinue.UI
         [field: SerializeField]
         public CompanionType CompanionType { get; private set; }
 
+        [SerializeField]
+        private CompanionTooltipHandler tooltip;
+
         private RetinueMiniProgressElement[] _elements;
 
         private void Start()
         {
             _elements = GetComponentsInChildren<RetinueMiniProgressElement>();
+
+            tooltip.SetData(new CompanionTooltip.Data(CompanionType, 0));
         }
 
         public void SetProgress(int level)
@@ -20,6 +25,8 @@ namespace Features.Player.Retinue.UI
             {
                 _elements[i].SetCompleted(i < level);
             }
+
+            tooltip.SetData(new CompanionTooltip.Data(CompanionType, level));
         }
     }
 }
