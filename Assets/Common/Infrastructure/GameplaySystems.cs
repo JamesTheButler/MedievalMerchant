@@ -17,6 +17,7 @@ namespace Common.Infrastructure
         public void Initialize()
         {
             AddGlobalSystems();
+            AddPlayerSystems();
             AddTownSystems();
 
             foreach (var system in _systems)
@@ -24,7 +25,6 @@ namespace Common.Infrastructure
                 system.Initialize();
             }
         }
-
 
         public void CleanUp()
         {
@@ -39,11 +39,16 @@ namespace Common.Infrastructure
         private void AddGlobalSystems()
         {
             _systems.Add(new DividendsSystem());
-            _systems.Add(new PlayerTickSystem());
             _systems.Add(new DateSystem());
-            _systems.Add(new PlayerUpkeepSystem());
             _systems.Add(new ConditionSystem());
             _systems.Add(new StatSystem());
+        }
+
+        private void AddPlayerSystems()
+        {
+            _systems.Add(new PlayerTickSystem());
+            _systems.Add(new PlayerUpkeepSystem());
+            _systems.Add(new PlayerTradeTrackingSystem());
         }
 
         private void AddTownSystems()

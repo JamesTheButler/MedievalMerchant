@@ -1,4 +1,5 @@
 using Common.Infrastructure;
+using Features.Player.Logic;
 using Features.Ticking;
 
 namespace Features.Player

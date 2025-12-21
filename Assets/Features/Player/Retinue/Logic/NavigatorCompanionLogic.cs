@@ -1,4 +1,5 @@
 ﻿using Common.Infrastructure;
+using Features.Player.Logic;
 using Features.Player.Retinue.Config.CompanionDatas;
 
 namespace Features.Player.Retinue.Logic

@@ -1,5 +1,6 @@
 ﻿using Common.Infrastructure;
 using Common.Utility;
+using Features.Player.Logic;
 using Features.Player.Retinue.Config.CompanionDatas;
 using Features.Player.Retinue.Config.LevelDatas;
 using Features.Towns;

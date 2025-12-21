@@ -7,10 +7,14 @@ namespace Features.Trade.Logic
     {
         public event Action<TradeInfo> TradeCompleted;
         public event Action<TradeInfo> TradeAborted;
-        
-        public void CompleteTrade(TradeInfo tradeInfo) { }
 
         public void Initialize() { }
         public void CleanUp() { }
+
+        public void CompleteTrade(TradeInfo tradeInfo)
+        {
+            tradeInfo.Town.ResolveTrade(tradeInfo);
+            TradeCompleted?.Invoke(tradeInfo);
+        }
     }
 }

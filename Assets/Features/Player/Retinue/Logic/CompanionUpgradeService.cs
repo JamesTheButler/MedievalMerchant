@@ -1,5 +1,6 @@
 ﻿using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
+using Features.Player.Logic;
 using Features.Player.Retinue.Config;
 using UnityEngine;
 

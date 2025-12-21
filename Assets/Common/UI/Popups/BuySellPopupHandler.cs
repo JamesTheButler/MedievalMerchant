@@ -4,6 +4,7 @@ using Common.UI.Elements;
 using Common.UI.Utility;
 using Features.Inventory;
 using Features.Player;
+using Features.Player.Logic;
 using Features.Towns;
 using Features.Trade;
 using Features.Trade.Logic;

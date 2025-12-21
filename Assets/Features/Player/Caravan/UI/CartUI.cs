@@ -8,6 +8,7 @@ using Common.Utility;
 using Features.Goods.Config;
 using Features.Player.Caravan.Config;
 using Features.Player.Caravan.Logic;
+using Features.Player.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

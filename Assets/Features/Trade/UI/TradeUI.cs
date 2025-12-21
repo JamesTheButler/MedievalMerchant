@@ -1,10 +1,13 @@
 using System;
-using Common.Config;
+using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Tooltips;
+using Common.UI.Utility;
+using Common.Utility;
 using Features.Goods.Config;
 using Features.Goods.UI;
+using Features.Player.Logic;
 using Features.Towns;
 using Features.Trade.Logic;
 using Features.Trade.Logic.Price;
@@ -15,7 +18,6 @@ using UnityEngine.UI;
 
 namespace Features.Trade.UI
 {
-
     public sealed class TradeUI : MonoBehaviour
     {
         [SerializeField, Required]
@@ -39,13 +41,16 @@ namespace Features.Trade.UI
         private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Instance.Model);
         private readonly Lazy<TradeService> _tradeService = new(() => GameplayContext.Instance.Services.TradeService);
         private readonly Lazy<Selection> _selection = new(() => GameplayContext.Instance.Selection);
-        private readonly Lazy<Colors> _colors = new(() => ResourceManager.Instance.Colors);
+
+        private readonly Lazy<TradeTracker> _tradeTracker =
+            new(() => GameplayContext.Instance.Model.Player.TradeTracker);
 
         private readonly Lazy<GoodsResources>
             _configurationManager = new(() => ResourceManager.Instance.GoodsResources);
 
         private bool _isInitialized;
 
+        private Town _town;
         private GoodResourceData _goodResourceData;
         private Good _good;
         private TradeType _tradeType;
@@ -67,6 +72,7 @@ namespace Features.Trade.UI
         {
             _good = good;
             _tradeType = tradeType;
+            _town = _selection.Value.SelectedTown;
 
             _goodResourceData = _configurationManager.Value.ConfigData[good];
 
@@ -155,12 +161,9 @@ namespace Features.Trade.UI
         private void SetUpInventories()
         {
             var player = _model.Value.Player.Inventory;
-            var town = _selection.Value.SelectedTown;
 
-            if (town is null) return;
-
-            var townInventory = town.Inventory;
-            _priceCalculator = new PriceCalculator(town);
+            var townInventory = _town.Inventory;
+            _priceCalculator = new PriceCalculator(_town);
 
             _buyingInventory = _tradeType == TradeType.Buy ? player : townInventory;
             _sellingInventory = _tradeType == TradeType.Sell ? player : townInventory;
@@ -195,17 +198,16 @@ namespace Features.Trade.UI
 
         private void CompleteTrade()
         {
-            var tradeInfo = new TradeInfo(_tradeType, _good, _tradeAmount, _totalPrice, 1);
+            var tradeInfo = new TradeInfo(_town, _tradeType, _good, _tradeAmount, _totalPrice, 1);
 
             _buyingInventory.RemoveFunds(_totalPrice);
             _sellingInventory.AddFunds(_totalPrice);
 
             _buyingInventory.AddGood(_good, _tradeAmount);
             _sellingInventory.RemoveGood(_good, _tradeAmount);
-            _selection.Value.SelectedTown.ResolveTrade(tradeInfo);
             // this should replace the line above
             _tradeService.Value.CompleteTrade(tradeInfo);
-            
+
             Hide();
         }
 
@@ -220,22 +222,40 @@ namespace Features.Trade.UI
         {
             _totalPrice = _tradeAmount * _singlePrice;
 
-            var priceText = $"{_totalPrice:0.##}";
+            var price = $"{_totalPrice:0.##}";
 
             if (_tradeType == TradeType.Buy && _tradeAmount > 0)
             {
-                priceText = "-" + priceText;
+                price = "-" + price;
             }
 
-            coinAmountText.text = priceText;
+            if (_tradeType == TradeType.Buy)
+            {
+                coinAmountText.text = price;
+            }
+            else
+            {
+                var trackedInfo = _tradeTracker.Value.TrackedGoods.GetValueOrDefault(_good);
+                if (trackedInfo == null)
+                {
+                    Debug.LogError($"TradeTracker did not have entry for {_good}. Something's wrong.");
+                    coinAmountText.text = price;
+                }
+                else
+                {
+                    // diff between what the player bought the goods for and what they're selling it for
+                    var difference = _totalPrice - trackedInfo.AveragePrice * _tradeAmount;
+                    var style = difference.GetNumberStyle();
+                    var differenceText = $"{difference.Sign()}{difference}".WithStyle(style);
+                    coinAmountText.text = $"{price} ({differenceText})";
+                }
+            }
         }
 
         private void RefreshButtonState()
         {
             var isTradePossible = _buyerFunds >= _totalPrice;
-
             _activeButton.interactable = isTradePossible;
-            coinAmountText.color = isTradePossible ? _colors.Value.FontDark : _colors.Value.Bad;
         }
     }
 }

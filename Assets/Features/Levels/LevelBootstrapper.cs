@@ -4,6 +4,7 @@ using Features.Levels.Config;
 using Features.Map;
 using Features.Map.Tiling;
 using Features.Player;
+using Features.Player.Logic;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;

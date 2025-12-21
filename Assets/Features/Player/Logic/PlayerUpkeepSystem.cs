@@ -1,5 +1,6 @@
 using Common.Infrastructure;
 using Features.Player.Caravan.Logic;
+using Features.Player.Logic;
 using Features.Towns;
 
 namespace Features.Player
