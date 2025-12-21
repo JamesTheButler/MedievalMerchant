@@ -13,10 +13,7 @@ namespace Common.UI
         private string startScene;
 
         [SerializeField]
-        private UnityEvent giveUpPressed;
-
-        [SerializeField]
-        private UnityEvent feedbackButtonPressed;
+        private UnityEvent giveUpPressed, feedbackButtonPressed;
 
         [SerializeField, Required]
         private Button giveUpButton, resetTutorialButton, feedbackButton, cancelButton;
@@ -29,16 +26,18 @@ namespace Common.UI
             feedbackButton.onClick.AddListener(ReportBug);
         }
 
-        private void CloseSelf()
-        {
-            gameObject.SetActive(false);
-        }
-
         private void OnDestroy()
         {
+            cancelButton.onClick.RemoveListener(CloseSelf);
             giveUpButton.onClick.RemoveListener(GiveUp);
             resetTutorialButton.onClick.RemoveListener(ResetTutorialState);
             feedbackButton.onClick.RemoveListener(ReportBug);
+        }
+
+
+        private void CloseSelf()
+        {
+            gameObject.SetActive(false);
         }
 
         private void ReportBug()
