@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Types;
 using Common.UI.Elements;
+using Common.UI.Popups;
 using Common.UI.Tooltips;
 using Features.Player.Caravan.Logic;
 using Features.Trade;
@@ -9,10 +10,11 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 namespace Features.Player.Caravan.UI
 {
-    public sealed class CaravanPanelUI : MonoBehaviour
+    public sealed class CaravanPanelUI : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField]
         private UnityEvent<InventoryCell, TradeType> inventoryCellClicked;
@@ -137,6 +139,12 @@ namespace Features.Player.Caravan.UI
         private void OnUpkeepChanged(float upkeep)
         {
             upkeepText.text = upkeep.ToString("0.##");
+        }
+
+        // background click should close popups
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            PopupManager.Instance.HideActive();
         }
     }
 }
