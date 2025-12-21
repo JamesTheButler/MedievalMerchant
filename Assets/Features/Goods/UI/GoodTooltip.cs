@@ -19,7 +19,7 @@ namespace Features.Goods.UI
         private GameObject currentPriceLine;
 
         [SerializeField, Required]
-        private Image tierImage, regionImage;
+        private Image goodImage, tierImage, regionImage;
 
         private GoodsResources _goodsResources;
         private GoodsConfig _goodsConfig;
@@ -46,6 +46,8 @@ namespace Features.Goods.UI
 
             nameText.text = goodData.GoodName;
             priceText.text = $"{price:0.##}";
+
+            goodImage.sprite = goodData.Icon;
             tierImage.sprite = tierIcon;
             regionImage.sprite = regionIcon.Icon;
 

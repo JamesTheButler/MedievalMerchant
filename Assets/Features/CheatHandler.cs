@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Types;
-using Common.Utility;
-using Features.Player;
 using Features.Player.Caravan.Config;
 using Features.Player.Logic;
 using Features.Tutorial;
@@ -12,6 +10,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Features
@@ -21,12 +20,10 @@ namespace Features
         [SerializeField, Required]
         private GameObject cheatUI;
 
-        [SerializeField, Required]
-        private TMP_InputField cheatInput;
-
         private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Instance.Model);
         private readonly Lazy<PlayerModel> _playerModel = new(() => GameplayContext.Instance.Model.Player);
 
+        private TMP_InputField _cheatInput;
         private Dictionary<string, Action> _simpleCommands;
         private Dictionary<string, Action<string>> _paramCommands;
 
@@ -52,6 +49,8 @@ namespace Features
                 { "tutorial", OpenTutorial },
             };
 
+            _cheatInput = cheatUI.GetComponentInChildren<TMP_InputField>();
+
             cheatUI.SetActive(false);
         }
 
@@ -64,12 +63,12 @@ namespace Features
 
             cheatUI.SetActive(isEnabled);
 
-            cheatInput.text = string.Empty;
+            _cheatInput.text = string.Empty;
             if (isEnabled)
             {
                 EventSystem.current.SetSelectedGameObject(cheatUI);
-                cheatInput.ActivateInputField();
-                cheatInput.Select();
+                _cheatInput.ActivateInputField();
+                _cheatInput.Select();
             }
         }
 
@@ -78,7 +77,7 @@ namespace Features
             if (!context.performed)
                 return;
 
-            CheatInputConfirmed(cheatInput.text);
+            CheatInputConfirmed(_cheatInput.text);
         }
 
         public void Cancel(InputAction.CallbackContext context)
@@ -99,7 +98,7 @@ namespace Features
 
         private void Clear()
         {
-            cheatInput.text = string.Empty;
+            _cheatInput.text = string.Empty;
             cheatUI.SetActive(false);
         }
 
@@ -252,16 +251,15 @@ namespace Features
         {
             GameplayContext.Instance.Services.TutorialService.OpenTutorial(Enum.Parse<TutorialTopic>(topic, true));
         }
-            
+
         private static void ReportSuccess(string message)
         {
             Debug.Log(message);
         }
 
-        private static void ReportError(string message)
+        private void ReportError(string message)
         {
-            Debug.LogError(message);
+            Debug.LogError($"{message}\nAvailable cheats: {string.Join(",", _simpleCommands.Keys)}");
         }
-        
     }
 }
