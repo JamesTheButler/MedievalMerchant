@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Common.Infrastructure.Observation;
+using Common.Utility;
 using UnityEngine;
 
 namespace Common.Infrastructure.Modifiable
@@ -126,8 +127,8 @@ namespace Common.Infrastructure.Modifiable
                     .AppendLine("--------------------");
             }
 
-            builder
-                .AppendJoin("\n", allOtherModifiers.Select(modifier => modifier.Description));
+            var nonNullModifiers = allOtherModifiers.Where(modifier => !modifier.Value.Value.IsApproximately(0));
+            builder.AppendJoin("\n", nonNullModifiers.Select(modifier => modifier.Description));
             return builder.ToString();
         }
     }

@@ -15,7 +15,10 @@ namespace Features.Player.Retinue.UI
             CompanionLevelUI.State State);
 
         [SerializeField, Required]
-        private TMP_Text levelText, priceText, effectsText, lockedText;
+        private GameObject upkeepLine;
+
+        [SerializeField, Required]
+        private TMP_Text levelText, priceText, effectsText, lockedText, upkeepText;
 
         [SerializeField, Required]
         private GameObject priceGroup, lockedGroup;
@@ -37,7 +40,7 @@ namespace Features.Player.Retinue.UI
             priceGroup.gameObject.SetActive(data.State != CompanionLevelUI.State.Unlocked);
             lockedGroup.gameObject.SetActive(data.State == CompanionLevelUI.State.Locked);
 
-            levelText.text = $"{companionData.Name} lvl. {data.Level}";
+            levelText.text = companionData.DisplayString(data.Level);
 
             if (levelData == null)
             {
@@ -48,6 +51,7 @@ namespace Features.Player.Retinue.UI
             priceText.text = $"{levelData.Cost:0.##}";
             effectsText.text = levelData.Description;
 
+            upkeepText.text = levelData.Upkeep.ToString("0.#");
             lockedText.text = companionData.IsImplemented ? "Unlock previous levels first" : "(coming soon)";
         }
 

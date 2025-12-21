@@ -4,7 +4,7 @@ using Features.Towns;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Features.Player
+namespace Features.Player.Logic
 {
     public sealed class PlayerLocation
     {

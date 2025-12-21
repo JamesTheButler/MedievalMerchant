@@ -1,8 +1,7 @@
 using Common.Infrastructure;
-using Features.Player.Logic;
 using Features.Ticking;
 
-namespace Features.Player
+namespace Features.Player.Logic
 {
     public sealed class PlayerTickSystem : ISystem
     {

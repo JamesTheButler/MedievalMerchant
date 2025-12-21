@@ -10,9 +10,12 @@ namespace Features.Player.Retinue.UI
     public sealed class CompanionTooltip : TooltipBase<CompanionTooltip.Data>
     {
         public sealed record Data(CompanionType CompanionType, int Level);
+        
+        [SerializeField, Required]
+        private GameObject upkeepLine;
 
         [SerializeField, Required]
-        private TMP_Text titleText, descriptionText, effectsText;
+        private TMP_Text titleText, descriptionText, effectsText, upkeepText;
 
         private CompanionConfig _configData;
 
@@ -28,10 +31,11 @@ namespace Features.Player.Retinue.UI
             var companionData = _configData.Get(data.CompanionType);
             var levelData = companionData.GetLevelData(data.Level);
 
-            var comingSoonSuffix = companionData.IsImplemented ? string.Empty : " - (coming soon)";
-            titleText.text = $"{companionData.Name} lvl. {data.Level} {comingSoonSuffix}";
+            titleText.text = companionData.DisplayString(data.Level);
             descriptionText.text = companionData.Description;
 
+            upkeepLine.SetActive(levelData != null);
+            upkeepText.text = levelData?.Upkeep.ToString("0.#") ?? string.Empty;
             effectsText.text = levelData?.Description ?? string.Empty;
         }
 

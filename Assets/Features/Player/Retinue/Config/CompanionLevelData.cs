@@ -9,6 +9,9 @@ namespace Features.Player.Retinue.Config
         [field: SerializeField]
         public float Cost { get; private set; }
 
+        [field: SerializeField]
+        public float Upkeep { get; private set; }
+
         public abstract string Description { get; }
     }
 }

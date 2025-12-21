@@ -39,6 +39,7 @@ namespace Features.Player.Retinue.Logic
             {
                 _activeUpkeepModifier = new NavigatorUpkeepModifier(level);
                 _player.CaravanManager.Upkeep.AddModifier(_activeUpkeepModifier);
+                _player.RetinueManager.Upkeep.AddModifier(_activeUpkeepModifier);
                 return;
             }
 

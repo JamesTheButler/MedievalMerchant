@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
+using Features.Player.Caravan.Logic;
 
 namespace Features.Player.Retinue.Logic
 {
     public sealed class RetinueManager
     {
+        public ModifiableVariable Upkeep { get; } = new("Retinue Upkeep", false);
+
         public Dictionary<CompanionType, Observable<int>> CompanionLevels { get; } = new();
+
+        private readonly Dictionary<CompanionType, CompanionUpkeepModifier> _upkeepModifiers = new();
 
         private readonly Dictionary<CompanionType, ICompanionLogic> _companionLogics;
 
@@ -15,6 +21,9 @@ namespace Features.Player.Retinue.Logic
             foreach (CompanionType companionType in Enum.GetValues(typeof(CompanionType)))
             {
                 CompanionLevels.Add(companionType, new Observable<int>());
+                var upkeepModifier = new CompanionUpkeepModifier(companionType);
+                _upkeepModifiers.Add(companionType, upkeepModifier);
+                Upkeep.AddModifier(upkeepModifier);
             }
 
             _companionLogics = new Dictionary<CompanionType, ICompanionLogic>
@@ -28,28 +37,12 @@ namespace Features.Player.Retinue.Logic
             };
         }
 
-        public void Upgrade(CompanionType companionType)
-        {
-            CompanionLevels[companionType].Value++;
-            RefreshLogic(companionType);
-        }
-
-        public void Downgrade(CompanionType companionType)
-        {
-            CompanionLevels[companionType].Value--;
-            RefreshLogic(companionType);
-        }
-
         public void SetLevel(CompanionType companionType, int newLevel)
         {
             CompanionLevels[companionType].Value = newLevel;
-            RefreshLogic(companionType);
-        }
-
-        private void RefreshLogic(CompanionType companionType)
-        {
             var level = CompanionLevels[companionType].Value;
             _companionLogics[companionType].SetLevel(level);
+            _upkeepModifiers[companionType].SetLevel(level);
         }
     }
 }

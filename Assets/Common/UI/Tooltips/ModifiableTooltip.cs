@@ -20,6 +20,9 @@ namespace Common.UI.Tooltips
         [SerializeField, Required]
         private GameObject flatModifierContainer, percentModifierContainer, percentModifierGroup;
 
+        [SerializeField, Required]
+        private GameObject headerDivider;
+
         private ModifiableVariable _modifiableVariable;
 
         protected override void UpdateUI(ModifiableVariable data)
@@ -55,18 +58,24 @@ namespace Common.UI.Tooltips
             }
 
             var flatModifiers = _modifiableVariable.Modifiers
+                .Where(modifier => !modifier.Value.Value.IsApproximately(0f))
                 .OfType<FlatModifier>()
                 .ToArray<IModifier>();
             AddModifierElements(flatModifiers, flatModifierContainer);
 
             var percentageModifiers = _modifiableVariable.Modifiers
+                .Where(modifier => !modifier.Value.Value.IsApproximately(0f))
                 .OfType<BasePercentageModifier>()
                 .ToArray<IModifier>();
+
             percentModifierGroup.SetActive(percentageModifiers.Length > 0);
             AddModifierElements(percentageModifiers, percentModifierContainer);
 
             var sum = percentageModifiers.Sum(modifier => modifier.Value);
             modifierSumText.text = sum.ToPercentString(true);
+
+            var isTooltipEmpty = baseModifier == null && flatModifiers.Length == 0 && percentageModifiers.Length == 0;
+            headerDivider.SetActive(!isTooltipEmpty);
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
             Justify();

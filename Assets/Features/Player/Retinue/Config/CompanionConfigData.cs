@@ -32,5 +32,11 @@ namespace Features.Player.Retinue.Config
 
             return Levels[level - 1];
         }
+
+        public string DisplayString(int level)
+        {
+            var comingSoonSuffix = IsImplemented ? string.Empty : " - (coming soon)";
+            return $"{Name} lvl. {level} {comingSoonSuffix}";
+        }
     }
 }

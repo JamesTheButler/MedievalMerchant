@@ -1,6 +1,6 @@
 using Common.Infrastructure.Modifiable;
 
-namespace Features.Player
+namespace Features.Player.Logic
 {
     public sealed class BaseMovementSpeedModifier : BaseValueModifier
     {

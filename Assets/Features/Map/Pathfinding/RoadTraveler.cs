@@ -5,6 +5,7 @@ using Common.Infrastructure;
 using Common.Utility;
 using Features.Player;
 using Features.Player.Caravan.Config;
+using Features.Player.Logic;
 using Features.Ticking;
 using Features.Towns;
 using UnityEngine;
