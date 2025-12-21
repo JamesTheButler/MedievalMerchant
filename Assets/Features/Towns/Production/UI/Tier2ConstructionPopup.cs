@@ -5,7 +5,6 @@ using Common.Types;
 using Common.UI.Popups;
 using Common.UI.Utility;
 using Features.Goods.Config;
-using Features.Player;
 using Features.Player.Logic;
 using Features.Towns.Production.Config;
 using Features.Towns.Production.Logic;

@@ -1,14 +1,10 @@
 using System.Collections.Generic;
-using Common.Config;
 using Common.Infrastructure;
 using Common.Types;
-using Common.UI.Tooltips;
-using Features.Goods.Config;
 using Features.Player.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Features.Goods.UI
 {

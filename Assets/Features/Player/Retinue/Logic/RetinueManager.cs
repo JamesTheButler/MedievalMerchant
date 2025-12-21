@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
-using Features.Player.Caravan.Logic;
 
 namespace Features.Player.Retinue.Logic
 {

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Utility;
-using Features.Player;
 using Features.Player.Caravan.Config;
 using Features.Player.Logic;
 using Features.Ticking;

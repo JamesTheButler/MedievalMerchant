@@ -4,7 +4,6 @@ using Common.Infrastructure.Modifiable;
 using Common.Types;
 using Common.Utility;
 using Features.Goods.Config;
-using Features.Player;
 using Features.Player.Logic;
 using Features.Player.Retinue;
 using Features.Player.Retinue.Logic;

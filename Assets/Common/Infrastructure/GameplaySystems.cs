@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Features.Levels.Conditions.Logic;
-using Features.Player;
 using Features.Player.Logic;
 using Features.Stats;
 using Features.Ticking;

@@ -1,5 +1,4 @@
-﻿using Common.UI.Utility;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Common.Utility
 {

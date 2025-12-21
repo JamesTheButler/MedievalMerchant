@@ -1,11 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Types;
 using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.Model;
 using Features.Map.Tiling;
-using Features.Player;
 using Features.Player.Logic;
 using Features.Stats;
 using Features.Towns;

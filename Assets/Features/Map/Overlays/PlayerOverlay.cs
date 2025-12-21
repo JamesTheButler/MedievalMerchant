@@ -1,6 +1,5 @@
 using Common.Infrastructure;
 using Common.Utility;
-using Features.Player;
 using Features.Player.Logic;
 using Features.Towns;
 using NaughtyAttributes;

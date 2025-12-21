@@ -1,5 +1,4 @@
 using Common.Infrastructure;
-using Common.UI.Popups;
 using Features.Ticking;
 using UnityEngine;
 

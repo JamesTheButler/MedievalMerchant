@@ -1,7 +1,6 @@
 using Features.Player.Retinue.Logic;
 using Features.Ticking;
 using Features.Trade.Logic;
-using Features.Trade.UI;
 using Features.Tutorial.Logic;
 
 namespace Common.Infrastructure
