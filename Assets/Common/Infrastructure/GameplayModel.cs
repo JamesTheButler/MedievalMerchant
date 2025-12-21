@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Types;
@@ -8,7 +9,6 @@ using Features.Player;
 using Features.Player.Logic;
 using Features.Stats;
 using Features.Towns;
-using Features.Trade.UI;
 using UnityEngine;
 
 namespace Common.Infrastructure

@@ -10,13 +10,13 @@ using UnityEngine.UI;
 
 namespace Features.Goods.UI
 {
-    public sealed class GoodTooltip : TooltipBase<Good>
+    public class GoodTooltip : TooltipBase<Good>
     {
         [SerializeField, Required]
-        private TMP_Text nameText, priceText;
+        protected TMP_Text nameText, priceText, currentPriceText;
 
         [SerializeField, Required]
-        private Image tierImage, regionImage;
+        protected Image tierImage, regionImage;
 
         private GoodsResources _goodsResources;
         private GoodsConfig _goodsConfig;
@@ -45,6 +45,8 @@ namespace Features.Goods.UI
             priceText.text = $"{price:0.##}";
             tierImage.sprite = tierIcon;
             regionImage.sprite = regionIcon.Icon;
+
+            currentPriceText.gameObject.SetActive(false);
         }
 
         public override void Reset() { }
