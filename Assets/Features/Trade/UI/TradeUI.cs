@@ -246,7 +246,7 @@ namespace Features.Trade.UI
                     // diff between what the player bought the goods for and what they're selling it for
                     var difference = _totalPrice - trackedInfo.AveragePrice * _tradeAmount;
                     var style = difference.GetNumberStyle();
-                    var differenceText = $"{difference.Sign()}{difference}".WithStyle(style);
+                    var differenceText = $"{difference.Sign()}{difference:0.##}".WithStyle(style);
                     coinAmountText.text = $"{price} ({differenceText})";
                 }
             }
