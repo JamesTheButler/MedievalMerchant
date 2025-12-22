@@ -11,16 +11,19 @@ namespace Features.Trade.UI
         [SerializeField, Required]
         private TradeUI tradeUI;
 
+        private Selection _selection;
+
         private void Start()
         {
             tradeUI.gameObject.SetActive(false);
 
-            GameplayContext.Instance.Selection.SelectedTown.Observe(OnSelectedTownChanged);
+            _selection = GameplayContext.Instance.Selection;
+            _selection.SelectedTown.Observe(OnSelectedTownChanged);
         }
 
         private void OnDestroy()
         {
-            GameplayContext.Instance.Selection.SelectedTown.StopObserving(OnSelectedTownChanged);
+            _selection.SelectedTown.StopObserving(OnSelectedTownChanged);
         }
 
         public void Show(Good good, TradeType tradeType)

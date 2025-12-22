@@ -7,6 +7,7 @@ using Common.Infrastructure.Observation;
 using Common.Types;
 using Common.Utility;
 using Features.Inventory;
+using Features.Player.Logic;
 using Features.Towns.Development.Logic;
 using Features.Towns.Development.Logic.Milestones;
 using Features.Towns.Flags;
@@ -31,6 +32,7 @@ namespace Features.Towns
         public ReputationManager ReputationManager { get; }
         public Inventory.Inventory Inventory { get; }
         public ModifiableVariable FundsChange { get; }
+        public PriceManager PriceManager { get; }
 
         public string Name { get; }
         public FlagInfo FlagInfo { get; private set; }
@@ -76,6 +78,7 @@ namespace Features.Towns
             DevelopmentManager = new DevelopmentManager(this);
             MilestoneManager = new MilestoneManager(this);
             ReputationManager = new ReputationManager(this);
+            PriceManager = new PriceManager(this);
 
             const Tier tempTier = Common.Types.Tier.Tier1;
             var consumptionRate = townConfig.GetConsumptionRate(tempTier, tempTier) ?? 0f;
