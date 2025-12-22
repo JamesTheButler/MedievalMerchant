@@ -24,7 +24,7 @@ namespace Features.Player.Caravan.UI
             _gameplayContext = GameplayContext.Instance;
             _playerInventory = _gameplayContext.Model.Player.Inventory;
             caravanPanelUI.Setup(_gameplayContext.Model.Player.CaravanManager);
-            _gameplayContext.Selection.TownSelected += OpenPanel;
+            _gameplayContext.Selection.SelectedTown.Observe(OpenPanel, false);
             _playerInventory.GoodUpdated += OnGoodUpdated;
             foreach (var (good, amount) in _playerInventory.Goods)
             {
@@ -34,7 +34,7 @@ namespace Features.Player.Caravan.UI
 
         private void OnDestroy()
         {
-            _gameplayContext.Selection.TownSelected -= OpenPanel;
+            _gameplayContext.Selection.SelectedTown.StopObserving(OpenPanel);
             _playerInventory.GoodUpdated -= OnGoodUpdated;
         }
 

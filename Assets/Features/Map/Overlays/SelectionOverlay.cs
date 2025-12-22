@@ -16,14 +16,14 @@ namespace Features.Map.Overlays
         {
             _selection = GameplayContext.Instance.Selection;
 
-            _selection.TownSelected += Select;
+            _selection.SelectedTown.Observe(Select);
 
             Select(_selection.SelectedTown);
         }
 
         private void OnDestroy()
         {
-            _selection.TownSelected -= Select;
+            _selection.SelectedTown.StopObserving(Select);
         }
 
         private void Select(Town town)

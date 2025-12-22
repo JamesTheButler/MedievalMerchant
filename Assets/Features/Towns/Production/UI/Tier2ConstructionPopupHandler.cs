@@ -12,6 +12,16 @@ namespace Features.Towns.Production.UI
 
         private readonly Lazy<Selection> _selection = new(() => GameplayContext.Instance.Selection);
 
+        private void Start()
+        {
+            _selection.Value.SelectedTown.Observe(OnSelectionChanged);
+        }
+
+        private void OnDestroy()
+        {
+            _selection.Value.SelectedTown.StopObserving(OnSelectionChanged);
+        }
+
         public void Show(ProductionCell cell)
         {
             popup.Show();
@@ -19,8 +29,11 @@ namespace Features.Towns.Production.UI
 
             var town = _selection.Value.SelectedTown;
             popup.Setup(town, cell.Index);
-            
-            _selection.Value.TownSelected += _ => Hide();
+        }
+
+        private void OnSelectionChanged(Town _)
+        {
+            Hide();
         }
 
         private void Hide()

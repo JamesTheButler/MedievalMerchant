@@ -15,12 +15,12 @@ namespace Features.Trade.UI
         {
             tradeUI.gameObject.SetActive(false);
 
-            GameplayContext.Instance.Selection.TownSelected += OnSelectedTownChanged;
+            GameplayContext.Instance.Selection.SelectedTown.Observe(OnSelectedTownChanged);
         }
 
-        private void OnSelectedTownChanged(Town town)
+        private void OnDestroy()
         {
-            Hide();
+            GameplayContext.Instance.Selection.SelectedTown.StopObserving(OnSelectedTownChanged);
         }
 
         public void Show(Good good, TradeType tradeType)
@@ -30,7 +30,12 @@ namespace Features.Trade.UI
             tradeUI.Initialize(good, tradeType);
         }
 
-        public void Hide()
+        private void OnSelectedTownChanged(Town town)
+        {
+            Hide();
+        }
+
+        private void Hide()
         {
             tradeUI.Hide();
         }

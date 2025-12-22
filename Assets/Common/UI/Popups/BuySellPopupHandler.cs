@@ -27,25 +27,25 @@ namespace Common.UI.Popups
         private Inventory _playerInventory;
         private AvailabilityCalculator _availabilityCalculator;
         private TradeValidator _tradeValidator;
-
-        private void Start()
-        {
-            Reset();
-            GameplayContext.Instance.Selection.TownSelected += _ => Reset();
-        }
+        private Selection _selection;
 
         public void Initialize(InventoryCellBase inventoryCell, TradeType tradeType)
         {
             Reset();
 
-            var selection = GameplayContext.Instance.Selection;
-            if (selection.SelectedTown is null) return;
-            if (inventoryCell.Good == null) return;
+            _selection = GameplayContext.Instance.Selection;
+            _selection.SelectedTown.Observe(OnSelectedTownChanged, false);
+
+            if (_selection.SelectedTown is null)
+                return;
+
+            if (inventoryCell.Good == null)
+                return;
 
             _good = inventoryCell.Good.Value;
 
             _player = GameplayContext.Instance.Model.Player;
-            _town = selection.SelectedTown;
+            _town = _selection.SelectedTown;
 
             _playerInventory = _player.Inventory;
             _townInventory = _town.Inventory;
@@ -64,13 +64,12 @@ namespace Common.UI.Popups
             // can buy and sell?
             OnPlayerGoodUpdated(_good, _playerInventory.Get(_good));
             OnTownGoodUpdated(_good, _townInventory.Get(_good));
-            _player.Location.TownEntered += OnTownChanged;
-            _player.Location.TownExited += OnTownChanged;
+            _player.Location.TownEntered += OnPlayerTownChanged;
+            _player.Location.TownExited += OnPlayerTownChanged;
             _playerInventory.GoodUpdated += OnPlayerGoodUpdated;
             _townInventory.GoodUpdated += OnTownGoodUpdated;
             _player.CaravanManager.SlotCount.Observe(OnTotalSlotCountChanged, false);
         }
-
 
         public void Reset()
         {
@@ -90,13 +89,18 @@ namespace Common.UI.Popups
 
             if (_player != null)
             {
-                _player.Location.TownEntered -= OnTownChanged;
-                _player.Location.TownExited -= OnTownChanged;
+                _player.Location.TownEntered -= OnPlayerTownChanged;
+                _player.Location.TownExited -= OnPlayerTownChanged;
                 _player.CaravanManager.SlotCount.StopObserving(OnTotalSlotCountChanged);
             }
         }
 
-        private void OnTownChanged(Town town)
+        private void OnSelectedTownChanged(Town town)
+        {
+            Reset();
+        }
+
+        private void OnPlayerTownChanged(Town town)
         {
             ValidateButtons();
         }

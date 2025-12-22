@@ -1,3 +1,4 @@
+using System;
 using Common.Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
@@ -9,12 +10,20 @@ namespace Features.Towns.UI.Inventory
         [SerializeField, Required]
         private TownInventoryUI inventoryUi;
 
+        private Selection _selection;
+
         private void Start()
         {
             inventoryUi.Hide();
             inventoryUi.Initialize();
 
-            GameplayContext.Instance.Selection.TownSelected += SelectTown;
+            _selection = GameplayContext.Instance.Selection;
+            _selection.SelectedTown.Observe(SelectTown, false);
+        }
+
+        private void OnDestroy()
+        {
+            _selection.SelectedTown.StopObserving(SelectTown);
         }
 
         private void SelectTown(Town town)

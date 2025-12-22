@@ -29,7 +29,6 @@ namespace Features.Player.Logic
             var inventoryPolicy = new SlotCountInventoryPolicy(CaravanManager.SlotCount);
             Inventory = new Inventory.Inventory(inventoryPolicy);
             Inventory.AddFunds(startFunds);
-
         }
     }
 }

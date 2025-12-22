@@ -1,21 +1,17 @@
-using System;
+using Common.Infrastructure.Observation;
 
 namespace Features.Towns
 {
     public sealed class Selection
     {
-        // TODO - STYLE: use Observable<Town>
-        public event Action<Town> TownSelected;
-
-        public Town SelectedTown { get; private set; }
+        public Observable<Town> SelectedTown { get; } = new();
 
         public void Select(Town town)
         {
-            if (SelectedTown == town)
+            if (SelectedTown.Value == town)
                 return;
 
-            SelectedTown = town;
-            TownSelected?.Invoke(town);
+            SelectedTown.Value = town;
         }
 
         public void Deselect()
