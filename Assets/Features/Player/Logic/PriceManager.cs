@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
@@ -22,15 +23,26 @@ namespace Features.Player.Logic
         private readonly GoodsResources _goodsResources;
         private readonly GoodsConfig _goodsConfig;
 
-        private AvailabilityPriceModifier _availabilityModifier;
         private readonly NegotiatorPriceModifier _negotiatorBuyModifier = new(0, TradeType.Buy);
         private readonly NegotiatorPriceModifier _negotiatorSellModifier = new(0, TradeType.Sell);
-        private ReputationPriceModifier _reputationModifier;
-
-        private Good _good;
-        private TradeType _tradeType;
+        private ReputationPriceModifier _reputationBuyModifier;
+        private ReputationPriceModifier _reputationSellModifier;
 
         // TODO: cache all created prices, later i can kill them again or create Handle<ModVar> or something
+
+        // good specific modifiers
+        // availabilty
+        // region ==> depends on buy sell
+        // town specific modifiers
+        // reputation
+        // town milestones
+        // negotiator ==> depends on buy/sell
+        // town missions
+        // level modifiers
+        // events
+
+        private readonly List<IModifier> _milestoneModifiers = new();
+        private readonly Dictionary<Good, ModifiableVariable> _prices = new();
 
         public PriceManager(Town town)
         {
@@ -39,30 +51,33 @@ namespace Features.Player.Logic
             _goodsResources = ResourceManager.Instance.GoodsResources;
             _goodsConfig = ConfigurationManager.Configurations.GoodsConfig;
             _availabilityCalculator = new AvailabilityCalculator(town);
+
+            _reputationBuyModifier = new ReputationPriceModifier(town, TradeType.Buy);
+            _reputationBuyModifier = new ReputationPriceModifier(town, TradeType.Sell);
         }
 
-        public ModifiableVariable GetPrice(Good good, TradeType tradeType)
+        public ModifiableVariable GetPrice(Good good)
         {
-            _good = good;
-            _tradeType = tradeType;
+            if (_prices.TryGetValue(good, out var cachedPrice))
+                return cachedPrice;
 
-            var goodTier = _goodsResources.ConfigData[_good].Tier;
+            //TODO: THIS IS NOT CORRECT!!!
+            var tradeType = TradeType.Buy;
+
+            var goodTier = _goodsResources.ConfigData[good].Tier;
             var goodBasePrice = _goodsConfig.BasePriceData[goodTier];
 
             var basePriceModifier = new BasePriceModifier(goodBasePrice, goodTier);
             var price = new ModifiableVariable("Price per Good", tradeType == TradeType.Sell, basePriceModifier);
 
-            AddAvailabilityModifier(price);
-            AddRegionModifiers(price);
-            AddReputationModifier();
+            AddAvailabilityModifier(price, good);
+            AddRegionModifiers(price, good, tradeType);
+            AddReputationModifier(price, tradeType);
             AddDevelopmentMilestoneModifiers(price);
             AddNegotiatorModifier(price, tradeType);
 
-            _player.RetinueManager.CompanionLevels[CompanionType.Negotiator].Observe(OnCompanionChanged);
-            _town.Inventory.GoodUpdated += OnTownInventoryChanged;
-            _town.MilestoneManager.MilestoneModifierAdded += TownModifierAdded;
-            _town.MilestoneManager.MilestoneModifierRemoved += TownModifierRemoved;
-            _town.ReputationManager.Reputation.Observe(OnReputationChanged);
+            _prices.Add(good, price);
+            return price;
         }
 
         public void Clear()
@@ -76,11 +91,11 @@ namespace Features.Player.Logic
 
         #region Adding Modifiers
 
-        private void AddAvailabilityModifier(ModifiableVariable price)
+        private void AddAvailabilityModifier(ModifiableVariable price, Good good)
         {
-            var availability = _availabilityCalculator.GetAvailability(_good);
-            _availabilityModifier = new AvailabilityPriceModifier(availability);
-            price.AddModifier(_availabilityModifier);
+            var availability = _availabilityCalculator.GetAvailability(good);
+            var availabilityModifier = new AvailabilityPriceModifier(availability);
+            price.AddModifier(availabilityModifier);
         }
 
         private void AddDevelopmentMilestoneModifiers(ModifiableVariable price)
@@ -92,13 +107,13 @@ namespace Features.Player.Logic
             }
         }
 
-        private void AddRegionModifiers(ModifiableVariable price)
+        private void AddRegionModifiers(ModifiableVariable price, Good good, TradeType tradeType)
         {
             // don't apply region modifier when buying from town
-            if (_tradeType != TradeType.Sell)
+            if (tradeType != TradeType.Sell)
                 return;
 
-            var goodRegions = _goodsResources.ConfigData[_good].Regions;
+            var goodRegions = _goodsResources.ConfigData[good].Regions;
             var isLocal = _town.Regions.Intersects(goodRegions);
 
             IModifier regionModifier = isLocal
@@ -107,10 +122,9 @@ namespace Features.Player.Logic
             price.AddModifier(regionModifier);
         }
 
-        private void AddReputationModifier(ModifiableVariable price)
+        private void AddReputationModifier(ModifiableVariable price, TradeType tradeType)
         {
-            _reputationModifier = new ReputationPriceModifier(_town, _tradeType);
-            price.AddModifier(_reputationModifier);
+            price.AddModifier(tradeType == TradeType.Buy ? _reputationBuyModifier : _reputationSellModifier);
         }
 
         private void AddNegotiatorModifier(ModifiableVariable price, TradeType tradeType)
@@ -134,28 +148,43 @@ namespace Features.Player.Logic
 
         private void OnTownInventoryChanged(Good good, int amount)
         {
-            if (good != _good)
+            if (!_prices.TryGetValue(good, out var price))
                 return;
 
+            // TODO: meh
+            var availabilityModifier = price.Modifiers.FirstOfType<AvailabilityPriceModifier, IModifier>();
             var availability = _availabilityCalculator.GetAvailability(good);
-            _availabilityModifier.Update(availability);
+            availabilityModifier.Update(availability);
         }
 
         private void TownModifierAdded(IModifier modifier)
         {
-            if (modifier is MilestonePriceBoostModifier)
-                Price.AddModifier(modifier);
+            if (modifier is not MilestonePriceBoostModifier)
+                return;
+
+            _milestoneModifiers.Add(modifier);
+            foreach (var price in _prices.Values)
+            {
+                price.AddModifier(modifier);
+            }
         }
 
         private void TownModifierRemoved(IModifier modifier)
         {
-            if (modifier is MilestonePriceBoostModifier)
-                Price.RemoveModifier(modifier);
+            if (modifier is not MilestonePriceBoostModifier)
+                return;
+
+            _milestoneModifiers.Remove(modifier);
+            foreach (var price in _prices.Values)
+            {
+                price.RemoveModifier(modifier);
+            }
         }
 
         private void OnReputationChanged(float reputation)
         {
-            _reputationModifier.Update(reputation);
+            _reputationBuyModifier.Update(reputation);
+            _reputationSellModifier.Update(reputation);
         }
 
         #endregion

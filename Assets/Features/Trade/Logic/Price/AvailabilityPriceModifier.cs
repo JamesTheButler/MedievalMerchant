@@ -13,8 +13,7 @@ namespace Features.Trade.Logic.Price
         private readonly AvailabilityConfig _config = ConfigurationManager.Configurations.AvailabilityConfig;
         private readonly AvailabilityResources _resources = ResourceManager.Instance.AvailabilityResources;
 
-        public AvailabilityPriceModifier(Availability availability)
-            : base(0, string.Empty)
+        public AvailabilityPriceModifier(Availability availability) : base(0, string.Empty)
         {
             Update(availability);
         }
