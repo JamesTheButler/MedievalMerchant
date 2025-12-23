@@ -4,7 +4,7 @@ using Common.Types;
 using Common.Utility;
 using Features.Goods.Config;
 
-namespace Features.Goods
+namespace Features.Goods.Selector
 {
     public sealed class ComplexGoodSelector : IGoodSelector
     {

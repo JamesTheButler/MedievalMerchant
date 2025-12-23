@@ -5,8 +5,8 @@ using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Types;
 using Common.Utility;
-using Features.Goods;
 using Features.Goods.Config;
+using Features.Goods.Selector;
 
 namespace Features.Towns.Production.Logic
 {

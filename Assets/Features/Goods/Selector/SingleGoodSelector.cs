@@ -1,15 +1,16 @@
 ﻿using Common.Types;
 
-namespace Features.Goods
+namespace Features.Goods.Selector
 {
-    public sealed class SpecificGoodSelector : IGoodSelector
+    public sealed class SingleGoodSelector : IGoodSelector
     {
         private readonly Good _good;
 
-        public SpecificGoodSelector(Good good)
+        public SingleGoodSelector(Good good)
         {
             _good = good;
         }
+
         public bool Matches(Good good)
         {
             return _good == good;

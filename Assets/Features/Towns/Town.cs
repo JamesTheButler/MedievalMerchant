@@ -6,7 +6,7 @@ using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Common.Types;
 using Common.Utility;
-using Features.Goods;
+using Features.Goods.Selector;
 using Features.Inventory;
 using Features.Player.Logic;
 using Features.Towns.Development.Logic;

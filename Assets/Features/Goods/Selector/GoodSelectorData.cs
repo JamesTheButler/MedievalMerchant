@@ -1,33 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using Common.Types;
 using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Features.Goods
+namespace Features.Goods.Selector
 {
     [Serializable]
     public sealed class GoodSelectorData
     {
         [SerializeField]
-        private bool specificGood;
-
-        [SerializeField]
         private bool applyToAll;
 
-        [SerializeField, HideIf(nameof(specificGood))]
+        [SerializeField]
         private bool limitRegion;
 
-        [SerializeField, HideIf(nameof(specificGood))]
+        [SerializeField]
         private bool limitTier;
 
-        [SerializeField, ShowIf(nameof(specificGood))]
-        private Good good;
+        [SerializeField]
+        private List<Good> goods;
 
-        [SerializeField, HideIf(nameof(specificGood)), ShowIf(nameof(limitRegion))]
+        [SerializeField, ShowIf(nameof(limitRegion))]
         private Regions region;
 
-        [SerializeField, HideIf(nameof(specificGood)), ShowIf(nameof(limitTier))]
+        [SerializeField, ShowIf(nameof(limitTier))]
         private Tier tier;
 
         [CanBeNull]
@@ -38,7 +36,8 @@ namespace Features.Goods
         private IGoodSelector GetSelector()
         {
             if (applyToAll) return new AllGoodsSelector();
-            if (specificGood) return new SpecificGoodSelector(good);
+            if (goods.Count == 1) return new SingleGoodSelector(goods[0]);
+            if (goods.Count > 1) return new SpecificGoodsSelector(goods.ToArray());
 
             return new ComplexGoodSelector(limitTier ? tier : null, limitRegion ? region : Regions.All);
         }

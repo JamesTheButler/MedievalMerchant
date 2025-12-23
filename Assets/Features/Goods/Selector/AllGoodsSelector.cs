@@ -1,6 +1,6 @@
 ﻿using Common.Types;
 
-namespace Features.Goods
+namespace Features.Goods.Selector
 {
     public sealed class AllGoodsSelector : IGoodSelector
     {

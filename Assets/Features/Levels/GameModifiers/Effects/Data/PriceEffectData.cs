@@ -1,5 +1,5 @@
 ﻿using Common.Utility;
-using Features.Goods;
+using Features.Goods.Selector;
 using UnityEngine;
 
 namespace Features.Levels.GameModifiers.Effects.Data
