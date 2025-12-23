@@ -1,9 +1,9 @@
 using System.Linq;
 using Common.Infrastructure;
 using Common.UI.Utility;
+using Features.Levels;
 using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.UI;
-using Features.Levels.Config;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -52,9 +52,7 @@ namespace Features.StartMenu.UI
             var isCompleted = completionDate != null;
             completionDateText.enabled = isCompleted;
             if (isCompleted)
-            {
                 completionDateText.text = $"Fastest Win: {completionDate!.CompletionDate.ToDisplayString()}";
-            }
 
             difficultyText.text = $"Difficulty: {levelInfo.Difficulty.WithColor(levelInfo.DifficultyColor)}";
 

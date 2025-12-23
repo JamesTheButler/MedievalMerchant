@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Features.Tutorial.Logic
 {
-    public sealed class TutorialPersistenceService
+    public sealed class TutorialPersistenceService : IService
     {
         private static readonly string SaveGameRootPath = Application.persistentDataPath;
         private static readonly string CompletedTopicsFilePath = Path.Combine(SaveGameRootPath, "tutorial.txt");
@@ -17,6 +17,9 @@ namespace Features.Tutorial.Logic
         {
             _serializer = serializer;
         }
+
+        public void Initialize() { }
+        public void CleanUp() { }
 
         public IDictionary<TutorialTopic, bool> ReadCompletedTopics()
         {
@@ -31,7 +34,6 @@ namespace Features.Tutorial.Logic
         {
             var serializedDict = _serializer.Serialize(topics.ToDictionary());
             File.WriteAllText(CompletedTopicsFilePath, serializedDict);
-
         }
     }
 }

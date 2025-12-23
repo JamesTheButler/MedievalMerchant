@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Features.Levels.GameModifiers.Logic;
 using Features.Player.Retinue.Logic;
 using Features.Ticking;
 using Features.Trade.Logic;
@@ -12,26 +14,40 @@ namespace Common.Infrastructure
         public TickingService TickingService { get; private set; }
         public CompanionUpgradeService CompanionUpgradeService { get; private set; }
         public TradeService TradeService { get; private set; }
+        public GameModifierService GameModifierService { get; private set; }
+
+        private readonly List<IService> _services = new();
 
         public void Initialize()
         {
             TutorialPersistenceService = new TutorialPersistenceService(GlobalContext.Instance.Services.Serializer);
-
             TutorialService = new TutorialService(TutorialPersistenceService);
-            TutorialService.Initialize();
             TickingService = new TickingService();
-            TickingService.Initialize();
             CompanionUpgradeService = new CompanionUpgradeService();
-            CompanionUpgradeService.Initialize();
             TradeService = new TradeService();
-            TradeService.Initialize();
+            GameModifierService = new GameModifierService();
+
+            _services.Add(TutorialPersistenceService);
+            _services.Add(TutorialService);
+            _services.Add(TickingService);
+            _services.Add(CompanionUpgradeService);
+            _services.Add(TradeService);
+            _services.Add(GameModifierService);
+
+            foreach (var service in _services)
+            {
+                service.Initialize();
+            }
         }
 
         public void CleanUp()
         {
-            TutorialService.CleanUp();
-            TickingService.CleanUp();
-            CompanionUpgradeService.CleanUp();
+            foreach (var service in _services)
+            {
+                service.CleanUp();
+            }
+
+            _services.Clear();
         }
     }
 }

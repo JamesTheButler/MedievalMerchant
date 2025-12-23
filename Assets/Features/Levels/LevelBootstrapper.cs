@@ -1,9 +1,9 @@
 using Common.Infrastructure;
 using Common.Utility;
-using Features.Levels.Config;
 using Features.Map;
 using Features.Map.Tiling;
 using Features.Player.Logic;
+using Features.Towns;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -47,6 +47,9 @@ namespace Features.Levels
             player.Location.CurrentTown = startTown;
             player.Location.WorldLocation.Value = startTown.WorldLocation;
             player.CaravanManager.UpgradeCart(0);
+
+            var modifierService = GameplayContext.Instance.Services.GameModifierService;
+            modifierService.ApplyModifier(levelInfo.GameplayModifiers);
 
             completed.Invoke();
         }

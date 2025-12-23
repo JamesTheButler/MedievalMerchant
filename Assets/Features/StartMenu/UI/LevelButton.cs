@@ -1,7 +1,7 @@
 using System;
 using Common.Infrastructure;
 using Common.UI.Tooltips;
-using Features.Levels.Config;
+using Features.Levels;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

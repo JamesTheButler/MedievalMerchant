@@ -15,7 +15,7 @@ namespace Features.Towns.Reputation.Logic
     {
         private readonly Town _town;
 
-        public Observable<float> Reputation { get; private set; } = new();
+        public Observable<float> Reputation { get; } = new();
 
         public IReadOnlyList<ReputationLogEntry> ReputationLog => _reputationLog;
         public IReadOnlyList<IModifier> Modifiers => _modifiers;
@@ -55,6 +55,16 @@ namespace Features.Towns.Reputation.Logic
             var clampedNeglect = Mathf.Min(_config.NeglectData.ReputationCost,
                 currentReputation - _config.NeglectData.ReputationCost);
             UpdateReputation(clampedNeglect, message);
+        }
+
+        public void AddModifier(IModifier modifier)
+        {
+            _modifiers.Add(modifier);
+        }
+
+        public void RemoveModifier(IModifier modifier)
+        {
+            _modifiers.Remove(modifier);
         }
 
         private void Bind()
@@ -97,7 +107,7 @@ namespace Features.Towns.Reputation.Logic
                 Tier.Tier1 => _config.RewardData.Tier1ProductionBuilding,
                 Tier.Tier2 => _config.RewardData.Tier2ProductionBuilding,
                 Tier.Tier3 => _config.RewardData.Tier3ProductionBuilding,
-                _ => 0,
+                _ => 0
             };
             var good = producer.ProducedGood;
             var message = $"Player constructed a production building ({good}) of {tier.ToDisplayString()}";

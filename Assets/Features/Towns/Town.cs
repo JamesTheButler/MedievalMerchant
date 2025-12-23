@@ -6,6 +6,7 @@ using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Common.Types;
 using Common.Utility;
+using Features.Goods;
 using Features.Inventory;
 using Features.Player.Logic;
 using Features.Towns.Development.Logic;
@@ -133,7 +134,7 @@ namespace Features.Towns
                     FundsChange.AddModifier(modifier);
                     break;
                 case MilestoneProductionBoostModifier prodBoostModifier:
-                    ProductionManager.AddModifier(prodBoostModifier);
+                    ProductionManager.AddModifier(prodBoostModifier, new AllGoodsSelector());
                     break;
             }
         }
@@ -146,7 +147,7 @@ namespace Features.Towns
                     FundsChange.RemoveModifier(modifier);
                     break;
                 case MilestoneProductionBoostModifier prodBoostModifier:
-                    ProductionManager.RemoveModifier(prodBoostModifier);
+                    ProductionManager.RemoveModifier(prodBoostModifier, new AllGoodsSelector());
                     break;
             }
         }

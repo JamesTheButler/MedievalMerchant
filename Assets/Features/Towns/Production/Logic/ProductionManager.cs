@@ -5,8 +5,8 @@ using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Types;
 using Common.Utility;
+using Features.Goods;
 using Features.Goods.Config;
-using Features.Towns.Development.Logic.Milestones;
 
 namespace Features.Towns.Production.Logic
 {
@@ -17,17 +17,17 @@ namespace Features.Towns.Production.Logic
         private readonly Town _town;
         private readonly GoodsResources _goodsResources = ResourceManager.Instance.GoodsResources;
         private readonly Dictionary<Tier, Producer[]> _producers;
-        private readonly List<ProductionBoostModifier> _productionModifiers = new();
+        private readonly List<IModifier> _productionModifiers = new();
 
         public ProductionManager(Town town)
         {
             _town = town;
 
-            _producers = new()
+            _producers = new Dictionary<Tier, Producer[]>
             {
                 { Tier.Tier1, new Producer[] { null, null, null } },
                 { Tier.Tier2, new Producer[] { null, null, null } },
-                { Tier.Tier3, new Producer[] { null, null, null } },
+                { Tier.Tier3, new Producer[] { null, null, null } }
             };
         }
 
@@ -35,7 +35,6 @@ namespace Features.Towns.Production.Logic
             .Concat(_producers[Tier.Tier2])
             .Concat(_producers[Tier.Tier3])
             .WhereNotNull();
-
 
         public bool IsProduced(Good good)
         {
@@ -73,20 +72,24 @@ namespace Features.Towns.Production.Logic
             ProductionAdded?.Invoke(producer);
         }
 
-        public void AddModifier(ProductionBoostModifier prodBoostModifier)
+        public void AddModifier(IModifier prodBoostModifier, IGoodSelector goodSelector)
         {
             _productionModifiers.Add(prodBoostModifier);
             foreach (var producer in AllProducers)
             {
+                if (!goodSelector.Matches(producer.ProducedGood))
+                    continue;
                 producer.ProductionRate.AddModifier(prodBoostModifier);
             }
         }
 
-        public void RemoveModifier(ProductionBoostModifier prodBoostModifier)
+        public void RemoveModifier(IModifier prodBoostModifier, IGoodSelector goodSelector)
         {
             _productionModifiers.Remove(prodBoostModifier);
             foreach (var producer in AllProducers)
             {
+                if (!goodSelector.Matches(producer.ProducedGood))
+                    continue;
                 producer.ProductionRate.RemoveModifier(prodBoostModifier);
             }
         }

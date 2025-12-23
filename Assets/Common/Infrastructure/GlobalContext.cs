@@ -1,12 +1,9 @@
-using Features.Levels.Config;
+using Features.Levels;
 using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Common.Infrastructure
 {
-    /// <summary>
-    /// Manages global models and services.
-    /// </summary>
     public sealed class GlobalContext : MonoBehaviour
     {
         public static GlobalContext Instance { get; private set; }

@@ -1,4 +1,4 @@
-using Features.Levels.Config;
+using Features.Levels.Conditions.Data;
 using Features.Map;
 using NaughtyAttributes;
 using UnityEngine;
