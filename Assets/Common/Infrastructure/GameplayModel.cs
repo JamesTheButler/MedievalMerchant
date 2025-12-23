@@ -3,6 +3,7 @@ using System.Linq;
 using Common.Types;
 using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.Model;
+using Features.Levels.GameModifiers.Events;
 using Features.Map.Tiling;
 using Features.Player.Logic;
 using Features.Stats;
@@ -19,6 +20,7 @@ namespace Common.Infrastructure
 
         public Date Date { get; } = new();
         public LevelConditions Conditions { get; } = new();
+        public EventModel Events { get; } = new();
 
         public IReadOnlyDictionary<Vector2Int, Town> Towns => _towns;
 

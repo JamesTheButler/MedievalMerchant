@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Features.Levels.Conditions.Logic;
+using Features.Levels.GameModifiers.Events;
 using Features.Player.Logic;
 using Features.Stats;
 using Features.Ticking;
@@ -41,6 +42,7 @@ namespace Common.Infrastructure
             _systems.Add(new DateSystem());
             _systems.Add(new ConditionSystem());
             _systems.Add(new StatSystem());
+            _systems.Add(new EventSystem());
         }
 
         private void AddPlayerSystems()

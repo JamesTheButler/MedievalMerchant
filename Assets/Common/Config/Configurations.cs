@@ -1,5 +1,6 @@
 using Common.Utility;
 using Features.Goods.Config;
+using Features.Levels.GameModifiers.Events.Data;
 using Features.Player.Caravan.Config;
 using Features.Player.Retinue.Config;
 using Features.Towns.Config;
@@ -27,6 +28,9 @@ namespace Common.Config
         public CompanionConfig CompanionConfig { get; private set; }
 
         [field: SerializeField, Required]
+        public EventConfig EventConfig { get; private set; }
+
+        [field: SerializeField, Required]
         public GoodsConfig GoodsConfig { get; private set; }
 
         [field: SerializeField, Required]
@@ -34,7 +38,7 @@ namespace Common.Config
 
         [field: SerializeField, Required]
         public ReputationConfig ReputationConfig { get; private set; }
-        
+
         [field: SerializeField, Required]
         public TickConfig TickConfig { get; private set; }
 

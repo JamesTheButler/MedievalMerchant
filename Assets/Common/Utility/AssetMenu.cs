@@ -8,6 +8,7 @@ namespace Common.Utility
         public const string ConditionsFolder = RootFolder + "Conditions/";
         public const string TownUpgradesFolder = RootFolder + "Town Upgrades/";
         public const string GameplayModifiersFolder = RootFolder + "Gameplay Modifiers/";
+        public const string EventsFolder = RootFolder + "Events/";
         public const string EffectsFolder = RootFolder + "Effects/";
     }
 }
