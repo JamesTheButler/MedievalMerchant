@@ -4,6 +4,7 @@ using Common.Infrastructure;
 using Common.Types;
 using Features.Player.Caravan.Config;
 using Features.Player.Logic;
+using Features.Towns;
 using Features.Tutorial;
 using NaughtyAttributes;
 using TMPro;
@@ -30,10 +31,12 @@ namespace Features
         {
             _simpleCommands = new Dictionary<string, Action>
             {
+                { "date", ResetDate },
                 { "funds", AddFunds },
                 { "win", CompleteTownUpgrade },
                 { "player.upgrade.random", RandomPlayerUpgrade },
                 { "player.upgrade.full", CompletePlayerUpgrade },
+                { "town.level", UpgradeSelectedTown },
                 { "town.upgrade.random", RandomTownUpgrade },
                 { "town.upgrade.full", CompleteTownUpgrade },
                 { "reset.levels", ResetCompletedLevels },
@@ -51,6 +54,20 @@ namespace Features
             _cheatInput = cheatUI.GetComponentInChildren<TMP_InputField>();
 
             cheatUI.SetActive(false);
+        }
+
+        private void UpgradeSelectedTown()
+        {
+            var selectedTown = GameplayContext.Instance.Selection.SelectedTown.Value;
+            if (selectedTown == null)
+                return;
+
+            selectedTown.DevelopmentManager.Upgrade();
+        }
+
+        private void ResetDate()
+        {
+            GameplayContext.Instance.Model.Date.SetDay(1);
         }
 
         public void Toggle(InputAction.CallbackContext context)
