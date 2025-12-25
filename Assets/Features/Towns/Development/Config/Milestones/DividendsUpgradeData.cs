@@ -9,11 +9,12 @@ namespace Features.Towns.Development.Config.Milestones
     [CreateAssetMenu(
         fileName = nameof(DividendsUpgradeData),
         menuName = AssetMenu.TownUpgradesFolder + nameof(DividendsUpgradeData))]
-    public sealed class DividendsUpgradeData : TownUpgradeData
+    public sealed class DividendsUpgradeData : MilestoneUpgradeData
     {
         [field: SerializeField]
         public float DividendsPercentage { get; private set; }
-        
-        public override string Description => $"Receive {DividendsPercentage.ToPercentString()} of the towns coin production.";
+
+        public override string Description =>
+            $"Receive {DividendsPercentage.ToPercentString()} of the towns coin production.";
     }
 }

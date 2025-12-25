@@ -15,7 +15,7 @@ namespace Features.Goods.UI
         private GameObject currentPriceGroup;
 
         [SerializeField, Required]
-        private TMP_Text averagePurchasePriceText, currentPriceLabel;
+        private TMP_Text averagePurchasePriceText;
 
         private TradeTracker _tradeTracker;
         private Selection _selection;
@@ -47,7 +47,10 @@ namespace Features.Goods.UI
             var isTownSelected = town != null;
             currentPriceGroup.SetActive(isTownSelected);
 
-            currentPriceLabel.text = $"Current Price ({town?.Name ?? string.Empty}):";
+            if (town == null)
+                return;
+
+            currentPriceLabel.text = $"{town.Name} {currentPriceLabel.text}";
         }
     }
 }

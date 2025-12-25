@@ -13,7 +13,7 @@ namespace Features.Goods.Selector
         private readonly Tier? _tier;
         private readonly Regions _regions;
 
-        public ComplexGoodSelector(Tier? tier, Regions regions)
+        public ComplexGoodSelector(Tier? tier = null, Regions regions = Regions.All)
         {
             _tier = tier;
             _regions = regions;

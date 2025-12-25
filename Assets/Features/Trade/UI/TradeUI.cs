@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Common.Infrastructure;
+using Common.Infrastructure.Modifiable;
 using Common.Types;
 using Common.UI.Tooltips;
 using Common.UI.Utility;
@@ -10,7 +11,6 @@ using Features.Goods.UI;
 using Features.Player.Logic;
 using Features.Towns;
 using Features.Trade.Logic;
-using Features.Trade.Logic.Price;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -66,13 +66,15 @@ namespace Features.Trade.UI
         private Inventory.Inventory _buyingInventory;
         private Inventory.Inventory _sellingInventory;
 
-        private PriceCalculator _priceCalculator;
+        private PriceManager _priceManager;
+        private ModifiableVariable _observedPrice;
 
         public void Initialize(Good good, TradeType tradeType)
         {
             _good = good;
             _tradeType = tradeType;
             _town = _selection.Value.SelectedTown;
+            _priceManager = _town.PriceManager;
 
             _goodResourceData = _configurationManager.Value.ConfigData[good];
 
@@ -81,10 +83,9 @@ namespace Features.Trade.UI
             SetUpInventories();
             SetUpSlider();
 
-            _priceCalculator = new PriceCalculator(_selection.Value.SelectedTown);
-            _priceCalculator.Initialize(good, tradeType);
-            _priceCalculator.Price.Observe(OnGoodPriceChanged);
-            priceTooltip.SetData(_priceCalculator.Price);
+            _observedPrice = _priceManager.GetPrice(good, tradeType);
+            _priceManager.GetPrice(good, tradeType).Observe(OnGoodPriceChanged);
+            priceTooltip.SetData(_observedPrice);
 
             gameObject.SetActive(true);
 
@@ -124,8 +125,9 @@ namespace Features.Trade.UI
             _activeButton.onClick.RemoveAllListeners();
             cancelButton.onClick.RemoveAllListeners();
 
-            _priceCalculator.Clear();
-            _priceCalculator = null;
+            priceTooltip.SetData(null);
+            _observedPrice.StopObserving(OnGoodPriceChanged);
+            _observedPrice = null;
             _buyingInventory = null;
             _sellingInventory = null;
 
@@ -163,7 +165,6 @@ namespace Features.Trade.UI
             var player = _model.Value.Player.Inventory;
 
             var townInventory = _town.Inventory;
-            _priceCalculator = new PriceCalculator(_town);
 
             _buyingInventory = _tradeType == TradeType.Buy ? player : townInventory;
             _sellingInventory = _tradeType == TradeType.Sell ? player : townInventory;

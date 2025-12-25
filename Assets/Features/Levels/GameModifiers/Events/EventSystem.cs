@@ -59,7 +59,6 @@ namespace Features.Levels.GameModifiers.Events
                     var eventDuration = Random.Range(min, max + 1); // +1 as max is exclusive
                     var endDate = _gameDate + eventDuration;
                     _gameModifierService.ApplyModifier(eventData, endDate);
-                    Debug.LogError($"Started event '{eventData.Title}' which ends on {endDate}");
                 }
             }
         }
@@ -74,7 +73,6 @@ namespace Features.Levels.GameModifiers.Events
             foreach (var expiredEvent in expiredEvents)
             {
                 _gameModifierService.RemoveModifier(expiredEvent);
-                Debug.LogError($"Resetting expired event '{expiredEvent.Title}'");
             }
         }
     }

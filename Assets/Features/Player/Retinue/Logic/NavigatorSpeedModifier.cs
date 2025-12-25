@@ -17,7 +17,7 @@ namespace Features.Player.Retinue.Logic
 
         public void Update(int level)
         {
-            Value.Value = _companionConfig.NavigatorData.GetTypedLevelData(level).SpeedBonus;
+            Value.Value = _companionConfig.NavigatorData.GetTypedLevelData(level)?.SpeedBonus ?? 0;
             Description.Value = GetDescription(level);
         }
 

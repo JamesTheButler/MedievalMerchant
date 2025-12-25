@@ -209,7 +209,7 @@ namespace Features
                 var upgradeCount = Random.Range(0, 2);
                 for (var upgradeId = 0; upgradeId < upgradeCount; upgradeId++)
                 {
-                    town.Upgrade();
+                    town.DevelopmentManager.Upgrade();
                 }
             }
         }
@@ -225,7 +225,7 @@ namespace Features
                 var upgradeCount = Enum.GetValues(typeof(Tier)).Length;
                 for (var upgradeId = 0; upgradeId < upgradeCount; upgradeId++)
                 {
-                    town.Upgrade();
+                    town.DevelopmentManager.Upgrade();
                 }
             }
         }

@@ -9,7 +9,7 @@ namespace Features.Player.Retinue.Logic
 
         public override void SetLevel(int level)
         {
-            Debug.LogError("The method or operation is not implemented.");
+            Debug.LogWarning("Diplomat is not yet implemented.");
         }
     }
 }

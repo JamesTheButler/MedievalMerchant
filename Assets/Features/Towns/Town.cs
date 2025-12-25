@@ -6,9 +6,7 @@ using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Common.Types;
 using Common.Utility;
-using Features.Goods.Selector;
 using Features.Inventory;
-using Features.Player.Logic;
 using Features.Towns.Development.Logic;
 using Features.Towns.Development.Logic.Milestones;
 using Features.Towns.Flags;
@@ -29,11 +27,11 @@ namespace Features.Towns
 
         public ProductionManager ProductionManager { get; }
         public DevelopmentManager DevelopmentManager { get; }
-        public MilestoneManager MilestoneManager { get; }
         public ReputationManager ReputationManager { get; }
         public Inventory.Inventory Inventory { get; }
         public ModifiableVariable FundsChange { get; }
         public PriceManager PriceManager { get; }
+        public MilestoneModel Milestones { get; }
 
         public string Name { get; }
         public FlagInfo FlagInfo { get; private set; }
@@ -41,7 +39,6 @@ namespace Features.Towns
         public Vector2 WorldLocation { get; }
         public HashSet<Good> AvailableGoods { get; }
         public Region MainRegion { get; }
-
         public Regions Regions { get; }
 
         // TODO - Feature: each good needs an Observable<float> consumption rate once implement consumption modifiers
@@ -77,9 +74,9 @@ namespace Features.Towns
             Inventory = new Inventory.Inventory(_inventoryPolicy);
             ProductionManager = new ProductionManager(this);
             DevelopmentManager = new DevelopmentManager(this);
-            MilestoneManager = new MilestoneManager(this);
             ReputationManager = new ReputationManager(this);
             PriceManager = new PriceManager(this);
+            Milestones = new MilestoneModel();
 
             const Tier tempTier = Common.Types.Tier.Tier1;
             var consumptionRate = townConfig.GetConsumptionRate(tempTier, tempTier) ?? 0f;
@@ -87,8 +84,6 @@ namespace Features.Towns
 
             DevelopmentManager.Tier.Observe(OnTierChanged);
             ProductionManager.ProductionAdded += OnProductionManagerOnProductionAdded;
-            MilestoneManager.MilestoneModifierAdded += OnMilestoneModifierAdded;
-            MilestoneManager.MilestoneModifierRemoved += OnMilestoneModifierRemoved;
 
             Inventory.AddFunds(townConfig.GetStartFunds());
             var baseModifier = new BaseTownFundsProduction(townConfig.FundRate[StartTier], StartTier);
@@ -106,9 +101,9 @@ namespace Features.Towns
             ProductionManager.AddProducer(good, index);
         }
 
-        public void Upgrade()
+        public void ResolveTrade(TradeInfo tradeInfo)
         {
-            DevelopmentManager.Upgrade();
+            TradeCompleted?.Invoke(tradeInfo);
         }
 
         private void OnTierChanged(Tier tier)
@@ -116,40 +111,9 @@ namespace Features.Towns
             _inventoryPolicy.AddSlots(tier, DefaultInventorySlots);
         }
 
-        public void ResolveTrade(TradeInfo tradeInfo)
-        {
-            TradeCompleted?.Invoke(tradeInfo);
-        }
-
         private void OnProductionManagerOnProductionAdded(Producer producer)
         {
             _inventoryPolicy.AddSlots(producer.Tier, 1);
-        }
-
-        private void OnMilestoneModifierAdded(IModifier modifier)
-        {
-            switch (modifier)
-            {
-                case MilestoneFundsBoostModifier:
-                    FundsChange.AddModifier(modifier);
-                    break;
-                case MilestoneProductionBoostModifier prodBoostModifier:
-                    ProductionManager.AddModifier(prodBoostModifier, new AllGoodsSelector());
-                    break;
-            }
-        }
-
-        private void OnMilestoneModifierRemoved(IModifier modifier)
-        {
-            switch (modifier)
-            {
-                case MilestoneFundsBoostModifier:
-                    FundsChange.RemoveModifier(modifier);
-                    break;
-                case MilestoneProductionBoostModifier prodBoostModifier:
-                    ProductionManager.RemoveModifier(prodBoostModifier, new AllGoodsSelector());
-                    break;
-            }
         }
     }
 }

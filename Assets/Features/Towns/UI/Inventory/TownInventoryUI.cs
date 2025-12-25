@@ -81,7 +81,7 @@ namespace Features.Towns.UI.Inventory
 
         public void Upgrade()
         {
-            _town.Upgrade();
+            _town.DevelopmentManager.Upgrade();
         }
 
         public void TravelHere()

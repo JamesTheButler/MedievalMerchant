@@ -13,8 +13,6 @@ namespace Features.Player.Retinue.Logic
 
         private readonly Dictionary<CompanionType, CompanionUpkeepModifier> _upkeepModifiers = new();
 
-        private readonly Dictionary<CompanionType, ICompanionLogic> _companionLogics;
-
         public RetinueManager()
         {
             foreach (CompanionType companionType in Enum.GetValues(typeof(CompanionType)))
@@ -24,23 +22,12 @@ namespace Features.Player.Retinue.Logic
                 _upkeepModifiers.Add(companionType, upkeepModifier);
                 Upkeep.AddModifier(upkeepModifier);
             }
-
-            _companionLogics = new Dictionary<CompanionType, ICompanionLogic>
-            {
-                { CompanionType.Architect, new ArchitectCompanionLogic() },
-                { CompanionType.Diplomat, new DiplomatCompanionLogic() },
-                { CompanionType.Guard, new GuardCompanionLogic() },
-                { CompanionType.Navigator, new NavigatorCompanionLogic() },
-                { CompanionType.Negotiator, new NegotiatorCompanionLogic() },
-                { CompanionType.Thief, new ThiefCompanionLogic() },
-            };
         }
 
         public void SetLevel(CompanionType companionType, int newLevel)
         {
             CompanionLevels[companionType].Value = newLevel;
             var level = CompanionLevels[companionType].Value;
-            _companionLogics[companionType].SetLevel(level);
             _upkeepModifiers[companionType].SetLevel(level);
         }
     }

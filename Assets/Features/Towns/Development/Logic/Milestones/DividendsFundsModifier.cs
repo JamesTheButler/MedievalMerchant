@@ -8,7 +8,7 @@ namespace Features.Towns.Development.Logic.Milestones
         private readonly float _percentage;
         private readonly Town _town;
 
-        public DividendsFundsModifier(float value, MilestoneManager.UpgradeTime upgradeTime, Town town)
+        public DividendsFundsModifier(float value, Town town)
             : base(value, GetDescription(value, town))
         {
             _percentage = value;

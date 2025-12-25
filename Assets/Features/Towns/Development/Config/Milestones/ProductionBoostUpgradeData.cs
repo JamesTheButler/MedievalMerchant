@@ -6,11 +6,12 @@ namespace Features.Towns.Development.Config.Milestones
     [CreateAssetMenu(
         fileName = nameof(ProductionBoostUpgradeData),
         menuName = AssetMenu.TownUpgradesFolder + nameof(ProductionBoostUpgradeData))]
-    public sealed class ProductionBoostUpgradeData : TownUpgradeData
+    public sealed class ProductionBoostUpgradeData : MilestoneUpgradeData
     {
         [field: SerializeField]
         public float ProductionBoost { get; private set; }
 
-        public override string Description => $"Boosts the towns good production by {ProductionBoost.ToPercentString()}.";
+        public override string Description =>
+            $"Boosts the towns good production by {ProductionBoost.ToPercentString()}.";
     }
 }

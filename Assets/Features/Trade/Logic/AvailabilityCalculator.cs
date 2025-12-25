@@ -45,10 +45,5 @@ namespace Features.Trade.Logic
 
             return Availability.VeryHigh;
         }
-
-        public float GetPriceMultiplier(Good good)
-        {
-            return _availabilityConfig.ConfigData[GetAvailability(good)].PriceMultiplier;
-        }
     }
 }

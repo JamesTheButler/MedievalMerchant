@@ -9,7 +9,7 @@ namespace Features.Player.Retinue.Logic
 
         public override void SetLevel(int level)
         {
-            Debug.LogError("The method or operation is not implemented.");
+            Debug.LogWarning("Architect is not yet implemented.");
         }
     }
 }

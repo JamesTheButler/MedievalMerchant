@@ -16,7 +16,7 @@ namespace Features.Player.Retinue.Logic
 
         public void Update(int level)
         {
-            var reduction = _companionConfig.NegotiatorData.GetTypedLevelData(level).UpgradeCostReduction;
+            var reduction = _companionConfig.NegotiatorData.GetTypedLevelData(level)?.UpgradeCostReduction ?? 0;
             Value.Value = -reduction;
             Description.Value = GetDescription(level);
         }

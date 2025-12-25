@@ -14,7 +14,7 @@ namespace Features.Towns.Development.Config
         public Sprite Icon { get; private set; }
 
         [field: SerializeField]
-        public TownUpgradeData[] Upgrades { get; private set; }
+        public MilestoneUpgradeData[] Upgrades { get; private set; }
 
         public string Description => GenerateDescription();
 

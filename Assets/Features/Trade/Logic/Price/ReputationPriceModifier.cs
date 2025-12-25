@@ -11,17 +11,19 @@ namespace Features.Trade.Logic.Price
     public sealed class ReputationPriceModifier : BasePercentageModifier
     {
         private readonly TradeType _tradeType;
-        private readonly ReputationConfig _reputationConfig = ConfigurationManager.Configurations.ReputationConfig;
+        private readonly ReputationConfig _reputationConfig;
         private readonly string _townName;
 
         public ReputationPriceModifier(Town town, TradeType tradeType) : base(0f, string.Empty)
         {
+            _reputationConfig = ConfigurationManager.Configurations.ReputationConfig;
+
             _tradeType = tradeType;
             _townName = town.Name;
-            Update(town.ReputationManager.Reputation);
+            town.ReputationManager.Reputation.Observe(Update);
         }
 
-        public void Update(float reputation)
+        private void Update(float reputation)
         {
             Description.Value = GetDescription(reputation);
             Value.Value = GetValue(reputation);

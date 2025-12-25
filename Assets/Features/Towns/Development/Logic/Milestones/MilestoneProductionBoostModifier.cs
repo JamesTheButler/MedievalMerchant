@@ -1,17 +1,9 @@
-using Common.Utility;
+using Common.Infrastructure.Modifiable;
 
 namespace Features.Towns.Development.Logic.Milestones
 {
-    public sealed class MilestoneProductionBoostModifier : ProductionBoostModifier
+    public sealed class MilestoneProductionBoostModifier : BasePercentageModifier
     {
-        public MilestoneProductionBoostModifier(float value, MilestoneManager.UpgradeTime upgradeTime)
-            : base(value, GetDescription(upgradeTime)) { }
-
-        private static string GetDescription(MilestoneManager.UpgradeTime upgradeTime)
-        {
-            var percentage = upgradeTime.DevelopmentScore.ToPercentString();
-            var tier = upgradeTime.Tier.ToRomanNumeral();
-            return $"Milestone ({percentage}, Tier {tier}";
-        }
+        public MilestoneProductionBoostModifier(float value) : base(value, "Milestone") { }
     }
 }

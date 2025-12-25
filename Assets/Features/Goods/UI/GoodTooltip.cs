@@ -4,6 +4,7 @@ using Common.Types;
 using Common.UI.Tooltips;
 using Features.Goods.Config;
 using Features.Towns;
+using Features.Trade;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -15,6 +16,9 @@ namespace Features.Goods.UI
     {
         [SerializeField, Required]
         private TMP_Text nameText, priceText, currentPriceText;
+            
+        [SerializeField, Required]
+        protected TMP_Text currentPriceLabel;
 
         [SerializeField, Required]
         private Image goodImage, tierImage, regionImage;
@@ -26,7 +30,8 @@ namespace Features.Goods.UI
         private Selection _selection;
 
         private Good _good;
-        private Town _selectedTown;
+        private Town _town;
+
         protected override void Awake()
         {
             base.Awake();
@@ -34,14 +39,13 @@ namespace Features.Goods.UI
             _goodsResources = ResourceManager.Instance.GoodsResources;
             _tierIcons = ResourceManager.Instance.TierResources;
             _region = ResourceManager.Instance.RegionResources;
-
             _selection = GameplayContext.Instance.Selection;
         }
 
         protected override void UpdateUI(Good data)
         {
             _good = data;
-            
+
             var goodData = _goodsResources.ConfigData[_good];
             var tier = goodData.Tier;
             var price = _goodsConfig.BasePriceData[tier];
@@ -62,33 +66,45 @@ namespace Features.Goods.UI
         private void OnTownChanged(Town newTown)
         {
             // unobserve the old price
-            _selectedTown?.PriceManager.GetPrice(_good)?.StopObserving(OnTownPriceChanged);
-            
-            _selectedTown = newTown;
+            _town?.PriceManager.GetPrice(_good, TradeType.Buy)?.StopObserving(OnTownPriceChanged);
+            _town?.PriceManager.GetPrice(_good, TradeType.Sell)?.StopObserving(OnTownPriceChanged);
+
+            _town = newTown;
             if (newTown == null)
             {
                 currentPriceText.text = "-";
+                return;
+            }
+
+            var buyPrice = newTown.PriceManager.GetPrice(_good, TradeType.Buy);
+            var sellPrice = newTown.PriceManager.GetPrice(_good, TradeType.Sell);
+
+            if (buyPrice != null)
+            {
+                currentPriceLabel.text = "Sells for";
+                buyPrice.Observe(OnTownPriceChanged);
+            }
+            else if (sellPrice != null)
+            {
+                currentPriceLabel.text = "Buys for";
+                sellPrice.Observe(OnTownPriceChanged);
             }
             else
             {
-                var priceInTown = newTown.PriceManager.GetPrice(_good);
-                priceInTown?.Observe(OnTownPriceChanged);
-                if (priceInTown == null)
-                {
-                    currentPriceText.text = "-";
-                }
+                Debug.LogError($"There is neither a buy nor sell price available in {_town.Name} for {_good}.");
             }
         }
 
         private void OnTownPriceChanged(float price)
         {
-            currentPriceText.text = $"{price:0.#}";
+            currentPriceText.text = $"{price:0.##}";
         }
 
         public override void Reset()
         {
             _selection.SelectedTown.StopObserving(OnTownChanged);
-            _selection.SelectedTown.Value?.PriceManager?.GetPrice(_good)?.StopObserving(OnTownPriceChanged);
+            _town?.PriceManager.GetPrice(_good, TradeType.Buy)?.StopObserving(OnTownPriceChanged);
+            _town?.PriceManager.GetPrice(_good, TradeType.Sell)?.StopObserving(OnTownPriceChanged);
         }
     }
 }

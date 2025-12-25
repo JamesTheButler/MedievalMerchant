@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using Features.Levels.Conditions.Logic;
 using Features.Levels.GameModifiers.Events;
 using Features.Player.Logic;
+using Features.Player.Retinue.Logic;
 using Features.Stats;
 using Features.Ticking;
 using Features.Towns;
 using Features.Towns.Development.Logic;
+using Features.Towns.Development.Logic.Milestones;
 using Features.Towns.Production.Logic;
 
 namespace Common.Infrastructure
@@ -38,7 +40,6 @@ namespace Common.Infrastructure
 
         private void AddGlobalSystems()
         {
-            _systems.Add(new DividendsSystem());
             _systems.Add(new DateSystem());
             _systems.Add(new ConditionSystem());
             _systems.Add(new StatSystem());
@@ -50,6 +51,7 @@ namespace Common.Infrastructure
             _systems.Add(new PlayerTickSystem());
             _systems.Add(new PlayerUpkeepSystem());
             _systems.Add(new PlayerTradeTrackingSystem());
+            _systems.Add(new RetinueSystem());
         }
 
         private void AddTownSystems()
@@ -61,6 +63,8 @@ namespace Common.Infrastructure
                 _systems.Add(new TownProductionSystem(town));
                 _systems.Add(new TownDevelopmentSystem(town));
                 _systems.Add(new TownConsumptionSystem(town));
+                _systems.Add(new DevelopmentMilestoneSystem(town));
+                _systems.Add(new MilestoneModifierSystem(town));
                 //_systems.Add(new TownNeglectSystem(town)); // TODO - Milestone 0.2.0
             }
         }
