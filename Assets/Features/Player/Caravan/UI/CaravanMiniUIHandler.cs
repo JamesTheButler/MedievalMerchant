@@ -19,6 +19,9 @@ namespace Features.Player.Caravan.UI
             _player = GameplayContext.Instance.Model.Player;
             _player.Location.TownEntered += OnPlayerEnteredTown;
             _player.Location.TownExited += OnPlayerExitedTown;
+
+            OnPlayerEnteredTown(_player.Location.CurrentTown);
+
             _caravanManager = _player.CaravanManager;
             _caravanManager.MoveSpeed.Observe(OnMoveSpeedChanged);
             _caravanManager.Upkeep.Observe(OnUpkeepChanged);
@@ -28,7 +31,7 @@ namespace Features.Player.Caravan.UI
         {
             caravanMiniUI.SetUpkeep(upkeep);
         }
-    
+
         private void OnMoveSpeedChanged(float moveSpeed)
         {
             caravanMiniUI.SetMoveSpeed(moveSpeed);
