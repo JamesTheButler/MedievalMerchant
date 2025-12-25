@@ -23,6 +23,10 @@ namespace Features.Levels.GameModifiers.Events
         {
             var context = GameplayContext.Instance;
             _eventConfig = ConfigurationManager.Configurations.EventConfig;
+
+            if (!_eventConfig.IsEnabled)
+                return;
+            
             _gameModifierService = context.Services.GameModifierService;
             _tickingService = context.Services.TickingService;
             _eventModel = context.Model.Events;

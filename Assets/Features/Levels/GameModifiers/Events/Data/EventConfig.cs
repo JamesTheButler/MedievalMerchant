@@ -19,5 +19,8 @@ namespace Features.Levels.GameModifiers.Events.Data
 
         [field: SerializeField]
         public EventSet DefaultEventSet { get; private set; }
+
+        [field: SerializeField]
+        public bool IsEnabled { get; private set; }
     }
 }
