@@ -1,8 +1,9 @@
 ﻿using Common.Infrastructure;
 using Features.Player.Logic;
 using Features.Player.Retinue.Config.CompanionDatas;
+using Features.Player.Retinue.Logic.Modifiers;
 
-namespace Features.Player.Retinue.Logic
+namespace Features.Player.Retinue.Logic.CompanionLogics
 {
     public sealed class NavigatorCompanionLogic : BaseCompanionLogic<NavigatorCompanionData>
     {
@@ -39,7 +40,7 @@ namespace Features.Player.Retinue.Logic
             {
                 _activeUpkeepModifier = new NavigatorUpkeepModifier(level);
                 _player.CaravanManager.Upkeep.AddModifier(_activeUpkeepModifier);
-                _player.RetinueManager.Upkeep.AddModifier(_activeUpkeepModifier);
+                _player.RetinueModel.Upkeep.AddModifier(_activeUpkeepModifier);
                 return;
             }
 

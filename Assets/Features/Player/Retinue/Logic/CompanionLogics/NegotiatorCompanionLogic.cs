@@ -1,9 +1,10 @@
 ﻿using Common.Infrastructure;
 using Features.Goods.Selector;
 using Features.Player.Retinue.Config.CompanionDatas;
+using Features.Player.Retinue.Logic.Modifiers;
 using Features.Trade;
 
-namespace Features.Player.Retinue.Logic
+namespace Features.Player.Retinue.Logic.CompanionLogics
 {
     public sealed class NegotiatorCompanionLogic : BaseCompanionLogic<NegotiatorCompanionData>
     {

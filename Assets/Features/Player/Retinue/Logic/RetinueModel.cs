@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
+using Features.Player.Retinue.Logic.Modifiers;
 
 namespace Features.Player.Retinue.Logic
 {
-    public sealed class RetinueManager
+    public sealed class RetinueModel
     {
         public ModifiableVariable Upkeep { get; } = new("Retinue Upkeep", false);
 
@@ -13,7 +14,7 @@ namespace Features.Player.Retinue.Logic
 
         private readonly Dictionary<CompanionType, CompanionUpkeepModifier> _upkeepModifiers = new();
 
-        public RetinueManager()
+        public RetinueModel()
         {
             foreach (CompanionType companionType in Enum.GetValues(typeof(CompanionType)))
             {

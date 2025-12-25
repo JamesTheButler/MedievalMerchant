@@ -15,13 +15,13 @@ namespace Features.Player.Retinue.UI
         [SerializeField, Required]
         private ModifiableTooltipHandler upkeepTooltip;
 
-        private RetinueManager _retinueManager;
+        private RetinueModel _retinueModel;
 
         private void Start()
         {
-            _retinueManager = GameplayContext.Instance.Model.Player.RetinueManager;
-            _retinueManager.Upkeep.Observe(OnUpkeepChanged);
-            upkeepTooltip.SetData(_retinueManager.Upkeep);
+            _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
+            _retinueModel.Upkeep.Observe(OnUpkeepChanged);
+            upkeepTooltip.SetData(_retinueModel.Upkeep);
         }
 
         private void OnUpkeepChanged(float upkeep)

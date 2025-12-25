@@ -2,6 +2,7 @@
 using Common.Infrastructure.Modifiable;
 using Features.Player.Logic;
 using Features.Player.Retinue.Config;
+using Features.Player.Retinue.Logic.Modifiers;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Logic
@@ -35,7 +36,7 @@ namespace Features.Player.Retinue.Logic
             var baseCost = companionConfigData.GetLevelData(newLevel).Cost;
             var cost = new ModifiableVariable("Upgrade Cost", false, new CompanionUpgradeBaseCostModifier(baseCost));
 
-            var negotiatorLevel = _player.RetinueManager.CompanionLevels[CompanionType.Negotiator];
+            var negotiatorLevel = _player.RetinueModel.CompanionLevels[CompanionType.Negotiator];
             if (negotiatorLevel > 0)
             {
                 var levelData = _companionConfig.NegotiatorData.GetTypedLevelData(negotiatorLevel);
@@ -50,7 +51,7 @@ namespace Features.Player.Retinue.Logic
                 return;
             }
 
-            _player.RetinueManager.SetLevel(companionType, newLevel);
+            _player.RetinueModel.SetLevel(companionType, newLevel);
             _player.Inventory.RemoveFunds((int)cost);
         }
     }

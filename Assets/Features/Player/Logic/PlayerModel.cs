@@ -14,7 +14,7 @@ namespace Features.Player.Logic
 
         public Inventory.Inventory Inventory { get; }
 
-        public RetinueManager RetinueManager { get; }
+        public RetinueModel RetinueModel { get; }
         public CaravanManager CaravanManager { get; }
         public TradeTracker TradeTracker { get; }
 
@@ -22,7 +22,7 @@ namespace Features.Player.Logic
         {
             FundsChange = new ModifiableVariable("Funds per day", true);
 
-            RetinueManager = new RetinueManager();
+            RetinueModel = new RetinueModel();
             CaravanManager = new CaravanManager();
             TradeTracker = new TradeTracker();
 

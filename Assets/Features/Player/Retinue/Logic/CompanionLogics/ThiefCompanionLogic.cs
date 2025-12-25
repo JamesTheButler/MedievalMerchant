@@ -6,7 +6,7 @@ using Features.Player.Retinue.Config.LevelDatas;
 using Features.Towns;
 using UnityEngine;
 
-namespace Features.Player.Retinue.Logic
+namespace Features.Player.Retinue.Logic.CompanionLogics
 {
     public sealed class ThiefCompanionLogic : BaseCompanionLogic<ThiefCompanionData>
     {
@@ -24,7 +24,7 @@ namespace Features.Player.Retinue.Logic
 
             if (_thiefLevelData is null)
             {
-                Debug.LogError($"Could not find level data for {Type}, {level}");
+                Debug.LogWarning($"Could not find level data for {Type}, {level}");
                 return;
             }
 

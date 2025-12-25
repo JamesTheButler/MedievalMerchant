@@ -1,4 +1,4 @@
-﻿namespace Features.Player.Retinue.Logic
+﻿namespace Features.Player.Retinue.Logic.CompanionLogics
 {
     public interface ICompanionLogic
     {

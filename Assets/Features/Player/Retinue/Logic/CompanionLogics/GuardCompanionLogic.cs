@@ -1,7 +1,7 @@
 ﻿using Features.Player.Retinue.Config.CompanionDatas;
 using UnityEngine;
 
-namespace Features.Player.Retinue.Logic
+namespace Features.Player.Retinue.Logic.CompanionLogics
 {
     public sealed class GuardCompanionLogic : BaseCompanionLogic<GuardCompanionData>
     {

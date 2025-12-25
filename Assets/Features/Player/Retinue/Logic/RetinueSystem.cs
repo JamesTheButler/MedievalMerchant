@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Common.Infrastructure;
+using Features.Player.Retinue.Logic.CompanionLogics;
 
 namespace Features.Player.Retinue.Logic
 {
@@ -7,11 +8,11 @@ namespace Features.Player.Retinue.Logic
     {
         private Dictionary<CompanionType, ICompanionLogic> _companionLogics;
 
-        private RetinueManager _retinueManager;
+        private RetinueModel _retinueModel;
 
         public void Initialize()
         {
-            _retinueManager = GameplayContext.Instance.Model.Player.RetinueManager;
+            _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
 
             _companionLogics = new Dictionary<CompanionType, ICompanionLogic>
             {
@@ -23,7 +24,7 @@ namespace Features.Player.Retinue.Logic
                 { CompanionType.Thief, new ThiefCompanionLogic() },
             };
 
-            foreach (var (companion, level) in _retinueManager.CompanionLevels)
+            foreach (var (companion, level) in _retinueModel.CompanionLevels)
             {
                 level.Observe(lvl => UpdateLevel(companion, lvl));
             }

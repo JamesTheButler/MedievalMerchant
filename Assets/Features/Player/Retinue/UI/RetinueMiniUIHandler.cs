@@ -9,12 +9,12 @@ namespace Features.Player.Retinue.UI
         [SerializeField]
         private RetinueMiniUI retinueMiniUI;
 
-        private RetinueManager _retinueManager;
+        private RetinueModel _retinueModel;
 
         private void Start()
         {
-            _retinueManager = GameplayContext.Instance.Model.Player.RetinueManager;
-            foreach (var (companion, levelObservable) in _retinueManager.CompanionLevels)
+            _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
+            foreach (var (companion, levelObservable) in _retinueModel.CompanionLevels)
             {
                 levelObservable.Observe(level => OnCompanionLevelChanged(companion, level));
             }

@@ -1,7 +1,7 @@
 ﻿using Common.Infrastructure;
 using Features.Player.Retinue.Config;
 
-namespace Features.Player.Retinue.Logic
+namespace Features.Player.Retinue.Logic.CompanionLogics
 {
     public abstract class BaseCompanionLogic<T> : ICompanionLogic
         where T : CompanionConfigData

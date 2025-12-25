@@ -31,7 +31,7 @@ namespace Features.Player.Retinue.UI
         [SerializeField, Required]
         private TMP_Text effectsText;
 
-        private RetinueManager _retinueManager;
+        private RetinueModel _retinueModel;
         private CompanionConfigData _configData;
         private CompanionUpgradeService _companionUpgradeService;
 
@@ -41,13 +41,13 @@ namespace Features.Player.Retinue.UI
 
         private void Start()
         {
-            _retinueManager = GameplayContext.Instance.Model.Player.RetinueManager;
+            _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
             _configData = ConfigurationManager.Configurations.CompanionConfig.Get(companionType);
             _companionUpgradeService = GameplayContext.Instance.Services.CompanionUpgradeService;
 
             InitializeUI();
 
-            _retinueManager.CompanionLevels[companionType].Observe(OnCompanionLevelChanged);
+            _retinueModel.CompanionLevels[companionType].Observe(OnCompanionLevelChanged);
         }
 
         private void InitializeUI()

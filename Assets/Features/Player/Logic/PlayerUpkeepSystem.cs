@@ -8,7 +8,7 @@ namespace Features.Player.Logic
     public sealed class PlayerUpkeepSystem : ISystem
     {
         private CaravanManager _caravanManager;
-        private RetinueManager _retinueManager;
+        private RetinueModel _retinueModel;
         private PlayerModel _playerModel;
         private PlayerLocation _playerLocation;
         private UpkeepFundsChangeModifier _caravanUpkeepFundsModifier, _retinueUpkeepFundsModifier;
@@ -21,10 +21,10 @@ namespace Features.Player.Logic
             _playerLocation.TownExited += OnTownExited;
 
             _caravanManager = GameplayContext.Instance.Model.Player.CaravanManager;
-            _retinueManager = GameplayContext.Instance.Model.Player.RetinueManager;
+            _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
 
             _caravanUpkeepFundsModifier = new UpkeepFundsChangeModifier(_caravanManager.Upkeep, "Caravan");
-            _retinueUpkeepFundsModifier = new UpkeepFundsChangeModifier(_retinueManager.Upkeep, "Retinue");
+            _retinueUpkeepFundsModifier = new UpkeepFundsChangeModifier(_retinueModel.Upkeep, "Retinue");
             _playerModel.FundsChange.AddModifier(_retinueUpkeepFundsModifier);
         }
 
