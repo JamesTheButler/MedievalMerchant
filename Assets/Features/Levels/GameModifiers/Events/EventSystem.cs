@@ -4,6 +4,7 @@ using Common.Types;
 using Common.Utility;
 using Features.Levels.GameModifiers.Events.Data;
 using Features.Levels.GameModifiers.Logic;
+using Features.Notifications.Logic;
 using Features.Ticking;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Features.Levels.GameModifiers.Events
         private TickingService _tickingService;
         private EventConfig _eventConfig;
         private EventModel _eventModel;
+        private NotificationService _notificationService;
         private Date _gameDate;
 
         private const int MaxEventCreationTries = 5;
@@ -26,8 +28,9 @@ namespace Features.Levels.GameModifiers.Events
 
             if (!_eventConfig.IsEnabled)
                 return;
-            
+
             _gameModifierService = context.Services.GameModifierService;
+            _notificationService = context.Services.NotificationService;
             _tickingService = context.Services.TickingService;
             _eventModel = context.Model.Events;
             _gameDate = context.Model.Date;
@@ -48,23 +51,30 @@ namespace Features.Levels.GameModifiers.Events
             if (!isEventTriggered)
                 return;
 
-            TriggerEvent();
+            TryTriggerEvent();
         }
 
-        private void TriggerEvent()
+        private void TryTriggerEvent()
         {
             for (var i = 0; i < MaxEventCreationTries; i++)
             {
                 var eventData = _eventConfig.DefaultEventSet.AvailableEvents.GetRandom();
                 if (!_eventModel.OngoingEvents.ContainsKey(eventData))
                 {
-                    var min = _eventConfig.MinDuration;
-                    var max = _eventConfig.MaxDuration;
-                    var eventDuration = Random.Range(min, max + 1); // +1 as max is exclusive
-                    var endDate = _gameDate + eventDuration;
-                    _gameModifierService.ApplyModifier(eventData, endDate);
+                    TriggerEvent(eventData);
+                    return;
                 }
             }
+        }
+
+        private void TriggerEvent(EventGameModifierData eventData)
+        {
+            var min = _eventConfig.MinDuration;
+            var max = _eventConfig.MaxDuration;
+            var eventDuration = Random.Range(min, max + 1); // +1 as max is exclusive
+            var endDate = _gameDate + eventDuration;
+            _gameModifierService.ApplyModifier(eventData, endDate);
+            _notificationService.PostNotification(new EventStartedNotification(eventData));
         }
 
         private void RevertExpiredEvents()
@@ -77,6 +87,7 @@ namespace Features.Levels.GameModifiers.Events
             foreach (var expiredEvent in expiredEvents)
             {
                 _gameModifierService.RemoveModifier(expiredEvent);
+                _notificationService.PostNotification(new EventExpiredNotification(expiredEvent));
             }
         }
     }

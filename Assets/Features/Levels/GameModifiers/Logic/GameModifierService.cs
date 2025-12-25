@@ -55,7 +55,9 @@ namespace Features.Levels.GameModifiers.Logic
         public void RemoveModifier(GameModifierData modifierData)
         {
             if (modifierData is EventGameModifierData eventModifierData)
+            {
                 _eventModel.OngoingEvents.Remove(eventModifierData);
+            }
 
             foreach (var effect in modifierData.Effects)
             {

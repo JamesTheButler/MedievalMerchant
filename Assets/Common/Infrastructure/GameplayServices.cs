@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Features.Levels.GameModifiers.Logic;
 using Features.Notifications;
+using Features.Notifications.Logic;
 using Features.Player.Retinue.Logic;
 using Features.Ticking;
 using Features.Trade.Logic;
