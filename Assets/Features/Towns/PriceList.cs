@@ -15,6 +15,7 @@ namespace Features.Towns
     public sealed class PriceList
     {
         private readonly TradeType _tradeType;
+        private readonly Town _town;
         private readonly Func<Good, bool> _pricePredicate;
         private readonly Dictionary<Good, ModifiableVariable> _cache = new();
         private readonly Dictionary<Good, AvailabilityPriceModifier> _availabilityModifiers = new();
@@ -28,6 +29,7 @@ namespace Features.Towns
         public PriceList(TradeType tradeType, Town town, Func<Good, bool> pricePredicate)
         {
             _tradeType = tradeType;
+            _town = town;
             _pricePredicate = pricePredicate;
             _availabilityCalculator = new AvailabilityCalculator(town);
             _goodsResources = ResourceManager.Instance.GoodsResources;
@@ -57,6 +59,8 @@ namespace Features.Towns
             _availabilityModifiers.Add(good, availabilityModifier);
             RefreshAvailability(good);
             price.AddModifier(availabilityModifier);
+            _town.Inventory.GoodUpdated += OnGoodUpdated;
+
 
             // add all other modifiers
             var matchingModifiers = _modifiers
@@ -65,6 +69,14 @@ namespace Features.Towns
             price.AddModifiers(matchingModifiers);
 
             return price;
+        }
+
+        private void OnGoodUpdated(Good good, int amount)
+        {
+            if (!_cache.TryGetValue(good, out var price))
+                return;
+
+            price.Observe(_ => RefreshAvailability(good));
         }
 
         public void AddModifier(IModifier modifier, IGoodSelector goodSelector)

@@ -36,7 +36,7 @@ namespace Common.UI.Popups
             _selection = GameplayContext.Instance.Selection;
             _selection.SelectedTown.Observe(OnSelectedTownChanged, false);
 
-            if (_selection.SelectedTown is null)
+            if (_selection.SelectedTown.Value is null)
                 return;
 
             if (inventoryCell.Good == null)
