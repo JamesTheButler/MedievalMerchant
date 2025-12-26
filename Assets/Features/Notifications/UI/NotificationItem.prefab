@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 4516856286702110170}
   - component: {fileID: 8610735702547589256}
   - component: {fileID: 8157604822633057489}
+  - component: {fileID: 6858190132186768467}
+  - component: {fileID: 13662873713595807}
   m_Layer: 5
   m_Name: NotificationItem
   m_TagString: Untagged
@@ -121,6 +123,35 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!225 &6858190132186768467
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840970213102612126}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!111 &13662873713595807
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840970213102612126}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 4f787f279cc387c489f5cec785f5cb89, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 4f787f279cc387c489f5cec785f5cb89, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &5517324722178703224
 GameObject:
   m_ObjectHideFlags: 0

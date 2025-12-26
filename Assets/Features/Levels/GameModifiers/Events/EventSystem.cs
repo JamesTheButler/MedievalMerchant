@@ -59,11 +59,11 @@ namespace Features.Levels.GameModifiers.Events
             for (var i = 0; i < MaxEventCreationTries; i++)
             {
                 var eventData = _eventConfig.DefaultEventSet.AvailableEvents.GetRandom();
-                if (!_eventModel.OngoingEvents.ContainsKey(eventData))
-                {
-                    TriggerEvent(eventData);
-                    return;
-                }
+                if (_eventModel.OngoingEvents.ContainsKey(eventData))
+                    continue;
+
+                TriggerEvent(eventData);
+                return;
             }
         }
 

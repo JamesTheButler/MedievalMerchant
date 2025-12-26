@@ -24,6 +24,8 @@ namespace Features.Player.Retinue.Config
         public bool IsImplemented { get; private set; }
 
         public abstract IReadOnlyList<CompanionLevelData> Levels { get; }
+        
+        public int MaxLevel => Levels.Count;
 
         public CompanionLevelData GetLevelData(int level)
         {

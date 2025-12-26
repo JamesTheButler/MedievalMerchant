@@ -12,6 +12,9 @@ namespace Features.Notifications.UI
         private int maxAmount = 3;
 
         [SerializeField]
+        private float popupLifetimeInSec = 5f;
+
+        [SerializeField]
         private GameObject notificationPrefab;
 
         [SerializeField]
@@ -44,6 +47,7 @@ namespace Features.Notifications.UI
             var notificationItem = Instantiate(notificationPrefab, notificationRect).GetComponent<NotificationItem>();
             notificationItem.SetUp(
                 notification,
+                popupLifetimeInSec,
                 () => _notificationService.PingNotification(notification),
                 () => _notificationItems.Remove(notificationItem));
 
