@@ -16,7 +16,7 @@ namespace Features.Towns
 
         private readonly Dictionary<Good, Mission> _missions = new();
 
-        public IGoodSelector GoodSelector { get; private set; } = IGoodSelector.All;
+        public IGoodSelector PermittedGoodsSelector { get; private set; } = IGoodSelector.All;
 
         public void AddMission(Mission mission)
         {
@@ -42,7 +42,7 @@ namespace Features.Towns
 
         public void LimitGoodSelection(IGoodSelector selector)
         {
-            GoodSelector = selector;
+            PermittedGoodsSelector = selector;
             GoodSelectorChanged?.Invoke();
         }
     }

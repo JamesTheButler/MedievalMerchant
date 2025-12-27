@@ -1,6 +1,7 @@
 ﻿using Common.Types;
 using Common.Utility;
 using Features.Goods.Selector;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Levels.GameModifiers.Effects.Data
@@ -10,8 +11,8 @@ namespace Features.Levels.GameModifiers.Effects.Data
         menuName = AssetMenu.EffectsFolder + nameof(MissionLimiterEffectData))]
     public sealed class MissionLimiterEffectData : EffectData
     {
-        [field: SerializeField]
-        public Regions AffectedRegions { get; private set; }
+        [field: SerializeField, InfoBox("Regions that the town CANNOT have to be affected.")]
+        public Regions UnaffectedRegions { get; private set; }
 
         [field: SerializeField]
         public GoodSelectorData GoodSelector { get; private set; }

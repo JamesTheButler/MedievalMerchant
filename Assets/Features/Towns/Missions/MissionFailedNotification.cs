@@ -16,13 +16,13 @@ namespace Features.Towns.Missions
         private static string GetTitle(Town town, Mission mission)
         {
             var config = ResourceManager.Instance.GoodsResources.ConfigData[mission.Good];
-            return $"Mission failed: {town.Name} no longer wants {config.GoodName}.";
+            return $"Mission failed: {town.Name}";
         }
 
         private static string GetDescription(Town town, Mission mission)
         {
             var config = ResourceManager.Instance.GoodsResources.ConfigData[mission.Good];
-            return $"You did not deliver {config.name} in time. {town.Name} is not happy.";
+            return $"You did not deliver enough {config.GoodName} in time. {town.Name} is not happy.";
         }
 
         private static Sprite GetIcon(Good missionGood)

@@ -18,7 +18,7 @@ namespace Features.Levels.GameModifiers.Effects.Logic
             var towns = GameplayContext.Instance.Model.Towns.Values;
             foreach (var town in towns)
             {
-                if (!town.Regions.Intersects(EffectData.AffectedRegions))
+                if (!town.Regions.Intersects(EffectData.UnaffectedRegions))
                 {
                     town.Missions.LimitGoodSelection(EffectData.GoodSelector.Selector);
                 }
@@ -30,7 +30,7 @@ namespace Features.Levels.GameModifiers.Effects.Logic
             var towns = GameplayContext.Instance.Model.Towns.Values;
             foreach (var town in towns)
             {
-                if (!town.Regions.Intersects(EffectData.AffectedRegions))
+                if (!town.Regions.Intersects(EffectData.UnaffectedRegions))
                 {
                     town.Missions.LimitGoodSelection(IGoodSelector.All);
                 }

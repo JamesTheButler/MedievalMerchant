@@ -20,9 +20,6 @@ namespace Features.Towns.Missions.Data
         public int Volume { get; private set; } = 15;
 
         [field: SerializeField]
-        public float PriceBoost { get; private set; } = 0.05f;
-
-        [field: SerializeField]
         public float GoldReward { get; private set; } = 500f;
 
         [field: SerializeField, Range(0, 100)]

@@ -32,7 +32,8 @@ namespace Features.Goods
             {
                 foreach (var good in zone.AvailableGoods)
                 {
-                    if (!_tier1Goods.Add(good)) return;
+                    if (!_tier1Goods.Add(good))
+                        continue;
 
                     var tier2Good = recipeResources.GetTier2RecipeForComponent(good).Result;
                     _tier2Goods.Add(tier2Good);

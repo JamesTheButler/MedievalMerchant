@@ -51,17 +51,22 @@ namespace Features.Towns.Missions
             _tickingService.DayPassed += OnDayPassed;
             _town.TradeCompleted += OnTradeCompleted;
             _town.DevelopmentManager.Tier.Observe(OnTownTierChanged, false);
-            _town.Missions.GoodSelectorChanged += ResetAvailableGoods;
+            _town.Missions.GoodSelectorChanged += OnGSChanged;
 
             ResetAvailableGoods();
         }
 
+        private void OnGSChanged()
+        {
+            ResetAvailableGoods();
+        }
+        
         public void CleanUp()
         {
             _tickingService.DayPassed -= OnDayPassed;
             _town.TradeCompleted -= OnTradeCompleted;
             _town.DevelopmentManager.Tier.StopObserving(OnTownTierChanged);
-            _town.Missions.GoodSelectorChanged -= ResetAvailableGoods;
+            _town.Missions.GoodSelectorChanged -= OnGSChanged;
         }
 
         private void OnTownTierChanged(Tier tier)
@@ -83,9 +88,9 @@ namespace Features.Towns.Missions
             // remove all goods from ongoing missions in this town
             _availableGoods.RemoveFrom(_missionModel.Missions.Keys);
             // remove goods disallowed by MissionModel.Selector
-            if (_missionModel.GoodSelector != IGoodSelector.All)
+            if (_missionModel.PermittedGoodsSelector != IGoodSelector.All)
             {
-                _availableGoods.RemoveWhere(good => !_missionModel.GoodSelector.Matches(good));
+                _availableGoods.RemoveWhere(good => !_missionModel.PermittedGoodsSelector.Matches(good));
             }
         }
 
@@ -128,7 +133,6 @@ namespace Features.Towns.Missions
                 return;
 
             var missionGood = _availableGoods.GetRandom();
-            _tradeConfig = _missionConfig.TradeMissionData;
             var mission = new Mission(
                 missionGood,
                 _tradeConfig.Volume,
@@ -136,10 +140,10 @@ namespace Features.Towns.Missions
                 _tradeConfig.GetReward(),
                 _tradeConfig.GetPenalty());
 
-            TrackMission(mission);
+            EnableMission(mission);
         }
 
-        private void TrackMission(Mission mission)
+        private void EnableMission(Mission mission)
         {
             _missionModel.AddMission(mission);
 
@@ -157,7 +161,7 @@ namespace Features.Towns.Missions
         {
             _resultHandler.Handle(mission.Reward);
 
-            UntrackMission(mission);
+            DisableMission(mission);
         }
 
         private void OnMissionFailed(Mission mission)
@@ -166,10 +170,10 @@ namespace Features.Towns.Missions
             _notificationService.PostNotification(notification);
             _resultHandler.Handle(mission.Penalty);
 
-            UntrackMission(mission);
+            DisableMission(mission);
         }
 
-        private void UntrackMission(Mission mission)
+        private void DisableMission(Mission mission)
         {
             mission.MissionFailed -= OnMissionFailed;
             mission.MissionSucceeded -= OnMissionSucceeded;

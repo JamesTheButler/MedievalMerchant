@@ -39,7 +39,7 @@ namespace Features.Levels
         [field: SerializeField, Expandable]
         public ConditionData[] Conditions { get; private set; }
 
-        [field: SerializeField]
+        [field: SerializeField, Expandable, Required]
         public LevelGameModifierData GameplayModifiers { get; private set; }
 
         /// <summary>
