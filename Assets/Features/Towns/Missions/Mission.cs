@@ -7,7 +7,7 @@ namespace Features.Towns.Missions
 {
     public sealed class Mission
     {
-        public event Action<IMissionResult> MissionFailed, MissionSucceeded;
+        public event Action<Mission> MissionFailed, MissionSucceeded;
 
         public Good Good { get; }
         public int TotalCount { get; }
@@ -30,6 +30,7 @@ namespace Features.Towns.Missions
         {
             Good = good;
             TotalCount = totalCount;
+            RemainingCount.Value = totalCount;
             EndDate = endDate;
             Reward = reward;
             Penalty = penalty;
@@ -44,17 +45,20 @@ namespace Features.Towns.Missions
             if (IsSucceeded)
             {
                 IsActive = false;
-                MissionSucceeded?.Invoke(Reward);
+                MissionSucceeded?.Invoke(this);
             }
         }
 
-        public void Fail()
+        public void ValidateDate(Date currentDate)
         {
             if (!IsActive)
                 return;
 
+            if (currentDate < EndDate)
+                return;
+
             IsActive = false;
-            MissionFailed?.Invoke(Penalty);
+            MissionFailed?.Invoke(this);
         }
     }
 }

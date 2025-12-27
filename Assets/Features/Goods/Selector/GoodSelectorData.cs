@@ -35,7 +35,7 @@ namespace Features.Goods.Selector
 
         private IGoodSelector GetSelector()
         {
-            if (applyToAll) return new AllGoodsSelector();
+            if (applyToAll) return IGoodSelector.All;
             if (goods.Count == 1) return new SingleGoodSelector(goods[0]);
             if (goods.Count > 1) return new SpecificGoodsSelector(goods.ToArray());
 

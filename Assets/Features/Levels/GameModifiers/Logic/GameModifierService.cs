@@ -78,6 +78,7 @@ namespace Features.Levels.GameModifiers.Logic
                 ProductionEffectData effectData => new ProductionEffectLogic(origin, effectData),
                 ReputationEffectData effectData => new ReputationEffectLogic(origin, effectData),
                 PriceEffectData effectData => new PriceEffectLogic(origin, effectData),
+                MissionLimiterEffectData effectData => new MissionLimiterEffectLogic(origin, effectData),
                 _ => throw new ArgumentOutOfRangeException(data.GetType().Name, data, null)
             };
         }

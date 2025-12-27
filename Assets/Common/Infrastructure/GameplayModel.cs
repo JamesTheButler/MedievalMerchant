@@ -5,6 +5,7 @@ using Features.Goods;
 using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.Model;
 using Features.Levels.GameModifiers.Events;
+using Features.Map;
 using Features.Map.Tiling;
 using Features.Player.Logic;
 using Features.Stats;
@@ -32,12 +33,13 @@ namespace Common.Infrastructure
             PlayerModel player,
             IEnumerable<Town> towns,
             TileFlagMap tileFlagMap,
-            ConditionData[] conditions)
+            ConditionData[] conditions,
+            ProductionZone[] productionZones)
         {
             _towns = towns.ToDictionary(town => town.GridLocation, town => town);
             Player = player;
             TileFlagMap = tileFlagMap;
-            GoodPool = new GoodPool();
+            GoodPool = new GoodPool(productionZones);
             Conditions.Initialize(conditions);
         }
     }

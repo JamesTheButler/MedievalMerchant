@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Types;
+using Features.Goods.Selector;
 using Features.Towns.Missions;
 using UnityEngine;
 
@@ -9,10 +10,13 @@ namespace Features.Towns
     public sealed class MissionModel
     {
         public event Action<Mission> MissionAdded, MissionRemoved;
+        public event Action GoodSelectorChanged;
 
         public IReadOnlyDictionary<Good, Mission> Missions => _missions;
 
         private readonly Dictionary<Good, Mission> _missions = new();
+
+        public IGoodSelector GoodSelector { get; private set; } = IGoodSelector.All;
 
         public void AddMission(Mission mission)
         {
@@ -34,6 +38,12 @@ namespace Features.Towns
             }
 
             MissionRemoved?.Invoke(mission);
+        }
+
+        public void LimitGoodSelection(IGoodSelector selector)
+        {
+            GoodSelector = selector;
+            GoodSelectorChanged?.Invoke();
         }
     }
 }

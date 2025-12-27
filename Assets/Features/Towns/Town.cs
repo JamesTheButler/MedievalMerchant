@@ -78,6 +78,7 @@ namespace Features.Towns
             ReputationManager = new ReputationManager(this);
             PriceManager = new PriceManager(this);
             Milestones = new MilestoneModel();
+            Missions = new MissionModel();
 
             const Tier tempTier = Common.Types.Tier.Tier1;
             var consumptionRate = townConfig.GetConsumptionRate(tempTier, tempTier) ?? 0f;

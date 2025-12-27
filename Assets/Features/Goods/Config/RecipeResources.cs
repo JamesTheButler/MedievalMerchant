@@ -6,7 +6,9 @@ using UnityEngine;
 
 namespace Features.Goods.Config
 {
-    [CreateAssetMenu(fileName = nameof(RecipeResources), menuName = AssetMenu.ConfigDataFolder + nameof(RecipeResources))]
+    [CreateAssetMenu(
+        fileName = nameof(RecipeResources),
+        menuName = AssetMenu.ConfigDataFolder + nameof(RecipeResources))]
     public sealed class RecipeResources : ScriptableObject
     {
         [SerializeField]
@@ -14,6 +16,8 @@ namespace Features.Goods.Config
 
         [SerializeField]
         private List<Tier3Recipe> tier3Recipes;
+
+        public IReadOnlyList<Tier3Recipe> Tier3Recipes => tier3Recipes;
 
         private readonly Dictionary<Good, Recipe> _recipes = new();
 
@@ -54,9 +58,7 @@ namespace Features.Goods.Config
 
         public Recipe GetRecipe(Good good)
         {
-            if (_recipes.TryGetValue(good, out var recipe)) return recipe;
-
-            return new Recipe(good);
+            return _recipes.TryGetValue(good, out var recipe) ? recipe : new Recipe(good);
         }
     }
 }

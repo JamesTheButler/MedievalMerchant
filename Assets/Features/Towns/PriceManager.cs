@@ -25,10 +25,10 @@ namespace Features.Towns
             _sellPrices = new PriceList(TradeType.Sell, town, good => !productionManager.IsProduced(good));
 
             _reputationBuyModifier = new ReputationPriceModifier(town, TradeType.Buy);
-            _buyPrices.AddModifier(_reputationBuyModifier, new AllGoodsSelector());
+            _buyPrices.AddModifier(_reputationBuyModifier, IGoodSelector.All);
 
             _reputationSellModifier = new ReputationPriceModifier(town, TradeType.Sell);
-            _sellPrices.AddModifier(_reputationSellModifier, new AllGoodsSelector());
+            _sellPrices.AddModifier(_reputationSellModifier, IGoodSelector.All);
 
             _sellPrices.AddModifier(
                 new LocalGoodPriceModifier(),

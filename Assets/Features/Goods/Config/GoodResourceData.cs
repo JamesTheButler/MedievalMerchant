@@ -5,7 +5,8 @@ using UnityEngine;
 
 namespace Features.Goods.Config
 {
-    [CreateAssetMenu(fileName = nameof(GoodResourceData), menuName = AssetMenu.ConfigDataFolder + nameof(GoodResourceData))]
+    [CreateAssetMenu(fileName = nameof(GoodResourceData),
+        menuName = AssetMenu.ConfigDataFolder + nameof(GoodResourceData))]
     public sealed class GoodResourceData : ScriptableObject
     {
         [field: SerializeField]

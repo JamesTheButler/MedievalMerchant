@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework.Constraints;
 using Random = UnityEngine.Random;
 
 namespace Common.Utility
@@ -123,6 +124,19 @@ namespace Common.Utility
             {
                 self.Remove(item);
             }
+        }
+
+        public static void Add<T>(this ICollection<T> self, IEnumerable<T> source)
+        {
+            foreach (var item in source)
+            {
+                self.Add(item);
+            }
+        }
+
+        public static bool IsEmpty<T>(this IEnumerable<T> self)
+        {
+            return !self.Any();
         }
     }
 }

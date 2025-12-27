@@ -14,6 +14,9 @@ namespace Features.Notifications.UI
         private TMP_Text titleText, descriptionText;
 
         [SerializeField]
+        private Image icon;
+
+        [SerializeField]
         private Button xButton;
 
         private Action _pingCallback, _destroyCallback;
@@ -28,6 +31,8 @@ namespace Features.Notifications.UI
 
             titleText.text = notification.Title;
             descriptionText.text = notification.Description;
+            icon.gameObject.SetActive(notification.Icon != null);
+            icon.sprite = notification.Icon;
             xButton.onClick.AddListener(Close);
             StartLifetimeTimer();
         }

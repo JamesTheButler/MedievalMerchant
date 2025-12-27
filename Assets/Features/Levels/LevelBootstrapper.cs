@@ -39,16 +39,18 @@ namespace Features.Levels
             var towns = townFactory.GenerateTowns(townPositions, zones, tileGrid);
             var player = new PlayerModel(levelInfo.StartPlayerFunds);
 
-            GameplayContext.Instance.Model.Initialize(player, towns, flagMap, levelInfo.Conditions);
-            GameplayContext.Instance.Services.Initialize();
-            GameplayContext.Instance.Systems.Initialize();
+            var context = GameplayContext.Instance;
+            context.Model.Initialize(player, towns, flagMap, levelInfo.Conditions, zones);
+            context.Services.Initialize();
+            context.Systems.Initialize();
 
             var startTown = towns.GetRandom();
             player.Location.CurrentTown = startTown;
             player.Location.WorldLocation.Value = startTown.WorldLocation;
+
             player.CaravanManager.UpgradeCart(0);
 
-            var modifierService = GameplayContext.Instance.Services.GameModifierService;
+            var modifierService = context.Services.GameModifierService;
             modifierService.ApplyModifier(levelInfo.GameplayModifiers);
 
             completed.Invoke();
