@@ -2,7 +2,7 @@ namespace Features.Trade
 {
     public enum TradeType
     {
-        Buy,
-        Sell,
+        Buy = 1,
+        Sell = 2,
     }
 }

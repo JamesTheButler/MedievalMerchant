@@ -6,6 +6,6 @@ namespace Features.Levels.GameModifiers.Events
     public sealed record EventExpiredNotification(EventGameModifierData GameEvent) : Notification(
         $"Event expired: {GameEvent.Title}", 
         GameEvent.Description,
-        NotificationType.Bad,
+        NotificationType.Info,
         null);
 }

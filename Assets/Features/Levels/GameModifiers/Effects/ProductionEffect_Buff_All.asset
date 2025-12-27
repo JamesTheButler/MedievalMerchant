@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4e9afa2e3ad4b0a9b81ae510150cc0e, type: 3}
-  m_Name: ProductionEffect_Buff_Field_+25
+  m_Name: ProductionEffect_Buff_All
   m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.GameModifiers.Data.ProductionEffectData
-  <SpeedBoostPercent>k__BackingField: 0.25
+  <SpeedBoostPercent>k__BackingField: 0.1
   <Selector>k__BackingField:
-    applyToAll: 0
-    limitRegion: 1
+    specificGood: 0
+    applyToAll: 1
+    limitRegion: 0
     limitTier: 0
-    goods: 
-    region: 4
+    good: 0
+    region: 2
     tier: 0

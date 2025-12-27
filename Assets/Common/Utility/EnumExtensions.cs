@@ -21,10 +21,10 @@ namespace Common.Utility
             return (TEnum)Enum.ToObject(typeof(TEnum), result);
         }
 
-        public static bool Intersects<TEnum>(this TEnum first, TEnum second)
+        public static bool Intersects<TEnum>(this TEnum self, TEnum other)
             where TEnum : struct, Enum
         {
-            return (Convert.ToInt64(first) & Convert.ToInt64(second)) != 0;
+            return (Convert.ToInt64(self) & Convert.ToInt64(other)) != 0;
         }
 
         public static List<(T1 val1, T2 val2)> GetPermutations<T1, T2>()
