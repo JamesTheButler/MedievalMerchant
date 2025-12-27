@@ -10,19 +10,18 @@ namespace Features.Levels.GameModifiers.Effects.Logic
     public sealed class PriceEffectLogic : EffectLogic<PriceEffectData>
     {
         private readonly GameplayModel _gameplayModel;
-
-        private IModifier _buyPriceModifier, _sellPriceModifier;
+        private readonly IModifier _buyPriceModifier, _sellPriceModifier;
 
         public PriceEffectLogic(EffectOrigin effectOrigin, PriceEffectData effectData)
             : base(effectOrigin, effectData)
         {
             _gameplayModel = GameplayContext.Instance.Model;
+            _buyPriceModifier = new EffectPercentModifier(-effectData.PriceBoostPercent, effectOrigin);
+            _sellPriceModifier = new EffectPercentModifier(effectData.PriceBoostPercent, effectOrigin);
         }
 
         public override void Apply()
         {
-            _buyPriceModifier = new EffectPercentModifier(-EffectData.PriceBoostPercent, EffectOrigin);
-            _sellPriceModifier = new EffectPercentModifier(EffectData.PriceBoostPercent, EffectOrigin);
             var goodSelector = EffectData.GoodSelector.Selector;
             foreach (var town in _gameplayModel.Towns.Values)
             {
@@ -52,9 +51,6 @@ namespace Features.Levels.GameModifiers.Effects.Logic
                     town.PriceManager.RemoveModifier(_sellPriceModifier, TradeType.Sell);
                 }
             }
-
-            _buyPriceModifier = null;
-            _sellPriceModifier = null;
         }
     }
 }

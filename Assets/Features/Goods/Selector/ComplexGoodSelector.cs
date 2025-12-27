@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Common.Config;
 using Common.Infrastructure;
 using Common.Types;
 using Common.Utility;
@@ -9,20 +12,46 @@ namespace Features.Goods.Selector
     public sealed class ComplexGoodSelector : IGoodSelector
     {
         private readonly Lazy<GoodsResources> _goodResources = new(() => ResourceManager.Instance.GoodsResources);
+        private readonly Lazy<RegionResources> _regionResources = new(() => ResourceManager.Instance.RegionResources);
 
-        private readonly Tier? _tier;
-        private readonly Regions _regions;
+        private readonly Tier? _selectedTier;
+        private readonly Regions _selectedRegions;
 
-        public ComplexGoodSelector(Tier? tier = null, Regions regions = Regions.All)
+        public ComplexGoodSelector(Tier? selectedTier = null, Regions selectedRegions = Regions.All)
         {
-            _tier = tier;
-            _regions = regions;
+            _selectedTier = selectedTier;
+            _selectedRegions = selectedRegions;
         }
 
         public bool Matches(Good good)
         {
             var configData = _goodResources.Value.ConfigData[good];
-            return (_tier == null || _tier == configData.Tier) && _regions.Intersects(configData.Regions);
+            return (_selectedTier == null || _selectedTier == configData.Tier) &&
+                   _selectedRegions.Intersects(configData.Regions);
+        }
+
+        public string ToDisplayString()
+        {
+            var tierString = _selectedTier == null ? "all" : $"Tier {_selectedTier.Value.ToDisplayString()}";
+
+
+            string regionsString;
+            if ((_selectedRegions & Regions.All) == Regions.All)
+            {
+                regionsString = "all regions";
+            }
+            else
+            {
+                regionsString = EnumExtensions.Enumerate<Region>()
+                    .Where(region => _selectedRegions.Contains(region))
+                    .Select(region => _regionResources.Value.Data[region].Name)
+                    .JoinWithAnd();
+            }
+
+            // e.g. "for Tier1 goods from Oceans, Fields and Mountains"
+            // e.g. "for all goods from Oceans"
+            // e.g. "for Tier2 goods from all regions"
+            return $"for {tierString} goods from {regionsString}";
         }
     }
 }

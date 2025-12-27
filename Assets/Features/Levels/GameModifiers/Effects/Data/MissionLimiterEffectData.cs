@@ -16,5 +16,10 @@ namespace Features.Levels.GameModifiers.Effects.Data
 
         [field: SerializeField]
         public GoodSelectorData GoodSelector { get; private set; }
+
+        [SerializeField]
+        private string manualDescription;
+
+        public override string Description => manualDescription;
     }
 }

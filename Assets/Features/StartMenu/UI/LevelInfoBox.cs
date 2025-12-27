@@ -27,7 +27,7 @@ namespace Features.StartMenu.UI
         private PreGameConditionListUI lossConditionList;
 
         [SerializeField, Required]
-        private PreGameConditionListUI gameConditionList;
+        private LevelConditionUiElement levelConditions;
 
         [SerializeField, Required]
         private Button continueButton, startButton;
@@ -59,6 +59,7 @@ namespace Features.StartMenu.UI
             var conditions = levelInfo.Conditions;
             winConditionList.Setup(conditions.OfType<WinConditionData>());
             lossConditionList.Setup(conditions.OfType<LossConditionData>());
+            levelConditions.Setup(levelInfo.GameplayModifiers);
         }
 
         private void LoadCurrentLevel()

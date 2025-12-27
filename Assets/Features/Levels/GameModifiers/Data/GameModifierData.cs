@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Features.Levels.GameModifiers.Effects.Data;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Levels.GameModifiers.Data
@@ -9,7 +10,7 @@ namespace Features.Levels.GameModifiers.Data
         [field: SerializeField]
         public string Title { get; private set; }
 
-        [field: SerializeField]
+        [field: SerializeField, TextArea]
         public string Description { get; private set; }
 
         [field: SerializeField]

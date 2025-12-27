@@ -1,4 +1,5 @@
-﻿using Common.Types;
+﻿using Common.Infrastructure;
+using Common.Types;
 
 namespace Features.Goods.Selector
 {
@@ -14,6 +15,12 @@ namespace Features.Goods.Selector
         public bool Matches(Good good)
         {
             return _good == good;
+        }
+        
+        public string ToDisplayString()
+        {
+            var data = ResourceManager.Instance.GoodsResources.ConfigData[_good];
+            return $"for {data.GoodName}"; // e.g. "for Berries"
         }
     }
 }

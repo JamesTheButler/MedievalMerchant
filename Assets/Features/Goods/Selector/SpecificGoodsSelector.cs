@@ -9,12 +9,9 @@ namespace Features.Goods.Selector
     {
         private readonly Good[] _good;
 
-        public string Description { get; }
-
         public SpecificGoodsSelector(Good[] good)
         {
             _good = good;
-            Description = GetDescription();
         }
 
         public bool Matches(Good good)
@@ -22,11 +19,11 @@ namespace Features.Goods.Selector
             return _good.Contains(good);
         }
 
-        private string GetDescription()
+        public string ToDisplayString()
         {
             var goodResources = ResourceManager.Instance.GoodsResources;
             var names = _good.Select(good => goodResources.ConfigData[good].GoodName);
-            return names.JoinWithAnd();
+            return $"for {names.JoinWithAnd()}"; // e.g. "for Berries, Logs, Flax and Wheat"
         }
     }
 }

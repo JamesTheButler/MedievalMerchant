@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Common.Infrastructure.Modifiable;
 using Common.Types;
 using Features.Goods.Selector;
@@ -9,33 +8,26 @@ namespace Features.Towns
 {
     public sealed class PriceManager
     {
-        private readonly Town _town;
-
-        private readonly ReputationPriceModifier _reputationBuyModifier, _reputationSellModifier;
-        // town milestones
-
-        private readonly List<IModifier> _milestoneModifiers = new();
         private readonly PriceList _buyPrices, _sellPrices;
 
         public PriceManager(Town town)
         {
-            _town = town;
-            var productionManager = _town.ProductionManager;
+            var productionManager = town.ProductionManager;
             _buyPrices = new PriceList(TradeType.Buy, town, productionManager.IsProduced);
             _sellPrices = new PriceList(TradeType.Sell, town, good => !productionManager.IsProduced(good));
 
-            _reputationBuyModifier = new ReputationPriceModifier(town, TradeType.Buy);
-            _buyPrices.AddModifier(_reputationBuyModifier, IGoodSelector.All);
+            var reputationBuyModifier = new ReputationPriceModifier(town, TradeType.Buy);
+            _buyPrices.AddModifier(reputationBuyModifier, IGoodSelector.All);
 
-            _reputationSellModifier = new ReputationPriceModifier(town, TradeType.Sell);
-            _sellPrices.AddModifier(_reputationSellModifier, IGoodSelector.All);
+            var reputationSellModifier = new ReputationPriceModifier(town, TradeType.Sell);
+            _sellPrices.AddModifier(reputationSellModifier, IGoodSelector.All);
 
             _sellPrices.AddModifier(
                 new LocalGoodPriceModifier(),
-                new ComplexGoodSelector(regions: town.Regions));
+                new ComplexGoodSelector(selectedRegions: town.Regions));
             _sellPrices.AddModifier(
                 new ForeignGoodPriceModifier(),
-                new ComplexGoodSelector(regions: Regions.All & ~town.Regions));
+                new ComplexGoodSelector(selectedRegions: Regions.All & ~town.Regions));
         }
 
         public ModifiableVariable GetPrice(Good good, TradeType tradeType)

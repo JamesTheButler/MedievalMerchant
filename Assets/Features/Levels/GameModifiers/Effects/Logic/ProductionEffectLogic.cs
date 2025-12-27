@@ -14,7 +14,7 @@ namespace Features.Levels.GameModifiers.Effects.Logic
             : base(effectOrigin, effectData)
         {
             _gameplayModel = GameplayContext.Instance.Model;
-            _modifier = new EffectPercentModifier(EffectData.SpeedBoostPercent, EffectOrigin);
+            _modifier = new EffectPercentModifier(EffectData.ProductionBoostPercent, EffectOrigin);
         }
 
         public override void Apply()

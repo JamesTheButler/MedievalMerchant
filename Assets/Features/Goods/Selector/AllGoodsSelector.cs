@@ -8,5 +8,10 @@ namespace Features.Goods.Selector
         {
             return true;
         }
+
+        public string ToDisplayString()
+        {
+            return "for all goods";
+        }
     }
 }
