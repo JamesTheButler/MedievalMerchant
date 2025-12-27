@@ -17,8 +17,59 @@ MonoBehaviour:
     the only thing plentiful. Everything else is expensvie and hard to get. So, towns
     really want to get some briny, juicy ocean stuff!
   <Effects>k__BackingField:
-  - {fileID: 11400000, guid: 2768b74c6e90b0f4aaadbf63667906a9, type: 2}
-  - {fileID: 11400000, guid: a8f7f7249b6e2494a8f3c18f06cd3aaa, type: 2}
-  - {fileID: 11400000, guid: 03bec55b2fa54be47aedb396a2304b94, type: 2}
-  - {fileID: 11400000, guid: b710a6cfdf2e29645a6e365fa68a5965, type: 2}
-  - {fileID: 11400000, guid: 1f3e354a1197af7409393d35aa288b0d, type: 2}
+  - rid: 4950215272220852489
+  - rid: 4950215272220852488
+  - rid: 4950215272220852490
+  - rid: 4950215272220852487
+  - rid: 4950215272220852486
+  references:
+    version: 2
+    RefIds:
+    - rid: 4950215272220852486
+      type: {class: MissionLimiterEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <UnaffectedRegions>k__BackingField: 2
+        <GoodSelector>k__BackingField:
+          applyToAll: 0
+          goods: 
+          regions: 2
+          tier: 0
+        manualDescription: Non-Ocean towns only request Ocean goods in their missions.
+    - rid: 4950215272220852487
+      type: {class: PriceEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <TradeTypes>k__BackingField: 6
+        <PriceBoostPercent>k__BackingField: -0.075
+        <GoodSelector>k__BackingField:
+          applyToAll: 0
+          goods: 
+          regions: 13
+          tier: 0
+    - rid: 4950215272220852488
+      type: {class: PriceEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <TradeTypes>k__BackingField: 6
+        <PriceBoostPercent>k__BackingField: 0.25
+        <GoodSelector>k__BackingField:
+          applyToAll: 0
+          goods: 
+          regions: 2
+          tier: 0
+    - rid: 4950215272220852489
+      type: {class: ProductionEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <ProductionBoostPercent>k__BackingField: 0.25
+        <Selector>k__BackingField:
+          applyToAll: 0
+          goods: 
+          regions: 2
+          tier: 0
+    - rid: 4950215272220852490
+      type: {class: ProductionEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <ProductionBoostPercent>k__BackingField: -0.075
+        <Selector>k__BackingField:
+          applyToAll: 0
+          goods: 
+          regions: 13
+          tier: 0

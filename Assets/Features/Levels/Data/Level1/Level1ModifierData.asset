@@ -16,6 +16,37 @@ MonoBehaviour:
   <Description>k__BackingField: Things have been great these past few years. The
     pepole are happy any healthy and life is good.
   <Effects>k__BackingField:
-  - {fileID: 11400000, guid: b538835cf85f04a4795f6e59fa044fae, type: 2}
-  - {fileID: 11400000, guid: c64eddbbfc25c814982ac96a45410fd7, type: 2}
-  - {fileID: 11400000, guid: 9febd066b620396439c2f25a2e8bab1a, type: 2}
+  - rid: 4950215272220852482
+  - rid: 4950215272220852483
+  - rid: 4950215272220852484
+  - rid: 4950215272220852485
+  references:
+    version: 2
+    RefIds:
+    - rid: 4950215272220852482
+      type: {class: MovementSpeedEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <SpeedBoostPercent>k__BackingField: 0.1
+    - rid: 4950215272220852483
+      type: {class: PriceEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <TradeTypes>k__BackingField: 6
+        <PriceBoostPercent>k__BackingField: 0.05
+        <GoodSelector>k__BackingField:
+          applyToAll: 0
+          goods: 
+          regions: 15
+          tier: 0
+    - rid: 4950215272220852484
+      type: {class: ProductionEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <ProductionBoostPercent>k__BackingField: 0.1
+        <Selector>k__BackingField:
+          applyToAll: 0
+          goods: 
+          regions: 15
+          tier: 0
+    - rid: 4950215272220852485
+      type: {class: ReputationEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <ReputationBoostPercent>k__BackingField: 0.2

@@ -14,15 +14,12 @@ namespace Features.Goods.Selector
         private bool applyToAll;
 
         [SerializeField]
-        private bool limitTier;
-
-        [SerializeField]
         private List<Good> goods;
 
         [SerializeField]
         private Regions regions = Regions.All;
 
-        [SerializeField, ShowIf(nameof(limitTier))]
+        [SerializeField]
         private Tier tier;
 
         [CanBeNull]
@@ -36,7 +33,7 @@ namespace Features.Goods.Selector
             if (goods.Count == 1) return new SingleGoodSelector(goods[0]);
             if (goods.Count > 1) return new SpecificGoodsSelector(goods.ToArray());
 
-            return new ComplexGoodSelector(limitTier ? tier : null, regions);
+            return new ComplexGoodSelector(tier, regions);
         }
     }
 }

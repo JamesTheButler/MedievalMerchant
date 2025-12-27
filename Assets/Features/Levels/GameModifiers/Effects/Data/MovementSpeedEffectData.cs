@@ -5,9 +5,7 @@ using UnityEngine;
 
 namespace Features.Levels.GameModifiers.Effects.Data
 {
-    [CreateAssetMenu(
-        fileName = nameof(MovementSpeedEffectData),
-        menuName = AssetMenu.EffectsFolder + nameof(MovementSpeedEffectData))]
+    [Serializable]
     public sealed class MovementSpeedEffectData : EffectData
     {
         [field: SerializeField, Range(-1f, 2f)]

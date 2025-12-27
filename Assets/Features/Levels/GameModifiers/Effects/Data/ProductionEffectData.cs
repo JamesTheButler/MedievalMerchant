@@ -1,13 +1,12 @@
-﻿using Common.UI.Utility;
+﻿using System;
+using Common.UI.Utility;
 using Common.Utility;
 using Features.Goods.Selector;
 using UnityEngine;
 
 namespace Features.Levels.GameModifiers.Effects.Data
 {
-    [CreateAssetMenu(
-        fileName = nameof(ProductionEffectData),
-        menuName = AssetMenu.EffectsFolder + nameof(ProductionEffectData))]
+    [Serializable]
     public sealed class ProductionEffectData : EffectData
     {
         [field: SerializeField, Range(-1f, 2f)]

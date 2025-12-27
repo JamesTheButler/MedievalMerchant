@@ -16,5 +16,21 @@ MonoBehaviour:
   <Description>k__BackingField: The clouds are dark, the air is thick. This storm
     isn't going to end any time soon.
   <Effects>k__BackingField:
-  - {fileID: 11400000, guid: 9f91f44ed6b0f4c43ace461366b87e4a, type: 2}
-  - {fileID: 11400000, guid: e1ca5c1db3d19574ca248cb2d11f6ef5, type: 2}
+  - rid: 4950215272220852478
+  - rid: 4950215272220852479
+  references:
+    version: 2
+    RefIds:
+    - rid: 4950215272220852478
+      type: {class: MovementSpeedEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <SpeedBoostPercent>k__BackingField: -0.05
+    - rid: 4950215272220852479
+      type: {class: ProductionEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <ProductionBoostPercent>k__BackingField: 0.15
+        <Selector>k__BackingField:
+          applyToAll: 0
+          goods: 
+          regions: 5
+          tier: 0

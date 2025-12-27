@@ -1,14 +1,12 @@
-﻿using Common.Types;
-using Common.Utility;
+﻿using System;
+using Common.Types;
 using Features.Goods.Selector;
 using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Levels.GameModifiers.Effects.Data
 {
-    [CreateAssetMenu(
-        fileName = nameof(MissionLimiterEffectData),
-        menuName = AssetMenu.EffectsFolder + nameof(MissionLimiterEffectData))]
+    [Serializable]
     public sealed class MissionLimiterEffectData : EffectData
     {
         [field: SerializeField, InfoBox("Regions that the town CANNOT have to be affected.")]

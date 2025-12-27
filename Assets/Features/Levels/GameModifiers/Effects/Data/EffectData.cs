@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
 
 namespace Features.Levels.GameModifiers.Effects.Data
 {
-    public abstract class EffectData : ScriptableObject
+    [Serializable]
+    public abstract class EffectData
     {
         public abstract string Description { get; }
     }

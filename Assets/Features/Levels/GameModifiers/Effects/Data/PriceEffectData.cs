@@ -1,4 +1,4 @@
-﻿using Common.Types;
+﻿using System;
 using Common.UI.Utility;
 using Common.Utility;
 using Features.Goods.Selector;
@@ -7,9 +7,7 @@ using UnityEngine;
 
 namespace Features.Levels.GameModifiers.Effects.Data
 {
-    [CreateAssetMenu(
-        fileName = nameof(PriceEffectData),
-        menuName = AssetMenu.EffectsFolder + nameof(PriceEffectData))]
+    [Serializable]
     public sealed class PriceEffectData : EffectData
     {
         [field: SerializeField]
@@ -30,9 +28,10 @@ namespace Features.Levels.GameModifiers.Effects.Data
                 var valueString = PriceBoostPercent.ToPercentString(true);
                 var tradeTypeString = TradeTypes switch
                 {
-                    TradeTypes.All or (TradeTypes)(-1) => "",
+                    TradeTypes.All => "",
                     TradeTypes.Buy => "purchase ",
                     TradeTypes.Sell => "sale ",
+                    _ => ""
                 };
                 var selectorString = GoodSelector.Selector.ToDisplayString();
                 var style = PriceBoostPercent > 0 ? Style.Good : Style.Bad;

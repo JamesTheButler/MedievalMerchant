@@ -15,4 +15,27 @@ MonoBehaviour:
   <Title>k__BackingField: Dry Winds
   <Description>k__BackingField: Bad weather ruins much of the seasonal crops.
   <Effects>k__BackingField:
-  - {fileID: 11400000, guid: 29cef41e0e555bc40b1f8778b961b408, type: 2}
+  - rid: 4950215272220852476
+  - rid: 4950215272220852477
+  references:
+    version: 2
+    RefIds:
+    - rid: 4950215272220852476
+      type: {class: ProductionEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <ProductionBoostPercent>k__BackingField: -0.15
+        <Selector>k__BackingField:
+          applyToAll: 0
+          goods: 
+          regions: 4
+          tier: 0
+    - rid: 4950215272220852477
+      type: {class: PriceEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <TradeTypes>k__BackingField: 2
+        <PriceBoostPercent>k__BackingField: -0.5
+        <GoodSelector>k__BackingField:
+          applyToAll: 0
+          goods: 
+          regions: 4
+          tier: 0
