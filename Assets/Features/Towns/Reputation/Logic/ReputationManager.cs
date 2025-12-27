@@ -57,6 +57,16 @@ namespace Features.Towns.Reputation.Logic
             UpdateReputation(clampedNeglect, message);
         }
 
+        public void ApplyMissionReward(float reward)
+        {
+            UpdateReputation(reward, $"You supplied {_town.Name} with the goods they wanted.");
+        }
+
+        public void ApplyMissionPenalty(float penalty)
+        {
+            UpdateReputation(penalty, $"You failed to supply {_town.Name} with what they needed.");
+        }
+
         public void AddModifier(IModifier modifier)
         {
             _modifiers.Add(modifier);

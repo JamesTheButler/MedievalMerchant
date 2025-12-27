@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Common.Types;
+using Features.Goods;
 using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.Model;
 using Features.Levels.GameModifiers.Events;
@@ -21,6 +22,7 @@ namespace Common.Infrastructure
         public Date Date { get; } = new();
         public LevelConditions Conditions { get; } = new();
         public EventModel Events { get; } = new();
+        public GoodPool GoodPool { get; private set; }
 
         public IReadOnlyDictionary<Vector2Int, Town> Towns => _towns;
 
@@ -35,6 +37,7 @@ namespace Common.Infrastructure
             _towns = towns.ToDictionary(town => town.GridLocation, town => town);
             Player = player;
             TileFlagMap = tileFlagMap;
+            GoodPool = new GoodPool();
             Conditions.Initialize(conditions);
         }
     }

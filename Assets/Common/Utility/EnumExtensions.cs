@@ -9,8 +9,8 @@ namespace Common.Utility
     {
         public static T GetRandom<T>() where T : Enum
         {
-            var values = (T[])Enum.GetValues(typeof(T));
-            var index = Random.Range(0, values.Length);
+            var values = Enumerate<T>().ToList();
+            var index = Random.Range(0, values.Count);
             return values[index];
         }
 
@@ -46,9 +46,12 @@ namespace Common.Utility
 
         public static IDictionary<TEnum, TValue> MakeDictionary<TEnum, TValue>(TValue defaultValue) where TEnum : Enum
         {
-            return ((TEnum[])Enum
-                .GetValues(typeof(TEnum)))
-                .ToDictionary(e => e, _ => defaultValue);
+            return Enumerate<TEnum>().ToDictionary(e => e, _ => defaultValue);
+        }
+
+        public static IEnumerable<TEnum> Enumerate<TEnum>() where TEnum : Enum
+        {
+            return Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
         }
     }
 }

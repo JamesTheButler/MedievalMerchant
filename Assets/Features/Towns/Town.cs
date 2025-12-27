@@ -32,6 +32,7 @@ namespace Features.Towns
         public ModifiableVariable FundsChange { get; }
         public PriceManager PriceManager { get; }
         public MilestoneModel Milestones { get; }
+        public MissionModel Missions { get; }
 
         public string Name { get; }
         public FlagInfo FlagInfo { get; private set; }

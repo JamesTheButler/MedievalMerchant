@@ -5,6 +5,7 @@ using Features.Player.Caravan.Config;
 using Features.Player.Retinue.Config;
 using Features.Towns.Config;
 using Features.Towns.Development.Config;
+using Features.Towns.Missions.Data;
 using Features.Towns.Production.Config;
 using Features.Towns.Reputation.Config;
 using NaughtyAttributes;
@@ -32,6 +33,9 @@ namespace Common.Config
 
         [field: SerializeField, Required]
         public GoodsConfig GoodsConfig { get; private set; }
+
+        [field: SerializeField, Required]
+        public MissionConfig MissionConfig { get; private set; }
 
         [field: SerializeField, Required]
         public ProducerConfig ProducerConfig { get; private set; }

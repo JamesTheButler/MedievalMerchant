@@ -8,7 +8,7 @@ namespace Features.Trade.Logic.Price
     /// </summary>
     public sealed class ForeignGoodPriceModifier : BasePercentageModifier
     {
-        public ForeignGoodPriceModifier() : base(0, "Foreign good price modifier")
+        public ForeignGoodPriceModifier() : base(0, "Good from foreign region")
         {
             Value.Value = ConfigurationManager.Configurations.GoodsConfig.ForeignGoodPriceModifier;
         }

@@ -116,5 +116,13 @@ namespace Common.Utility
         {
             return source.Aggregate("", (result, next) => result + formatter.Invoke(next));
         }
+
+        public static void RemoveFrom<T>(this ICollection<T> self, IEnumerable<T> source)
+        {
+            foreach (var item in source)
+            {
+                self.Remove(item);
+            }
+        }
     }
 }

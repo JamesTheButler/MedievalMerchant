@@ -8,6 +8,7 @@ using Features.Ticking;
 using Features.Towns;
 using Features.Towns.Development.Logic;
 using Features.Towns.Development.Logic.Milestones;
+using Features.Towns.Missions;
 using Features.Towns.Production.Logic;
 
 namespace Common.Infrastructure
@@ -65,6 +66,7 @@ namespace Common.Infrastructure
                 _systems.Add(new TownConsumptionSystem(town));
                 _systems.Add(new DevelopmentMilestoneSystem(town));
                 _systems.Add(new MilestoneModifierSystem(town));
+                _systems.Add(new MissionSystem(town));
                 //_systems.Add(new TownNeglectSystem(town)); // TODO - Milestone 0.2.0
             }
         }
