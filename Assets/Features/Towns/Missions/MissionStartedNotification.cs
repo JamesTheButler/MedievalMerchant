@@ -7,8 +7,11 @@ namespace Features.Towns.Missions
 {
     public sealed record MissionStartedNotification : Notification
     {
-        public MissionStartedNotification(Town town, Mission mission)
-            : base(GetTitle(town, mission), GetDescription(mission), GetIcon(mission.Good)) { }
+        public MissionStartedNotification(Town town, Mission mission) : base(
+            GetTitle(town, mission),
+            GetDescription(mission),
+            NotificationType.Info,
+            GetIcon(mission.Good)) { }
 
         private static string GetTitle(Town town, Mission mission)
         {

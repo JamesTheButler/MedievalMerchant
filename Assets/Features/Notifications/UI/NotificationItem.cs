@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Common.UI.Utility;
 using Features.Notifications.Logic;
 using TMPro;
 using UnityEngine;
@@ -29,7 +30,14 @@ namespace Features.Notifications.UI
             _destroyCallback = destroyCallback;
             _lifetimeInSec = lifetimeInSec;
 
-            titleText.text = notification.Title;
+            var style = notification.Type switch
+            {
+                NotificationType.Info => Style.Default,
+                NotificationType.Good => Style.Good,
+                NotificationType.Bad => Style.Bad,
+                _ => Style.Default
+            };
+            titleText.text = notification.Title.WithStyle(style);
             descriptionText.text = notification.Description;
             icon.gameObject.SetActive(notification.Icon != null);
             icon.sprite = notification.Icon;
