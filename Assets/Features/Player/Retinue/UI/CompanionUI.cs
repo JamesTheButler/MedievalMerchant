@@ -15,7 +15,6 @@ namespace Features.Player.Retinue.UI
         [SerializeField]
         private CompanionType companionType;
 
-        [Header("Set Up")]
         [SerializeField, Required]
         private Image companionIcon, fadeOutImage;
 
@@ -29,7 +28,7 @@ namespace Features.Player.Retinue.UI
         private CompanionTooltipHandler tooltip;
 
         [SerializeField, Required]
-        private TMP_Text effectsText;
+        private TMP_Text nameText, descriptionText, effectsText;
 
         private RetinueModel _retinueModel;
         private CompanionConfigData _configData;
@@ -53,6 +52,8 @@ namespace Features.Player.Retinue.UI
         private void InitializeUI()
         {
             levelUiParent.DestroyChildren();
+            nameText.text = _configData.Name;
+            descriptionText.text = _configData.Description;
             companionIcon.sprite = _configData.Icon;
             companionIcon.color = _configData.IsImplemented ? Color.white : Color.white.WithAlpha(0.5f);
             fadeOutImage.enabled = !_configData.IsImplemented;

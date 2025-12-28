@@ -40,7 +40,7 @@ namespace Features
                 { "town.upgrade.random", RandomTownUpgrade },
                 { "town.upgrade.full", CompleteTownUpgrade },
                 { "reset.levels", ResetCompletedLevels },
-                { "reset.tutorial", ResetCompletedLevels },
+                { "reset.tutorial", ResetTutorial },
                 { "reset.all", ResetAllProgress },
             };
 
@@ -257,10 +257,15 @@ namespace Features
             }
         }
 
+        private void ResetTutorial()
+        {
+            GameplayContext.Instance.Services.TutorialService.ResetCompletedTopics();
+        }
+        
         private void ResetAllProgress()
         {
             GlobalContext.Instance.ProgressModel.Reset();
-            GameplayContext.Instance.Services.TutorialService.ResetCompletedTopics();
+            ResetTutorial();
         }
 
         private void ResetCompletedLevels()
