@@ -32,8 +32,7 @@ namespace Features.Goods.Selector
 
         public string ToDisplayString()
         {
-            var tierString = _selectedTier == null ? "all" : $"Tier {_selectedTier.Value.ToDisplayString()}";
-
+            var tierString = _selectedTier is null or 0 ? "all" : _selectedTier.Value.ToDisplayString();
 
             string regionsString;
             if ((_selectedRegions & Regions.All) == Regions.All)

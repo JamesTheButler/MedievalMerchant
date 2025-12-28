@@ -4,6 +4,7 @@ using Common.UI.Utility;
 using Features.Levels;
 using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.UI;
+using Features.Levels.GameModifiers.UI;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace Features.StartMenu.UI
         private PreGameConditionListUI lossConditionList;
 
         [SerializeField, Required]
-        private LevelConditionUiElement levelConditions;
+        private GameModifierUIElement levelConditionsElement;
 
         [SerializeField, Required]
         private Button continueButton, startButton;
@@ -59,7 +60,7 @@ namespace Features.StartMenu.UI
             var conditions = levelInfo.Conditions;
             winConditionList.Setup(conditions.OfType<WinConditionData>());
             lossConditionList.Setup(conditions.OfType<LossConditionData>());
-            levelConditions.Setup(levelInfo.GameplayModifiers);
+            levelConditionsElement.Setup(levelInfo.GameplayModifiers);
         }
 
         private void LoadCurrentLevel()

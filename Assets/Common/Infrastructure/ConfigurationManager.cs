@@ -10,6 +10,9 @@ namespace Common.Infrastructure
         private static ConfigurationManager _instance;
         public static Configurations Configurations;
 
+        [SerializeField]
+        private bool forceRelease;
+        
         [SerializeField, Required, Expandable]
         private Configurations debugConfigs, releaseConfigs;
 
@@ -38,10 +41,10 @@ namespace Common.Infrastructure
             Configurations = IsDebug() ? debugConfigs : releaseConfigs;
         }
 
-        private static bool IsDebug()
+        private bool IsDebug()
         {
 #if UNITY_EDITOR
-            return true;
+            return !forceRelease;
 #else
             return false;
 #endif

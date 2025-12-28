@@ -59,7 +59,7 @@ namespace Features.Levels.GameModifiers.Events
             for (var i = 0; i < MaxEventCreationTries; i++)
             {
                 var eventData = _eventConfig.DefaultEventSet.AvailableEvents.GetRandom();
-                if (_eventModel.OngoingEvents.ContainsKey(eventData))
+                if (_eventModel.OngoingEvents.Any(gameEvent => gameEvent.Data == eventData))
                     continue;
 
                 TriggerEvent(eventData);
@@ -80,14 +80,13 @@ namespace Features.Levels.GameModifiers.Events
         private void RevertExpiredEvents()
         {
             var expiredEvents = _eventModel.OngoingEvents
-                .Where(kvPair => kvPair.Value <= _gameDate)
-                .Select(kvPair => kvPair.Key)
+                .Where(gameEvent => gameEvent.EndDate <= _gameDate)
                 .ToList();
 
             foreach (var expiredEvent in expiredEvents)
             {
-                _gameModifierService.RemoveModifier(expiredEvent);
-                _notificationService.PostNotification(new EventExpiredNotification(expiredEvent));
+                _gameModifierService.RemoveModifier(expiredEvent.Data);
+                _notificationService.PostNotification(new EventExpiredNotification(expiredEvent.Data));
             }
         }
     }

@@ -1,11 +1,25 @@
-﻿using System.Collections.Generic;
-using Common.Types;
-using Features.Levels.GameModifiers.Events.Data;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Features.Levels.GameModifiers.Events
 {
     public sealed class EventModel
     {
-        public readonly Dictionary<EventGameModifierData, Date> OngoingEvents = new();
+        public event Action<GameEvent> EventAdded, EventRemoved;
+
+        private readonly List<GameEvent> _ongoingEvents = new();
+        public IReadOnlyList<GameEvent> OngoingEvents => _ongoingEvents;
+
+        public void AddEvent(GameEvent gameEvent)
+        {
+            _ongoingEvents.Add(gameEvent);
+            EventAdded?.Invoke(gameEvent);
+        }
+
+        public void RemoveEvent(GameEvent gameEvent)
+        {
+            _ongoingEvents.Remove(gameEvent);
+            EventRemoved?.Invoke(gameEvent);
+        }
     }
 }

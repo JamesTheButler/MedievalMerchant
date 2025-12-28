@@ -14,12 +14,15 @@ namespace Features.Levels.GameModifiers.Logic
     public sealed class GameModifierService : IService
     {
         private EventModel _eventModel;
+        private Date _gameDate;
 
         private readonly Dictionary<(GameModifierData, EffectData), IEffectLogic> _logics = new();
+        private readonly Dictionary<GameModifierData, GameEvent> _eventDatasToEvents = new();
 
         public void Initialize()
         {
             _eventModel = GameplayContext.Instance.Model.Events;
+            _gameDate = GameplayContext.Instance.Model.Date;
         }
 
         public void CleanUp() { }
@@ -41,7 +44,10 @@ namespace Features.Levels.GameModifiers.Logic
                     return;
                 }
 
-                _eventModel.OngoingEvents.Add(eventModifierData, endDate);
+                var gameEvent = new GameEvent(eventModifierData, endDate);
+                _gameDate.Changed += gameEvent.UpdateGameDate;
+                _eventModel.AddEvent(gameEvent);
+                _eventDatasToEvents.Add(eventModifierData, gameEvent);
             }
 
             foreach (var effect in modifierData.Effects)
@@ -54,9 +60,11 @@ namespace Features.Levels.GameModifiers.Logic
 
         public void RemoveModifier(GameModifierData modifierData)
         {
-            if (modifierData is EventGameModifierData eventModifierData)
+            if (_eventDatasToEvents.TryGetValue(modifierData, out var gameEvent))
             {
-                _eventModel.OngoingEvents.Remove(eventModifierData);
+                _gameDate.Changed -= gameEvent.UpdateGameDate;
+                _eventModel.RemoveEvent(gameEvent);
+                _eventDatasToEvents.Remove(modifierData);
             }
 
             foreach (var effect in modifierData.Effects)
