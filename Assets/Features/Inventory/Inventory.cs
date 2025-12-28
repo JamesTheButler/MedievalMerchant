@@ -54,13 +54,14 @@ namespace Features.Inventory
 
         public void AddGood(Good good, int amount)
         {
-            if (amount == 0) return;
+            if (amount == 0)
+                return;
 
             if (!_goods.ContainsKey(good))
             {
                 GoodAdded?.Invoke(good);
             }
-            
+
             _goods.TryAdd(good, 0);
             _goods[good] += amount;
             GoodUpdated?.Invoke(good, _goods[good]);

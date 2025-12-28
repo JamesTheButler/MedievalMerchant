@@ -36,7 +36,7 @@ namespace Features
                 { "win", CompleteTownUpgrade },
                 { "player.upgrade.random", RandomPlayerUpgrade },
                 { "player.upgrade.full", CompletePlayerUpgrade },
-                { "town.level", UpgradeSelectedTown },
+                { "town.upgrade", UpgradeSelectedTown },
                 { "town.upgrade.random", RandomTownUpgrade },
                 { "town.upgrade.full", CompleteTownUpgrade },
                 { "reset.levels", ResetCompletedLevels },
@@ -49,6 +49,7 @@ namespace Features
                 { "funds", AddFunds },
                 { "reset.level", ResetLevelProgress },
                 { "tutorial", OpenTutorial },
+                { "give", GiveGoods },
             };
 
             _cheatInput = cheatUI.GetComponentInChildren<TMP_InputField>();
@@ -56,13 +57,22 @@ namespace Features
             cheatUI.SetActive(false);
         }
 
+        private void GiveGoods(string parameter)
+        {
+            var playerInventory = GameplayContext.Instance.Model.Player.Inventory;
+            var good = Enum.Parse<Good>(parameter, true);
+
+            if (playerInventory.InventoryPolicy.CanAdd(good, 50).Success)
+            {
+                playerInventory.AddGood(good, 50);
+            }
+        }
+
         private void UpgradeSelectedTown()
         {
             var selectedTown = GameplayContext.Instance.Selection.SelectedTown.Value;
-            if (selectedTown == null)
-                return;
 
-            selectedTown.DevelopmentManager.Upgrade();
+            selectedTown?.DevelopmentManager.Upgrade();
         }
 
         private void ResetDate()
@@ -265,7 +275,8 @@ namespace Features
 
         private void OpenTutorial(string topic)
         {
-            GameplayContext.Instance.Services.TutorialService.OpenTutorial(Enum.Parse<TutorialTopic>(topic, true));
+            var tutorialTopic = Enum.Parse<TutorialTopic>(topic, true);
+            GameplayContext.Instance.Services.TutorialService.OpenTutorial(tutorialTopic);
         }
 
         private static void ReportSuccess(string message)

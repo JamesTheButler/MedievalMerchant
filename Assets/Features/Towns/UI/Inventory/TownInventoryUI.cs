@@ -4,6 +4,7 @@ using Common.UI.Tooltips;
 using Common.Utility;
 using Features.Towns.Development.UI.DevelopmentGauge;
 using Features.Towns.Flags.UI;
+using Features.Towns.Missions.UI;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -48,6 +49,9 @@ namespace Features.Towns.UI.Inventory
         [SerializeField, Required]
         private TownInventoryPanel inventoryPanel;
 
+        [SerializeField, Required]
+        private MissionPanel missionPanel;
+
         private Town _town;
         private Features.Inventory.Inventory _inventory;
 
@@ -55,6 +59,7 @@ namespace Features.Towns.UI.Inventory
         {
             productionPanel.Initialize();
             inventoryPanel.Initialize();
+            missionPanel.Initialize();
         }
 
         public void Bind(Town town)
@@ -96,6 +101,7 @@ namespace Features.Towns.UI.Inventory
             flagUI.SetFlag(_town.FlagInfo);
             productionPanel.Bind(_town);
             inventoryPanel.Bind(_town);
+            missionPanel.Bind(_town.Missions);
 
             BindInventory(_town.Inventory);
 
@@ -154,6 +160,7 @@ namespace Features.Towns.UI.Inventory
             _town.ReputationManager.IsNeglected.StopObserving(OnNeglectedChanged);
 
             developmentGauge.Unbind();
+            missionPanel.Unbind(_town.Missions);
             fundsTooltip.SetData(_town.FundsChange);
 
             _town = null;
