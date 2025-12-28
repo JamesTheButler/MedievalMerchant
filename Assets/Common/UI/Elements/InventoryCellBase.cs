@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
@@ -5,8 +6,8 @@ namespace Common.UI.Elements
 {
     public class InventoryCellBase : GoodCell
     {
-        [SerializeField]
-        private TMP_Text amountText;
+        [SerializeField, Required]
+        private TMP_Text amountText, amountTextSecondary;
 
         public void SetAmount(int amount)
         {
@@ -18,6 +19,7 @@ namespace Common.UI.Elements
             {
                 amountText?.gameObject.SetActive(true);
                 amountText?.SetText(amount.ToString());
+                amountTextSecondary?.SetText(amount.ToString());
             }
 
             SetEnabled(amount > 0);
