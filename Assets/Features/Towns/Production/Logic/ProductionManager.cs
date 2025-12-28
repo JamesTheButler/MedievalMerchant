@@ -48,7 +48,7 @@ namespace Features.Towns.Production.Logic
 
         public int GetIndexOfProducedGood(Good good)
         {
-            var tier = _goodsResources.ConfigData[good].Tier;
+            var tier = _goodsResources.ResourceData[good].Tier;
             return GetProducers(tier)
                 .ToList()
                 .IndexOf(producer => producer?.ProducedGood == good);
@@ -59,7 +59,7 @@ namespace Features.Towns.Production.Logic
             if (!CanAddProducer(good, index))
                 return;
 
-            var tier = _goodsResources.ConfigData[good].Tier;
+            var tier = _goodsResources.ResourceData[good].Tier;
             var producers = GetProducers(tier);
             var producer = new Producer(good, _town);
             producers[index] = producer;
@@ -93,7 +93,7 @@ namespace Features.Towns.Production.Logic
 
         private bool CanAddProducer(Good good, int index)
         {
-            var tier = _goodsResources.ConfigData[good].Tier;
+            var tier = _goodsResources.ResourceData[good].Tier;
             return GetProducers(tier)[index] == null;
         }
     }

@@ -68,7 +68,7 @@ namespace Features.Towns.UI.Inventory
             if (_town.ProductionManager.IsProduced(good))
                 return;
 
-            var goodTier = _goodsConfig.Value.ConfigData[good].Tier;
+            var goodTier = _goodsConfig.Value.ResourceData[good].Tier;
             rows[goodTier].UpdateGood(good, amount);
         }
 

@@ -43,7 +43,7 @@ namespace Features.Towns.UI.Inventory
 
         public void UpdateGood(Good good, int amount)
         {
-            var goodTier = _goodsResources.ConfigData[good].Tier;
+            var goodTier = _goodsResources.ResourceData[good].Tier;
             if (goodTier != tier)
             {
                 Debug.LogError($"Tried adding {good} to {nameof(InventoryTierRow)} ({goodTier}) for Tier {tier}.");

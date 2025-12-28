@@ -71,7 +71,7 @@ namespace Common.UI.Popups
         public void SetGood(Good good)
         {
             _good = good;
-            goodNameText.text = _goodsConfig.Value.ConfigData[good].GoodName;
+            goodNameText.text = _goodsConfig.Value.ResourceData[good].GoodName;
         }
 
         public void CanBuy(TradeResult canBuy)

@@ -76,7 +76,7 @@ namespace Features.Trade.UI
             _town = _selection.Value.SelectedTown;
             _priceManager = _town.PriceManager;
 
-            _goodResourceData = _configurationManager.Value.ConfigData[good];
+            _goodResourceData = _configurationManager.Value.ResourceData[good];
 
             SetUpGoodIcon();
             SetUpButtons();

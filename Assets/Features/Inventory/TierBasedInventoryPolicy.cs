@@ -24,7 +24,7 @@ namespace Features.Inventory
 
         public TradeResult CanAdd(Good good, int amount)
         {
-            var goodTier = _goodsConfig.Value.ConfigData[good].Tier;
+            var goodTier = _goodsConfig.Value.ResourceData[good].Tier;
 
             return goodTier <= _maxTier
                 ? TradeResult.Succeeded()

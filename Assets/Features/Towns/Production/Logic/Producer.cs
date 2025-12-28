@@ -30,7 +30,7 @@ namespace Features.Towns.Production.Logic
             _producerConfig = ConfigurationManager.Configurations.ProducerConfig;
             var recipeConfig = ResourceManager.Instance.RecipeResources;
 
-            Tier = _goodsResources.ConfigData[producedGood].Tier;
+            Tier = _goodsResources.ResourceData[producedGood].Tier;
 
             var baseProductionRate = new BaseProductionValue(producedGood);
             ProductionRate = new ModifiableVariable("Production Rate", true, baseProductionRate);
@@ -41,7 +41,7 @@ namespace Features.Towns.Production.Logic
 
         private void OnTownTierChanged(Tier townTier)
         {
-            var goodTier = _goodsResources.ConfigData[ProducedGood].Tier;
+            var goodTier = _goodsResources.ResourceData[ProducedGood].Tier;
             var configLimit = _producerConfig.GetLimit(townTier, goodTier);
             ProductionLimit = configLimit ?? 0;
             

@@ -15,19 +15,19 @@ namespace Features.Towns.Missions
 
         private static string GetTitle(Town town, Mission mission)
         {
-            var config = ResourceManager.Instance.GoodsResources.ConfigData[mission.Good];
+            var config = ResourceManager.Instance.GoodsResources.ResourceData[mission.Good];
             return $"Mission started: {town.Name} wants {config.GoodName}.";
         }
 
         private static string GetDescription(Mission mission)
         {
-            var config = ResourceManager.Instance.GoodsResources.ConfigData[mission.Good];
+            var config = ResourceManager.Instance.GoodsResources.ResourceData[mission.Good];
             return $"Deliver {mission.TotalCount}x {config.GoodName} before {mission.EndDate}.";
         }
 
         private static Sprite GetIcon(Good missionGood)
         {
-            var configData = ResourceManager.Instance.GoodsResources.ConfigData[missionGood];
+            var configData = ResourceManager.Instance.GoodsResources.ResourceData[missionGood];
             return configData.Icon;
         }
     }

@@ -19,7 +19,7 @@ namespace Features.Goods.Selector
         
         public string ToDisplayString()
         {
-            var data = ResourceManager.Instance.GoodsResources.ConfigData[_good];
+            var data = ResourceManager.Instance.GoodsResources.ResourceData[_good];
             return $"for {data.GoodName}"; // e.g. "for Berries"
         }
     }

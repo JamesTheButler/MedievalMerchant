@@ -97,7 +97,7 @@ namespace Features.Inventory
             {
                 if (amount <= 0) continue;
 
-                var tier = _goodsInfoManager.Value.ConfigData[good].Tier;
+                var tier = _goodsInfoManager.Value.ResourceData[good].Tier;
                 result[tier]++;
             }
 

@@ -52,7 +52,7 @@ namespace Common.UI.Elements
                 return;
             }
 
-            var goodConfigData = GoodsConfig.Value.ConfigData[good!.Value];
+            var goodConfigData = GoodsConfig.Value.ResourceData[good!.Value];
             goodIcon.gameObject.SetActive(true);
             goodIcon.sprite = goodConfigData.Icon;
             tooltipHandler.SetData(good.Value);

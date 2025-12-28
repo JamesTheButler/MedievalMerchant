@@ -79,7 +79,7 @@ namespace Features.Towns.Missions
             // start with all available goods on the map
             _availableGoods = _goodPool.AllAvailableGoods.ToHashSet();
             // remove from wrong tiers
-            var goodsOfWrongTier = _goodsResources.ConfigData
+            var goodsOfWrongTier = _goodsResources.ResourceData
                 .Where(kvPair => kvPair.Value.Tier != _town.Tier.Value)
                 .Select(kvPair => kvPair.Key);
             _availableGoods.RemoveFrom(goodsOfWrongTier);
@@ -179,7 +179,7 @@ namespace Features.Towns.Missions
             mission.MissionSucceeded -= OnMissionSucceeded;
 
             // add good back into available pool (if of correct tier)
-            var goodTier = _goodsResources.ConfigData[mission.Good].Tier;
+            var goodTier = _goodsResources.ResourceData[mission.Good].Tier;
             if (goodTier == _town.Tier.Value)
             {
                 _availableGoods.Add(mission.Good);

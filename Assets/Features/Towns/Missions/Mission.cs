@@ -17,6 +17,7 @@ namespace Features.Towns.Missions
         public IMissionResult Penalty { get; }
 
         public Observable<int> RemainingCount { get; } = new();
+        public Observable<int> DaysLeft { get; } = new();
 
         public bool IsActive { get; private set; } = true;
         public bool IsSucceeded => RemainingCount.Value <= 0;
@@ -54,6 +55,10 @@ namespace Features.Towns.Missions
             if (!IsActive)
                 return;
 
+            var dayDiff = EndDate.AsDays() - currentDate.AsDays();
+            
+            DaysLeft.Value -= Math.Clamp(dayDiff, 0, DaysLeft);
+            
             if (currentDate < EndDate)
                 return;
 

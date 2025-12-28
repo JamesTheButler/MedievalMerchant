@@ -46,7 +46,7 @@ namespace Features.Towns.Development.Logic
 
         private void OnProducerAdded(Producer producer)
         {
-            var goodTier = _goodsResources.ConfigData[producer.ProducedGood].Tier;
+            var goodTier = _goodsResources.ResourceData[producer.ProducedGood].Tier;
             RefreshProducerModifiers(goodTier);
         }
 
@@ -56,7 +56,7 @@ namespace Features.Towns.Development.Logic
             if (_town.ProductionManager.IsProduced(addedGood))
                 return;
 
-            var goodTier = _goodsResources.ConfigData[addedGood].Tier;
+            var goodTier = _goodsResources.ResourceData[addedGood].Tier;
             RefreshGoodsInInventoryModifiers(goodTier);
         }
 
@@ -84,7 +84,7 @@ namespace Features.Towns.Development.Logic
         {
             var newCount = _town.Inventory.Goods.Keys
                 .Count(good =>
-                    !_town.ProductionManager.IsProduced(good) && _goodsResources.ConfigData[good].Tier == goodTier);
+                    !_town.ProductionManager.IsProduced(good) && _goodsResources.ResourceData[good].Tier == goodTier);
 
             // modifier would not change
             if (_storedGoodsModifier.TryGetValue(goodTier, out var oldModifier) &&

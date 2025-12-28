@@ -46,7 +46,7 @@ namespace Features.Goods.UI
         {
             _good = data;
 
-            var goodData = _goodsResources.ConfigData[_good];
+            var goodData = _goodsResources.ResourceData[_good];
             var tier = goodData.Tier;
             var price = _goodsConfig.BasePriceData[tier];
             var tierIcon = _tierIcons.Icons[tier];

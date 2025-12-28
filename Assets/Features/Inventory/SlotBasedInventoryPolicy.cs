@@ -32,7 +32,7 @@ namespace Features.Inventory
 
         public TradeResult CanAdd(Good good, int amount)
         {
-            var goodTier = _goodsConfig.Value.ConfigData[good].Tier;
+            var goodTier = _goodsConfig.Value.ResourceData[good].Tier;
             var slotsForThisGoodsTier = _inventory.GoodsPerTier()[goodTier];
             var canFitGood = _inventory.HasGood(good) || slotsForThisGoodsTier < _slotsPerTier[goodTier];
 

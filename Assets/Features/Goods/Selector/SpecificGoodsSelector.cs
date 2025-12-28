@@ -22,7 +22,7 @@ namespace Features.Goods.Selector
         public string ToDisplayString()
         {
             var goodResources = ResourceManager.Instance.GoodsResources;
-            var names = _good.Select(good => goodResources.ConfigData[good].GoodName);
+            var names = _good.Select(good => goodResources.ResourceData[good].GoodName);
             return $"for {names.JoinWithAnd()}"; // e.g. "for Berries, Logs, Flax and Wheat"
         }
     }

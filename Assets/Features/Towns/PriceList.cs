@@ -44,7 +44,7 @@ namespace Features.Towns
             if (_cache.TryGetValue(good, out var cachedPrice))
                 return cachedPrice;
 
-            var goodTier = _goodsResources.ConfigData[good].Tier;
+            var goodTier = _goodsResources.ResourceData[good].Tier;
             var goodBasePrice = _goodsConfig.BasePriceData[goodTier];
             var basePriceModifier = new BasePriceModifier(goodBasePrice, goodTier);
 

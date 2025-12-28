@@ -23,7 +23,7 @@ namespace Features.Trade.Logic
 
         public Availability GetAvailability(Good good)
         {
-            var goodTier = _goodsResources.ConfigData[good].Tier;
+            var goodTier = _goodsResources.ResourceData[good].Tier;
             // we use production limit for buy and sell right now
             var maxAmount = _townConfig.GetLimit(_town.Tier.Value, goodTier);
 

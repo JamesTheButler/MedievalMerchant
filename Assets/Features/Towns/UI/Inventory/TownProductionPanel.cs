@@ -113,7 +113,7 @@ namespace Features.Towns.UI.Inventory
             if (!_town.ProductionManager.IsProduced(good))
                 return;
 
-            var goodTier = _goodsConfig.Value.ConfigData[good].Tier;
+            var goodTier = _goodsConfig.Value.ResourceData[good].Tier;
             var cellIndex = _town.ProductionManager.GetIndexOfProducedGood(good);
             rows[goodTier].UpdateProducedGood(good, amount, cellIndex);
         }
@@ -131,7 +131,7 @@ namespace Features.Towns.UI.Inventory
         private void OnProducerAdded(Producer producer)
         {
             var good = producer.ProducedGood;
-            var goodConfigData = _goodsConfig.Value.ConfigData;
+            var goodConfigData = _goodsConfig.Value.ResourceData;
             var goodTier = goodConfigData[good].Tier;
             var index = _town.ProductionManager.GetIndexOfProducedGood(good);
             var section = rows[goodTier];
