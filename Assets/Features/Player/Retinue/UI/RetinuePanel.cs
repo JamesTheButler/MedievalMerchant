@@ -24,14 +24,19 @@ namespace Features.Player.Retinue.UI
             upkeepTooltip.SetData(_retinueModel.Upkeep);
         }
 
-        private void OnUpkeepChanged(float upkeep)
-        {
-            upkeepText.text = upkeep.ToString("0.#");
-        }
-
         public void Toggle()
         {
             gameObject.SetActive(!gameObject.activeSelf);
+        }
+
+        public void Close()
+        {
+            gameObject.SetActive(false);
+        }
+
+        private void OnUpkeepChanged(float upkeep)
+        {
+            upkeepText.text = upkeep.ToString("0.#");
         }
     }
 }
