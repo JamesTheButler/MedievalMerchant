@@ -26,10 +26,13 @@ namespace Features.Towns.Production.UI
         [SerializeField]
         private Button costButton;
 
-        private readonly Lazy<RecipeResources> _recipeConfig = new(() => ResourceManager.Instance.RecipeResources);
+        private readonly Lazy<RecipeResources> _recipeResources = new(() => ResourceManager.Instance.RecipeResources);
+        private readonly Lazy<GoodsResources> _goodResources = new(() => ResourceManager.Instance.GoodsResources);
         private readonly Lazy<Colors> _colors = new(() => ResourceManager.Instance.Colors);
         private readonly Lazy<PlayerModel> _player = new(() => GameplayContext.Instance.Model.Player);
-        private readonly Lazy<ProducerConfig> _producerConfig = new(() => ConfigurationManager.Configurations.ProducerConfig);
+
+        private readonly Lazy<ProducerConfig> _producerConfig =
+            new(() => ConfigurationManager.Configurations.ProducerConfig);
 
         private readonly Dictionary<Tier1ConstructionElement, Action> _clickHandlers = new();
 
@@ -96,6 +99,9 @@ namespace Features.Towns.Production.UI
             var initialSelectionFound = false;
             foreach (var good in town.AvailableGoods)
             {
+                if (_goodResources.Value.ResourceData[good].Tier != Tier.Tier1)
+                    continue;
+
                 var isAlreadyBuilt = town.ProductionManager.IsProduced(good);
                 var element = SpawnElement(good, isAlreadyBuilt);
 
@@ -110,7 +116,7 @@ namespace Features.Towns.Production.UI
 
         private Tier1ConstructionElement SpawnElement(Good good, bool isAlreadyBuilt)
         {
-            var tier2Good = _recipeConfig.Value.GetTier2RecipeForComponent(good).Result;
+            var tier2Good = _recipeResources.Value.GetTier2RecipeForComponent(good).Result;
             var goodGroup = Instantiate(goodGroupPrefab, goodGroupParent);
             var element = goodGroup.GetComponent<Tier1ConstructionElement>();
             element.Setup(good, tier2Good, isAlreadyBuilt);

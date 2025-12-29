@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common.Config;
 using Common.Infrastructure;
 using Common.Types;
@@ -29,7 +30,9 @@ namespace Features.Towns.Production.UI
         private readonly Lazy<RecipeResources> _recipeConfig = new(() => ResourceManager.Instance.RecipeResources);
         private readonly Lazy<Colors> _colors = new(() => ResourceManager.Instance.Colors);
         private readonly Lazy<PlayerModel> _player = new(() => GameplayContext.Instance.Model.Player);
-        private readonly Lazy<ProducerConfig> _producerConfig = new(() => ConfigurationManager.Configurations.ProducerConfig);
+
+        private readonly Lazy<ProducerConfig> _producerConfig =
+            new(() => ConfigurationManager.Configurations.ProducerConfig);
 
         private readonly Dictionary<Tier3UpgradePathElement, Action> _clickHandlers = new();
 
@@ -37,7 +40,6 @@ namespace Features.Towns.Production.UI
         private Town _town;
         private float _cost = -1;
         private float _lastPlayerFunds;
-
 
         public void Setup(Town town, int cellIndex)
         {
@@ -103,8 +105,14 @@ namespace Features.Towns.Production.UI
             var primaryTier2Good = tier2Producer.ProducedGood; // T2 good that was clicked in ui that is shown first
             var tier3Recipes = _recipeConfig.Value.GetTier3RecipeForComponent(primaryTier2Good);
             var initialSelectionFound = false;
+
+            var globalGoodPool = GameplayContext.Instance.Model.GoodPool;
+            var globallyAvailableT3Goods = globalGoodPool.Tier3Goods;
             foreach (var recipe in tier3Recipes)
             {
+                if (!globallyAvailableT3Goods.Contains(recipe.Result))
+                    continue;
+
                 var isAlreadyBuilt = town.ProductionManager.IsProduced(recipe.Result);
                 var element = SpawnElement(recipe, primaryTier2Good);
 

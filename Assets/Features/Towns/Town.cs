@@ -6,6 +6,7 @@ using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Common.Types;
 using Common.Utility;
+using Features.Goods.Config;
 using Features.Inventory;
 using Features.Towns.Development.Logic;
 using Features.Towns.Development.Logic.Milestones;
@@ -48,6 +49,7 @@ namespace Features.Towns
         public IReadOnlyObservable<Tier> Tier => DevelopmentManager.Tier;
 
         private readonly SlotBasedInventoryPolicy _inventoryPolicy;
+        private readonly RecipeResources _recipeResources;
 
         public Town(
             Vector2Int gridLocation,
@@ -65,6 +67,7 @@ namespace Features.Towns
 
             var townConfig = ConfigurationManager.Configurations.TownConfig;
             var townResources = ResourceManager.Instance.TownResources;
+            _recipeResources = ResourceManager.Instance.RecipeResources;
             AvailableGoods = availableGoods.ToHashSet();
 
             Name = townResources.NameGenerators[MainRegion].GenerateName();
@@ -111,6 +114,34 @@ namespace Features.Towns
         private void OnTierChanged(Tier tier)
         {
             _inventoryPolicy.AddSlots(tier, DefaultInventorySlots);
+            switch (tier)
+            {
+                case Common.Types.Tier.Tier2:
+                    var t2Goods = new List<Good>();
+                    foreach (var good in AvailableGoods)
+                    {
+                        t2Goods.Add(_recipeResources.GetTier2RecipeForComponent(good).Result);
+                    }
+
+                    AvailableGoods.Add(t2Goods);
+                    break;
+
+                case Common.Types.Tier.Tier3:
+                    var t3Goods = new List<Good>();
+                    var globalGoodPool = GameplayContext.Instance.Model.GoodPool;
+                    foreach (var t3Good in globalGoodPool.Tier3Goods)
+                    {
+                        var t3Recipe = _recipeResources.GetTier3RecipeForResult(t3Good);
+                        if (AvailableGoods.Contains(t3Recipe.Component1) ||
+                            AvailableGoods.Contains(t3Recipe.Component2))
+                        {
+                            t3Goods.Add(t3Good);
+                        }
+                    }
+
+                    AvailableGoods.Add(t3Goods);
+                    break;
+            }
         }
 
         private void OnProductionManagerOnProductionAdded(Producer producer)
