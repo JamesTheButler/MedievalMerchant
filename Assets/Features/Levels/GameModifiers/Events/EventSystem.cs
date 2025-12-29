@@ -51,6 +51,9 @@ namespace Features.Levels.GameModifiers.Events
             if (!isEventTriggered)
                 return;
 
+            if (_eventModel.OngoingEvents.Count >= _eventConfig.MaxEventCount)
+                return;
+
             TryTriggerEvent();
         }
 

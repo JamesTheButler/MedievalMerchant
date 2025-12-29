@@ -57,7 +57,7 @@ namespace Features.Towns.Missions
 
             var dayDiff = EndDate.AsDays() - currentDate.AsDays();
             
-            DaysLeft.Value -= Math.Clamp(dayDiff, 0, DaysLeft);
+            DaysLeft.Value = Math.Max(0, dayDiff);
             
             if (currentDate < EndDate)
                 return;

@@ -20,7 +20,7 @@ namespace Features.Levels.GameModifiers.Events
         public void UpdateGameDate(Date gameDate)
         {
             var dayDiff = EndDate.AsDays() - gameDate.AsDays();
-            DaysLeft.Value -= Math.Clamp(dayDiff, 0, DaysLeft);
+            DaysLeft.Value = Math.Max(0, dayDiff);
         }
     }
 }
