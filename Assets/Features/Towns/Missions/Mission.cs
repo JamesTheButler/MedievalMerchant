@@ -50,20 +50,25 @@ namespace Features.Towns.Missions
             }
         }
 
+        public void Fail()
+        {
+            IsActive = false;
+            MissionFailed?.Invoke(this);
+        }
+
         public void ValidateDate(Date currentDate)
         {
             if (!IsActive)
                 return;
 
             var dayDiff = EndDate.AsDays() - currentDate.AsDays();
-            
+
             DaysLeft.Value = Math.Max(0, dayDiff);
-            
+
             if (currentDate < EndDate)
                 return;
 
-            IsActive = false;
-            MissionFailed?.Invoke(this);
+            Fail();
         }
     }
 }

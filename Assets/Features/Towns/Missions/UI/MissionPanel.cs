@@ -51,7 +51,7 @@ namespace Features.Towns.Missions.UI
             var uiElement = Instantiate(missionElementPrefab, missionListParent.transform);
             var uiElementScript = uiElement.GetComponentInChildren<MissionUIElement>();
             var goodIcon = _goodsResources.ResourceData[mission.Good].Icon;
-            uiElementScript.Setup(goodIcon, mission.RemainingCount, mission.TotalCount);
+            uiElementScript.Setup(goodIcon, mission.RemainingCount, mission.TotalCount, mission.Fail);
             mission.RemainingCount.Observe(OnMissionCountChanged);
 
             _missionUiElements.Add(mission, uiElementScript);
