@@ -8,6 +8,9 @@ namespace Features.Levels.GameModifiers.Events.Data
         menuName = AssetMenu.ConfigDataFolder + nameof(EventConfig))]
     public sealed class EventConfig : ScriptableObject
     {
+        [field: SerializeField, Min(1)]
+        public int MaxEventCount { get; private set; } = 3;
+        
         [field: SerializeField, Range(0f, 1f)]
         public float DailyEventChance { get; private set; }
 
