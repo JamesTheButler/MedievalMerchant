@@ -1,14 +1,10 @@
-using Common.Types;
 using Common.UI.Popups;
 using Common.UI.Tooltips;
 using Common.Utility;
 using Features.Towns.Development.UI.DevelopmentGauge;
-using Features.Towns.Flags.UI;
 using Features.Towns.Missions.UI;
 using NaughtyAttributes;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -16,17 +12,6 @@ namespace Features.Towns.UI.Inventory
 {
     public sealed class TownInventoryUI : MonoBehaviour, IPointerClickHandler
     {
-        [Header("Events")]
-        [SerializeField]
-        private UnityEvent<Town> travelButtonClicked;
-
-        [Header("Header UI Elements")]
-        [SerializeField, Required]
-        private TMP_Text townNameText, reputationText;
-
-        [SerializeField, Required]
-        private FlagUI flagUI;
-
         [SerializeField, Required]
         private DevelopmentGauge developmentGauge;
 
@@ -35,13 +20,6 @@ namespace Features.Towns.UI.Inventory
 
         [SerializeField, Required]
         private SimpleTooltipHandler upgradeButtonTooltip;
-
-        [Header("Inventory UI Elements")]
-        [SerializeField, Required]
-        private TMP_Text fundsText;
-
-        [SerializeField, Required]
-        private ModifiableTooltipHandler fundsTooltip;
 
         [SerializeField, Required]
         private TownProductionPanel productionPanel;
@@ -53,10 +31,18 @@ namespace Features.Towns.UI.Inventory
         private MissionPanel missionPanel;
 
         private Town _town;
-        private Features.Inventory.Inventory _inventory;
+
+        private TownUISection[] _sections;
 
         public void Initialize()
         {
+            _sections = GetComponentsInChildren<TownUISection>();
+
+            foreach (var section in _sections)
+            {
+                section.Initialize();
+            }
+
             productionPanel.Initialize();
             inventoryPanel.Initialize();
             missionPanel.Initialize();
@@ -70,6 +56,12 @@ namespace Features.Towns.UI.Inventory
             Unbind();
 
             if (town == null) return;
+
+
+            foreach (var section in _sections)
+            {
+                section.Bind(town);
+            }
 
             BindTown(town);
         }
@@ -89,44 +81,17 @@ namespace Features.Towns.UI.Inventory
             _town.DevelopmentManager.Upgrade();
         }
 
-        public void TravelHere()
-        {
-            travelButtonClicked?.Invoke(_town);
-        }
-
         private void BindTown(Town town)
         {
             _town = town;
 
-            flagUI.SetFlag(_town.FlagInfo);
             productionPanel.Bind(_town);
             inventoryPanel.Bind(_town);
             missionPanel.Bind(_town.Missions);
 
-            BindInventory(_town.Inventory);
-
             _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged);
-            _town.Tier.Observe(TownUpgrade);
-            _town.ReputationManager.Reputation.Observe(OnReputationChanged);
-            _town.ReputationManager.IsNeglected.Observe(OnNeglectedChanged);
-            fundsTooltip.SetData(_town.FundsChange);
-
-            RefreshTownName(_town.Tier.Value);
 
             developmentGauge.Bind(_town);
-        }
-
-        private void OnReputationChanged(float reputation)
-        {
-            var neglectedIcon = _town.ReputationManager.IsNeglected ? " :(" : "";
-            reputationText.text = $"Rep: {reputation:0.#}{neglectedIcon}";
-        }
-
-        private void OnNeglectedChanged(bool isNeglected)
-        {
-            var neglectedIcon = !isNeglected ? "" : " :(";
-            var reputation = _town.ReputationManager.Reputation.Value;
-            reputationText.text = $"Rep: {reputation:0.#}{neglectedIcon}";
         }
 
         private void OnDevelopmentChanged(float developmentScore)
@@ -134,13 +99,6 @@ namespace Features.Towns.UI.Inventory
             var isButtonEnabled = developmentScore.IsApproximately(100f);
             upgradeButton.interactable = isButtonEnabled;
             upgradeButtonTooltip.SetEnabled(!isButtonEnabled);
-        }
-
-        private void BindInventory(Features.Inventory.Inventory inventory)
-        {
-            inventory.Funds.Observe(OnFundsUpdated);
-
-            _inventory = inventory;
         }
 
         public void Unbind()
@@ -154,14 +112,8 @@ namespace Features.Towns.UI.Inventory
             if (_town == null) return;
 
             _town.DevelopmentManager.DevelopmentScore.StopObserving(OnDevelopmentChanged);
-            _town.Tier.StopObserving(TownUpgrade);
-
-            _town.ReputationManager.Reputation.StopObserving(OnReputationChanged);
-            _town.ReputationManager.IsNeglected.StopObserving(OnNeglectedChanged);
-
             developmentGauge.Unbind();
             missionPanel.Unbind(_town.Missions);
-            fundsTooltip.SetData(_town.FundsChange);
 
             _town = null;
         }
@@ -170,28 +122,6 @@ namespace Features.Towns.UI.Inventory
         {
             productionPanel.Unbind();
             inventoryPanel.Unbind();
-
-            fundsText.text = "0";
-
-            if (_inventory == null) return;
-
-            _inventory.Funds.StopObserving(OnFundsUpdated);
-            _inventory = null;
-        }
-
-        private void RefreshTownName(Tier tier)
-        {
-            townNameText.text = $"{_town.Name} ({tier.ToRomanNumeral()})";
-        }
-
-        private void TownUpgrade(Tier tier)
-        {
-            RefreshTownName(tier);
-        }
-
-        private void OnFundsUpdated(float funds)
-        {
-            fundsText.text = funds.ToString("N0");
         }
 
         // background click should close popups

@@ -5,7 +5,7 @@ namespace Features.Levels.Conditions.Logic
 {
     public sealed class ConditionLogicFactory
     {
-        public IConditionLogic Get(Model.ICondition condition)
+        public IConditionLogic Get(ICondition condition)
         {
             return condition switch
             {

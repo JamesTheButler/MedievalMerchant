@@ -10,7 +10,10 @@ namespace Features.Towns.Config
         menuName = AssetMenu.ResourceFolder + nameof(TownResources))]
     public sealed class TownResources : ScriptableObject
     {
-        [field: SerializeField, SerializedDictionary("Region", "Name Generator"), Header("Town Setup")]
+        [field: SerializeField, SerializedDictionary("Region", "Name Generator")]
         public SerializedDictionary<Region, TownNameGenerator> NameGenerators { get; private set; }
+
+        [field: SerializeField, SerializedDictionary("Town Tier", "Descriptor")]
+        public SerializedDictionary<Tier, string> TownTypeNames { get; private set; }
     }
 }

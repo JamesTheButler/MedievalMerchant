@@ -45,6 +45,7 @@ namespace Features.Towns
 
         // TODO - Feature: each good needs an Observable<float> consumption rate once implement consumption modifiers
         public Observable<float> ConsumptionRate { get; }
+        public Observable<string> Descriptor { get; } = new("Town");
 
         public IReadOnlyObservable<Tier> Tier => DevelopmentManager.Tier;
 
