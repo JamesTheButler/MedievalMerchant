@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Types;
+using Common.Utility;
 using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
@@ -29,9 +30,17 @@ namespace Features.Goods.Selector
 
         private IGoodSelector GetSelector()
         {
-            if (applyToAll) return IGoodSelector.All;
-            if (goods.Count == 1) return new SingleGoodSelector(goods[0]);
-            if (goods.Count > 1) return new SpecificGoodsSelector(goods.ToArray());
+            if (applyToAll)
+                return IGoodSelector.All;
+
+            if (goods.Count == 1)
+                return new SingleGoodSelector(goods[0]);
+
+            if (goods.Count > 1)
+                return new SpecificGoodsSelector(goods.ToArray());
+
+            if (tier == 0 && regions == Regions.All && goods.IsEmpty())
+                return IGoodSelector.All;
 
             return new ComplexGoodSelector(tier, regions);
         }
