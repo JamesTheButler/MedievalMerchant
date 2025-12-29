@@ -10,7 +10,7 @@ namespace Features.Player.Retinue.Logic.Modifiers
         private readonly TradeType _tradeType;
         private readonly CompanionConfig _companionConfig;
 
-        private int _currentLevel;
+        private int _currentLevel = -1;
 
         public NegotiatorPriceModifier(int level, TradeType tradeType) : base(0, string.Empty)
         {
@@ -25,6 +25,7 @@ namespace Features.Player.Retinue.Logic.Modifiers
             if (_currentLevel == level)
                 return;
 
+            _currentLevel = level;
             var sign = _tradeType == TradeType.Buy ? -1f : 1f;
             var priceBoost = _companionConfig.NegotiatorData.GetTypedLevelData(level)?.PriceSavings ?? 0;
             Value.Value = sign * priceBoost;
