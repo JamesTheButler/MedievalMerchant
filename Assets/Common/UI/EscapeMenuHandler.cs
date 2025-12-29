@@ -1,46 +1,28 @@
 using Common.Infrastructure;
 using Features.Ticking;
 using Features.Ticking.Logic;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Common.UI
 {
     public class EscapeMenuHandler : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject escapeMenuRoot;
+        [SerializeField, Required]
+        private EscapeMenu escapeMenu;
 
         private GameSpeedModel _gameSpeedModel;
-
-        private bool IsActive => escapeMenuRoot.activeSelf;
-
-        public void ToggleMenu()
-        {
-            ToggleEscMenu(!IsActive);
-        }
-
-        public void OpenMenu()
-        {
-            ToggleEscMenu(true);
-        }
 
         private void Start()
         {
             _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
-            ToggleEscMenu(false);
+            escapeMenu.Closed += OnMenuClosed;
+            escapeMenu.Opened += OnMenuOpened;
+            escapeMenu.Hide();
         }
 
-        private void ToggleEscMenu(bool isActive)
-        {
-            escapeMenuRoot.SetActive(isActive);
-            if (isActive)
-            {
-                _gameSpeedModel.Pause();
-            }
-            else
-            {
-                _gameSpeedModel.Resume();
-            }
-        }
+        public void ToggleMenu() => escapeMenu.Toggle();
+        private void OnMenuOpened() => _gameSpeedModel.Pause();
+        private void OnMenuClosed() => _gameSpeedModel.Resume();
     }
 }

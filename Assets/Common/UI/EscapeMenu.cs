@@ -1,3 +1,4 @@
+using System;
 using Common.Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace Common.UI
 {
     public sealed class EscapeMenu : MonoBehaviour
     {
+        public event Action Opened, Closed;
+
         [SerializeField, Scene]
         private string startScene;
 
@@ -20,24 +23,22 @@ namespace Common.UI
 
         private void Start()
         {
-            cancelButton.onClick.AddListener(CloseSelf);
+            cancelButton.onClick.AddListener(Hide);
             giveUpButton.onClick.AddListener(GiveUp);
             resetTutorialButton.onClick.AddListener(ResetTutorialState);
             feedbackButton.onClick.AddListener(ReportBug);
         }
 
-        private void OnDestroy()
+        public void Show()
         {
-            cancelButton.onClick.RemoveListener(CloseSelf);
-            giveUpButton.onClick.RemoveListener(GiveUp);
-            resetTutorialButton.onClick.RemoveListener(ResetTutorialState);
-            feedbackButton.onClick.RemoveListener(ReportBug);
+            gameObject.SetActive(true);
+            Opened?.Invoke();
         }
 
-
-        private void CloseSelf()
+        public void Hide()
         {
             gameObject.SetActive(false);
+            Closed?.Invoke();
         }
 
         private void ReportBug()
@@ -54,6 +55,18 @@ namespace Common.UI
         {
             giveUpPressed.Invoke();
             SceneManager.LoadScene(startScene);
+        }
+
+        public void Toggle()
+        {
+            if (gameObject.activeSelf)
+            {
+                Hide();
+            }
+            else
+            {
+                Show();
+            }
         }
     }
 }
