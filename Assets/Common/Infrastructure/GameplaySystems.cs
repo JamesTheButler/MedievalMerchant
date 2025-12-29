@@ -54,6 +54,7 @@ namespace Common.Infrastructure
             _systems.Add(new PlayerUpkeepSystem());
             _systems.Add(new PlayerTradeTrackingSystem());
             _systems.Add(new RetinueSystem());
+            _systems.Add(new PlayerMapSpeedSystem());
         }
 
         private void AddTownSystems()

@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Utility;
-using Features.Player.Caravan.Config;
 using Features.Player.Logic;
-using Features.Ticking;
+using Features.Ticking.Logic;
 using Features.Towns;
 using UnityEngine;
 
@@ -22,21 +21,22 @@ namespace Features.Map.Pathfinding
 
         private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Instance.Model);
 
-        private Lazy<RoadGraph> _graph;
-        private Lazy<PlayerLocation> _playerLocation;
-        private Lazy<CaravanConfig> _caravanConfig;
-        private Lazy<TickingService> _tickingService;
+        private RoadGraph _graph;
+        private PlayerLocation _playerLocation;
+        private GameSpeedModel _gameSpeedModel;
 
         private PlayerLocation Location => _model.Value.Player.Location;
 
+        private float _mapSpeed;
+
         private Town _town;
 
-        private void Awake()
+        private void Start()
         {
-            _graph = new Lazy<RoadGraph>(() => RoadGraphBuilder.Build(_model.Value.TileFlagMap));
-            _playerLocation = new Lazy<PlayerLocation>(() => _model.Value.Player.Location);
-            _tickingService = new Lazy<TickingService>(() => GameplayContext.Instance.Services.TickingService);
-            _caravanConfig = new Lazy<CaravanConfig>(() => ConfigurationManager.Configurations.CaravanConfig);
+            _graph = RoadGraphBuilder.Build(_model.Value.TileFlagMap);
+            _playerLocation = _model.Value.Player.Location;
+            _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
+            GameplayContext.Instance.Model.Player.SpeedInTilesPerDay.Observe(OnMapSpeedChanged);
         }
 
         public void TravelTo(Town town)
@@ -53,7 +53,7 @@ namespace Features.Map.Pathfinding
             startCell = NearestRoadCell(startCell);
             endCell = NearestRoadCell(endCell);
 
-            if (AStar.FindPath(_graph.Value, startCell, endCell, out var path))
+            if (AStar.FindPath(_graph, startCell, endCell, out var path))
             {
                 StopAllCoroutines(); // cancel any current travel
             }
@@ -61,9 +61,14 @@ namespace Features.Map.Pathfinding
             StartCoroutine(MoveAlongPath(path));
         }
 
+        private void OnMapSpeedChanged(float mapSpeed)
+        {
+            _mapSpeed = mapSpeed;
+        }
+
         private Vector2Int NearestRoadCell(Vector2Int cell)
         {
-            var graph = _graph.Value;
+            var graph = _graph;
             if (graph.IsNode(cell))
                 return cell;
 
@@ -108,9 +113,8 @@ namespace Features.Map.Pathfinding
 
             var smoothed = SmoothCorners(points, smoothing);
 
-            // Move
-            _playerLocation.Value.WorldLocation.Value = smoothed[0];
-            _playerLocation.Value.CurrentTown = null;
+            _playerLocation.WorldLocation.Value = smoothed[0];
+            _playerLocation.CurrentTown = null;
 
             for (var i = 1; i < smoothed.Count; i++)
             {
@@ -118,27 +122,30 @@ namespace Features.Map.Pathfinding
                 var b = smoothed[i];
                 var dist = Vector3.Distance(a, b);
 
-                // TODO - Optimization: would be cheaper to observe model and have local _moveSpeed
-                var moveSpeed = _model.Value.Player.MovementSpeed * _caravanConfig.Value.MovementSpeedMultiplier;
-                var dur = dist / Mathf.Max(0.01f, moveSpeed);
+                var dur = dist / Mathf.Max(0.01f, GetMapSpeed());
                 var elapsed = 0f;
                 while (elapsed < dur)
                 {
                     // TODO - Optimization: would be cheaper to observe _tickingService and have local _isPaused
                     // pause movement when game is paused
-                    yield return new WaitUntil(() => !_tickingService.Value.IsPaused);
+                    yield return new WaitUntil(() => !_gameSpeedModel.IsPaused.Value);
 
                     elapsed += Time.deltaTime;
                     var u = Mathf.Clamp01(elapsed / dur);
-                    _playerLocation.Value.WorldLocation.Value = Vector3.Lerp(a, b, u);
+                    _playerLocation.WorldLocation.Value = Vector3.Lerp(a, b, u);
 
                     yield return null;
                 }
             }
 
             // we arrived
-            _playerLocation.Value.CurrentTown = _town;
+            _playerLocation.CurrentTown = _town;
             _town = null;
+        }
+
+        private float GetMapSpeed()
+        {
+            return _mapSpeed;
         }
 
         private static List<Vector3> SmoothCorners(List<Vector3> pts, float cut)

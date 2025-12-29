@@ -17,7 +17,7 @@ namespace Features.Player.Caravan.Config
         private SerializedDictionary<int, CaravanUpgradeData> caravanUpgradeDatas;
 
         [field: SerializeField]
-        public float MovementSpeedMultiplier { get; private set; }
+        public float TilesPerMoveSpeedPointPerDay { get; private set; } = 1f;
 
         [field: SerializeField]
         public float BaseUpkeep { get; private set; } = 5f;

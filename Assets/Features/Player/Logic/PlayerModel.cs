@@ -1,4 +1,5 @@
 using Common.Infrastructure.Modifiable;
+using Common.Infrastructure.Observation;
 using Features.Inventory;
 using Features.Player.Caravan.Logic;
 using Features.Player.Retinue.Logic;
@@ -10,6 +11,9 @@ namespace Features.Player.Logic
         public PlayerLocation Location { get; } = new();
 
         public ModifiableVariable MovementSpeed => CaravanManager.MoveSpeed;
+
+        public Observable<float> SpeedInTilesPerDay = new(1f);
+
         public ModifiableVariable FundsChange { get; }
 
         public Inventory.Inventory Inventory { get; }
