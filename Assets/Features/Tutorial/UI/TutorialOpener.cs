@@ -1,4 +1,5 @@
 ﻿using Common.Infrastructure;
+using Common.UI.Tooltips;
 using Common.UI.Utility;
 using Features.Tutorial.Logic;
 using NaughtyAttributes;
@@ -17,6 +18,9 @@ namespace Features.Tutorial.UI
         private Button button;
 
         [SerializeField, Required]
+        private SimpleTooltipHandler tooltip;
+
+        [SerializeField, Required]
         private Sprite defaultBackground, highlightedBackground;
 
         private TutorialService _tutorialService;
@@ -31,6 +35,8 @@ namespace Features.Tutorial.UI
             _buttonText = button.GetComponentInChildren<TMP_Text>();
             _tutorialService = GameplayContext.Instance.Services.TutorialService;
             _tutorialService.TopicCompletionChanged += OnTopicCompleted;
+            var topicName = ResourceManager.Instance.TutorialResources.Topics[tutorialTopic].Title;
+            tooltip.SetData($"Tutorial: {topicName}");
             MarkAsCompleted(_tutorialService.CompletedChapters[tutorialTopic]);
         }
 

@@ -22,6 +22,7 @@ namespace Features.Player.Retinue.UI
             _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
             _retinueModel.Upkeep.Observe(OnUpkeepChanged);
             upkeepTooltip.SetData(_retinueModel.Upkeep);
+            Close();
         }
 
         public void Toggle()
