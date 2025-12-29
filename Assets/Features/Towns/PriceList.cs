@@ -61,7 +61,6 @@ namespace Features.Towns
             price.AddModifier(availabilityModifier);
             _town.Inventory.GoodUpdated += OnGoodUpdated;
 
-
             // add all other modifiers
             var matchingModifiers = _modifiers
                 .Where(kv => kv.Value.Matches(good))
@@ -82,11 +81,28 @@ namespace Features.Towns
         public void AddModifier(IModifier modifier, IGoodSelector goodSelector)
         {
             _modifiers.Add(modifier, goodSelector);
+
+            foreach (var (good, price) in _cache)
+            {
+                if (!goodSelector.Matches(good))
+                    continue;
+
+                price.AddModifier(modifier);
+            }
         }
 
         public void RemoveModifier(IModifier modifier)
         {
-            _modifiers.Remove(modifier);
+            if (!_modifiers.Remove(modifier, out var goodSelector))
+                return;
+
+            foreach (var (good, price) in _cache)
+            {
+                if (!goodSelector.Matches(good))
+                    continue;
+
+                price.RemoveModifier(modifier);
+            }
         }
 
         public bool HasPrice(Good good)

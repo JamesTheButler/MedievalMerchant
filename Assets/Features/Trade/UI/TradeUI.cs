@@ -84,7 +84,7 @@ namespace Features.Trade.UI
             SetUpSlider();
 
             _observedPrice = _priceManager.GetPrice(good, tradeType);
-            _priceManager.GetPrice(good, tradeType).Observe(OnGoodPriceChanged);
+            _observedPrice.Observe(OnGoodPriceChanged);
             priceTooltip.SetData(_observedPrice);
 
             gameObject.SetActive(true);
@@ -92,26 +92,6 @@ namespace Features.Trade.UI
             SetMaxPrice();
 
             _isInitialized = true;
-        }
-
-        private void OnGoodPriceChanged(float newPrice)
-        {
-            _singlePrice = newPrice;
-            RefreshTotalPrice();
-        }
-
-        private void SetUpGoodIcon()
-        {
-            goodIcon.sprite = _goodResourceData.Icon;
-            goodTooltip.SetData(_good);
-        }
-
-        private void SetUpSlider()
-        {
-            amountSlider.minValue = 0;
-            amountSlider.value = 0;
-            amountSlider.maxValue = _sellerGoodAmount;
-            amountSlider.onValueChanged.AddListener(TradeSliderUpdate);
         }
 
         public void Hide()
@@ -141,6 +121,26 @@ namespace Features.Trade.UI
             var maxAffordableGoodAmount = Mathf.FloorToInt(_buyingInventory.Funds.Value / _singlePrice);
             amountSlider.value = Mathf.Min(maxAffordableGoodAmount, amountSlider.maxValue);
             RefreshTotalPrice();
+        }
+
+        private void OnGoodPriceChanged(float newPrice)
+        {
+            _singlePrice = newPrice;
+            RefreshTotalPrice();
+        }
+
+        private void SetUpGoodIcon()
+        {
+            goodIcon.sprite = _goodResourceData.Icon;
+            goodTooltip.SetData(_good);
+        }
+
+        private void SetUpSlider()
+        {
+            amountSlider.minValue = 0;
+            amountSlider.value = 0;
+            amountSlider.maxValue = _sellerGoodAmount;
+            amountSlider.onValueChanged.AddListener(TradeSliderUpdate);
         }
 
         private void TradeSliderUpdate(float amount)

@@ -26,7 +26,8 @@ namespace Features.Goods.Selector
         public bool Matches(Good good)
         {
             var configData = _goodResources.Value.ResourceData[good];
-            return (_selectedTier == null || _selectedTier == configData.Tier) &&
+            // HACK: _selectedTier is set from inspector 
+            return (_selectedTier == null || _selectedTier == 0|| _selectedTier == configData.Tier) &&
                    _selectedRegions.Intersects(configData.Regions);
         }
 
