@@ -49,18 +49,19 @@ namespace Features.Tutorial.UI
 
         public void Open()
         {
+            if (gameObject.activeSelf)
+                return;
+            
             gameObject.SetActive(true);
         }
 
         public void Close()
         {
+            if (!gameObject.activeSelf)
+                return;
+            
             Closed?.Invoke();
             gameObject.SetActive(false);
-        }
-
-        private void OnDisable()
-        {
-            Closed?.Invoke();
         }
 
         private void SetChapter(int index)

@@ -37,7 +37,8 @@ namespace Features.Ticking
 
         public void Update(float deltaTime)
         {
-            if (IsPaused) return;
+            if (IsPaused.Value)
+                return;
 
             _timer += deltaTime;
 
