@@ -14,6 +14,8 @@ namespace Features.Notifications.UI
         private GameSpeedModel _gameSpeedModel;
         private NotificationService _notificationService;
 
+        private Notification _currentNofNotification;
+
         private void Start()
         {
             _notificationService = GameplayContext.Instance.Services.NotificationService;
@@ -24,6 +26,15 @@ namespace Features.Notifications.UI
 
             panel.Opened += OnPanelOpened;
             panel.Closed += OnPanelClosed;
+            panel.Pinged += OnPingRequested;
+        }
+
+        private void OnPingRequested()
+        {
+            if (_currentNofNotification == null)
+                return;
+
+            _notificationService.PingNotification(_currentNofNotification);
         }
 
         public void ClosePanel()
@@ -33,15 +44,17 @@ namespace Features.Notifications.UI
 
         private void OnNotificationPosted(Notification notification)
         {
-           //if (notification.Severity != Severity.Major)
-           //    return;
+            if (notification.Severity != Severity.Major)
+                return;
 
+            _currentNofNotification = notification;
             panel.Show(notification);
         }
 
         private void OnPanelClosed()
         {
             _gameSpeedModel.Resume();
+            _currentNofNotification = null;
         }
 
         private void OnPanelOpened()

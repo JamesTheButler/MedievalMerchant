@@ -9,7 +9,7 @@ namespace Features.Notifications.UI
 {
     public sealed class MajorNotificationPanel : MonoBehaviour
     {
-        public event Action Opened, Closed;
+        public event Action Opened, Closed, Pinged;
 
         [SerializeField]
         private TMP_Text titleText, descriptionText;
@@ -18,7 +18,7 @@ namespace Features.Notifications.UI
         private Image icon;
 
         [SerializeField]
-        private Button closeButton;
+        private Button closeButton, pingButton;
 
         public void Show(Notification notification)
         {
@@ -35,11 +35,20 @@ namespace Features.Notifications.UI
             icon.gameObject.SetActive(notification.Icon != null);
             icon.sprite = notification.Icon;
             closeButton.onClick.AddListener(Hide);
+            pingButton.onClick.AddListener(PingNotification);
+            gameObject.SetActive(true);
             Opened?.Invoke();
+        }
+
+        private void PingNotification()
+        {
+            Pinged?.Invoke();
+            Hide();
         }
 
         public void Hide()
         {
+            gameObject.SetActive(false);
             Closed?.Invoke();
         }
     }

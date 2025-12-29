@@ -22,8 +22,7 @@ namespace Features.Levels.GameModifiers.UI
 
             titleText.text = modifierData.Title;
             descriptionText.text = modifierData.Description;
-            effectsText.text = modifierData.Effects
-                .AggregateString(effect => $"- {effect.Description}\n");
+            effectsText.text = modifierData.EffectsString;
         }
     }
 }
