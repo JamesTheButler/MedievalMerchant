@@ -1,6 +1,6 @@
-using System;
-using Common.Infrastructure;
+using Common.Utility;
 using NaughtyAttributes;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,29 +11,26 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
         public record Data(float ThresholdPercent, Sprite Icon, string Description);
 
         [SerializeField, Required]
-        private Image milestoneImage, topImage;
+        private Image milestoneImage, topImage, incompletedBlocker;
 
         [SerializeField]
-        private Image baseImage;
+        private TMP_Text percentText;
 
         [SerializeField, Required]
         private DevelopmentMilestoneTooltipHandler tooltip;
-
-        private readonly Lazy<DevelopmentMilestoneResources> _milestoneAssets =
-            new(() => ResourceManager.Instance.DevelopmentMilestoneResources);
 
         private Data _data;
         private float _threshold;
         private Slider _slider;
         private bool? _isCompleted;
 
-
-        public void SetUp(Slider newSlider, Data data)
+        public void SetUp(Slider slider, Data data)
         {
             _data = data;
             _threshold = data.ThresholdPercent * 100f;
 
-            _slider = newSlider;
+            percentText?.SetText(data.ThresholdPercent.ToPercentString());
+            _slider = slider;
             _slider.onValueChanged.AddListener(SliderValueChanged);
             milestoneImage.sprite = data.Icon;
             tooltip.SetData(new DevelopmentMilestoneTooltip.Data(data, _isCompleted ?? false));
@@ -53,16 +50,7 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
                 return;
 
             tooltip.SetData(new DevelopmentMilestoneTooltip.Data(_data, isCompleted));
-            var assets = _milestoneAssets.Value;
-
-            // to accomodate base-less end milestones
-            if (baseImage)
-            {
-                baseImage.sprite = isCompleted ? assets.BaseComplete : assets.BaseIncomplete;
-            }
-
-            topImage.sprite = isCompleted ? assets.TopComplete : assets.TopIncomplete;
-
+            incompletedBlocker.gameObject.SetActive(!isCompleted);
             _isCompleted = isCompleted;
         }
     }

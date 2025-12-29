@@ -10,15 +10,6 @@ namespace Features.Towns.Development.UI.DevelopmentGauge
     public sealed class DevelopmentMilestoneResources : ScriptableObject
     {
         [field: SerializeField, Required]
-        public Sprite BaseIncomplete { get; private set; }
-
-        [field: SerializeField, Required]
-        public Sprite BaseComplete { get; private set; }
-
-        [field: SerializeField, Required]
-        public Sprite TopIncomplete { get; private set; }
-
-        [field: SerializeField, Required]
         public Sprite TopComplete { get; private set; }
     }
 }

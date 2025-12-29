@@ -68,7 +68,7 @@ TextureImporter:
   spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
@@ -126,7 +126,7 @@ TextureImporter:
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 5, z: 0, w: 5}
+      border: {x: 4, y: 4, z: 4, w: 4}
       customData: 
       outline: []
       physicsShape: []
@@ -148,7 +148,7 @@ TextureImporter:
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 3, y: 6, z: 3, w: 6}
+      border: {x: 4, y: 4, z: 4, w: 4}
       customData: 
       outline: []
       physicsShape: []
@@ -161,11 +161,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Milestone_Top_Complete
+      name: Milestone
       rect:
         serializedVersion: 2
-        x: 0
-        y: 16
+        x: 32
+        y: 32
         width: 16
         height: 16
       alignment: 0
@@ -178,72 +178,6 @@ TextureImporter:
       bones: []
       spriteID: a1bac1d7eabeb8b44bb89b41d7277665
       internalID: 1938853221
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Milestone_Top_Incomplete
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 4, y: 4, z: 4, w: 4}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d8e2ac59e22d5eb45a041d34dc0aa34d
-      internalID: -235718613
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Milestone_Base_Complete
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 4, y: 4, z: 4, w: 4}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 453a1fb89260f34428be8b41a01b52b7
-      internalID: -1320369275
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Milestone_Base_Incomplete
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 4, y: 4, z: 4, w: 4}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eca2c43142dc2d449be715ad2ba1da63
-      internalID: 176488005
       vertices: []
       indices: 
       edges: []
@@ -263,9 +197,9 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       MarketStateIcons_0: 1407447166
+      Milestone: 1938853221
       Milestone_Base_Complete: -1320369275
       Milestone_Base_Incomplete: 176488005
-      Milestone_Top_Complete: 1938853221
       Milestone_Top_Incomplete: -235718613
       Slider_Background: 661333760
       Slider_Fill: 151497275

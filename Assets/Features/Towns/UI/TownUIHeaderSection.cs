@@ -62,7 +62,7 @@ namespace Features.Towns.UI
 
             // TODO: is this OK when we change the town??
             fundsChangeTooltip.SetData(town.FundsChange);
-            
+
             town.Tier.Observe(OnTierChanged);
             town.Descriptor.Observe(OnDescriptorChanged);
             town.ReputationManager.Reputation.Observe(OnReputationChanged);
@@ -100,7 +100,7 @@ namespace Features.Towns.UI
         {
             _playerModel.Location.TownEntered -= OnTownEntered;
             _playerModel.Location.TownExited -= OnTownExited;
-            
+
             town.Tier.StopObserving(OnTierChanged);
             town.Descriptor.StopObserving(OnDescriptorChanged);
             town.ReputationManager.Reputation.StopObserving(OnReputationChanged);

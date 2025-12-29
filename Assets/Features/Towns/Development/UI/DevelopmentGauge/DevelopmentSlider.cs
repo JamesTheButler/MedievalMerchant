@@ -7,24 +7,21 @@ using UnityEngine.UI;
 
 namespace Features.Towns.Development.UI.DevelopmentGauge
 {
-    public class DevelopmentSlider : MonoBehaviour
+    public sealed class DevelopmentSlider : MonoBehaviour
     {
         [SerializeField, Required]
         private Slider slider;
 
         [SerializeField, Required]
-        private GameObject milestonePrefab;
-
-        [SerializeField, Required]
-        private GameObject endMilestonePrefab;
+        private GameObject milestonePrefab, endMilestonePrefab;
 
         [SerializeField, Required]
         private Transform milestoneParent;
 
         public void SetDevelopment(float developmentScore)
         {
-            var actualValue = Math.Clamp(developmentScore, 0, 100f);
-            slider.value = actualValue;
+            var clampedScore = Math.Clamp(developmentScore, 0, 100f);
+            slider.value = clampedScore;
         }
 
         public void SetMilestones(List<DevelopmentMilestone.Data> milestones)

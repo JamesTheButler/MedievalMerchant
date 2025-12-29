@@ -6,15 +6,13 @@ using Features.Towns.Missions.UI;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Features.Towns.UI.Inventory
 {
     public sealed class TownInventoryUI : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField, Required]
-        private DevelopmentGauge developmentGauge;
-
         [SerializeField, Required]
         private Button upgradeButton;
 
@@ -90,8 +88,6 @@ namespace Features.Towns.UI.Inventory
             missionPanel.Bind(_town.Missions);
 
             _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged);
-
-            developmentGauge.Bind(_town);
         }
 
         private void OnDevelopmentChanged(float developmentScore)
@@ -112,7 +108,6 @@ namespace Features.Towns.UI.Inventory
             if (_town == null) return;
 
             _town.DevelopmentManager.DevelopmentScore.StopObserving(OnDevelopmentChanged);
-            developmentGauge.Unbind();
             missionPanel.Unbind(_town.Missions);
 
             _town = null;
