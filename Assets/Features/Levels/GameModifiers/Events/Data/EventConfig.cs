@@ -10,20 +10,20 @@ namespace Features.Levels.GameModifiers.Events.Data
     {
         [field: SerializeField, Min(1)]
         public int MaxEventCount { get; private set; } = 3;
-        
+
         [field: SerializeField, Range(0f, 1f)]
-        public float DailyEventChance { get; private set; }
+        public float DailyEventChance { get; private set; } = 0.05f;
 
         [field: SerializeField, Range(1, 365)]
-        public int MinDuration { get; private set; }
+        public int MinDuration { get; private set; } = 30;
 
         [field: SerializeField, Range(1, 365)]
-        public int MaxDuration { get; private set; }
+        public int MaxDuration { get; private set; } = 60;
 
         [field: SerializeField]
         public EventSet DefaultEventSet { get; private set; }
 
         [field: SerializeField]
-        public bool IsEnabled { get; private set; }
+        public bool IsEnabled { get; private set; } = true;
     }
 }
