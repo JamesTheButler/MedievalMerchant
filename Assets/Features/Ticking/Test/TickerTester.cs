@@ -1,3 +1,4 @@
+using Features.Ticking.Logic;
 using UnityEngine;
 
 namespace Features.Ticking.Test

@@ -8,6 +8,7 @@ using Features.Goods.Config;
 using Features.Goods.Selector;
 using Features.Notifications.Logic;
 using Features.Ticking;
+using Features.Ticking.Logic;
 using Features.Towns.Missions.Data;
 using Features.Towns.Missions.Results;
 using Features.Trade;

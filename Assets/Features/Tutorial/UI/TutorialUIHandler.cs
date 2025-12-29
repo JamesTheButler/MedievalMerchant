@@ -1,5 +1,6 @@
 ﻿using Common.Infrastructure;
 using Features.Ticking;
+using Features.Ticking.Logic;
 using Features.Tutorial.Data;
 using Features.Tutorial.Logic;
 using UnityEngine;
@@ -13,13 +14,13 @@ namespace Features.Tutorial.UI
 
         private TutorialResources _tutorialSResources;
         private TutorialService _tutorialService;
-        private TickingService _tickingService;
+        private GameSpeedModel _gameSpeedModel;
 
         private void Start()
         {
             _tutorialSResources = ResourceManager.Instance.TutorialResources;
             _tutorialService = GameplayContext.Instance.Services.TutorialService;
-            _tickingService = GameplayContext.Instance.Services.TickingService;
+            _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
             _tutorialService.OpenTutorialRequest += OpenTutorial;
             tutorialUI.Closed += OnTutorialUiClosed;
         }
@@ -40,12 +41,12 @@ namespace Features.Tutorial.UI
 
             tutorialUI.Setup(topicData);
             tutorialUI.Open();
-            _tickingService.Pause();
+            _gameSpeedModel.Pause();
         }
 
         private void OnTutorialUiClosed()
         {
-            _tickingService.Resume();
+            _gameSpeedModel.Resume();
         }
     }
 }

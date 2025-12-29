@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Types;
 using Features.Ticking;
+using Features.Ticking.Logic;
 using UnityEngine;
 
 namespace Features.Towns.Production.Logic

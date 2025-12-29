@@ -9,6 +9,8 @@ using Features.Map;
 using Features.Map.Tiling;
 using Features.Player.Logic;
 using Features.Stats;
+using Features.Ticking;
+using Features.Ticking.Logic;
 using Features.Towns;
 using UnityEngine;
 
@@ -20,6 +22,7 @@ namespace Common.Infrastructure
         public TileFlagMap TileFlagMap { get; private set; }
         public PlayerModel Player { get; private set; }
 
+        public GameSpeedModel GameSpeed { get; } = new();
         public Date Date { get; } = new();
         public LevelConditions Conditions { get; } = new();
         public EventModel Events { get; } = new();

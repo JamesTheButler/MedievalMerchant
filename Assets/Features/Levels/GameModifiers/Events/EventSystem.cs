@@ -6,6 +6,7 @@ using Features.Levels.GameModifiers.Events.Data;
 using Features.Levels.GameModifiers.Logic;
 using Features.Notifications.Logic;
 using Features.Ticking;
+using Features.Ticking.Logic;
 using UnityEngine;
 
 namespace Features.Levels.GameModifiers.Events

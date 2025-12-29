@@ -3,6 +3,7 @@ using Features.Levels.GameModifiers.Logic;
 using Features.Notifications.Logic;
 using Features.Player.Retinue.Logic;
 using Features.Ticking;
+using Features.Ticking.Logic;
 using Features.Trade.Logic;
 using Features.Tutorial.Logic;
 

@@ -5,6 +5,7 @@ using Features.Player.Logic;
 using Features.Player.Retinue.Logic;
 using Features.Stats;
 using Features.Ticking;
+using Features.Ticking.Logic;
 using Features.Towns;
 using Features.Towns.Development.Logic;
 using Features.Towns.Development.Logic.Milestones;

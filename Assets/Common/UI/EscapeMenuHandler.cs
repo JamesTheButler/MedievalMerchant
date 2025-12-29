@@ -1,5 +1,6 @@
 using Common.Infrastructure;
 using Features.Ticking;
+using Features.Ticking.Logic;
 using UnityEngine;
 
 namespace Common.UI
@@ -9,7 +10,7 @@ namespace Common.UI
         [SerializeField]
         private GameObject escapeMenuRoot;
 
-        private TickingService _tickingService;
+        private GameSpeedModel _gameSpeedModel;
 
         private bool IsActive => escapeMenuRoot.activeSelf;
 
@@ -25,7 +26,7 @@ namespace Common.UI
 
         private void Start()
         {
-            _tickingService = GameplayContext.Instance.Services.TickingService;
+            _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
             ToggleEscMenu(false);
         }
 
@@ -34,11 +35,11 @@ namespace Common.UI
             escapeMenuRoot.SetActive(isActive);
             if (isActive)
             {
-                _tickingService.Pause();
+                _gameSpeedModel.Pause();
             }
             else
             {
-                _tickingService.Resume();
+                _gameSpeedModel.Resume();
             }
         }
     }
