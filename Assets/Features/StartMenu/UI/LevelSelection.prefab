@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 5967564045156675718}
   - component: {fileID: 3466441525541984751}
   - component: {fileID: 4584259858434093050}
+  - component: {fileID: 5556960722419994614}
   m_Layer: 5
   m_Name: Links Tom
   m_TagString: Untagged
@@ -116,7 +117,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 310, y: 20}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5967564045156675718
 CanvasRenderer:
@@ -231,6 +232,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Linkable
   link: https://github.com/JamesTheButler
+--- !u!114 &5556960722419994614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569467276425532475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: 0
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &1820110680607082928
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,6 +339,7 @@ GameObject:
   - component: {fileID: 7466427231010457210}
   - component: {fileID: 351470524095482647}
   - component: {fileID: 543183791222207901}
+  - component: {fileID: 9087935225759200685}
   m_Layer: 5
   m_Name: Links Natsch
   m_TagString: Untagged
@@ -342,7 +364,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 218.57, y: 20}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7466427231010457210
 CanvasRenderer:
@@ -457,6 +479,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Linkable
   link: https://natillodesign.xyz/
+--- !u!114 &9087935225759200685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2932268149237668753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: 0
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &4754441239000602418
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,7 +602,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 20}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &9017250744857319015
 CanvasRenderer:
@@ -799,7 +841,7 @@ MonoBehaviour:
   m_Spacing: 32
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -1351,6 +1393,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 340971357684282340, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 340971357684282340, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1860,15 +1906,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5628471946062192005, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5628471946062192005, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5628471946062192005, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 288
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5628471946062192005, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1876,11 +1922,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5628471946062192005, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 152
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5628471946062192005, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -149.505
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6032811183250934397, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2036,23 +2082,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8571134887920371884, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8571134887920371884, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8571134887920371884, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 288
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571134887920371884, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8571134887920371884, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 152
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8571134887920371884, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -55
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8739908710802877053, guid: 640151284310cdd49a3d2b474c45111e, type: 3}
       propertyPath: m_AnchorMax.y
