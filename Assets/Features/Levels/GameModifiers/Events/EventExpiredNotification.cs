@@ -7,5 +7,6 @@ namespace Features.Levels.GameModifiers.Events
         $"Event expired: {GameEvent.Title}", 
         GameEvent.Description,
         NotificationType.Info,
+        Severity.Minor,
         null);
 }

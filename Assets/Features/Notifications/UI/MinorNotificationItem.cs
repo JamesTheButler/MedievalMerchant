@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Features.Notifications.UI
 {
-    public sealed class NotificationItem : MonoBehaviour, IPointerClickHandler
+    public sealed class MinorNotificationItem : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField]
         private TMP_Text titleText, descriptionText;

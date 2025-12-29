@@ -7,5 +7,6 @@ namespace Features.Levels.GameModifiers.Events
         $"Event started: {GameEvent.Title}",
         GameEvent.Description,
         NotificationType.Info,
+        Severity.Major,
         null);
 }

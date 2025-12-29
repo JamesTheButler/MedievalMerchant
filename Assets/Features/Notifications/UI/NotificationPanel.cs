@@ -20,7 +20,7 @@ namespace Features.Notifications.UI
         [SerializeField]
         private RectTransform notificationRect;
 
-        private readonly List<NotificationItem> _notificationItems = new();
+        private readonly List<MinorNotificationItem> _notificationItems = new();
 
         private NotificationService _notificationService;
 
@@ -37,6 +37,9 @@ namespace Features.Notifications.UI
 
         private void OnNotificationReceived(Notification notification)
         {
+            if (notification.Severity != Severity.Minor)
+                return;
+            
             if (_notificationItems.Count >= maxAmount)
             {
                 var item = _notificationItems.First();
@@ -44,7 +47,7 @@ namespace Features.Notifications.UI
                 item.Close();
             }
 
-            var notificationItem = Instantiate(notificationPrefab, notificationRect).GetComponent<NotificationItem>();
+            var notificationItem = Instantiate(notificationPrefab, notificationRect).GetComponent<MinorNotificationItem>();
             notificationItem.SetUp(
                 notification,
                 popupLifetimeInSec,

@@ -7,6 +7,7 @@ namespace Features.Notifications.Logic
         string Title,
         string Description,
         NotificationType Type,
+        Severity Severity,
         [CanBeNull]
         Sprite Icon);
 }

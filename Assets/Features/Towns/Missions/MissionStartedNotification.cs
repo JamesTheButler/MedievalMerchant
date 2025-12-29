@@ -11,6 +11,7 @@ namespace Features.Towns.Missions
             GetTitle(town, mission),
             GetDescription(mission),
             NotificationType.Info,
+            Severity.Minor,
             GetIcon(mission.Good)) { }
 
         private static string GetTitle(Town town, Mission mission)
