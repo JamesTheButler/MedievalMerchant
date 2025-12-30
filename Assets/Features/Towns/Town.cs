@@ -8,6 +8,7 @@ using Common.Types;
 using Common.Utility;
 using Features.Goods.Config;
 using Features.Inventory;
+using Features.Towns.Config;
 using Features.Towns.Development.Logic;
 using Features.Towns.Development.Logic.Milestones;
 using Features.Towns.Flags;
@@ -21,7 +22,6 @@ namespace Features.Towns
 {
     public sealed class Town
     {
-        private const int DefaultInventorySlots = 3;
         private const Tier StartTier = Common.Types.Tier.Tier1;
 
         public event Action<TradeInfo> TradeCompleted;
@@ -51,6 +51,7 @@ namespace Features.Towns
 
         private readonly SlotBasedInventoryPolicy _inventoryPolicy;
         private readonly RecipeResources _recipeResources;
+        private readonly TownConfig _townConfig;
 
         public Town(
             Vector2Int gridLocation,
@@ -66,14 +67,14 @@ namespace Features.Towns
             Regions = regions;
             MainRegion = regions.GetRandom();
 
-            var townConfig = ConfigurationManager.Configurations.TownConfig;
+            _townConfig = ConfigurationManager.Configurations.TownConfig;
             var townResources = ResourceManager.Instance.TownResources;
             _recipeResources = ResourceManager.Instance.RecipeResources;
             AvailableGoods = availableGoods.ToHashSet();
 
             Name = townResources.NameGenerators[MainRegion].GenerateName();
 
-            _inventoryPolicy.AddSlots(StartTier, DefaultInventorySlots);
+            _inventoryPolicy.AddSlots(StartTier, _townConfig.InventorySlotsPerTier[StartTier]);
 
             // initial funds and goods
             Inventory = new Inventory.Inventory(_inventoryPolicy);
@@ -85,19 +86,19 @@ namespace Features.Towns
             Missions = new MissionModel();
 
             const Tier tempTier = Common.Types.Tier.Tier1;
-            var consumptionRate = townConfig.GetConsumptionRate(tempTier, tempTier) ?? 0f;
+            var consumptionRate = _townConfig.GetConsumptionRate(tempTier, tempTier) ?? 0f;
             ConsumptionRate = new Observable<float>(consumptionRate);
 
             DevelopmentManager.Tier.Observe(OnTierChanged);
             ProductionManager.ProductionAdded += OnProductionManagerOnProductionAdded;
 
-            Inventory.AddFunds(townConfig.GetStartFunds());
-            var baseModifier = new BaseTownFundsProduction(townConfig.FundRate[StartTier], StartTier);
+            Inventory.AddFunds(_townConfig.GetStartFunds());
+            var baseModifier = new BaseTownFundsProduction(_townConfig.FundRate[StartTier], StartTier);
             FundsChange = new ModifiableVariable("Funds change per day", true, baseModifier);
 
             var startGood = AvailableGoods.GetRandom();
             AddProduction(startGood, 0);
-            Inventory.AddGood(startGood, townConfig.GetStartGoods());
+            Inventory.AddGood(startGood, _townConfig.GetStartGoods());
 
             FlagInfo = flagFactory.CreateFlagInfo(MainRegion);
         }
@@ -114,7 +115,7 @@ namespace Features.Towns
 
         private void OnTierChanged(Tier tier)
         {
-            _inventoryPolicy.AddSlots(tier, DefaultInventorySlots);
+            _inventoryPolicy.AddSlots(tier, _townConfig.InventorySlotsPerTier[tier]);
             switch (tier)
             {
                 case Common.Types.Tier.Tier2:

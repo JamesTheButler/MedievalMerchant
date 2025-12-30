@@ -20,9 +20,6 @@ namespace Features.Towns.UI
         [SerializeField, Required]
         private TownProductionPanel productionPanel;
 
-        [SerializeField, Required]
-        private TownInventoryPanel inventoryPanel;
-
         private Town _town;
         private TownUISection[] _sections;
 
@@ -36,7 +33,6 @@ namespace Features.Towns.UI
             }
 
             productionPanel.Initialize();
-            inventoryPanel.Initialize();
         }
 
         public void Bind(Town town)
@@ -82,7 +78,6 @@ namespace Features.Towns.UI
             _town = town;
 
             productionPanel.Bind(_town);
-            inventoryPanel.Bind(_town);
 
             _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged);
         }
@@ -107,7 +102,6 @@ namespace Features.Towns.UI
             }
 
             productionPanel.Unbind();
-            inventoryPanel.Unbind();
 
             _town = null;
         }

@@ -4,14 +4,25 @@ using System.Linq;
 using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Elements;
+using Common.UI.Tooltips;
 using Features.Goods.Config;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Features.Towns.UI.Inventory
 {
     public sealed class InventoryTierRow : MonoBehaviour
     {
         public event Action<InventoryCellBase> InventoryCellClicked;
+
+        [SerializeField]
+        private GameObject lockedGroup;
+
+        [SerializeField]
+        private SimpleTooltipHandler lockedTooltip;
+
+        [SerializeField]
+        private Image tierIcon;
 
         [SerializeField]
         private Tier tier;
@@ -21,24 +32,13 @@ namespace Features.Towns.UI.Inventory
         private readonly Dictionary<Good, InventoryCell> _occupiedCells = new();
         private readonly List<InventoryCell> _inventoryCells = new();
 
-        private void Awake()
-        {
-            GatherCells();
-        }
-
         private void Start()
         {
             _goodsResources = ResourceManager.Instance.GoodsResources;
-        }
-
-        private void GatherCells()
-        {
-            foreach (var inventoryCell in GetComponentsInChildren<InventoryCell>())
-            {
-                _inventoryCells.Add(inventoryCell);
-                inventoryCell.Update(null, 0);
-                inventoryCell.Clicked += () => InventoryCellClicked?.Invoke(inventoryCell);
-            }
+            tierIcon.sprite = ResourceManager.Instance.TierResources.Icons[tier];
+            
+            GatherCells();
+            lockedTooltip.SetData($"Unlocked when town reaches {tier.ToDisplayString()}.");
         }
 
         public void UpdateGood(Good good, int amount)
@@ -83,7 +83,23 @@ namespace Features.Towns.UI.Inventory
                 cell.Value.Update(null, 0);
             }
 
+            SetLocked(true);
             _occupiedCells.Clear();
+        }
+
+        public void SetLocked(bool isLocked)
+        {
+            lockedGroup.SetActive(isLocked);
+        }
+
+        private void GatherCells()
+        {
+            foreach (var inventoryCell in GetComponentsInChildren<InventoryCell>())
+            {
+                _inventoryCells.Add(inventoryCell);
+                inventoryCell.Update(null, 0);
+                inventoryCell.Clicked += () => InventoryCellClicked?.Invoke(inventoryCell);
+            }
         }
     }
 }

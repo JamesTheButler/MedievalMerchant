@@ -14,6 +14,9 @@ namespace Features.Towns.Config
         [field: SerializeField, SerializedDictionary("Town Tier", "Funds /day")]
         public SerializedDictionary<Tier, float> FundRate { get; private set; }
 
+        [field: SerializeField, SerializedDictionary("Town Tier", "Inventory Slots")]
+        public SerializedDictionary<Tier, int> InventorySlotsPerTier { get; private set; }
+
         [Header("Consumption Rates")]
         [SerializeField, SerializedDictionary("Good Tier", "Consumption /day")]
         private SerializedDictionary<Tier, float> tier1ConsumptionRate;
