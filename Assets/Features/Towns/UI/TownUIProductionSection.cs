@@ -1,11 +1,8 @@
-using System;
-using AYellowpaper.SerializedCollections;
+using System.Linq;
 using Common.Infrastructure;
 using Common.Types;
 using Features.Goods.Config;
-using Features.Towns.Production.Logic;
 using Features.Trade;
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,16 +10,6 @@ namespace Features.Towns.UI
 {
     public sealed class TownUIProductionSection : TownUISection
     {
-        [SerializeField, Required]
-        private ArrowDrawer tier2Arrows;
-
-        [SerializeField, Required]
-        private ArrowDrawer tier3Arrows;
-
-        [SerializeField, SerializedDictionary("Tier", "Row")]
-        private SerializedDictionary<Tier, ProductionTierGroup> rows;
-
-        [Header("Events")]
         [SerializeField]
         private UnityEvent<ProductionCell, TradeType> productionCellClicked;
 
@@ -35,172 +22,62 @@ namespace Features.Towns.UI
         [SerializeField]
         private UnityEvent<ProductionCell> tier3UpgradeButtonClicked;
 
-        private Town _town;
-        private readonly Lazy<GoodsResources> _goodsConfig = new(() => ResourceManager.Instance.GoodsResources);
+        private ProducerGroup[] _producerGroups;
+        private GoodsResources _goodResources;
 
         public override void Initialize()
         {
-            rows[Tier.Tier1].UpgradeButtonClicked += tier1UpgradeButtonClicked.Invoke;
-            rows[Tier.Tier2].UpgradeButtonClicked += tier2UpgradeButtonClicked.Invoke;
-            rows[Tier.Tier3].UpgradeButtonClicked += tier3UpgradeButtonClicked.Invoke;
+            _goodResources = ResourceManager.Instance.GoodsResources;
 
-            foreach (var section in rows.Values)
-            {
-                section.ProductionCellClicked += OnProductionCellClicked;
-            }
+            _producerGroups = GetComponentsInChildren<ProducerGroup>();
         }
 
         public override void CleanUp() { }
 
         public override void Bind(Town town)
         {
-            _town = town;
+            var availableTier1GoodsInTown = town.AvailableGoods
+                .Count(good => _goodResources.ResourceData[good].Tier == Tier.Tier1);
 
-            BindTownTier();
-            BindProducer();
-            BindInventory();
+            for (var index = 0; index < _producerGroups.Length; index++)
+            {
+                var group = _producerGroups[index];
+                group.Initialize(index, index < availableTier1GoodsInTown);
+                group.UpgradeButtonClicked += OnUpgradeButtonClicked;
+                group.ProductionCellClicked += OnProductionCellClicked;
+
+
+                group.Bind(town.ProductionManager);
+            }
         }
 
         public override void Unbind(Town town)
         {
-            foreach (var row in rows.Values)
+            foreach (var group in _producerGroups)
             {
-                row.Reset();
+                group.Reset();
             }
+        }
 
-            tier2Arrows.ClearArrows();
-            tier3Arrows.ClearArrows();
-
-            HideAllRows();
-
-
-            town.Tier.StopObserving(OnTierChanged);
-            town.ProductionManager.ProductionAdded -= OnProducerAdded;
-            town.Inventory.GoodUpdated -= UpdateGood;
-            _town = null;
+        private void OnUpgradeButtonClicked(ProductionCell productionCell, Tier tier)
+        {
+            switch (tier)
+            {
+                case Tier.Tier1:
+                    tier1UpgradeButtonClicked.Invoke(productionCell);
+                    break;
+                case Tier.Tier2:
+                    tier2UpgradeButtonClicked.Invoke(productionCell);
+                    break;
+                case Tier.Tier3:
+                    tier3UpgradeButtonClicked.Invoke(productionCell);
+                    break;
+            }
         }
 
         private void OnProductionCellClicked(ProductionCell productionCell)
         {
             productionCellClicked.Invoke(productionCell, TradeType.Buy);
-        }
-
-        private void BindTownTier()
-        {
-            // don't invoke directly as we want to go through all tiers manually in the right order
-            _town.Tier.Observe(OnTierChanged, false);
-            for (var tier = Tier.Tier1; tier <= _town.Tier.Value; tier++)
-            {
-                OnTierChanged(tier);
-            }
-
-            // TODO - POLISH: should only enable up to a max amount == town.availableGoods
-            rows[Tier.Tier1].EnableProductionCellUpgradeButtons(true);
-        }
-
-        private void BindInventory()
-        {
-            _town.Inventory.GoodUpdated += UpdateGood;
-            foreach (var (good, amount) in _town.Inventory.Goods)
-            {
-                UpdateGood(good, amount);
-            }
-        }
-
-        private void UpdateGood(Good good, int amount)
-        {
-            // goods NOT produced here, are handled by TownInventoryPanel
-            if (!_town.ProductionManager.IsProduced(good))
-                return;
-
-            var goodTier = _goodsConfig.Value.ResourceData[good].Tier;
-            var cellIndex = _town.ProductionManager.GetIndexOfProducedGood(good);
-            rows[goodTier].UpdateProducedGood(good, amount, cellIndex);
-        }
-
-        private void BindProducer()
-        {
-            foreach (var producer in _town.ProductionManager.AllProducers)
-            {
-                OnProducerAdded(producer);
-            }
-
-            _town.ProductionManager.ProductionAdded += OnProducerAdded;
-        }
-
-        private void OnProducerAdded(Producer producer)
-        {
-            var good = producer.ProducedGood;
-            var goodConfigData = _goodsConfig.Value.ResourceData;
-            var goodTier = goodConfigData[good].Tier;
-            var index = _town.ProductionManager.GetIndexOfProducedGood(good);
-            var section = rows[goodTier];
-            section.UnlockProductionCell(index, good);
-
-            switch (goodTier)
-            {
-                case Tier.Tier1:
-                {
-                    var tier2Section = rows[Tier.Tier2];
-                    tier2Section.EnableProductionCellUpgradeButton(index, true);
-                    RefreshTier2Arrows();
-                    break;
-                }
-
-                case Tier.Tier2:
-                    var tier3Section = rows[Tier.Tier3];
-                    tier3Section.EnableProductionCellUpgradeButton(index, true);
-                    RefreshTier3Arrows();
-                    break;
-
-                case Tier.Tier3:
-                default:
-                    break;
-            }
-        }
-
-        private void RefreshTier2Arrows()
-        {
-            tier2Arrows.ClearArrows();
-            if (_town.Tier.Value < Tier.Tier2) return;
-
-            var t1Producers = _town.ProductionManager.GetProducers(Tier.Tier1);
-            for (var i = 0; i < t1Producers.Length; i++)
-            {
-                if (t1Producers[i] == null) continue;
-
-                tier2Arrows.AddArrow(i, i);
-            }
-        }
-
-        public void RefreshTier3Arrows()
-        {
-            tier3Arrows.ClearArrows();
-            if (_town.Tier.Value < Tier.Tier3) return;
-
-            var t2Producers = _town.ProductionManager.GetProducers(Tier.Tier2);
-            for (var i = 0; i < t2Producers.Length; i++)
-            {
-                if (t2Producers[i] == null) continue;
-
-                tier3Arrows.AddArrow(i, i);
-            }
-        }
-
-        private void HideAllRows()
-        {
-            foreach (var row in rows.Values)
-            {
-                row.gameObject.SetActive(false);
-            }
-        }
-
-        private void OnTierChanged(Tier tier)
-        {
-            // show row for tier
-            rows[tier].gameObject.SetActive(true);
-            RefreshTier2Arrows();
-            RefreshTier3Arrows();
         }
     }
 }

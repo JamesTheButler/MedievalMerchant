@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Features.Towns.UI
+namespace Common.UI.Elements
 {
     public sealed class ArrowDrawer : MonoBehaviour
     {

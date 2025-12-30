@@ -6,7 +6,6 @@ using Features.Goods.Config;
 using Features.Trade;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Features.Towns.UI
 {

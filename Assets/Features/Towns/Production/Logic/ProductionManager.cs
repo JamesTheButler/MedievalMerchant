@@ -13,6 +13,7 @@ namespace Features.Towns.Production.Logic
     public sealed class ProductionManager
     {
         public event Action<Producer> ProductionAdded;
+        public event Action<Producer, int> ProductionAddedIndexed;
 
         private readonly Town _town;
         private readonly GoodsResources _goodsResources = ResourceManager.Instance.GoodsResources;
@@ -65,6 +66,7 @@ namespace Features.Towns.Production.Logic
             producers[index] = producer;
             producer.ProductionRate.AddModifiers(_productionModifiers);
             ProductionAdded?.Invoke(producer);
+            ProductionAddedIndexed?.Invoke(producer, index);
         }
 
         public void AddModifier(IModifier prodBoostModifier, IGoodSelector goodSelector)
