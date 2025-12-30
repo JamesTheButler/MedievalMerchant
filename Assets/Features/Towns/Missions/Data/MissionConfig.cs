@@ -13,5 +13,8 @@ namespace Features.Towns.Missions.Data
 
         [field: SerializeField]
         public UpgradeMissionConfigData UpgradeMissionData { get; private set; }
+
+        [field: SerializeField, Min(0)]
+        public int WarningThresholdDays { get; private set; } = 7;
     }
 }

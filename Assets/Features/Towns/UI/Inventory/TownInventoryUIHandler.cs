@@ -2,20 +2,21 @@ using System;
 using Common.Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Features.Towns.UI.Inventory
 {
     public sealed class TownInventoryUIHandler : MonoBehaviour
     {
-        [SerializeField, Required]
-        private TownInventoryUI inventoryUi;
+        [FormerlySerializedAs("inventoryUi"),SerializeField, Required]
+        private TownUI townUi;
 
         private Selection _selection;
 
         private void Start()
         {
-            inventoryUi.Hide();
-            inventoryUi.Initialize();
+            townUi.Hide();
+            townUi.Initialize();
 
             _selection = GameplayContext.Instance.Selection;
             _selection.SelectedTown.Observe(SelectTown, false);
@@ -34,14 +35,14 @@ namespace Features.Towns.UI.Inventory
                 return;
             }
 
-            inventoryUi.Show();
-            inventoryUi.Bind(town);
+            townUi.Show();
+            townUi.Bind(town);
         }
 
         private void DeselectTown()
         {
-            inventoryUi.Unbind();
-            inventoryUi.Hide();
+            townUi.Unbind();
+            townUi.Hide();
         }
     }
 }

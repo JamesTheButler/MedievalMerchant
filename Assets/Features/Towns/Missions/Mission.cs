@@ -12,6 +12,7 @@ namespace Features.Towns.Missions
         public Good Good { get; }
         public int TotalCount { get; }
         public Date EndDate { get; }
+        public MissionType Type { get; }
 
         public IMissionResult Reward { get; }
         public IMissionResult Penalty { get; }
@@ -26,6 +27,7 @@ namespace Features.Towns.Missions
             Good good,
             int totalCount,
             Date endDate,
+            MissionType type,
             IMissionResult reward,
             IMissionResult penalty)
         {
@@ -33,6 +35,7 @@ namespace Features.Towns.Missions
             TotalCount = totalCount;
             RemainingCount.Value = totalCount;
             EndDate = endDate;
+            Type = type;
             Reward = reward;
             Penalty = penalty;
         }

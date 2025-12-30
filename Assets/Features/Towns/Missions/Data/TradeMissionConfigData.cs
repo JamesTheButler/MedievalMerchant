@@ -7,7 +7,7 @@ namespace Features.Towns.Missions.Data
     [Serializable]
     public sealed class TradeMissionConfigData
     {
-        [field: SerializeField]
+        [field: SerializeField, Range(0, 3)]
         public int MaxMissionCount { get; private set; } = 1;
 
         [field: SerializeField, Range(0f, 1f)]

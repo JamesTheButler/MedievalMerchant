@@ -7,7 +7,6 @@ using Features.Goods;
 using Features.Goods.Config;
 using Features.Goods.Selector;
 using Features.Notifications.Logic;
-using Features.Ticking;
 using Features.Ticking.Logic;
 using Features.Towns.Missions.Data;
 using Features.Towns.Missions.Results;
@@ -61,7 +60,7 @@ namespace Features.Towns.Missions
         {
             ResetAvailableGoods();
         }
-        
+
         public void CleanUp()
         {
             _tickingService.DayPassed -= OnDayPassed;
@@ -138,8 +137,11 @@ namespace Features.Towns.Missions
                 missionGood,
                 _tradeConfig.Volume,
                 _gameDate + _tradeConfig.LengthInDays,
+                MissionType.TradeMission,
                 _tradeConfig.GetReward(),
                 _tradeConfig.GetPenalty());
+
+            mission.ValidateDate(_gameDate);
 
             EnableMission(mission);
         }
