@@ -3,10 +3,10 @@ using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Elements;
 using Features.Goods.Config;
-using Features.Towns.UI.Inventory;
 using Features.Trade;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Features.Towns.UI
 {
@@ -15,8 +15,8 @@ namespace Features.Towns.UI
         [SerializeField]
         private UnityEvent<InventoryCellBase, TradeType> inventoryCellClicked;
 
-        [SerializeField, SerializedDictionary("Tier", "Section")]
-        private SerializedDictionary<Tier, InventoryTierRow> rows;
+        [FormerlySerializedAs("rows"),SerializeField, SerializedDictionary("Tier", "Section")]
+        private SerializedDictionary<Tier, InventoryTierGroup> tierGroups;
 
         private GoodsResources _goodsConfig;
         private Town _town;
@@ -24,7 +24,7 @@ namespace Features.Towns.UI
         public override void Initialize()
         {
             _goodsConfig = ResourceManager.Instance.GoodsResources;
-            foreach (var row in rows.Values)
+            foreach (var row in tierGroups.Values)
             {
                 row.InventoryCellClicked += OnInventoryCellClicked;
             }
@@ -46,7 +46,7 @@ namespace Features.Towns.UI
 
         public override void Unbind(Town town)
         {
-            foreach (var row in rows.Values)
+            foreach (var row in tierGroups.Values)
             {
                 row.Reset();
             }
@@ -62,12 +62,12 @@ namespace Features.Towns.UI
                 return;
 
             var goodTier = _goodsConfig.ResourceData[good].Tier;
-            rows[goodTier].UpdateGood(good, amount);
+            tierGroups[goodTier].UpdateGood(good, amount);
         }
 
         private void OnTownTierChanged(Tier townTier)
         {
-            foreach (var (rowTier, row) in rows)
+            foreach (var (rowTier, row) in tierGroups)
             {
                 row.SetLocked(rowTier > townTier);
             }

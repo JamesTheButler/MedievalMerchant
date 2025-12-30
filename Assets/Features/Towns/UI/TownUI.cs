@@ -1,7 +1,6 @@
 using Common.UI.Popups;
 using Common.UI.Tooltips;
 using Common.Utility;
-using Features.Towns.UI.Inventory;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,9 +16,6 @@ namespace Features.Towns.UI
         [SerializeField, Required]
         private SimpleTooltipHandler upgradeButtonTooltip;
 
-        [SerializeField, Required]
-        private TownProductionPanel productionPanel;
-
         private Town _town;
         private TownUISection[] _sections;
 
@@ -31,8 +27,6 @@ namespace Features.Towns.UI
             {
                 section.Initialize();
             }
-
-            productionPanel.Initialize();
         }
 
         public void Bind(Town town)
@@ -76,9 +70,6 @@ namespace Features.Towns.UI
             }
 
             _town = town;
-
-            productionPanel.Bind(_town);
-
             _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged);
         }
 
@@ -100,8 +91,6 @@ namespace Features.Towns.UI
             {
                 section.Unbind(_town);
             }
-
-            productionPanel.Unbind();
 
             _town = null;
         }
