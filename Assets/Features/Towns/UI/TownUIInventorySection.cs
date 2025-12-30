@@ -15,7 +15,7 @@ namespace Features.Towns.UI
         [SerializeField]
         private UnityEvent<InventoryCellBase, TradeType> inventoryCellClicked;
 
-        [FormerlySerializedAs("rows"),SerializeField, SerializedDictionary("Tier", "Section")]
+        [SerializeField, SerializedDictionary("Tier", "Section")]
         private SerializedDictionary<Tier, InventoryTierGroup> tierGroups;
 
         private GoodsResources _goodsConfig;

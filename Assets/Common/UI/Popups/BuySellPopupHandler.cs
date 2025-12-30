@@ -29,7 +29,7 @@ namespace Common.UI.Popups
         private TradeValidator _tradeValidator;
         private Selection _selection;
 
-        public void Initialize(InventoryCellBase inventoryCell, TradeType tradeType)
+        public void Initialize(GoodCell inventoryCell, TradeType tradeType)
         {
             Reset();
 

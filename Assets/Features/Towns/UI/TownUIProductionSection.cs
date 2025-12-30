@@ -20,7 +20,7 @@ namespace Features.Towns.UI
         private ArrowDrawer tier3Arrows;
 
         [SerializeField, SerializedDictionary("Tier", "Row")]
-        private SerializedDictionary<Tier, ProductionTierRow> rows;
+        private SerializedDictionary<Tier, ProductionTierGroup> rows;
 
         [Header("Events")]
         [SerializeField]

@@ -1,13 +1,19 @@
 using System.Collections.Generic;
+using Common.UI.Elements;
 using Common.Utility;
 using Features.Towns.Missions;
+using Features.Trade;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Features.Towns.UI
 {
     public sealed class TownUIMissionSection : TownUISection
     {
+        [SerializeField]
+        private UnityEvent<GoodCell, TradeType> goodCellClicked;
+
         [SerializeField, Required]
         private GameObject missionPrefab;
 
@@ -50,6 +56,7 @@ namespace Features.Towns.UI
             var uiElement = Instantiate(missionPrefab, tradeMissionContainer.transform);
             var uiElementScript = uiElement.GetComponentInChildren<TownUIMissionSectionItem>();
 
+            uiElementScript.GoodCellClicked += cell => goodCellClicked.Invoke(cell, TradeType.Sell);
             uiElementScript.Bind(mission);
             _missionUiElements.Add(mission, uiElementScript);
         }

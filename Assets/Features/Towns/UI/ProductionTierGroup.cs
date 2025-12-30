@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace Features.Towns.UI
 {
-    public sealed class ProductionTierRow : MonoBehaviour
+    public sealed class ProductionTierGroup : MonoBehaviour
     {
         public event Action<ProductionCell> UpgradeButtonClicked;
         public event Action<ProductionCell> ProductionCellClicked;
