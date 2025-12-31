@@ -113,11 +113,13 @@ namespace Features.Towns.Production.UI
                 if (!globallyAvailableT3Goods.Contains(recipe.Result))
                     continue;
 
-                var isAlreadyBuilt = town.ProductionManager.IsProduced(recipe.Result);
+                if (town.ProductionManager.IsProduced(recipe.Result))
+                    continue;
+
                 var element = SpawnElement(recipe, primaryTier2Good);
 
                 // select the first producer element that isn't built yet
-                if (isAlreadyBuilt || initialSelectionFound)
+                if (initialSelectionFound)
                     continue;
 
                 PopupGroupOnClicked(element);
