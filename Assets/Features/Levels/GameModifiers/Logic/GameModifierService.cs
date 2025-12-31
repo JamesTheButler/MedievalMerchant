@@ -46,6 +46,7 @@ namespace Features.Levels.GameModifiers.Logic
 
                 var gameEvent = new GameEvent(eventModifierData, endDate);
                 _gameDate.Changed += gameEvent.UpdateGameDate;
+                gameEvent.UpdateGameDate(_gameDate);
                 _eventModel.AddEvent(gameEvent);
                 _eventDatasToEvents.Add(eventModifierData, gameEvent);
             }

@@ -70,14 +70,8 @@ namespace Features.Towns.UI
             _town = town;
 
             _town.Tier.Observe(OnTownTierChanged);
-            _town.Inventory.GoodUpdated += OnGoodUpdated;
-            foreach (var (good, amount) in town.Inventory.Goods)
-            {
-                OnGoodUpdated(good, amount);
-            }
 
             town.ProductionManager.ProductionAddedIndexed += OnProducerAdded;
-
             foreach (var tier in EnumExtensions.Enumerate<Tier>())
             {
                 var producer = _town.ProductionManager.GetProducers(tier)[_producerIndex];
@@ -85,6 +79,12 @@ namespace Features.Towns.UI
                 {
                     OnProducerAdded(producer, _producerIndex);
                 }
+            }
+
+            _town.Inventory.GoodUpdated += OnGoodUpdated;
+            foreach (var (good, amount) in town.Inventory.Goods)
+            {
+                OnGoodUpdated(good, amount);
             }
 
             RefreshProducerCellStates();

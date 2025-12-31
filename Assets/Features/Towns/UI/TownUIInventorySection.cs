@@ -3,6 +3,7 @@ using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Elements;
 using Features.Goods.Config;
+using Features.Towns.Production.Logic;
 using Features.Trade;
 using UnityEngine;
 using UnityEngine.Events;
@@ -35,13 +36,15 @@ namespace Features.Towns.UI
         {
             _town = town;
             town.Tier.Observe(OnTownTierChanged);
-
             town.Inventory.GoodUpdated += UpdateGood;
             foreach (var (good, amount) in town.Inventory.Goods)
             {
                 UpdateGood(good, amount);
             }
+
+            town.ProductionManager.ProductionAdded += OnProducerAdded;
         }
+
 
         public override void Unbind(Town town)
         {
@@ -72,6 +75,12 @@ namespace Features.Towns.UI
             }
         }
 
+        private void OnProducerAdded(Producer producer)
+        {
+            // remove good if we build a producer with a good in the inventory
+            tierGroups[producer.Tier].UpdateGood(producer.ProducedGood, 0);
+        }
+        
         private void OnInventoryCellClicked(InventoryCellBase cell)
         {
             inventoryCellClicked.Invoke(cell, TradeType.Sell);

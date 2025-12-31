@@ -7,23 +7,22 @@ namespace Common.Camera
 {
     public sealed class CameraFocuser : MonoBehaviour
     {
-        private CameraManager _cameraManager;
+        private readonly Lazy<CameraManager> _cameraManager = new(FindAnyObjectByType<CameraManager>);
 
         private void Start()
         {
-            _cameraManager = FindAnyObjectByType<CameraManager>();
             GameplayContext.Instance.Services.CameraService.FocusCameraRequested += FocusCameraOnTown;
         }
 
         public void FocusCameraOnPlayer()
         {
             var playerLocation = GameplayContext.Instance.Model.Player.Location;
-            _cameraManager.FocusCamera(playerLocation.WorldLocation.Value);
+            _cameraManager.Value.FocusCamera(playerLocation.WorldLocation.Value);
         }
 
         private void FocusCameraOnTown(Town town)
         {
-            _cameraManager.FocusCamera(town.WorldLocation);
+            _cameraManager.Value.FocusCamera(town.WorldLocation);
         }
     }
 }
