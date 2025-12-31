@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Elements;
 using Common.UI.Popups;
@@ -33,13 +34,15 @@ namespace Features.Player.Caravan.UI
 
         private CaravanManager _caravanManager;
         private Inventory.Inventory _playerInventory;
+        private UIEventService _uiEventService;
 
         public void Setup(CaravanManager caravanManager)
         {
+            _uiEventService = GameplayContext.Instance.Services.UIEventService;
             _caravanManager = caravanManager;
 
             // TODO - STYLE: it's not so nice to have a random business logic class in here.
-            //   This would have to be in the view model layer.
+            //   This would have to be in the view model layer. Probably should be system.
             var caravanUpgrader = new CaravanUpgrader();
 
             for (var i = 0; i < caravanManager.Carts.Count; i++)
@@ -62,6 +65,11 @@ namespace Features.Player.Caravan.UI
 
         public void Toggle(bool isOn)
         {
+            if (isOn)
+            {
+                _uiEventService.OpenCaravanPanel();
+            }
+
             gameObject.SetActive(isOn);
         }
 

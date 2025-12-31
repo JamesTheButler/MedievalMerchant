@@ -7,6 +7,7 @@
         Retinue = 2,
         Caravan = 3,
         Development = 4,
+        Town = 5,
         Reputation = 6,
         Production = 7
     }

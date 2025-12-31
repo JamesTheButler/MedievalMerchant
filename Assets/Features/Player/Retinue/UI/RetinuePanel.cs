@@ -16,10 +16,12 @@ namespace Features.Player.Retinue.UI
         private ModifiableTooltipHandler upkeepTooltip;
 
         private RetinueModel _retinueModel;
+        private UIEventService _uiEventService;
 
         private void Start()
         {
             _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
+            _uiEventService = GameplayContext.Instance.Services.UIEventService;
             _retinueModel.Upkeep.Observe(OnUpkeepChanged);
             upkeepTooltip.SetData(_retinueModel.Upkeep);
             Close();
@@ -27,7 +29,18 @@ namespace Features.Player.Retinue.UI
 
         public void Toggle()
         {
-            gameObject.SetActive(!gameObject.activeSelf);
+            if (gameObject.activeSelf)
+                Close();
+            else
+            {
+                Open();
+            }
+        }
+
+        public void Open()
+        {
+            _uiEventService.OpenRetinuePanel();
+            gameObject.SetActive(true);
         }
 
         public void Close()

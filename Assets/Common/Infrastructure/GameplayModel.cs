@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Types;
@@ -9,7 +10,6 @@ using Features.Map;
 using Features.Map.Tiling;
 using Features.Player.Logic;
 using Features.Stats;
-using Features.Ticking;
 using Features.Ticking.Logic;
 using Features.Towns;
 using UnityEngine;

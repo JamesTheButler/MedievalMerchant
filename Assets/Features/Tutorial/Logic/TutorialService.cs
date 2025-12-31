@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Common.Infrastructure;
+using Common.Utility;
 
 namespace Features.Tutorial.Logic
 {
@@ -13,27 +14,26 @@ namespace Features.Tutorial.Logic
         public IReadOnlyDictionary<TutorialTopic, bool> CompletedChapters => _completedChapters;
 
         private readonly TutorialPersistenceService _persistenceService;
-        private Dictionary<TutorialTopic, bool> _completedChapters = new();
+        private readonly Dictionary<TutorialTopic, bool> _completedChapters;
 
         public TutorialService(TutorialPersistenceService persistenceService)
         {
             _persistenceService = persistenceService;
+            _completedChapters = EnumExtensions.MakeDictionary<TutorialTopic, bool>(false);
         }
 
         public void Initialize()
         {
             var persistedTopics = _persistenceService.ReadCompletedTopics();
-            _completedChapters = new Dictionary<TutorialTopic, bool>(persistedTopics);
-            foreach (var (chapter, isCompleted) in persistedTopics)
+
+            foreach (var topic in persistedTopics)
             {
-                TopicCompletionChanged?.Invoke(chapter, isCompleted);
+                _completedChapters[topic] = true;
+                TopicCompletionChanged?.Invoke(topic, true);
             }
         }
 
-        public void CleanUp()
-        {
-            _completedChapters.Clear();
-        }
+        public void CleanUp() { }
 
         public void ResetCompletedTopics()
         {
@@ -69,7 +69,7 @@ namespace Features.Tutorial.Logic
 
         private void Persist()
         {
-            _persistenceService.WriteCompletedTopics(_completedChapters);
+            _persistenceService.WriteCompletedTopics(_completedChapters.Where(kv => kv.Value).Select(kv => kv.Key));
         }
     }
 }

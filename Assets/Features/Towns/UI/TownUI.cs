@@ -1,3 +1,4 @@
+using Common.Infrastructure;
 using Common.UI.Popups;
 using Common.UI.Tooltips;
 using Common.Utility;
@@ -19,8 +20,11 @@ namespace Features.Towns.UI
         private Town _town;
         private TownUISection[] _sections;
 
+        private UIEventService _uiEventService;
+        
         public void Initialize()
         {
+            _uiEventService = GameplayContext.Instance.Services.UIEventService;
             _sections = GetComponentsInChildren<TownUISection>();
 
             foreach (var section in _sections)
@@ -49,7 +53,9 @@ namespace Features.Towns.UI
 
         public void Show()
         {
+            _uiEventService.OpenTownPanel();
             gameObject.SetActive(true);
+            
         }
 
         public void Hide()

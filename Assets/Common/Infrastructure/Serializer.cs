@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace Common.Infrastructure
 {
-    public class Serializer : ISerializer
+    public sealed class Serializer : ISerializer
     {
         public T Deserialize<T>(string input)
         {

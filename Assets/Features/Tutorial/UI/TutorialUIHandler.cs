@@ -15,12 +15,16 @@ namespace Features.Tutorial.UI
         private TutorialResources _tutorialSResources;
         private TutorialService _tutorialService;
         private GameSpeedModel _gameSpeedModel;
+        private UIEventService _uiEventService;
+
+        private TutorialTopic? _currentTopic;
 
         private void Start()
         {
             _tutorialSResources = ResourceManager.Instance.TutorialResources;
             _tutorialService = GameplayContext.Instance.Services.TutorialService;
             _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
+            _uiEventService = GameplayContext.Instance.Services.UIEventService;
             _tutorialService.OpenTutorialRequest += OpenTutorial;
             tutorialUI.Closed += OnTutorialUiClosed;
         }
@@ -39,6 +43,7 @@ namespace Features.Tutorial.UI
                 Debug.LogError($"Could not find topic data for '{topic}'");
             }
 
+            _currentTopic = topic;
             tutorialUI.Setup(topicData);
             tutorialUI.Open();
             _gameSpeedModel.Pause();
@@ -47,6 +52,11 @@ namespace Features.Tutorial.UI
         private void OnTutorialUiClosed()
         {
             _gameSpeedModel.Resume();
+            if (_currentTopic != null)
+            {
+                _uiEventService.CloseTutorial(_currentTopic.Value);
+                _currentTopic = null;
+            }
         }
     }
 }

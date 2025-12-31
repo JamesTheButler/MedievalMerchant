@@ -44,7 +44,7 @@ namespace Common.Utility
             return list;
         }
 
-        public static IDictionary<TEnum, TValue> MakeDictionary<TEnum, TValue>(TValue defaultValue) where TEnum : Enum
+        public static Dictionary<TEnum, TValue> MakeDictionary<TEnum, TValue>(TValue defaultValue) where TEnum : Enum
         {
             return Enumerate<TEnum>().ToDictionary(e => e, _ => defaultValue);
         }

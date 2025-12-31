@@ -11,6 +11,7 @@ using Features.Towns.Development.Logic;
 using Features.Towns.Development.Logic.Milestones;
 using Features.Towns.Missions;
 using Features.Towns.Production.Logic;
+using Features.Tutorial.Logic;
 
 namespace Common.Infrastructure
 {
@@ -46,6 +47,7 @@ namespace Common.Infrastructure
             _systems.Add(new ConditionSystem());
             _systems.Add(new StatSystem());
             _systems.Add(new EventSystem());
+            _systems.Add(new TutorialSystem());
         }
 
         private void AddPlayerSystems()

@@ -51,7 +51,7 @@ namespace Features.Tutorial.UI
         {
             if (gameObject.activeSelf)
                 return;
-            
+
             gameObject.SetActive(true);
         }
 
@@ -59,9 +59,10 @@ namespace Features.Tutorial.UI
         {
             if (!gameObject.activeSelf)
                 return;
-            
-            Closed?.Invoke();
+
             gameObject.SetActive(false);
+
+            Closed?.Invoke();
         }
 
         private void SetChapter(int index)

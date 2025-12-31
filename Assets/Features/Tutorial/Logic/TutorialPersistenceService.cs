@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Common.Infrastructure;
-using Common.Utility;
 using UnityEngine;
 
 namespace Features.Tutorial.Logic
@@ -21,18 +20,18 @@ namespace Features.Tutorial.Logic
         public void Initialize() { }
         public void CleanUp() { }
 
-        public IDictionary<TutorialTopic, bool> ReadCompletedTopics()
+        public IEnumerable<TutorialTopic> ReadCompletedTopics()
         {
             if (!File.Exists(CompletedTopicsFilePath))
-                return EnumExtensions.MakeDictionary<TutorialTopic, bool>(false);
+                return new List<TutorialTopic>();
 
             var completedTopicsFile = File.ReadAllText(CompletedTopicsFilePath);
-            return _serializer.Deserialize<Dictionary<TutorialTopic, bool>>(completedTopicsFile);
+            return _serializer.Deserialize<IEnumerable<TutorialTopic>>(completedTopicsFile);
         }
 
-        public void WriteCompletedTopics(IDictionary<TutorialTopic, bool> topics)
+        public void WriteCompletedTopics(IEnumerable<TutorialTopic> topics)
         {
-            var serializedDict = _serializer.Serialize(topics.ToDictionary());
+            var serializedDict = _serializer.Serialize(topics);
             File.WriteAllText(CompletedTopicsFilePath, serializedDict);
         }
     }
