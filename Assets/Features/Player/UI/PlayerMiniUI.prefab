@@ -1592,6 +1592,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1129015328823344704, guid: 01dce4995ada0934e9dbef8057421135, type: 3}
       insertIndex: 1
       addedObject: {fileID: 4698893554176453471}
+    - targetCorrespondingSourceObject: {fileID: 1129015328823344704, guid: 01dce4995ada0934e9dbef8057421135, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7714934581228219976}
   m_SourcePrefab: {fileID: 100100000, guid: 01dce4995ada0934e9dbef8057421135, type: 3}
 --- !u!1 &3419659585427869335 stripped
 GameObject:
@@ -1612,6 +1615,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Features.Ticking.UI.GamePauseButton
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   highlightColor: {r: 0.7882353, g: 0.6901961, b: 0.5529412, a: 1}
+--- !u!114 &7714934581228219976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3419659585427869335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 1
+  hideOnClick: 1
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  defaultText: Pause
 --- !u!224 &8292420925704368532 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6037809595929559363, guid: 01dce4995ada0934e9dbef8057421135, type: 3}
@@ -1760,6 +1781,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1129015328823344704, guid: 01dce4995ada0934e9dbef8057421135, type: 3}
       insertIndex: 1
       addedObject: {fileID: 3857161481861800847}
+    - targetCorrespondingSourceObject: {fileID: 1129015328823344704, guid: 01dce4995ada0934e9dbef8057421135, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2144698683889745391}
   m_SourcePrefab: {fileID: 100100000, guid: 01dce4995ada0934e9dbef8057421135, type: 3}
 --- !u!1 &3112239843752163336 stripped
 GameObject:
@@ -1781,6 +1805,24 @@ MonoBehaviour:
   gameSpeed: 0
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   highlightColor: {r: 0.7882353, g: 0.6901961, b: 0.5529412, a: 1}
+--- !u!114 &2144698683889745391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3112239843752163336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 1
+  hideOnClick: 1
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  defaultText: Play
 --- !u!224 &8597775234248328971 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6037809595929559363, guid: 01dce4995ada0934e9dbef8057421135, type: 3}
@@ -2031,6 +2073,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1129015328823344704, guid: 01dce4995ada0934e9dbef8057421135, type: 3}
       insertIndex: 1
       addedObject: {fileID: 1344576604968244534}
+    - targetCorrespondingSourceObject: {fileID: 1129015328823344704, guid: 01dce4995ada0934e9dbef8057421135, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1651744807162410881}
   m_SourcePrefab: {fileID: 100100000, guid: 01dce4995ada0934e9dbef8057421135, type: 3}
 --- !u!224 &3570113620099830702 stripped
 RectTransform:
@@ -2057,3 +2102,21 @@ MonoBehaviour:
   gameSpeed: 1
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   highlightColor: {r: 0.7882353, g: 0.6901961, b: 0.5529412, a: 1}
+--- !u!114 &1651744807162410881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7920175673262107821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 1
+  hideOnClick: 1
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  defaultText: Play Fast
