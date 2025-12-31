@@ -102,11 +102,13 @@ namespace Features.Towns.Production.UI
                 if (_goodResources.Value.ResourceData[good].Tier != Tier.Tier1)
                     continue;
 
-                var isAlreadyBuilt = town.ProductionManager.IsProduced(good);
-                var element = SpawnElement(good, isAlreadyBuilt);
+                if (town.ProductionManager.IsProduced(good))
+                    continue;
+
+                var element = SpawnElement(good);
 
                 // select the first producer element that isn't built yet
-                if (isAlreadyBuilt || initialSelectionFound)
+                if (initialSelectionFound)
                     continue;
 
                 PopupGroupOnClicked(element);
@@ -114,12 +116,12 @@ namespace Features.Towns.Production.UI
             }
         }
 
-        private Tier1ConstructionElement SpawnElement(Good good, bool isAlreadyBuilt)
+        private Tier1ConstructionElement SpawnElement(Good good)
         {
             var tier2Good = _recipeResources.Value.GetTier2RecipeForComponent(good).Result;
             var goodGroup = Instantiate(goodGroupPrefab, goodGroupParent);
             var element = goodGroup.GetComponent<Tier1ConstructionElement>();
-            element.Setup(good, tier2Good, isAlreadyBuilt);
+            element.Setup(good, tier2Good);
 
             Action popupGroupClickHandler = () => PopupGroupOnClicked(element);
             element.Clicked += popupGroupClickHandler;

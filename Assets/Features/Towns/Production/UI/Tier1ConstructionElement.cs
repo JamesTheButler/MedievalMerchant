@@ -26,16 +26,12 @@ namespace Features.Towns.Production.UI
 
         public Good Tier1Good { get; private set; }
 
-        private bool _isAlreadyBuilt;
-
-        public void Setup(Good tier1Good, Good tier2Good, bool isAlreadyBuilt)
+        public void Setup(Good tier1Good, Good tier2Good)
         {
             Tier1Good = tier1Good;
-            _isAlreadyBuilt = isAlreadyBuilt;
-
             tier1GoodIcon.SetGood(tier1Good);
             tier2GoodIcon.SetGood(tier2Good);
-            isBuiltImage.enabled = _isAlreadyBuilt;
+            isBuiltImage.enabled = false;
 
             Deselect(); // initially, it shouldn't be selected
         }
@@ -52,7 +48,6 @@ namespace Features.Towns.Production.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (_isAlreadyBuilt) return;
             Clicked?.Invoke();
         }
     }
