@@ -48,12 +48,25 @@ namespace Features.Towns.UI
                 OnMissionRemoved(mission);
             }
 
+            upgradeMissionSection.SetActive(false);
+            upgradeMissionContainer.DestroyChildren();
             tradeMissionContainer.DestroyChildren();
         }
 
         private void OnMissionAdded(Mission mission)
         {
-            var uiElement = Instantiate(missionPrefab, tradeMissionContainer.transform);
+            var isUpgradeMission = mission.Type == MissionType.UpgradeMission;
+
+            if (mission.Type == MissionType.UpgradeMission)
+            {
+                upgradeMissionSection.SetActive(true);
+            }
+
+            var container = isUpgradeMission
+                ? upgradeMissionContainer
+                : tradeMissionContainer;
+
+            var uiElement = Instantiate(missionPrefab, container.transform);
             var uiElementScript = uiElement.GetComponentInChildren<TownUIMissionSectionItem>();
 
             uiElementScript.GoodCellClicked += cell => goodCellClicked.Invoke(cell, TradeType.Sell);
@@ -63,6 +76,11 @@ namespace Features.Towns.UI
 
         private void OnMissionRemoved(Mission mission)
         {
+            if (mission.Type == MissionType.UpgradeMission)
+            {
+                upgradeMissionSection.SetActive(false);
+            }
+
             if (!_missionUiElements.Remove(mission, out var uiElement))
                 return;
 

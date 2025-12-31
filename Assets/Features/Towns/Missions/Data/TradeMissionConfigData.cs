@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Features.Towns.Missions.Data
 {
     [Serializable]
-    public sealed class TradeMissionConfigData
+    public sealed class TradeMissionConfigData : IMissionConfigData
     {
         [field: SerializeField, Range(0, 3)]
         public int MaxMissionCount { get; private set; } = 1;

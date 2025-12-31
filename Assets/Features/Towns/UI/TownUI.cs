@@ -1,27 +1,16 @@
 using Common.Infrastructure;
 using Common.UI.Popups;
-using Common.UI.Tooltips;
-using Common.Utility;
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Features.Towns.UI
 {
     public sealed class TownUI : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField, Required]
-        private Button upgradeButton;
-
-        [SerializeField, Required]
-        private SimpleTooltipHandler upgradeButtonTooltip;
-
         private Town _town;
         private TownUISection[] _sections;
-
         private UIEventService _uiEventService;
-        
+
         public void Initialize()
         {
             _uiEventService = GameplayContext.Instance.Services.UIEventService;
@@ -55,17 +44,11 @@ namespace Features.Towns.UI
         {
             _uiEventService.OpenTownPanel();
             gameObject.SetActive(true);
-            
         }
 
         public void Hide()
         {
             gameObject.SetActive(false);
-        }
-
-        public void Upgrade()
-        {
-            _town.DevelopmentManager.Upgrade();
         }
 
         private void BindTown(Town town)
@@ -76,22 +59,12 @@ namespace Features.Towns.UI
             }
 
             _town = town;
-            _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged);
-        }
-
-        private void OnDevelopmentChanged(float developmentScore)
-        {
-            var isButtonEnabled = developmentScore.IsApproximately(100f);
-            upgradeButton.interactable = isButtonEnabled;
-            upgradeButtonTooltip.SetEnabled(!isButtonEnabled);
         }
 
         public void Unbind()
         {
             if (_town == null)
                 return;
-
-            _town.DevelopmentManager.DevelopmentScore.StopObserving(OnDevelopmentChanged);
 
             foreach (var section in _sections)
             {

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Features.Towns.Missions.Data
 {
     [Serializable]
-    public sealed class UpgradeMissionConfigData
+    public sealed class UpgradeMissionConfigData : IMissionConfigData
     {
         [field: SerializeField]
         public int LengthInDays { get; private set; } = 20;

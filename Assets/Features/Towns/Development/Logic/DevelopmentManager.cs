@@ -16,15 +16,17 @@ namespace Features.Towns.Development.Logic
     {
         public Observable<Tier> Tier { get; } = new(Common.Types.Tier.Tier1);
         public ModifiableVariable DevelopmentTrend { get; } = new("Development Trend", true);
-        public Observable<float> DevelopmentScore { get; } = new();
+        public IReadOnlyObservable<float> DevelopmentScore => _developmentScore;
         public Observable<DevelopmentTrend> GrowthTrend { get; } = new();
 
         private readonly Town _town;
         private readonly TownDevelopmentConfig _townDevelopmentConfig;
         private readonly GoodsResources _goodsResources;
-
+        private readonly Observable<float> _developmentScore  = new();
         private readonly Dictionary<Tier, ProducerDevelopmentModifier> _producerModifiers = new();
         private readonly Dictionary<Tier, StoredGoodsDevelopmentModifier> _storedGoodsModifier = new();
+
+        private bool _isDegrowthLocked;
 
         public DevelopmentManager(Town town)
         {
@@ -42,6 +44,35 @@ namespace Features.Towns.Development.Logic
         {
             _town.ProductionManager.ProductionAdded -= OnProducerAdded;
             _town.Inventory.GoodUpdated -= OnGoodAdded;
+        }
+
+        public void AddDevelopmentChange(float developmentChange)
+        {
+            if (_isDegrowthLocked && developmentChange < 0f)
+                return;
+
+            var developmentScore = _developmentScore + developmentChange;
+            developmentScore = Mathf.Clamp(developmentScore, 0, 100);
+            _developmentScore.Value = developmentScore;
+            UpdateGrowthTrend();
+        }
+
+        public void Upgrade()
+        {
+            var oldTier = Tier.Value;
+            var newTier = (Tier)Math.Min((int)Tier.Value + 1, (int)Common.Types.Tier.Tier3);
+
+            if (oldTier == newTier)
+                return;
+
+            Tier.Value = newTier;
+            _developmentScore.Value = 0;
+            Debug.Log($"{_town.Name} upgraded to {Tier}");
+        }
+
+        public void LockDegrowth(bool isLocked)
+        {
+            _isDegrowthLocked = isLocked;
         }
 
         private void OnProducerAdded(Producer producer)
@@ -94,31 +125,10 @@ namespace Features.Towns.Development.Logic
             // TODO - STYLE: should use observable modifier
             DevelopmentTrend.RemoveModifier(oldModifier);
 
-            var modifierValue = _townDevelopmentConfig.SoldGoodsGrowthInfluence.Get(Tier, goodTier)*newCount;
+            var modifierValue = _townDevelopmentConfig.SoldGoodsGrowthInfluence.Get(Tier, goodTier) * newCount;
             var modifier = new StoredGoodsDevelopmentModifier(modifierValue, newCount, goodTier);
             DevelopmentTrend.AddModifier(modifier);
             _storedGoodsModifier[goodTier] = modifier;
-        }
-
-        public void AddDevelopmentChange(float developmentChange)
-        {
-            var developmentScore = DevelopmentScore + developmentChange;
-            developmentScore = Mathf.Clamp(developmentScore, 0, 100);
-            DevelopmentScore.Value = developmentScore;
-            UpdateGrowthTrend();
-        }
-
-        public void Upgrade()
-        {
-            var oldTier = Tier.Value;
-            var newTier = (Tier)Math.Min((int)Tier.Value + 1, (int)Common.Types.Tier.Tier3);
-
-            if (oldTier == newTier)
-                return;
-
-            Tier.Value = newTier;
-            DevelopmentScore.Value = 0;
-            Debug.Log($"{_town.Name} upgraded to {Tier}");
         }
 
         private void UpdateGrowthTrend()

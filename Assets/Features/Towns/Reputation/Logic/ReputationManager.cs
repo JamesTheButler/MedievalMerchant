@@ -39,6 +39,11 @@ namespace Features.Towns.Reputation.Logic
             Bind();
         }
 
+        ~ReputationManager()
+        {
+            Unbind();
+        }
+
         public void ApplyCaughtThief(float reputationLoss)
         {
             UpdateReputation(reputationLoss, "Your thief was caught stealing!");
@@ -64,7 +69,7 @@ namespace Features.Towns.Reputation.Logic
 
         public void ApplyMissionPenalty(float penalty)
         {
-            UpdateReputation(penalty, $"You failed to supply {_town.Name} with what they needed.");
+            UpdateReputation(penalty, $"You failed to supply {_town.Name} in time.");
         }
 
         public void AddModifier(IModifier modifier)
@@ -82,9 +87,6 @@ namespace Features.Towns.Reputation.Logic
             _town.TradeCompleted += OnTradeCompleted;
             _town.DevelopmentManager.Tier.Observe(OnTownUpgrade, false);
             _town.ProductionManager.ProductionAdded += OnProductionBuildingBuilt;
-            // TODO - MED-72: Missions Completion and Failure support
-            //_town.MissionManager.MissionResolved += OnMissionResolved
-            //_town.MissionManager.MissionExpired += OnMissionExpired
         }
 
         private void Unbind()
@@ -92,9 +94,6 @@ namespace Features.Towns.Reputation.Logic
             _town.TradeCompleted -= OnTradeCompleted;
             _town.DevelopmentManager.Tier.StopObserving(OnTownUpgrade);
             _town.ProductionManager.ProductionAdded -= OnProductionBuildingBuilt;
-            // TODO - MED-72: Missions Completion and Failure support
-            //_town.MissionManager.MissionResolved -= OnMissionResolved
-            //_town.MissionManager.MissionExpired -= OnMissionExpired
         }
 
         private void OnTradeCompleted(TradeInfo tradeInfo)

@@ -8,6 +8,7 @@ using Features.Goods.Config;
 using Features.Goods.Selector;
 using Features.Notifications.Logic;
 using Features.Ticking.Logic;
+using Features.Towns.Development.Logic;
 using Features.Towns.Missions.Data;
 using Features.Towns.Missions.Results;
 using Features.Trade;
@@ -17,6 +18,7 @@ namespace Features.Towns.Missions
     public sealed class MissionSystem : ISystem
     {
         private readonly Town _town;
+        private readonly DevelopmentManager _developmentManager;
         private readonly MissionModel _missionModel;
         private readonly MissionResultHandler _resultHandler;
 
@@ -25,7 +27,8 @@ namespace Features.Towns.Missions
         private Date _gameDate;
 
         private MissionConfig _missionConfig;
-        private TradeMissionConfigData _tradeConfig;
+        private TradeMissionConfigData _tradeMissionConfig;
+        private UpgradeMissionConfigData _upgradeMissionConfig;
         private GoodsResources _goodsResources;
         private GoodPool _goodPool;
 
@@ -35,6 +38,7 @@ namespace Features.Towns.Missions
         {
             _town = town;
             _missionModel = town.Missions;
+            _developmentManager = town.DevelopmentManager;
             _resultHandler = new MissionResultHandler(town);
         }
 
@@ -43,7 +47,8 @@ namespace Features.Towns.Missions
             _tickingService = GameplayContext.Instance.Services.TickingService;
             _notificationService = GameplayContext.Instance.Services.NotificationService;
             _missionConfig = ConfigurationManager.Configurations.MissionConfig;
-            _tradeConfig = _missionConfig.TradeMissionData;
+            _tradeMissionConfig = _missionConfig.TradeMissionData;
+            _upgradeMissionConfig = _missionConfig.UpgradeMissionData;
             _gameDate = GameplayContext.Instance.Model.Date;
             _goodPool = GameplayContext.Instance.Model.GoodPool;
             _goodsResources = ResourceManager.Instance.GoodsResources;
@@ -51,13 +56,9 @@ namespace Features.Towns.Missions
             _tickingService.DayPassed += OnDayPassed;
             _town.TradeCompleted += OnTradeCompleted;
             _town.DevelopmentManager.Tier.Observe(OnTownTierChanged, false);
-            _town.Missions.GoodSelectorChanged += OnGSChanged;
+            _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged, false);
+            _town.Missions.GoodSelectorChanged += OnGoodSelectorChanged;
 
-            ResetAvailableGoods();
-        }
-
-        private void OnGSChanged()
-        {
             ResetAvailableGoods();
         }
 
@@ -66,12 +67,44 @@ namespace Features.Towns.Missions
             _tickingService.DayPassed -= OnDayPassed;
             _town.TradeCompleted -= OnTradeCompleted;
             _town.DevelopmentManager.Tier.StopObserving(OnTownTierChanged);
-            _town.Missions.GoodSelectorChanged -= OnGSChanged;
+            _town.Missions.GoodSelectorChanged -= OnGoodSelectorChanged;
+        }
+
+        private void OnDevelopmentChanged(float development)
+        {
+            if (development < 99.9f)
+                return;
+
+            TriggerMission(_upgradeMissionConfig, MissionType.UpgradeMission);
+            _developmentManager.LockDegrowth(true);
+        }
+
+        private void OnGoodSelectorChanged()
+        {
+            ResetAvailableGoods();
         }
 
         private void OnTownTierChanged(Tier tier)
         {
             ResetAvailableGoods();
+        }
+
+        private void OnTradeCompleted(TradeInfo tradeInfo)
+        {
+            // only progress missions when selling to town
+            if (tradeInfo.Type == TradeType.Buy)
+                return;
+
+            if (!_missionModel.Missions.TryGetValue(tradeInfo.Good, out var mission))
+                return;
+
+            mission.Deliver(tradeInfo.Amount);
+        }
+
+        private void OnDayPassed()
+        {
+            ValidateOngoingMissions();
+            TryTriggerTradeMission();
         }
 
         private void ResetAvailableGoods()
@@ -94,24 +127,6 @@ namespace Features.Towns.Missions
             }
         }
 
-        private void OnTradeCompleted(TradeInfo tradeInfo)
-        {
-            // only progress missions when selling to town
-            if (tradeInfo.Type == TradeType.Buy)
-                return;
-
-            if (!_missionModel.Missions.TryGetValue(tradeInfo.Good, out var mission))
-                return;
-
-            mission.Deliver(tradeInfo.Amount);
-        }
-
-        private void OnDayPassed()
-        {
-            ValidateOngoingMissions();
-            TryTriggerNewMission();
-        }
-
         private void ValidateOngoingMissions()
         {
             foreach (var mission in _missionModel.Missions.Values.ToArray())
@@ -120,26 +135,31 @@ namespace Features.Towns.Missions
             }
         }
 
-        private void TryTriggerNewMission()
+        private void TryTriggerTradeMission()
         {
-            if (_missionModel.Missions.Count >= _tradeConfig.MaxMissionCount)
+            if (_missionModel.Missions.Count >= _tradeMissionConfig.MaxMissionCount)
                 return;
 
-            var isMissionTriggered = RandomUtility.GetBool(_missionConfig.TradeMissionData.DailyMissionChance);
+            var isMissionTriggered = RandomUtility.GetBool(_tradeMissionConfig.DailyMissionChance);
             if (!isMissionTriggered)
                 return;
 
+            TriggerMission(_tradeMissionConfig, MissionType.TradeMission);
+        }
+
+        private void TriggerMission(IMissionConfigData config, MissionType type)
+        {
             if (_availableGoods.IsEmpty())
                 return;
 
             var missionGood = _availableGoods.GetRandom();
             var mission = new Mission(
                 missionGood,
-                _tradeConfig.Volume,
-                _gameDate + _tradeConfig.LengthInDays,
-                MissionType.TradeMission,
-                _tradeConfig.GetReward(),
-                _tradeConfig.GetPenalty());
+                config.Volume,
+                _gameDate + config.LengthInDays,
+                type,
+                config.GetReward(),
+                config.GetPenalty());
 
             mission.ValidateDate(_gameDate);
 
@@ -160,22 +180,6 @@ namespace Features.Towns.Missions
             _notificationService.PostNotification(notification);
         }
 
-        private void OnMissionSucceeded(Mission mission)
-        {
-            _resultHandler.Handle(mission.Reward);
-
-            DisableMission(mission);
-        }
-
-        private void OnMissionFailed(Mission mission)
-        {
-            var notification = new MissionFailedNotification(_town, mission);
-            _notificationService.PostNotification(notification);
-            _resultHandler.Handle(mission.Penalty);
-
-            DisableMission(mission);
-        }
-
         private void DisableMission(Mission mission)
         {
             mission.MissionFailed -= OnMissionFailed;
@@ -189,6 +193,34 @@ namespace Features.Towns.Missions
             }
 
             _missionModel.RemoveMission(mission);
+        }
+
+        private void OnMissionSucceeded(Mission mission)
+        {
+            if (mission.Type == MissionType.UpgradeMission)
+            {
+                _developmentManager.Upgrade();
+                _developmentManager.LockDegrowth(false);
+            }
+
+            _resultHandler.Handle(mission.Reward);
+
+            DisableMission(mission);
+        }
+
+        private void OnMissionFailed(Mission mission)
+        {
+            if (mission.Type == MissionType.UpgradeMission)
+            {
+                _developmentManager.LockDegrowth(false);
+            }
+
+            var notification = new MissionFailedNotification(_town, mission);
+            _notificationService.PostNotification(notification);
+            _resultHandler.Handle(mission.Penalty);
+
+
+            DisableMission(mission);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Features.Towns.Missions.Results
             switch (result)
             {
                 case TradeMissionPenalty penalty:
-                    _town.ReputationManager.ApplyMissionPenalty(penalty.ReputationPenalty);
+                    _town.ReputationManager.ApplyMissionReward(penalty.ReputationPenalty);
                     _town.DevelopmentManager.AddDevelopmentChange(penalty.GrowthPenalty);
                     break;
                 case TradeMissionReward reward:
@@ -33,6 +33,7 @@ namespace Features.Towns.Missions.Results
                     break;
                 case UpgradeMissionReward reward:
                     _town.DevelopmentManager.Upgrade();
+                    _town.ReputationManager.ApplyMissionReward(reward.ReputationReward);
                     break;
             }
         }

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common.Infrastructure;
 using Common.Types;
+using Common.Utility;
 using Features.Player.Caravan.Config;
 using Features.Player.Logic;
 using Features.Towns;
@@ -50,11 +52,25 @@ namespace Features
                 { "reset.level", ResetLevelProgress },
                 { "tutorial", OpenTutorial },
                 { "give", GiveGoods },
+                { "town.grow", AddTownDevelopment },
             };
 
             _cheatInput = cheatUI.GetComponentInChildren<TMP_InputField>();
 
             cheatUI.SetActive(false);
+        }
+
+        private void AddTownDevelopment(string parameter)
+        {
+            var selectedTown = GameplayContext.Instance.Selection.SelectedTown.Value;
+            if (selectedTown == null)
+            {
+                ReportError("No town was selected.");
+                return;
+            }
+
+            var devChange = int.Parse(parameter).Clamp(0, 100);
+            selectedTown.DevelopmentManager.AddDevelopmentChange(devChange);
         }
 
         private void GiveGoods(string parameter)
@@ -71,8 +87,13 @@ namespace Features
         private void UpgradeSelectedTown()
         {
             var selectedTown = GameplayContext.Instance.Selection.SelectedTown.Value;
+            if (selectedTown == null)
+            {
+                ReportError("No town was selected.");
+                return;
+            }
 
-            selectedTown?.DevelopmentManager.Upgrade();
+            selectedTown.DevelopmentManager.Upgrade();
         }
 
         private void ResetDate()
@@ -261,7 +282,7 @@ namespace Features
         {
             GameplayContext.Instance.Services.TutorialService.ResetCompletedTopics();
         }
-        
+
         private void ResetAllProgress()
         {
             GlobalContext.Instance.ProgressModel.Reset();

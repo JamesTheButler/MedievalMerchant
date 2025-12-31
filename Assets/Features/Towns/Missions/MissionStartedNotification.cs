@@ -11,13 +11,14 @@ namespace Features.Towns.Missions
             GetTitle(town, mission),
             GetDescription(mission),
             NotificationType.Info,
-            Severity.Minor,
+            mission.Type == MissionType.TradeMission ? Severity.Minor : Severity.Major,
             GetIcon(mission.Good)) { }
 
         private static string GetTitle(Town town, Mission mission)
         {
             var config = ResourceManager.Instance.GoodsResources.ResourceData[mission.Good];
-            return $"Mission started: {town.Name} wants {config.GoodName}.";
+            var missionTitle = mission.Type == MissionType.TradeMission ? "Trade Mission" : "Upgrade Mission";
+            return $"{missionTitle} started: {town.Name} wants {config.GoodName}.";
         }
 
         private static string GetDescription(Mission mission)
