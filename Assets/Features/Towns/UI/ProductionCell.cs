@@ -28,6 +28,7 @@ namespace Features.Towns.UI
         private GameObject lockGroup;
 
         public int Index { get; set; }
+
         private State _currentState = State.Hidden;
 
         private void Awake()

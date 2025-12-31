@@ -239,7 +239,7 @@ namespace Features.Trade.UI
                 var trackedInfo = _tradeTracker.Value.TrackedGoods.GetValueOrDefault(_good);
                 if (trackedInfo == null)
                 {
-                    Debug.LogError($"TradeTracker did not have entry for {_good}. Something's wrong.");
+                    Debug.LogWarning($"TradeTracker did not have entry for {_good}. Something's wrong.");
                     coinAmountText.text = price;
                 }
                 else

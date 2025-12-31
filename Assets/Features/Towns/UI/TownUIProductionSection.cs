@@ -30,6 +30,14 @@ namespace Features.Towns.UI
             _goodResources = ResourceManager.Instance.GoodsResources;
 
             _producerGroups = GetComponentsInChildren<ProducerGroup>();
+            
+            for (var index = 0; index < _producerGroups.Length; index++)
+            {
+                var group = _producerGroups[index];
+                group.Initialize(index);
+                group.UpgradeButtonClicked += OnUpgradeButtonClicked;
+                group.ProductionCellClicked += OnProductionCellClicked;
+            }
         }
 
         public override void CleanUp() { }
@@ -42,12 +50,7 @@ namespace Features.Towns.UI
             for (var index = 0; index < _producerGroups.Length; index++)
             {
                 var group = _producerGroups[index];
-                group.Initialize(index, index < availableTier1GoodsInTown);
-                group.UpgradeButtonClicked += OnUpgradeButtonClicked;
-                group.ProductionCellClicked += OnProductionCellClicked;
-
-
-                group.Bind(town.ProductionManager);
+                group.Bind(town, index < availableTier1GoodsInTown);
             }
         }
 
@@ -55,7 +58,7 @@ namespace Features.Towns.UI
         {
             foreach (var group in _producerGroups)
             {
-                group.Reset();
+                group.Unbind();
             }
         }
 

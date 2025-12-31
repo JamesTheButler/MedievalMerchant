@@ -127,7 +127,7 @@ namespace Features.Towns.Production.UI
 
         private Tier3UpgradePathElement SpawnElement(Tier3Recipe recipe, Good tier2Component1)
         {
-            var tier2Component2 = recipe.GetOther(tier2Component1);
+            var tier2Component2 = recipe.GetOtherComponent(tier2Component1);
             var tier1Component1 = _recipeConfig.Value.GetTier2RecipeForResult(tier2Component1).Component;
             var tier1Component2 = _recipeConfig.Value.GetTier2RecipeForResult(tier2Component2).Component;
             var tier3Result = recipe.Result;

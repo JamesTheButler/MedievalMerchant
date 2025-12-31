@@ -47,6 +47,14 @@ namespace Features.Towns.Production.Logic
             return _producers[tier];
         }
 
+        public bool HasProducer(Tier tier, int index)
+        {
+            if (index < 0 || index >= _producers[tier].Length)
+                return false;
+
+            return _producers[tier][index] != null;
+        }
+
         public int GetIndexOfProducedGood(Good good)
         {
             var tier = _goodsResources.ResourceData[good].Tier;
@@ -96,7 +104,7 @@ namespace Features.Towns.Production.Logic
         private bool CanAddProducer(Good good, int index)
         {
             var tier = _goodsResources.ResourceData[good].Tier;
-            return GetProducers(tier)[index] == null;
+            return !HasProducer(tier, index);
         }
     }
 }

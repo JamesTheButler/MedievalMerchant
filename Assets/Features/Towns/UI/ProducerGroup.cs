@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Common.Infrastructure;
 using Common.Types;
-using Common.UI.Tooltips;
 using Common.UI.Utility;
+using Common.Utility;
+using Features.Goods.Config;
 using Features.Towns.Production.Logic;
 using NaughtyAttributes;
 using TMPro;
@@ -15,8 +17,6 @@ namespace Features.Towns.UI
         public event Action<ProductionCell, Tier> UpgradeButtonClicked;
         public event Action<ProductionCell> ProductionCellClicked;
 
-        private readonly Dictionary<Tier, ProductionCell> _productionCells = new();
-
         [SerializeField, Required]
         private GameObject unavailableGroup;
 
@@ -24,50 +24,204 @@ namespace Features.Towns.UI
         private ProductionCell t1Cell, t2Cell, t3Cell;
 
         [SerializeField, Required]
+        private ProductionCell deliveryCell;
+
+        [SerializeField, Required]
+        private GameObject arrowT1T2, arrowT2T3, arrowT2T3Delivery;
+
+        [SerializeField, Required]
         private TMP_Text titleText;
 
+        private readonly Dictionary<Tier, ProductionCell> _producerCellsPerTier = new();
+        private readonly Dictionary<Good, ProductionCell> _producerCellsPerGood = new();
+
+        private RecipeResources _recipeResources;
+        private Town _town;
         private int _producerIndex;
         private bool _isAvailable;
 
-        private void Awake()
+        public void Initialize(int producerIndex)
         {
-            _productionCells.Add(Tier.Tier1, t1Cell);
-            _productionCells.Add(Tier.Tier2, t2Cell);
-            _productionCells.Add(Tier.Tier3, t3Cell);
+            _recipeResources = ResourceManager.Instance.RecipeResources;
+            _producerIndex = producerIndex;
+
+            _producerCellsPerTier.Add(Tier.Tier1, t1Cell);
+            _producerCellsPerTier.Add(Tier.Tier2, t2Cell);
+            _producerCellsPerTier.Add(Tier.Tier3, t3Cell);
+
+            foreach (var (tier, cell) in _producerCellsPerTier)
+            {
+                cell.Index = _producerIndex;
+                cell.Clicked += () => ProductionCellClicked?.Invoke(cell);
+                cell.UnlockButtonClicked += () => UpgradeButtonClicked?.Invoke(cell, tier);
+            }
         }
 
-        public void Initialize(int producerIndex, bool isAvailable)
+        public void Bind(Town town, bool isAvailable)
         {
             _isAvailable = isAvailable;
             unavailableGroup.SetActive(!isAvailable);
-            _producerIndex = producerIndex;
             var style = isAvailable ? Style.Default : Style.Subtitle;
-            titleText.text = $"Producer {_producerIndex}".WithStyle(style);
+            titleText.text = $"Producer {_producerIndex + 1}".WithStyle(style);
+
+            if (!_isAvailable)
+                return;
+
+            _town = town;
+
+            _town.Tier.Observe(OnTownTierChanged);
+            _town.Inventory.GoodUpdated += OnGoodUpdated;
+            town.ProductionManager.ProductionAddedIndexed += OnProducerAdded;
+
+            foreach (var tier in EnumExtensions.Enumerate<Tier>())
+            {
+                var producer = _town.ProductionManager.GetProducers(tier)[_producerIndex];
+                if (producer != null)
+                {
+                    OnProducerAdded(producer, _producerIndex);
+                }
+            }
+
+            RefreshProducerCellStates();
+            RefreshArrows();
         }
 
-        public void Bind(ProductionManager productionManager)
+        public void Unbind()
         {
-            if (!_isAvailable) return;
+            if (_town != null)
+            {
+                _town.Tier.StopObserving(OnTownTierChanged);
+                _town.Inventory.GoodUpdated -= OnGoodUpdated;
+                _town.ProductionManager.ProductionAddedIndexed -= OnProducerAdded;
+            }
 
-            productionManager.ProductionAddedIndexed += OnProducerAdded;
+            arrowT1T2.SetActive(false);
+            arrowT2T3.SetActive(false);
+            arrowT2T3Delivery.SetActive(false);
+
+            ToggleDeliveryCell(false);
+
+            foreach (var productionCell in _producerCellsPerTier.Values)
+            {
+                productionCell.SetState(ProductionCell.State.Hidden);
+            }
+
+            _town = null;
+        }
+
+        private void OnTownTierChanged(Tier tier)
+        {
+            RefreshProducerCellStates();
+            RefreshArrows();
+        }
+
+        private void RefreshProducerCellStates()
+        {
+            var townTier = _town.Tier.Value;
+            foreach (var (tier, cell) in _producerCellsPerTier)
+            {
+                if (townTier < tier)
+                {
+                    cell.SetState(ProductionCell.State.Hidden);
+                }
+                else
+                {
+                    if (_town.ProductionManager.HasProducer(tier, _producerIndex))
+                    {
+                        cell.SetState(ProductionCell.State.Active);
+                    }
+                    else
+                    {
+                        var isUpgradable =
+                            tier == Tier.Tier1 ||
+                            _town.ProductionManager.HasProducer(tier - 1, _producerIndex);
+                        cell.SetState(isUpgradable ? ProductionCell.State.Upgradeable : ProductionCell.State.Locked);
+                    }
+                }
+            }
+        }
+
+        private void RefreshArrows()
+        {
+            var townTier = _town.Tier.Value;
+
+            arrowT1T2.SetActive(townTier > Tier.Tier1);
+            arrowT2T3.SetActive(townTier > Tier.Tier2);
+            var hasT3Producer = _town.ProductionManager.HasProducer(Tier.Tier3, _producerIndex);
+            arrowT2T3Delivery.SetActive(townTier > Tier.Tier2 && hasT3Producer);
         }
 
         private void OnProducerAdded(Producer producer, int producerIndex)
         {
-            if (!_isAvailable) return;
+            if (!_isAvailable)
+                return;
 
             if (producerIndex != _producerIndex)
                 return;
+
+            var producerCell = _producerCellsPerTier[producer.Tier];
+            producerCell.SetGood(producer.ProducedGood);
+            _producerCellsPerGood[producer.ProducedGood] = producerCell;
+            RefreshProducerCellStates();
+            RefreshArrows();
+
+            if (producer.Tier == Tier.Tier3)
+            {
+                ToggleDeliveryCell(true);
+            }
         }
 
-        public void Reset()
+        private void OnProducerRemoved(Producer producer)
         {
-            if (!_isAvailable) return;
+            if (!_producerCellsPerGood.Remove(producer.ProducedGood, out var producerCell))
+                return;
 
-            foreach (var productionCell in _productionCells.Values)
+            if (producer.Tier == Tier.Tier3)
             {
-                // reset and hide all
+                ToggleDeliveryCell(false);
             }
+
+            producerCell.SetGood(null);
+            producerCell.SetAmount(0);
+
+            RefreshProducerCellStates();
+            RefreshArrows();
+        }
+
+        private void OnGoodUpdated(Good good, int amount)
+        {
+            // TODO: Remember to update delivery Cell
+            if (!_producerCellsPerGood.TryGetValue(good, out var value))
+                return;
+
+            value.SetAmount(amount);
+        }
+
+        private void ToggleDeliveryCell(bool isEnabled)
+        {
+            deliveryCell.SetAmount(0);
+            deliveryCell.SetEnabled(true);
+            deliveryCell.SetState(isEnabled ? ProductionCell.State.Active : ProductionCell.State.Hidden);
+
+            if (!isEnabled)
+                return;
+
+            // temporary, later this is useless (either it's hidden or not)
+            deliveryCell.SetState(ProductionCell.State.Active);
+            var tier2Good = _producerCellsPerTier[Tier.Tier2].Good;
+            var tier3Good = _producerCellsPerTier[Tier.Tier3].Good;
+            if (tier2Good == null || tier3Good == null)
+            {
+                Debug.LogError($"Could not toggle cell on t2cell {tier2Good}, t3 cell {tier3Good}");
+                return;
+            }
+
+            var t2GoodToDeliver = _recipeResources
+                .GetTier3RecipeForResult(tier3Good.Value)
+                .GetOtherComponent(tier2Good.Value);
+            deliveryCell.SetGood(t2GoodToDeliver);
+            // TODO: need to change delivery cell state depending on if town produces it or not.
+            //  deliveryCell.IsSellable = _town.ProdMgr.HasGood
         }
     }
 }

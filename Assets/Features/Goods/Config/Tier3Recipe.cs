@@ -17,9 +17,9 @@ namespace Features.Goods.Config
         [field: SerializeField]
         public Good Component2 { get; private set; }
 
-        public Good GetOther(Good good)
+        public Good GetOtherComponent(Good component)
         {
-            return Component1 == good ? Component2 : Component1;
+            return Component1 == component ? Component2 : Component1;
         }
     }
 }

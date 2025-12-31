@@ -78,9 +78,9 @@ namespace Features.Towns.UI
 
         public void Reset()
         {
-            foreach (var cell in _occupiedCells)
+            foreach (var cell in _inventoryCells)
             {
-                cell.Value.Update(null, 0);
+                cell.Reset();
             }
 
             SetLocked(true);
