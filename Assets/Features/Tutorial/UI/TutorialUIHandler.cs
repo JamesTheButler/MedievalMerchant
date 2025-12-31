@@ -15,7 +15,7 @@ namespace Features.Tutorial.UI
         private TutorialResources _tutorialSResources;
         private TutorialService _tutorialService;
         private GameSpeedModel _gameSpeedModel;
-        private UIEventService _uiEventService;
+        private UIBridgeService _uiBridgeService;
 
         private TutorialTopic? _currentTopic;
 
@@ -24,7 +24,7 @@ namespace Features.Tutorial.UI
             _tutorialSResources = ResourceManager.Instance.TutorialResources;
             _tutorialService = GameplayContext.Instance.Services.TutorialService;
             _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
-            _uiEventService = GameplayContext.Instance.Services.UIEventService;
+            _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
             _tutorialService.OpenTutorialRequest += OpenTutorial;
             tutorialUI.Closed += OnTutorialUiClosed;
         }
@@ -54,7 +54,7 @@ namespace Features.Tutorial.UI
             _gameSpeedModel.Resume();
             if (_currentTopic != null)
             {
-                _uiEventService.CloseTutorial(_currentTopic.Value);
+                _uiBridgeService.CloseTutorialFromUI(_currentTopic.Value);
                 _currentTopic = null;
             }
         }

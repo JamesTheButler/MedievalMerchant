@@ -7,6 +7,7 @@ namespace Features.Notifications.Logic
     public sealed class NotificationService : IService
     {
         public event Action<Notification> NotificationPosted;
+        public event Action<Notification> NotificationPinged;
 
         public void Initialize() { }
         public void CleanUp() { }
@@ -18,7 +19,7 @@ namespace Features.Notifications.Logic
 
         public void PingNotification(Notification notification)
         {
-            Debug.LogError($"Pinging {notification.GetType().Name} not implemented yet.");
+            NotificationPinged?.Invoke(notification);
         }
     }
 }

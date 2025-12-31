@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Infrastructure;
 using Common.Types;
+using Common.UI;
 using Common.UI.Elements;
 using Common.UI.Popups;
 using Common.UI.Tooltips;
@@ -34,11 +35,11 @@ namespace Features.Player.Caravan.UI
 
         private CaravanManager _caravanManager;
         private Inventory.Inventory _playerInventory;
-        private UIEventService _uiEventService;
+        private UIBridgeService _uiBridgeService;
 
         public void Setup(CaravanManager caravanManager)
         {
-            _uiEventService = GameplayContext.Instance.Services.UIEventService;
+            _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
             _caravanManager = caravanManager;
 
             // TODO - STYLE: it's not so nice to have a random business logic class in here.
@@ -67,7 +68,7 @@ namespace Features.Player.Caravan.UI
         {
             if (isOn)
             {
-                _uiEventService.OpenCaravanPanel();
+                _uiBridgeService.OpenPanelFromUI(UIPanel.Caravan);
             }
 
             gameObject.SetActive(isOn);

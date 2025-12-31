@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Common.Camera;
 using Features.Levels.GameModifiers.Logic;
 using Features.Notifications.Logic;
 using Features.Player.Retinue.Logic;
@@ -17,7 +18,8 @@ namespace Common.Infrastructure
         public TradeService TradeService { get; private set; }
         public GameModifierService GameModifierService { get; private set; }
         public NotificationService NotificationService { get; private set; }
-        public UIEventService UIEventService { get; private set; }
+        public UIBridgeService UIBridgeService { get; private set; }
+        public CameraService CameraService { get; private set; }
 
         private readonly List<IService> _services = new();
 
@@ -30,7 +32,8 @@ namespace Common.Infrastructure
             TradeService = new TradeService();
             GameModifierService = new GameModifierService();
             NotificationService = new NotificationService();
-            UIEventService = new UIEventService();
+            UIBridgeService = new UIBridgeService();
+            CameraService = new CameraService();
 
             _services.Add(TutorialPersistenceService);
             _services.Add(TutorialService);
@@ -39,7 +42,8 @@ namespace Common.Infrastructure
             _services.Add(TradeService);
             _services.Add(GameModifierService);
             _services.Add(NotificationService);
-            _services.Add(UIEventService);
+            _services.Add(UIBridgeService);
+            _services.Add(CameraService);
 
             foreach (var service in _services)
             {

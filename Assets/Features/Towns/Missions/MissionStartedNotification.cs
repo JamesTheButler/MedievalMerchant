@@ -7,12 +7,17 @@ namespace Features.Towns.Missions
 {
     public sealed record MissionStartedNotification : Notification
     {
+        public Town Town { get; }
+
         public MissionStartedNotification(Town town, Mission mission) : base(
             GetTitle(town, mission),
             GetDescription(mission),
             NotificationType.Info,
             mission.Type == MissionType.TradeMission ? Severity.Minor : Severity.Major,
-            GetIcon(mission.Good)) { }
+            GetIcon(mission.Good))
+        {
+            Town = town;
+        }
 
         private static string GetTitle(Town town, Mission mission)
         {

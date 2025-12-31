@@ -1,24 +1,23 @@
 ﻿using Common.Infrastructure;
+using Common.UI;
 
 namespace Features.Tutorial.Logic
 {
     public sealed class TutorialSystem : ISystem
     {
         private TutorialService _tutorialService;
-        private UIEventService _uiEventService;
+        private UIBridgeService _uiBridgeService;
         private GameplayModel _gameModel;
 
         public void Initialize()
         {
             _tutorialService = GameplayContext.Instance.Services.TutorialService;
-            _uiEventService = GameplayContext.Instance.Services.UIEventService;
+            _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
             _gameModel = GameplayContext.Instance.Model;
 
             _gameModel.Date.Day.Observe(OnDayChanged);
-            _uiEventService.TutorialClosed += OnTutorialClosed;
-            _uiEventService.CaravanPanelOpened += OnCaravanPanelOpened;
-            _uiEventService.TownPanelOpened += OnTownPanelOpened;
-            _uiEventService.RetinuePanelOpened += OnRetinuePanelOpened;
+            _uiBridgeService.TutorialClosedFromUI += OnTutorialClosedFromUI;
+            _uiBridgeService.PanelOpenedFromUI += OnPanelOpenedFromUI;
         }
 
         private void OnDayChanged(int day)
@@ -41,28 +40,27 @@ namespace Features.Tutorial.Logic
         public void CleanUp()
         {
             _gameModel.Date.Day.StopObserving(OnDayChanged);
-            _uiEventService.TutorialClosed -= OnTutorialClosed;
-            _uiEventService.CaravanPanelOpened -= OnCaravanPanelOpened;
-            _uiEventService.TownPanelOpened -= OnTownPanelOpened;
-            _uiEventService.RetinuePanelOpened -= OnRetinuePanelOpened;
+            _uiBridgeService.TutorialClosedFromUI -= OnTutorialClosedFromUI;
+            _uiBridgeService.PanelOpenedFromUI -= OnPanelOpenedFromUI;
         }
 
-        private void OnCaravanPanelOpened()
+        private void OnPanelOpenedFromUI(UIPanel uiPanel)
         {
-            OpenTutorialIfIncomplete(TutorialTopic.Caravan);
+            TutorialTopic? topic = uiPanel switch
+            {
+                UIPanel.Retinue => TutorialTopic.Retinue,
+                UIPanel.Caravan => TutorialTopic.Caravan,
+                UIPanel.Town => TutorialTopic.Town,
+                _ => null,
+            };
+
+            if (topic == null)
+                return;
+
+            OpenTutorialIfIncomplete(topic.Value);
         }
 
-        private void OnTownPanelOpened()
-        {
-            OpenTutorialIfIncomplete(TutorialTopic.Town);
-        }
-
-        private void OnRetinuePanelOpened()
-        {
-            OpenTutorialIfIncomplete(TutorialTopic.Retinue);
-        }
-
-        private void OnTutorialClosed(TutorialTopic topic)
+        private void OnTutorialClosedFromUI(TutorialTopic topic)
         {
             if (topic == TutorialTopic.Intro)
             {

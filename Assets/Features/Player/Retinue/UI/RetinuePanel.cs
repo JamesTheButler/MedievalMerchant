@@ -1,4 +1,5 @@
 using Common.Infrastructure;
+using Common.UI;
 using Common.UI.Tooltips;
 using Features.Player.Retinue.Logic;
 using NaughtyAttributes;
@@ -16,12 +17,12 @@ namespace Features.Player.Retinue.UI
         private ModifiableTooltipHandler upkeepTooltip;
 
         private RetinueModel _retinueModel;
-        private UIEventService _uiEventService;
+        private UIBridgeService _uiBridgeService;
 
         private void Start()
         {
             _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
-            _uiEventService = GameplayContext.Instance.Services.UIEventService;
+            _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
             _retinueModel.Upkeep.Observe(OnUpkeepChanged);
             upkeepTooltip.SetData(_retinueModel.Upkeep);
             Close();
@@ -39,7 +40,7 @@ namespace Features.Player.Retinue.UI
 
         public void Open()
         {
-            _uiEventService.OpenRetinuePanel();
+            _uiBridgeService.OpenPanelFromUI(UIPanel.Retinue);
             gameObject.SetActive(true);
         }
 

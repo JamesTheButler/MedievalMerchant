@@ -7,12 +7,17 @@ namespace Features.Towns.Missions
 {
     public sealed record MissionFailedNotification : Notification
     {
+        public Town Town { get; }
+
         public MissionFailedNotification(Town town, Mission mission) : base(
             GetTitle(town, mission),
             GetDescription(town, mission),
             NotificationType.Bad,
             Severity.Minor,
-            GetIcon(mission.Good)) { }
+            GetIcon(mission.Good))
+        {
+            Town = town;
+        }
 
         private static string GetTitle(Town town, Mission mission)
         {

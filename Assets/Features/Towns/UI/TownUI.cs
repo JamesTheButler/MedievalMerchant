@@ -1,4 +1,5 @@
 using Common.Infrastructure;
+using Common.UI;
 using Common.UI.Popups;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,11 +10,11 @@ namespace Features.Towns.UI
     {
         private Town _town;
         private TownUISection[] _sections;
-        private UIEventService _uiEventService;
+        private UIBridgeService _uiBridgeService;
 
         public void Initialize()
         {
-            _uiEventService = GameplayContext.Instance.Services.UIEventService;
+            _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
             _sections = GetComponentsInChildren<TownUISection>();
 
             foreach (var section in _sections)
@@ -42,7 +43,7 @@ namespace Features.Towns.UI
 
         public void Show()
         {
-            _uiEventService.OpenTownPanel();
+            _uiBridgeService.OpenPanelFromUI(UIPanel.Town);
             gameObject.SetActive(true);
         }
 
