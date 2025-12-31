@@ -2,11 +2,11 @@
 {
     public enum UIPanel
     {
-        Caravan,
-        Town,
-        Retinue,
-        WinLossConditions,
-        LevelConditions,
-        EscapeMenu
+        Caravan = 0,
+        Town = 1,
+        Retinue = 2,
+        WinLossConditions = 3,
+        LevelConditions = 4,
+        EscapeMenu = 5
     }
 }

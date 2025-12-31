@@ -27,6 +27,7 @@ namespace Features.Levels.GameModifiers.UI
 
         public void Bind()
         {
+            Unbind();
             _gameEventModel = GameplayContext.Instance.Model.Events;
             _gameEventModel.EventAdded += OnEventAdded;
             _gameEventModel.EventRemoved += OnEventRemoved;
@@ -50,9 +51,12 @@ namespace Features.Levels.GameModifiers.UI
 
             _uiElements.Clear();
             _handlers.Clear();
-
-            _gameEventModel.EventAdded -= OnEventAdded;
-            _gameEventModel.EventRemoved -= OnEventRemoved;
+    
+            if (_gameEventModel != null)
+            {
+                _gameEventModel.EventAdded -= OnEventAdded;
+                _gameEventModel.EventRemoved -= OnEventRemoved;
+            }
         }
 
         private void OnEventAdded(GameEvent gameEvent)

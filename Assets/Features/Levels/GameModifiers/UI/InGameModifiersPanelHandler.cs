@@ -1,10 +1,11 @@
+using System;
 using Common.Infrastructure;
 using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Levels.GameModifiers.UI
 {
-    public sealed class InGameLevelConditionsPanelHandler : MonoBehaviour
+    public sealed class InGameModifiersPanelHandler : MonoBehaviour
     {
         [SerializeField, Required]
         private GameObject panel;
@@ -27,19 +28,25 @@ namespace Features.Levels.GameModifiers.UI
             {
                 Show();
             }
-
-            panel.SetActive(!isActive);
         }
 
-        private void Show()
+        public void Show()
         {
+            if (panel.activeSelf)
+                return;
+
             levelConditionsElement.Setup(GlobalContext.CurrentLevelInfo?.GameplayModifiers);
             gameEventListUI.Bind();
+            panel.SetActive(true);
         }
 
-        private void Hide()
+        public void Hide()
         {
+            if (!panel.activeSelf)
+                return;
+
             gameEventListUI.Unbind();
+            panel.SetActive(false);
         }
     }
 }

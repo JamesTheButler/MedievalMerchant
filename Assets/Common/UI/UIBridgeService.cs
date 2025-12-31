@@ -1,8 +1,8 @@
 ﻿using System;
-using Common.UI;
+using Common.Infrastructure;
 using Features.Tutorial;
 
-namespace Common.Infrastructure
+namespace Common.UI
 {
     /// <summary>
     /// Forwards UI events, like user inputs to the logic layer.

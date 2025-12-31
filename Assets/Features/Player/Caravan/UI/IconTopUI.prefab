@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9218538237699705470}
   - component: {fileID: 2236913949556327770}
+  - component: {fileID: 4292988426095567957}
   - component: {fileID: 3214827136729867020}
   - component: {fileID: 8244741175097336291}
   - component: {fileID: 5227668365018004272}
@@ -55,6 +56,22 @@ MonoBehaviour:
   clicked:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4292988426095567957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421366637234583889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 789f069e77b84ec686d5c93e8cb95932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.BackendPanelRequestReceiver
+  requestReceived:
+    m_PersistentCalls:
+      m_Calls: []
+  panel: 5
 --- !u!222 &3214827136729867020
 CanvasRenderer:
   m_ObjectHideFlags: 0
