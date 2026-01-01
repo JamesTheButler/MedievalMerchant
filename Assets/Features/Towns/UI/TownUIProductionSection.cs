@@ -1,6 +1,7 @@
 using System.Linq;
 using Common.Infrastructure;
 using Common.Types;
+using Common.UI.Elements;
 using Features.Goods.Config;
 using Features.Trade;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Features.Towns.UI
     public sealed class TownUIProductionSection : TownUISection
     {
         [SerializeField]
-        private UnityEvent<ProductionCell, TradeType> productionCellClicked;
+        private UnityEvent<GoodCell, TradeType> productionCellClicked;
 
         [SerializeField]
         private UnityEvent<ProductionCell> tier1UpgradeButtonClicked;
@@ -30,13 +31,14 @@ namespace Features.Towns.UI
             _goodResources = ResourceManager.Instance.GoodsResources;
 
             _producerGroups = GetComponentsInChildren<ProducerGroup>();
-            
+
             for (var index = 0; index < _producerGroups.Length; index++)
             {
                 var group = _producerGroups[index];
                 group.Initialize(index);
                 group.UpgradeButtonClicked += OnUpgradeButtonClicked;
                 group.ProductionCellClicked += OnProductionCellClicked;
+                group.DeliveryCellClicked += OnDeliveryCellClicked;
             }
         }
 
@@ -78,9 +80,14 @@ namespace Features.Towns.UI
             }
         }
 
-        private void OnProductionCellClicked(ProductionCell productionCell)
+        private void OnProductionCellClicked(GoodCell cell)
         {
-            productionCellClicked.Invoke(productionCell, TradeType.Buy);
+            productionCellClicked.Invoke(cell, TradeType.Buy);
+        }
+
+        private void OnDeliveryCellClicked(GoodCell cell)
+        {
+            productionCellClicked.Invoke(cell, TradeType.Sell);
         }
     }
 }

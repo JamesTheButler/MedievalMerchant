@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Types;
+using Common.UI.Elements;
 using Common.UI.Utility;
 using Common.Utility;
 using Features.Goods.Config;
@@ -16,7 +17,7 @@ namespace Features.Towns.UI
     public sealed class ProducerGroup : MonoBehaviour
     {
         public event Action<ProductionCell, Tier> UpgradeButtonClicked;
-        public event Action<ProductionCell> ProductionCellClicked;
+        public event Action<GoodCell> ProductionCellClicked, DeliveryCellClicked;
 
         [SerializeField, Required]
         private GameObject unavailableGroup;
@@ -25,7 +26,7 @@ namespace Features.Towns.UI
         private ProductionCell t1Cell, t2Cell, t3Cell;
 
         [SerializeField, Required]
-        private ProductionCell deliveryCell;
+        private InventoryCell deliveryCell;
 
         [SerializeField, Required]
         private GameObject arrowT1T2, arrowT2T3, arrowT2T3Delivery;
@@ -59,6 +60,8 @@ namespace Features.Towns.UI
                 cell.Clicked += () => ProductionCellClicked?.Invoke(cell);
                 cell.UnlockButtonClicked += () => UpgradeButtonClicked?.Invoke(cell, tier);
             }
+
+            deliveryCell.Clicked += () => DeliveryCellClicked?.Invoke(deliveryCell);
         }
 
         public void Bind(Town town, bool isAvailable)
@@ -147,6 +150,8 @@ namespace Features.Towns.UI
                     }
                 }
             }
+
+            ToggleDeliveryCell(_town.ProductionManager.HasProducer(Tier.Tier3, _producerIndex));
         }
 
         private void RefreshArrows()
@@ -204,24 +209,27 @@ namespace Features.Towns.UI
 
         private void OnGoodUpdated(Good good, int amount)
         {
-            // TODO: Remember to update delivery Cell
-            if (!_producerCellsPerGood.TryGetValue(good, out var value))
-                return;
+            if (_producerCellsPerGood.TryGetValue(good, out var producerCell))
+            {
+                producerCell.SetAmount(amount);
+            }
 
-            value.SetAmount(amount);
+            if (deliveryCell.Good == good)
+            {
+                deliveryCell.SetAmount(amount);
+            }
         }
 
         private void ToggleDeliveryCell(bool isEnabled)
         {
-            deliveryCell.SetAmount(0);
-            deliveryCell.SetEnabled(true);
-            deliveryCell.SetState(isEnabled ? ProductionCell.State.Active : ProductionCell.State.Hidden);
+            var canvasGroup = deliveryCell.GetComponent<CanvasGroup>();
+            canvasGroup.alpha = isEnabled ? 1 : 0;
+            canvasGroup.blocksRaycasts = isEnabled;
 
             if (!isEnabled)
                 return;
 
             // temporary, later this is useless (either it's hidden or not)
-            deliveryCell.SetState(ProductionCell.State.Active);
             var tier2Good = _producerCellsPerTier[Tier.Tier2].Good;
             var tier3Good = _producerCellsPerTier[Tier.Tier3].Good;
             if (tier2Good == null || tier3Good == null)
@@ -233,9 +241,9 @@ namespace Features.Towns.UI
             var t2GoodToDeliver = _recipeResources
                 .GetTier3RecipeForResult(tier3Good.Value)
                 .GetOtherComponent(tier2Good.Value);
+
             deliveryCell.SetGood(t2GoodToDeliver);
-            // TODO: need to change delivery cell state depending on if town produces it or not.
-            //  deliveryCell.IsSellable = _town.ProdMgr.HasGood
+            deliveryCell.SetAmount(_town.Inventory.Get(t2GoodToDeliver));
         }
     }
 }
