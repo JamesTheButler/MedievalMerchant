@@ -1,6 +1,5 @@
 ﻿using System;
 using Common.Infrastructure;
-using UnityEngine;
 
 namespace Features.Notifications.Logic
 {

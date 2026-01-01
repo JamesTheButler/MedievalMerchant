@@ -50,6 +50,7 @@ namespace Common.Infrastructure
             _systems.Add(new EventSystem());
             _systems.Add(new TutorialSystem());
             _systems.Add(new NotificationPingSystem());
+            _systems.Add(new NotificationLoggerSystem());
         }
 
         private void AddPlayerSystems()

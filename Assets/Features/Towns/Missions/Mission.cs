@@ -73,5 +73,10 @@ namespace Features.Towns.Missions
 
             Fail();
         }
+
+        public override string ToString()
+        {
+            return $"{Type} Mission: {Good} x{TotalCount}.";
+        }
     }
 }

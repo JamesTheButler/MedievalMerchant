@@ -12,6 +12,7 @@ using Features.Towns.Development.Logic;
 using Features.Towns.Missions.Data;
 using Features.Towns.Missions.Results;
 using Features.Trade;
+using UnityEngine;
 
 namespace Features.Towns.Missions
 {
@@ -171,6 +172,8 @@ namespace Features.Towns.Missions
 
         private void EnableMission(Mission mission)
         {
+            Debug.Log($"Mission in {_town.Name}: {mission}");
+            
             _missionModel.AddMission(mission);
 
             mission.MissionFailed += OnMissionFailed;
@@ -202,7 +205,6 @@ namespace Features.Towns.Missions
         {
             if (mission.Type == MissionType.UpgradeMission)
             {
-                _developmentManager.Upgrade();
                 _developmentManager.LockDegrowth(false);
             }
 
