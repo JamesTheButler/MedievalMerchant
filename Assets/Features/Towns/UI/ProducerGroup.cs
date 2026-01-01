@@ -180,6 +180,7 @@ namespace Features.Towns.UI
 
             var producerCell = _producerCellsPerTier[producer.Tier];
             producerCell.SetGood(producer.ProducedGood);
+            producerCell.SetAmount(0);
             _producerCellsPerGood[producer.ProducedGood] = producerCell;
             RefreshProducerCellStates();
             RefreshArrows();

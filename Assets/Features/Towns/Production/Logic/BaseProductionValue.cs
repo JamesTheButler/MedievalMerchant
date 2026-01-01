@@ -7,9 +7,7 @@ namespace Features.Towns.Production.Logic
     public sealed class BaseProductionValue : BaseValueModifier
     {
         public BaseProductionValue(Good good) :
-            base(GetProductionRate(good), $"Base production for Tier {GetTier(good)}")
-        {
-        }
+            base(GetProductionRate(good), $"Base production for Tier {GetTier(good)}") { }
 
         private static float GetProductionRate(Good good)
         {

@@ -12,7 +12,7 @@ namespace Features.Player.Retinue.UI
 
         private RetinueMiniProgressElement[] _elements;
 
-        private void Start()
+        public void Initialize()
         {
             _elements = GetComponentsInChildren<RetinueMiniProgressElement>();
 

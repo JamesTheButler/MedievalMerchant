@@ -6,14 +6,19 @@ namespace Features.Player.Retinue.UI
 {
     public sealed class RetinueMiniUI : MonoBehaviour
     {
-        private Dictionary<CompanionType, RetinueMiniProgressGroup> _progressGroupDict;
+        private readonly Dictionary<CompanionType, RetinueMiniProgressGroup> _progressGroupDict = new();
 
-        private void Awake()
+        public void Initialize()
         {
             var progressGroups = GetComponentsInChildren<RetinueMiniProgressGroup>();
-            _progressGroupDict = progressGroups.ToDictionary(group => group.CompanionType, group => group);
-        }
 
+            foreach (var group in progressGroups)
+            {
+                group.Initialize();
+                _progressGroupDict.Add(group.CompanionType, group);
+            }
+        }
+        
         public void SetProgress(CompanionType companionType, int level)
         {
             _progressGroupDict[companionType].SetProgress(level);

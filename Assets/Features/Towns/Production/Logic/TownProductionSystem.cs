@@ -10,7 +10,7 @@ namespace Features.Towns.Production.Logic
     {
         private readonly Town _town;
         private readonly Dictionary<Producer, IntBasedTicker> _productionTickers = new();
-        private readonly Dictionary<(Producer, Good), IntBasedTicker> _ingredientTickers = new();
+        //private readonly Dictionary<(Producer, Good), IntBasedTicker> _ingredientTickers = new();
 
         private TickingService _tickingService;
 
@@ -45,7 +45,7 @@ namespace Features.Towns.Production.Logic
             }
 
             RegisterProductionTicker(producer);
-            RegisterIngredientTickers(producer);
+           // RegisterIngredientTickers(producer);
         }
 
         private void RegisterProductionTicker(Producer producer)
@@ -53,7 +53,7 @@ namespace Features.Towns.Production.Logic
             var productionTicker = new IntBasedTicker(
                 productionRate => OnProductionTick(producer, productionRate),
                 producer.ProductionRate);
-            // TODO this dangles refs!!!!!
+            // TODO StopObserving
             producer.ProductionRate.Observe(productionRate => OnProductionRateChanged(producer, productionRate));
             _tickingService.RegisterTicker(productionTicker);
             _productionTickers.Add(producer, productionTicker);
@@ -70,7 +70,7 @@ namespace Features.Towns.Production.Logic
             _town.Inventory.AddGood(producer.ProducedGood, cappedAmount);
         }
 
-        private void RegisterIngredientTickers(Producer producer)
+       /* private void RegisterIngredientTickers(Producer producer)
         {
             foreach (var (ingredient, consumptionRate) in producer.IngredientConsumptionRates)
             {
@@ -93,7 +93,7 @@ namespace Features.Towns.Production.Logic
                 return;
 
             _town.Inventory.RemoveGood(ingredient, rate);
-        }
+        }*/
 
         private void OnProductionRateChanged(Producer producer, float productionRate)
         {

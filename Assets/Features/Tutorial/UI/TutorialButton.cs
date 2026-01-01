@@ -42,6 +42,8 @@ namespace Features.Tutorial.UI
 
         private void OnDestroy()
         {
+            if (_tutorialService == null)
+                return;
             _tutorialService.TopicCompletionChanged -= OnTopicCompleted;
         }
 

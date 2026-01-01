@@ -14,6 +14,7 @@ namespace Features.Player.Retinue.UI
         private void Start()
         {
             _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
+            retinueMiniUI.Initialize();
             foreach (var (companion, levelObservable) in _retinueModel.CompanionLevels)
             {
                 levelObservable.Observe(level => OnCompanionLevelChanged(companion, level));

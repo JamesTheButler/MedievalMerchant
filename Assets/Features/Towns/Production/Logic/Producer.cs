@@ -34,7 +34,14 @@ namespace Features.Towns.Production.Logic
 
             var baseProductionRate = new BaseProductionValue(producedGood);
             ProductionRate = new ModifiableVariable("Production Rate", true, baseProductionRate);
-            recipeConfig.GetRecipe(producedGood);
+            var recipe = recipeConfig.GetRecipe(producedGood);
+
+            var baseConsumptionRate = new BaseConsumptionValue();
+            foreach (var ingredient in recipe.Components)
+            {
+                var consumptionModVar = new ModifiableVariable("Consumption Rate", false, baseConsumptionRate);
+                _ingredientConsumptionRates.Add(ingredient, consumptionModVar);
+            }
 
             town.Tier.Observe(OnTownTierChanged);
         }
@@ -44,7 +51,7 @@ namespace Features.Towns.Production.Logic
             var goodTier = _goodsResources.ResourceData[ProducedGood].Tier;
             var configLimit = _producerConfig.GetLimit(townTier, goodTier);
             ProductionLimit = configLimit ?? 0;
-            
+
             if (configLimit == null)
             {
                 Debug.LogError($"No production limit is set for town {townTier} and good {goodTier}.");
