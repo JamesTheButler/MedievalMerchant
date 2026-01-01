@@ -6,10 +6,10 @@ using UnityEngine;
 namespace Features.Levels.GameModifiers.Effects.Data
 {
     [Serializable]
-    public sealed class ReputationEffectData : EffectData
+    public sealed class DevelopmentEffectData : EffectData
     {
         [field: SerializeField, Range(-1f, 2f)]
-        public float ReputationBoostPercent { get; private set; }
+        public float DevelopmentBoostPercent { get; private set; }
 
         private string _description;
 
@@ -17,9 +17,9 @@ namespace Features.Levels.GameModifiers.Effects.Data
         {
             get
             {
-                var valueString = ReputationBoostPercent.ToPercentString(true);
-                var style = ReputationBoostPercent.GetNumberStyle();
-                return $"{valueString} for all reputation changes".WithStyle(style);
+                var valueString = DevelopmentBoostPercent.ToPercentString(true);
+                var style = DevelopmentBoostPercent.GetNumberStyle();
+                return $"{valueString} development change rate".WithStyle(style);
             }
         }
     }

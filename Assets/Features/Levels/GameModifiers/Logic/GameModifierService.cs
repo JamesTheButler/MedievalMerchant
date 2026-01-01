@@ -54,6 +54,12 @@ namespace Features.Levels.GameModifiers.Logic
             foreach (var effect in modifierData.Effects)
             {
                 var logic = GetLogic(effect, origin);
+                if (logic == null)
+                {
+                    Debug.LogError($"Unhandled effect data: {effect.GetType().Name}");
+                    return;
+                }
+                
                 logic.Apply();
                 _logics.Add((modifierData, effect), logic);
             }
@@ -88,7 +94,8 @@ namespace Features.Levels.GameModifiers.Logic
                 ReputationEffectData effectData => new ReputationEffectLogic(origin, effectData),
                 PriceEffectData effectData => new PriceEffectLogic(origin, effectData),
                 MissionLimiterEffectData effectData => new MissionLimiterEffectLogic(origin, effectData),
-                _ => throw new ArgumentOutOfRangeException(data.GetType().Name, data, null)
+                DevelopmentEffectData effectData => new DevelopmentEffectLogic(origin, effectData),
+                _ => null,
             };
         }
     }

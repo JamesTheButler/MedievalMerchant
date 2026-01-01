@@ -10,8 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f30ec84e5be54405b1dec013afbfaea1, type: 3}
-  m_Name: GenerousNoblesEvent____EffectsMissing
+  m_Name: GenerousNoblesEvent
   m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.GameModifiers.Data.EventGameModifierData
   <Title>k__BackingField: Generous Nobles
-  <Description>k__BackingField: The nobility around these parts are in a giving mood.
-  <Effects>k__BackingField: []
+  <Description>k__BackingField: The nobility around these parts are in a giving mood
+    and support all towns in their development.
+  <Effects>k__BackingField:
+  - rid: 8122472857143869514
+  references:
+    version: 2
+    RefIds:
+    - rid: 8122472857143869514
+      type: {class: DevelopmentEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <DevelopmentBoostPercent>k__BackingField: 0.1
