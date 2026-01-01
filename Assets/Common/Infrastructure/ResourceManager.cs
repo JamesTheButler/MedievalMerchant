@@ -3,6 +3,7 @@ using Features.Goods.Config;
 using Features.Towns.Config;
 using Features.Towns.Development.UI.DevelopmentGauge;
 using Features.Towns.Flags.Config;
+using Features.Towns.Production.Config;
 using Features.Tutorial.Data;
 using NaughtyAttributes;
 using UnityEngine;
@@ -38,6 +39,9 @@ namespace Common.Infrastructure
 
         [field: SerializeField, Required]
         public GoodsResources GoodsResources { get; private set; }
+
+        [field: SerializeField, Required]
+        public ProducerResources ProducerResources { get; private set; }
 
         [field: SerializeField, Required]
         public RecipeResources RecipeResources { get; private set; }

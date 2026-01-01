@@ -5,6 +5,7 @@ using Common.Types;
 using Common.UI.Utility;
 using Common.Utility;
 using Features.Goods.Config;
+using Features.Towns.Production.Config;
 using Features.Towns.Production.Logic;
 using NaughtyAttributes;
 using TMPro;
@@ -36,6 +37,7 @@ namespace Features.Towns.UI
         private readonly Dictionary<Good, ProductionCell> _producerCellsPerGood = new();
 
         private RecipeResources _recipeResources;
+        private ProducerResources _producerResources;
         private Town _town;
         private int _producerIndex;
         private bool _isAvailable;
@@ -43,6 +45,8 @@ namespace Features.Towns.UI
         public void Initialize(int producerIndex)
         {
             _recipeResources = ResourceManager.Instance.RecipeResources;
+            _producerResources = ResourceManager.Instance.ProducerResources;
+
             _producerIndex = producerIndex;
 
             _producerCellsPerTier.Add(Tier.Tier1, t1Cell);
@@ -61,8 +65,7 @@ namespace Features.Towns.UI
         {
             _isAvailable = isAvailable;
             unavailableGroup.SetActive(!isAvailable);
-            var style = isAvailable ? Style.Default : Style.Subtitle;
-            titleText.text = $"Producer {_producerIndex + 1}".WithStyle(style);
+            titleText.text = $"Producer {_producerIndex + 1}".WithStyle(Style.Subtitle);
 
             if (!_isAvailable)
                 return;
@@ -163,6 +166,12 @@ namespace Features.Towns.UI
 
             if (producerIndex != _producerIndex)
                 return;
+
+            if (producer.Tier == Tier.Tier3
+                || !_town.ProductionManager.HasProducer(producer.Tier + 1, producerIndex))
+            {
+                titleText.text = _producerResources.producerNames[producer.ProducedGood];
+            }
 
             var producerCell = _producerCellsPerTier[producer.Tier];
             producerCell.SetGood(producer.ProducedGood);
