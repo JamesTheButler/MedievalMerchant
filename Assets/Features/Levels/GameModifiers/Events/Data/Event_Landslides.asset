@@ -10,32 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f30ec84e5be54405b1dec013afbfaea1, type: 3}
-  m_Name: DryWindsEvent
+  m_Name: Event_Landslides
   m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.GameModifiers.Data.EventGameModifierData
-  <Title>k__BackingField: Dry Winds
-  <Description>k__BackingField: Bad weather ruins much of the seasonal crops.
+  <Title>k__BackingField: Land Slides
+  <Description>k__BackingField: Large parts of the mountains have become impassable
+    making the mines hardly usable.
   <Effects>k__BackingField:
-  - rid: 4950215272220852476
-  - rid: 4950215272220852477
+  - rid: 8122472857143869516
   references:
     version: 2
     RefIds:
-    - rid: 4950215272220852476
+    - rid: 8122472857143869516
       type: {class: ProductionEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
       data:
-        <ProductionBoostPercent>k__BackingField: -0.15
+        <ProductionBoostPercent>k__BackingField: -0.2
         <Selector>k__BackingField:
           applyToAll: 0
           goods: 
-          regions: 4
-          tier: 0
-    - rid: 4950215272220852477
-      type: {class: PriceEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
-      data:
-        <TradeTypes>k__BackingField: 2
-        <PriceBoostPercent>k__BackingField: -0.5
-        <GoodSelector>k__BackingField:
-          applyToAll: 0
-          goods: 
-          regions: 4
+          regions: 8
           tier: 0

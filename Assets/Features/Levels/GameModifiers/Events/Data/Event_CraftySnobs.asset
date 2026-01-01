@@ -10,27 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f30ec84e5be54405b1dec013afbfaea1, type: 3}
-  m_Name: HeavyRainEvent
+  m_Name: Event_CraftySnobs
   m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.GameModifiers.Data.EventGameModifierData
-  <Title>k__BackingField: Heavy Rain
-  <Description>k__BackingField: The clouds are dark, the air is thick. This storm
-    isn't going to end any time soon.
+  <Title>k__BackingField: Crafty Snobs
+  <Description>k__BackingField: The rich elite is becoming unusually crafty. Perhaps
+    a new trend to pass the time.
   <Effects>k__BackingField:
-  - rid: 4950215272220852478
-  - rid: 4950215272220852479
+  - rid: 4950215272220852475
   references:
     version: 2
     RefIds:
-    - rid: 4950215272220852478
-      type: {class: MovementSpeedEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
-      data:
-        <SpeedBoostPercent>k__BackingField: -0.05
-    - rid: 4950215272220852479
+    - rid: 4950215272220852475
       type: {class: ProductionEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
       data:
-        <ProductionBoostPercent>k__BackingField: 0.15
+        <ProductionBoostPercent>k__BackingField: 0.1
         <Selector>k__BackingField:
           applyToAll: 0
+          limitTier: 0
           goods: 
-          regions: 5
-          tier: 0
+          regions: 15
+          tier: 3

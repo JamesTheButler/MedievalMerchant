@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f30ec84e5be54405b1dec013afbfaea1, type: 3}
+  m_Name: Event_DryWinds
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.GameModifiers.Data.EventGameModifierData
+  <Title>k__BackingField: Dry Winds
+  <Description>k__BackingField: Bad weather ruins much of the seasonal crops.
+  <Effects>k__BackingField:
+  - rid: 4950215272220852476
+  - rid: 4950215272220852477
+  references:
+    version: 2
+    RefIds:
+    - rid: 4950215272220852476
+      type: {class: ProductionEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <ProductionBoostPercent>k__BackingField: -0.15
+        <Selector>k__BackingField:
+          applyToAll: 0
+          goods: 
+          regions: 4
+          tier: 0
+    - rid: 4950215272220852477
+      type: {class: PriceEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <TradeTypes>k__BackingField: 2
+        <PriceBoostPercent>k__BackingField: -0.5
+        <GoodSelector>k__BackingField:
+          applyToAll: 0
+          goods: 
+          regions: 4
+          tier: 0
