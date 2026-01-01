@@ -75,6 +75,9 @@ namespace Features.Towns.Missions
             if (development < 99.9f)
                 return;
 
+            if (_missionModel.Missions.Values.Any(mission => mission.Type == MissionType.UpgradeMission))
+                return;
+
             TriggerMission(_upgradeMissionConfig, MissionType.UpgradeMission);
             _developmentManager.LockDegrowth(true);
         }
