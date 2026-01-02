@@ -6,6 +6,7 @@ using Common.UI.Elements;
 using Common.UI.Utility;
 using Common.Utility;
 using Features.Goods.Config;
+using Features.Player.Logic;
 using Features.Towns.Production.Config;
 using Features.Towns.Production.Logic;
 using NaughtyAttributes;
@@ -29,7 +30,7 @@ namespace Features.Towns.UI
         private InventoryCell deliveryCell;
 
         [SerializeField, Required]
-        private GameObject arrowT1T2, arrowT2T3, arrowT2T3Delivery;
+        private GameObject arrowT1T2, arrowT2T3, arrowT2T3Delivery, notHereBlockerGroup;
 
         [SerializeField, Required]
         private TMP_Text titleText;
@@ -39,6 +40,7 @@ namespace Features.Towns.UI
 
         private RecipeResources _recipeResources;
         private ProducerResources _producerResources;
+        private PlayerLocation _playerLocation;
         private Town _town;
         private int _producerIndex;
         private bool _isAvailable;
@@ -47,6 +49,7 @@ namespace Features.Towns.UI
         {
             _recipeResources = ResourceManager.Instance.RecipeResources;
             _producerResources = ResourceManager.Instance.ProducerResources;
+            _playerLocation = GameplayContext.Instance.Model.Player.Location;
 
             _producerIndex = producerIndex;
 
@@ -76,6 +79,9 @@ namespace Features.Towns.UI
             _town = town;
 
             _town.Tier.Observe(OnTownTierChanged);
+            _playerLocation.TownEntered += OnPlayerTownEntered;
+            _playerLocation.TownExited += OnPlayerTownExited;
+            OnPlayerTownEntered(_playerLocation.CurrentTown);
 
             town.ProductionManager.ProductionAddedIndexed += OnProducerAdded;
             foreach (var tier in EnumExtensions.Enumerate<Tier>())
@@ -104,6 +110,12 @@ namespace Features.Towns.UI
                 _town.Tier.StopObserving(OnTownTierChanged);
                 _town.Inventory.GoodUpdated -= OnGoodUpdated;
                 _town.ProductionManager.ProductionAddedIndexed -= OnProducerAdded;
+            }
+
+            if (_playerLocation != null)
+            {
+                _playerLocation.TownEntered -= OnPlayerTownEntered;
+                _playerLocation.TownExited -= OnPlayerTownExited;
             }
 
             arrowT1T2.SetActive(false);
@@ -248,6 +260,16 @@ namespace Features.Towns.UI
 
             deliveryCell.SetGood(t2GoodToDeliver);
             deliveryCell.SetAmount(_town.Inventory.Get(t2GoodToDeliver));
+        }
+
+        private void OnPlayerTownEntered(Town town)
+        {
+            notHereBlockerGroup.SetActive(_town != town);
+        }
+
+        private void OnPlayerTownExited(Town town)
+        {
+            notHereBlockerGroup.SetActive(false);
         }
     }
 }
