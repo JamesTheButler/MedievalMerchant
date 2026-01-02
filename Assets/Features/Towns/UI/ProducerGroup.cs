@@ -114,8 +114,11 @@ namespace Features.Towns.UI
 
             foreach (var productionCell in _producerCellsPerTier.Values)
             {
+                productionCell.Reset();
                 productionCell.SetState(ProductionCell.State.Hidden);
             }
+
+            _producerCellsPerGood.Clear();
 
             _town = null;
         }
@@ -201,11 +204,11 @@ namespace Features.Towns.UI
                 ToggleDeliveryCell(false);
             }
 
-            producerCell.SetGood(null);
-            producerCell.SetAmount(0);
+            producerCell.Reset();
 
             RefreshProducerCellStates();
             RefreshArrows();
+            _producerCellsPerGood.Remove(producer.ProducedGood);
         }
 
         private void OnGoodUpdated(Good good, int amount)
