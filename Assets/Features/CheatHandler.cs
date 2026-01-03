@@ -60,47 +60,6 @@ namespace Features
             cheatUI.SetActive(false);
         }
 
-        private void AddTownDevelopment(string parameter)
-        {
-            var selectedTown = GameplayContext.Instance.Selection.SelectedTown.Value;
-            if (selectedTown == null)
-            {
-                ReportError("No town was selected.");
-                return;
-            }
-
-            var devChange = int.Parse(parameter).Clamp(0, 100);
-            selectedTown.DevelopmentManager.AddDevelopmentChange(devChange);
-        }
-
-        private void GiveGoods(string parameter)
-        {
-            var playerInventory = GameplayContext.Instance.Model.Player.Inventory;
-            var good = Enum.Parse<Good>(parameter, true);
-
-            if (playerInventory.InventoryPolicy.CanAdd(good, 50).Success)
-            {
-                playerInventory.AddGood(good, 50);
-            }
-        }
-
-        private void UpgradeSelectedTown()
-        {
-            var selectedTown = GameplayContext.Instance.Selection.SelectedTown.Value;
-            if (selectedTown == null)
-            {
-                ReportError("No town was selected.");
-                return;
-            }
-
-            selectedTown.DevelopmentManager.Upgrade();
-        }
-
-        private void ResetDate()
-        {
-            GameplayContext.Instance.Model.Date.SetDay(1);
-        }
-
         public void Toggle(InputAction.CallbackContext context)
         {
             if (!enabled || !context.performed)
@@ -151,17 +110,24 @@ namespace Features
 
         private void ParseCheat(string cheat)
         {
-            var split = cheat.Split(" ");
-            switch (split.Length)
+            try
             {
-                case 1:
-                    HandleSimpleCheat(split[0]);
-                    break;
-                case 2:
-                    HandleParamCheat(split[0], split[1]); break;
-                default:
-                    ReportError("Cheats must have 0 or 1 params.");
-                    break;
+                var split = cheat.Split(" ");
+                switch (split.Length)
+                {
+                    case 1:
+                        HandleSimpleCheat(split[0]);
+                        break;
+                    case 2:
+                        HandleParamCheat(split[0], split[1]); break;
+                    default:
+                        ReportError("Cheats must have 0 or 1 params.");
+                        break;
+                }
+            }
+            catch (Exception exception)
+            {
+                ReportError(exception.Message);
             }
         }
 
@@ -203,6 +169,47 @@ namespace Features
             {
                 ReportError($"Unknown cheat '{command}'");
             }
+        }
+
+        private void AddTownDevelopment(string parameter)
+        {
+            var selectedTown = GameplayContext.Instance.Selection.SelectedTown.Value;
+            if (selectedTown == null)
+            {
+                ReportError("No town was selected.");
+                return;
+            }
+
+            var devChange = int.Parse(parameter).Clamp(0, 100);
+            selectedTown.DevelopmentManager.AddDevelopmentChange(devChange);
+        }
+
+        private void GiveGoods(string parameter)
+        {
+            var playerInventory = GameplayContext.Instance.Model.Player.Inventory;
+            var good = Enum.Parse<Good>(parameter, true);
+
+            if (playerInventory.InventoryPolicy.CanAdd(good, 50).Success)
+            {
+                playerInventory.AddGood(good, 50);
+            }
+        }
+
+        private void UpgradeSelectedTown()
+        {
+            var selectedTown = GameplayContext.Instance.Selection.SelectedTown.Value;
+            if (selectedTown == null)
+            {
+                ReportError("No town was selected.");
+                return;
+            }
+
+            selectedTown.DevelopmentManager.Upgrade();
+        }
+
+        private void ResetDate()
+        {
+            GameplayContext.Instance.Model.Date.SetDay(1);
         }
 
         private void AddFunds()
