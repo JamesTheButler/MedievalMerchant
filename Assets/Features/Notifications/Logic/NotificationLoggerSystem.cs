@@ -11,6 +11,7 @@ namespace Features.Notifications.Logic
 
         public void Initialize()
         {
+            _gameDate = GameplayContext.Instance.Model.Date;
             _notificationService = GameplayContext.Instance.Services.NotificationService;
             _notificationService.NotificationPosted += LogNotification;
         }

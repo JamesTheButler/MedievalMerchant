@@ -49,7 +49,6 @@ namespace Features.Tutorial.Logic
             TutorialTopic? topic = uiPanel switch
             {
                 UIPanel.Retinue => TutorialTopic.Retinue,
-                UIPanel.Caravan => TutorialTopic.Caravan,
                 UIPanel.Town => TutorialTopic.Town,
                 _ => null,
             };
