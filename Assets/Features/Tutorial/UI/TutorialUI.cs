@@ -1,6 +1,7 @@
 ﻿using System;
 using Common.Utility;
 using Features.Tutorial.Data;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,13 +12,16 @@ namespace Features.Tutorial.UI
     {
         public event Action Closed;
 
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text topicTitleText, chapterTitleText, descriptionText, chapterCountText;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Button leftButton, rightButton, closeButton;
 
-        [SerializeField]
+        [SerializeField, Required]
+        private CanvasGroup leftButtonGroup, rightButtonGroup;
+
+        [SerializeField, Required]
         private RawImage tutorialImage;
 
         private TutorialTopicData _currentTopic;
@@ -74,8 +78,8 @@ namespace Features.Tutorial.UI
             chapterCountText.text = $"{_currentChapterIndex + 1}/{_chapterCount}";
             tutorialImage.texture = chapterData.Image;
 
-            leftButton.gameObject.SetActive(_currentChapterIndex > 0);
-            rightButton.gameObject.SetActive(_currentChapterIndex < _chapterCount - 1);
+            leftButtonGroup.alpha = _currentChapterIndex > 0 ? 1 : 0;
+            rightButtonGroup.alpha = _currentChapterIndex < _chapterCount - 1 ? 1 : 0;
         }
 
         private void OnRightButtonClicked()

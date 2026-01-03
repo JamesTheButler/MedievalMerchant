@@ -5,8 +5,7 @@ namespace Features.Trade.Logic.Price
 {
     public sealed class BasePriceModifier : BaseValueModifier
     {
-        public BasePriceModifier(float value, Tier goodTier) : base(value,$"Price for {goodTier} good")
-        {
-        }
+        public BasePriceModifier(float value, Tier goodTier) :
+            base(value, $"Base price for {goodTier.ToDisplayString()} goods") { }
     }
 }
