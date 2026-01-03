@@ -269,7 +269,7 @@ namespace Features.Towns.UI
 
         private void OnPlayerTownExited(Town town)
         {
-            notHereBlockerGroup.SetActive(false);
+            notHereBlockerGroup.SetActive(true);
         }
     }
 }
