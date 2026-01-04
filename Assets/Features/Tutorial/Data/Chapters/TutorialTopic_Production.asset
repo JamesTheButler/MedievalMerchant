@@ -14,20 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Features.Tutorial.Data.TutorialTopicData
   <Title>k__BackingField: Town Production
   <Chapters>k__BackingField:
-  - <Title>k__BackingField: Production Zones
-    <Description>k__BackingField: Towns have goods from nearby production zones such
-      as forests, fields, or the ocean. To produce them, you must finance production
-      buildings
-    <Image>k__BackingField: {fileID: 2800000, guid: 489cf1137e4ac184c915a339106a22e4, type: 3}
   - <Title>k__BackingField: Production Buildings
-    <Description>k__BackingField: You can build additional production buildings to
-      increase output and unlock new goods. This will also raise the development
-      of the town.
+    <Description>k__BackingField: You can finance production buildings in towns to
+      make them produce goods
     <Image>k__BackingField: {fileID: 2800000, guid: 489cf1137e4ac184c915a339106a22e4, type: 3}
   - <Title>k__BackingField: Production Tiers
-    <Description>k__BackingField: 'Tier II buildings are built on top of Tier I buildings.
+    <Description>k__BackingField: 'Tier I buildings can be built based on the towns
+      neighboring regions.
+
+      Tier II buildings are built on top of Tier I buildings.
 
       Tier
-      III buildings require two Tier II goods to operate, and at least one of those
-      goods must be produced locally.'
-    <Image>k__BackingField: {fileID: 2800000, guid: 489cf1137e4ac184c915a339106a22e4, type: 3}
+      III buildings are built on top of a Tier II producer and require a seconds
+      Tier II good to produce Tier III goods. This second good can either be produced
+      in the town or must be delivered (sold) by you.'
+    <Image>k__BackingField: {fileID: 2800000, guid: c0a77cebe55681e418b4dd17db294ec3, type: 3}
