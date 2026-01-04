@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Common.Types;
 using Common.Utility;
 using JetBrains.Annotations;
-using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Goods.Selector
