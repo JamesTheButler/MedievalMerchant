@@ -89,9 +89,10 @@ namespace Features.Towns.UI
             daysLeftIcon.color = isCloseToFailure ? _badColor : _defaultDaysLeftIconColor;
         }
 
-        private void OnRemainingCountChanged(int count)
+        private void OnRemainingCountChanged(int remainingCount)
         {
-            countText.text = $"{count}/{_mission.TotalCount} delivered";
+            var deliveredCount = _mission.TotalCount - remainingCount;
+            countText.text = $"{deliveredCount}/{_mission.TotalCount} delivered";
         }
 
         private void AbortButtonClicked()
