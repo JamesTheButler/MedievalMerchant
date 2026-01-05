@@ -30,12 +30,6 @@ namespace Common.UI.Popups
         [SerializeField, Required]
         private Hoverable buyButtonHoverable, sellButtonHoverable;
 
-        [SerializeField, Required]
-        private TitleDescriptionTooltipHandler availabilityTooltip;
-
-        private readonly Lazy<AvailabilityResources> _availabilityResources =
-            new(() => ResourceManager.Instance.AvailabilityResources);
-
         private readonly Lazy<GoodsResources> _goodsConfig = new(() => ResourceManager.Instance.GoodsResources);
 
         private Good _good;
@@ -86,13 +80,6 @@ namespace Common.UI.Popups
 
         public void SetAvailability(Availability availability)
         {
-            if (_availability == availability)
-                return;
-
-            _availability = availability;
-
-            var configData = _availabilityResources.Value.Resources[availability];
-            availabilityTooltip.SetData(($"Availability: {configData.DisplayString}", configData.Description));
         }
     }
 }
