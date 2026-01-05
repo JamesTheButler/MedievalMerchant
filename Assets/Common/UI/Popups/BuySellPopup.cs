@@ -31,9 +31,6 @@ namespace Common.UI.Popups
         private Hoverable buyButtonHoverable, sellButtonHoverable;
 
         [SerializeField, Required]
-        private Image marketStateIcon;
-
-        [SerializeField, Required]
         private TitleDescriptionTooltipHandler availabilityTooltip;
 
         private readonly Lazy<AvailabilityResources> _availabilityResources =
@@ -59,7 +56,6 @@ namespace Common.UI.Popups
             _hoveredTradeType = tradeType;
             buyButton.gameObject.SetActive(tradeType is null or TradeType.Buy);
             sellButton.gameObject.SetActive(tradeType is null or TradeType.Sell);
-            RefreshIcon();
         }
 
         private void TradeInitiated(TradeType tradeType)
@@ -94,28 +90,9 @@ namespace Common.UI.Popups
                 return;
 
             _availability = availability;
-            RefreshIcon();
 
             var configData = _availabilityResources.Value.Resources[availability];
             availabilityTooltip.SetData(($"Availability: {configData.DisplayString}", configData.Description));
-        }
-
-        private void RefreshIcon()
-        {
-            // the popup is likely not set up completely yet. this will be called again in a bit.
-            if (_availability is null)
-                return;
-
-            var configData = _availabilityResources.Value.Resources[_availability.Value];
-
-            var icon = _hoveredTradeType switch
-            {
-                TradeType.Buy => configData.BuyIcon,
-                TradeType.Sell => configData.SellIcon,
-                _ => configData.DefaultIcon
-            };
-
-            marketStateIcon.sprite = icon;
         }
     }
 }
