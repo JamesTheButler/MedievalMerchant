@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using Common.Types;
 using Features.Goods.Selector;
-using Features.Towns.Missions;
 using UnityEngine;
 
-namespace Features.Towns
+namespace Features.Towns.Missions
 {
     public sealed class MissionModel
     {
