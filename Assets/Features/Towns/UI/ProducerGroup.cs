@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Elements;
 using Common.UI.Utility;
 using Common.Utility;
+using Features.Goods;
 using Features.Goods.Config;
 using Features.Player.Logic;
 using Features.Towns.Production.Config;
@@ -41,7 +43,9 @@ namespace Features.Towns.UI
         private RecipeResources _recipeResources;
         private ProducerResources _producerResources;
         private PlayerLocation _playerLocation;
+        private GoodPool _globalGoodPool;
         private Town _town;
+        private ProductionManager _productionManager;
         private int _producerIndex;
         private bool _isAvailable;
 
@@ -50,6 +54,7 @@ namespace Features.Towns.UI
             _recipeResources = ResourceManager.Instance.RecipeResources;
             _producerResources = ResourceManager.Instance.ProducerResources;
             _playerLocation = GameplayContext.Instance.Model.Player.Location;
+            _globalGoodPool = GameplayContext.Instance.Model.GoodPool;
 
             _producerIndex = producerIndex;
 
@@ -69,24 +74,24 @@ namespace Features.Towns.UI
 
         public void Bind(Town town, bool isAvailable)
         {
+            _town = town;
+            _productionManager = _town.ProductionManager;
+
             _isAvailable = isAvailable;
             unavailableGroup.SetActive(!isAvailable);
             titleText.text = $"Producer {_producerIndex + 1}".WithStyle(Style.Subtitle);
 
-            if (!_isAvailable)
-                return;
-
-            _town = town;
-
-            _town.Tier.Observe(OnTownTierChanged);
             _playerLocation.TownEntered += OnPlayerTownEntered;
             _playerLocation.TownExited += OnPlayerTownExited;
             OnPlayerTownEntered(_playerLocation.CurrentTown);
 
-            town.ProductionManager.ProductionAddedIndexed += OnProducerAdded;
+            if (!_isAvailable)
+                return;
+
+            _productionManager.ProductionAddedIndexed += OnProducerAdded;
             foreach (var tier in EnumExtensions.Enumerate<Tier>())
             {
-                var producer = _town.ProductionManager.GetProducers(tier)[_producerIndex];
+                var producer = _productionManager.GetProducers(tier)[_producerIndex];
                 if (producer != null)
                 {
                     OnProducerAdded(producer, _producerIndex);
@@ -99,6 +104,8 @@ namespace Features.Towns.UI
                 OnGoodUpdated(good, amount);
             }
 
+            _town.Tier.Observe(OnTownTierChanged);
+
             RefreshProducerCellStates();
             RefreshArrows();
         }
@@ -109,7 +116,7 @@ namespace Features.Towns.UI
             {
                 _town.Tier.StopObserving(OnTownTierChanged);
                 _town.Inventory.GoodUpdated -= OnGoodUpdated;
-                _town.ProductionManager.ProductionAddedIndexed -= OnProducerAdded;
+                _productionManager.ProductionAddedIndexed -= OnProducerAdded;
             }
 
             if (_playerLocation != null)
@@ -141,6 +148,7 @@ namespace Features.Towns.UI
             RefreshArrows();
         }
 
+        // phewww...
         private void RefreshProducerCellStates()
         {
             var townTier = _town.Tier.Value;
@@ -149,24 +157,63 @@ namespace Features.Towns.UI
                 if (townTier < tier)
                 {
                     cell.SetState(ProductionCell.State.Hidden);
+                    continue;
                 }
-                else
+
+                if (_productionManager.HasProducer(tier, _producerIndex))
                 {
-                    if (_town.ProductionManager.HasProducer(tier, _producerIndex))
-                    {
-                        cell.SetState(ProductionCell.State.Active);
-                    }
-                    else
-                    {
-                        var isUpgradable =
-                            tier == Tier.Tier1 ||
-                            _town.ProductionManager.HasProducer(tier - 1, _producerIndex);
-                        cell.SetState(isUpgradable ? ProductionCell.State.Upgradeable : ProductionCell.State.Locked);
-                    }
+                    cell.SetState(ProductionCell.State.Active);
+                    continue;
                 }
+
+                RefreshEmptyProducerCell(tier, cell);
             }
 
-            ToggleDeliveryCell(_town.ProductionManager.HasProducer(Tier.Tier3, _producerIndex));
+            ToggleDeliveryCell(_productionManager.HasProducer(Tier.Tier3, _producerIndex));
+        }
+
+        // Cell without an active producer in it.
+        private void RefreshEmptyProducerCell(Tier tier, ProductionCell cell)
+        {
+            switch (tier)
+            {
+                case Tier.Tier1:
+                    cell.SetState(ProductionCell.State.Upgradeable);
+                    break;
+                case Tier.Tier2:
+                {
+                    var hasT1Producer = _productionManager.HasProducer(Tier.Tier1, _producerIndex);
+                    cell.SetState(hasT1Producer
+                        ? ProductionCell.State.Upgradeable
+                        : ProductionCell.State.Locked);
+                    break;
+                }
+                case Tier.Tier3:
+                {
+                    var t2Producer = _productionManager.GetProducers(tier - 1)
+                        .ElementAt(_producerIndex);
+                    var hasT2Producer = t2Producer != null;
+                    if (!hasT2Producer)
+                    {
+                        cell.SetState(ProductionCell.State.Locked);
+                        break;
+                    }
+
+                    var t3Recipes = _recipeResources
+                        .GetTier3RecipeForComponent(t2Producer.ProducedGood);
+
+                    var globallyAvailableT3Goods = _globalGoodPool.Tier3Goods.ToList();
+                    var recipes = t3Recipes.Where(recipe => globallyAvailableT3Goods.Contains(recipe.Result));
+
+                    var doesAnyRecipeExist = recipes.Any(recipe => !_productionManager.IsProduced(recipe.Result));
+
+                    cell.SetState(doesAnyRecipeExist
+                        ? ProductionCell.State.Upgradeable
+                        : ProductionCell.State.MissingRecipes);
+                }
+
+                    break;
+            }
         }
 
         private void RefreshArrows()
@@ -185,7 +232,11 @@ namespace Features.Towns.UI
                 return;
 
             if (producerIndex != _producerIndex)
+            {
+                // need to refresh in case one producer group built the only available T3 producer of this group
+                RefreshProducerCellStates();
                 return;
+            }
 
             if (producer.Tier == Tier.Tier3
                 || !_town.ProductionManager.HasProducer(producer.Tier + 1, producerIndex))

@@ -1,5 +1,6 @@
 using System;
 using Common.UI.Elements;
+using Common.UI.Tooltips;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +14,8 @@ namespace Features.Towns.UI
             Hidden = 0,
             Locked = 1,
             Upgradeable = 2,
-            Active = 3
+            Active = 3,
+            MissingRecipes = 4,
         }
 
         public event Action UnlockButtonClicked;
@@ -26,6 +28,9 @@ namespace Features.Towns.UI
 
         [SerializeField, Required]
         private GameObject lockGroup;
+
+        [SerializeField, Required]
+        private SimpleTooltipHandler missingRecipeTooltip;
 
         public int Index { get; set; }
 
@@ -41,6 +46,7 @@ namespace Features.Towns.UI
         {
             if (_currentState == state)
                 return;
+
             // find diff between current and target state and roll-out button changes one step at a time
             var currentValue = (int)_currentState;
             var targetValue = (int)state;
@@ -78,6 +84,11 @@ namespace Features.Towns.UI
                     break;
                 case State.Active:
                     upgradeButton.gameObject.SetActive(false);
+                    missingRecipeTooltip.SetEnabled(false);
+                    break;
+                case State.MissingRecipes:
+                    lockGroup.SetActive(true);
+                    missingRecipeTooltip.SetEnabled(true);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }

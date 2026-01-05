@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 6756301025129896198}
   - component: {fileID: 5961148516871363242}
   - component: {fileID: 3431673265684837139}
+  - component: {fileID: 5254994376247083415}
   m_Layer: 5
   m_Name: LockedGroup
   m_TagString: Untagged
@@ -151,6 +152,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2
+--- !u!114 &5254994376247083415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6574585821274355139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 0
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  defaultText: There are no available production recipes for this building.
 --- !u!1001 &1032536098755577623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -378,6 +397,7 @@ MonoBehaviour:
   rootCanvasGroup: {fileID: 7875724559877150340}
   upgradeButton: {fileID: 296728265017520584}
   lockGroup: {fileID: 6574585821274355139}
+  missingRecipeTooltip: {fileID: 5254994376247083415}
 --- !u!225 &7875724559877150340
 CanvasGroup:
   m_ObjectHideFlags: 0
