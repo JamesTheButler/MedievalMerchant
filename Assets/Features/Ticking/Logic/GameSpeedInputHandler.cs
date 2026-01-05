@@ -10,7 +10,14 @@ namespace Features.Ticking.Logic
 
         public void PauseGame()
         {
-            _gameSpeedModel.Value.Pause();
+            if (_gameSpeedModel.Value.IsPaused.Value)
+            {
+                _gameSpeedModel.Value.Resume();
+            }
+            else
+            {
+                _gameSpeedModel.Value.Pause();
+            }
         }
 
         public void PlayGame()
