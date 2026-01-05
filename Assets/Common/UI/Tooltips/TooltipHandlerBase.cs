@@ -27,10 +27,14 @@ namespace Common.UI.Tooltips
         private TData _data;
         private Canvas _canvas;
 
+        private void Awake()
+        {
+            SetEnabled(enabledOnStart);
+        }
+
         protected virtual void Start()
         {
             _canvas = GetComponentInParent<Canvas>();
-            SetEnabled(enabledOnStart);
         }
 
         public void OnDisable()
