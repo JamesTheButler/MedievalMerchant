@@ -22,7 +22,8 @@ namespace Features.Notifications.UI
             _notificationService.NotificationPosted += OnNotificationPosted;
             _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
 
-            panel.Hide();
+            panel.Initialize();
+            panel.Close();
 
             panel.Opened += OnPanelOpened;
             panel.Closed += OnPanelClosed;
@@ -39,7 +40,7 @@ namespace Features.Notifications.UI
 
         public void ClosePanel()
         {
-            panel.Hide();
+            panel.Close();
         }
 
         private void OnNotificationPosted(Notification notification)
@@ -48,7 +49,8 @@ namespace Features.Notifications.UI
                 return;
 
             _currentNofNotification = notification;
-            panel.Show(notification);
+            panel.Setup(notification);
+            panel.Open();
         }
 
         private void OnPanelClosed()

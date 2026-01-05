@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.UI.Elements;
 using Common.UI.Utility;
 using Features.Notifications.Logic;
 using TMPro;
@@ -7,9 +8,9 @@ using UnityEngine.UI;
 
 namespace Features.Notifications.UI
 {
-    public sealed class MajorNotificationPanel : MonoBehaviour
+    public sealed class MajorNotificationPanel : DynamicPanel
     {
-        public event Action Opened, Closed, Pinged;
+        public event Action Pinged;
 
         [SerializeField]
         private TMP_Text titleText, descriptionText;
@@ -20,36 +21,45 @@ namespace Features.Notifications.UI
         [SerializeField]
         private Button closeButton, pingButton;
 
-        public void Show(Notification notification)
+        protected override void OnInitialize()
         {
-            var style = notification.Type switch
+            closeButton.onClick.AddListener(Close);
+            pingButton.onClick.AddListener(PingNotification);
+        }
+
+        private Notification _notification;
+
+        public void Setup(Notification notification)
+        {
+            _notification = notification;
+
+            var style = _notification.Type switch
             {
                 NotificationType.Info => Style.Default,
                 NotificationType.Good => Style.Good,
                 NotificationType.Bad => Style.Bad,
                 _ => Style.Default
             };
+            titleText.text = _notification.Title.WithStyle(style);
+            descriptionText.text = _notification.Description;
+            icon.gameObject.SetActive(_notification.Icon != null);
+            icon.sprite = _notification.Icon;
+        }
 
-            titleText.text = notification.Title.WithStyle(style);
-            descriptionText.text = notification.Description;
-            icon.gameObject.SetActive(notification.Icon != null);
-            icon.sprite = notification.Icon;
-            closeButton.onClick.AddListener(Hide);
-            pingButton.onClick.AddListener(PingNotification);
+        protected override void OnOpen()
+        {
             gameObject.SetActive(true);
-            Opened?.Invoke();
+        }
+
+        protected override void OnClose()
+        {
+            gameObject.SetActive(false);
         }
 
         private void PingNotification()
         {
             Pinged?.Invoke();
-            Hide();
-        }
-
-        public void Hide()
-        {
-            gameObject.SetActive(false);
-            Closed?.Invoke();
+            Close();
         }
     }
 }

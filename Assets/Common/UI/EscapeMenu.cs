@@ -1,5 +1,6 @@
-using System;
 using Common.Infrastructure;
+using Common.UI.Elements;
+using Features.Tutorial.Logic;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,10 +9,8 @@ using UnityEngine.UI;
 
 namespace Common.UI
 {
-    public sealed class EscapeMenu : MonoBehaviour
+    public sealed class EscapeMenu : DynamicPanel
     {
-        public event Action Opened, Closed;
-
         [SerializeField, Scene]
         private string startScene;
 
@@ -21,24 +20,26 @@ namespace Common.UI
         [SerializeField, Required]
         private Button giveUpButton, resetTutorialButton, feedbackButton, cancelButton;
 
-        private void Start()
+        private TutorialService _tutorialService;
+
+        protected override void OnInitialize()
         {
-            cancelButton.onClick.AddListener(Hide);
+            _tutorialService = GameplayContext.Instance.Services.TutorialService;
+
+            cancelButton.onClick.AddListener(Close);
             giveUpButton.onClick.AddListener(GiveUp);
             resetTutorialButton.onClick.AddListener(ResetTutorialState);
             feedbackButton.onClick.AddListener(ReportBug);
         }
 
-        public void Show()
+        protected override void OnOpen()
         {
             gameObject.SetActive(true);
-            Opened?.Invoke();
         }
 
-        public void Hide()
+        protected override void OnClose()
         {
             gameObject.SetActive(false);
-            Closed?.Invoke();
         }
 
         private void ReportBug()
@@ -48,25 +49,13 @@ namespace Common.UI
 
         private void ResetTutorialState()
         {
-            GameplayContext.Instance.Services.TutorialService.ResetCompletedTopics();
+            _tutorialService.ResetCompletedTopics();
         }
 
         private void GiveUp()
         {
             giveUpPressed.Invoke();
             SceneManager.LoadScene(startScene);
-        }
-
-        public void Toggle()
-        {
-            if (gameObject.activeSelf)
-            {
-                Hide();
-            }
-            else
-            {
-                Show();
-            }
         }
     }
 }

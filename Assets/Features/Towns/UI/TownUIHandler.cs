@@ -33,8 +33,8 @@ namespace Features.Towns.UI
                 return;
             }
 
-            townUi.Show();
             townUi.Bind(town);
+            townUi.Show();
         }
 
         private void DeselectTown()

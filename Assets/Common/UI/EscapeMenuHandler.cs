@@ -1,12 +1,11 @@
 using Common.Infrastructure;
-using Features.Ticking;
 using Features.Ticking.Logic;
 using NaughtyAttributes;
 using UnityEngine;
 
 namespace Common.UI
 {
-    public class EscapeMenuHandler : MonoBehaviour
+    public sealed class EscapeMenuHandler : MonoBehaviour
     {
         [SerializeField, Required]
         private EscapeMenu escapeMenu;
@@ -16,9 +15,10 @@ namespace Common.UI
         private void Start()
         {
             _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
-            escapeMenu.Closed += OnMenuClosed;
+
+            escapeMenu.Initialize();
             escapeMenu.Opened += OnMenuOpened;
-            escapeMenu.Hide();
+            escapeMenu.Closed += OnMenuClosed;
         }
 
         public void ToggleMenu() => escapeMenu.Toggle();
