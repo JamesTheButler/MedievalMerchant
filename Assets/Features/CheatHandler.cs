@@ -39,8 +39,9 @@ namespace Features
                 { "player.upgrade.random", RandomPlayerUpgrade },
                 { "player.upgrade.full", CompletePlayerUpgrade },
                 { "town.upgrade", UpgradeSelectedTown },
+                { "town.upgrade.full", FullyUpgradeSelectedTown },
                 { "town.upgrade.random", RandomTownUpgrade },
-                { "town.upgrade.full", CompleteTownUpgrade },
+                { "town.upgrade.all", CompleteTownUpgrade },
                 { "reset.levels", ResetCompletedLevels },
                 { "reset.tutorial", ResetTutorial },
                 { "reset.all", ResetAllProgress },
@@ -204,6 +205,20 @@ namespace Features
                 return;
             }
 
+            selectedTown.DevelopmentManager.Upgrade();
+        }
+
+        private void FullyUpgradeSelectedTown()
+        {
+            var selectedTown = GameplayContext.Instance.Selection.SelectedTown.Value;
+            if (selectedTown == null)
+            {
+                ReportError("No town was selected.");
+                return;
+            }
+
+            selectedTown.DevelopmentManager.Upgrade();
+            selectedTown.DevelopmentManager.Upgrade();
             selectedTown.DevelopmentManager.Upgrade();
         }
 
