@@ -1,6 +1,7 @@
 using System.Linq;
 using Features.Tutorial.Data;
 using Features.Tutorial.UI;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
@@ -8,10 +9,10 @@ namespace Features.Tutorial.Test
 {
     public class TutorialTestDropdown : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField, Required]
         private TutorialResources tutorialResources;
 
-        [SerializeField]
+        [SerializeField, Required]
         private TutorialUI tutorialUI;
 
         private TMP_Dropdown _dropdown;
@@ -28,7 +29,7 @@ namespace Features.Tutorial.Test
             _dropdown.AddOptions(topics);
 
             _dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
-            
+
             tutorialUI.Open();
             tutorialUI.Setup(tutorialResources.Topics[TutorialTopic.Intro]);
         }

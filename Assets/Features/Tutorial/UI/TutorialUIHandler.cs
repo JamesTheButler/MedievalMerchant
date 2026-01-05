@@ -1,6 +1,5 @@
 ﻿using Common.Infrastructure;
 using Common.UI;
-using Features.Ticking;
 using Features.Ticking.Logic;
 using Features.Tutorial.Data;
 using Features.Tutorial.Logic;
@@ -53,11 +52,11 @@ namespace Features.Tutorial.UI
         private void OnTutorialUiClosed()
         {
             _gameSpeedModel.Resume();
-            if (_currentTopic != null)
-            {
-                _uiBridgeService.CloseTutorialFromUI(_currentTopic.Value);
-                _currentTopic = null;
-            }
+            if (_currentTopic == null)
+                return;
+
+            _uiBridgeService.CloseTutorialFromUI(_currentTopic.Value);
+            _currentTopic = null;
         }
     }
 }

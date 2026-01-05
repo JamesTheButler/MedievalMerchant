@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.UI.Elements;
 using Common.Utility;
 using Features.Tutorial.Data;
 using NaughtyAttributes;
@@ -8,10 +9,8 @@ using UnityEngine.UI;
 
 namespace Features.Tutorial.UI
 {
-    public sealed class TutorialUI : MonoBehaviour
+    public sealed class TutorialUI : DynamicPanel
     {
-        public event Action Closed;
-
         [SerializeField, Required]
         private TMP_Text topicTitleText, chapterTitleText, descriptionText, chapterCountText;
 
@@ -51,22 +50,14 @@ namespace Features.Tutorial.UI
             _currentTopic = null;
         }
 
-        public void Open()
+        protected override void OnOpen()
         {
-            if (gameObject.activeSelf)
-                return;
-
             gameObject.SetActive(true);
         }
 
-        public void Close()
+        protected override void OnClose()
         {
-            if (!gameObject.activeSelf)
-                return;
-
             gameObject.SetActive(false);
-
-            Closed?.Invoke();
         }
 
         private void SetChapter(int index)
