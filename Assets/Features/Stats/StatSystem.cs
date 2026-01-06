@@ -20,20 +20,21 @@ namespace Features.Stats
 
         private void OnTradeAborted(TradeInfo info)
         {
-            _model.TradesAborted.Value++;
+            _model.TradesAborted++;
         }
 
         private void OnTradeCompleted(TradeInfo info)
         {
-            _model.TradesCompleted.Value++;
-            _model.TradeVolumeTraded.Value += Mathf.Abs(info.TotalPrice);
+            _model.TradesCompleted++;
             if (info.Type == TradeType.Buy)
             {
-                _model.TotalValueBought.Value += Mathf.Abs(info.TotalPrice);
+                _model.TotalValueBought += Mathf.Abs(info.TotalPrice);
+                _model.TrackBoughtGood(info.Good, info.Amount);
             }
             else
             {
-                _model.TotalValueSold.Value += Mathf.Abs(info.TotalPrice);
+                _model.TotalValueSold += Mathf.Abs(info.TotalPrice);
+                _model.TrackSoldGood(info.Good, info.Amount);
             }
         }
 
