@@ -1,46 +1,30 @@
 ﻿using Common.Infrastructure;
+using Common.UI.Elements;
 using Features.Notifications.Logic;
-using Features.Ticking.Logic;
 using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Notifications.UI
 {
-    public sealed class MajorNotificationPanelHandler : MonoBehaviour
+    public sealed class MajorNotificationPanelHandler : InitializableUI
     {
         [SerializeField, Required]
         private MajorNotificationPanel panel;
 
-        private GameSpeedModel _gameSpeedModel;
         private NotificationService _notificationService;
 
-        private Notification _currentNofNotification;
-
-        private void Start()
+        public override void Initialize()
         {
             _notificationService = GameplayContext.Instance.Services.NotificationService;
             _notificationService.NotificationPosted += OnNotificationPosted;
-            _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
 
-            panel.Initialize();
             panel.Close();
-
-            panel.Opened += OnPanelOpened;
-            panel.Closed += OnPanelClosed;
             panel.Pinged += OnPingRequested;
         }
 
-        private void OnPingRequested()
+        private void OnPingRequested(Notification notification)
         {
-            if (_currentNofNotification == null)
-                return;
-
-            _notificationService.PingNotification(_currentNofNotification);
-        }
-
-        public void ClosePanel()
-        {
-            panel.Close();
+            _notificationService.PingNotification(notification);
         }
 
         private void OnNotificationPosted(Notification notification)
@@ -48,20 +32,8 @@ namespace Features.Notifications.UI
             if (notification.Severity != Severity.Major)
                 return;
 
-            _currentNofNotification = notification;
             panel.Setup(notification);
             panel.Open();
-        }
-
-        private void OnPanelClosed()
-        {
-            _gameSpeedModel.Resume();
-            _currentNofNotification = null;
-        }
-
-        private void OnPanelOpened()
-        {
-            _gameSpeedModel.Pause();
         }
     }
 }

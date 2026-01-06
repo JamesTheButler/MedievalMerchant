@@ -85,6 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6829452926438905327}
   - component: {fileID: 6583390507034786093}
+  - component: {fileID: 8029433708494015614}
   m_Layer: 5
   m_Name: EscapeMenu
   m_TagString: Untagged
@@ -136,6 +137,19 @@ MonoBehaviour:
   resetTutorialButton: {fileID: 3666942847894090410}
   feedbackButton: {fileID: 6102326299991809414}
   cancelButton: {fileID: 484095111236749311}
+--- !u!114 &8029433708494015614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582676733529576235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02d95b51f014eb68f7d791d0a4a865a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.DynamicPanelGamePauser
+  dynamicPanel: {fileID: 6583390507034786093}
 --- !u!1 &2787402749910719439
 GameObject:
   m_ObjectHideFlags: 0

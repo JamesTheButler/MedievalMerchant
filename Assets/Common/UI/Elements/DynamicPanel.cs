@@ -1,10 +1,8 @@
 ﻿using System;
-using Features;
-using UnityEngine;
 
 namespace Common.UI.Elements
 {
-    public abstract class DynamicPanel : MonoBehaviour
+    public abstract class DynamicPanel : InitializableUI
     {
         public event Action Opened, Closed;
 
@@ -15,7 +13,7 @@ namespace Common.UI.Elements
         /// <summary>
         /// One-time setup
         /// </summary>
-        public void Initialize()
+        public override void Initialize()
         {
             _isOpen = gameObject.activeSelf;
             if (_isInitialized) return;

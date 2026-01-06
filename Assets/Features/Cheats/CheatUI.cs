@@ -1,6 +1,7 @@
 using System;
 using Common.Infrastructure;
 using Common.UI.Elements;
+using Common.Utility;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -46,6 +47,9 @@ namespace Features.Cheats
         private void CheatInputConfirmed(string cheat)
         {
             if (!enabled)
+                return;
+
+            if (cheat == string.Empty)
                 return;
 
             ParseCheat(cheat);

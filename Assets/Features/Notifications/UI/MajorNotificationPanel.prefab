@@ -607,6 +607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7637377995696284299}
   - component: {fileID: 3234185207905700529}
+  - component: {fileID: 7260506745035602825}
   - component: {fileID: 5754783309400028396}
   - component: {fileID: 1477957852005567843}
   m_Layer: 5
@@ -653,6 +654,19 @@ MonoBehaviour:
   icon: {fileID: 3230579470656808207}
   closeButton: {fileID: 8443342357357853711}
   pingButton: {fileID: 4675979350371573619}
+--- !u!114 &7260506745035602825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8099903407759032706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02d95b51f014eb68f7d791d0a4a865a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.DynamicPanelGamePauser
+  dynamicPanel: {fileID: 3234185207905700529}
 --- !u!222 &5754783309400028396
 CanvasRenderer:
   m_ObjectHideFlags: 0

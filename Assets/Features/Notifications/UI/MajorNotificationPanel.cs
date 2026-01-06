@@ -10,7 +10,7 @@ namespace Features.Notifications.UI
 {
     public sealed class MajorNotificationPanel : DynamicPanel
     {
-        public event Action Pinged;
+        public event Action<Notification> Pinged;
 
         [SerializeField]
         private TMP_Text titleText, descriptionText;
@@ -21,13 +21,13 @@ namespace Features.Notifications.UI
         [SerializeField]
         private Button closeButton, pingButton;
 
+        private Notification _notification;
+
         protected override void OnInitialize()
         {
             closeButton.onClick.AddListener(Close);
             pingButton.onClick.AddListener(PingNotification);
         }
-
-        private Notification _notification;
 
         public void Setup(Notification notification)
         {
@@ -58,7 +58,7 @@ namespace Features.Notifications.UI
 
         private void PingNotification()
         {
-            Pinged?.Invoke();
+            Pinged?.Invoke(_notification);
             Close();
         }
     }

@@ -1,4 +1,5 @@
 using Common.Infrastructure;
+using Common.UI.Elements;
 using Common.Utility;
 using Features.Map;
 using Features.Map.Tiling;
@@ -53,7 +54,18 @@ namespace Features.Levels
             var modifierService = context.Services.GameModifierService;
             modifierService.ApplyModifier(levelInfo.GameplayModifiers);
 
+            InitializeUI();
+
             completed.Invoke();
+        }
+
+        private void InitializeUI()
+        {
+            var initializables = Resources.FindObjectsOfTypeAll<InitializableUI>();
+            foreach (var initializable in initializables)
+            {
+                initializable.Initialize();
+            }
         }
     }
 }

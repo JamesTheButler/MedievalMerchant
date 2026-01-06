@@ -1594,18 +1594,18 @@ PrefabInstance:
     - target: {fileID: 2236913949556327770, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1739388770}
+      objectReference: {fileID: 1047097854627170042}
     - target: {fileID: 2236913949556327770, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2236913949556327770, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToggleMenu
+      value: Open
       objectReference: {fileID: 0}
     - target: {fileID: 2236913949556327770, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Common.UI.EscapeMenuHandler, Assembly-CSharp
+      value: Common.UI.EscapeMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2236913949556327770, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: clicked.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1622,7 +1622,7 @@ PrefabInstance:
     - target: {fileID: 4292988426095567957, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: requestReceived.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1739388770}
+      objectReference: {fileID: 0}
     - target: {fileID: 4292988426095567957, guid: 16c13375b1cbf4a46b3140df11d1e77f, type: 3}
       propertyPath: requestReceived.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -9483,8 +9483,8 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 635790169646488211}
-        m_TargetAssemblyTypeName: Features.CheatUI, Assembly-CSharp
-        m_MethodName: Open
+        m_TargetAssemblyTypeName: Features.Cheats.CheatUI, Assembly-CSharp
+        m_MethodName: Toggle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9592,8 +9592,8 @@ MonoBehaviour:
   escapeFallthrough:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1739388770}
-        m_TargetAssemblyTypeName: Common.UI.EscapeMenuHandler, Assembly-CSharp
+      - m_Target: {fileID: 1047097854627170042}
+        m_TargetAssemblyTypeName: Common.UI.EscapeMenu, Assembly-CSharp
         m_MethodName: Open
         m_Mode: 1
         m_Arguments:
@@ -10567,10 +10567,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1739388766}
   - component: {fileID: 1739388767}
-  - component: {fileID: 1739388770}
   - component: {fileID: 1739388769}
   - component: {fileID: 1739388772}
-  - component: {fileID: 1739388773}
   m_Layer: 5
   m_Name: UI Handlers
   m_TagString: Untagged
@@ -10623,19 +10621,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverUi: {fileID: 2485581173029192015}
---- !u!114 &1739388770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1739388765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8047e5c14265fc4b85a61ff0e600ee7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  escapeMenu: {fileID: 1047097854627170042}
 --- !u!114 &1739388772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10649,19 +10634,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Features.Notifications.UI.MajorNotificationPanelHandler
   panel: {fileID: 221144513}
---- !u!114 &1739388773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1739388765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9f5a8f41b194a58b97dd365100478d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Cheats.CheatUIHandler
-  cheatUI: {fileID: 635790169646488211}
 --- !u!1001 &1786801732
 PrefabInstance:
   m_ObjectHideFlags: 0

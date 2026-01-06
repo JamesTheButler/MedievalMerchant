@@ -155,6 +155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8788168266977459778}
   - component: {fileID: 7080212227992556228}
+  - component: {fileID: 8468292036254209622}
   - component: {fileID: 3553880505118476950}
   - component: {fileID: 2822465734634907778}
   m_Layer: 5
@@ -206,6 +207,19 @@ MonoBehaviour:
   leftButtonGroup: {fileID: 2645367534390344866}
   rightButtonGroup: {fileID: 2725018949061791510}
   tutorialImage: {fileID: 3134686026803241458}
+--- !u!114 &8468292036254209622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714403549499525796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02d95b51f014eb68f7d791d0a4a865a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.DynamicPanelGamePauser
+  dynamicPanel: {fileID: 7080212227992556228}
 --- !u!222 &3553880505118476950
 CanvasRenderer:
   m_ObjectHideFlags: 0
