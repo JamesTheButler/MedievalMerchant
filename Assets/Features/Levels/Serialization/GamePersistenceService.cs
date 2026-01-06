@@ -55,6 +55,9 @@ namespace Features.Levels.Serialization
         public void ResetCompletedLevel(int levelId)
         {
             var filePath = string.Format(CompletedLevelFilenameTemplate, levelId);
+            if (!File.Exists(filePath))
+                return;
+
             File.Delete(filePath);
         }
 
@@ -69,17 +72,27 @@ namespace Features.Levels.Serialization
         public void ResetOngoingLevel(int levelId)
         {
             var filePath = string.Format(OngoingLevelFilenameTemplate, levelId);
+
+            if (!File.Exists(filePath))
+                return;
+
             File.Delete(filePath);
         }
 
         public void ResetAllOngoingLevels()
         {
+            if (!Directory.Exists(OngoingLevelPath))
+                return;
+
             Directory.Delete(OngoingLevelPath, true);
         }
 
         public void ResetAllCompletedLevels()
         {
-            Directory.Delete(CompletedLevelPath + "/", true);
+            if (!Directory.Exists(CompletedLevelPath))
+                return;
+
+            Directory.Delete(CompletedLevelPath, true);
         }
 
         public void ResetAllSaveData()
