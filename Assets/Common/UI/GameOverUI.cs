@@ -4,8 +4,11 @@ using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Elements;
 using Common.UI.Utility;
+using Common.Utility;
 using Features.Goods.Config;
+using Features.Levels.Conditions.Model;
 using Features.Stats;
+using JetBrains.Annotations;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -21,6 +24,8 @@ namespace Common.UI
         [SerializeField, Required]
         private TMP_Text titleText, messageText, failureText, dynamicStatsText;
 
+        private const string StateNotFoundsString = "-";
+
         private GoodsResources _goodsResources;
         private GameplayModel _model;
         private StatsModel _statsModel;
@@ -32,24 +37,32 @@ namespace Common.UI
             _statsModel = _model.Stats;
         }
 
-        public void Show(bool isWon)
+        public void ShowWin()
+        {
+            Show(true);
+        }
+
+        public void ShowLoss(ILossCondition lossCondition)
+        {
+            failureText.text = lossCondition.GameOverMessage.WithStyle(Style.Bad);
+            Show(false);
+        }
+
+        private void Show(bool isWon)
         {
             gameObject.SetActive(true);
             titleText.text = isWon ? "Level Finished!".WithStyle(Style.Good) : "Game Over!".WithStyle(Style.Bad);
 
             var currentLevel = GlobalContext.CurrentLevelInfo!;
-            var currentLevelString = $"{currentLevel.LevelNumberText}: {currentLevel.LevelName}";
+            var currentLevelString = $"{currentLevel.LevelNumberText}: {currentLevel.LevelName}"
+                .WithStyle(Style.Subtitle);
+
             var message = isWon
                 ? $"Congratulations! You successfully completed {currentLevelString}!"
                 : $"You failed to complete {currentLevelString}!";
 
             messageText.text = message;
-
-            failureText.gameObject.SetActive(false);
-            /*
             failureText.gameObject.SetActive(!isWon);
-            failureText.text = "You lost because... TBD";
-            */
             dynamicStatsText.text = GenerateStatisticsText();
         }
 
@@ -63,9 +76,7 @@ namespace Common.UI
                 towns.Sum(town => town.ProductionManager.AllProducers.Count())
                 - towns.Count; // each town starts with one producer
 
-            var favoriteGood = _statsModel.TradedGoods.Max(kvPair => kvPair.Key);
-            var favoriteGoodName = _goodsResources.ResourceData[favoriteGood].GoodName;
-            var favoriteGoodAmount = _statsModel.TradedGoods[favoriteGood];
+            var favoriteGoodString = GenerateFavoriteGoodString();
 
             var stringBuilder = new StringBuilder();
             stringBuilder
@@ -76,10 +87,22 @@ namespace Common.UI
                 .AppendLine(productionBuildingCount.ToString())
                 .AppendLine(_statsModel.TotalGoodsTraded.ToString())
                 .AppendLine(_statsModel.TotalValueBought.ToString("0.#"))
-                .AppendLine($"{favoriteGoodName} (traded {favoriteGoodAmount} times)")
+                .AppendLine(favoriteGoodString)
                 .AppendLine(averageRep.ToString("0.#"));
 
             return stringBuilder.ToString();
+        }
+
+        private string GenerateFavoriteGoodString()
+        {
+            if (_statsModel.TradedGoods.IsEmpty())
+                return StateNotFoundsString;
+
+            var favoriteGood = _statsModel.TradedGoods.Max(kvPair => kvPair.Key);
+            var favoriteGoodName = _goodsResources.ResourceData[favoriteGood].GoodName;
+            var favoriteGoodAmount = _statsModel.TradedGoods[favoriteGood];
+            var favoriteGoodString = $"{favoriteGoodName} (traded {favoriteGoodAmount} times)";
+            return favoriteGoodString;
         }
 
         public void Hide()

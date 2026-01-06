@@ -13,7 +13,8 @@ namespace Features.Levels.Conditions.Model
         public IReadOnlyList<IWinCondition> WinConditions => _winConditions;
         public IReadOnlyList<ILossCondition> LossConditions => _lossConditions;
 
-        public event Action LevelWon, LevelLost;
+        public event Action LevelWon;
+        public event Action<ILossCondition> LevelLost;
         public event Action<int> CompletionCountChanged;
         public Observable<bool> IsLossClose { get; } = new();
 
@@ -44,7 +45,8 @@ namespace Features.Levels.Conditions.Model
                         break;
                     case ILossCondition lossCondition:
                         _lossConditions.Add(lossCondition);
-                        lossCondition.Progress.IsCompleted.Observe(OnLossConditionChanged, false);
+                        lossCondition.Progress.IsCompleted.Observe(
+                            isCompleted => OnLossConditionChanged(lossCondition, isCompleted), false);
                         lossCondition.Progress.CurrentValuePercent.Observe(
                             percent => OnLossConditionProgressChanged(percent, lossCondition), false);
                         break;
@@ -78,12 +80,12 @@ namespace Features.Levels.Conditions.Model
             }
         }
 
-        private void OnLossConditionChanged(bool isCompleted)
+        private void OnLossConditionChanged(ILossCondition lossCondition, bool isCompleted)
         {
-            if (isCompleted)
-            {
-                LevelLost?.Invoke();
-            }
+            if (!isCompleted)
+                return;
+
+            LevelLost?.Invoke(lossCondition);
         }
     }
 }

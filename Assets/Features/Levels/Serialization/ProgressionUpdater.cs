@@ -1,22 +1,39 @@
 using Common.Infrastructure;
+using Common.Types;
+using Features.Levels.Conditions.Model;
 using UnityEngine;
 
 namespace Features.Levels.Serialization
 {
-    public sealed class ProgressionUpdater : MonoBehaviour
+    public sealed class ProgressionSystem : ISystem
     {
-        public void LevelCompleted()
+        private LevelConditions _conditions;
+        private Date _gameDate;
+        private ProgressModel _progressModel;
+
+        public void Initialize()
         {
-            var completionDate = GameplayContext.Instance.Model.Date;
-            var levelSaveData = new CompletedLevelSaveData(completionDate);
+            _conditions = GameplayContext.Instance.Model.Conditions;
+            _gameDate = GameplayContext.Instance.Model.Date;
+            _progressModel = GlobalContext.Instance.ProgressModel;
+
+            _conditions.LevelWon += LevelCompleted;
+        }
+
+        public void CleanUp()
+        {
+            _conditions.LevelWon -= LevelCompleted;
+        }
+
+        private void LevelCompleted()
+        {
             var levelIndex = GlobalContext.CurrentLevelInfo!.InternalIndex;
 
-            var progressModel = GlobalContext.Instance.ProgressModel;
-            var previousFinishDate = progressModel.CompletedLevels[levelIndex]?.CompletionDate;
-
-            if (previousFinishDate == null || completionDate < previousFinishDate)
+            var previousFinishDate = _progressModel.CompletedLevels[levelIndex]?.CompletionDate;
+            var levelSaveData = new CompletedLevelSaveData(_gameDate);
+            if (previousFinishDate == null || _gameDate < previousFinishDate)
             {
-                progressModel.UpdateCompletedLevel(levelIndex, levelSaveData);
+                _progressModel.UpdateCompletedLevel(levelIndex, levelSaveData);
             }
         }
     }

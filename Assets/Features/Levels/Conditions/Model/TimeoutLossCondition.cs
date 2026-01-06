@@ -11,7 +11,7 @@ namespace Features.Levels.Conditions.Model
         public Progress Progress { get; }
         public Date DeadlineDate { get; }
 
-        public string GameOverMessage => "You've run out of time!";
+        public string GameOverMessage => $"You've run out of time! You had until {DeadlineDate.ToDisplayString()} to win.";
 
         public ConditionType Type => _data.Type;
         public string Description => _data.Description;

@@ -8,7 +8,9 @@ namespace Features.Levels.Conditions.Model
         private readonly BankruptcyLossConditionData _data;
 
         public Progress Progress { get; }
-        public string GameOverMessage => "You've run out of money!";
+
+        public string GameOverMessage =>
+            $"You've run out of money! You were bankrupt for more than {MaxBankruptcyDurationInDays} days.";
 
         public int BankruptcyFundsThreshold => _data.BankruptcyFundsThreshold;
         public int MaxBankruptcyDurationInDays => _data.MaxBankruptcyDurationInDays;
