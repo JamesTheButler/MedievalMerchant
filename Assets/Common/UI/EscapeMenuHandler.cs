@@ -21,7 +21,7 @@ namespace Common.UI
             escapeMenu.Closed += OnMenuClosed;
         }
 
-        public void ToggleMenu() => escapeMenu.Toggle();
+        public void Open() => escapeMenu.Open();
         private void OnMenuOpened() => _gameSpeedModel.Pause();
         private void OnMenuClosed() => _gameSpeedModel.Resume();
     }

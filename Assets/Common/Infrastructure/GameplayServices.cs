@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Common.Camera;
 using Common.UI;
+using Features;
+using Features.Cheats;
 using Features.Levels.GameModifiers.Logic;
 using Features.Notifications.Logic;
 using Features.Player.Retinue.Logic;
@@ -21,6 +23,7 @@ namespace Common.Infrastructure
         public NotificationService NotificationService { get; private set; }
         public UIBridgeService UIBridgeService { get; private set; }
         public CameraService CameraService { get; private set; }
+        public CheatService Cheats { get; private set; }
 
         private readonly List<IService> _services = new();
 
@@ -35,6 +38,7 @@ namespace Common.Infrastructure
             NotificationService = new NotificationService();
             UIBridgeService = new UIBridgeService();
             CameraService = new CameraService();
+            Cheats = new CheatService();
 
             _services.Add(TutorialPersistenceService);
             _services.Add(TutorialService);
@@ -45,6 +49,7 @@ namespace Common.Infrastructure
             _services.Add(NotificationService);
             _services.Add(UIBridgeService);
             _services.Add(CameraService);
+            _services.Add(Cheats);
 
             foreach (var service in _services)
             {

@@ -1,0 +1,76 @@
+﻿using System.Collections.Generic;
+using Common.UI.Elements;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
+
+namespace Common.UI.Utility
+{
+    public sealed class EscapablePanelManager : MonoBehaviour
+    {
+        [SerializeField]
+        private UnityEvent escapeFallthrough;
+
+        [SerializeField]
+        private List<DynamicPanel> trackedPanels;
+
+        private readonly List<DynamicPanel> _activePanels = new();
+
+        private void Awake()
+        {
+            foreach (var panel in trackedPanels)
+            {
+                panel.Opened += OnPanelOpened;
+                continue;
+
+                void OnPanelOpened()
+                {
+                    TrackPanel(panel);
+                }
+            }
+        }
+
+        public void OnEscapePressed(InputAction.CallbackContext context)
+        {
+            if (!context.performed)
+                return;
+
+            EscapeNext();
+        }
+
+        private void TrackPanel(DynamicPanel panel)
+        {
+            // if it's already managed, we just bring it to the top of the list.
+            if (_activePanels.Contains(panel))
+            {
+                _activePanels.Remove(panel);
+                _activePanels.Add(panel);
+                return;
+            }
+
+            _activePanels.Add(panel);
+            panel.Closed += OnPanelClosed;
+            return;
+
+            void OnPanelClosed()
+            {
+                _activePanels.Remove(panel);
+                panel.Closed -= OnPanelClosed;
+            }
+        }
+
+        private void EscapeNext()
+        {
+            if (_activePanels.Count <= 0)
+            {
+                escapeFallthrough.Invoke();
+                return;
+            }
+
+            var lastIndex = _activePanels.Count - 1;
+            var next = _activePanels[lastIndex];
+            _activePanels.RemoveAt(lastIndex);
+            next.Close();
+        }
+    }
+}

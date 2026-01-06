@@ -1,4 +1,5 @@
 using Common.Infrastructure;
+using Common.UI.Elements;
 using Common.UI.Utility;
 using Features.Feedback.Logic;
 using NaughtyAttributes;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Features.Feedback.UI
 {
-    public sealed class FeedbackForm : MonoBehaviour
+    public sealed class FeedbackForm : DynamicPanel
     {
         private FeedbackService _feedbackService;
 
@@ -32,7 +33,7 @@ namespace Features.Feedback.UI
             Close();
         }
 
-        public void Open()
+        protected override void OnOpen()
         {
             nameInput.Clear();
             messageInput.Clear();
@@ -40,28 +41,16 @@ namespace Features.Feedback.UI
             gameObject.SetActive(true);
 
             nameInput.Select();
-            nameInput.Select();
+            nameInput.Select(); // ???
             nameInput.Select();
         }
 
-        public void Close()
+        protected override void OnClose()
         {
             nameInput.Clear();
             messageInput.Clear();
 
             gameObject.SetActive(false);
-        }
-
-        public void Toggle()
-        {
-            if (gameObject.activeSelf)
-            {
-                Close();
-            }
-            else
-            {
-                Open();
-            }
         }
     }
 }

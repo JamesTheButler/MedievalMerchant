@@ -41,6 +41,9 @@ namespace Features.Levels.GameModifiers.Events
 
         public void CleanUp()
         {
+            if (_tickingService == null)
+                return;
+
             _tickingService.DayPassed -= OnDayPassed;
         }
 
