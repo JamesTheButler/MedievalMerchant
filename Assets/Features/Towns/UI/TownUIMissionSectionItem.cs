@@ -37,7 +37,7 @@ namespace Features.Towns.UI
 
         private Mission _mission;
 
-        private void Awake()
+        public void Initialize()
         {
             _goodsResources = ResourceManager.Instance.GoodsResources;
             _missionConfig = ConfigurationManager.Configurations.MissionConfig;

@@ -70,6 +70,7 @@ namespace Features.Towns.UI
             var uiElementScript = uiElement.GetComponentInChildren<TownUIMissionSectionItem>();
 
             uiElementScript.GoodCellClicked += cell => goodCellClicked.Invoke(cell, TradeType.Sell);
+            uiElementScript.Initialize();
             uiElementScript.Bind(mission);
             _missionUiElements.Add(mission, uiElementScript);
         }
