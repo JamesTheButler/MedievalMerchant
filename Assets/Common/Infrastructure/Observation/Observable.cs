@@ -4,7 +4,7 @@ namespace Common.Infrastructure.Observation
 {
     public class Observable<T> : IReadOnlyObservable<T>
     {
-        private event Action ValueChangeNotified;
+        private event Action ValueChangeWithoutValue;
         private event Action<T> ValueChanged;
         private event Action<T, T> ValueChangedWithOldValue;
 
@@ -19,6 +19,7 @@ namespace Common.Infrastructure.Observation
                 _value = value;
                 ValueChanged?.Invoke(_value);
                 ValueChangedWithOldValue?.Invoke(oldValue, _value);
+                ValueChangeWithoutValue?.Invoke();
             }
         }
 
@@ -29,28 +30,32 @@ namespace Common.Infrastructure.Observation
             Value = value;
         }
 
-        public void Observe(Action notifyCallback)
+        public IBinding Observe(Action notifyCallback)
         {
-            ValueChangeNotified += notifyCallback;
+            ValueChangeWithoutValue += notifyCallback;
+            return new Binding(() => StopObserving(notifyCallback));
         }
 
-        public void Observe(Action<T> callback, bool invokeOnObserve = true)
+        public IBinding Observe(Action<T> callback, bool invokeOnObserve = true)
         {
             ValueChanged += callback;
             if (invokeOnObserve)
             {
                 callback?.Invoke(Value);
             }
+
+            return new Binding(() => StopObserving(callback));
         }
 
-        public void Observe(Action<T, T> callback)
+        public IBinding Observe(Action<T, T> callback)
         {
             ValueChangedWithOldValue += callback;
+            return new Binding(() => StopObserving(callback));
         }
 
         public void StopObserving(Action notifyCallback)
         {
-            ValueChangeNotified -= notifyCallback;
+            ValueChangeWithoutValue -= notifyCallback;
         }
 
         public void StopObserving(Action<T> callback)

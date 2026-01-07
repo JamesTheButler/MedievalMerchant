@@ -6,10 +6,13 @@ namespace Common.Infrastructure.Observation
     {
         T Value { get; }
         
-        void Observe(Action<T> callback, bool invokeOnObserve = true);
+        IBinding Observe(Action<T> callback, bool invokeOnObserve = true);
         void StopObserving(Action<T> callback);
 
-        void Observe(Action<T, T> callback);
+        IBinding Observe(Action<T, T> callback);
         void StopObserving(Action<T, T> callback);
+        
+        IBinding Observe(Action callback);
+        void StopObserving(Action callback);
     }
 }
