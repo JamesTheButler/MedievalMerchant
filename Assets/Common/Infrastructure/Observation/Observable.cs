@@ -4,6 +4,7 @@ namespace Common.Infrastructure.Observation
 {
     public class Observable<T> : IReadOnlyObservable<T>
     {
+        private event Action ValueChangeNotified;
         private event Action<T> ValueChanged;
         private event Action<T, T> ValueChangedWithOldValue;
 
@@ -28,6 +29,11 @@ namespace Common.Infrastructure.Observation
             Value = value;
         }
 
+        public void Observe(Action notifyCallback)
+        {
+            ValueChangeNotified += notifyCallback;
+        }
+
         public void Observe(Action<T> callback, bool invokeOnObserve = true)
         {
             ValueChanged += callback;
@@ -40,6 +46,11 @@ namespace Common.Infrastructure.Observation
         public void Observe(Action<T, T> callback)
         {
             ValueChangedWithOldValue += callback;
+        }
+
+        public void StopObserving(Action notifyCallback)
+        {
+            ValueChangeNotified -= notifyCallback;
         }
 
         public void StopObserving(Action<T> callback)

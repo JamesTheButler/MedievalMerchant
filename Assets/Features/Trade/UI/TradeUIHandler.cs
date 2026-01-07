@@ -1,19 +1,20 @@
 using Common.Infrastructure;
 using Common.Types;
+using Common.UI.Elements;
 using Features.Towns;
 using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Trade.UI
 {
-    public sealed class TradeUIHandler : MonoBehaviour
+    public sealed class TradeUIHandler : InitializableUI
     {
         [SerializeField, Required]
         private TradeUI tradeUI;
 
         private Selection _selection;
 
-        private void Start()
+        public override void Initialize()
         {
             tradeUI.gameObject.SetActive(false);
 
@@ -21,7 +22,7 @@ namespace Features.Trade.UI
             _selection.SelectedTown.Observe(OnSelectedTownChanged);
         }
 
-        private void OnDestroy()
+        public override void CleanUp()
         {
             _selection.SelectedTown.StopObserving(OnSelectedTownChanged);
         }
@@ -30,7 +31,7 @@ namespace Features.Trade.UI
         {
             tradeUI.Hide();
             tradeUI.gameObject.SetActive(true);
-            tradeUI.Initialize(good, tradeType);
+            tradeUI.Show(good, tradeType);
         }
 
         private void OnSelectedTownChanged(Town town)
