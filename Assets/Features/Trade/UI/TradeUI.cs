@@ -28,7 +28,8 @@ namespace Features.Trade.UI
             lossProfitText,
             playerFundsText,
             townFundsText,
-            townReputationText;
+            townReputationText,
+            sliderValueText;
 
         [SerializeField, Required]
         private GoodCell goodCell;
@@ -82,7 +83,7 @@ namespace Features.Trade.UI
             cancelButton.onClick.AddListener(AbortTrade);
             maxAmountButton.onClick.AddListener(SetMaxAmount);
             missionAmountButton.onClick.AddListener(SetActiveMissionAmount);
-            
+
             SetUpSlider();
 
             _model = GameplayContext.Instance.Model;
@@ -179,6 +180,7 @@ namespace Features.Trade.UI
 
         private void TradeSliderUpdate(float amount)
         {
+            sliderValueText.text = amount.ToString("0");
             SetAmount((int)amount);
             RefreshButtonState();
         }
@@ -264,9 +266,7 @@ namespace Features.Trade.UI
 
             lossProfitText.gameObject.SetActive(_tradeType == TradeType.Sell);
             if (_tradeType == TradeType.Sell)
-            {
                 RefreshLossOrProfitText();
-            }
         }
 
         private void RefreshFundsChangeTexts()
@@ -282,9 +282,7 @@ namespace Features.Trade.UI
         {
             var price = $"{_totalPrice:0.##}";
             if (_tradeType == TradeType.Buy && _tradeAmount > 0)
-            {
                 price = "-" + price;
-            }
 
             coinAmountText.text = price;
         }
