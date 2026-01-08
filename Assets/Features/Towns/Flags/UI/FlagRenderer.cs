@@ -17,10 +17,9 @@ namespace Features.Towns.Flags.UI
         public void SetFlag(FlagInfo info)
         {
             var data = _flagConfig.Value.GetData(info);
-
             flagImage.sprite = data.Flag;
             goodImage.sprite = data.RegionIcon;
-            goodImage.color = data.GoodColor;
+            goodImage.color = data.IconColor;
         }
     }
 }

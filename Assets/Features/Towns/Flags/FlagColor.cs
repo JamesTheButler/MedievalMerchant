@@ -1,10 +1,11 @@
 namespace Features.Towns.Flags
 {
+    // number values are used when rendering flags (in Sprite.Create)
     public enum FlagColor
     {
-        Blue = 0,
-        Red = 1,
-        Yellow = 2,
-        Green = 3,
+        Blue = 3,
+        Red = 2,
+        Yellow = 1,
+        Green = 0
     }
 }

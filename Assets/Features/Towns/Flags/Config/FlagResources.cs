@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
 using Common.Types;
 using Common.Utility;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Towns.Flags.Config
@@ -11,9 +12,12 @@ namespace Features.Towns.Flags.Config
         menuName = AssetMenu.ResourceFolder + nameof(FlagResources))]
     public sealed class FlagResources : ScriptableObject
     {
-        public sealed record Data(Sprite Flag, Sprite RegionIcon, Color GoodColor);
+        public sealed record Data(Sprite Flag, Sprite RegionIcon, Color IconColor);
 
-        [SerializeField]
+        [SerializeField, Required]
+        private Sprite sampleFlag;
+
+        [SerializeField, Required]
         private Texture2D flags;
 
         [SerializeField, SerializedDictionary("Region", "Icon")]
@@ -21,12 +25,6 @@ namespace Features.Towns.Flags.Config
 
         [SerializeField, SerializedDictionary("Flag Color", "Icon Color")]
         private SerializedDictionary<FlagColor, Color> goodIconColor;
-
-        [SerializeField]
-        private int pixelsPerUnit;
-
-        [SerializeField]
-        private Vector2Int tileSize;
 
         private readonly Dictionary<Vector2Int, Sprite> _cache = new();
 
@@ -44,6 +42,9 @@ namespace Features.Towns.Flags.Config
 
             if (_cache.TryGetValue(index, out var flagSprite))
                 return flagSprite;
+
+            var tileSize = sampleFlag.rect.size;
+            var pixelsPerUnit = sampleFlag.pixelsPerUnit;
 
             var pos = new Vector2(index.x * tileSize.x, index.y * tileSize.y);
             var spriteRect = new Rect(pos, tileSize);
