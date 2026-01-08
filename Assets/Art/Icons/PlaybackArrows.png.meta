@@ -56,7 +56,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
@@ -105,15 +105,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlaybackArrows_0
+      name: PlaybackArrow1_Foreground
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 16
-        height: 16
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -127,15 +127,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlaybackArrows_1
+      name: PlaybackArrow2_Foreground
       rect:
         serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -144,6 +144,50 @@ TextureImporter:
       bones: []
       spriteID: e0e8b6a5ef4ec2e4eaab2227c1d6ba9b
       internalID: -180208558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaybackArrow1_Background
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc8288b2a2046764882c166644c75472
+      internalID: -10632518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaybackArrow2_Background
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7906232d2b8491c43bfd314611c50856
+      internalID: -1239897745
       vertices: []
       indices: 
       edges: []
@@ -163,8 +207,10 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       MarketStateIcons_0: 1407447166
-      PlaybackArrows_0: -1226867321
-      PlaybackArrows_1: -180208558
+      PlaybackArrow1_Background: -10632518
+      PlaybackArrow1_Foreground: -1226867321
+      PlaybackArrow2_Background: -1239897745
+      PlaybackArrow2_Foreground: -180208558
       mountain_tiles_0: 6453768184565535170
       mountain_tiles_1: -1226596708182325552
       mountain_tiles_2: 369789480198496347
