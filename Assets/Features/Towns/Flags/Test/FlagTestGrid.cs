@@ -24,7 +24,7 @@ namespace Features.Towns.Flags.Test
                 var flag = flagObject.GetComponent<FlagRenderer>();
                 flag.name = $"Flag_{color}_{shape}";
 
-                var info = new FlagInfo(color, shape, Region.Fields);
+                var info = new FlagInfo(color, shape, EnumExtensions.GetRandom<Region>());
                 flag.SetFlag(info);
             }
         }
