@@ -3,7 +3,7 @@
     "name": "Inputs",
     "maps": [
         {
-            "name": "UI",
+            "name": "Gameplay",
             "id": "272f6d14-89ba-496f-b7ff-215263d3219f",
             "actions": [
                 {
@@ -613,6 +613,74 @@
                     "processors": "",
                     "groups": "",
                     "action": "PlayGameFast",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "b9625390-300a-41eb-a503-36d896bb2842",
+            "actions": [
+                {
+                    "name": "Next",
+                    "type": "Button",
+                    "id": "d1fbb721-bc75-46fa-8e86-6bc0f9eee40b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Submit",
+                    "type": "Button",
+                    "id": "7961bb68-046f-4b12-8f50-c3c5d2d8f962",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "3cc5131e-bffb-4d16-b220-ffcfdbf8730a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "47f23bd3-83ff-4ab3-9110-4291de2cffd0",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3fd08a7a-bd2d-4162-8ab5-1b7f5e0cb18d",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "060de4bc-5575-4dfb-a83c-77ef949b96a7",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

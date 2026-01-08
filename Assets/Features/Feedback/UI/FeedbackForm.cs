@@ -5,6 +5,7 @@ using Features.Feedback.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Features.Feedback.UI
@@ -19,7 +20,7 @@ namespace Features.Feedback.UI
         [SerializeField, Required]
         private Button submitButton, cancelButton;
 
-        private void Awake()
+        protected override void OnInitialize()
         {
             submitButton.onClick.AddListener(Submit);
             cancelButton.onClick.AddListener(Close);
@@ -43,6 +44,9 @@ namespace Features.Feedback.UI
             nameInput.Select();
             nameInput.Select(); // ???
             nameInput.Select();
+
+            var playerInput = FindAnyObjectByType<PlayerInput>();
+            playerInput.SwitchCurrentActionMap(ActionMap.UI);
         }
 
         protected override void OnClose()
@@ -51,6 +55,9 @@ namespace Features.Feedback.UI
             messageInput.Clear();
 
             gameObject.SetActive(false);
+
+            var playerInput = FindAnyObjectByType<PlayerInput>();
+            playerInput.SwitchCurrentActionMap(ActionMap.Gameplay);
         }
     }
 }
