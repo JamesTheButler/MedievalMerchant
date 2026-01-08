@@ -1,4 +1,3 @@
-using Common.Infrastructure;
 using Common.Types;
 using Common.Utility;
 using Features.Towns.Flags.UI;
@@ -10,9 +9,6 @@ namespace Features.Towns.Flags.Test
     public sealed class FlagTestGrid : MonoBehaviour
     {
         [SerializeField]
-        private ConfigurationManager configurationManager;
-
-        [SerializeField]
         private Transform flagContainer;
 
         [SerializeField]
@@ -21,16 +17,11 @@ namespace Features.Towns.Flags.Test
         [Button("Re-Generate Grid")]
         private void Generate()
         {
-            foreach (Transform child in flagContainer)
-            {
-                DestroyImmediate(child.gameObject);
-            }
-
             var permutations = EnumExtensions.GetPermutations<FlagColor, FlagShape>();
             foreach (var (color, shape) in permutations)
             {
                 var flagObject = Instantiate(flagPrefab, flagContainer);
-                var flag = flagObject.GetComponent<FlagUI>();
+                var flag = flagObject.GetComponent<FlagRenderer>();
                 flag.name = $"Flag_{color}_{shape}";
 
                 var info = new FlagInfo(color, shape, Region.Fields);

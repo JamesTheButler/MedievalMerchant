@@ -47,7 +47,7 @@ namespace Features.Trade.UI
         private Slider amountSlider;
 
         [SerializeField, Required]
-        private FlagUI townFlagUI;
+        private FlagRenderer townFlagRenderer;
 
         [SerializeField, Required]
         private ModifiableTooltipHandler priceTooltip;
@@ -109,7 +109,7 @@ namespace Features.Trade.UI
             tradeButton.GetText().text = tradeType == TradeType.Buy ? "Buy" : "Sell";
 
             townNameText.text = _town.Name;
-            townFlagUI.SetFlag(_town.FlagInfo);
+            townFlagRenderer.SetFlag(_town.FlagInfo);
 
             goodCell.SetGood(_good);
             goodDirectionIcon.sprite = tradeType == TradeType.Buy ? playerGetsIcon : playerGivesIcon;

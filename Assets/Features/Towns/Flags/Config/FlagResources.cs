@@ -23,10 +23,10 @@ namespace Features.Towns.Flags.Config
         private SerializedDictionary<FlagColor, Color> goodIconColor;
 
         [SerializeField]
-        private int pixelsPerUnit = 16;
+        private int pixelsPerUnit;
 
         [SerializeField]
-        private Vector2Int tileSize = new(16, 16);
+        private Vector2Int tileSize;
 
         private readonly Dictionary<Vector2Int, Sprite> _cache = new();
 

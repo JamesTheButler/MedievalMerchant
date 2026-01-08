@@ -33,7 +33,7 @@ namespace Features.Towns.UI
         private ModifiableTooltipHandler fundsChangeTooltip;
 
         [SerializeField, Required]
-        private FlagUI flagIcon;
+        private FlagRenderer flagIcon;
 
         [SerializeField, Required]
         private Image tierIcon;

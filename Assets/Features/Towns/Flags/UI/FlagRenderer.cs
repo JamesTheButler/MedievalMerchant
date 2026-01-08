@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Features.Towns.Flags.UI
 {
-    public sealed class FlagUI : MonoBehaviour
+    public sealed class FlagRenderer : MonoBehaviour
     {
         [SerializeField, Required]
         private Image flagImage, goodImage;
