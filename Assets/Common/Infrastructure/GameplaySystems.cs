@@ -6,7 +6,6 @@ using Features.Notifications.Logic;
 using Features.Player.Logic;
 using Features.Player.Retinue.Logic;
 using Features.Stats;
-using Features.Ticking;
 using Features.Ticking.Logic;
 using Features.Towns;
 using Features.Towns.Development.Logic;
@@ -62,6 +61,7 @@ namespace Common.Infrastructure
             _systems.Add(new PlayerTradeTrackingSystem());
             _systems.Add(new RetinueSystem());
             _systems.Add(new PlayerMapSpeedSystem());
+            _systems.Add(new PlayerInTownPauseSystem());
         }
 
         private void AddTownSystems()

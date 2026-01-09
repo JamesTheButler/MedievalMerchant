@@ -24,47 +24,38 @@ namespace Features.Map.Overlays
             _playerLocation = GameplayContext.Instance.Model.Player.Location;
             _zLevel = gameObject.transform.position.z;
 
-            _playerLocation.TownEntered += OnTownEntered;
-            _playerLocation.TownExited += OnTownExited;
             _animationHandler.Initialize(animation);
 
+            _playerLocation.CurrentTown.Observe(OnTownChanged);
             _playerLocation.WorldLocation.Observe(OnWorldLocationChanged);
-
-            OnTownEntered(_playerLocation.CurrentTown);
         }
 
         private void OnDestroy()
         {
-            _playerLocation.TownEntered -= OnTownEntered;
-            _playerLocation.TownExited -= OnTownExited;
+            _playerLocation.CurrentTown.StopObserving(OnTownChanged);
             _playerLocation.WorldLocation.StopObserving(OnWorldLocationChanged);
             _animationHandler.CleanUp();
         }
 
         private void OnWorldLocationChanged(Vector2 worldLocation)
         {
-            if (_playerLocation.CurrentTown != null) return;
+            if (_playerLocation.CurrentTown.Value != null)
+                return;
 
             gameObject.transform.localPosition = worldLocation.FromXY(_zLevel);
         }
 
-        private void OnTownEntered(Town town)
+        private void OnTownChanged(Town town)
         {
-            if (town == null)
-            {
-                OnTownExited(null);
+            var isInTown = town != null;
+
+            townOverlay.SetActive(isInTown);
+            worldOverlay.SetActive(!isInTown);
+
+            if (!isInTown)
                 return;
-            }
 
-            townOverlay.SetActive(true);
-            worldOverlay.SetActive(false);
             gameObject.transform.localPosition = town.WorldLocation.FromXY(_zLevel);
-        }
-
-        private void OnTownExited(Town town)
-        {
-            townOverlay.SetActive(false);
-            worldOverlay.SetActive(true);
         }
     }
 }

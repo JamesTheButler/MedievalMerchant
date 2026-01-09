@@ -56,9 +56,8 @@ namespace Features.Towns.UI
             flagIcon.SetFlag(town.FlagInfo);
             nameText.text = town.Name;
 
-            _playerModel.Location.TownEntered += OnTownEntered;
-            _playerModel.Location.TownExited += OnTownExited;
-            OnTownEntered(_playerModel.Location.CurrentTown);
+            _playerModel.Location.CurrentTown.Observe(OnTownChanged);
+            OnTownChanged(_playerModel.Location.CurrentTown);
 
             // TODO: is this OK when we change the town??
             fundsChangeTooltip.SetData(town.FundsChange);
@@ -98,8 +97,7 @@ namespace Features.Towns.UI
 
         public override void Unbind(Town town)
         {
-            _playerModel.Location.TownEntered -= OnTownEntered;
-            _playerModel.Location.TownExited -= OnTownExited;
+            _playerModel.Location.CurrentTown.StopObserving(OnTownChanged);
 
             town.Tier.StopObserving(OnTierChanged);
             town.Descriptor.StopObserving(OnDescriptorChanged);
@@ -108,14 +106,9 @@ namespace Features.Towns.UI
             town.FundsChange.StopObserving(OnFundsChangeChanged);
         }
 
-        private void OnTownEntered(Town town)
+        private void OnTownChanged(Town town)
         {
             SetInTown(town == _town);
-        }
-
-        private void OnTownExited(Town town)
-        {
-            SetInTown(false);
         }
 
         private void SetInTown(bool isPlayerInThisTown)

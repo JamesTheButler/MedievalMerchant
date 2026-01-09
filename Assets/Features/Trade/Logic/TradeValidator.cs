@@ -20,7 +20,7 @@ namespace Features.Trade.Logic
             if (_town == null)
                 return TradeResult.Failed("Cannot complete the trade without a town.");
 
-            if (_town != _player.Location.CurrentTown)
+            if (_town != _player.Location.CurrentTown.Value)
                 return TradeResult.Failed($"You are not currently in {_town.Name}");
 
             var buyingInventory = tradeType == TradeType.Buy ? _player.Inventory : _town.Inventory;

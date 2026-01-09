@@ -17,10 +17,7 @@ namespace Features.Player.Caravan.UI
         private void Start()
         {
             _player = GameplayContext.Instance.Model.Player;
-            _player.Location.TownEntered += OnPlayerEnteredTown;
-            _player.Location.TownExited += OnPlayerExitedTown;
-
-            OnPlayerEnteredTown(_player.Location.CurrentTown);
+            _player.Location.CurrentTown.Observe(OnPlayerEnteredTown);
 
             _caravanManager = _player.CaravanManager;
             _caravanManager.MoveSpeed.Observe(OnMoveSpeedChanged);
@@ -37,14 +34,10 @@ namespace Features.Player.Caravan.UI
             caravanMiniUI.SetMoveSpeed(moveSpeed);
         }
 
-        private void OnPlayerExitedTown(Town town)
-        {
-            caravanMiniUI.ToggleUpkeep(true);
-        }
-
         private void OnPlayerEnteredTown(Town town)
         {
-            caravanMiniUI.ToggleUpkeep(false);
+            // toggle when player leaves town
+            caravanMiniUI.ToggleUpkeep(town == null);
         }
     }
 }

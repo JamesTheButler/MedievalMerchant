@@ -35,22 +35,22 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
         private void Bind()
         {
             _player = GameplayContext.Instance.Model.Player;
-            _player.Location.TownEntered += OnTownChanged;
+            _player.Location.CurrentTown.Observe(OnTownChanged);
 
             _isBound = true;
         }
 
-        private void OnTownChanged(Town enteredTown)
+        private void OnTownChanged(Town town)
         {
-            if (enteredTown == null || _thiefLevelData == null) return;
+            if (town == null || _thiefLevelData == null) return;
 
             _player.Inventory.AddFunds(_thiefLevelData.TownEntranceGold);
-            enteredTown.Inventory.RemoveFunds(_thiefLevelData.TownEntranceGold);
+            town.Inventory.RemoveFunds(_thiefLevelData.TownEntranceGold);
 
             var isThiefCaught = RandomUtility.GetBool(_thiefLevelData.ReputationLossChance);
             if (isThiefCaught)
             {
-                enteredTown.ReputationManager.ApplyCaughtThief(_thiefLevelData.ReputationLoss);
+                town.ReputationManager.ApplyCaughtThief(_thiefLevelData.ReputationLoss);
             }
         }
     }

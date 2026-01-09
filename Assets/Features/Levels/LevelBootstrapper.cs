@@ -46,7 +46,7 @@ namespace Features.Levels
             context.Systems.Initialize();
 
             var startTown = towns.GetRandom();
-            player.Location.CurrentTown = startTown;
+            player.Location.CurrentTown.Value = startTown;
             player.Location.WorldLocation.Value = startTown.WorldLocation;
 
             player.CaravanManager.UpgradeCart(0);

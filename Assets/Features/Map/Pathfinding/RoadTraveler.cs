@@ -41,7 +41,7 @@ namespace Features.Map.Pathfinding
 
         public void TravelTo(Town town)
         {
-            if (town == Location.CurrentTown || town == null)
+            if (town == Location.CurrentTown.Value || town == null)
                 return;
 
             _town = town;
@@ -114,7 +114,7 @@ namespace Features.Map.Pathfinding
             var smoothed = SmoothCorners(points, smoothing);
 
             _playerLocation.WorldLocation.Value = smoothed[0];
-            _playerLocation.CurrentTown = null;
+            _playerLocation.CurrentTown.Value = null;
 
             for (var i = 1; i < smoothed.Count; i++)
             {
@@ -139,7 +139,7 @@ namespace Features.Map.Pathfinding
             }
 
             // we arrived
-            _playerLocation.CurrentTown = _town;
+            _playerLocation.CurrentTown.Value = _town;
             _town = null;
         }
 

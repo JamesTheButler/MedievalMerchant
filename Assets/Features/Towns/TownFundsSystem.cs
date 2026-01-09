@@ -1,5 +1,4 @@
 using Common.Infrastructure;
-using Features.Ticking;
 using Features.Ticking.Logic;
 
 namespace Features.Towns
@@ -24,7 +23,6 @@ namespace Features.Towns
             _town.FundsChange.Observe(OnFundsRateChanged);
             _tickingService.RegisterTicker(_fundsChangeTicker);
         }
-
 
         public void CleanUp()
         {

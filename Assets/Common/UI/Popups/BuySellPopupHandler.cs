@@ -64,8 +64,7 @@ namespace Common.UI.Popups
             // can buy and sell?
             OnPlayerGoodUpdated(_good, _playerInventory.Get(_good));
             OnTownGoodUpdated(_good, _townInventory.Get(_good));
-            _player.Location.TownEntered += OnPlayerTownChanged;
-            _player.Location.TownExited += OnPlayerTownChanged;
+            _player.Location.CurrentTown.Observe(OnPlayerTownChanged);
             _playerInventory.GoodUpdated += OnPlayerGoodUpdated;
             _townInventory.GoodUpdated += OnTownGoodUpdated;
             _player.CaravanManager.SlotCount.Observe(OnTotalSlotCountChanged, false);
@@ -89,8 +88,7 @@ namespace Common.UI.Popups
 
             if (_player != null)
             {
-                _player.Location.TownEntered -= OnPlayerTownChanged;
-                _player.Location.TownExited -= OnPlayerTownChanged;
+                _player.Location.CurrentTown.StopObserving(OnPlayerTownChanged);
                 _player.CaravanManager.SlotCount.StopObserving(OnTotalSlotCountChanged);
             }
         }

@@ -17,8 +17,7 @@ namespace Features.Player.Logic
         {
             _playerModel = GameplayContext.Instance.Model.Player;
             _playerLocation = _playerModel.Location;
-            _playerLocation.TownEntered += OnTownEntered;
-            _playerLocation.TownExited += OnTownExited;
+            _playerLocation.CurrentTown.Observe(OnTownEntered);
 
             _caravanManager = GameplayContext.Instance.Model.Player.CaravanManager;
             _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
@@ -28,20 +27,21 @@ namespace Features.Player.Logic
             _playerModel.FundsChange.AddModifier(_retinueUpkeepFundsModifier);
         }
 
-        private void OnTownExited(Town town)
-        {
-            _playerModel.FundsChange.AddModifier(_caravanUpkeepFundsModifier);
-        }
-
         private void OnTownEntered(Town town)
         {
-            _playerModel.FundsChange.RemoveModifier(_caravanUpkeepFundsModifier);
+            if (town == null)
+            {
+                _playerModel.FundsChange.AddModifier(_caravanUpkeepFundsModifier);
+            }
+            else
+            {
+                _playerModel.FundsChange.RemoveModifier(_caravanUpkeepFundsModifier);
+            }
         }
 
         public void CleanUp()
         {
-            _playerLocation.TownEntered -= OnTownEntered;
-            _playerLocation.TownExited -= OnTownExited;
+            _playerLocation.CurrentTown.StopObserving(OnTownEntered);
         }
     }
 }

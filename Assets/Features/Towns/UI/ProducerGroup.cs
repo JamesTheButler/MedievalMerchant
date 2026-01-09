@@ -81,9 +81,7 @@ namespace Features.Towns.UI
             unavailableGroup.SetActive(!isAvailable);
             titleText.text = $"Producer {_producerIndex + 1}".WithStyle(Style.Subtitle);
 
-            _playerLocation.TownEntered += OnPlayerTownEntered;
-            _playerLocation.TownExited += OnPlayerTownExited;
-            OnPlayerTownEntered(_playerLocation.CurrentTown);
+            _playerLocation.CurrentTown.Observe(OnPlayerTownChanged);
 
             if (!_isAvailable)
                 return;
@@ -121,8 +119,7 @@ namespace Features.Towns.UI
 
             if (_playerLocation != null)
             {
-                _playerLocation.TownEntered -= OnPlayerTownEntered;
-                _playerLocation.TownExited -= OnPlayerTownExited;
+                _playerLocation.CurrentTown.StopObserving(OnPlayerTownChanged);
             }
 
             arrowT1T2.SetActive(false);
@@ -313,14 +310,9 @@ namespace Features.Towns.UI
             deliveryCell.SetAmount(_town.Inventory.Get(t2GoodToDeliver));
         }
 
-        private void OnPlayerTownEntered(Town town)
+        private void OnPlayerTownChanged(Town town)
         {
             notHereBlockerGroup.SetActive(_town != town);
-        }
-
-        private void OnPlayerTownExited(Town town)
-        {
-            notHereBlockerGroup.SetActive(true);
         }
     }
 }
