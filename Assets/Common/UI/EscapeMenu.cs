@@ -1,7 +1,8 @@
 using Common.Infrastructure;
 using Common.UI.Elements;
-using Features.Tutorial.Logic;
+using Features.Feedback.Logic;
 using NaughtyAttributes;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -18,38 +19,45 @@ namespace Common.UI
         private UnityEvent giveUpPressed, feedbackButtonPressed;
 
         [SerializeField, Required]
-        private Button giveUpButton, resetTutorialButton, feedbackButton, cancelButton;
+        private Button giveUpButton, feedbackButton, cancelButton;
 
-        private TutorialService _tutorialService;
+        [SerializeField, Required]
+        private TMP_Text feedbackReceivedText;
+
+        private FeedbackService _feedbackService;
 
         protected override void OnInitialize()
         {
-            _tutorialService = GameplayContext.Instance.Services.TutorialService;
+            _feedbackService = GlobalContext.Instance.Services.FeedbackService;
 
             cancelButton.onClick.AddListener(Close);
             giveUpButton.onClick.AddListener(GiveUp);
-            resetTutorialButton.onClick.AddListener(ResetTutorialState);
             feedbackButton.onClick.AddListener(ReportBug);
+        }
+
+        private void OnFeedbackPosted()
+        {
+            feedbackReceivedText.gameObject.SetActive(true);
         }
 
         protected override void OnOpen()
         {
+            _feedbackService.FeedbackPosted += OnFeedbackPosted;
+
             gameObject.SetActive(true);
+            feedbackReceivedText.gameObject.SetActive(false);
         }
 
         protected override void OnClose()
         {
+            _feedbackService.FeedbackPosted -= OnFeedbackPosted;
+
             gameObject.SetActive(false);
         }
 
         private void ReportBug()
         {
             feedbackButtonPressed.Invoke();
-        }
-
-        private void ResetTutorialState()
-        {
-            _tutorialService.ResetCompletedTopics();
         }
 
         private void GiveUp()

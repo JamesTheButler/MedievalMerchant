@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Common.Infrastructure;
 using UnityEngine;
@@ -7,7 +8,11 @@ namespace Features.Feedback.Logic
 {
     public sealed class FeedbackService
     {
-        private const string FormUrl = "https://docs.google.com/forms/d/1tdYh9PE26UMTd05RBw-yKAGnQdsa6c0-Vo0P0q6g7ak/formResponse";
+        public event Action FeedbackPosted;
+
+        private const string FormUrl =
+            "https://docs.google.com/forms/d/1tdYh9PE26UMTd05RBw-yKAGnQdsa6c0-Vo0P0q6g7ak/formResponse";
+
         private const string VersionFieldId = "entry.349607095";
         private const string NameFieldId = "entry.1261410891";
         private const string FeedbackFieldId = "entry.1538213941";
@@ -32,6 +37,8 @@ namespace Features.Feedback.Logic
             {
                 Debug.Log("Success");
             }
+
+            FeedbackPosted?.Invoke();
         }
     }
 }
