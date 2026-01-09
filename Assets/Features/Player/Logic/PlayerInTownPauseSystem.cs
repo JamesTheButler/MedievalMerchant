@@ -14,12 +14,12 @@ namespace Features.Player.Logic
             _playerLocation = GameplayContext.Instance.Model.Player.Location;
             _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
 
-            _playerLocation.CurrentTown.Observe(OnTownChanged);
+            //_playerLocation.CurrentTown.Observe(OnTownChanged);
         }
 
         public void CleanUp()
         {
-            _playerLocation.CurrentTown.StopObserving(OnTownChanged);
+            //_playerLocation.CurrentTown.StopObserving(OnTownChanged);
         }
 
         private void OnTownChanged(Town town)
