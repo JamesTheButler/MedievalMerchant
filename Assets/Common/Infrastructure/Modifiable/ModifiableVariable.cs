@@ -36,7 +36,8 @@ namespace Common.Infrastructure.Modifiable
 
         public void AddModifier(IModifier modifier)
         {
-            if (modifier == null) return;
+            if (modifier == null)
+                return;
 
             _modifiers.Add(modifier);
             ApplyModifier(modifier);
@@ -46,9 +47,12 @@ namespace Common.Infrastructure.Modifiable
 
         public void RemoveModifier(IModifier modifier)
         {
-            if (modifier == null) return;
+            if (modifier == null)
+                return;
 
-            _modifiers.Remove(modifier);
+            if (!_modifiers.Remove(modifier))
+                return;
+
             UnapplyModifier(modifier);
             ModifiersChanged?.Invoke();
         }

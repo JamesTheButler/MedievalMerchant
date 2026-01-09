@@ -13,7 +13,7 @@ namespace Common.Infrastructure.Observation
             get => _value;
             set
             {
-                if (_value?.Equals(value) ?? false) return;
+                if ((_value == null && value == null) || (_value?.Equals(value) ?? false)) return;
 
                 var oldValue = _value;
                 _value = value;
@@ -40,9 +40,7 @@ namespace Common.Infrastructure.Observation
         {
             ValueChanged += callback;
             if (invokeOnObserve)
-            {
                 callback?.Invoke(Value);
-            }
 
             return new Binding(() => StopObserving(callback));
         }
