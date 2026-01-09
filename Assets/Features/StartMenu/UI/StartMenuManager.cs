@@ -1,6 +1,7 @@
 using System.Linq;
 using Common.Infrastructure;
 using Common.Utility;
+using Features.Feedback.UI;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -22,6 +23,9 @@ namespace Features.StartMenu.UI
         [SerializeField, Required]
         private LevelInfoBox levelInfoBox;
 
+        [SerializeField, Required]
+        private FeedbackForm feedbackForm;
+
         private bool _initialized;
         private LevelButton[] _levelButtons;
 
@@ -39,6 +43,8 @@ namespace Features.StartMenu.UI
             {
                 button.Clicked += OnButtonClick;
             }
+
+            feedbackForm.Initialize();
 
             var cursor = ResourceManager.Instance.Cursors.Default;
             Cursor.SetCursor(cursor.Texture, cursor.HotSpot, CursorMode.Auto);

@@ -8,7 +8,6 @@ using Common.Utility;
 using Features.Goods.Config;
 using Features.Levels.Conditions.Model;
 using Features.Stats;
-using JetBrains.Annotations;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

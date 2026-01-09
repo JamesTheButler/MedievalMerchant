@@ -467,9 +467,33 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: feab2132-eda2-4abc-ac3a-facd3f5242ee
     m_ActionName: 'Gameplay/PlayGameFast[/Keyboard/2]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d1fbb721-bc75-46fa-8e86-6bc0f9eee40b
+    m_ActionName: 'UI/Next[/Keyboard/tab]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7961bb68-046f-4b12-8f50-c3c5d2d8f962
+    m_ActionName: 'UI/Submit[/Keyboard/enter]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 702890910}
+        m_TargetAssemblyTypeName: Features.Feedback.UI.FeedbackForm, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3cc5131e-bffb-4d16-b220-ffcfdbf8730a
+    m_ActionName: 'UI/Cancel[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
-  m_DefaultActionMap: 272f6d14-89ba-496f-b7ff-215263d3219f
+  m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &1162402760
@@ -657,6 +681,7 @@ MonoBehaviour:
   startScreenGO: {fileID: 1589775079}
   levelSelectionGO: {fileID: 1073292254}
   levelInfoBox: {fileID: 195694490}
+  feedbackForm: {fileID: 702890910}
 --- !u!1001 &3342224205942162645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1195,7 +1220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757611040449850160, guid: 6e5ddb48a7215ef469bb4c4d7af223d0, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 58.58
+      value: 45.72
       objectReference: {fileID: 0}
     - target: {fileID: 3757611040449850160, guid: 6e5ddb48a7215ef469bb4c4d7af223d0, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1875,7 +1900,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6298432901173346220, guid: 6e5ddb48a7215ef469bb4c4d7af223d0, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 433.41998
+      value: 446.28003
       objectReference: {fileID: 0}
     - target: {fileID: 6298432901173346220, guid: 6e5ddb48a7215ef469bb4c4d7af223d0, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1883,7 +1908,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6298432901173346220, guid: 6e5ddb48a7215ef469bb4c4d7af223d0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -411.28998
+      value: -404.86002
       objectReference: {fileID: 0}
     - target: {fileID: 6328730075220259833, guid: 6e5ddb48a7215ef469bb4c4d7af223d0, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1999,7 +2024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7313608493803827856, guid: 6e5ddb48a7215ef469bb4c4d7af223d0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -162.58
+      value: -149.72
       objectReference: {fileID: 0}
     - target: {fileID: 7410179479670673603, guid: 6e5ddb48a7215ef469bb4c4d7af223d0, type: 3}
       propertyPath: m_AnchorMax.y
