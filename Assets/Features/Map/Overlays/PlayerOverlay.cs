@@ -10,12 +10,13 @@ namespace Features.Map.Overlays
     public sealed class PlayerOverlay : MonoBehaviour
     {
         [SerializeField, Required]
-        private GameObject worldOverlay;
+        private GameObject worldOverlay, townOverlay;
 
         [SerializeField, Required]
-        private GameObject townOverlay;
+        private new Animation animation;
 
         private PlayerLocation _playerLocation;
+        private readonly GameSpeedAnimationHandler _animationHandler = new();
         private float _zLevel;
 
         private void Start()
@@ -25,6 +26,8 @@ namespace Features.Map.Overlays
 
             _playerLocation.TownEntered += OnTownEntered;
             _playerLocation.TownExited += OnTownExited;
+            _animationHandler.Initialize(animation);
+
             _playerLocation.WorldLocation.Observe(OnWorldLocationChanged);
 
             OnTownEntered(_playerLocation.CurrentTown);
@@ -35,6 +38,7 @@ namespace Features.Map.Overlays
             _playerLocation.TownEntered -= OnTownEntered;
             _playerLocation.TownExited -= OnTownExited;
             _playerLocation.WorldLocation.StopObserving(OnWorldLocationChanged);
+            _animationHandler.CleanUp();
         }
 
         private void OnWorldLocationChanged(Vector2 worldLocation)

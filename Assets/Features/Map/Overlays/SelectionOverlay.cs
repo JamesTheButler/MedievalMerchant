@@ -10,19 +10,23 @@ namespace Features.Map.Overlays
         [SerializeField, Required]
         private GameObject visuals;
 
+        [SerializeField, Required]
+        private new Animation animation;
+
         private Selection _selection;
+        private readonly GameSpeedAnimationHandler _animationHandler = new();
 
         private void Start()
         {
             _selection = GameplayContext.Instance.Selection;
 
+            _animationHandler.Initialize(animation);
             _selection.SelectedTown.Observe(Select);
-
-            Select(_selection.SelectedTown);
         }
 
         private void OnDestroy()
         {
+            _animationHandler.CleanUp();
             _selection.SelectedTown.StopObserving(Select);
         }
 

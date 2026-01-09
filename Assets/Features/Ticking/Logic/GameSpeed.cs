@@ -2,7 +2,7 @@
 {
     public enum GameSpeed
     {
-        Normal,
-        Fast,
+        Normal = 0,
+        Fast = 1
     }
 }
