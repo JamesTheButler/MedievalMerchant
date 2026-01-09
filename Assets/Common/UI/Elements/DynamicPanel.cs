@@ -10,39 +10,22 @@ namespace Common.UI.Elements
 
         private bool _isInitialized;
 
-        /// <summary>
-        /// One-time setup
-        /// </summary>
         public override void Initialize()
         {
             _isOpen = gameObject.activeSelf;
-            if (_isInitialized) return;
+
+            if (_isInitialized)
+                return;
 
             OnInitialize();
 
             _isInitialized = true;
         }
 
-        public void Toggle()
-        {
-            Toggle(_isOpen);
-        }
-
-        public void Toggle(bool isOpen)
-        {
-            if (isOpen)
-            {
-                Close();
-            }
-            else
-            {
-                Open();
-            }
-        }
-
         public void Open()
         {
-            if (_isOpen) return;
+            if (_isOpen)
+                return;
 
             _isOpen = true;
             OnOpen();
@@ -51,7 +34,8 @@ namespace Common.UI.Elements
 
         public virtual void Close()
         {
-            if (!_isOpen) return;
+            if (!_isOpen)
+                return;
 
             _isOpen = false;
             OnClose();
@@ -59,7 +43,9 @@ namespace Common.UI.Elements
         }
 
         protected virtual void OnInitialize() { }
+
         protected abstract void OnOpen();
+
         protected abstract void OnClose();
     }
 }

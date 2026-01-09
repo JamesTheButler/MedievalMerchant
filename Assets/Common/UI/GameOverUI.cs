@@ -58,8 +58,8 @@ namespace Common.UI
                 .WithStyle(Style.Subtitle);
 
             var message = isWon
-                ? $"Congratulations! You successfully completed {currentLevelString}!"
-                : $"You failed to complete {currentLevelString}!";
+                ? $"Congratulations! You successfully completed {currentLevelString}"
+                : $"You failed to complete {currentLevelString}";
 
             messageText.text = message;
             failureText.gameObject.SetActive(!isWon);
