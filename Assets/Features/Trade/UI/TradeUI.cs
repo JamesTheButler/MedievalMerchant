@@ -38,6 +38,9 @@ namespace Features.Trade.UI
         private Button tradeButton, cancelButton, maxAmountButton, missionAmountButton;
 
         [SerializeField, Required]
+        private SimpleTooltipHandler tradeButtonTooltip;
+
+        [SerializeField, Required]
         private Image goodDirectionIcon, coinDirectionIcon;
 
         [SerializeField, Required]
@@ -320,6 +323,16 @@ namespace Features.Trade.UI
         {
             var isTradePossible = _buyerFunds >= _totalPrice;
             tradeButton.interactable = isTradePossible;
+            tradeButtonTooltip.SetEnabled(!isTradePossible);
+
+            if (isTradePossible)
+                return;
+
+            var notEnoughCoinMessage = _tradeType == TradeType.Buy
+                ? "You do not have enough coin."
+                : $"{_town.Name} does not have enough coin.";
+
+            tradeButtonTooltip.SetData(notEnoughCoinMessage);
         }
 
         private void RefreshTownReputationText()
