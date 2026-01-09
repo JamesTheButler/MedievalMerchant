@@ -18,6 +18,7 @@ namespace Features.Cheats
         private GameplayModel _model;
         private PlayerModel _playerModel;
         private ProgressModel _progressModel;
+        private Date _gameDate;
 
         private Selection _selection;
         private TutorialService _tutorialService;
@@ -28,6 +29,7 @@ namespace Features.Cheats
         public void Initialize()
         {
             _model = GameplayContext.Instance.Model;
+            _gameDate = _model.Date;
             _playerModel = _model.Player;
             _selection = GameplayContext.Instance.Selection;
             _tutorialService = GameplayContext.Instance.Services.TutorialService;
@@ -51,6 +53,7 @@ namespace Features.Cheats
 
             _paramCommands = new Dictionary<string, Action<string>>
             {
+                { "day", SetDay },
                 { "funds", AddFunds },
                 { "reset.level", ResetLevelProgress },
                 { "tutorial", OpenTutorial },
@@ -153,7 +156,7 @@ namespace Features.Cheats
 
         private void ResetDate()
         {
-            GameplayContext.Instance.Model.Date.SetDay(1);
+            _gameDate.SetDay(1);
         }
 
         private void AddFunds()
@@ -164,6 +167,11 @@ namespace Features.Cheats
         private void AddFunds(string funds)
         {
             _playerModel.Inventory.AddFunds(int.Parse(funds));
+        }
+
+        private void SetDay(string day)
+        {
+            _gameDate.SetDay(int.Parse(day));
         }
 
         /// <summary>
