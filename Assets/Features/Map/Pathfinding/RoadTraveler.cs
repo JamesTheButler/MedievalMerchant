@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Common.Infrastructure;
+using Common.UI;
 using Common.Utility;
 using Features.Player.Logic;
 using Features.Ticking.Logic;
@@ -22,10 +23,10 @@ namespace Features.Map.Pathfinding
         private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Instance.Model);
 
         private RoadGraph _graph;
+        private PlayerModel _player;
         private PlayerLocation _playerLocation;
         private GameSpeedModel _gameSpeedModel;
-
-        private PlayerLocation Location => _model.Value.Player.Location;
+        private UIBridgeService _uiBridgeService;
 
         private float _mapSpeed;
 
@@ -34,18 +35,23 @@ namespace Features.Map.Pathfinding
         private void Start()
         {
             _graph = RoadGraphBuilder.Build(_model.Value.TileFlagMap);
-            _playerLocation = _model.Value.Player.Location;
+            _player = _model.Value.Player;
+            _playerLocation = _player.Location;
             _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
-            GameplayContext.Instance.Model.Player.SpeedInTilesPerDay.Observe(OnMapSpeedChanged);
+            _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
+
+            _player.SpeedInTilesPerDay.Observe(OnMapSpeedChanged);
         }
 
         public void TravelTo(Town town)
         {
-            if (town == Location.CurrentTown.Value || town == null)
+            if (town == _playerLocation.CurrentTown.Value || town == null)
                 return;
 
+            _uiBridgeService.NavigateToTown(town);
+
             _town = town;
-            var startCell = tileGrid.WorldToCell(Location.WorldLocation.Value).XY();
+            var startCell = tileGrid.WorldToCell(_playerLocation.WorldLocation.Value).XY();
             var endCell = town.GridLocation;
 
             // BUG: when changing between target towns mid-travel, we get buggy-ness from this.

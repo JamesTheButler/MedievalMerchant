@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Infrastructure;
+using Features.Towns;
 using Features.Tutorial;
 
 namespace Common.UI
@@ -12,6 +13,8 @@ namespace Common.UI
         public event Action<UIPanel> PanelOpenedFromUI, PanelOpenedFromBackEnd;
 
         public event Action<TutorialTopic> TutorialClosedFromUI;
+
+        public event Action<Town> NavigationStarted;
 
         public void Initialize() { }
         public void CleanUp() { }
@@ -29,6 +32,11 @@ namespace Common.UI
         public void CloseTutorialFromUI(TutorialTopic topic)
         {
             TutorialClosedFromUI?.Invoke(topic);
+        }
+
+        public void NavigateToTown(Town town)
+        {
+            NavigationStarted?.Invoke(town);
         }
     }
 }

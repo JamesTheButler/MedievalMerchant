@@ -1,4 +1,5 @@
 using Common.Infrastructure;
+using Common.UI;
 using Features.Ticking.Logic;
 using Features.Towns;
 
@@ -8,18 +9,22 @@ namespace Features.Player.Logic
     {
         private PlayerLocation _playerLocation;
         private GameSpeedModel _gameSpeedModel;
+        private UIBridgeService _uiBridgeService;
 
         public void Initialize()
         {
             _playerLocation = GameplayContext.Instance.Model.Player.Location;
             _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
+            _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
 
-            //_playerLocation.CurrentTown.Observe(OnTownChanged);
+            _playerLocation.CurrentTown.Observe(OnTownChanged);
+            _uiBridgeService.NavigationStarted += OnNavigationStarted;
         }
 
         public void CleanUp()
         {
-            //_playerLocation.CurrentTown.StopObserving(OnTownChanged);
+            _playerLocation.CurrentTown.StopObserving(OnTownChanged);
+            _uiBridgeService.NavigationStarted -= OnNavigationStarted;
         }
 
         private void OnTownChanged(Town town)
@@ -27,6 +32,11 @@ namespace Features.Player.Logic
             if (town == null) return;
 
             _gameSpeedModel.Pause();
+        }
+
+        private void OnNavigationStarted(Town town)
+        {
+            _gameSpeedModel.Resume();
         }
     }
 }
