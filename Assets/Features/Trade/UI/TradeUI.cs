@@ -18,7 +18,7 @@ using UnityEngine.UI;
 
 namespace Features.Trade.UI
 {
-    public sealed class TradeUI : InitializableUI
+    public sealed class TradeUI : InitializableBehavior
     {
         [SerializeField, Required]
         private TMP_Text
@@ -266,7 +266,9 @@ namespace Features.Trade.UI
 
             lossProfitText.gameObject.SetActive(_tradeType == TradeType.Sell);
             if (_tradeType == TradeType.Sell)
+            {
                 RefreshLossOrProfitText();
+            }
         }
 
         private void RefreshFundsChangeTexts()
@@ -282,7 +284,9 @@ namespace Features.Trade.UI
         {
             var price = $"{_totalPrice:0.##}";
             if (_tradeType == TradeType.Buy && _tradeAmount > 0)
+            {
                 price = "-" + price;
+            }
 
             coinAmountText.text = price;
         }

@@ -2,7 +2,7 @@
 
 namespace Common.UI.Elements
 {
-    public abstract class DynamicPanel : InitializableUI
+    public abstract class DynamicPanel : InitializableBehavior
     {
         public event Action Opened, Closed;
 

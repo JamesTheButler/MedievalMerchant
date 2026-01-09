@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Features.Trade.UI
 {
-    public sealed class TradeUIHandler : InitializableUI
+    public sealed class TradeUIHandler : InitializableBehavior
     {
         [SerializeField, Required]
         private TradeUI tradeUI;

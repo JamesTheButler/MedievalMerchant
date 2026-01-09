@@ -61,7 +61,7 @@ namespace Features.Levels
 
         private void InitializeUI()
         {
-            var initializables = Resources.FindObjectsOfTypeAll<InitializableUI>();
+            var initializables = Resources.FindObjectsOfTypeAll<InitializableBehavior>();
             foreach (var initializable in initializables)
             {
                 initializable.Initialize();

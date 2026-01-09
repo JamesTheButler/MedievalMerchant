@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Common.UI.Elements
 {
-    public sealed class DynamicPanelGamePauser : InitializableUI
+    public sealed class DynamicPanelGamePauser : InitializableBehavior
     {
         [SerializeField, Required]
         private DynamicPanel dynamicPanel;

@@ -15,7 +15,7 @@ using UnityEngine.SceneManagement;
 
 namespace Common.UI
 {
-    public class GameOverUI : InitializableUI
+    public class GameOverUI : InitializableBehavior
     {
         [SerializeField, Scene]
         private string startScene;

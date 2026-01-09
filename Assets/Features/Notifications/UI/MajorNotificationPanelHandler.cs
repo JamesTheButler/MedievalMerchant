@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Features.Notifications.UI
 {
-    public sealed class MajorNotificationPanelHandler : InitializableUI
+    public sealed class MajorNotificationPanelHandler : InitializableBehavior
     {
         [SerializeField, Required]
         private MajorNotificationPanel panel;
