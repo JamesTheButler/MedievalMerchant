@@ -894,6 +894,7 @@ GameObject:
   - component: {fileID: 1988595845905901102}
   - component: {fileID: 2299660737064938945}
   - component: {fileID: 816592597524152260}
+  - component: {fileID: 6214699491466090001}
   m_Layer: 5
   m_Name: TownUIMissionSectionItem
   m_TagString: Untagged
@@ -944,6 +945,7 @@ MonoBehaviour:
   titleText: {fileID: 855484519071244597}
   countText: {fileID: 8462045779617483422}
   daysLeftText: {fileID: 1998907073942355140}
+  missionTooltipHandler: {fileID: 6214699491466090001}
 --- !u!114 &1988595845905901102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1008,6 +1010,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6214699491466090001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6568128384485566119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7890e02d424d99aaae8aa72c53715f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Towns.Missions.UI.TradeMissionTooltipHandler
+  toolTipPrefab: {fileID: 6568128384485566119, guid: 60cbc76a98c8e7c42a0047227c10a780, type: 3}
+  enabledOnStart: 1
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
 --- !u!1 &7775971743992893339
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,7 @@ using Features.Towns.Config;
 using Features.Towns.Development.UI.DevelopmentGauge;
 using Features.Towns.Flags.Config;
 using Features.Towns.Production.Config;
+using Features.Towns.Reputation.Data;
 using Features.Tutorial.Data;
 using NaughtyAttributes;
 using UnityEngine;
@@ -48,6 +49,9 @@ namespace Common.Infrastructure
 
         [field: SerializeField, Required]
         public RegionResources RegionResources { get; private set; }
+
+        [field: SerializeField, Required]
+        public ReputationResources ReputationResources { get; private set; }
 
         [field: SerializeField, Required]
         public TierResources TierResources { get; private set; }

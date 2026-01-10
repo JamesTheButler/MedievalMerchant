@@ -8,7 +8,7 @@ using Features.Towns.Config;
 using Features.Towns.Development.Config;
 using Features.Towns.Missions.Data;
 using Features.Towns.Production.Config;
-using Features.Towns.Reputation.Config;
+using Features.Towns.Reputation.Data;
 using NaughtyAttributes;
 using UnityEngine;
 

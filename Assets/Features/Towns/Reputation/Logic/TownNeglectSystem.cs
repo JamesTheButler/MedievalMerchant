@@ -1,6 +1,6 @@
 using Common.Infrastructure;
 using Common.Types;
-using Features.Towns.Reputation.Config;
+using Features.Towns.Reputation.Data;
 
 namespace Features.Towns.Reputation.Logic
 {

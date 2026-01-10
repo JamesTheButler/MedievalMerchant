@@ -5,7 +5,7 @@ using Common.Infrastructure.Observation;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Towns.Production.Logic;
-using Features.Towns.Reputation.Config;
+using Features.Towns.Reputation.Data;
 using Features.Trade;
 using UnityEngine;
 

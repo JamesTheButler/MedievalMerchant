@@ -1,7 +1,7 @@
 ﻿using Common.Utility;
 using UnityEngine;
 
-namespace Features.Towns.Reputation.Config
+namespace Features.Towns.Reputation.Data
 {
     [CreateAssetMenu(
         fileName = nameof(ReputationConfig),

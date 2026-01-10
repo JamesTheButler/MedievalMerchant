@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Features.Towns.Reputation.Config
+namespace Features.Towns.Reputation.Data
 {
     [Serializable]
     public sealed record ReputationRewardData

@@ -2,19 +2,18 @@ using System;
 using Common.Infrastructure;
 using Common.UI.Elements;
 using Features.Goods.Config;
-using Features.Towns.Missions;
 using Features.Towns.Missions.Data;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Features.Towns.UI
+namespace Features.Towns.Missions.UI
 {
     public sealed class TownUIMissionSectionItem : MonoBehaviour
     {
         public event Action<GoodCell> GoodCellClicked;
-        
+
         [SerializeField, Required]
         private GoodCell goodCell;
 
@@ -29,6 +28,9 @@ namespace Features.Towns.UI
 
         [SerializeField, Required]
         private TMP_Text titleText, countText, daysLeftText;
+
+        [SerializeField, Required]
+        private MissionTooltipHandler missionTooltipHandler;
 
         private Color _defaultDaysLeftIconColor, _badColor;
 
@@ -67,6 +69,8 @@ namespace Features.Towns.UI
             background.sprite = isHighlighted ? highlightedBackground : defaultBackground;
 
             countText.text = currentAmount.ToString();
+
+            missionTooltipHandler.SetData(mission);
 
             mission.RemainingCount.Observe(OnRemainingCountChanged);
             mission.DaysLeft.Observe(OnDaysLeftChanged);

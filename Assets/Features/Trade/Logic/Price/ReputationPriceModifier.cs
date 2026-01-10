@@ -1,7 +1,7 @@
 ﻿using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Features.Towns;
-using Features.Towns.Reputation.Config;
+using Features.Towns.Reputation.Data;
 
 namespace Features.Trade.Logic.Price
 {
