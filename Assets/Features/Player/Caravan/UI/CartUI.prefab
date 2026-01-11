@@ -365,8 +365,8 @@ MonoBehaviour:
   moveSpeedUpgradeIcon: {fileID: 6119292984187641907}
   upkeepUpgradeIcon: {fileID: 3100774230104923088}
   faderImage: {fileID: 6305030323404163146}
-  lockedUpgradeTooltip: {fileID: 549594015358393739}
-  upgradeTooltip: {fileID: 757631945873083006}
+  cartUnlockTooltip: {fileID: 100126271528612501}
+  cartUpgradeTooltip: {fileID: 757631945873083006}
 --- !u!114 &698051142750912375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2617,8 +2617,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2221790527321945402, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 549594015358393739}
+      insertIndex: 1
+      addedObject: {fileID: 100126271528612501}
   m_SourcePrefab: {fileID: 100100000, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
 --- !u!114 &3123231088021761521 stripped
 MonoBehaviour:
@@ -2641,7 +2641,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2221790527321945402, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
   m_PrefabInstance: {fileID: 8777936122035387120}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &549594015358393739
+--- !u!114 &100126271528612501
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2650,10 +2650,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7423089781407944650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf557c3f22ca40eab27cbfb5c00c0582, type: 3}
+  m_Script: {fileID: 11500000, guid: e1c3e44f38b842839de9409dc3d6598a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.ModifiableTooltipHandler
-  toolTipPrefab: {fileID: 7373911500606536191, guid: 3ac92ddabb6007a4582e8826558d2a2e, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Caravan.UI.CartUpgradeTooltipHandler
+  toolTipPrefab: {fileID: 6568128384485566119, guid: 35f24fea78b527a4ba07d2a92d800c37, type: 3}
   enabledOnStart: 1
   hideOnClick: 0
   useSelfAsOrigin: 1

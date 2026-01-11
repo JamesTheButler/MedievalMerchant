@@ -12,6 +12,7 @@ using Features.Player.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Features.Player.Caravan.UI
@@ -41,10 +42,7 @@ namespace Features.Player.Caravan.UI
         private Image tierIcon, moveSpeedUpgradeIcon, upkeepUpgradeIcon, faderImage;
 
         [SerializeField, Required]
-        private ModifiableTooltipHandler lockedUpgradeTooltip;
-
-        [SerializeField, Required]
-        private CartUpgradeTooltipHandler upgradeTooltip;
+        private CartTooltipHandler cartUnlockTooltip, cartUpgradeTooltip;
 
         public event Action<InventoryCell> OnCellAdded, OnCellClicked;
 
@@ -77,13 +75,13 @@ namespace Features.Player.Caravan.UI
             upgradeButton.onClick.AddListener(() =>
             {
                 upgradeAction.Invoke();
-                upgradeTooltip.SetData(_cart);
+                cartUpgradeTooltip.SetData(_cart);
                 HoverNextLevel();
             });
 
             unlockButton.onClick.AddListener(unlockAction.Invoke);
-            upgradeTooltip.SetData(_cart);
-            lockedUpgradeTooltip.SetData(_cart.UpgradeCost);
+            cartUpgradeTooltip.SetData(_cart);
+            cartUnlockTooltip.SetData(_cart);
             Unhover();
         }
 
@@ -154,7 +152,7 @@ namespace Features.Player.Caravan.UI
             if (level >= CaravanConfig.MaxLevel)
             {
                 Unhover();
-                upgradeTooltip.SetEnabled(false);
+                cartUpgradeTooltip.SetEnabled(false);
             }
         }
 

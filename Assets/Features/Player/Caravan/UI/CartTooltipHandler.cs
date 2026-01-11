@@ -3,5 +3,5 @@ using Features.Player.Caravan.Logic;
 
 namespace Features.Player.Caravan.UI
 {
-    public sealed class CartUpgradeTooltipHandler : TooltipHandlerBase<Cart> { }
+    public sealed class CartTooltipHandler : TooltipHandlerBase<Cart> { }
 }
