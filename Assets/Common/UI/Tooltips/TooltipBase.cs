@@ -22,6 +22,7 @@ namespace Common.UI.Tooltips
         private readonly Dictionary<Rect, Color> _debugRects = new();
 
         public abstract void Reset();
+
         protected abstract void UpdateUI(TData data);
 
         protected virtual void Awake()

@@ -354,6 +354,7 @@ MonoBehaviour:
   - {fileID: 8902693758555165857}
   unlockedParent: {fileID: 7448948064535196495}
   unlockButton: {fileID: 3123231088021761521}
+  upgradeButton: {fileID: 2118116828575942683}
   backgroundImage: {fileID: 3167814260094330147}
   cartImage: {fileID: 2725854481829059834}
   moveSpeedText: {fileID: 7386974953468810812}
@@ -364,11 +365,8 @@ MonoBehaviour:
   moveSpeedUpgradeIcon: {fileID: 6119292984187641907}
   upkeepUpgradeIcon: {fileID: 3100774230104923088}
   faderImage: {fileID: 6305030323404163146}
-  upgradeButton: {fileID: 2118116828575942683}
   lockedUpgradeTooltip: {fileID: 549594015358393739}
-  unlockedUpgradeTooltip: {fileID: 5525067518056949866}
-  arrowUp: {fileID: -1280818974, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
-  arrowDown: {fileID: -1324882022, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
+  upgradeTooltip: {fileID: 757631945873083006}
 --- !u!114 &698051142750912375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2207,7 +2205,7 @@ PrefabInstance:
       addedObject: {fileID: 5728498942949668319}
     - targetCorrespondingSourceObject: {fileID: 2221790527321945402, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5525067518056949866}
+      addedObject: {fileID: 757631945873083006}
   m_SourcePrefab: {fileID: 100100000, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
 --- !u!224 &961364968702039331 stripped
 RectTransform:
@@ -2292,7 +2290,7 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &5525067518056949866
+--- !u!114 &757631945873083006
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2301,14 +2299,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5852145122964318752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf557c3f22ca40eab27cbfb5c00c0582, type: 3}
+  m_Script: {fileID: 11500000, guid: e1c3e44f38b842839de9409dc3d6598a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  toolTipPrefab: {fileID: 7373911500606536191, guid: 3ac92ddabb6007a4582e8826558d2a2e, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Caravan.UI.CartTooltipHandler
+  toolTipPrefab: {fileID: 6568128384485566119, guid: c3e14464564c8e0419781e262ea21130, type: 3}
   enabledOnStart: 1
   hideOnClick: 0
-  useSelfAsOrigin: 1
-  originTransform: {fileID: 0}
+  useSelfAsOrigin: 0
+  originTransform: {fileID: 934465093660804327}
 --- !u!1001 &8381572857968709744
 PrefabInstance:
   m_ObjectHideFlags: 0

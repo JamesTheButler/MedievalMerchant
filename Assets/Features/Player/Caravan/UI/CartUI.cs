@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Common.Config;
 using Common.Infrastructure;
 using Common.UI.Elements;
 using Common.UI.Tooltips;
+using Common.UI.Utility;
 using Common.Utility;
 using Features.Goods.Config;
 using Features.Player.Caravan.Config;
@@ -25,7 +25,7 @@ namespace Features.Player.Caravan.UI
         private GameObject unlockedParent;
 
         [SerializeField, Required]
-        private Button unlockButton;
+        private Button unlockButton, upgradeButton;
 
         [SerializeField, Required]
         private Image backgroundImage, cartImage;
@@ -41,14 +41,10 @@ namespace Features.Player.Caravan.UI
         private Image tierIcon, moveSpeedUpgradeIcon, upkeepUpgradeIcon, faderImage;
 
         [SerializeField, Required]
-        private Button upgradeButton;
+        private ModifiableTooltipHandler lockedUpgradeTooltip;
 
         [SerializeField, Required]
-        private ModifiableTooltipHandler lockedUpgradeTooltip, unlockedUpgradeTooltip;
-
-        [Header("Sprites")]
-        [SerializeField, Required]
-        private Sprite arrowUp, arrowDown;
+        private CartUpgradeTooltipHandler upgradeTooltip;
 
         public event Action<InventoryCell> OnCellAdded, OnCellClicked;
 
@@ -56,7 +52,6 @@ namespace Features.Player.Caravan.UI
         private Cart _cart;
         private CaravanConfig _caravanConfig;
         private CaravanResources _caravanResources;
-        private Colors _colors;
 
         private int _lastActiveSlotCount;
 
@@ -65,7 +60,6 @@ namespace Features.Player.Caravan.UI
             _player = GameplayContext.Instance.Model.Player;
             _caravanConfig = ConfigurationManager.Configurations.CaravanConfig;
             _caravanResources = ResourceManager.Instance.CaravanResources;
-            _colors = ResourceManager.Instance.Colors;
 
             _cart = cart;
 
@@ -83,12 +77,13 @@ namespace Features.Player.Caravan.UI
             upgradeButton.onClick.AddListener(() =>
             {
                 upgradeAction.Invoke();
+                upgradeTooltip.SetData(_cart);
                 HoverNextLevel();
             });
 
             unlockButton.onClick.AddListener(unlockAction.Invoke);
+            upgradeTooltip.SetData(_cart);
             lockedUpgradeTooltip.SetData(_cart.UpgradeCost);
-            unlockedUpgradeTooltip.SetData(_cart.UpgradeCost);
             Unhover();
         }
 
@@ -159,7 +154,7 @@ namespace Features.Player.Caravan.UI
             if (level >= CaravanConfig.MaxLevel)
             {
                 Unhover();
-                unlockedUpgradeTooltip.SetEnabled(false);
+                upgradeTooltip.SetEnabled(false);
             }
         }
 
@@ -221,7 +216,6 @@ namespace Features.Player.Caravan.UI
         {
             var moveSpeed = _cart.MoveSpeed.Value.ToString("N0");
             moveSpeedText.text = moveSpeed;
-            moveSpeedText.color = _colors.FontDark;
             moveSpeedTooltip.SetData($"Movement Speed: {moveSpeed}");
         }
 
@@ -229,7 +223,6 @@ namespace Features.Player.Caravan.UI
         {
             var upkeep = _cart.Upkeep.Value.ToString("N0");
             upkeepText.text = upkeep;
-            upkeepText.color = _colors.FontDark;
             upkeepTooltip.SetData($"Upkeep: {upkeep}");
         }
 
@@ -243,10 +236,9 @@ namespace Features.Player.Caravan.UI
                 return;
 
             var isBigger = newValue > oldValue;
-            var color = isBigger == isBiggerBetter ? _colors.Good : _colors.Bad;
+            var style = isBigger == isBiggerBetter ? Style.Good : Style.Bad;
 
-            textField.text = newValue.ToString("N0");
-            textField.color = color;
+            textField.text = newValue.ToString("N0").WithStyle(style);
         }
     }
 }

@@ -8,5 +8,15 @@ namespace Common.Utility
         {
             return Mathf.Clamp(value, min, max);
         }
+
+        public static string Sign(this int value)
+        {
+            return value switch
+            {
+                > 0 => "+",
+                < 0 => "",
+                _ => "+/-",
+            };
+        }
     }
 }
