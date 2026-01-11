@@ -23,7 +23,7 @@ namespace Features.Notifications.Logic
 
         private void LogNotification(Notification notif)
         {
-            Debug.Log($"({_gameDate}){notif.Severity} Notification {notif.Title}: {notif.Description}");
+            Debug.Log($"({_gameDate}) {notif.Severity} Notification {notif.Title}: {notif.Description}");
         }
     }
 }
