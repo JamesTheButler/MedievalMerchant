@@ -1,36 +1,33 @@
 using System;
 using System.Collections.Generic;
 using Common.Infrastructure;
+using Common.UI.Elements;
 using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Map.Overlays
 {
-    public sealed class TownOverlayManager : MonoBehaviour
+    public sealed class TownOverlayManager : InitializableBehavior
     {
         [SerializeField, Required]
         private GameObject townOverlayParent;
 
         [SerializeField, Required]
-        private GameObject townOverlayPrefab;
-
-        private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Instance.Model);
+        private TownOverlay townOverlayPrefab;
 
         private readonly List<TownOverlay> _overlays = new();
 
-        public void Initialize()
+        public override void Initialize()
         {
-            var model = _model.Value;
-            foreach (var town in model.Towns.Values)
+            foreach (var town in GameplayContext.Instance.Model.Towns.Values)
             {
-                var overlayObject = Instantiate(townOverlayPrefab, townOverlayParent.transform);
-                var overlay = overlayObject.GetComponent<TownOverlay>();
+                var overlay = Instantiate(townOverlayPrefab, townOverlayParent.transform);
                 overlay.Bind(town);
                 _overlays.Add(overlay);
             }
         }
 
-        private void OnDestroy()
+        public override void CleanUp()
         {
             foreach (var overlay in _overlays)
             {

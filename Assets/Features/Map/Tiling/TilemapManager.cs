@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Types;
+using Common.UI.Elements;
 using Common.Utility;
 using Features.Towns;
 using NaughtyAttributes;
@@ -11,7 +12,7 @@ using UnityEngine.Tilemaps;
 
 namespace Features.Map.Tiling
 {
-    public sealed class TilemapManager : MonoBehaviour
+    public sealed class TilemapManager : InitializableBehavior
     {
         [SerializeField, Required]
         private Grid grid;
@@ -20,24 +21,21 @@ namespace Features.Map.Tiling
         private Tiles tiles;
 
         [SerializeField]
-        private UnityEvent<Town> onTownClicked;
-
-        [SerializeField]
-        private UnityEvent<Town> onTownRightClicked;
+        private UnityEvent<Town> onTownClicked, onTownRightClicked;
 
         [SerializeField]
         private UnityEvent onGroundClicked;
 
         public Tilemap Tilemap { get; private set; }
-        
+
         private GameplayModel _model;
 
-        public void Initialize()
+        public override void Initialize()
         {
             _model = GameplayContext.Instance.Model;
-            
+
             Tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
-            
+
             foreach (var town in _model.Towns.Values)
             {
                 town.Tier.Observe(_ => UpdateTown(town));
