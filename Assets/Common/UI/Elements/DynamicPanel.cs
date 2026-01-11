@@ -2,7 +2,7 @@
 
 namespace Common.UI.Elements
 {
-    public abstract class DynamicPanel : InitializableBehavior
+    public abstract class DynamicPanel : InitializableBehavior, IOpenClosable
     {
         public event Action Opened, Closed;
 
@@ -40,6 +40,18 @@ namespace Common.UI.Elements
             _isOpen = false;
             OnClose();
             Closed?.Invoke();
+        }
+
+        public void Toggle()
+        {
+            if (_isOpen)
+            {
+                Close();
+            }
+            else
+            {
+                Open();
+            }
         }
 
         protected virtual void OnInitialize() { }
