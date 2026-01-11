@@ -78,7 +78,7 @@ namespace Features.Towns.Production.UI
             if (producedTier1Good == null)
             {
                 Debug.LogError($"Town {_town.Name} has no producer in slot {cellIndex}.");
-                Hide();
+                Close();
                 return;
             }
 
@@ -92,7 +92,7 @@ namespace Features.Towns.Production.UI
             {
                 town.AddProduction(_tier2Good, cellIndex);
                 _player.Value.Inventory.RemoveFunds(_cost);
-                Hide();
+                Close();
             });
 
             _player.Value.Inventory.Funds.Observe(OnPlayerFundsChanged);

@@ -90,7 +90,7 @@ namespace Features.Towns.Production.UI
                 if (_selectedElement == null) return;
                 town.AddProduction(_selectedElement.Tier1Good, cellIndex);
                 _player.Value.Inventory.RemoveFunds(_cost);
-                Hide();
+                Close();
             });
         }
 

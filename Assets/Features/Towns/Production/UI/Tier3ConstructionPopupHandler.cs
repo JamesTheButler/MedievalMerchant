@@ -24,7 +24,7 @@ namespace Features.Towns.Production.UI
 
         public void Show(ProductionCell cell)
         {
-            popup.Show();
+            popup.Open();
             popup.transform.position = cell.transform.position;
 
             var town = _selection.Value.SelectedTown;
@@ -38,7 +38,7 @@ namespace Features.Towns.Production.UI
 
         private void Hide()
         {
-            popup.Hide();
+            popup.Close();
         }
     }
 }

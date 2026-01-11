@@ -14,7 +14,7 @@ namespace Common.UI.Utility
         [SerializeField]
         private List<DynamicPanel> trackedPanels;
 
-        private readonly List<DynamicPanel> _activePanels = new();
+        private readonly List<IOpenClosable> _activePanels = new();
 
         private void Awake()
         {

@@ -44,7 +44,7 @@ namespace Common.UI.Popups
                 productionZonePopup.AddGood(tier1Good, tier2Good);
             }
 
-            productionZonePopup.Show();
+            productionZonePopup.Open();
         }
 
         public void RefreshPosition()
@@ -60,7 +60,7 @@ namespace Common.UI.Popups
         public void Unbind()
         {
             productionZonePopup.Reset();
-            productionZonePopup.Hide();
+            productionZonePopup.Close();
             _zone = null;
         }
     }

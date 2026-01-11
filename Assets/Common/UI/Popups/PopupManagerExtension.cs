@@ -5,7 +5,7 @@ namespace Common.UI.Popups
         public static void HideActive(this PopupManager self)
         {
             if (!self.ActivePopup) return;
-            self.ActivePopup.Hide();
+            self.ActivePopup.Close();
         }
     }
 }

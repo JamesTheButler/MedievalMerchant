@@ -1,16 +1,21 @@
+using System;
+using Common.UI.Elements;
 using UnityEngine;
 
 namespace Common.UI.Popups
 {
-    public abstract class Popup : MonoBehaviour
+    public abstract class Popup : MonoBehaviour, IOpenClosable
     {
-        public virtual void Show()
+        public event Action Opened;
+        public event Action Closed;
+
+        public virtual void Open()
         {
             gameObject.SetActive(true);
             PopupManager.Instance.Show(this);
         }
 
-        public virtual void Hide()
+        public virtual void Close()
         {
             gameObject.SetActive(false);
             PopupManager.Instance.Hide(this);

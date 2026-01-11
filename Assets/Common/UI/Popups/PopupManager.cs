@@ -17,7 +17,7 @@ namespace Common.UI.Popups
             if (ActivePopup == popup)
                 return;
 
-            ActivePopup?.Hide();
+            ActivePopup?.Close();
             ActivePopup = popup;
         }
 

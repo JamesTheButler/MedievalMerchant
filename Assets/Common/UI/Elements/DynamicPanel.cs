@@ -28,7 +28,9 @@ namespace Common.UI.Elements
                 return;
 
             _isOpen = true;
+
             OnOpen();
+
             Opened?.Invoke();
         }
 
@@ -38,7 +40,9 @@ namespace Common.UI.Elements
                 return;
 
             _isOpen = false;
+
             OnClose();
+
             Closed?.Invoke();
         }
 
@@ -57,7 +61,6 @@ namespace Common.UI.Elements
         protected virtual void OnInitialize() { }
 
         protected abstract void OnOpen();
-
         protected abstract void OnClose();
     }
 }

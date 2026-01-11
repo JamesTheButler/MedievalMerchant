@@ -54,7 +54,7 @@ namespace Common.UI.Popups
 
         private void TradeInitiated(TradeType tradeType)
         {
-            Hide();
+            Close();
             tradeInitiated?.Invoke(_good, tradeType);
         }
 

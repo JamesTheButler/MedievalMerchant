@@ -56,7 +56,7 @@ namespace Common.UI.Popups
             var cellTransform = (RectTransform)inventoryCell.transform;
             var cellCenter = cellTransform.GetCenter();
 
-            buySellPopup.Show();
+            buySellPopup.Open();
             buySellPopup.transform.position = cellCenter + Vector3.up * yOffset;
             buySellPopup.SetGood(_good);
             buySellPopup.SetTradeType(tradeType);
@@ -72,7 +72,7 @@ namespace Common.UI.Popups
 
         public void Reset()
         {
-            buySellPopup.Hide();
+            buySellPopup.Close();
 
             if (_playerInventory != null)
             {
