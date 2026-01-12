@@ -22,9 +22,9 @@ namespace Features.Levels.Conditions.Data
         {
             return DeadlineDay switch
             {
-                <= 1 => $"Win the game by the start of Year {DeadlineYear}",
-                >= Date.LastDayOfYear => $"Win the game by the end of Year {DeadlineYear}",
-                _ => $"Win the game by Day {DeadlineDay} of Year {DeadlineYear}",
+                <= 1 => $"You lose at the start of year {DeadlineYear}",
+                >= Date.LastDayOfYear => $"ou lose at the end of year {DeadlineYear}",
+                _ => $"ou lose on day {DeadlineDay} of year {DeadlineYear}",
             };
         }
     }
