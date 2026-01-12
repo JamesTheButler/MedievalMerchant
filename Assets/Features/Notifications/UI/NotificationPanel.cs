@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Infrastructure;
 using Features.Notifications.Logic;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Notifications.UI
@@ -14,10 +15,10 @@ namespace Features.Notifications.UI
         [SerializeField]
         private float popupLifetimeInSec = 5f;
 
-        [SerializeField]
-        private GameObject notificationPrefab;
+        [SerializeField, Required]
+        private MinorNotificationItem notificationPrefab;
 
-        [SerializeField]
+        [SerializeField, Required]
         private RectTransform notificationRect;
 
         private readonly List<MinorNotificationItem> _notificationItems = new();
@@ -47,7 +48,7 @@ namespace Features.Notifications.UI
                 item.Close();
             }
 
-            var notificationItem = Instantiate(notificationPrefab, notificationRect).GetComponent<MinorNotificationItem>();
+            var notificationItem = Instantiate(notificationPrefab, notificationRect);
             notificationItem.SetUp(
                 notification,
                 popupLifetimeInSec,
