@@ -4,6 +4,7 @@ using Common.Types;
 using Common.UI.Tooltips;
 using Common.Utility;
 using Features.Towns.Flags.UI;
+using Features.Towns.Reputation.Data;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -26,13 +27,15 @@ namespace Features.Towns.UI
         private FlagRenderer flagIcon;
 
         [SerializeField, Required]
-        private Image tierIcon;
+        private Image tierIcon, reputationIcon;
 
         private TierResources _tierResources;
+        private ReputationResources _reputationResources;
 
         public override void Initialize()
         {
             _tierResources = ResourceManager.Instance.TierResources;
+            _reputationResources = ResourceManager.Instance.ReputationResources;
         }
 
         public override void CleanUp() { }
@@ -49,6 +52,9 @@ namespace Features.Towns.UI
             town.ReputationManager.Reputation.Observe(OnReputationChanged);
             town.Inventory.Funds.Observe(OnFundsChanged);
             town.FundsChange.Observe(OnFundsChangeChanged);
+
+            // force reputation icon on bind
+            OnReputationChanged(town.ReputationManager.Reputation * -1, town.ReputationManager.Reputation);
         }
 
         private void OnTierChanged(Tier tier)
@@ -62,9 +68,16 @@ namespace Features.Towns.UI
             descriptorText.text = descriptor;
         }
 
-        private void OnReputationChanged(float reputation)
+        private void OnReputationChanged(float oldReputation, float newReputation)
         {
-            reputationText.text = $"{reputation:0.#}";
+            reputationText.text = $"{newReputation:0.#}";
+            var isHappy = newReputation >= 0;
+            var wasHappy = oldReputation >= 0;
+            if (isHappy != wasHappy)
+            {
+                reputationIcon.sprite = isHappy ? _reputationResources.HappyIcon : _reputationResources.UnhappyIcon;
+            }
+
         }
 
         private void OnFundsChanged(float funds)
