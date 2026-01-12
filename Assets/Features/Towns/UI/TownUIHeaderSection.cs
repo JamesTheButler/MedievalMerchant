@@ -3,7 +3,6 @@ using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Tooltips;
 using Common.Utility;
-using Features.Player.Logic;
 using Features.Towns.Flags.UI;
 using NaughtyAttributes;
 using TMPro;
@@ -18,16 +17,7 @@ namespace Features.Towns.UI
         private TMP_Text nameText, descriptorText, reputationText, fundsText, fundsChangeText;
 
         [SerializeField, Required]
-        private GameObject inTownIndicator;
-
-        [SerializeField, Required]
         private RectTransform regionIconGroup;
-
-        [SerializeField, Required]
-        private Button gotoButton;
-
-        [SerializeField, Required]
-        private SimpleTooltipHandler gotoButtonTooltip;
 
         [SerializeField, Required]
         private ModifiableTooltipHandler fundsChangeTooltip;
@@ -38,13 +28,10 @@ namespace Features.Towns.UI
         [SerializeField, Required]
         private Image tierIcon;
 
-        private PlayerModel _playerModel;
         private TierResources _tierResources;
-        private Town _town;
 
         public override void Initialize()
         {
-            _playerModel = GameplayContext.Instance.Model.Player;
             _tierResources = ResourceManager.Instance.TierResources;
         }
 
@@ -52,14 +39,9 @@ namespace Features.Towns.UI
 
         public override void Bind(Town town)
         {
-            _town = town;
             flagIcon.SetFlag(town.FlagInfo);
             nameText.text = town.Name;
 
-            _playerModel.Location.CurrentTown.Observe(OnTownChanged);
-            OnTownChanged(_playerModel.Location.CurrentTown);
-
-            // TODO: is this OK when we change the town??
             fundsChangeTooltip.SetData(town.FundsChange);
 
             town.Tier.Observe(OnTierChanged);
@@ -97,26 +79,11 @@ namespace Features.Towns.UI
 
         public override void Unbind(Town town)
         {
-            _playerModel.Location.CurrentTown.StopObserving(OnTownChanged);
-
             town.Tier.StopObserving(OnTierChanged);
             town.Descriptor.StopObserving(OnDescriptorChanged);
             town.ReputationManager.Reputation.StopObserving(OnReputationChanged);
             town.Inventory.Funds.StopObserving(OnFundsChanged);
             town.FundsChange.StopObserving(OnFundsChangeChanged);
-        }
-
-        private void OnTownChanged(Town town)
-        {
-            SetInTown(town == _town);
-        }
-
-        private void SetInTown(bool isPlayerInThisTown)
-        {
-            var tooltipContent = isPlayerInThisTown ? "You are here." : $"Travel to {_town.Name}";
-            gotoButtonTooltip.SetData(tooltipContent);
-            gotoButton.interactable = !isPlayerInThisTown;
-            inTownIndicator.SetActive(isPlayerInThisTown);
         }
     }
 }
