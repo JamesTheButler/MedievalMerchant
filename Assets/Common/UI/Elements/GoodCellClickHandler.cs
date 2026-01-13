@@ -28,8 +28,13 @@ namespace Common.UI.Elements
 
             foreach (var cell in goodCells)
             {
-                cell.Clicked += () => { cellClicked?.Invoke(cell); };
+                Add(cell);
             }
+        }
+
+        public void Add(GoodCell cell)
+        {
+            cell.Clicked += () => { cellClicked?.Invoke(cell); };
         }
     }
 }

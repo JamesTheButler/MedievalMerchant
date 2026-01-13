@@ -5,20 +5,19 @@ using Features.Towns.UI;
 using Features.Trade;
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Features.Towns.Missions.UI
 {
     public sealed class TownUIMissionSection : TownUISection
     {
-        [SerializeField]
-        private UnityEvent<GoodCell, TradeType> goodCellClicked;
-
         [SerializeField, Required]
         private TownUIMissionSectionItem missionPrefab;
 
         [SerializeField, Required]
         private GameObject tradeMissionContainer, upgradeMissionSection, upgradeMissionContainer;
+
+        [SerializeField, Required]
+        private GoodCellClickHandler cellClickHandler;
 
         private readonly Dictionary<Mission, TownUIMissionSectionItem> _missionUiElements = new();
 
@@ -67,10 +66,12 @@ namespace Features.Towns.Missions.UI
                 : tradeMissionContainer;
 
             var uiElementScript = Instantiate(missionPrefab, container.transform);
-            uiElementScript.GoodCellClicked += cell => goodCellClicked.Invoke(cell, TradeType.Sell);
             uiElementScript.Initialize();
             uiElementScript.Bind(mission);
             _missionUiElements.Add(mission, uiElementScript);
+
+            var missionGoodCell = uiElementScript.gameObject.GetComponentInChildren<GoodCell>();
+            cellClickHandler.Add(missionGoodCell);
         }
 
         private void OnMissionRemoved(Mission mission)

@@ -1,4 +1,3 @@
-using System;
 using Common.Infrastructure;
 using Common.UI.Elements;
 using Features.Goods.Config;
@@ -12,8 +11,6 @@ namespace Features.Towns.Missions.UI
 {
     public sealed class TownUIMissionSectionItem : MonoBehaviour
     {
-        public event Action<GoodCell> GoodCellClicked;
-
         [SerializeField, Required]
         private GoodCell goodCell;
 
@@ -47,7 +44,6 @@ namespace Features.Towns.Missions.UI
             abortButton.onClick.AddListener(AbortButtonClicked);
             _defaultDaysLeftIconColor = daysLeftIcon.color;
             _badColor = ResourceManager.Instance.Colors.Bad;
-            goodCell.Clicked += () => GoodCellClicked?.Invoke(goodCell);
         }
 
         public void Bind(Mission mission)
