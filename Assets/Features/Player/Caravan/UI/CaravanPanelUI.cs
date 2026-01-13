@@ -7,20 +7,15 @@ using Common.UI.Elements;
 using Common.UI.Popups;
 using Common.UI.Tooltips;
 using Features.Player.Caravan.Logic;
-using Features.Trade;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace Features.Player.Caravan.UI
 {
     public sealed class CaravanPanelUI : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField]
-        private UnityEvent<InventoryCell, TradeType> inventoryCellClicked;
-
         [SerializeField, Required]
         private TMP_Text moveSpeedText, upkeepText;
 
@@ -54,7 +49,6 @@ namespace Features.Player.Caravan.UI
                     () => caravanUpgrader.RequestUpgrade(cartId),
                     () => caravanUpgrader.RequestUpgrade(caravanManager.UnlockedCartCount),
                     OnCellAdded);
-                cartUis[i].OnCellClicked += OnCellClicked;
             }
 
             caravanManager.MoveSpeed.Observe(OnMoveSpeedChanged);
@@ -95,11 +89,6 @@ namespace Features.Player.Caravan.UI
 
             _caravanManager.MoveSpeed.StopObserving(OnMoveSpeedChanged);
             _caravanManager.Upkeep.StopObserving(OnUpkeepChanged);
-        }
-
-        private void OnCellClicked(InventoryCell cell)
-        {
-            inventoryCellClicked.Invoke(cell, TradeType.Sell);
         }
 
         private void AddNewGood(Good good, int amount)

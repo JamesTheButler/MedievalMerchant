@@ -12,7 +12,7 @@ namespace Common.Infrastructure.Observation
         IBinding Observe(Action<T, T> callback);
         void StopObserving(Action<T, T> callback);
         
-        IBinding Observe(Action callback);
+        IBinding Observe(Action callback, bool invokeOnObserve);
         void StopObserving(Action callback);
     }
 }

@@ -30,9 +30,14 @@ namespace Common.Infrastructure.Observation
             Value = value;
         }
 
-        public IBinding Observe(Action notifyCallback)
+        public IBinding Observe(Action notifyCallback, bool invokeOnObserve)
         {
             ValueChangeWithoutValue += notifyCallback;
+            if (invokeOnObserve)
+            {
+                notifyCallback?.Invoke();
+            }
+
             return new Binding(() => StopObserving(notifyCallback));
         }
 
@@ -40,7 +45,9 @@ namespace Common.Infrastructure.Observation
         {
             ValueChanged += callback;
             if (invokeOnObserve)
+            {
                 callback?.Invoke(Value);
+            }
 
             return new Binding(() => StopObserving(callback));
         }

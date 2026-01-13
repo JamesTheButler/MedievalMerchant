@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4017078828261712836}
   - component: {fileID: 1675575041870258853}
+  - component: {fileID: 5818510182947043921}
+  - component: {fileID: 6712113868415642049}
   - component: {fileID: 2264633791105185111}
   - component: {fileID: 3409564218628168194}
   - component: {fileID: 5340986463525574350}
@@ -54,9 +56,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10922dbfb7274b4b92afab37e4977749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryCellClicked:
-    m_PersistentCalls:
-      m_Calls: []
   moveSpeedText: {fileID: 7936395345875995176}
   upkeepText: {fileID: 8105782739784979793}
   moveSpeedTooltip: {fileID: 4990029906757307376}
@@ -66,6 +65,63 @@ MonoBehaviour:
   - {fileID: 99772124807130788}
   - {fileID: 3376022303043768111}
   - {fileID: 5168208323701177625}
+--- !u!114 &5818510182947043921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276405225066129319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08b440275f4049a1bdbfd8748f564380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.GoodCellClickHandler
+  cellClicked:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6712113868415642049}
+        m_TargetAssemblyTypeName: Features.Trade.UI.TradeInitializer, Assembly-CSharp
+        m_MethodName: OnCellClicked
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  autoFindCells: 1
+  goodCells: []
+--- !u!114 &6712113868415642049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276405225066129319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f31e46d3964dd3b6968a970144ec47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Trade.UI.TradeInitializer
+  initializeTradeUI:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  tradeType: 2
 --- !u!114 &2264633791105185111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1130,7 +1186,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3238021091350097085, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 31.72
       objectReference: {fileID: 0}
     - target: {fileID: 3238021091350097085, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1250,7 +1306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6460175953014649476, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 31.72
       objectReference: {fileID: 0}
     - target: {fileID: 6460175953014649476, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1649,7 +1705,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3238021091350097085, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 31.72
       objectReference: {fileID: 0}
     - target: {fileID: 3238021091350097085, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1769,7 +1825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6460175953014649476, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 31.72
       objectReference: {fileID: 0}
     - target: {fileID: 6460175953014649476, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2030,7 +2086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3238021091350097085, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 31.72
       objectReference: {fileID: 0}
     - target: {fileID: 3238021091350097085, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2150,7 +2206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6460175953014649476, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 31.72
       objectReference: {fileID: 0}
     - target: {fileID: 6460175953014649476, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2411,7 +2467,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3238021091350097085, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 31.72
       objectReference: {fileID: 0}
     - target: {fileID: 3238021091350097085, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2531,7 +2587,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6460175953014649476, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 31.72
       objectReference: {fileID: 0}
     - target: {fileID: 6460175953014649476, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_AnchoredPosition.x

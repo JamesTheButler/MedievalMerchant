@@ -8,7 +8,15 @@ namespace Features.Towns
 {
     public sealed class PriceManager
     {
-        private readonly PriceList _buyPrices, _sellPrices;
+        /// <summary>
+        /// Prices that the town pays when you buy from them.
+        /// </summary>
+        private readonly PriceList _buyPrices;
+
+        /// <summary>
+        /// Prices that the town receives when you sell to them.
+        /// </summary>
+        private readonly PriceList _sellPrices;
 
         public PriceManager(Town town)
         {

@@ -12,7 +12,6 @@ using Features.Player.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Features.Player.Caravan.UI
@@ -44,7 +43,7 @@ namespace Features.Player.Caravan.UI
         [SerializeField, Required]
         private CartTooltipHandler cartUnlockTooltip, cartUpgradeTooltip;
 
-        public event Action<InventoryCell> OnCellAdded, OnCellClicked;
+        public event Action<InventoryCell> OnCellAdded;
 
         private PlayerModel _player;
         private Cart _cart;
@@ -204,7 +203,6 @@ namespace Features.Player.Caravan.UI
                 var cell = inventoryCells[slotIndex];
                 cell.gameObject.SetActive(true);
                 OnCellAdded?.Invoke(cell);
-                cell.Clicked += () => OnCellClicked?.Invoke(cell);
             }
 
             _lastActiveSlotCount = slotCount;

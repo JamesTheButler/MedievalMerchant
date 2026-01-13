@@ -38,7 +38,7 @@ namespace Features.Inventory
 
             return canFitGood
                 ? TradeResult.Succeeded()
-                : TradeResult.Failed($"There are no more empty slots for {goodTier}");
+                : TradeResult.Failed($"There are no more empty slots for {goodTier.ToDisplayString()}");
         }
     }
 }

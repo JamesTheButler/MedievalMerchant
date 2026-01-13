@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
+using Common.Infrastructure.Observation;
 using Common.Types;
 using Common.UI.Elements;
 using Common.UI.Tooltips;
@@ -55,30 +56,30 @@ namespace Features.Trade.UI
         [SerializeField, Required]
         private ModifiableTooltipHandler priceTooltip;
 
+        private const string NetProfitStringFormat = "You will be making a profit of {0} with this trade.";
+        private const string NetLossStringFormat = "You will be making a loss of {0} with this trade.";
+
+        private readonly Bindings _bindings = new();
+
         private GameplayModel _model;
         private TradeService _tradeService;
         private Selection _selection;
         private TradeTracker _tradeTracker;
 
-        private bool _isInitialized;
-
         private Town _town;
         private Good _good;
         private TradeType _tradeType;
 
+        private Inventory.Inventory _buyingInventory;
+        private Inventory.Inventory _sellingInventory;
+        private PriceManager _priceManager;
+        private ModifiableVariable _observedPrice;
+
+        private bool _isInitialized;
         private float _buyerFunds;
         private int _tradeAmount;
         private float _totalPrice;
         private float _singlePrice;
-
-        private Inventory.Inventory _buyingInventory;
-        private Inventory.Inventory _sellingInventory;
-
-        private PriceManager _priceManager;
-        private ModifiableVariable _observedPrice;
-
-        private const string NetProfitStringFormat = "You will be making a profit of {0} with this trade.";
-        private const string NetLossStringFormat = "You will be making a loss of {0} with this trade.";
 
         public override void Initialize()
         {
@@ -100,14 +101,16 @@ namespace Features.Trade.UI
             _good = good;
             _tradeType = tradeType;
             _town = _selection.SelectedTown;
-            _town.ReputationManager.Reputation.Observe(RefreshTownReputationText);
-            RefreshTownReputationText();
-            _town.Inventory.Funds.Observe(RefreshTownFundsText);
+            _priceManager = _town.PriceManager;
+
+            _bindings.Track(
+                _town.ReputationManager.Reputation.Observe(RefreshTownReputationText, true),
+                _town.Inventory.Funds.Observe(RefreshTownFundsText, true),
+                _model.Player.Inventory.Funds.Observe(RefreshPlayerFundsText, true)
+            );
+
             _town.Missions.MissionAdded += OnMissionAdded;
             RefreshMissionAmountButton();
-
-            _priceManager = _town.PriceManager;
-            _model.Player.Inventory.Funds.Observe(RefreshPlayerFundsText);
 
             tradeButton.GetText().text = tradeType == TradeType.Buy ? "Buy" : "Sell";
 
@@ -121,7 +124,11 @@ namespace Features.Trade.UI
             SetUpInventories();
 
             _observedPrice = _priceManager.GetPrice(good, tradeType);
-            _observedPrice.Observe(OnGoodPriceChanged);
+
+            _bindings.Track(
+                _observedPrice.Observe(OnGoodPriceChanged)
+            );
+
             priceTooltip.SetData(_observedPrice);
 
             gameObject.SetActive(true);
@@ -145,15 +152,13 @@ namespace Features.Trade.UI
 
             if (!_isInitialized) return;
 
-            _model.Player.Inventory.Funds.StopObserving(RefreshPlayerFundsText);
-            _town.ReputationManager.Reputation.StopObserving(RefreshTownReputationText);
-            _town.Inventory.Funds.StopObserving(RefreshTownFundsText);
+            _bindings.UnbindAll();
+
             _sellingInventory.GoodUpdated -= OnSellingInventoryGoodUpdated;
             _town.Missions.MissionAdded -= OnMissionAdded;
             _buyingInventory.Funds.StopObserving(OnBuyingInventoryFundsUpdated);
 
             priceTooltip.SetData(null);
-            _observedPrice.StopObserving(OnGoodPriceChanged);
             _observedPrice = null;
             _buyingInventory = null;
             _sellingInventory = null;
