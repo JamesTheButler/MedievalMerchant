@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Infrastructure;
@@ -6,6 +5,7 @@ using Common.Types;
 using Common.UI.Elements;
 using Common.UI.Tooltips;
 using Features.Goods.Config;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,15 +13,13 @@ namespace Features.Towns.UI
 {
     public sealed class InventoryTierGroup : MonoBehaviour
     {
-        public event Action<InventoryCellBase> InventoryCellClicked;
-
-        [SerializeField]
+        [SerializeField, Required]
         private GameObject lockedGroup;
 
-        [SerializeField]
+        [SerializeField, Required]
         private SimpleTooltipHandler lockedTooltip;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Image tierIcon;
 
         [SerializeField]
@@ -98,7 +96,6 @@ namespace Features.Towns.UI
             {
                 _inventoryCells.Add(inventoryCell);
                 inventoryCell.Update(null, 0);
-                inventoryCell.Clicked += () => InventoryCellClicked?.Invoke(inventoryCell);
             }
         }
     }

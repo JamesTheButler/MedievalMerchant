@@ -1,20 +1,14 @@
 using AYellowpaper.SerializedCollections;
 using Common.Infrastructure;
 using Common.Types;
-using Common.UI.Elements;
 using Features.Goods.Config;
 using Features.Towns.Production.Logic;
-using Features.Trade;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Features.Towns.UI
 {
     public sealed class TownUIInventorySection : TownUISection
     {
-        [SerializeField]
-        private UnityEvent<InventoryCellBase, TradeType> inventoryCellClicked;
-
         [SerializeField, SerializedDictionary("Tier", "Section")]
         private SerializedDictionary<Tier, InventoryTierGroup> tierGroups;
 
@@ -24,10 +18,6 @@ namespace Features.Towns.UI
         public override void Initialize()
         {
             _goodsConfig = ResourceManager.Instance.GoodsResources;
-            foreach (var row in tierGroups.Values)
-            {
-                row.InventoryCellClicked += OnInventoryCellClicked;
-            }
         }
 
         public override void CleanUp() { }
@@ -79,11 +69,6 @@ namespace Features.Towns.UI
         {
             // remove good if we build a producer with a good in the inventory
             tierGroups[producer.Tier].UpdateGood(producer.ProducedGood, 0);
-        }
-        
-        private void OnInventoryCellClicked(InventoryCellBase cell)
-        {
-            inventoryCellClicked.Invoke(cell, TradeType.Sell);
         }
     }
 }

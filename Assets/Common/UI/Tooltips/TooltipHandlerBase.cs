@@ -64,6 +64,12 @@ namespace Common.UI.Tooltips
         public void ShowTooltip(TData data)
         {
             SetData(data);
+
+            if (_activeToolTip != null)
+            {
+                HideTooltip();
+            }
+
             ShowTooltip();
         }
 
