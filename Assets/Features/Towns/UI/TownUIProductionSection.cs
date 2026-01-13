@@ -12,9 +12,6 @@ namespace Features.Towns.UI
     public sealed class TownUIProductionSection : TownUISection
     {
         [SerializeField]
-        private UnityEvent<GoodCell, TradeType> productionCellClicked;
-
-        [SerializeField]
         private UnityEvent<ProductionCell> tier1UpgradeButtonClicked;
 
         [SerializeField]
@@ -37,7 +34,6 @@ namespace Features.Towns.UI
                 var group = _producerGroups[index];
                 group.Initialize(index);
                 group.UpgradeButtonClicked += OnUpgradeButtonClicked;
-                group.DeliveryCellClicked += OnDeliveryCellClicked;
             }
         }
 
@@ -77,11 +73,6 @@ namespace Features.Towns.UI
                     tier3UpgradeButtonClicked.Invoke(productionCell);
                     break;
             }
-        }
-
-        private void OnDeliveryCellClicked(GoodCell cell)
-        {
-            productionCellClicked.Invoke(cell, TradeType.Sell);
         }
     }
 }
