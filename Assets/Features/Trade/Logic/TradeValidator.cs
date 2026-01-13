@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Player.Logic;
 using Features.Towns;
+using UnityEditor;
 
 namespace Features.Trade.Logic
 {
@@ -23,6 +25,7 @@ namespace Features.Trade.Logic
         {
             var townName = _town.Name;
             var goodName = _goodResources.ResourceData[good].GoodName;
+            var muchOrMany = _goodResources.ResourceData[good].PluralWorld;
 
             if (_town == null)
                 return TradeResult.Failed("Travel to and select a town to trade.");
@@ -50,14 +53,24 @@ namespace Features.Trade.Logic
             if (!inventoryPolicyResult.Success)
                 return inventoryPolicyResult;
 
-            var notEnoughGoodsMessage = tradeType == TradeType.Buy
-                ? $"{townName} does not own that many {goodName}."
-                : $"You do not own that many {goodName}.";
+            var availableAmount = sellingInventory.Goods.GetValueOrDefault(good, 0);
+            if (availableAmount == 0)
+            {
+                var message = tradeType == TradeType.Buy
+                    ? $"{townName} does not own any {goodName}."
+                    : $"You do not own that any {goodName}.";
+                return TradeResult.Failed(message);
+            }
 
-            // check if there are enough items to be sold
-            return sellingInventory.HasGood(good, amount)
-                ? TradeResult.Succeeded()
-                : TradeResult.Failed(notEnoughGoodsMessage);
+            if (availableAmount < amount)
+            {
+                var message = tradeType == TradeType.Buy
+                    ? $"{townName} does not own that {muchOrMany} {goodName}."
+                    : $"You do not own that {muchOrMany} {goodName}.";
+                return TradeResult.Failed(message);
+            }
+
+            return TradeResult.Succeeded();
         }
     }
 }

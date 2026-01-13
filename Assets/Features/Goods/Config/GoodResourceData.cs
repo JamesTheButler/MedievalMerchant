@@ -11,6 +11,9 @@ namespace Features.Goods.Config
     {
         [field: SerializeField]
         public string GoodName { get; private set; }
+        
+        [field: SerializeField]
+        public string PluralWorld { get; private set; }
 
         [field: SerializeField]
         public Tier Tier { get; private set; }
