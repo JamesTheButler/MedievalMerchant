@@ -1,11 +1,10 @@
-using System;
 using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Elements;
-using Features.Goods.Config;
 using Features.Player.Logic;
 using Features.Towns;
 using Features.Trade.Logic;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,6 +17,9 @@ namespace Features.Trade.UI
 
         [SerializeField]
         private TradeType tradeType;
+
+        [SerializeField, Required]
+        private SimpleErrorPopup errorPopupPrefab;
 
         private PlayerModel _player;
         private Selection _selection;
@@ -41,13 +43,8 @@ namespace Features.Trade.UI
             }
             else
             {
-                ReportError(tradeResult.Error);
+                cell.PostMessage(tradeResult.Error);
             }
-        }
-
-        private void ReportError(string message)
-        {
-            Debug.LogError(message);
         }
     }
 }

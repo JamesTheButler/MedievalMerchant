@@ -61,6 +61,12 @@ namespace Common.UI.Tooltips
             }
         }
 
+        public void ShowTooltip(TData data)
+        {
+            SetData(data);
+            ShowTooltip();
+        }
+
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (!_isEnabled || _data == null)
@@ -69,11 +75,7 @@ namespace Common.UI.Tooltips
             if (_activeToolTip != null)
                 return;
 
-            var tooltipObject = Instantiate(toolTipPrefab, _canvas.transform);
-            _activeToolTip = tooltipObject.GetComponent<TooltipBase<TData>>();
-            var origin = useSelfAsOrigin | !originTransform ? (RectTransform)gameObject.transform : originTransform;
-            _activeToolTip.SetOriginObject(origin);
-            _activeToolTip.SetData(_data);
+            ShowTooltip();
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -87,6 +89,15 @@ namespace Common.UI.Tooltips
                 return;
 
             HideTooltip();
+        }
+
+        private void ShowTooltip()
+        {
+            var tooltipObject = Instantiate(toolTipPrefab, _canvas.transform);
+            _activeToolTip = tooltipObject.GetComponent<TooltipBase<TData>>();
+            var origin = useSelfAsOrigin | !originTransform ? (RectTransform)gameObject.transform : originTransform;
+            _activeToolTip.SetOriginObject(origin);
+            _activeToolTip.SetData(_data);
         }
 
         private void HideTooltip()

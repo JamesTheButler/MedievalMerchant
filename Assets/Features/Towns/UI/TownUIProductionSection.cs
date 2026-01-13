@@ -37,7 +37,6 @@ namespace Features.Towns.UI
                 var group = _producerGroups[index];
                 group.Initialize(index);
                 group.UpgradeButtonClicked += OnUpgradeButtonClicked;
-                group.ProductionCellClicked += OnProductionCellClicked;
                 group.DeliveryCellClicked += OnDeliveryCellClicked;
             }
         }
@@ -78,11 +77,6 @@ namespace Features.Towns.UI
                     tier3UpgradeButtonClicked.Invoke(productionCell);
                     break;
             }
-        }
-
-        private void OnProductionCellClicked(GoodCell cell)
-        {
-            productionCellClicked.Invoke(cell, TradeType.Buy);
         }
 
         private void OnDeliveryCellClicked(GoodCell cell)

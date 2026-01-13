@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 7330017870725814728}
   - component: {fileID: 4248308205964919256}
   - component: {fileID: 7683751165650186782}
+  - component: {fileID: 8584376674820508153}
   m_Layer: 5
   m_Name: InventoryCell
   m_TagString: Untagged
@@ -266,6 +267,7 @@ MonoBehaviour:
   disabledIcon: {fileID: 2776188808676176578}
   cornerIcon: {fileID: 4920030285414879396}
   tooltipHandler: {fileID: 7683751165650186782}
+  messageTooltip: {fileID: 8584376674820508153}
   amountText: {fileID: 2335126984185299119}
   amountTextSecondary: {fileID: 7917703577623015960}
 --- !u!114 &7683751165650186782
@@ -285,6 +287,24 @@ MonoBehaviour:
   hideOnClick: 1
   useSelfAsOrigin: 1
   originTransform: {fileID: 0}
+--- !u!114 &8584376674820508153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5228330734817415516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 0
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  defaultText: 
 --- !u!1 &5297035684684207205
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System;
 using Common.Infrastructure;
 using Common.Types;
+using Common.UI.Tooltips;
 using Features.Goods.Config;
 using Features.Goods.UI;
 using NaughtyAttributes;
@@ -28,6 +29,9 @@ namespace Common.UI.Elements
 
         [SerializeField, Required]
         protected GoodTooltipHandler tooltipHandler;
+        
+        [SerializeField, Required]
+        protected SimpleTooltipHandler messageTooltip;
 
         protected readonly Lazy<GoodsResources> GoodsConfig = new(() => ResourceManager.Instance.GoodsResources);
 
@@ -80,6 +84,11 @@ namespace Common.UI.Elements
                 case PointerEventData.InputButton.Left: Clicked?.Invoke(); break;
                 case PointerEventData.InputButton.Right: RightClicked?.Invoke(); break;
             }
+        }
+
+        public void PostMessage(string message)
+        {
+            messageTooltip.ShowTooltip(message);
         }
     }
 }

@@ -132,6 +132,7 @@ namespace Common.UI.Tooltips
             }
 
             var tooltipCenterPosition = new Vector2(targetX, targetY);
+
             RegisterDebugShapes(
                 originRect,
                 spaceOnTop,

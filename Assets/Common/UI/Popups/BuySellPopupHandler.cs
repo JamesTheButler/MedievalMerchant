@@ -108,8 +108,6 @@ namespace Common.UI.Popups
             if (_good != good)
                 return;
 
-            var availability = _availabilityCalculator.GetAvailability(good);
-            buySellPopup.SetAvailability(availability);
             ValidateBuyButton();
         }
 

@@ -34,7 +34,6 @@ namespace Common.UI.Popups
 
         private Good _good;
         private Availability? _availability;
-        private TradeType? _hoveredTradeType;
 
         private void Start()
         {
@@ -47,7 +46,6 @@ namespace Common.UI.Popups
 
         public void SetTradeType(TradeType? tradeType)
         {
-            _hoveredTradeType = tradeType;
             buyButton.gameObject.SetActive(tradeType is null or TradeType.Buy);
             sellButton.gameObject.SetActive(tradeType is null or TradeType.Sell);
         }
@@ -76,10 +74,6 @@ namespace Common.UI.Popups
             sellButton.interactable = canSell.Success;
             sellButtonTooltip.SetEnabled(!canSell.Success);
             sellButtonTooltip.SetData(canSell.Error);
-        }
-
-        public void SetAvailability(Availability availability)
-        {
         }
     }
 }
