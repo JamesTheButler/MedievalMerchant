@@ -21,20 +21,20 @@ namespace Features.Towns.Missions
 
         private static string GetTitle(Town town, Mission mission)
         {
-            var config = ResourceManager.Instance.GoodsResources.ResourceData[mission.Good];
+            var config = ResourceManager.Instance.GoodResources.ResourceData[mission.Good];
             var missionTitle = mission.Type == MissionType.TradeMission ? "Trade Mission" : "Upgrade Mission";
             return $"{missionTitle} started: {town.Name} wants {config.GoodName}.";
         }
 
         private static string GetDescription(Mission mission)
         {
-            var config = ResourceManager.Instance.GoodsResources.ResourceData[mission.Good];
+            var config = ResourceManager.Instance.GoodResources.ResourceData[mission.Good];
             return $"Deliver {mission.TotalCount}x {config.GoodName} before {mission.EndDate}.";
         }
 
         private static Sprite GetIcon(Good missionGood)
         {
-            var configData = ResourceManager.Instance.GoodsResources.ResourceData[missionGood];
+            var configData = ResourceManager.Instance.GoodResources.ResourceData[missionGood];
             return configData.Icon;
         }
     }

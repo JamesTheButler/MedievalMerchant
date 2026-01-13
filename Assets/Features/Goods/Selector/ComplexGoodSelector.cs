@@ -10,7 +10,7 @@ namespace Features.Goods.Selector
 {
     public sealed class ComplexGoodSelector : IGoodSelector
     {
-        private readonly Lazy<GoodsResources> _goodResources = new(() => ResourceManager.Instance.GoodsResources);
+        private readonly Lazy<GoodResources> _goodResources = new(() => ResourceManager.Instance.GoodResources);
         private readonly Lazy<RegionResources> _regionResources = new(() => ResourceManager.Instance.RegionResources);
 
         private readonly Tier? _selectedTier;

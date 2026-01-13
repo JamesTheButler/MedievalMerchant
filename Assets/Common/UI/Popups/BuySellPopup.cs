@@ -30,7 +30,7 @@ namespace Common.UI.Popups
         [SerializeField, Required]
         private Hoverable buyButtonHoverable, sellButtonHoverable;
 
-        private readonly Lazy<GoodsResources> _goodsConfig = new(() => ResourceManager.Instance.GoodsResources);
+        private readonly Lazy<GoodResources> _goodsConfig = new(() => ResourceManager.Instance.GoodResources);
 
         private Good _good;
         private Availability? _availability;

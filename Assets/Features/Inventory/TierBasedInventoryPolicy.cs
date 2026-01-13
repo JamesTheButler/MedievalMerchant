@@ -8,7 +8,7 @@ namespace Features.Inventory
 {
     public sealed class TierBasedInventoryPolicy : IInventoryPolicy
     {
-        private readonly Lazy<GoodsResources> _goodsConfig = new(() => ResourceManager.Instance.GoodsResources);
+        private readonly Lazy<GoodResources> _goodsConfig = new(() => ResourceManager.Instance.GoodResources);
 
         private Tier _maxTier = Tier.Tier3; // by default, all tiers are allowed
 

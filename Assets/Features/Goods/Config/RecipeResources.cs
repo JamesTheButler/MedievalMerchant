@@ -8,7 +8,7 @@ namespace Features.Goods.Config
 {
     [CreateAssetMenu(
         fileName = nameof(RecipeResources),
-        menuName = AssetMenu.ConfigDataFolder + nameof(RecipeResources))]
+        menuName = AssetMenu.ResourceFolder + nameof(RecipeResources))]
     public sealed class RecipeResources : ScriptableObject
     {
         [SerializeField]

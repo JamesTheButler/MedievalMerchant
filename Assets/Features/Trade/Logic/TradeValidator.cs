@@ -10,13 +10,13 @@ namespace Features.Trade.Logic
     {
         private readonly PlayerModel _player;
         private readonly Town _town;
-        private readonly GoodsResources _goodResources;
+        private readonly GoodResources _goodResources;
 
         public TradeValidator(PlayerModel player, Town town)
         {
             _player = player;
             _town = town;
-            _goodResources = ResourceManager.Instance.GoodsResources;
+            _goodResources = ResourceManager.Instance.GoodResources;
         }
 
         public TradeResult Validate(TradeType tradeType, Good good, int amount)

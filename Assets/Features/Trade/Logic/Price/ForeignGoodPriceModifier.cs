@@ -10,7 +10,7 @@ namespace Features.Trade.Logic.Price
     {
         public ForeignGoodPriceModifier() : base(0, "Good from foreign region")
         {
-            Value.Value = ConfigurationManager.Configurations.GoodsConfig.ForeignGoodPriceModifier;
+            Value.Value = ConfigurationManager.Configurations.GoodConfig.ForeignGoodPriceModifier;
         }
     }
 }

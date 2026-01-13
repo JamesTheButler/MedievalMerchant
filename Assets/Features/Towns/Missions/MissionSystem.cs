@@ -30,7 +30,7 @@ namespace Features.Towns.Missions
         private MissionConfig _missionConfig;
         private TradeMissionConfigData _tradeMissionConfig;
         private UpgradeMissionConfigData _upgradeMissionConfig;
-        private GoodsResources _goodsResources;
+        private GoodResources _goodResources;
         private GoodPool _goodPool;
 
         private HashSet<Good> _availableGoods;
@@ -52,7 +52,7 @@ namespace Features.Towns.Missions
             _upgradeMissionConfig = _missionConfig.UpgradeMissionData;
             _gameDate = GameplayContext.Instance.Model.Date;
             _goodPool = GameplayContext.Instance.Model.GoodPool;
-            _goodsResources = ResourceManager.Instance.GoodsResources;
+            _goodResources = ResourceManager.Instance.GoodResources;
 
             _tickingService.DayPassed += OnDayPassed;
             _town.TradeCompleted += OnTradeCompleted;
@@ -116,7 +116,7 @@ namespace Features.Towns.Missions
             // start with all available goods on the map
             _availableGoods = _goodPool.AllAvailableGoods.ToHashSet();
             // remove from wrong tiers
-            var goodsOfWrongTier = _goodsResources.ResourceData
+            var goodsOfWrongTier = _goodResources.ResourceData
                 .Where(kvPair => kvPair.Value.Tier != _town.Tier.Value)
                 .Select(kvPair => kvPair.Key);
             _availableGoods.RemoveFrom(goodsOfWrongTier);
@@ -192,7 +192,7 @@ namespace Features.Towns.Missions
             mission.MissionSucceeded -= OnMissionSucceeded;
 
             // add good back into available pool (if of correct tier)
-            var goodTier = _goodsResources.ResourceData[mission.Good].Tier;
+            var goodTier = _goodResources.ResourceData[mission.Good].Tier;
             if (goodTier == _town.Tier.Value)
             {
                 _availableGoods.Add(mission.Good);

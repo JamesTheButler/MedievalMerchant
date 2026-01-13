@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Features.Goods.Config
 {
-    [CreateAssetMenu(fileName = nameof(GoodsConfig), menuName = AssetMenu.ConfigDataFolder + nameof(GoodsConfig))]
-    public sealed class GoodsConfig : ScriptableObject
+    [CreateAssetMenu(fileName = nameof(GoodConfig), menuName = AssetMenu.ConfigDataFolder + nameof(GoodConfig))]
+    public sealed class GoodConfig : ScriptableObject
     {
         [field: SerializeField, SerializedDictionary]
         public SerializedDictionary<Tier, float> BasePriceData { get; private set; }

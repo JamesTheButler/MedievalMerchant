@@ -6,9 +6,9 @@ using UnityEngine;
 namespace Features.Goods.Config
 {
     [CreateAssetMenu(
-        fileName = nameof(GoodsResources),
-        menuName = AssetMenu.ResourceFolder + nameof(GoodsResources))]
-    public sealed class GoodsResources : ScriptableObject
+        fileName = nameof(GoodResources),
+        menuName = AssetMenu.ResourceFolder + nameof(GoodResources))]
+    public sealed class GoodResources : ScriptableObject
     {
         [field: SerializeField, SerializedDictionary]
         public SerializedDictionary<Good, GoodResourceData> ResourceData { get; private set; }

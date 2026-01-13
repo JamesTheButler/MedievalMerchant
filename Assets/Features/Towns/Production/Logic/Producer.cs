@@ -17,7 +17,7 @@ namespace Features.Towns.Production.Logic
 
         public IReadOnlyDictionary<Good, ModifiableVariable> IngredientConsumptionRates => _ingredientConsumptionRates;
 
-        private readonly GoodsResources _goodsResources;
+        private readonly GoodResources _goodResources;
         private readonly ProducerConfig _producerConfig;
 
         private readonly Dictionary<Good, ModifiableVariable> _ingredientConsumptionRates = new();
@@ -26,11 +26,11 @@ namespace Features.Towns.Production.Logic
         {
             ProducedGood = producedGood;
 
-            _goodsResources = ResourceManager.Instance.GoodsResources;
+            _goodResources = ResourceManager.Instance.GoodResources;
             _producerConfig = ConfigurationManager.Configurations.ProducerConfig;
             var recipeConfig = ResourceManager.Instance.RecipeResources;
 
-            Tier = _goodsResources.ResourceData[producedGood].Tier;
+            Tier = _goodResources.ResourceData[producedGood].Tier;
 
             var baseProductionRate = new BaseProductionValue(producedGood);
             ProductionRate = new ModifiableVariable("Production Rate", true, baseProductionRate);
@@ -48,7 +48,7 @@ namespace Features.Towns.Production.Logic
 
         private void OnTownTierChanged(Tier townTier)
         {
-            var goodTier = _goodsResources.ResourceData[ProducedGood].Tier;
+            var goodTier = _goodResources.ResourceData[ProducedGood].Tier;
             var configLimit = _producerConfig.GetLimit(townTier, goodTier);
             ProductionLimit = configLimit ?? 0;
 

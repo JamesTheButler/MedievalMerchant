@@ -21,11 +21,11 @@ namespace Features.Towns.UI
         private UnityEvent<ProductionCell> tier3UpgradeButtonClicked;
 
         private ProducerGroup[] _producerGroups;
-        private GoodsResources _goodResources;
+        private GoodResources _goodResources;
 
         public override void Initialize()
         {
-            _goodResources = ResourceManager.Instance.GoodsResources;
+            _goodResources = ResourceManager.Instance.GoodResources;
 
             _producerGroups = GetComponentsInChildren<ProducerGroup>();
 

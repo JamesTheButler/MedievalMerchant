@@ -31,14 +31,14 @@ namespace Features.Towns.Missions.UI
 
         private Color _defaultDaysLeftIconColor, _badColor;
 
-        private GoodsResources _goodsResources;
+        private GoodResources _goodResources;
         private MissionConfig _missionConfig;
 
         private Mission _mission;
 
         public void Initialize()
         {
-            _goodsResources = ResourceManager.Instance.GoodsResources;
+            _goodResources = ResourceManager.Instance.GoodResources;
             _missionConfig = ConfigurationManager.Configurations.MissionConfig;
 
             abortButton.onClick.AddListener(AbortButtonClicked);
@@ -57,7 +57,7 @@ namespace Features.Towns.Missions.UI
 
             var currentAmount = mission.RemainingCount;
 
-            var goodName = _goodsResources.ResourceData[mission.Good].GoodName;
+            var goodName = _goodResources.ResourceData[mission.Good].GoodName;
             titleText.text = $"Sell {mission.TotalCount} {goodName}";
             goodCell.SetGood(mission.Good);
 

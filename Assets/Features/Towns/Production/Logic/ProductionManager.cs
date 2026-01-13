@@ -16,7 +16,7 @@ namespace Features.Towns.Production.Logic
         public event Action<Producer, int> ProductionAddedIndexed;
 
         private readonly Town _town;
-        private readonly GoodsResources _goodsResources = ResourceManager.Instance.GoodsResources;
+        private readonly GoodResources _goodResources = ResourceManager.Instance.GoodResources;
         private readonly Dictionary<Tier, Producer[]> _producers;
         private readonly List<IModifier> _productionModifiers = new();
 
@@ -57,7 +57,7 @@ namespace Features.Towns.Production.Logic
 
         public int GetIndexOfProducedGood(Good good)
         {
-            var tier = _goodsResources.ResourceData[good].Tier;
+            var tier = _goodResources.ResourceData[good].Tier;
             return GetProducers(tier)
                 .ToList()
                 .IndexOf(producer => producer?.ProducedGood == good);
@@ -68,7 +68,7 @@ namespace Features.Towns.Production.Logic
             if (!CanAddProducer(good, index))
                 return;
 
-            var tier = _goodsResources.ResourceData[good].Tier;
+            var tier = _goodResources.ResourceData[good].Tier;
             var producers = GetProducers(tier);
             var producer = new Producer(good, _town);
             producers[index] = producer;
@@ -103,7 +103,7 @@ namespace Features.Towns.Production.Logic
 
         private bool CanAddProducer(Good good, int index)
         {
-            var tier = _goodsResources.ResourceData[good].Tier;
+            var tier = _goodResources.ResourceData[good].Tier;
             return !HasProducer(tier, index);
         }
     }

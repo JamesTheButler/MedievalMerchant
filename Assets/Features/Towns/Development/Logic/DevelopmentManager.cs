@@ -21,7 +21,7 @@ namespace Features.Towns.Development.Logic
 
         private readonly Town _town;
         private readonly TownDevelopmentConfig _townDevelopmentConfig;
-        private readonly GoodsResources _goodsResources;
+        private readonly GoodResources _goodResources;
         private readonly Observable<float> _developmentScore  = new();
         private readonly Dictionary<Tier, ProducerDevelopmentModifier> _producerModifiers = new();
         private readonly Dictionary<Tier, StoredGoodsDevelopmentModifier> _storedGoodsModifier = new();
@@ -32,7 +32,7 @@ namespace Features.Towns.Development.Logic
         {
             _town = town;
             _townDevelopmentConfig = ConfigurationManager.Configurations.TownDevelopmentConfig;
-            _goodsResources = ResourceManager.Instance.GoodsResources;
+            _goodResources = ResourceManager.Instance.GoodResources;
 
             _town.ProductionManager.ProductionAdded += OnProducerAdded;
             _town.Inventory.GoodUpdated += OnGoodAdded;
@@ -77,7 +77,7 @@ namespace Features.Towns.Development.Logic
 
         private void OnProducerAdded(Producer producer)
         {
-            var goodTier = _goodsResources.ResourceData[producer.ProducedGood].Tier;
+            var goodTier = _goodResources.ResourceData[producer.ProducedGood].Tier;
             RefreshProducerModifiers(goodTier);
         }
 
@@ -87,7 +87,7 @@ namespace Features.Towns.Development.Logic
             if (_town.ProductionManager.IsProduced(addedGood))
                 return;
 
-            var goodTier = _goodsResources.ResourceData[addedGood].Tier;
+            var goodTier = _goodResources.ResourceData[addedGood].Tier;
             RefreshGoodsInInventoryModifiers(goodTier);
         }
 
@@ -115,7 +115,7 @@ namespace Features.Towns.Development.Logic
         {
             var newCount = _town.Inventory.Goods.Keys
                 .Count(good =>
-                    !_town.ProductionManager.IsProduced(good) && _goodsResources.ResourceData[good].Tier == goodTier);
+                    !_town.ProductionManager.IsProduced(good) && _goodResources.ResourceData[good].Tier == goodTier);
 
             // modifier would not change
             if (_storedGoodsModifier.TryGetValue(goodTier, out var oldModifier) &&

@@ -39,7 +39,7 @@ namespace Common.Infrastructure
         public FlagResources FlagResources { get; private set; }
 
         [field: SerializeField, Required]
-        public GoodsResources GoodsResources { get; private set; }
+        public GoodResources GoodResources { get; private set; }
 
         [field: SerializeField, Required]
         public ProducerResources ProducerResources { get; private set; }

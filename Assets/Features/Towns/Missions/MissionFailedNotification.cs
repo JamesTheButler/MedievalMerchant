@@ -21,19 +21,19 @@ namespace Features.Towns.Missions
 
         private static string GetTitle(Town town, Mission mission)
         {
-            var config = ResourceManager.Instance.GoodsResources.ResourceData[mission.Good];
+            var config = ResourceManager.Instance.GoodResources.ResourceData[mission.Good];
             return $"Mission failed: {town.Name}";
         }
 
         private static string GetDescription(Town town, Mission mission)
         {
-            var config = ResourceManager.Instance.GoodsResources.ResourceData[mission.Good];
+            var config = ResourceManager.Instance.GoodResources.ResourceData[mission.Good];
             return $"You did not deliver enough {config.GoodName} in time. {town.Name} is not happy.";
         }
 
         private static Sprite GetIcon(Good missionGood)
         {
-            var configData = ResourceManager.Instance.GoodsResources.ResourceData[missionGood];
+            var configData = ResourceManager.Instance.GoodResources.ResourceData[missionGood];
             return configData.Icon;
         }
     }

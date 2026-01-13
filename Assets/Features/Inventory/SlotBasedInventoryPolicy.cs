@@ -9,7 +9,7 @@ namespace Features.Inventory
 {
     public sealed class SlotBasedInventoryPolicy : IInventoryPolicy
     {
-        private readonly Lazy<GoodsResources> _goodsConfig = new(() => ResourceManager.Instance.GoodsResources);
+        private readonly Lazy<GoodResources> _goodsConfig = new(() => ResourceManager.Instance.GoodResources);
 
         private readonly Dictionary<Tier, int> _slotsPerTier = new()
         {

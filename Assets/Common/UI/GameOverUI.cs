@@ -25,13 +25,13 @@ namespace Common.UI
 
         private const string StateNotFoundsString = "-";
 
-        private GoodsResources _goodsResources;
+        private GoodResources _goodResources;
         private GameplayModel _model;
         private StatsModel _statsModel;
 
         public override void Initialize()
         {
-            _goodsResources = ResourceManager.Instance.GoodsResources;
+            _goodResources = ResourceManager.Instance.GoodResources;
             _model = GameplayContext.Instance.Model;
             _statsModel = _model.Stats;
         }
@@ -98,7 +98,7 @@ namespace Common.UI
                 return StateNotFoundsString;
 
             var favoriteGood = _statsModel.TradedGoods.Max(kvPair => kvPair.Key);
-            var favoriteGoodName = _goodsResources.ResourceData[favoriteGood].GoodName;
+            var favoriteGoodName = _goodResources.ResourceData[favoriteGood].GoodName;
             var favoriteGoodAmount = _statsModel.TradedGoods[favoriteGood];
             var favoriteGoodString = $"{favoriteGoodName} (traded {favoriteGoodAmount} times)";
             return favoriteGoodString;

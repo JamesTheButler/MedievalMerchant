@@ -17,7 +17,7 @@ namespace Features.Towns.Production.Logic
 
         private static Tier GetTier(Good good)
         {
-            return ResourceManager.Instance.GoodsResources.ResourceData[good].Tier;
+            return ResourceManager.Instance.GoodResources.ResourceData[good].Tier;
         }
     }
 }

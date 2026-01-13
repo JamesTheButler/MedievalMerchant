@@ -12,12 +12,12 @@ namespace Features.Towns.UI
         [SerializeField, SerializedDictionary("Tier", "Section")]
         private SerializedDictionary<Tier, InventoryTierGroup> tierGroups;
 
-        private GoodsResources _goodsConfig;
+        private GoodResources _goodConfig;
         private Town _town;
 
         public override void Initialize()
         {
-            _goodsConfig = ResourceManager.Instance.GoodsResources;
+            _goodConfig = ResourceManager.Instance.GoodResources;
         }
 
         public override void CleanUp() { }
@@ -53,7 +53,7 @@ namespace Features.Towns.UI
             if (_town.ProductionManager.IsProduced(good))
                 return;
 
-            var goodTier = _goodsConfig.ResourceData[good].Tier;
+            var goodTier = _goodConfig.ResourceData[good].Tier;
             tierGroups[goodTier].UpdateGood(good, amount);
         }
 

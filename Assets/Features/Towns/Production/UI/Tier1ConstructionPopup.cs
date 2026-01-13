@@ -27,7 +27,7 @@ namespace Features.Towns.Production.UI
         private Button costButton;
 
         private readonly Lazy<RecipeResources> _recipeResources = new(() => ResourceManager.Instance.RecipeResources);
-        private readonly Lazy<GoodsResources> _goodResources = new(() => ResourceManager.Instance.GoodsResources);
+        private readonly Lazy<GoodResources> _goodResources = new(() => ResourceManager.Instance.GoodResources);
         private readonly Lazy<Colors> _colors = new(() => ResourceManager.Instance.Colors);
         private readonly Lazy<PlayerModel> _player = new(() => GameplayContext.Instance.Model.Player);
 

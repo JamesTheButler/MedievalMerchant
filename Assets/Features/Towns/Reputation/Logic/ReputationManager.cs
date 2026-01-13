@@ -23,7 +23,7 @@ namespace Features.Towns.Reputation.Logic
 
         private readonly GameplayModel _model;
         private readonly ReputationConfig _config;
-        private readonly GoodsResources _goodResources;
+        private readonly GoodResources _goodResources;
 
         private readonly List<IModifier> _modifiers = new();
         private readonly List<ReputationLogEntry> _reputationLog = new();
@@ -32,7 +32,7 @@ namespace Features.Towns.Reputation.Logic
         {
             _model = GameplayContext.Instance.Model;
             _config = ConfigurationManager.Configurations.ReputationConfig;
-            _goodResources = ResourceManager.Instance.GoodsResources;
+            _goodResources = ResourceManager.Instance.GoodResources;
 
             _town = town;
 

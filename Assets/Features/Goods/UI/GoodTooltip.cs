@@ -23,8 +23,8 @@ namespace Features.Goods.UI
         [SerializeField, Required]
         private Image goodImage, tierImage, regionImage;
 
-        private GoodsResources _goodsResources;
-        private GoodsConfig _goodsConfig;
+        private GoodResources _goodResources;
+        private GoodConfig _goodConfig;
         private TierResources _tierIcons;
         private RegionResources _region;
         private Selection _selection;
@@ -35,8 +35,8 @@ namespace Features.Goods.UI
         protected override void Awake()
         {
             base.Awake();
-            _goodsConfig = ConfigurationManager.Configurations.GoodsConfig;
-            _goodsResources = ResourceManager.Instance.GoodsResources;
+            _goodConfig = ConfigurationManager.Configurations.GoodConfig;
+            _goodResources = ResourceManager.Instance.GoodResources;
             _tierIcons = ResourceManager.Instance.TierResources;
             _region = ResourceManager.Instance.RegionResources;
             _selection = GameplayContext.Instance.Selection;
@@ -46,9 +46,9 @@ namespace Features.Goods.UI
         {
             _good = data;
 
-            var goodData = _goodsResources.ResourceData[_good];
+            var goodData = _goodResources.ResourceData[_good];
             var tier = goodData.Tier;
-            var price = _goodsConfig.BasePriceData[tier];
+            var price = _goodConfig.BasePriceData[tier];
             var tierIcon = _tierIcons.Icons[tier];
             // TODO - HACK: should it take First() instead of random?
             var regionIcon = _region.Data[goodData.Regions.GetRandom()];

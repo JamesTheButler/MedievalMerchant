@@ -18,7 +18,7 @@ namespace Features.Inventory
         public IInventoryPolicy InventoryPolicy { get; }
         public IReadOnlyDictionary<Good, int> Goods => _goods;
 
-        private readonly Lazy<GoodsResources> _goodsInfoManager = new(() => ResourceManager.Instance.GoodsResources);
+        private readonly Lazy<GoodResources> _goodsInfoManager = new(() => ResourceManager.Instance.GoodResources);
         private readonly Dictionary<Good, int> _goods = new();
 
         public Inventory(IInventoryPolicy inventoryPolicy)

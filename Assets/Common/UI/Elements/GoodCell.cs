@@ -33,7 +33,7 @@ namespace Common.UI.Elements
         [SerializeField, Required]
         protected SimpleTooltipHandler messageTooltip;
 
-        protected readonly Lazy<GoodsResources> GoodsConfig = new(() => ResourceManager.Instance.GoodsResources);
+        protected readonly Lazy<GoodResources> GoodsConfig = new(() => ResourceManager.Instance.GoodResources);
 
         private void Awake()
         {

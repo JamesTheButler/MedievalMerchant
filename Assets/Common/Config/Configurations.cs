@@ -33,7 +33,7 @@ namespace Common.Config
         public EventConfig EventConfig { get; private set; }
 
         [field: SerializeField, Required]
-        public GoodsConfig GoodsConfig { get; private set; }
+        public GoodConfig GoodConfig { get; private set; }
 
         [field: SerializeField, Required]
         public MissionConfig MissionConfig { get; private set; }

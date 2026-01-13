@@ -25,14 +25,14 @@ namespace Features.Towns.UI
         [SerializeField]
         private Tier tier;
 
-        private GoodsResources _goodsResources;
+        private GoodResources _goodResources;
 
         private readonly Dictionary<Good, InventoryCell> _occupiedCells = new();
         private readonly List<InventoryCell> _inventoryCells = new();
 
         private void Start()
         {
-            _goodsResources = ResourceManager.Instance.GoodsResources;
+            _goodResources = ResourceManager.Instance.GoodResources;
             tierIcon.sprite = ResourceManager.Instance.TierResources.Icons[tier];
             
             GatherCells();
@@ -41,7 +41,7 @@ namespace Features.Towns.UI
 
         public void UpdateGood(Good good, int amount)
         {
-            var goodTier = _goodsResources.ResourceData[good].Tier;
+            var goodTier = _goodResources.ResourceData[good].Tier;
             if (goodTier != tier)
             {
                 Debug.LogError($"Tried adding {good} to {nameof(InventoryTierGroup)} ({goodTier}) for Tier {tier}.");

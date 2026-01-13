@@ -21,8 +21,8 @@ namespace Features.Towns
         private readonly Dictionary<Good, AvailabilityPriceModifier> _availabilityModifiers = new();
 
         private readonly AvailabilityCalculator _availabilityCalculator;
-        private readonly GoodsResources _goodsResources;
-        private readonly GoodsConfig _goodsConfig;
+        private readonly GoodResources _goodResources;
+        private readonly GoodConfig _goodConfig;
 
         private readonly Dictionary<IModifier, IGoodSelector> _modifiers = new();
 
@@ -32,8 +32,8 @@ namespace Features.Towns
             _town = town;
             _pricePredicate = pricePredicate;
             _availabilityCalculator = new AvailabilityCalculator(town);
-            _goodsResources = ResourceManager.Instance.GoodsResources;
-            _goodsConfig = ConfigurationManager.Configurations.GoodsConfig;
+            _goodResources = ResourceManager.Instance.GoodResources;
+            _goodConfig = ConfigurationManager.Configurations.GoodConfig;
         }
 
         public ModifiableVariable GetPrice(Good good)
@@ -44,8 +44,8 @@ namespace Features.Towns
             if (_cache.TryGetValue(good, out var cachedPrice))
                 return cachedPrice;
 
-            var goodTier = _goodsResources.ResourceData[good].Tier;
-            var goodBasePrice = _goodsConfig.BasePriceData[goodTier];
+            var goodTier = _goodResources.ResourceData[good].Tier;
+            var goodBasePrice = _goodConfig.BasePriceData[goodTier];
             var basePriceModifier = new BasePriceModifier(goodBasePrice, goodTier);
 
             var price = new ModifiableVariable(

@@ -13,7 +13,7 @@ namespace Features.Trade.Logic
 
         private readonly AvailabilityConfig _availabilityConfig = ConfigurationManager.Configurations.AvailabilityConfig;
         private readonly ProducerConfig _townConfig = ConfigurationManager.Configurations.ProducerConfig;
-        private readonly GoodsResources _goodsResources = ResourceManager.Instance.GoodsResources;
+        private readonly GoodResources _goodResources = ResourceManager.Instance.GoodResources;
 
         public AvailabilityCalculator(Town town)
         {
@@ -23,7 +23,7 @@ namespace Features.Trade.Logic
 
         public Availability GetAvailability(Good good)
         {
-            var goodTier = _goodsResources.ResourceData[good].Tier;
+            var goodTier = _goodResources.ResourceData[good].Tier;
             // we use production limit for buy and sell right now
             var maxAmount = _townConfig.GetLimit(_town.Tier.Value, goodTier);
 

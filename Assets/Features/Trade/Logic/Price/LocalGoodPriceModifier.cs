@@ -10,7 +10,7 @@ namespace Features.Trade.Logic.Price
     {
         public LocalGoodPriceModifier() : base(0, "Good from local region.")
         {
-            Value.Value = ConfigurationManager.Configurations.GoodsConfig.LocalGoodPriceModifier;
+            Value.Value = ConfigurationManager.Configurations.GoodConfig.LocalGoodPriceModifier;
         }
     }
 }
