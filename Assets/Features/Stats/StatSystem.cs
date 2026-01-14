@@ -1,4 +1,5 @@
 using Common.Infrastructure;
+using Common.Infrastructure.Observation;
 using Features.Trade;
 using Features.Trade.Logic;
 using UnityEngine;
@@ -7,6 +8,8 @@ namespace Features.Stats
 {
     public sealed class StatSystem : ISystem
     {
+        private readonly Bindings _bindings = new();
+
         private StatsModel _model;
         private TradeService _tradeService;
 
@@ -14,8 +17,16 @@ namespace Features.Stats
         {
             _model = GameplayContext.Instance.Model.Stats;
             _tradeService = GameplayContext.Instance.Services.TradeService;
-            _tradeService.TradeCompleted += OnTradeCompleted;
-            _tradeService.TradeAborted += OnTradeAborted;
+
+            _bindings.Track(
+                _tradeService.TradeCompleted.Observe(OnTradeCompleted),
+                _tradeService.TradeAborted.Observe(OnTradeAborted)
+            );
+        }
+
+        public void CleanUp()
+        {
+            _bindings.UnbindAll();
         }
 
         private void OnTradeAborted(TradeInfo info)
@@ -37,7 +48,5 @@ namespace Features.Stats
                 _model.TrackSoldGood(info.Good, info.Amount);
             }
         }
-
-        public void CleanUp() { }
     }
 }

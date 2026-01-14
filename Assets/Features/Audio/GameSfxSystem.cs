@@ -2,6 +2,7 @@ using Common.Infrastructure;
 using Common.Infrastructure.Observation;
 using Features.Ticking.Logic;
 using Features.Towns;
+using Features.Trade;
 
 namespace Features.Audio
 {
@@ -19,25 +20,31 @@ namespace Features.Audio
             var selection = GameplayContext.Instance.Selection;
             var gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
             var navigationService = GameplayContext.Instance.Services.NavigationService;
+            var tradeService = GameplayContext.Instance.Services.TradeService;
 
             _bindings.Track(
                 playerModel.Location.CurrentTown.Observe(PlayerLocationChanged),
                 selection.SelectedTown.Observe(SelectedTownChanged),
                 navigationService.NavigationStarted.Observe(OnNavigationChanged),
-                //  TradeService.TradeCompleted +=  ObsEvnt!
-                //LevelStarted
+                tradeService.TradeCompleted.Observe(OnTradeCompleted),
+                //  LevelStarted // no hook exists for this, i think
                 //  LevelConditions.LevelWon += ObsEvnt!
                 //  LevelConditions.LevelLost += ObsEvnt!
                 //  EventModel.EventAdded +=  ObsEvnt!
                 gameSpeedModel.IsPaused.Observe(OnGamePaused),
                 gameSpeedModel.GameSpeed.Observe(OnGameSpeedChanged)
-                
+
                 // UpgradeMissionStarted --- MissionModel.MissionAdded
                 // i don't have a good way of detecting why a mission ended
                 // UpgradeMissionCompleted  --- MissionModel.MissionRemoved
                 // UpgradeMissionFailed --- MissionModel.MissionRemoved
                 // TradeMissionCompleted --- MissionModel.MissionRemoved
             );
+        }
+
+        private void OnTradeCompleted(TradeInfo info)
+        {
+            Play(GameSoundEffect.TradeCompleted);
         }
 
         public void CleanUp()

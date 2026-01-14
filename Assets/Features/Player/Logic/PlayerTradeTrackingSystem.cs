@@ -14,12 +14,12 @@ namespace Features.Player.Logic
             _tradeTracker = GameplayContext.Instance.Model.Player.TradeTracker;
             _tradeService = GameplayContext.Instance.Services.TradeService;
 
-            _tradeService.TradeCompleted += OnTradeCompleted;
+            _tradeService.TradeCompleted.Observe(OnTradeCompleted);
         }
 
         public void CleanUp()
         {
-            _tradeService.TradeCompleted -= OnTradeCompleted;
+            _tradeService.TradeCompleted.StopObserving(OnTradeCompleted);
         }
         
         private void OnTradeCompleted(TradeInfo info)

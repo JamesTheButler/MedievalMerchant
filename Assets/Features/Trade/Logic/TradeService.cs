@@ -1,12 +1,12 @@
-using System;
 using Common.Infrastructure;
+using Common.Infrastructure.Observation;
 
 namespace Features.Trade.Logic
 {
     public sealed class TradeService : IService
     {
-        public event Action<TradeInfo> TradeCompleted;
-        public event Action<TradeInfo> TradeAborted;
+        public ObservableEvent<TradeInfo> TradeCompleted { get; } = new();
+        public ObservableEvent<TradeInfo> TradeAborted { get; } = new();
 
         public void Initialize() { }
         public void CleanUp() { }
