@@ -1,4 +1,5 @@
 using Common.Config;
+using Features.Audio;
 using Features.Goods.Config;
 using Features.Towns.Config;
 using Features.Towns.Development.UI.DevelopmentGauge;
@@ -16,6 +17,9 @@ namespace Common.Infrastructure
     public sealed class ResourceManager : MonoBehaviour
     {
         public static ResourceManager Instance;
+
+        [field: SerializeField, Required]
+        public AudioResources AudioResources { get; private set; }
 
         [field: SerializeField, Required]
         public AvailabilityResources AvailabilityResources { get; private set; }

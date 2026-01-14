@@ -54,17 +54,31 @@ namespace Features.Levels
             var modifierService = context.Services.GameModifierService;
             modifierService.ApplyModifier(levelInfo.GameplayModifiers);
 
-            InitializeUI();
+            InitializeEverything();
 
             completed.Invoke();
         }
 
-        private void InitializeUI()
+        private void OnDestroy()
+        {
+            CleanUpEverything();
+        }
+
+        private void InitializeEverything()
         {
             var initializables = Resources.FindObjectsOfTypeAll<InitializableBehavior>();
             foreach (var initializable in initializables)
             {
                 initializable.Initialize();
+            }
+        }
+
+        private void CleanUpEverything()
+        {
+            var initializables = Resources.FindObjectsOfTypeAll<InitializableBehavior>();
+            foreach (var initializable in initializables)
+            {
+                initializable.CleanUp();
             }
         }
     }

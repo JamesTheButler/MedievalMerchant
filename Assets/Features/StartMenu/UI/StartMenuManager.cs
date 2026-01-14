@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using Common.Infrastructure;
+using Common.UI.Elements;
 using Common.Utility;
 using Features.Feedback.UI;
 using NaughtyAttributes;
@@ -44,10 +46,19 @@ namespace Features.StartMenu.UI
                 button.Clicked += OnButtonClick;
             }
 
-            feedbackForm.Initialize();
-
             var cursor = ResourceManager.Instance.Cursors.Default;
             Cursor.SetCursor(cursor.Texture, cursor.HotSpot, CursorMode.Auto);
+
+            InitializeEverything();
+        }
+
+        private static void InitializeEverything()
+        {
+            var initializables = Resources.FindObjectsOfTypeAll<InitializableBehavior>();
+            foreach (var initializable in initializables)
+            {
+                initializable.Initialize();
+            }
         }
 
         private void Update()
