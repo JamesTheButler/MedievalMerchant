@@ -3,7 +3,7 @@ using Common.UI.Elements;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Features.Towns.Production.UI
+namespace Features.Towns.Production.UI.Construction
 {
     public sealed class Tier2ConstructionElement : MonoBehaviour
     {

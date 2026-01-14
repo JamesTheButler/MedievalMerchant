@@ -13,7 +13,7 @@ using Features.Towns.Production.Logic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Features.Towns.Production.UI
+namespace Features.Towns.Production.UI.Construction
 {
     public sealed class Tier1ConstructionPopup : Popup
     {

@@ -15,12 +15,11 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
-namespace Features.Towns.UI
+namespace Features.Towns.Production.UI
 {
     public sealed class ProducerGroup : MonoBehaviour
     {
         public event Action<ProductionCell, Tier> UpgradeButtonClicked;
-        public event Action<GoodCell> ProductionCellClicked, DeliveryCellClicked;
 
         [SerializeField, Required]
         private GameObject unavailableGroup;
@@ -65,11 +64,8 @@ namespace Features.Towns.UI
             foreach (var (tier, cell) in _producerCellsPerTier)
             {
                 cell.Index = _producerIndex;
-                cell.Clicked += () => ProductionCellClicked?.Invoke(cell);
                 cell.UnlockButtonClicked += () => UpgradeButtonClicked?.Invoke(cell, tier);
             }
-
-            deliveryCell.Clicked += () => DeliveryCellClicked?.Invoke(deliveryCell);
         }
 
         public void Bind(Town town, bool isAvailable)

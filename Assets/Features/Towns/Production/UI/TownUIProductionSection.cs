@@ -1,13 +1,12 @@
 using System.Linq;
 using Common.Infrastructure;
 using Common.Types;
-using Common.UI.Elements;
 using Features.Goods.Config;
-using Features.Trade;
+using Features.Towns.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Features.Towns.UI
+namespace Features.Towns.Production.UI
 {
     public sealed class TownUIProductionSection : TownUISection
     {

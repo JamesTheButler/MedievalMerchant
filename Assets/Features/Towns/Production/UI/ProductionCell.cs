@@ -5,7 +5,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Features.Towns.UI
+namespace Features.Towns.Production.UI
 {
     public sealed class ProductionCell : InventoryCellBase
     {

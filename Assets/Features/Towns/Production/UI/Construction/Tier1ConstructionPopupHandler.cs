@@ -1,9 +1,8 @@
 using System;
 using Common.Infrastructure;
-using Features.Towns.UI;
 using UnityEngine;
 
-namespace Features.Towns.Production.UI
+namespace Features.Towns.Production.UI.Construction
 {
     public sealed class Tier1ConstructionPopupHandler : MonoBehaviour
     {

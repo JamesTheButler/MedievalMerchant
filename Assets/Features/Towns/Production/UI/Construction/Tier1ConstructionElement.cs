@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Features.Towns.Production.UI
+namespace Features.Towns.Production.UI.Construction
 {
     public sealed class Tier1ConstructionElement : MonoBehaviour, IPointerClickHandler
     {
