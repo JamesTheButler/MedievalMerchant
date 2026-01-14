@@ -30,6 +30,9 @@ namespace Features.Feedback.UI
 
         public void Submit()
         {
+            if (messageInput.text == "")
+                return;
+
             StartCoroutine(_feedbackService.PostFeedback(nameInput.text, messageInput.text));
             Close();
         }
