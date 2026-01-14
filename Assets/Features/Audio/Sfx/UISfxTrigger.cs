@@ -2,7 +2,7 @@ using Common.Infrastructure;
 using Common.UI.Elements;
 using UnityEngine;
 
-namespace Features.Audio
+namespace Features.Audio.Sfx
 {
     public sealed class UISfxTrigger : InitializableBehavior
     {

@@ -1,7 +1,7 @@
 using Common.Infrastructure;
 using Common.Infrastructure.Observation;
 
-namespace Features.Audio
+namespace Features.Audio.Sfx
 {
     public sealed class SfxService : IService
     {

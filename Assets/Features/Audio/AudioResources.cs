@@ -1,5 +1,7 @@
 using AYellowpaper.SerializedCollections;
 using Common.Utility;
+using Features.Audio.Sfx;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Audio
@@ -14,5 +16,11 @@ namespace Features.Audio
 
         [field: SerializeField, SerializedDictionary]
         public SerializedDictionary<UISoundEffect, AudioClip> UiSoundClips { get; private set; }
+
+        [field: SerializeField, Required]
+        public AudioClip StartMenuMusic { get; private set; }
+
+        [field: SerializeField]
+        public AudioClip[] GameplayMusic { get; private set; }
     }
 }

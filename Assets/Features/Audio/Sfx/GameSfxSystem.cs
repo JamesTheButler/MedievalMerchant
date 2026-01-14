@@ -4,7 +4,7 @@ using Features.Ticking.Logic;
 using Features.Towns;
 using Features.Trade;
 
-namespace Features.Audio
+namespace Features.Audio.Sfx
 {
     public sealed class GameSfxSystem : ISystem
     {

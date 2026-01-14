@@ -1,4 +1,4 @@
-namespace Features.Audio
+namespace Features.Audio.Sfx
 {
     public enum GameSoundEffect
     {

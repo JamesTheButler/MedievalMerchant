@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Features.Audio;
+using Features.Audio.Sfx;
 using Features.Levels.Conditions.Logic;
 using Features.Levels.GameModifiers.Events;
 using Features.Levels.Serialization;

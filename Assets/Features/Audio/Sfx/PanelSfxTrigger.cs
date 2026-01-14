@@ -3,7 +3,7 @@ using Common.UI.Elements;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Features.Audio
+namespace Features.Audio.Sfx
 {
     public sealed class PanelSfxTrigger : InitializableBehavior
     {

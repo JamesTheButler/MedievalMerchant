@@ -1,4 +1,5 @@
 using Common.Utility;
+using Features.Audio.Music;
 using Features.Goods.Config;
 using Features.Levels.GameModifiers.Events.Data;
 using Features.Player.Caravan.Config;
@@ -37,6 +38,9 @@ namespace Common.Config
 
         [field: SerializeField, Required]
         public MissionConfig MissionConfig { get; private set; }
+
+        [field: SerializeField, Required]
+        public MusicConfig MusicConfig { get; private set; }
 
         [field: SerializeField, Required]
         public ProducerConfig ProducerConfig { get; private set; }
