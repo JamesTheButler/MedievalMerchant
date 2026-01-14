@@ -1,14 +1,12 @@
+using Common.Infrastructure;
 using Common.UI.Elements;
 using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Audio
 {
-    public sealed class PanelSoundEffectTrigger : InitializableBehavior
+    public sealed class PanelSfxTrigger : InitializableBehavior
     {
-        [SerializeField]
-        private bool autoFindPanel;
-
         [SerializeField, Required]
         private DynamicPanel panel;
 
@@ -16,11 +14,8 @@ namespace Features.Audio
 
         public override void Initialize()
         {
-            if (autoFindPanel)
-            {
-                panel = FindFirstObjectByType<DynamicPanel>();
-            }
-
+            _sfxService = GlobalContext.Instance.Services.SfxService;
+            
             panel.Opened += OnOpened;
             panel.Closed += OnClosed;
         }

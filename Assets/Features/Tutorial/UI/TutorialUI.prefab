@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 3553880505118476950}
   - component: {fileID: 2822465734634907778}
   - component: {fileID: 6925280677167383808}
+  - component: {fileID: 4066294039842428921}
   m_Layer: 5
   m_Name: TutorialUI
   m_TagString: Untagged
@@ -286,6 +287,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4066294039842428921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714403549499525796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef4154b6a6a44a584dc2a16ab7a9648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Audio.PanelSfxTrigger
+  panel: {fileID: 7080212227992556228}
 --- !u!1 &2161578864933797375
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,7 +515,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 2
 --- !u!114 &6569762900455592390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -731,7 +745,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 2
 --- !u!114 &6672583003172401308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -884,7 +898,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 2
 --- !u!114 &5506412505533728537
 MonoBehaviour:
   m_ObjectHideFlags: 0

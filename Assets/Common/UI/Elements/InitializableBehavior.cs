@@ -8,5 +8,10 @@ namespace Common.UI.Elements
         public abstract void Initialize();
 
         public virtual void CleanUp() { }
+
+        private void OnDestroy()
+        {
+            CleanUp();
+        }
     }
 }

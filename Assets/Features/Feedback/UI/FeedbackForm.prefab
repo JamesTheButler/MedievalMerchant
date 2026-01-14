@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 6134036318578862042}
   - component: {fileID: 7046697428895930061}
   - component: {fileID: 194592059522898218}
+  - component: {fileID: 8229048895739729844}
   m_Layer: 5
   m_Name: FeedbackForm
   m_TagString: Untagged
@@ -221,6 +222,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4305228323508372140}
   m_CullTransparentMesh: 1
+--- !u!114 &8229048895739729844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305228323508372140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef4154b6a6a44a584dc2a16ab7a9648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Audio.PanelSfxTrigger
+  panel: {fileID: 7046697428895930061}
 --- !u!1 &6349627639181986601
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,34 +1005,6 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
       objectReference: {fileID: 1961801037023603436}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 7046697428895930061}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Submit
-      objectReference: {fileID: 0}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Features.StartMenu.UI.FeedbackForm, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3804264420171853399, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
     m_RemovedGameObjects:
@@ -1245,34 +1231,6 @@ PrefabInstance:
     - target: {fileID: 5165203022748418147, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 7046697428895930061}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Close
-      objectReference: {fileID: 0}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Features.StartMenu.UI.FeedbackForm, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3804264420171853399, guid: 60380833e0ea23f40877d37250ce3015, type: 3}

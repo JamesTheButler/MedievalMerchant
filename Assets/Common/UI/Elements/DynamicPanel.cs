@@ -7,7 +7,6 @@ namespace Common.UI.Elements
         public event Action Opened, Closed;
 
         private bool _isOpen;
-
         private bool _isInitialized;
 
         public override void Initialize()
