@@ -5,6 +5,7 @@ using Features;
 using Features.Audio;
 using Features.Cheats;
 using Features.Levels.GameModifiers.Logic;
+using Features.Map;
 using Features.Notifications.Logic;
 using Features.Player.Retinue.Logic;
 using Features.Ticking.Logic;
@@ -25,6 +26,7 @@ namespace Common.Infrastructure
         public UIBridgeService UIBridgeService { get; private set; }
         public CameraService CameraService { get; private set; }
         public CheatService Cheats { get; private set; }
+        public NavigationService NavigationService { get; private set; }
 
         private readonly List<IService> _services = new();
 
@@ -40,6 +42,7 @@ namespace Common.Infrastructure
             UIBridgeService = new UIBridgeService();
             CameraService = new CameraService();
             Cheats = new CheatService();
+            NavigationService = new NavigationService();
 
             _services.Add(TutorialPersistenceService);
             _services.Add(TutorialService);
@@ -51,6 +54,7 @@ namespace Common.Infrastructure
             _services.Add(UIBridgeService);
             _services.Add(CameraService);
             _services.Add(Cheats);
+            _services.Add(NavigationService);
 
             foreach (var service in _services)
             {

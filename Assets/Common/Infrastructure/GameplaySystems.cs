@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Features.Audio;
 using Features.Levels.Conditions.Logic;
 using Features.Levels.GameModifiers.Events;
 using Features.Levels.Serialization;
@@ -52,6 +53,7 @@ namespace Common.Infrastructure
             _systems.Add(new NotificationPingSystem());
             _systems.Add(new NotificationLoggerSystem());
             _systems.Add(new ProgressionSystem());
+            _systems.Add(new GameSfxSystem());
         }
 
         private void AddPlayerSystems()

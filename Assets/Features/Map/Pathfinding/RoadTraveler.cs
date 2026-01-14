@@ -1,8 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Common.Infrastructure;
-using Common.UI;
+using Common.Infrastructure.Observation;
+using Common.UI.Elements;
 using Common.Utility;
 using Features.Player.Logic;
 using Features.Ticking.Logic;
@@ -12,7 +12,7 @@ using UnityEngine;
 namespace Features.Map.Pathfinding
 {
     // TODO - CORE: this is not generic, but it should be. anything that can walk on roads should be able to use this
-    public sealed class RoadTraveler : MonoBehaviour
+    public sealed class RoadTraveler : InitializableBehavior
     {
         [SerializeField, Range(0, 0.45f)]
         public float smoothing = 0.2f;
@@ -20,35 +20,44 @@ namespace Features.Map.Pathfinding
         [SerializeField]
         private Grid tileGrid;
 
-        private readonly Lazy<GameplayModel> _model = new(() => GameplayContext.Instance.Model);
+        private readonly Bindings _bindings = new();
 
         private RoadGraph _graph;
         private PlayerModel _player;
         private PlayerLocation _playerLocation;
         private GameSpeedModel _gameSpeedModel;
-        private UIBridgeService _uiBridgeService;
+        private NavigationService _navigationService;
 
         private float _mapSpeed;
 
         private Town _town;
 
-        private void Start()
+        public override void Initialize()
         {
-            _graph = RoadGraphBuilder.Build(_model.Value.TileFlagMap);
-            _player = _model.Value.Player;
-            _playerLocation = _player.Location;
-            _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
-            _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
+            var model = GameplayContext.Instance.Model;
 
-            _player.SpeedInTilesPerDay.Observe(OnMapSpeedChanged);
+            _graph = RoadGraphBuilder.Build(model.TileFlagMap);
+            _player = model.Player;
+            _playerLocation = _player.Location;
+            _gameSpeedModel = model.GameSpeed;
+            _navigationService = GameplayContext.Instance.Services.NavigationService;
+
+            _bindings.Track(
+                _player.SpeedInTilesPerDay.Observe(OnMapSpeedChanged),
+                _navigationService.NavigationStarted.Observe(TravelTo)
+            );
         }
 
-        public void TravelTo(Town town)
+        public override void CleanUp()
+        {
+            base.CleanUp();
+            _bindings.UnbindAll();
+        }
+
+        private void TravelTo(Town town)
         {
             if (town == _playerLocation.CurrentTown.Value || town == null)
                 return;
-
-            _uiBridgeService.NavigateToTown(town);
 
             _town = town;
             var startCell = tileGrid.WorldToCell(_playerLocation.WorldLocation.Value).XY();
@@ -132,8 +141,7 @@ namespace Features.Map.Pathfinding
                 var elapsed = 0f;
                 while (elapsed < dur)
                 {
-                    // TODO - Optimization: would be cheaper to observe _tickingService and have local _isPaused
-                    // pause movement when game is paused
+                    // pause movement while game is paused
                     yield return new WaitUntil(() => !_gameSpeedModel.IsPaused.Value);
 
                     elapsed += Time.deltaTime;

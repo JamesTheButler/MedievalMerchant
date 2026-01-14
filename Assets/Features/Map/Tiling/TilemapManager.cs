@@ -29,10 +29,12 @@ namespace Features.Map.Tiling
         public Tilemap Tilemap { get; private set; }
 
         private GameplayModel _model;
+        private NavigationService _navigationService;
 
         public override void Initialize()
         {
             _model = GameplayContext.Instance.Model;
+            _navigationService = GameplayContext.Instance.Services.NavigationService;
 
             Tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
 
@@ -76,6 +78,7 @@ namespace Features.Map.Tiling
             var clickedCell = GetCellOnMousePosition();
             var town = _model.Towns.GetValueOrDefault(clickedCell);
             onTownRightClicked?.Invoke(town);
+            _navigationService.NavigationStarted?.Invoke(town);
         }
 
         private void LeftClick()

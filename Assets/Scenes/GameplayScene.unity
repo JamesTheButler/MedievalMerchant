@@ -6996,18 +6996,6 @@ MonoBehaviour:
   onTownRightClicked:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 575118715}
-        m_TargetAssemblyTypeName: Data.PlayerTraveler, Assembly-CSharp
-        m_MethodName: TravelTo
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1616901943}
         m_TargetAssemblyTypeName: Features.Towns.SelectionEvents, Assembly-CSharp
         m_MethodName: Select
@@ -7059,19 +7047,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Features.Levels.Conditions.UI.InGameConditionsListUIHandler,
-          Assembly-CSharp
-        m_MethodName: Close
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1081175975}
         m_TargetAssemblyTypeName: Features.Player.Retinue.UI.RetinuePanel, Assembly-CSharp
         m_MethodName: Close
@@ -7084,10 +7059,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Features.Levels.GameModifiers.UI.InGameModifiersPanelHandler,
+      - m_Target: {fileID: 8780336678312397558}
+        m_TargetAssemblyTypeName: Features.Levels.Conditions.UI.InGameConditionsPanel,
           Assembly-CSharp
-        m_MethodName: Hide
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1843114920}
+        m_TargetAssemblyTypeName: Features.Levels.GameModifiers.UI.InGameModifiersPanel,
+          Assembly-CSharp
+        m_MethodName: Close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

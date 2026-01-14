@@ -224,7 +224,6 @@ namespace Features.Towns.Missions
             _notificationService.PostNotification(notification);
             _resultHandler.Handle(mission.Penalty);
 
-
             DisableMission(mission);
         }
     }
