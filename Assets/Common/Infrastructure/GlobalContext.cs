@@ -1,4 +1,6 @@
 using Features.Levels;
+using Features.Settings.Logic;
+using Features.Settings.UI;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -10,6 +12,7 @@ namespace Common.Infrastructure
 
         public GlobalServices Services { get; private set; }
         public ProgressModel ProgressModel { get; private set; }
+        public AudioSettingsModel AudioSettingsModel { get; private set; }
 
         [CanBeNull]
         public static LevelInfo CurrentLevelInfo { get; set; }
@@ -32,9 +35,13 @@ namespace Common.Infrastructure
         {
             Services = new GlobalServices();
             ProgressModel = new ProgressModel();
+            AudioSettingsModel = new AudioSettingsModel();
 
             Services.Initialize();
+            
+            
             ProgressModel.Initialize();
+            AudioSettingsModel.Initialize();
         }
     }
 }
