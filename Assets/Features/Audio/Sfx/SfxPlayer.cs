@@ -9,6 +9,8 @@ namespace Features.Audio.Sfx
 {
     public sealed class SfxPlayer : InitializableBehavior
     {
+        private static SfxPlayer _instance;
+
         private readonly Bindings _bindings = new();
 
         private SfxService _sfxService;
@@ -19,6 +21,17 @@ namespace Features.Audio.Sfx
 
         private void Awake()
         {
+            if (_instance == null)
+            {
+                _instance = this;
+            }
+
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             DontDestroyOnLoad(gameAudioSource);
         }
 

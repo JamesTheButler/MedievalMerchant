@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Common.Infrastructure;
 using Common.Infrastructure.Global;
 using Common.Infrastructure.Observation;
@@ -12,6 +13,8 @@ namespace Features.Audio.Music
 {
     public sealed class MusicPlayer : InitializableBehavior
     {
+        private static MusicPlayer _instance;
+
         private AudioResources _audioResources;
 
         [SerializeField, Required]
@@ -29,7 +32,28 @@ namespace Features.Audio.Music
 
         private void Awake()
         {
+            if (_instance == null)
+            {
+                _instance = this;
+            }
+
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            _instance = this;
+
             DontDestroyOnLoad(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            if (_instance == this)
+            {
+                _instance = null;
+            }
         }
 
         public override void Initialize()
@@ -59,14 +83,14 @@ namespace Features.Audio.Music
 
             if (!audioSource || !audioSource.enabled)
                 return;
-            
+
             _currentMode = mode;
 
-            audioSource.Stop();
 
             switch (mode)
             {
                 case MusicMode.Menu:
+                    audioSource.Stop();
                     this.StopCoroutineSafe(_gameplayLoop);
                     audioSource.clip = _audioResources.StartMenuMusic;
                     audioSource.loop = true;
@@ -89,6 +113,7 @@ namespace Features.Audio.Music
 
                 yield return new WaitForSeconds(_musicConfig.SecondsBetweenSongs);
 
+                audioSource.Stop();
                 var nextSong = _activePool.GetRandom();
                 audioSource.clip = nextSong;
                 audioSource.Play();
