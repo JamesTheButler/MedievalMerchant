@@ -1,4 +1,3 @@
-using Common.Infrastructure;
 using Common.Infrastructure.Global;
 using Common.UI.Elements;
 using UnityEngine;

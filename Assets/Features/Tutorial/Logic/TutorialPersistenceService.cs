@@ -2,7 +2,6 @@
 using System.IO;
 using Common.Infrastructure.Global;
 using Common.Infrastructure.Serialization;
-using Features.Settings.Logic;
 
 namespace Features.Tutorial.Logic
 {

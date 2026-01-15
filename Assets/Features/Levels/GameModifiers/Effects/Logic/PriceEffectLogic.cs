@@ -1,5 +1,4 @@
-﻿using Common.Infrastructure;
-using Common.Infrastructure.Gameplay;
+﻿using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Modifiable;
 using Common.Utility;
 using Features.Levels.GameModifiers.Effects.Data;

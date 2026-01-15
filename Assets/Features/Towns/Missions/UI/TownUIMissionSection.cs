@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Common.UI.Elements;
 using Common.Utility;
 using Features.Towns.UI;
-using Features.Trade;
 using NaughtyAttributes;
 using UnityEngine;
 

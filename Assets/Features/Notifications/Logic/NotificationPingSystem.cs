@@ -1,5 +1,4 @@
-﻿using System;
-using Common.Camera;
+﻿using Common.Camera;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.UI;

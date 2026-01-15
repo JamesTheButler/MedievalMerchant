@@ -1,5 +1,4 @@
-﻿using System;
-using Common.UI.Elements;
+﻿using Common.UI.Elements;
 using Common.Utility;
 using Features.Tutorial.Data;
 using NaughtyAttributes;

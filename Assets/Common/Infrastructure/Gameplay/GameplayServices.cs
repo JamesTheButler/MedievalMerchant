@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Common.Camera;
-using Common.Infrastructure.Global;
 using Common.UI;
 using Features.Cheats;
 using Features.Levels.GameModifiers.Logic;

@@ -1,6 +1,5 @@
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
-using Features.Ticking;
 using Features.Ticking.Logic;
 
 namespace Features.Player.Logic

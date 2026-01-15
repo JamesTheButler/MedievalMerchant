@@ -1,5 +1,4 @@
-﻿using Common.Infrastructure;
-using Common.Infrastructure.Gameplay;
+﻿using Common.Infrastructure.Gameplay;
 using Features.Goods.Selector;
 using Features.Player.Retinue.Config.CompanionDatas;
 using Features.Player.Retinue.Logic.Modifiers;

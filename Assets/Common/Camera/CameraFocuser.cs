@@ -1,5 +1,4 @@
 using System;
-using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Features.Towns;
 using UnityEngine;

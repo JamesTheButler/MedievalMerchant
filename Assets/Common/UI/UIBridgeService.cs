@@ -1,6 +1,5 @@
 ﻿using System;
 using Common.Infrastructure;
-using Features.Towns;
 using Features.Tutorial;
 
 namespace Common.UI
