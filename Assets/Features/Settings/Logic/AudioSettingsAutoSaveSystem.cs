@@ -29,7 +29,7 @@ namespace Features.Settings.Logic
 
         private void OnAnyChanged()
         {
-            _persistenceService.Save(new AudioSettings(
+            _persistenceService.Save(new AudioSettingSaveData(
                 _model.MasterVolume,
                 _model.MusicVolume,
                 _model.SfxVolume,

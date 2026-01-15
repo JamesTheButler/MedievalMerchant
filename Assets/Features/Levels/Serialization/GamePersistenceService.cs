@@ -1,15 +1,14 @@
 using System.IO;
 using Common.Infrastructure;
 using Common.Infrastructure.Global;
-using UnityEngine;
+using Common.Infrastructure.Serialization;
 
 namespace Features.Levels.Serialization
 {
     public sealed class GamePersistenceService : IService
     {
-        private static readonly string SaveGameRootPath = Application.persistentDataPath;
-        private static readonly string OngoingLevelPath = Path.Combine(SaveGameRootPath, "OngoingLevels");
-        private static readonly string CompletedLevelPath = Path.Combine(SaveGameRootPath, "CompletedLevels");
+        private static readonly string OngoingLevelPath = Path.Combine(PersistenceLocation.Levels, "OngoingLevels");
+        private static readonly string CompletedLevelPath = Path.Combine(PersistenceLocation.Levels, "CompletedLevels");
         private static readonly string OngoingLevelFilenameTemplate = Path.Combine(OngoingLevelPath, "Level{0}.txt");
 
         private static readonly string CompletedLevelFilenameTemplate =
@@ -104,7 +103,7 @@ namespace Features.Levels.Serialization
 
         private static void EnsureFoldersExist()
         {
-            Directory.CreateDirectory(SaveGameRootPath);
+            Directory.CreateDirectory(PersistenceLocation.Levels);
             Directory.CreateDirectory(OngoingLevelPath);
             Directory.CreateDirectory(CompletedLevelPath);
         }

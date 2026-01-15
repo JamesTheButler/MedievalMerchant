@@ -31,7 +31,7 @@ namespace Common.Infrastructure.Gameplay
 
         public void Initialize()
         {
-            TutorialPersistenceService = new TutorialPersistenceService(GlobalContext.Instance.PersistenceServices.Serializer);
+            TutorialPersistenceService = new TutorialPersistenceService();
             TutorialService = new TutorialService(TutorialPersistenceService);
             TickingService = new TickingService();
             CompanionUpgradeService = new CompanionUpgradeService();

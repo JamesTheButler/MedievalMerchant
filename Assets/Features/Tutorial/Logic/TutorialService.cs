@@ -24,9 +24,9 @@ namespace Features.Tutorial.Logic
 
         public void Initialize()
         {
-            var persistedTopics = _persistenceService.ReadCompletedTopics();
+            var persistedTopics = _persistenceService.Load();
 
-            foreach (var topic in persistedTopics)
+            foreach (var topic in persistedTopics.CompletedTopics)
             {
                 _completedChapters[topic] = true;
                 TopicCompletionChanged?.Invoke(topic, true);
@@ -69,7 +69,12 @@ namespace Features.Tutorial.Logic
 
         private void Persist()
         {
-            _persistenceService.WriteCompletedTopics(_completedChapters.Where(kv => kv.Value).Select(kv => kv.Key));
+            var saveData = new TutorialSaveData(_completedChapters
+                .Where(kv => kv.Value)
+                .Select(kv => kv.Key)
+                .ToArray());
+
+            _persistenceService.Save(saveData);
         }
     }
 }
