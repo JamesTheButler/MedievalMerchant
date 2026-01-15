@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Infrastructure;
+using Common.Infrastructure.Gameplay;
 using Common.Types;
 using Features.Levels.GameModifiers.Data;
 using Features.Levels.GameModifiers.Effects.Data;

@@ -1,7 +1,7 @@
 using Features.Towns;
 using UnityEngine;
 
-namespace Common.Infrastructure
+namespace Common.Infrastructure.Gameplay
 {
     /// <summary>
     /// Manages models and services relevant while playing a specific level.

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Common.Infrastructure;
+using Common.Infrastructure.Gameplay;
 using Features.Player.Retinue.Logic.CompanionLogics;
 
 namespace Features.Player.Retinue.Logic

@@ -1,5 +1,6 @@
 using System;
 using Common.Infrastructure;
+using Common.Infrastructure.Gameplay;
 using Common.Utility;
 using Features.Map.Tiling;
 using NaughtyAttributes;

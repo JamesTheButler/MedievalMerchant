@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Features.Audio;
 using Features.Audio.Sfx;
 using Features.Levels.Conditions.Logic;
 using Features.Levels.GameModifiers.Events;
@@ -16,7 +15,7 @@ using Features.Towns.Missions;
 using Features.Towns.Production.Logic;
 using Features.Tutorial.Logic;
 
-namespace Common.Infrastructure
+namespace Common.Infrastructure.Gameplay
 {
     public sealed class GameplaySystems
     {

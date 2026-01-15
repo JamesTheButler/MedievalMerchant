@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using Common.Camera;
 using Common.Infrastructure.Global;
 using Common.UI;
-using Features;
-using Features.Audio;
 using Features.Cheats;
 using Features.Levels.GameModifiers.Logic;
 using Features.Map;
@@ -13,7 +11,7 @@ using Features.Ticking.Logic;
 using Features.Trade.Logic;
 using Features.Tutorial.Logic;
 
-namespace Common.Infrastructure
+namespace Common.Infrastructure.Gameplay
 {
     public sealed class GameplayServices
     {

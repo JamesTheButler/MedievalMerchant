@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Infrastructure;
+using Common.Infrastructure.Gameplay;
 using Features.Player.Logic;
 
 namespace Features.Towns.Missions.Results

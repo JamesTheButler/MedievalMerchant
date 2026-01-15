@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Infrastructure;
+using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Common.Types;

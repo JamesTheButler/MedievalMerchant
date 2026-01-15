@@ -1,4 +1,5 @@
 ﻿using Common.Infrastructure;
+using Common.Infrastructure.Gameplay;
 using Features.Player.Caravan.Config;
 using Features.Ticking.Config;
 using Features.Ticking.Logic;

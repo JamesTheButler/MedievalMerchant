@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Types;
@@ -14,7 +13,7 @@ using Features.Ticking.Logic;
 using Features.Towns;
 using UnityEngine;
 
-namespace Common.Infrastructure
+namespace Common.Infrastructure.Gameplay
 {
     public sealed class GameplayModel
     {

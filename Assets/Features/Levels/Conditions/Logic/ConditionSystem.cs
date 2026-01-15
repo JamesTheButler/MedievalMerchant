@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Common.Infrastructure;
+using Common.Infrastructure.Gameplay;
 using Features.Levels.Conditions.Model;
 
 namespace Features.Levels.Conditions.Logic

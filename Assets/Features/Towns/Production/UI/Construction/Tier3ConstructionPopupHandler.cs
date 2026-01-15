@@ -1,5 +1,6 @@
 using System;
 using Common.Infrastructure;
+using Common.Infrastructure.Gameplay;
 using UnityEngine;
 
 namespace Features.Towns.Production.UI.Construction
