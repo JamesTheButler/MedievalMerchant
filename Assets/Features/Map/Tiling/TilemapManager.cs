@@ -78,7 +78,10 @@ namespace Features.Map.Tiling
             var clickedCell = GetCellOnMousePosition();
             var town = _model.Towns.GetValueOrDefault(clickedCell);
             onTownRightClicked?.Invoke(town);
-            _navigationService.NavigationStarted?.Invoke(town);
+            if (town != null)
+            {
+                _navigationService.NavigationStarted?.Invoke(town);
+            }
         }
 
         private void LeftClick()
