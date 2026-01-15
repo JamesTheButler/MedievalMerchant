@@ -1,5 +1,4 @@
-﻿using Common.Infrastructure;
-using Common.Infrastructure.Gameplay;
+﻿using Common.Infrastructure.Gameplay;
 using Features.Ticking.Logic;
 using NaughtyAttributes;
 using UnityEngine;
