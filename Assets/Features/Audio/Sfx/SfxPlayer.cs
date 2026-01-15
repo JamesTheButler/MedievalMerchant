@@ -63,6 +63,7 @@ namespace Features.Audio.Sfx
                 return;
             }
 
+            uiAudioSource.Stop();
             uiAudioSource.PlayOneShot(audioClip);
         }
 
@@ -77,6 +78,7 @@ namespace Features.Audio.Sfx
                 return;
             }
 
+            gameAudioSource.Stop();
             gameAudioSource.PlayOneShot(audioClip);
         }
     }
