@@ -1,5 +1,6 @@
 using System.Linq;
 using Common.Infrastructure;
+using Common.Infrastructure.Global;
 using Common.UI.Utility;
 using Features.Levels;
 using Features.Levels.Conditions.Data;
@@ -49,7 +50,7 @@ namespace Features.StartMenu.UI
             levelIdText.text = levelInfo.LevelNumberText;
             nameText.text = levelInfo.LevelName;
             descriptionText.text = levelInfo.Description;
-            var completionDate = GlobalContext.Instance.ProgressModel.CompletedLevels[levelInfo.InternalIndex];
+            var completionDate = GlobalContext.Instance.Model.ProgressModel.CompletedLevels[levelInfo.InternalIndex];
             var isCompleted = completionDate != null;
             completionDateText.enabled = isCompleted;
             if (isCompleted)

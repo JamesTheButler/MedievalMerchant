@@ -1,7 +1,7 @@
 using Common.Infrastructure;
+using Common.Infrastructure.Global;
 using Common.Types;
 using Features.Levels.Conditions.Model;
-using UnityEngine;
 
 namespace Features.Levels.Serialization
 {
@@ -15,7 +15,7 @@ namespace Features.Levels.Serialization
         {
             _conditions = GameplayContext.Instance.Model.Conditions;
             _gameDate = GameplayContext.Instance.Model.Date;
-            _progressModel = GlobalContext.Instance.ProgressModel;
+            _progressModel = GlobalContext.Instance.Model.ProgressModel;
 
             _conditions.LevelWon += LevelCompleted;
         }

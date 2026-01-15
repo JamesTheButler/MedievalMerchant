@@ -1,4 +1,5 @@
 using Common.Infrastructure;
+using Common.Infrastructure.Global;
 using Common.UI.Elements;
 using Features.Settings.Logic;
 using NaughtyAttributes;
@@ -16,14 +17,14 @@ namespace Features.Settings.UI
 
         public override void Initialize()
         {
-            _audioSettings = GlobalContext.Instance.AudioSettingsModel;
+            _audioSettings = GlobalContext.Instance.Model.AudioSettingsModel;
 
             volumeSlider.onValueChanged.AddListener(OnVolumeSliderChanged);
             musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeSliderChanged);
             uiVolumeSlider.onValueChanged.AddListener(OnUiVolumeSliderChanged);
             sfxVolumeSlider.onValueChanged.AddListener(OnSfxVolumeSliderChanged);
 
-            volumeSlider.value = _audioSettings.TotalVolume;
+            volumeSlider.value = _audioSettings.MasterVolume;
             musicVolumeSlider.value = _audioSettings.MusicVolume;
             uiVolumeSlider.value = _audioSettings.InterfaceVolume;
             sfxVolumeSlider.value = _audioSettings.SfxVolume;
@@ -31,7 +32,7 @@ namespace Features.Settings.UI
 
         private void OnVolumeSliderChanged(float volume)
         {
-            _audioSettings.TotalVolume.Value = (int)volume;
+            _audioSettings.MasterVolume.Value = (int)volume;
         }
 
         private void OnMusicVolumeSliderChanged(float volume)

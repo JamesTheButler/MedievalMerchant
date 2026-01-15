@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Infrastructure;
+using Common.Infrastructure.Global;
 using Common.Types;
 using Common.Utility;
 using Features.Player.Caravan.Config;
@@ -33,7 +34,7 @@ namespace Features.Cheats
             _playerModel = _model.Player;
             _selection = GameplayContext.Instance.Selection;
             _tutorialService = GameplayContext.Instance.Services.TutorialService;
-            _progressModel = GlobalContext.Instance.ProgressModel;
+            _progressModel = GlobalContext.Instance.Model.ProgressModel;
 
             _simpleCommands = new Dictionary<string, Action>
             {

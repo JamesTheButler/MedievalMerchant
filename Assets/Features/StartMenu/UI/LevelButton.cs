@@ -1,5 +1,6 @@
 using System;
 using Common.Infrastructure;
+using Common.Infrastructure.Global;
 using Common.UI.Tooltips;
 using Features.Levels;
 using NaughtyAttributes;
@@ -41,7 +42,7 @@ namespace Features.StartMenu.UI
             button.onClick.AddListener(OnClick);
             numberText.text = LevelInfo.LevelNumberText;
             nameText.text = LevelInfo.LevelName;
-            var isCompleted = GlobalContext.Instance.ProgressModel.CompletedLevels[LevelInfo.InternalIndex] != null;
+            var isCompleted = GlobalContext.Instance.Model.ProgressModel.CompletedLevels[LevelInfo.InternalIndex] != null;
             completeIcon.gameObject.SetActive(isCompleted);
         }
 

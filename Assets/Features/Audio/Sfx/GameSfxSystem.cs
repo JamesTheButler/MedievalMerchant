@@ -1,4 +1,5 @@
 using Common.Infrastructure;
+using Common.Infrastructure.Global;
 using Common.Infrastructure.Observation;
 using Features.Ticking.Logic;
 using Features.Towns;

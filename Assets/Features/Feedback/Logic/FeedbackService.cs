@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Common.Infrastructure;
+using Common.Infrastructure.Global;
 using UnityEngine;
 using UnityEngine.Networking;
 
