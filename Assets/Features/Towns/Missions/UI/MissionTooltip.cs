@@ -57,7 +57,7 @@ namespace Features.Towns.Missions.UI
         private void RenderResult(IMissionResult result)
         {
             var unhappyIcon = _reputationResources.UnhappyIcon;
-            var happyIcon = _reputationResources.UnhappyIcon;
+            var happyIcon = _reputationResources.HappyIcon;
             var growthTrendData = _townDevelopmentConfig.GrowthTrendConfig;
 
             switch (result)
@@ -70,8 +70,8 @@ namespace Features.Towns.Missions.UI
                 case TradeMissionReward tradeReward:
                     var trendUpIcon = growthTrendData[DevelopmentTrend.Up].Icon;
                     AddResultDetailItem($"{tradeReward.Coin} coin", coinIcon, rewardGroup);
-                    AddResultDetailItem($"{tradeReward.Growth} growth", trendUpIcon, rewardGroup);
-                    AddResultDetailItem($"{tradeReward.Reputation} reputation", happyIcon, rewardGroup);
+                    AddResultDetailItem($"+{tradeReward.Growth} growth", trendUpIcon, rewardGroup);
+                    AddResultDetailItem($"+{tradeReward.Reputation} reputation", happyIcon, rewardGroup);
                     break;
                 case UpgradeMissionPenalty upgradePenalty:
                     var trendVeryDownIcon = growthTrendData[DevelopmentTrend.VeryDown].Icon;
@@ -79,7 +79,7 @@ namespace Features.Towns.Missions.UI
                     AddResultDetailItem($"{upgradePenalty.ReputationPenalty} reputation", unhappyIcon, penaltyGroup);
                     break;
                 case UpgradeMissionReward upgradeReward:
-                    AddResultDetailItem($"{upgradeReward.ReputationReward} reputation", happyIcon, rewardGroup);
+                    AddResultDetailItem($"+{upgradeReward.ReputationReward} reputation", happyIcon, rewardGroup);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(result));
             }
