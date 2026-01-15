@@ -41,6 +41,9 @@ namespace Features.Audio.Sfx
 
         private void OnUISoundEffect(UISoundEffect effect)
         {
+            if (!uiAudioSource || !uiAudioSource.enabled)
+                return;
+
             if (!_audioResources.UiSoundClips.TryGetValue(effect, out var audioClip) || audioClip == null)
             {
                 Debug.LogWarning($"No audio clip added for effect '{effect}'.");
@@ -52,6 +55,9 @@ namespace Features.Audio.Sfx
 
         private void OnGameSoundEffect(GameSoundEffect effect)
         {
+            if (!gameAudioSource || !gameAudioSource.enabled)
+                return;
+
             if (!_audioResources.GameSoundClips.TryGetValue(effect, out var audioClip) || audioClip == null)
             {
                 Debug.LogWarning($"No audio clip added for effect '{effect}'.");

@@ -1,4 +1,3 @@
-using Common.Infrastructure;
 using Common.Infrastructure.Global;
 using Common.UI.Elements;
 using Features.Settings.Logic;
@@ -8,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Features.Settings.UI
 {
-    public sealed class AudioSection : InitializableBehavior
+    public sealed class AudioSettingsUI : InitializableBehavior
     {
         [SerializeField, Required]
         private Slider volumeSlider, musicVolumeSlider, sfxVolumeSlider, uiVolumeSlider;

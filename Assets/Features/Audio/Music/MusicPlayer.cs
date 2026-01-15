@@ -40,7 +40,7 @@ namespace Features.Audio.Music
 
             _activePool.Clear();
             _activePool.AddRange(_audioResources.GameplayMusic);
-            
+
             _bindings.Track(
                 _musicService.MusicModeChange.Observe(SetMusicMode)
             );
@@ -57,6 +57,9 @@ namespace Features.Audio.Music
             if (_currentMode == mode)
                 return;
 
+            if (!audioSource || !audioSource.enabled)
+                return;
+            
             _currentMode = mode;
 
             audioSource.Stop();
@@ -81,7 +84,7 @@ namespace Features.Audio.Music
 
             while (true)
             {
-                if (audioSource.isPlaying)
+                while (audioSource.isPlaying)
                     yield return null;
 
                 yield return new WaitForSeconds(_musicConfig.SecondsBetweenSongs);
