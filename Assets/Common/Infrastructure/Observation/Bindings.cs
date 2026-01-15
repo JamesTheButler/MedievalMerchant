@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using Common.Utility;
 
 namespace Common.Infrastructure.Observation
 {
     public sealed class Bindings
     {
-        private readonly List<IBinding> _bindings = new();
+        private readonly HashSet<IBinding> _bindings = new();
 
         public void Track(IBinding binding)
         {
@@ -13,7 +14,7 @@ namespace Common.Infrastructure.Observation
 
         public void Track(params IBinding[] binding)
         {
-            _bindings.AddRange(binding);
+            _bindings.Add(binding);
         }
 
         public void UnbindAll()

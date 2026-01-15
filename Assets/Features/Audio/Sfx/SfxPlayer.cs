@@ -16,6 +16,11 @@ namespace Features.Audio.Sfx
         [SerializeField, Required]
         private AudioSource gameAudioSource, uiAudioSource;
 
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameAudioSource);
+        }
+
         public override void Initialize()
         {
             _sfxService = GlobalContext.Instance.Services.SfxService;

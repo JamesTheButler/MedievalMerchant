@@ -30,5 +30,12 @@ namespace Common.Utility
                 }
             }
         }
+
+        public static void StopCoroutineSafe(this MonoBehaviour self, Coroutine coroutine)
+        {
+            if (coroutine == null) return;
+
+            self.StopCoroutine(coroutine);
+        }
     }
 }

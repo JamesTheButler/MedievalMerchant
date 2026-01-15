@@ -12,6 +12,6 @@ namespace Features.Audio.Music
         public float SecondsBetweenSongs { get; private set; } = 5;
 
         [field: SerializeField]
-        public int MinGap { get; private set; } = 1;
+        public int MinGapBetweenRepeats { get; private set; } = 1;
     }
 }

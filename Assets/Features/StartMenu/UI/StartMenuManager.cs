@@ -3,6 +3,7 @@ using System.Linq;
 using Common.Infrastructure;
 using Common.UI.Elements;
 using Common.Utility;
+using Features.Audio.Music;
 using Features.Feedback.UI;
 using NaughtyAttributes;
 using TMPro;
@@ -50,6 +51,8 @@ namespace Features.StartMenu.UI
             Cursor.SetCursor(cursor.Texture, cursor.HotSpot, CursorMode.Auto);
 
             InitializeEverything();
+            
+            GlobalContext.Instance.Services.MusicService.MusicModeChange.Invoke(MusicMode.Menu);
         }
 
         private static void InitializeEverything()

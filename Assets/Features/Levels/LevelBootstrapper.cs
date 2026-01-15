@@ -1,6 +1,7 @@
 using Common.Infrastructure;
 using Common.UI.Elements;
 using Common.Utility;
+using Features.Audio.Music;
 using Features.Map;
 using Features.Map.Tiling;
 using Features.Player.Logic;
@@ -56,6 +57,8 @@ namespace Features.Levels
 
             InitializeEverything();
 
+            GlobalContext.Instance.Services.MusicService.MusicModeChange.Invoke(MusicMode.Gameplay);
+            
             completed.Invoke();
         }
 
