@@ -348,17 +348,17 @@ namespace Features.Trade.UI
         private void RefreshTownFundsText()
         {
             var townChangeText = _tradeType == TradeType.Buy
-                ? $"{_totalPrice:0.#}".WithStyle(Style.Good)
+                ? $"+{_totalPrice:0.#}".WithStyle(Style.Good)
                 : $"-{_totalPrice:0.#}".WithStyle(Style.Bad);
             townFundsText.text = $"Funds: {_town.Inventory.Funds.Value:0.#} ({townChangeText})";
         }
 
         private void RefreshPlayerFundsText()
         {
-            var townChangeText = _tradeType == TradeType.Sell
-                ? $"{_totalPrice:0.#}".WithStyle(Style.Good)
+            var playerChangeText = _tradeType == TradeType.Sell
+                ? $"+{_totalPrice:0.#}".WithStyle(Style.Good)
                 : $"-{_totalPrice:0.#}".WithStyle(Style.Bad);
-            playerFundsText.text = $"Funds: {_model.Player.Inventory.Funds.Value:0.#} ({townChangeText})";
+            playerFundsText.text = $"Funds: {_model.Player.Inventory.Funds.Value:0.#} ({playerChangeText})";
         }
     }
 }
