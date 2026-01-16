@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Features.Audio.Music
 {
-    public sealed class MusicPlayer : InitializableBehavior
+    public sealed class MusicPlayer : InitializableSingleton
     {
         private static MusicPlayer _instance;
 
@@ -46,13 +46,10 @@ namespace Features.Audio.Music
 
         private void OnDestroy()
         {
-            if (_instance == this)
-            {
-                _instance = null;
-            }
+            _bindings.UnbindAll();
         }
 
-        public override void Initialize()
+        protected override void OnInitialize()
         {
             if (_isInitialized)
                 return;
@@ -69,12 +66,6 @@ namespace Features.Audio.Music
             );
 
             _isInitialized = true;
-        }
-
-        public override void CleanUp()
-        {
-            base.CleanUp();
-            _bindings.UnbindAll();
         }
 
         private void SetMusicMode(MusicMode mode)

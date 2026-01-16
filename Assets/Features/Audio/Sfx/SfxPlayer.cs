@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Features.Audio.Sfx
 {
-    public sealed class SfxPlayer : InitializableBehavior
+    public sealed class SfxPlayer : InitializableSingleton
     {
         private static SfxPlayer _instance;
 
@@ -33,7 +33,7 @@ namespace Features.Audio.Sfx
             DontDestroyOnLoad(gameAudioSource);
         }
 
-        public override void Initialize()
+        protected override void OnInitialize()
         {
             if (_isInitialized)
                 return;
@@ -49,11 +49,9 @@ namespace Features.Audio.Sfx
             _isInitialized = true;
         }
 
-        public override void CleanUp()
+        private void OnDestroy()
         {
             _bindings.UnbindAll();
-
-            base.CleanUp();
         }
 
         private void OnUISoundEffect(UISoundEffect effect)

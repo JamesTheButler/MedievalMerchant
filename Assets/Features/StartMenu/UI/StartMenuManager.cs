@@ -51,16 +51,22 @@ namespace Features.StartMenu.UI
             Cursor.SetCursor(cursor.Texture, cursor.HotSpot, CursorMode.Auto);
 
             InitializeEverything();
-            
+
             GlobalContext.Instance.Services.MusicService.MusicModeChange.Invoke(MusicMode.Menu);
         }
 
         private static void InitializeEverything()
         {
-            var initializables = Resources.FindObjectsOfTypeAll<InitializableBehavior>();
-            foreach (var initializable in initializables)
+            var behaviors = Resources.FindObjectsOfTypeAll<InitializableBehavior>();
+            foreach (var behavior in behaviors)
             {
-                initializable.Initialize();
+                behavior.Initialize();
+            }
+
+            var singletons = Resources.FindObjectsOfTypeAll<InitializableSingleton>();
+            foreach (var singleton in singletons)
+            {
+                singleton.Initialize();
             }
         }
 
