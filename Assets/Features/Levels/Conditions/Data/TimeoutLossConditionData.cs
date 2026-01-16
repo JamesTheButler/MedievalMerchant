@@ -23,8 +23,8 @@ namespace Features.Levels.Conditions.Data
             return DeadlineDay switch
             {
                 <= 1 => $"You lose at the start of year {DeadlineYear}",
-                >= Date.LastDayOfYear => $"ou lose at the end of year {DeadlineYear}",
-                _ => $"ou lose on day {DeadlineDay} of year {DeadlineYear}",
+                >= Date.LastDayOfYear => $"You lose at the end of year {DeadlineYear}",
+                _ => $"You lose on day {DeadlineDay} of year {DeadlineYear}",
             };
         }
     }
