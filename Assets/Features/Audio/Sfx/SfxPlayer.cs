@@ -63,7 +63,7 @@ namespace Features.Audio.Sfx
 
             if (!_audioResources.UiSoundClips.TryGetValue(effect, out var audioClip) || audioClip == null)
             {
-                Debug.LogWarning($"No audio clip added for effect '{effect}'.");
+                Debug.Log($"No audio clip added for effect '{effect}'.");
                 return;
             }
 
@@ -78,7 +78,7 @@ namespace Features.Audio.Sfx
 
             if (!_audioResources.GameSoundClips.TryGetValue(effect, out var audioClip) || audioClip == null)
             {
-                Debug.LogWarning($"No audio clip added for effect '{effect}'.");
+                Debug.Log($"No audio clip added for effect '{effect}'.");
                 return;
             }
 
