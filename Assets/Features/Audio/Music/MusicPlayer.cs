@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Common.Infrastructure;
@@ -30,6 +31,7 @@ namespace Features.Audio.Music
         private MusicMode? _currentMode;
 
         private bool _isInitialized;
+        private bool _hasFocus = true;
 
         private void Awake()
         {
@@ -47,6 +49,11 @@ namespace Features.Audio.Music
         private void OnDestroy()
         {
             _bindings.UnbindAll();
+        }
+
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            _hasFocus = hasFocus;
         }
 
         protected override void OnInitialize()
@@ -101,8 +108,16 @@ namespace Features.Audio.Music
 
             while (true)
             {
-                while (audioSource.isPlaying)
+                while (true)
+                {
+                    while (!_hasFocus)
+                        yield return null;
+
+                    if (!audioSource.isPlaying)
+                        break;
+
                     yield return null;
+                }
 
                 yield return new WaitForSeconds(_musicConfig.SecondsBetweenSongs);
 
