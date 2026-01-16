@@ -432,7 +432,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsSliderGroup
   valueText: {fileID: 8787635771986216812}
-  slider: {fileID: 8155230631552531359}
 --- !u!114 &1924801070580202765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,27 +572,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7259197122474752459, guid: 89bb1fb26c0664a4cb01e096fcaaa884, type: 3}
       propertyPath: m_Value
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259197122474752459, guid: 89bb1fb26c0664a4cb01e096fcaaa884, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7259197122474752459, guid: 89bb1fb26c0664a4cb01e096fcaaa884, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7259197122474752459, guid: 89bb1fb26c0664a4cb01e096fcaaa884, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7259197122474752459, guid: 89bb1fb26c0664a4cb01e096fcaaa884, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 6975998957604457902}
+      objectReference: {fileID: -361837303536810256}
     - target: {fileID: 7259197122474752459, guid: 89bb1fb26c0664a4cb01e096fcaaa884, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7259197122474752459, guid: 89bb1fb26c0664a4cb01e096fcaaa884, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateText
+      objectReference: {fileID: 0}
+    - target: {fileID: 7259197122474752459, guid: 89bb1fb26c0664a4cb01e096fcaaa884, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: Features.Settings.UI.SettingsSliderGroup, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7259197122474752459, guid: 89bb1fb26c0664a4cb01e096fcaaa884, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7979090600216265461, guid: 89bb1fb26c0664a4cb01e096fcaaa884, type: 3}
       propertyPath: m_AnchorMax.x
@@ -618,14 +625,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 58310519518381026, guid: 89bb1fb26c0664a4cb01e096fcaaa884, type: 3}
   m_PrefabInstance: {fileID: 1553999567210906196}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8155230631552531359 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7259197122474752459, guid: 89bb1fb26c0664a4cb01e096fcaaa884, type: 3}
-  m_PrefabInstance: {fileID: 1553999567210906196}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
