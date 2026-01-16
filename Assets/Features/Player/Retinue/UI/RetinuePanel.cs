@@ -1,5 +1,6 @@
 using Common.Infrastructure.Gameplay;
 using Common.UI;
+using Common.UI.Elements;
 using Common.UI.Tooltips;
 using Features.Player.Retinue.Logic;
 using NaughtyAttributes;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace Features.Player.Retinue.UI
 {
-    public sealed class RetinuePanel : MonoBehaviour
+    public sealed class RetinuePanel : DynamicPanel
     {
         [SerializeField, Required]
         private TMP_Text upkeepText;
@@ -28,23 +29,13 @@ namespace Features.Player.Retinue.UI
             Close();
         }
 
-        public void Toggle()
-        {
-            if (gameObject.activeSelf)
-                Close();
-            else
-            {
-                Open();
-            }
-        }
-
-        public void Open()
+        protected override void OnOpen()
         {
             _uiBridgeService.OpenPanelFromUI(UIPanel.Retinue);
             gameObject.SetActive(true);
         }
 
-        public void Close()
+        protected override void OnClose()
         {
             gameObject.SetActive(false);
         }

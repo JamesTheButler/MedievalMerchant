@@ -16,7 +16,7 @@ namespace Features.Player.Caravan.UI
 
         public void TogglePanel()
         {
-            caravanPanelUI.Toggle(!caravanPanelUI.gameObject.activeSelf);
+            caravanPanelUI.Toggle();
         }
 
         private void Start()
@@ -45,7 +45,14 @@ namespace Features.Player.Caravan.UI
 
         private void OpenPanel(Town town)
         {
-            caravanPanelUI.Toggle(town != null);
+            if (town == null)
+            {
+                caravanPanelUI.Close();
+            }
+            else
+            {
+                caravanPanelUI.Open();
+            }
         }
     }
 }

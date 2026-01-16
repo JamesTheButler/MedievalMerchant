@@ -14,7 +14,7 @@ using UnityEngine.EventSystems;
 
 namespace Features.Player.Caravan.UI
 {
-    public sealed class CaravanPanelUI : MonoBehaviour, IPointerClickHandler
+    public sealed class CaravanPanelUI : DynamicPanel, IPointerClickHandler
     {
         [SerializeField, Required]
         private TMP_Text moveSpeedText, upkeepText;
@@ -58,16 +58,6 @@ namespace Features.Player.Caravan.UI
             upkeepTooltip.SetData(caravanManager.Upkeep);
         }
 
-        public void Toggle(bool isOn)
-        {
-            if (isOn)
-            {
-                _uiBridgeService.OpenPanelFromUI(UIPanel.Caravan);
-            }
-
-            gameObject.SetActive(isOn);
-        }
-
         public void UpdateGood(Good good, int amount)
         {
             if (_occupiedCells.ContainsKey(good))
@@ -78,6 +68,23 @@ namespace Features.Player.Caravan.UI
             {
                 AddNewGood(good, amount);
             }
+        }
+
+        // background click should close popups
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            PopupManager.Instance.HideActive();
+        }
+
+        protected override void OnOpen()
+        {
+            _uiBridgeService.OpenPanelFromUI(UIPanel.Caravan);
+            gameObject.SetActive(true);
+        }
+
+        protected override void OnClose()
+        {
+            gameObject.SetActive(false);
         }
 
         private void OnDestroy()
@@ -137,12 +144,6 @@ namespace Features.Player.Caravan.UI
         private void OnUpkeepChanged(float upkeep)
         {
             upkeepText.text = upkeep.ToString("0.##");
-        }
-
-        // background click should close popups
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            PopupManager.Instance.HideActive();
         }
     }
 }
