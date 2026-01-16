@@ -65,8 +65,7 @@ namespace Features.Audio.Sfx
                 return;
             }
 
-            uiAudioSource.clip = audioClip;
-            uiAudioSource.Play();
+            uiAudioSource.PlayOneShot(audioClip);
         }
 
         private void OnGameSoundEffect(GameSoundEffect effect)
@@ -80,8 +79,7 @@ namespace Features.Audio.Sfx
                 return;
             }
 
-            gameAudioSource.clip = audioClip;
-            gameAudioSource.Play();
+            gameAudioSource.PlayOneShot(audioClip);
         }
     }
 }

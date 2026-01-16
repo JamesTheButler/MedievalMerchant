@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 3924324254548247369}
   - component: {fileID: 2222067406996460329}
   - component: {fileID: 5010681966389324454}
+  - component: {fileID: 7410234430462167431}
   m_Layer: 5
   m_Name: GameOverUI
   m_TagString: Untagged
@@ -176,6 +177,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142f33a817a311942b98f75794bd86f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Opened:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7410234430462167431}
+        m_TargetAssemblyTypeName: Features.Audio.Sfx.UISfxTrigger, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   startScene: StartScene
   titleText: {fileID: 3784425352079475707}
   messageText: {fileID: 1334287731633734137}
@@ -219,6 +235,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7410234430462167431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2406018815397324359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5c53a104a1c4d08871514ff006b8f54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Audio.Sfx.UISfxTrigger
+  uiSoundEffect: 2
 --- !u!1 &2665572916948995299
 GameObject:
   m_ObjectHideFlags: 0

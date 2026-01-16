@@ -13,12 +13,16 @@ using Features.Stats;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace Common.UI
 {
-    public class GameOverUI : InitializableBehavior
+    public sealed class GameOverUI : InitializableBehavior
     {
+        [SerializeField]
+        private UnityEvent Opened;
+        
         [SerializeField, Scene]
         private string startScene;
 
@@ -52,6 +56,7 @@ namespace Common.UI
         private void Show(bool isWon)
         {
             gameObject.SetActive(true);
+            Opened.Invoke();
             titleText.text = isWon ? "Level Finished!".WithStyle(Style.Good) : "Game Over!".WithStyle(Style.Bad);
 
             var currentLevel = GlobalContext.CurrentLevelInfo!;
