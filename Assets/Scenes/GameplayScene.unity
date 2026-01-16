@@ -2442,14 +2442,14 @@ PrefabInstance:
     - target: {fileID: 302057586499446636, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1142402037}
+      objectReference: {fileID: 48834444}
     - target: {fileID: 302057586499446636, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Show
       objectReference: {fileID: 0}
     - target: {fileID: 302057586499446636, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Features.Trade.UI.TradeUI, Assembly-CSharp
+      value: Features.Trade.UI.TradeUIHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 302057586499446636, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -4590,7 +4590,7 @@ PrefabInstance:
     - target: {fileID: 5038145504170979520, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1142402037}
+      objectReference: {fileID: 48834444}
     - target: {fileID: 5038145504170979520, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -4601,7 +4601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5038145504170979520, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Features.Trade.UI.TradeUI, Assembly-CSharp
+      value: Features.Trade.UI.TradeUIHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5038145504170979520, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -5106,7 +5106,7 @@ PrefabInstance:
     - target: {fileID: 5799886223201553436, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1142402037}
+      objectReference: {fileID: 48834444}
     - target: {fileID: 5799886223201553436, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -5117,7 +5117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5799886223201553436, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Features.Trade.UI.TradeUI, Assembly-CSharp
+      value: Features.Trade.UI.TradeUIHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5799886223201553436, guid: 945b699926825d341aa1f0cc054a2d84, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -10033,6 +10033,7 @@ MonoBehaviour:
   - {fileID: 1061472080}
   - {fileID: 221144513}
   - {fileID: 4437660609906520927}
+  - {fileID: 1142402037}
 --- !u!1001 &1264256137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14009,11 +14010,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 518597632188324773, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 31.72
+      value: 12.86
       objectReference: {fileID: 0}
     - target: {fileID: 518597632188324773, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 24
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 518597632188324773, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 593230140228865483, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchorMax.y
@@ -14193,7 +14198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1952778231924225962, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 39.86
+      value: 41.86
       objectReference: {fileID: 0}
     - target: {fileID: 1952778231924225962, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -14429,7 +14434,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3792546734934087201, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 39.86
+      value: 41.86
       objectReference: {fileID: 0}
     - target: {fileID: 3792546734934087201, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -14605,11 +14610,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4194942902896680803, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 31.72
+      value: 12.86
       objectReference: {fileID: 0}
     - target: {fileID: 4194942902896680803, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 24
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 4194942902896680803, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 4270161327039116335, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchorMax.y
@@ -14685,11 +14694,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4749382133015906328, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 31.72
+      value: 12.86
       objectReference: {fileID: 0}
     - target: {fileID: 4749382133015906328, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 24
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749382133015906328, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 4804763395075965295, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchorMax.y
@@ -14781,7 +14794,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5728449617971085658, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 39.86
+      value: 41.86
       objectReference: {fileID: 0}
     - target: {fileID: 5728449617971085658, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -14930,14 +14943,14 @@ PrefabInstance:
     - target: {fileID: 6712113868415642049, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1142402037}
+      objectReference: {fileID: 48834444}
     - target: {fileID: 6712113868415642049, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Show
       objectReference: {fileID: 0}
     - target: {fileID: 6712113868415642049, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Features.Trade.UI.TradeUI, Assembly-CSharp
+      value: Features.Trade.UI.TradeUIHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6712113868415642049, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: initializeTradeUI.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -15125,11 +15138,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7949220300995242387, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 31.72
+      value: 12.86
       objectReference: {fileID: 0}
     - target: {fileID: 7949220300995242387, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 24
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949220300995242387, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 8156007377829509884, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchorMax.y
@@ -15161,7 +15178,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8249056334450902428, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 39.86
+      value: 41.86
       objectReference: {fileID: 0}
     - target: {fileID: 8249056334450902428, guid: 523474d1c29a7de41b11415dbd101251, type: 3}
       propertyPath: m_AnchoredPosition.y

@@ -19,7 +19,7 @@ using UnityEngine.UI;
 
 namespace Features.Trade.UI
 {
-    public sealed class TradeUI : InitializableBehavior
+    public sealed class TradeUI : DynamicPanel
     {
         [SerializeField, Required]
         private TMP_Text
@@ -96,8 +96,14 @@ namespace Features.Trade.UI
             _selection = GameplayContext.Instance.Selection;
         }
 
-        public void Show(Good good, TradeType tradeType)
+        public void SetUp(Good good, TradeType tradeType)
         {
+            if (_isInitialized)
+            {
+                Debug.LogError("TradeUI was already initialized.");
+                return;
+            }
+
             _good = good;
             _tradeType = tradeType;
             _town = _selection.SelectedTown;
@@ -131,26 +137,22 @@ namespace Features.Trade.UI
 
             priceTooltip.SetData(_observedPrice);
 
-            gameObject.SetActive(true);
-
             SetMaxAmount();
 
             _isInitialized = true;
         }
 
-        private void OnMissionAdded(Mission mission)
+        protected override void OnOpen()
         {
-            if (mission.Good != _good)
-                return;
-
-            RefreshMissionAmountButton();
+            gameObject.SetActive(true);
         }
 
-        public void Hide()
+        protected override void OnClose()
         {
             gameObject.SetActive(false);
 
-            if (!_isInitialized) return;
+            if (!_isInitialized)
+                return;
 
             _bindings.UnbindAll();
 
@@ -164,6 +166,15 @@ namespace Features.Trade.UI
             _sellingInventory = null;
 
             _isInitialized = false;
+            _tradeService.AbortTrade();
+        }
+
+        private void OnMissionAdded(Mission mission)
+        {
+            if (mission.Good != _good)
+                return;
+
+            RefreshMissionAmountButton();
         }
 
         private void SetMaxAmount()
@@ -233,7 +244,7 @@ namespace Features.Trade.UI
 
         private void AbortTrade()
         {
-            Hide();
+            Close();
         }
 
         private void CompleteTrade()
@@ -248,7 +259,7 @@ namespace Features.Trade.UI
             // this should replace the line above
             _tradeService.CompleteTrade(tradeInfo);
 
-            Hide();
+            Close();
         }
 
         private void SetAmount(int amount)

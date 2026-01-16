@@ -29,19 +29,14 @@ namespace Features.Trade.UI
 
         public void Show(Good good, TradeType tradeType)
         {
-            tradeUI.Hide();
-            tradeUI.gameObject.SetActive(true);
-            tradeUI.Show(good, tradeType);
+            tradeUI.Close();
+            tradeUI.SetUp(good, tradeType);
+            tradeUI.Open();
         }
 
         private void OnSelectedTownChanged(Town town)
         {
-            Hide();
-        }
-
-        private void Hide()
-        {
-            tradeUI.Hide();
+            tradeUI.Close();
         }
     }
 }

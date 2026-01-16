@@ -2,7 +2,7 @@ using System;
 
 namespace Common.Infrastructure.Observation
 {
-    public sealed class ObservableEvent
+    public sealed class ObservableEvent : IReadOnlyObservableEvent
     {
         private event Action Action;
 

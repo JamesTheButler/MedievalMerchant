@@ -5,8 +5,11 @@ namespace Features.Trade.Logic
 {
     public sealed class TradeService : IService
     {
-        public ObservableEvent<TradeInfo> TradeCompleted { get; } = new();
-        public ObservableEvent<TradeInfo> TradeAborted { get; } = new();
+        public IReadOnlyObservableEvent<TradeInfo> TradeCompleted => _tradeCompleted;
+        public IReadOnlyObservableEvent TradeAborted => _tradeAborted;
+
+        private readonly ObservableEvent<TradeInfo> _tradeCompleted = new();
+        private readonly ObservableEvent _tradeAborted = new();
 
         public void Initialize() { }
         public void CleanUp() { }
@@ -14,7 +17,12 @@ namespace Features.Trade.Logic
         public void CompleteTrade(TradeInfo tradeInfo)
         {
             tradeInfo.Town.ResolveTrade(tradeInfo);
-            TradeCompleted?.Invoke(tradeInfo);
+            _tradeCompleted?.Invoke(tradeInfo);
+        }
+
+        public void AbortTrade()
+        {
+            _tradeAborted.Invoke();
         }
     }
 }

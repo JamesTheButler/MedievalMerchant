@@ -30,7 +30,7 @@ namespace Features.Stats
             _bindings.UnbindAll();
         }
 
-        private void OnTradeAborted(TradeInfo info)
+        private void OnTradeAborted()
         {
             _model.TradesAborted++;
         }
