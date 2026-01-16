@@ -41,6 +41,11 @@ namespace Features.Audio.Sfx
                 // UpgradeMissionCompleted  --- MissionModel.MissionRemoved
                 // UpgradeMissionFailed --- MissionModel.MissionRemoved
                 // TradeMissionCompleted --- MissionModel.MissionRemoved
+                
+                // ProducerBuilt
+                // CartUpgraded
+                // CartBought
+                // CompanionUpgraded
             );
         }
 

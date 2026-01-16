@@ -19,5 +19,9 @@ namespace Features.Audio.Sfx
         UpgradeMissionCompleted = 14,
         UpgradeMissionFailed = 15,
         TradeMissionCompleted = 16,
+        ProducerBuilt = 17,
+        CartUpgraded = 18,
+        CartBought = 19,
+        CompanionUpgraded = 20,
     }
 }

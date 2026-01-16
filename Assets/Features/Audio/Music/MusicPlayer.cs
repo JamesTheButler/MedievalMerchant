@@ -29,14 +29,11 @@ namespace Features.Audio.Music
 
         private MusicMode? _currentMode;
 
+        private bool _isInitialized;
+
         private void Awake()
         {
-            if (_instance == null)
-            {
-                _instance = this;
-            }
-
-            if (_instance != this)
+            if (_instance != null && _instance != this)
             {
                 Destroy(gameObject);
                 return;
@@ -57,6 +54,9 @@ namespace Features.Audio.Music
 
         public override void Initialize()
         {
+            if (_isInitialized)
+                return;
+
             _audioResources = ResourceManager.Instance.AudioResources;
             _musicService = GlobalContext.Instance.Services.MusicService;
             _musicConfig = ConfigurationManager.Configurations.MusicConfig;
@@ -67,6 +67,8 @@ namespace Features.Audio.Music
             _bindings.Track(
                 _musicService.MusicModeChange.Observe(SetMusicMode)
             );
+
+            _isInitialized = true;
         }
 
         public override void CleanUp()

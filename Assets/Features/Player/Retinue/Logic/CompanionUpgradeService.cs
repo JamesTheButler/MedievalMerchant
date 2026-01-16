@@ -13,7 +13,6 @@ namespace Features.Player.Retinue.Logic
         private CompanionConfig _companionConfig;
         private PlayerModel _player;
 
-
         public void Initialize()
         {
             _companionConfig = ConfigurationManager.Configurations.CompanionConfig;

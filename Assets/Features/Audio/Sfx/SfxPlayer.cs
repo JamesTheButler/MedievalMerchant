@@ -19,24 +19,25 @@ namespace Features.Audio.Sfx
         [SerializeField, Required]
         private AudioSource gameAudioSource, uiAudioSource;
 
+        private bool _isInitialized;
+
         private void Awake()
         {
-            if (_instance == null)
-            {
-                _instance = this;
-            }
-
-            if (_instance != this)
+            if (_instance != null && _instance != this)
             {
                 Destroy(gameObject);
                 return;
             }
 
+            _instance = this;
             DontDestroyOnLoad(gameAudioSource);
         }
 
         public override void Initialize()
         {
+            if (_isInitialized)
+                return;
+
             _sfxService = GlobalContext.Instance.Services.SfxService;
             _audioResources = ResourceManager.Instance.AudioResources;
 
@@ -44,12 +45,15 @@ namespace Features.Audio.Sfx
                 _sfxService.GameSoundEffect.Observe(OnGameSoundEffect),
                 _sfxService.UISoundEffect.Observe(OnUISoundEffect)
             );
+
+            _isInitialized = true;
         }
 
         public override void CleanUp()
         {
-            base.CleanUp();
             _bindings.UnbindAll();
+
+            base.CleanUp();
         }
 
         private void OnUISoundEffect(UISoundEffect effect)
@@ -63,8 +67,8 @@ namespace Features.Audio.Sfx
                 return;
             }
 
-            uiAudioSource.Stop();
-            uiAudioSource.PlayOneShot(audioClip);
+            uiAudioSource.clip = audioClip;
+            uiAudioSource.Play();
         }
 
         private void OnGameSoundEffect(GameSoundEffect effect)
@@ -78,8 +82,8 @@ namespace Features.Audio.Sfx
                 return;
             }
 
-            gameAudioSource.Stop();
-            gameAudioSource.PlayOneShot(audioClip);
+            gameAudioSource.clip = audioClip;
+            gameAudioSource.Play();
         }
     }
 }
