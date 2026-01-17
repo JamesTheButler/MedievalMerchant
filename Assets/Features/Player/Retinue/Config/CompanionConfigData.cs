@@ -8,9 +8,6 @@ namespace Features.Player.Retinue.Config
     [Serializable]
     public abstract class CompanionConfigData
     {
-        [field: SerializeField]
-        public CompanionType Type { get; private set; }
-
         [field: SerializeField, Required, ShowAssetPreview]
         public Sprite Icon { get; private set; }
 

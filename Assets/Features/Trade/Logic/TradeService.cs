@@ -1,5 +1,6 @@
 using Common.Infrastructure;
 using Common.Infrastructure.Observation;
+using UnityEngine;
 
 namespace Features.Trade.Logic
 {
@@ -18,11 +19,14 @@ namespace Features.Trade.Logic
         {
             tradeInfo.Town.ResolveTrade(tradeInfo);
             _tradeCompleted?.Invoke(tradeInfo);
+            
+            Debug.Log($"Trade completed. Info: {tradeInfo}.");
         }
 
         public void AbortTrade()
         {
             _tradeAborted.Invoke();
+            Debug.Log("Trade aborted.");
         }
     }
 }

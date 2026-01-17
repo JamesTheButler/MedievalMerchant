@@ -30,7 +30,6 @@ namespace Features.Audio.Music
 
         private MusicMode? _currentMode;
 
-        private bool _isInitialized;
         private bool _hasFocus = true;
 
         private void Awake()
@@ -48,6 +47,7 @@ namespace Features.Audio.Music
 
         private void OnDestroy()
         {
+            this.StopCoroutineSafe(_gameplayLoop);
             _bindings.UnbindAll();
         }
 
@@ -58,9 +58,6 @@ namespace Features.Audio.Music
 
         protected override void OnInitialize()
         {
-            if (_isInitialized)
-                return;
-
             _audioResources = ResourceManager.Instance.AudioResources;
             _musicService = GlobalContext.Instance.Services.MusicService;
             _musicConfig = ConfigurationManager.Configurations.MusicConfig;
@@ -71,8 +68,6 @@ namespace Features.Audio.Music
             _bindings.Track(
                 _musicService.MusicModeChange.Observe(SetMusicMode)
             );
-
-            _isInitialized = true;
         }
 
         private void SetMusicMode(MusicMode mode)

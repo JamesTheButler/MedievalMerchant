@@ -19,8 +19,6 @@ namespace Features.Audio.Sfx
         [SerializeField, Required]
         private AudioSource gameAudioSource, uiAudioSource;
 
-        private bool _isInitialized;
-
         private void Awake()
         {
             if (_instance != null && _instance != this)
@@ -35,9 +33,6 @@ namespace Features.Audio.Sfx
 
         protected override void OnInitialize()
         {
-            if (_isInitialized)
-                return;
-
             _sfxService = GlobalContext.Instance.Services.SfxService;
             _audioResources = ResourceManager.Instance.AudioResources;
 
@@ -45,8 +40,6 @@ namespace Features.Audio.Sfx
                 _sfxService.GameSoundEffect.Observe(OnGameSoundEffect),
                 _sfxService.UISoundEffect.Observe(OnUISoundEffect)
             );
-
-            _isInitialized = true;
         }
 
         private void OnDestroy()
