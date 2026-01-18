@@ -1,5 +1,6 @@
 using System;
 using Common.Infrastructure.Gameplay;
+using Common.UI.Utility;
 using Common.Utility;
 using Features.Map.Tiling;
 using NaughtyAttributes;
@@ -100,6 +101,9 @@ namespace Common.Camera
 
         public void InitiateOrAbortPan(InputAction.CallbackContext context)
         {
+            if (UIUtility.IsPointerOverBlockingUI())
+                return;
+
             _isPanning = context.ReadValueAsButton();
         }
 
