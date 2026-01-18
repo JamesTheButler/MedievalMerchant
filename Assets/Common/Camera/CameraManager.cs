@@ -101,10 +101,12 @@ namespace Common.Camera
 
         public void InitiateOrAbortPan(InputAction.CallbackContext context)
         {
-            if (UIUtility.IsPointerOverBlockingUI())
+            var clickedOrReleased = context.ReadValueAsButton();
+            
+            if (clickedOrReleased && UIUtility.IsPointerOverBlockingUI())
                 return;
 
-            _isPanning = context.ReadValueAsButton();
+            _isPanning = clickedOrReleased;
         }
 
         public void FocusCamera(Vector2 worldPosition)
