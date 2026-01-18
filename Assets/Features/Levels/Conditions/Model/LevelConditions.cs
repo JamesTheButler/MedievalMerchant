@@ -26,13 +26,13 @@ namespace Features.Levels.Conditions.Model
 
         private ConditionResources _conditionResources;
 
-        public void Initialize(ConditionData[] conditions)
+        public void Initialize(IEnumerable<ConditionData> conditions)
         {
             _conditionResources = ResourceManager.Instance.ConditionResources;
             PopulateConditions(conditions);
         }
 
-        private void PopulateConditions(ConditionData[] conditionDatas)
+        private void PopulateConditions(IEnumerable<ConditionData> conditionDatas)
         {
             var conditions = conditionDatas.Select(data => _factory.Get(data));
             foreach (var condition in conditions)

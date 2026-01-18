@@ -1,12 +1,10 @@
+using System;
 using Common.Types;
-using Common.Utility;
 using UnityEngine;
 
 namespace Features.Levels.Conditions.Data
 {
-    [CreateAssetMenu(
-        fileName = nameof(TimeoutLossConditionData),
-        menuName = AssetMenu.ConditionsFolder + nameof(TimeoutLossConditionData))]
+    [Serializable]
     public sealed class TimeoutLossConditionData : LossConditionData
     {
         [field: SerializeField, Min(1)]

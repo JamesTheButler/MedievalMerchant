@@ -22,8 +22,30 @@ MonoBehaviour:
   <DifficultyColor>k__BackingField: {r: 0.14509805, g: 0.4392157, b: 0.16862746, a: 1}
   <StartPlayerFunds>k__BackingField: 1000
   <Conditions>k__BackingField:
-  - {fileID: 11400000, guid: 48849fb542043384cb2c2d50f35ef260, type: 2}
-  - {fileID: 11400000, guid: 8b4a251fa3e95774289000a1b80be006, type: 2}
-  - {fileID: 11400000, guid: 961b0f68f873524419ff4f8e68208da6, type: 2}
-  - {fileID: 11400000, guid: 76d69dc7894a4ad48a2ef7f25b4bd8d5, type: 2}
+  - rid: 5229624075333140555
+  - rid: 5229624075333140554
+  - rid: 5229624075333140553
+  - rid: 5229624075333140552
   <GameplayModifiers>k__BackingField: {fileID: 11400000, guid: 8847b3b0c08573949a2c93506b25b016, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 5229624075333140552
+      type: {class: TownTierWinConditionData, ns: Features.Levels.Conditions.Data, asm: Assembly-CSharp}
+      data:
+        <TargetTier>k__BackingField: 3
+        <TargetCount>k__BackingField: 3
+    - rid: 5229624075333140553
+      type: {class: FundsWinConditionData, ns: Features.Levels.Conditions.Data, asm: Assembly-CSharp}
+      data:
+        <FundsToReach>k__BackingField: 5000
+    - rid: 5229624075333140554
+      type: {class: TimeoutLossConditionData, ns: Features.Levels.Conditions.Data, asm: Assembly-CSharp}
+      data:
+        <DeadlineYear>k__BackingField: 1
+        <DeadlineDay>k__BackingField: 365
+    - rid: 5229624075333140555
+      type: {class: BankruptcyLossConditionData, ns: Features.Levels.Conditions.Data, asm: Assembly-CSharp}
+      data:
+        <MaxBankruptcyDurationInDays>k__BackingField: 14
+        <BankruptcyFundsThreshold>k__BackingField: 0

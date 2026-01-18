@@ -1,7 +1,7 @@
+using System;
+
 namespace Features.Levels.Conditions.Data
 {
-    public abstract class LossConditionData : ConditionData
-    {
-        
-    }
+    [Serializable]
+    public abstract class LossConditionData : ConditionData { }
 }

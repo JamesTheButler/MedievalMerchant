@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Common.Utility;
 using Features.Levels.Conditions.Data;
 using Features.Levels.GameModifiers.Data;
@@ -13,7 +14,7 @@ namespace Features.Levels
         public bool IsEnabled { get; private set; }
 
         /// <summary>
-        ///     Index for display to the player. 1-based.
+        /// Index for display to the player. 1-based.
         /// </summary>
         [field: SerializeField]
         public int DisplayIndex { get; private set; }
@@ -36,8 +37,8 @@ namespace Features.Levels
         [field: SerializeField]
         public float StartPlayerFunds { get; private set; }
 
-        [field: SerializeField, Expandable]
-        public ConditionData[] Conditions { get; private set; }
+        [field: SerializeReference, SubclassSelector]
+        public List<ConditionData> Conditions { get; private set; }
 
         [field: SerializeField, Expandable, Required]
         public LevelGameModifierData GameplayModifiers { get; private set; }

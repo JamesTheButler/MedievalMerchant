@@ -1,11 +1,9 @@
-using Common.Utility;
+using System;
 using UnityEngine;
 
 namespace Features.Levels.Conditions.Data
 {
-    [CreateAssetMenu(
-        fileName = nameof(BankruptcyLossConditionData),
-        menuName = AssetMenu.ConditionsFolder + nameof(BankruptcyLossConditionData))]
+    [Serializable]
     public sealed class BankruptcyLossConditionData : LossConditionData
     {
         [field: SerializeField]

@@ -35,7 +35,7 @@ namespace Common.Infrastructure.Gameplay
             PlayerModel player,
             IEnumerable<Town> towns,
             TileFlagMap tileFlagMap,
-            ConditionData[] conditions,
+            IEnumerable<ConditionData> conditions,
             ProductionZone[] productionZones)
         {
             _towns = towns.ToDictionary(town => town.GridLocation, town => town);
