@@ -75,7 +75,7 @@ namespace Features.Trade.UI
         private PriceManager _priceManager;
         private ModifiableVariable _observedPrice;
 
-        private bool _isInitialized;
+        private bool _isSetUp;
         private float _buyerFunds;
         private int _tradeAmount;
         private float _totalPrice;
@@ -98,7 +98,7 @@ namespace Features.Trade.UI
 
         public void SetUp(Good good, TradeType tradeType)
         {
-            if (_isInitialized)
+            if (_isSetUp)
             {
                 Debug.LogError("TradeUI was already initialized.");
                 return;
@@ -139,7 +139,7 @@ namespace Features.Trade.UI
 
             SetMaxAmount();
 
-            _isInitialized = true;
+            _isSetUp = true;
         }
 
         protected override void OnOpen()
@@ -151,7 +151,7 @@ namespace Features.Trade.UI
         {
             gameObject.SetActive(false);
 
-            if (!_isInitialized)
+            if (!_isSetUp)
                 return;
 
             _bindings.UnbindAll();
@@ -165,7 +165,7 @@ namespace Features.Trade.UI
             _buyingInventory = null;
             _sellingInventory = null;
 
-            _isInitialized = false;
+            _isSetUp = false;
             _tradeService.AbortTrade();
         }
 
