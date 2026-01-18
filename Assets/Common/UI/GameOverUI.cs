@@ -22,7 +22,7 @@ namespace Common.UI
     {
         [SerializeField]
         private UnityEvent Opened;
-        
+
         [SerializeField, Scene]
         private string startScene;
 
@@ -69,7 +69,9 @@ namespace Common.UI
 
             messageText.text = message;
             failureText.gameObject.SetActive(!isWon);
-            dynamicStatsText.text = GenerateStatisticsText();
+            var statisticsText = GenerateStatisticsText();
+            dynamicStatsText.text = statisticsText;
+            Debug.Log($"Game Over Stats: {dynamicStatsText}");
         }
 
         private string GenerateStatisticsText()
