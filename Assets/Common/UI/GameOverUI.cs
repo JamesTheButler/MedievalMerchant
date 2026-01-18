@@ -79,7 +79,7 @@ namespace Common.UI
             var towns = _model.Towns.Values.ToList();
             var t2TownCount = towns.Count(town => town.Tier.Value == Tier.Tier2);
             var t3TownCount = towns.Count(town => town.Tier.Value == Tier.Tier3);
-            var averageRep = towns.Average(town => town.ReputationManager.Reputation);
+            var averageRep = towns.Average(town => town.ReputationManager.Reputation.Value);
             var productionBuildingCount =
                 towns.Sum(town => town.ProductionManager.AllProducers.Count())
                 - towns.Count; // each town starts with one producer

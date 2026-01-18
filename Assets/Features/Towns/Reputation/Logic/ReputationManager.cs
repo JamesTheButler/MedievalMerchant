@@ -16,7 +16,7 @@ namespace Features.Towns.Reputation.Logic
     {
         private readonly Town _town;
 
-        public Observable<float> Reputation { get; } = new();
+        public IReadOnlyObservable<float> Reputation => _reputation;
 
         public IReadOnlyList<ReputationLogEntry> ReputationLog => _reputationLog;
         public IReadOnlyList<IModifier> Modifiers => _modifiers;
@@ -26,6 +26,7 @@ namespace Features.Towns.Reputation.Logic
         private readonly ReputationConfig _config;
         private readonly GoodResources _goodResources;
 
+        private readonly Observable<float> _reputation = new();
         private readonly List<IModifier> _modifiers = new();
         private readonly List<ReputationLogEntry> _reputationLog = new();
 
@@ -136,10 +137,10 @@ namespace Features.Towns.Reputation.Logic
             UpdateReputation(repChange, $"{_town.Name} was upgrade to {tier.ToDisplayString()}");
         }
 
-        private void UpdateReputation(float repChange, string reason)
+        public void UpdateReputation(float repChange, string reason)
         {
             // TODO - MED-73: apply modifiers
-            Reputation.Value = Mathf.Clamp(Reputation.Value + repChange, -100, 100);
+            _reputation.Value = Mathf.Clamp(Reputation.Value + repChange, -100, 100);
 
             var date = _model.Date;
             var logEntry = new ReputationLogEntry(date, repChange, Reputation.Value, reason);

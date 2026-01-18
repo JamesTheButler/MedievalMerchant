@@ -95,6 +95,7 @@ namespace Features.Levels.GameModifiers.Logic
                 PriceEffectData effectData => new PriceEffectLogic(origin, effectData),
                 MissionLimiterEffectData effectData => new MissionLimiterEffectLogic(origin, effectData),
                 DevelopmentEffectData effectData => new DevelopmentEffectLogic(origin, effectData),
+                AllyEffectData effectData => new AllyEffectLogic(origin, effectData),
                 _ => null,
             };
         }

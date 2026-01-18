@@ -54,7 +54,8 @@ namespace Features.Towns.UI
             town.FundsChange.Observe(OnFundsChangeChanged);
 
             // force reputation icon on bind
-            OnReputationChanged(town.ReputationManager.Reputation * -1, town.ReputationManager.Reputation);
+            var reputation = town.ReputationManager.Reputation.Value;
+            OnReputationChanged(reputation * -1, reputation);
         }
 
         private void OnTierChanged(Tier tier)
@@ -77,7 +78,6 @@ namespace Features.Towns.UI
             {
                 reputationIcon.sprite = isHappy ? _reputationResources.HappyIcon : _reputationResources.UnhappyIcon;
             }
-
         }
 
         private void OnFundsChanged(float funds)

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc0d85bad0f94c2491be2589bbdb31c6, type: 3}
+  m_Name: Level3ModifierData
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.GameModifiers.Data.LevelGameModifierData
+  <Title>k__BackingField: Times of Mistrust
+  <Description>k__BackingField: People in this area like to stick to themselves and
+    don't trust the others. You start with towns of one region on your side and will
+    need to play your cards right to please everyone.
+  <Effects>k__BackingField:
+  - rid: 4950215272220852485
+  - rid: 5229624043891589193
+  references:
+    version: 2
+    RefIds:
+    - rid: 4950215272220852485
+      type: {class: ReputationEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <ReputationBoostPercent>k__BackingField: 0.2
+    - rid: 5229624043891589193
+      type: {class: AllyEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <StartReputationAlly>k__BackingField: 50
+        <StartReputationOpponent>k__BackingField: -35

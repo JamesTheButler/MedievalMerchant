@@ -1,9 +1,11 @@
 using System.Linq;
 using Common.Infrastructure.Global;
 using Common.UI.Utility;
+using Common.Utility;
 using Features.Levels;
 using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.UI;
+using Features.Levels.GameModifiers.Effects.Data;
 using Features.Levels.GameModifiers.UI;
 using NaughtyAttributes;
 using TMPro;
@@ -22,24 +24,26 @@ namespace Features.StartMenu.UI
         private TMP_Text levelIdText, nameText, completionDateText, descriptionText, difficultyText;
 
         [SerializeField, Required]
-        private PreGameConditionListUI winConditionList;
-
-        [SerializeField, Required]
-        private PreGameConditionListUI lossConditionList;
+        private PreGameConditionListUI winConditionList, lossConditionList;
 
         [SerializeField, Required]
         private GameModifierUIElement levelConditionsElement;
 
         [SerializeField, Required]
+        private AllySelectionPanel allySelectionPanel;
+
+        [SerializeField, Required]
         private Button continueButton, startButton;
 
+        private AllyEffectData _allyEffect;
         private LevelInfo _currentLevelInfo;
 
         private void Awake()
         {
-            startButton.onClick.AddListener(LoadCurrentLevel);
+            startButton.onClick.AddListener(StartButtonClicked);
             // relevant later, when I add serialization of ongoing games
             continueButton.gameObject.SetActive(false);
+            allySelectionPanel.gameObject.SetActive(false);
         }
 
         public void Setup(LevelInfo levelInfo)
@@ -53,7 +57,9 @@ namespace Features.StartMenu.UI
             var isCompleted = completionDate != null;
             completionDateText.enabled = isCompleted;
             if (isCompleted)
+            {
                 completionDateText.text = $"Fastest Win: {completionDate!.CompletionDate.ToDisplayString()}";
+            }
 
             difficultyText.text = $"Difficulty: {levelInfo.Difficulty.WithColor(levelInfo.DifficultyColor)}";
 
@@ -61,9 +67,22 @@ namespace Features.StartMenu.UI
             winConditionList.Setup(conditions.OfType<WinConditionData>());
             lossConditionList.Setup(conditions.OfType<LossConditionData>());
             levelConditionsElement.Setup(levelInfo.GameplayModifiers);
+
+            _allyEffect = levelInfo.GameplayModifiers.Effects.FirstOfType<AllyEffectData, EffectData>();
         }
 
-        private void LoadCurrentLevel()
+        private void StartButtonClicked()
+        {
+            if (_allyEffect != null)
+            {
+                allySelectionPanel.SetUp(_allyEffect, LoadSelectedLevel);
+                return;
+            }
+
+            LoadSelectedLevel();
+        }
+
+        private void LoadSelectedLevel()
         {
             Debug.Log($"Loading level {_currentLevelInfo.LevelName}...");
 

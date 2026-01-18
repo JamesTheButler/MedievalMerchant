@@ -56,7 +56,9 @@ namespace Features.Towns
                 foreach (var zone in zones)
                 {
                     if (zone.IsAdjacentTo(townPosition, ZoneDistance))
+                    {
                         zonesPerTown[townPosition].Add(zone);
+                    }
                 }
             }
 

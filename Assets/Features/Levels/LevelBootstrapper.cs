@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Global;
 using Common.UI.Elements;
 using Common.Utility;
 using Features.Audio.Music;
+using Features.Levels.GameModifiers.Effects.Data;
 using Features.Map;
 using Features.Map.Tiling;
 using Features.Player.Logic;
@@ -47,9 +50,7 @@ namespace Features.Levels
             context.Services.Initialize();
             context.Systems.Initialize();
 
-            var startTown = towns.GetRandom();
-            player.Location.CurrentTown.Value = startTown;
-            player.Location.WorldLocation.Value = startTown.WorldLocation;
+            SetStartTown(levelInfo, towns, player);
 
             player.CaravanManager.UpgradeCart(0);
 
@@ -59,8 +60,20 @@ namespace Features.Levels
             InitializeEverything();
 
             GlobalContext.Instance.Services.MusicService.MusicModeChange.Invoke(MusicMode.Gameplay);
-            
+
             completed.Invoke();
+        }
+
+        private static void SetStartTown(LevelInfo levelInfo, List<Town> towns, PlayerModel player)
+        {
+            var allyEffect = levelInfo.GameplayModifiers.Effects.FirstOfType<AllyEffectData, EffectData>();
+            var possibleTowns = allyEffect != null
+                ? towns.Where(town => town.MainRegion == allyEffect.AllyRegion)
+                : towns;
+
+            var startTown = possibleTowns.GetRandom();
+            player.Location.CurrentTown.Value = startTown;
+            player.Location.WorldLocation.Value = startTown.WorldLocation;
         }
 
         private void OnDestroy()
