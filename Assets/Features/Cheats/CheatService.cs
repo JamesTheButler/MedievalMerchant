@@ -51,6 +51,9 @@ namespace Features.Cheats
                 { "reset.levels", ResetCompletedLevels },
                 { "reset.tutorial", ResetTutorial },
                 { "reset.all", ResetAllProgress },
+                { "town.grow", SetTownDevelopmentTo100 },
+                { "town.rep", SetTownReputationTo100 },
+                { "town.reputation", SetTownReputationTo100 },
             };
 
             _paramCommands = new Dictionary<string, Action<string>>
@@ -61,6 +64,8 @@ namespace Features.Cheats
                 { "tutorial", OpenTutorial },
                 { "give", GiveGoods },
                 { "town.grow", AddTownDevelopment },
+                { "town.rep", SetTownReputation },
+                { "town.reputation", SetTownReputation },
             };
         }
 
@@ -106,6 +111,8 @@ namespace Features.Cheats
             }
         }
 
+        #region Cheats
+
         private void AddTownDevelopment(string parameter)
         {
             var selectedTown = _selection.SelectedTown.Value;
@@ -117,6 +124,43 @@ namespace Features.Cheats
 
             var devChange = int.Parse(parameter).Clamp(0, 100);
             selectedTown.DevelopmentManager.AddDevelopmentChange(devChange);
+        }
+
+        private void SetTownDevelopmentTo100()
+        {
+            var selectedTown = _selection.SelectedTown.Value;
+            if (selectedTown == null)
+            {
+                ReportError("No town was selected.");
+                return;
+            }
+
+            selectedTown.DevelopmentManager.AddDevelopmentChange(100);
+        }
+
+        private void SetTownReputation(string parameter)
+        {
+            var selectedTown = _selection.SelectedTown.Value;
+            if (selectedTown == null)
+            {
+                ReportError("No town was selected.");
+                return;
+            }
+
+            var repChange = int.Parse(parameter);
+            selectedTown.ReputationManager.UpdateReputation(repChange, "You cheated!!");
+        }
+
+        private void SetTownReputationTo100()
+        {
+            var selectedTown = _selection.SelectedTown.Value;
+            if (selectedTown == null)
+            {
+                ReportError("No town was selected.");
+                return;
+            }
+
+            selectedTown.ReputationManager.UpdateReputation(200f, "You cheated!!");
         }
 
         private void GiveGoods(string parameter)
@@ -266,6 +310,10 @@ namespace Features.Cheats
             _tutorialService.OpenTutorial(tutorialTopic);
         }
 
+        #endregion
+
+        #region Utilities
+
         private static void ReportSuccess(string message)
         {
             Debug.Log(message);
@@ -280,5 +328,7 @@ namespace Features.Cheats
         {
             ReportError($"Invalid cheat '{input}' has been entered.");
         }
+
+        #endregion
     }
 }
