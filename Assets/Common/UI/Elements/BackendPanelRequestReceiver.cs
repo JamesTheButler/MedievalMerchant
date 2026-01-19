@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Common.UI
+namespace Common.UI.Elements
 {
     public sealed class BackendPanelRequestReceiver : MonoBehaviour
     {
