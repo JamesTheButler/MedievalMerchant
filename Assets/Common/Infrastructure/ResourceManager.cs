@@ -6,6 +6,9 @@ using Features.Towns.Development.UI.DevelopmentGauge;
 using Features.Towns.Flags.Config;
 using Features.Towns.Production.Config;
 using Features.Towns.Reputation.Data;
+using Features.Trade.Haggling;
+using Features.Trade.Haggling.Data;
+using Features.Trade.UI;
 using Features.Tutorial.Data;
 using NaughtyAttributes;
 using UnityEngine;
@@ -41,6 +44,9 @@ namespace Common.Infrastructure
 
         [field: SerializeField, Required]
         public FlagResources FlagResources { get; private set; }
+        
+        [field: SerializeField, Required]
+        public HaggleResources HaggleResources { get; private set; }
 
         [field: SerializeField, Required]
         public GoodResources GoodResources { get; private set; }

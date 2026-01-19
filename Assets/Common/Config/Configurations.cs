@@ -10,6 +10,9 @@ using Features.Towns.Development.Config;
 using Features.Towns.Missions.Data;
 using Features.Towns.Production.Config;
 using Features.Towns.Reputation.Data;
+using Features.Trade.Haggling;
+using Features.Trade.Haggling.Data;
+using Features.Trade.UI;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -35,6 +38,9 @@ namespace Common.Config
 
         [field: SerializeField, Required]
         public GoodConfig GoodConfig { get; private set; }
+
+        [field: SerializeField, Required]
+        public HaggleConfig HaggleConfig { get; private set; }
 
         [field: SerializeField, Required]
         public MissionConfig MissionConfig { get; private set; }
