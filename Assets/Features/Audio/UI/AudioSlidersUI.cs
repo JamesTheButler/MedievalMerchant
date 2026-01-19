@@ -1,13 +1,14 @@
 using Common.Infrastructure.Global;
 using Common.UI.Elements;
 using Features.Settings.Logic;
+using Features.Settings.UI;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Features.Settings.UI
+namespace Features.Audio.UI
 {
-    public sealed class AudioSettingsUI : InitializableBehavior
+    public sealed class AudioSlidersUI : InitializableBehavior
     {
         [SerializeField, Required]
         private Slider volumeSlider, musicVolumeSlider, sfxVolumeSlider, uiVolumeSlider;
