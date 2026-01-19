@@ -6,5 +6,7 @@ namespace Features.Levels.Conditions
         TownTierWinCondition = 1,
         FundsWinCondition = 2,
         BankruptcyLossCondition = 3,
+        GlobalRepWinCondition = 4,
+        LocalRepWinCondition = 5,
     }
 }

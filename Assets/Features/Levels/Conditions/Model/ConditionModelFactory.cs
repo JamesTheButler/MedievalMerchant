@@ -9,17 +9,12 @@ namespace Features.Levels.Conditions.Model
         {
             return conditionData switch
             {
-                FundsWinConditionData fundsWinConditionData =>
-                    new FundsWinCondition(fundsWinConditionData),
-
-                BankruptcyLossConditionData bankruptcyLossConditionData =>
-                    new BankruptcyLossCondition(bankruptcyLossConditionData),
-
-                TimeoutLossConditionData timeoutLossConditionData =>
-                    new TimeoutLossCondition(timeoutLossConditionData),
-
-                TownTierWinConditionData townTierWinConditionData =>
-                    new TownTierWinCondition(townTierWinConditionData),
+                FundsWinConditionData data => new FundsWinCondition(data),
+                BankruptcyLossConditionData data => new BankruptcyLossCondition(data),
+                TimeoutLossConditionData data => new TimeoutLossCondition(data),
+                TownTierWinConditionData data => new TownTierWinCondition(data),
+                LocalReputationWinConditionData data => new LocalReputationWinCondition(data),
+                GlobalReputationWinConditionData data => new GlobalReputationWinCondition(data),
 
                 _ => throw new ArgumentOutOfRangeException(nameof(conditionData))
             };

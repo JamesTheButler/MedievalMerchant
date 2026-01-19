@@ -24,8 +24,8 @@ namespace Features.Levels.Conditions.Logic
 
         public void SetProgress(int currentValue)
         {
-            CurrentValue.Value = Mathf.Clamp(currentValue, 0, _maxValue);
-            CurrentValuePercent.Value = (float)CurrentValue.Value / _maxValue;
+            CurrentValue.Value = currentValue;
+            CurrentValuePercent.Value = Math.Min(CurrentValue.Value, 0f) / _maxValue;
             IsCompleted.Value = currentValue >= _maxValue;
             CurrentValueText.Value = _formatter.Invoke(CurrentValue.Value, _maxValue);
         }
