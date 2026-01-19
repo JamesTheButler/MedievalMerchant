@@ -18,7 +18,6 @@ namespace Features.Player.Retinue.Config.LevelDatas
         [field: SerializeField, Range(0, 100)]
         public float ReputationLoss { get; private set; }
 
-
         public override string Description => new StringBuilder()
             .AppendLine($"- Steals {TownEntranceGold} coin when entering town".WithStyle(Style.Good))
             .AppendLine($"- {ReputationLossChance.ToPercentString()} chance of getting caught".WithStyle(Style.Bad))

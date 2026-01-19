@@ -1,4 +1,5 @@
 ﻿using Common.Infrastructure.Gameplay;
+using Common.Types;
 using Common.Utility;
 using Features.Player.Logic;
 using Features.Player.Retinue.Config.CompanionDatas;
@@ -11,6 +12,8 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
     public sealed class ThiefCompanionLogic : BaseCompanionLogic<ThiefCompanionData>
     {
         private PlayerModel _player;
+        private Date _gameDate;
+        private Date _nextPossibleTheftDate = new();
 
         protected override CompanionType Type => CompanionType.Thief;
 
@@ -35,6 +38,8 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
         private void Bind()
         {
             _player = GameplayContext.Instance.Model.Player;
+            _gameDate = GameplayContext.Instance.Model.Date;
+
             _player.Location.CurrentTown.Observe(OnTownChanged);
 
             _isBound = true;
@@ -44,14 +49,25 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
         {
             if (town == null || _thiefLevelData == null) return;
 
+            if (_gameDate < _nextPossibleTheftDate)
+                return;
+
+            _nextPossibleTheftDate = _gameDate + ConfigData.MinDaysBetweenThefts;
+
+
             _player.Inventory.AddFunds(_thiefLevelData.TownEntranceGold);
             town.Inventory.RemoveFunds(_thiefLevelData.TownEntranceGold);
 
+            var log = $"Thief stole {_thiefLevelData.TownEntranceGold} from {town.Name}.";
+            
             var isThiefCaught = RandomUtility.GetBool(_thiefLevelData.ReputationLossChance);
             if (isThiefCaught)
             {
                 town.ReputationManager.ApplyCaughtThief(_thiefLevelData.ReputationLoss);
+                log += $".. and got caught ({_thiefLevelData.ReputationLoss} rep)";
             }
+
+            Debug.Log(log);
         }
     }
 }
