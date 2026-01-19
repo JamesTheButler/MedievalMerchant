@@ -15,7 +15,10 @@ namespace Features.Audio.Sfx
         public override void Initialize()
         {
             _sfxService = GlobalContext.Instance.Services.SfxService;
-            
+
+            if (!panel)
+                return;
+
             panel.Opened += OnOpened;
             panel.Closed += OnClosed;
         }
