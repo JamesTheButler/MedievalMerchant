@@ -54,6 +54,7 @@ namespace Common.Infrastructure.Gameplay
             _systems.Add(new NotificationLoggerSystem());
             _systems.Add(new ProgressionSystem());
             _systems.Add(new GameSfxSystem());
+            _systems.Add(new GlobalSurplusSystem());
         }
 
         private void AddPlayerSystems()
@@ -78,6 +79,7 @@ namespace Common.Infrastructure.Gameplay
                 _systems.Add(new DevelopmentMilestoneSystem(town));
                 _systems.Add(new MilestoneModifierSystem(town));
                 _systems.Add(new MissionSystem(town));
+                _systems.Add(new LostInterestSystem(town));
                 //_systems.Add(new TownNeglectSystem(town)); // TODO - Milestone 0.2.0
             }
         }

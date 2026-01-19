@@ -22,4 +22,5 @@ namespace Common.Infrastructure.Observation
             Action -= notifyCallback;
         }
     }
+    
 }

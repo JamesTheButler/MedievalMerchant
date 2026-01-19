@@ -10,7 +10,7 @@ namespace Features.Trade.Logic.Price
     /// </summary>
     public sealed class AvailabilityPriceModifier : BasePercentageModifier
     {
-        private readonly AvailabilityConfig _config = ConfigurationManager.Configurations.AvailabilityConfig;
+        private readonly PriceModifierConfig _config = ConfigurationManager.Configurations.PriceModifierConfig;
         private readonly AvailabilityResources _resources = ResourceManager.Instance.AvailabilityResources;
 
         public AvailabilityPriceModifier(Availability availability) : base(0, string.Empty)
@@ -20,7 +20,7 @@ namespace Features.Trade.Logic.Price
 
         public void Update(Availability availability)
         {
-            Value.Value = _config.ConfigData[availability].PriceMultiplier;
+            Value.Value = _config.AvailabilityConfigData[availability].PriceMultiplier;
             Description.Value = GetDescription(availability);
         }
 

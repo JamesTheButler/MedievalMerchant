@@ -22,7 +22,7 @@ namespace Common.Config
     public sealed class Configurations : ScriptableObject
     {
         [field: SerializeField, Required]
-        public AvailabilityConfig AvailabilityConfig { get; private set; }
+        public PriceModifierConfig PriceModifierConfig { get; private set; }
 
         [field: SerializeField, Required]
         public CaravanConfig CaravanConfig { get; private set; }

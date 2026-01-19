@@ -11,7 +11,7 @@ namespace Features.Trade.Logic
         private readonly Town _town;
         private readonly Inventory.Inventory _inventory;
 
-        private readonly AvailabilityConfig _availabilityConfig = ConfigurationManager.Configurations.AvailabilityConfig;
+        private readonly PriceModifierConfig _priceModifierConfig = ConfigurationManager.Configurations.PriceModifierConfig;
         private readonly ProducerConfig _townConfig = ConfigurationManager.Configurations.ProducerConfig;
         private readonly GoodResources _goodResources = ResourceManager.Instance.GoodResources;
 
@@ -34,9 +34,9 @@ namespace Features.Trade.Logic
                 return Availability.VeryLow;
 
             // this assumes an order of the keys, which I know to work but it's not robust
-            foreach (var marketState in _availabilityConfig.ConfigData.Keys)
+            foreach (var marketState in _priceModifierConfig.AvailabilityConfigData.Keys)
             {
-                var threshold = _availabilityConfig.ConfigData[marketState].ActivationThresholdInPercent / 100f;
+                var threshold = _priceModifierConfig.AvailabilityConfigData[marketState].ActivationThresholdInPercent / 100f;
                 if (relativeAmount < threshold)
                 {
                     return marketState - 1;

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 037565b327164076a4f71456b57f9fdc, type: 3}
-  m_Name: AvailabilityConfig_Release
+  m_Name: PriceModifierConfig_Debug
   m_EditorClassIdentifier: 
-  <ConfigData>k__BackingField:
+  <AvailabilityConfigData>k__BackingField:
     _serializedList:
     - Key: 0
       Value:
@@ -21,16 +21,24 @@ MonoBehaviour:
     - Key: 1
       Value:
         <PriceMultiplier>k__BackingField: 0.025
-        <ActivationThresholdInPercent>k__BackingField: 15
+        <ActivationThresholdInPercent>k__BackingField: 10
     - Key: 2
       Value:
         <PriceMultiplier>k__BackingField: 0
-        <ActivationThresholdInPercent>k__BackingField: 30
+        <ActivationThresholdInPercent>k__BackingField: 25
     - Key: 3
       Value:
         <PriceMultiplier>k__BackingField: -0.025
-        <ActivationThresholdInPercent>k__BackingField: 70
+        <ActivationThresholdInPercent>k__BackingField: 75
     - Key: 4
       Value:
-        <PriceMultiplier>k__BackingField: -0.05
-        <ActivationThresholdInPercent>k__BackingField: 85
+        <PriceMultiplier>k__BackingField: -0.2
+        <ActivationThresholdInPercent>k__BackingField: -0.05
+  <GlobalSurplusModiferConfig>k__BackingField:
+    <StartThreshold>k__BackingField: 100
+    <GoodsPerStep>k__BackingField: 100
+    <PriceReductionPerStep>k__BackingField: 0.03
+  <DisinterestModiferConfig>k__BackingField:
+    <TrackedPeriodInDays>k__BackingField: 30
+    <GoodsPerStep>k__BackingField: 25
+    <PriceReductionPerStep>k__BackingField: 0.02

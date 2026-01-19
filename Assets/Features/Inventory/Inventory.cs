@@ -13,11 +13,13 @@ namespace Features.Inventory
         public event Action<Good> GoodAdded, GoodRemoved;
         public event Action<Good, int> GoodUpdated;
 
+        public IReadOnlyObservableEvent<Good, int, int> GoodUpdatedWithOld;
         public Observable<float> Funds { get; } = new();
 
         public IInventoryPolicy InventoryPolicy { get; }
         public IReadOnlyDictionary<Good, int> Goods => _goods;
 
+        private ObservableEvent<Good, int, int> _goodUpdatedWithOld;
         private readonly Lazy<GoodResources> _goodsInfoManager = new(() => ResourceManager.Instance.GoodResources);
         private readonly Dictionary<Good, int> _goods = new();
 
@@ -60,11 +62,15 @@ namespace Features.Inventory
             if (!_goods.ContainsKey(good))
             {
                 GoodAdded?.Invoke(good);
+                _goods.Add(good, 0);
             }
 
-            _goods.TryAdd(good, 0);
-            _goods[good] += amount;
-            GoodUpdated?.Invoke(good, _goods[good]);
+            var oldValue = _goods[good];
+            var newValue = oldValue + amount;
+
+            _goods[good] = newValue;
+            GoodUpdated?.Invoke(good, newValue);
+            _goodUpdatedWithOld.Invoke(good, oldValue, newValue);
         }
 
         public void RemoveGood(Good good, int amount)
@@ -72,7 +78,10 @@ namespace Features.Inventory
             if (amount == 0) return;
             if (!HasGood(good)) return;
 
-            _goods[good] -= amount;
+            var oldValue = _goods[good];
+            var newValue = Math.Min(oldValue - amount, 0);
+            
+            _goods[good] = newValue;
 
             if (_goods[good] <= 0)
             {
@@ -80,7 +89,8 @@ namespace Features.Inventory
                 GoodRemoved?.Invoke(good);
             }
 
-            GoodUpdated?.Invoke(good, _goods.GetValueOrDefault(good, 0));
+            GoodUpdated?.Invoke(good, newValue);
+            _goodUpdatedWithOld.Invoke(good, oldValue, newValue);
         }
 
         public int Get(Good good)
