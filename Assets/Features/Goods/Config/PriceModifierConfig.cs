@@ -1,6 +1,7 @@
 using AYellowpaper.SerializedCollections;
 using Common.Types;
 using Common.Utility;
+using Features.Trade.Logic.Price;
 using UnityEngine;
 
 namespace Features.Goods.Config

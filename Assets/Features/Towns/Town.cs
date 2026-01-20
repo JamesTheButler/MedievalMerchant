@@ -18,6 +18,7 @@ using Features.Towns.Missions;
 using Features.Towns.Production.Logic;
 using Features.Towns.Reputation.Logic;
 using Features.Trade;
+using Features.Trade.Logic.Price;
 using UnityEngine;
 
 namespace Features.Towns

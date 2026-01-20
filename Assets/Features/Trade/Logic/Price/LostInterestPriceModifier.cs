@@ -1,6 +1,6 @@
 using Common.Infrastructure.Modifiable;
 
-namespace Features.Towns
+namespace Features.Trade.Logic.Price
 {
     public sealed class LostInterestPriceModifier : BasePercentageModifier
     {

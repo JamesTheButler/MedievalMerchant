@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Types;
-using Features.Trade;
-using Features.Trade.Logic;
+using Features.Goods.Selector;
+using Features.Towns;
 
-namespace Features.Towns
+namespace Features.Trade.Logic.Price
 {
     public sealed class LostInterestSystem : ISystem
     {
@@ -26,8 +26,6 @@ namespace Features.Towns
             _gameDate = GameplayContext.Instance.Model.Date;
 
             _tradeService.TradeCompleted.Observe(OnTradeCompleted);
-
-            // _town.PriceManager.AddModifier(_modifier,, TradeType.Sell);
         }
 
         public void CleanUp() { }
@@ -36,6 +34,11 @@ namespace Features.Towns
         {
             if (tradeInfo.Town != _town)
                 return;
+        }
+
+        private void AddModifier(Good good)
+        {
+            _town.PriceManager.AddModifier(_modifier[good], new SingleGoodSelector(good), TradeType.Sell);
         }
     }
 }

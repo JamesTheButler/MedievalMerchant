@@ -12,6 +12,7 @@ using Features.Towns;
 using Features.Towns.Flags.UI;
 using Features.Towns.Missions;
 using Features.Trade.Logic;
+using Features.Trade.Logic.Price;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;

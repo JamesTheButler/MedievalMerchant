@@ -1,10 +1,9 @@
 using Common.Infrastructure.Modifiable;
 using Common.Types;
 using Features.Goods.Selector;
-using Features.Trade;
-using Features.Trade.Logic.Price;
+using Features.Towns;
 
-namespace Features.Towns
+namespace Features.Trade.Logic.Price
 {
     public sealed class PriceManager
     {

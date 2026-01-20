@@ -3,10 +3,9 @@ using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Types;
 using Common.Utility;
-using Features.Goods.Config;
 using UnityEngine;
 
-namespace Features.Towns
+namespace Features.Trade.Logic.Price
 {
     public sealed class GlobalSurplusPriceModifier : BasePercentageModifier
     {

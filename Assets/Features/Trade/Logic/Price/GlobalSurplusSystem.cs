@@ -1,16 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
-using AYellowpaper.SerializedCollections.Editor.Data;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
-using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Common.Types;
-using Features.Goods.Config;
 using Features.Goods.Selector;
-using Features.Trade;
+using Features.Towns;
 
-namespace Features.Towns
+namespace Features.Trade.Logic.Price
 {
     public sealed class GlobalSurplusSystem : ISystem
     {

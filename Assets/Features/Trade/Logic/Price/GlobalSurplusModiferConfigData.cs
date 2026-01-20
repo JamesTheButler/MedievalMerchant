@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Features.Goods.Config
+namespace Features.Trade.Logic.Price
 {
     [Serializable]
     public sealed class GlobalSurplusModiferConfigData
