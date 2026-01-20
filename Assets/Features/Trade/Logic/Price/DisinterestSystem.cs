@@ -9,8 +9,6 @@ using Features.Towns;
 
 namespace Features.Trade.Logic.Price
 {
-    public sealed class DateLog<T> : Dictionary<Date, T> { }
-
     public sealed class DisinterestSystem : ISystem
     {
         private readonly Town _town;
