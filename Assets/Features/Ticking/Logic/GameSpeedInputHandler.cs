@@ -1,6 +1,7 @@
 using System;
 using Common.Infrastructure.Gameplay;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Features.Ticking.Logic
 {
@@ -8,8 +9,11 @@ namespace Features.Ticking.Logic
     {
         private readonly Lazy<GameSpeedModel> _gameSpeedModel = new(() => GameplayContext.Instance.Model.GameSpeed);
 
-        public void PauseGame()
+        public void PauseOrResume(InputAction.CallbackContext context)
         {
+            if (!context.performed)
+                return;
+
             if (_gameSpeedModel.Value.IsPaused.Value)
             {
                 _gameSpeedModel.Value.Resume();
