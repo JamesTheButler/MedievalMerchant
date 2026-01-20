@@ -16,6 +16,8 @@ namespace Features.Cheats
 
         private CheatService _cheatService;
 
+        private string _lastCheat;
+        
         protected override void OnInitialize()
         {
             _cheatService = GameplayContext.Instance.Services.Cheats;
@@ -63,6 +65,11 @@ namespace Features.Cheats
         {
             try
             {
+                if (cheat == "l")
+                {
+                    cheat = _lastCheat;
+                }
+                
                 var split = cheat
                     .ToLowerInvariant()
                     .TrimEnd(' ')
@@ -78,6 +85,8 @@ namespace Features.Cheats
                         _cheatService.HandleInvalidInput(cheat);
                         break;
                 }
+                
+                _lastCheat = cheat;
             }
             catch (Exception exception)
             {

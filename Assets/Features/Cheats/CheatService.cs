@@ -27,7 +27,7 @@ namespace Features.Cheats
 
         private Dictionary<string, Action> _simpleCommands;
         private Dictionary<string, Action<string>> _paramCommands;
-
+        
         public void Initialize()
         {
             _model = GameplayContext.Instance.Model;
@@ -66,6 +66,7 @@ namespace Features.Cheats
                 { "town.grow", AddTownDevelopment },
                 { "town.rep", SetTownReputation },
                 { "town.reputation", SetTownReputation },
+                { "town.funds", AddTownFunds },
             };
         }
 
@@ -149,6 +150,19 @@ namespace Features.Cheats
 
             var repChange = int.Parse(parameter);
             selectedTown.ReputationManager.UpdateReputation(repChange, "You cheated!!");
+        }
+
+        private void AddTownFunds(string parameter)
+        {
+            var selectedTown = _selection.SelectedTown.Value;
+            if (selectedTown == null)
+            {
+                ReportError("No town was selected.");
+                return;
+            }
+
+            var fundsChange = int.Parse(parameter);
+            selectedTown.Inventory.AddFunds(fundsChange);
         }
 
         private void SetTownReputationTo100()
