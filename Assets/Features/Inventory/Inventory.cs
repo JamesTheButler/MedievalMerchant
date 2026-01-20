@@ -13,13 +13,13 @@ namespace Features.Inventory
         public event Action<Good> GoodAdded, GoodRemoved;
         public event Action<Good, int> GoodUpdated;
 
-        public IReadOnlyObservableEvent<Good, int, int> GoodUpdatedWithOld;
+        public IReadOnlyObservableEvent<Good, int, int> GoodUpdatedWithOld => _goodUpdatedWithOld;
         public Observable<float> Funds { get; } = new();
 
         public IInventoryPolicy InventoryPolicy { get; }
         public IReadOnlyDictionary<Good, int> Goods => _goods;
 
-        private ObservableEvent<Good, int, int> _goodUpdatedWithOld;
+        private readonly ObservableEvent<Good, int, int> _goodUpdatedWithOld = new();
         private readonly Lazy<GoodResources> _goodsInfoManager = new(() => ResourceManager.Instance.GoodResources);
         private readonly Dictionary<Good, int> _goods = new();
 
@@ -79,8 +79,8 @@ namespace Features.Inventory
             if (!HasGood(good)) return;
 
             var oldValue = _goods[good];
-            var newValue = Math.Min(oldValue - amount, 0);
-            
+            var newValue = Math.Max(oldValue - amount, 0);
+
             _goods[good] = newValue;
 
             if (_goods[good] <= 0)
