@@ -80,7 +80,7 @@ namespace Common.Infrastructure.Gameplay
                 _systems.Add(new DevelopmentMilestoneSystem(town));
                 _systems.Add(new MilestoneModifierSystem(town));
                 _systems.Add(new MissionSystem(town));
-                //_systems.Add(new LostInterestSystem(town));
+                _systems.Add(new DisinterestSystem(town));
                 //_systems.Add(new TownNeglectSystem(town)); // TODO - Milestone 0.2.0
             }
         }
