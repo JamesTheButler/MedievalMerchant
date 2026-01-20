@@ -45,7 +45,7 @@ namespace Features.Levels.GameModifiers.Logic
                 }
 
                 var gameEvent = new GameEvent(eventModifierData, endDate);
-                _gameDate.Changed += gameEvent.UpdateGameDate;
+                _gameDate.Changed.Observe(gameEvent.UpdateGameDate);
                 gameEvent.UpdateGameDate(_gameDate);
                 _eventModel.AddEvent(gameEvent);
                 _eventDatasToEvents.Add(eventModifierData, gameEvent);
@@ -69,7 +69,7 @@ namespace Features.Levels.GameModifiers.Logic
         {
             if (_eventDatasToEvents.TryGetValue(modifierData, out var gameEvent))
             {
-                _gameDate.Changed -= gameEvent.UpdateGameDate;
+                _gameDate.Changed.StopObserving(gameEvent.UpdateGameDate);
                 _eventModel.RemoveEvent(gameEvent);
                 _eventDatasToEvents.Remove(modifierData);
             }

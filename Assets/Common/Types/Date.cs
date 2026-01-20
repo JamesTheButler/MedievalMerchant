@@ -1,4 +1,3 @@
-using System;
 using Common.Infrastructure.Observation;
 
 namespace Common.Types
@@ -7,7 +6,7 @@ namespace Common.Types
     {
         public const int LastDayOfYear = 365;
 
-        public event Action<Date> Changed;
+        public ObservableEvent<Date> Changed { get; } = new();
 
         private readonly Observable<int> _year;
         private readonly Observable<int> _day;
@@ -73,7 +72,7 @@ namespace Common.Types
         {
             return new Date(left.Day.Value + right.Day.Value, left.Year.Value + right.Year.Value);
         }
-        
+
         public static Date operator -(Date left, Date right)
         {
             return new Date(left.Day.Value - right.Day.Value, left.Year.Value - right.Year.Value);

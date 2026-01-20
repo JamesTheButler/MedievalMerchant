@@ -38,7 +38,7 @@ namespace Features.Levels.Conditions.Logic
             {
                 _isBankrupt = true;
                 _bankruptcyDate = _currentDate + _condition.MaxBankruptcyDurationInDays;
-                _currentDate.Changed += OnGameDateChanged;
+                _currentDate.Changed.Observe(OnGameDateChanged);
                 _condition.Progress.SetProgress(0);
             }
 
@@ -47,7 +47,7 @@ namespace Features.Levels.Conditions.Logic
             {
                 _isBankrupt = false;
                 _bankruptcyDate = null;
-                _currentDate.Changed -= OnGameDateChanged;
+                _currentDate.Changed.StopObserving(OnGameDateChanged);
                 _condition.Progress.SetProgress(0);
             }
         }

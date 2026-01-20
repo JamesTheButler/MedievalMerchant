@@ -25,7 +25,7 @@ namespace Features.Towns.Reputation.Logic
             _neglectConfig = ConfigurationManager.Configurations.ReputationConfig.NeglectData;
 
             _town.ReputationManager.Reputation.Observe(OnReputationChanged);
-            _model.Date.Changed += OnGameDateChanged;
+            _model.Date.Changed.Observe(OnGameDateChanged);
 
             ResetNeglect();
         }
@@ -33,7 +33,7 @@ namespace Features.Towns.Reputation.Logic
         public void CleanUp()
         {
             _town.ReputationManager.Reputation.StopObserving(OnReputationChanged);
-            _model.Date.Changed -= OnGameDateChanged;
+            _model.Date.Changed.StopObserving(OnGameDateChanged);
         }
 
         private void OnReputationChanged(float oldRep, float newRep)
