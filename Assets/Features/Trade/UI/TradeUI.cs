@@ -76,7 +76,7 @@ namespace Features.Trade.UI
         private ModifiableVariable _observedPrice;
 
         private bool _isSetUp;
-        private bool _wasSuccessfulTrade;
+        private bool _wasSuccessfullTrade;
         private float _buyerFunds;
         private int _tradeAmount;
         private float _totalPrice;
@@ -167,12 +167,12 @@ namespace Features.Trade.UI
             _sellingInventory = null;
 
             _isSetUp = false;
-            _wasSuccessfulTrade = false;
 
-            if (!_wasSuccessfulTrade)
+            if (!_wasSuccessfullTrade)
             {
                 _tradeService.AbortTrade();
             }
+            _wasSuccessfullTrade = false;
         }
 
         private void OnMissionAdded(Mission mission)
@@ -262,10 +262,10 @@ namespace Features.Trade.UI
 
             _buyingInventory.AddGood(_good, _tradeAmount);
             _sellingInventory.RemoveGood(_good, _tradeAmount);
-            // this should replace the line above
+            // this should replace the lines above
             _tradeService.CompleteTrade(tradeInfo);
 
-            _wasSuccessfulTrade = true;
+            _wasSuccessfullTrade = true;
             Close();
         }
 
