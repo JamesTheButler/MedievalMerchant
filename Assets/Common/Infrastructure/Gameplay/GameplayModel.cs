@@ -22,7 +22,7 @@ namespace Common.Infrastructure.Gameplay
         public PlayerModel Player { get; private set; }
 
         public GameSpeedModel GameSpeed { get; } = new();
-        public Date Date { get; } = new();
+        public DateModel DateModel { get; } = new();
         public LevelConditions Conditions { get; } = new();
         public EventModel Events { get; } = new();
         public GoodPool GoodPool { get; private set; }

@@ -18,7 +18,7 @@ namespace Features.Levels.GameModifiers.Events
         private EventConfig _eventConfig;
         private EventModel _eventModel;
         private NotificationService _notificationService;
-        private Date _gameDate;
+        private DateModel _gameDateModel;
 
         private const int MaxEventCreationTries = 5;
 
@@ -34,7 +34,7 @@ namespace Features.Levels.GameModifiers.Events
             _notificationService = context.Services.NotificationService;
             _tickingService = context.Services.TickingService;
             _eventModel = context.Model.Events;
-            _gameDate = context.Model.Date;
+            _gameDateModel = context.Model.DateModel;
 
             _tickingService.DayPassed += OnDayPassed;
         }
@@ -79,7 +79,7 @@ namespace Features.Levels.GameModifiers.Events
             var min = _eventConfig.MinDuration;
             var max = _eventConfig.MaxDuration;
             var eventDuration = Random.Range(min, max + 1); // +1 as max is exclusive
-            var endDate = _gameDate + eventDuration;
+            var endDate = _gameDateModel.GameDate.Value + eventDuration;
             _gameModifierService.ApplyModifier(eventData, endDate);
             _notificationService.PostNotification(new EventStartedNotification(eventData));
         }
@@ -87,7 +87,7 @@ namespace Features.Levels.GameModifiers.Events
         private void RevertExpiredEvents()
         {
             var expiredEvents = _eventModel.OngoingEvents
-                .Where(gameEvent => gameEvent.EndDate <= _gameDate)
+                .Where(gameEvent => gameEvent.EndDate <= _gameDateModel.GameDate.Value)
                 .ToList();
 
             foreach (var expiredEvent in expiredEvents)

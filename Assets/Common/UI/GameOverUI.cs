@@ -88,7 +88,7 @@ namespace Common.UI
 
             var stringBuilder = new StringBuilder();
             stringBuilder
-                .AppendLine(_model.Date.ToDisplayString())
+                .AppendLine(_model.DateModel.GameDate.Value.ToDisplayString())
                 .AppendLine(_model.Player.Inventory.Funds.Value.ToString("0.#"))
                 .AppendLine(t2TownCount.ToString())
                 .AppendLine(t3TownCount.ToString())

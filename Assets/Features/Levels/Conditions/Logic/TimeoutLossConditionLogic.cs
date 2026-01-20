@@ -7,8 +7,7 @@ namespace Features.Levels.Conditions.Logic
     public sealed class TimeoutLossConditionLogic : IConditionLogic
     {
         private readonly TimeoutLossCondition _condition;
-        private Date _deadlineDate;
-        private Date _currentDate;
+        private DateModel _gameDate;
 
         public TimeoutLossConditionLogic(TimeoutLossCondition condition)
         {
@@ -17,32 +16,19 @@ namespace Features.Levels.Conditions.Logic
 
         public void Initialize()
         {
-            _currentDate = GameplayContext.Instance.Model.Date;
-            _deadlineDate = _condition.DeadlineDate;
+            _gameDate = GameplayContext.Instance.Model.DateModel;
 
-            _currentDate.Day.Observe(DayChanged);
-            _currentDate.Year.Observe(YearChanged);
+            _gameDate.GameDate.Observe(DateChanged);
         }
 
         public void CleanUp()
         {
-            _currentDate.Day.StopObserving(DayChanged);
-            _currentDate.Year.StopObserving(YearChanged);
+            _gameDate.GameDate.StopObserving(DateChanged);
         }
-
-        private void YearChanged(int year)
+        
+        private void DateChanged(Date date)
         {
-            Evaluate();
-        }
-
-        private void DayChanged(int day)
-        {
-            Evaluate();
-        }
-
-        private void Evaluate()
-        {
-            _condition.Progress.SetProgress(_currentDate.AsDays());
+            _condition.Progress.SetProgress(date.AsDays());
         }
     }
 }

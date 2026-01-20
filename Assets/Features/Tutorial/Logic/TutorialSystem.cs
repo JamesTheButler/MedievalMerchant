@@ -1,6 +1,7 @@
 ﻿using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Global;
+using Common.Types;
 using Common.UI;
 using Common.UI.Elements;
 
@@ -18,15 +19,15 @@ namespace Features.Tutorial.Logic
             _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
             _gameModel = GameplayContext.Instance.Model;
 
-            _gameModel.Date.Day.Observe(OnDayChanged);
+            _gameModel.DateModel.GameDate.Observe(OnDateChanged);
             _uiBridgeService.TutorialClosedFromUI += OnTutorialClosedFromUI;
             _uiBridgeService.PanelOpenedFromUI += OnPanelOpenedFromUI;
         }
 
-        private void OnDayChanged(int day)
+        private void OnDateChanged(Date date)
         {
             var levelIndex = GlobalContext.CurrentLevelInfo?.InternalIndex ?? -1;
-            if (day != 2) // on day 2 we trigger all start-of-level tutorials
+            if (date.Day != 2) // on day 2 we trigger all start-of-level tutorials
                 return;
 
             switch (levelIndex)
@@ -42,7 +43,7 @@ namespace Features.Tutorial.Logic
 
         public void CleanUp()
         {
-            _gameModel.Date.Day.StopObserving(OnDayChanged);
+            _gameModel.DateModel.GameDate.StopObserving(OnDateChanged);
             _uiBridgeService.TutorialClosedFromUI -= OnTutorialClosedFromUI;
             _uiBridgeService.PanelOpenedFromUI -= OnPanelOpenedFromUI;
         }

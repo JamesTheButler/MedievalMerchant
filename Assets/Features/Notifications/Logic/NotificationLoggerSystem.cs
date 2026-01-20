@@ -8,11 +8,11 @@ namespace Features.Notifications.Logic
     public sealed class NotificationLoggerSystem : ISystem
     {
         private NotificationService _notificationService;
-        private Date _gameDate;
+        private DateModel _gameDateModel;
 
         public void Initialize()
         {
-            _gameDate = GameplayContext.Instance.Model.Date;
+            _gameDateModel = GameplayContext.Instance.Model.DateModel;
             _notificationService = GameplayContext.Instance.Services.NotificationService;
             _notificationService.NotificationPosted += LogNotification;
         }
@@ -24,7 +24,7 @@ namespace Features.Notifications.Logic
 
         private void LogNotification(Notification notif)
         {
-            Debug.Log($"({_gameDate}) {notif.Severity} Notification {notif.Title}: {notif.Description}");
+            Debug.Log($"({_gameDateModel.GameDate.Value.ToDisplayString()}) {notif.Severity} Notification {notif.Title}: {notif.Description}");
         }
     }
 }

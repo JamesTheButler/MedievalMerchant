@@ -12,7 +12,7 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
     public sealed class ThiefCompanionLogic : BaseCompanionLogic<ThiefCompanionData>
     {
         private PlayerModel _player;
-        private Date _gameDate;
+        private DateModel _gameDateModel;
         private Date _nextPossibleTheftDate = new();
 
         protected override CompanionType Type => CompanionType.Thief;
@@ -38,7 +38,7 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
         private void Bind()
         {
             _player = GameplayContext.Instance.Model.Player;
-            _gameDate = GameplayContext.Instance.Model.Date;
+            _gameDateModel = GameplayContext.Instance.Model.DateModel;
 
             _player.Location.CurrentTown.Observe(OnTownChanged);
 
@@ -49,10 +49,10 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
         {
             if (town == null || _thiefLevelData == null) return;
 
-            if (_gameDate < _nextPossibleTheftDate)
+            if (_gameDateModel.GameDate.Value < _nextPossibleTheftDate)
                 return;
 
-            _nextPossibleTheftDate = _gameDate + ConfigData.MinDaysBetweenThefts;
+            _nextPossibleTheftDate = _gameDateModel.GameDate.Value + ConfigData.MinDaysBetweenThefts;
 
 
             _player.Inventory.AddFunds(_thiefLevelData.TownEntranceGold);

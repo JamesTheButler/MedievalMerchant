@@ -9,8 +9,10 @@ namespace Features.Levels.Conditions.Logic
     {
         private readonly BankruptcyLossCondition _condition;
 
-        private Date _currentDate, _bankruptcyDate;
+        private DateModel _currentDateModel;
         private PlayerModel _playerModel;
+
+        private Date _bankruptcyDate;
         private bool _isBankrupt;
 
         public BankruptcyLossConditionLogic(BankruptcyLossCondition condition)
@@ -20,7 +22,7 @@ namespace Features.Levels.Conditions.Logic
 
         public void Initialize()
         {
-            _currentDate = GameplayContext.Instance.Model.Date;
+            _currentDateModel = GameplayContext.Instance.Model.DateModel;
             _playerModel = GameplayContext.Instance.Model.Player;
 
             _playerModel.Inventory.Funds.Observe(OnPlayerFundsChanged, false);
@@ -37,8 +39,8 @@ namespace Features.Levels.Conditions.Logic
             if (!_isBankrupt && funds < _condition.BankruptcyFundsThreshold)
             {
                 _isBankrupt = true;
-                _bankruptcyDate = _currentDate + _condition.MaxBankruptcyDurationInDays;
-                _currentDate.Changed.Observe(OnGameDateChanged);
+                _bankruptcyDate = _currentDateModel.GameDate.Value + _condition.MaxBankruptcyDurationInDays;
+                _currentDateModel.GameDate.Observe(OnGameDateChanged);
                 _condition.Progress.SetProgress(0);
             }
 
@@ -47,7 +49,7 @@ namespace Features.Levels.Conditions.Logic
             {
                 _isBankrupt = false;
                 _bankruptcyDate = null;
-                _currentDate.Changed.StopObserving(OnGameDateChanged);
+                _currentDateModel.GameDate.StopObserving(OnGameDateChanged);
                 _condition.Progress.SetProgress(0);
             }
         }

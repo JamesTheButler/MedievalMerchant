@@ -25,7 +25,7 @@ namespace Features.Towns.Reputation.Logic
             _neglectConfig = ConfigurationManager.Configurations.ReputationConfig.NeglectData;
 
             _town.ReputationManager.Reputation.Observe(OnReputationChanged);
-            _model.Date.Changed.Observe(OnGameDateChanged);
+            _model.DateModel.GameDate.Observe(OnGameDateChanged);
 
             ResetNeglect();
         }
@@ -33,7 +33,7 @@ namespace Features.Towns.Reputation.Logic
         public void CleanUp()
         {
             _town.ReputationManager.Reputation.StopObserving(OnReputationChanged);
-            _model.Date.Changed.StopObserving(OnGameDateChanged);
+            _model.DateModel.GameDate.StopObserving(OnGameDateChanged);
         }
 
         private void OnReputationChanged(float oldRep, float newRep)
@@ -51,12 +51,12 @@ namespace Features.Towns.Reputation.Logic
 
             _town.ReputationManager.IsNeglected.Value = true;
             _town.ReputationManager.ApplyNeglect();
-            _neglectActivationDate = _model.Date + _neglectConfig.IntervalInDays;
+            _neglectActivationDate = _model.DateModel.GameDate.Value + _neglectConfig.IntervalInDays;
         }
 
         private void ResetNeglect()
         {
-            _neglectActivationDate = _model.Date + _neglectConfig.ActivationDelayInDays;
+            _neglectActivationDate = _model.DateModel.GameDate.Value + _neglectConfig.ActivationDelayInDays;
             _town.ReputationManager.IsNeglected.Value = false;
         }
     }

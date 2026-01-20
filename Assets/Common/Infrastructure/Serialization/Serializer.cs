@@ -1,4 +1,6 @@
+using System;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Common.Infrastructure.Serialization
 {
@@ -6,7 +8,15 @@ namespace Common.Infrastructure.Serialization
     {
         public T Deserialize<T>(string input)
         {
-            return JsonConvert.DeserializeObject<T>(input);
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(input);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(ex.Message);
+                return default;
+            }
         }
 
         public string Serialize<T>(T input)

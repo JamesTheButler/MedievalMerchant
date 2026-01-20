@@ -7,14 +7,14 @@ namespace Features.Ticking.Logic
     public sealed class DateSystem : ISystem
     {
         private TickingService _tickingService;
-        private Date _date;
+        private DateModel _dateModel;
 
         public void Initialize()
         {
             _tickingService = GameplayContext.Instance.Services.TickingService;
             _tickingService.DayPassed += OnDayChanged;
 
-            _date = GameplayContext.Instance.Model.Date;
+            _dateModel = GameplayContext.Instance.Model.DateModel;
         }
 
         public void CleanUp()
@@ -24,7 +24,7 @@ namespace Features.Ticking.Logic
 
         private void OnDayChanged()
         {
-            _date.IncrementDay();
+            _dateModel.Increment();
         }
     }
 }

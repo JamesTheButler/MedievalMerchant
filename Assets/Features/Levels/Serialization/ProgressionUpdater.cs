@@ -9,13 +9,13 @@ namespace Features.Levels.Serialization
     public sealed class ProgressionSystem : ISystem
     {
         private LevelConditions _conditions;
-        private Date _gameDate;
+        private DateModel _gameDateModel;
         private ProgressModel _progressModel;
 
         public void Initialize()
         {
             _conditions = GameplayContext.Instance.Model.Conditions;
-            _gameDate = GameplayContext.Instance.Model.Date;
+            _gameDateModel = GameplayContext.Instance.Model.DateModel;
             _progressModel = GlobalContext.Instance.Model.ProgressModel;
 
             _conditions.LevelWon += LevelCompleted;
@@ -31,8 +31,8 @@ namespace Features.Levels.Serialization
             var levelIndex = GlobalContext.CurrentLevelInfo!.InternalIndex;
 
             var previousFinishDate = _progressModel.CompletedLevels[levelIndex]?.CompletionDate;
-            var levelSaveData = new CompletedLevelSaveData(_gameDate);
-            if (previousFinishDate == null || _gameDate < previousFinishDate)
+            var levelSaveData = new CompletedLevelSaveData(_gameDateModel.GameDate.Value);
+            if (previousFinishDate == null || _gameDateModel.GameDate.Value < previousFinishDate)
             {
                 _progressModel.UpdateCompletedLevel(levelIndex, levelSaveData);
             }

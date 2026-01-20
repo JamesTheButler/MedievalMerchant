@@ -1,48 +1,36 @@
-using System;
 using Common.Infrastructure.Gameplay;
 using Common.Types;
+using Common.UI.Elements;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
 namespace Common.UI
 {
-    public sealed class DateGauge : MonoBehaviour
+    public sealed class DateGauge : InitializableBehavior
     {
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text dateText;
 
-        private readonly Lazy<Date> _date = new(() => GameplayContext.Instance.Model.Date);
+        private DateModel _gameDate;
 
         private const string DateFormat = "Year {0}. Day {1}";
-        private int _day, _year;
 
-        private void Start()
+        public override void Initialize()
         {
-            _date.Value.Day.Observe(OnDayChanged);
-            _date.Value.Year.Observe(OnYearChanged);
+            _gameDate = GameplayContext.Instance.Model.DateModel;
+            _gameDate.GameDate.Observe(OnDateChanged);
         }
 
-        private void OnDestroy()
+        public override void CleanUp()
         {
-            _date.Value.Day.StopObserving(OnDayChanged);
-            _date.Value.Year.StopObserving(OnYearChanged);
+            base.CleanUp();
+            _gameDate.GameDate.StopObserving(OnDateChanged);
         }
 
-        private void OnYearChanged(int year)
+        private void OnDateChanged(Date date)
         {
-            _year = year;
-            UpdateText();
-        }
-
-        private void OnDayChanged(int day)
-        {
-            _day = day;
-            UpdateText();
-        }
-
-        private void UpdateText()
-        {
-            dateText.text = string.Format(DateFormat, _year, _day);
+            dateText.text = string.Format(DateFormat, date.Year, date.Day);
         }
     }
 }

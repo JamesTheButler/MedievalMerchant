@@ -26,7 +26,7 @@ namespace Features.Towns.Missions
 
         private TickingService _tickingService;
         private NotificationService _notificationService;
-        private Date _gameDate;
+        private DateModel _gameDateModel;
 
         private MissionConfig _missionConfig;
         private TradeMissionConfigData _tradeMissionConfig;
@@ -51,7 +51,7 @@ namespace Features.Towns.Missions
             _missionConfig = ConfigurationManager.Configurations.MissionConfig;
             _tradeMissionConfig = _missionConfig.TradeMissionData;
             _upgradeMissionConfig = _missionConfig.UpgradeMissionData;
-            _gameDate = GameplayContext.Instance.Model.Date;
+            _gameDateModel = GameplayContext.Instance.Model.DateModel;
             _goodPool = GameplayContext.Instance.Model.GoodPool;
             _goodResources = ResourceManager.Instance.GoodResources;
 
@@ -136,7 +136,7 @@ namespace Features.Towns.Missions
         {
             foreach (var mission in _missionModel.Missions.Values.ToArray())
             {
-                mission.ValidateDate(_gameDate);
+                mission.ValidateDate(_gameDateModel.GameDate.Value);
             }
         }
 
@@ -161,12 +161,12 @@ namespace Features.Towns.Missions
             var mission = new Mission(
                 missionGood,
                 config.Volume,
-                _gameDate + config.LengthInDays,
+                _gameDateModel.GameDate.Value + config.LengthInDays,
                 type,
                 config.GetReward(),
                 config.GetPenalty());
 
-            mission.ValidateDate(_gameDate);
+            mission.ValidateDate(_gameDateModel.GameDate.Value);
 
             EnableMission(mission);
         }

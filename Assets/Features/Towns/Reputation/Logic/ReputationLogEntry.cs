@@ -2,5 +2,5 @@
 
 namespace Features.Towns.Reputation.Logic
 {
-    public sealed record ReputationLogEntry(Date Date, float RepChange, float CurrentRep, string Description);
+    public sealed record ReputationLogEntry(DateModel DateModel, float RepChange, float CurrentRep, string Description);
 }

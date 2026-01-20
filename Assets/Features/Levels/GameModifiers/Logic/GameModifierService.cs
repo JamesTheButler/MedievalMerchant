@@ -14,7 +14,7 @@ namespace Features.Levels.GameModifiers.Logic
     public sealed class GameModifierService : IService
     {
         private EventModel _eventModel;
-        private Date _gameDate;
+        private DateModel _gameDateModel;
 
         private readonly Dictionary<(GameModifierData, EffectData), IEffectLogic> _logics = new();
         private readonly Dictionary<GameModifierData, GameEvent> _eventDatasToEvents = new();
@@ -22,7 +22,7 @@ namespace Features.Levels.GameModifiers.Logic
         public void Initialize()
         {
             _eventModel = GameplayContext.Instance.Model.Events;
-            _gameDate = GameplayContext.Instance.Model.Date;
+            _gameDateModel = GameplayContext.Instance.Model.DateModel;
         }
 
         public void CleanUp() { }
@@ -45,8 +45,7 @@ namespace Features.Levels.GameModifiers.Logic
                 }
 
                 var gameEvent = new GameEvent(eventModifierData, endDate);
-                _gameDate.Changed.Observe(gameEvent.UpdateGameDate);
-                gameEvent.UpdateGameDate(_gameDate);
+                _gameDateModel.GameDate.Observe(gameEvent.UpdateGameDate);
                 _eventModel.AddEvent(gameEvent);
                 _eventDatasToEvents.Add(eventModifierData, gameEvent);
             }
@@ -69,7 +68,7 @@ namespace Features.Levels.GameModifiers.Logic
         {
             if (_eventDatasToEvents.TryGetValue(modifierData, out var gameEvent))
             {
-                _gameDate.Changed.StopObserving(gameEvent.UpdateGameDate);
+                _gameDateModel.GameDate.StopObserving(gameEvent.UpdateGameDate);
                 _eventModel.RemoveEvent(gameEvent);
                 _eventDatasToEvents.Remove(modifierData);
             }

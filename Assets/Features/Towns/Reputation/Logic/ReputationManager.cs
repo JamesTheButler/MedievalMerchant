@@ -89,7 +89,7 @@ namespace Features.Towns.Reputation.Logic
             // TODO - MED-73: apply modifiers
             _reputation.Value = Mathf.Clamp(Reputation.Value + repChange, -100, 100);
 
-            var date = _model.Date;
+            var date = _model.DateModel;
             var logEntry = new ReputationLogEntry(date, repChange, Reputation.Value, reason);
             _reputationLog.Add(logEntry);
         }

@@ -19,7 +19,7 @@ namespace Features.Trade.Logic.Price
         private readonly Bindings _bindings = new();
 
         private TradeService _tradeService;
-        private Date _gameDate;
+        private DateModel _gameDateModel;
         private DisinterestModiferConfigData _config;
 
         public DisinterestSystem(Town town)
@@ -30,12 +30,12 @@ namespace Features.Trade.Logic.Price
         public void Initialize()
         {
             _tradeService = GameplayContext.Instance.Services.TradeService;
-            _gameDate = GameplayContext.Instance.Model.Date;
+            _gameDateModel = GameplayContext.Instance.Model.DateModel;
             _config = ConfigurationManager.Configurations.PriceModifierConfig.DisinterestModiferConfig;
 
             _bindings.Track(
                 _tradeService.TradeCompleted.Observe(OnTradeCompleted),
-                _gameDate.Changed.Observe(OnDateChanged)
+                _gameDateModel.GameDate.Observe(OnDateChanged)
             );
         }
 
@@ -51,7 +51,7 @@ namespace Features.Trade.Logic.Price
 
             var good = tradeInfo.Good;
             _goodLogs.TryAdd(good, new DateLog<int>());
-            var dateToDeactivate = _gameDate + _config.TrackedPeriodInDays;
+            var dateToDeactivate = _gameDateModel.GameDate.Value + _config.TrackedPeriodInDays;
             _goodLogs[good].TryAdd(dateToDeactivate, 0);
             _goodLogs[good][dateToDeactivate] += tradeInfo.Amount;
 
