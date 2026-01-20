@@ -11,7 +11,7 @@ namespace Features.Goods.Config
         /// </summary>
         [field: SerializeField]
         public int StartThreshold { get; private set; } = 100;
-        
+
         /// <summary>
         /// How many goods need to be in global surplus for each step change in the price modifier.
         /// </summary>
@@ -21,7 +21,7 @@ namespace Features.Goods.Config
         /// <summary>
         /// How large is the percentage change to prices, per step (i.e. per GoodsPerStep goods)
         /// </summary>
-        [field: SerializeField]
-        public float PriceReductionPerStep { get; private set; } = 0.01f;
+        [field: SerializeField, Range(-1f, 0f)]
+        public float PriceReductionPerStep { get; private set; } = -0.01f;
     }
 }

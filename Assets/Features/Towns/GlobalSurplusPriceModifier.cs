@@ -1,6 +1,7 @@
 using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Types;
+using Common.Utility;
 using Features.Goods.Config;
 using UnityEngine;
 
@@ -24,11 +25,13 @@ namespace Features.Towns
 
         public void Update(int amount)
         {
-            Description.Value = $"There is a global surplus of {amount} {_goodName}.";
+            var detailsString =
+                $"({_config.PriceReductionPerStep.ToPercentString()} coin per {_config.GoodsPerStep} goods)";
+            Description.Value = $"There is a global surplus of {amount} {_goodName}. {detailsString}";
 
             // amount adjusted to start threshold
             var adjustedAmount = amount - _config.StartThreshold;
-            var currentStep = Mathf.CeilToInt((float)adjustedAmount / _config.GoodsPerStep);
+            var currentStep = Mathf.FloorToInt((float)adjustedAmount / _config.GoodsPerStep);
 
             if (_previousStep == currentStep)
                 return;
