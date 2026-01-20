@@ -1,3 +1,4 @@
+using System.Text;
 using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Types;
@@ -25,9 +26,11 @@ namespace Features.Towns
 
         public void Update(int amount)
         {
-            var detailsString =
-                $"({_config.PriceReductionPerStep.ToPercentString()} coin per {_config.GoodsPerStep} goods)";
-            Description.Value = $"There is a global surplus of {amount} {_goodName}. {detailsString}";
+            var descriptionStringBuilder = new StringBuilder()
+                .AppendLine($"There is a global surplus of {amount} {_goodName}.")
+                .AppendLine($"({_config.PriceReductionPerStep.ToPercentString()} per {_config.GoodsPerStep} goods)");
+
+            Description.Value = descriptionStringBuilder.ToString();
 
             // amount adjusted to start threshold
             var adjustedAmount = amount - _config.StartThreshold;
