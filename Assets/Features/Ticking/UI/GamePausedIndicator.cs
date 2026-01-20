@@ -1,21 +1,22 @@
 ﻿using Common.Infrastructure.Gameplay;
+using Common.UI.Elements;
 using Features.Ticking.Logic;
-using UnityEngine;
 
 namespace Features.Ticking.UI
 {
-    public sealed class GamePausedIndicator : MonoBehaviour
+    public sealed class GamePausedIndicator : InitializableBehavior
     {
         private GameSpeedModel _gameSpeedModel;
 
-        private void Awake()
+        public override void Initialize()
         {
             _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
             _gameSpeedModel.IsPaused.Observe(OnPausedChanged);
         }
 
-        private void OnDestroy()
+        public override void CleanUp()
         {
+            base.CleanUp();
             _gameSpeedModel.IsPaused.StopObserving(OnPausedChanged);
         }
 
