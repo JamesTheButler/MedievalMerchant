@@ -67,10 +67,7 @@ namespace Features.Audio.Sfx
                 return;
 
             if (!_audioResources.GameSoundClips.TryGetValue(effect, out var audioClip) || audioClip == null)
-            {
-                Debug.Log($"No audio clip added for effect '{effect}'.");
                 return;
-            }
 
             gameAudioSource.PlayOneShot(audioClip);
         }
