@@ -2,6 +2,7 @@
 using System.Linq;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
+using Common.Infrastructure.Observation;
 using Common.Types;
 using Common.Utility;
 using Features.Goods;
@@ -13,6 +14,7 @@ using Features.Towns.Development.Logic;
 using Features.Towns.Missions.Data;
 using Features.Towns.Missions.Results;
 using Features.Trade;
+using Features.Trade.Logic;
 using UnityEngine;
 
 namespace Features.Towns.Missions
@@ -23,8 +25,10 @@ namespace Features.Towns.Missions
         private readonly DevelopmentManager _developmentManager;
         private readonly MissionModel _missionModel;
         private readonly MissionResultHandler _resultHandler;
+        private readonly Bindings _bindings = new();
 
         private TickingService _tickingService;
+        private TradeService _tradeService;
         private NotificationService _notificationService;
         private DateModel _gameDateModel;
 
@@ -33,7 +37,6 @@ namespace Features.Towns.Missions
         private UpgradeMissionConfigData _upgradeMissionConfig;
         private GoodResources _goodResources;
         private GoodPool _goodPool;
-
         private HashSet<Good> _availableGoods;
 
         public MissionSystem(Town town)
@@ -46,6 +49,7 @@ namespace Features.Towns.Missions
 
         public void Initialize()
         {
+            _tradeService = GameplayContext.Instance.Services.TradeService;
             _tickingService = GameplayContext.Instance.Services.TickingService;
             _notificationService = GameplayContext.Instance.Services.NotificationService;
             _missionConfig = ConfigurationManager.Configurations.MissionConfig;
@@ -56,10 +60,13 @@ namespace Features.Towns.Missions
             _goodResources = ResourceManager.Instance.GoodResources;
 
             _tickingService.DayPassed += OnDayPassed;
-            _town.TradeCompleted += OnTradeCompleted;
-            _town.DevelopmentManager.Tier.Observe(OnTownTierChanged, false);
-            _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged, false);
             _town.Missions.GoodSelectorChanged += OnGoodSelectorChanged;
+
+            _bindings.Track(
+                _tradeService.TradeCompleted.Observe(OnTradeCompleted),
+                _town.DevelopmentManager.Tier.Observe(OnTownTierChanged, false),
+                _town.DevelopmentManager.DevelopmentScore.Observe(OnDevelopmentChanged, false)
+            );
 
             ResetAvailableGoods();
         }
@@ -67,9 +74,8 @@ namespace Features.Towns.Missions
         public void CleanUp()
         {
             _tickingService.DayPassed -= OnDayPassed;
-            _town.TradeCompleted -= OnTradeCompleted;
-            _town.DevelopmentManager.Tier.StopObserving(OnTownTierChanged);
             _town.Missions.GoodSelectorChanged -= OnGoodSelectorChanged;
+            _bindings.UnbindAll();
         }
 
         private void OnDevelopmentChanged(float development)
@@ -94,16 +100,18 @@ namespace Features.Towns.Missions
             ResetAvailableGoods();
         }
 
-        private void OnTradeCompleted(TradeInfo tradeInfo)
+        private void OnTradeCompleted(OngoingTrade trade)
         {
-            // only progress missions when selling to town
-            if (tradeInfo.Type == TradeType.Buy)
+            if (trade.Town != _town)
                 return;
 
-            if (!_missionModel.Missions.TryGetValue(tradeInfo.Good, out var mission))
+            if (trade.TradeType == TradeType.Buy)
                 return;
 
-            mission.Deliver(tradeInfo.Amount);
+            if (!_missionModel.Missions.TryGetValue(trade.Good, out var mission))
+                return;
+
+            mission.Deliver(trade.Amount);
         }
 
         private void OnDayPassed()
@@ -174,7 +182,7 @@ namespace Features.Towns.Missions
         private void EnableMission(Mission mission)
         {
             Debug.Log($"Mission in {_town.Name}: {mission}");
-            
+
             _missionModel.AddMission(mission);
 
             mission.MissionFailed += OnMissionFailed;

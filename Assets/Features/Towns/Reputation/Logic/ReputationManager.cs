@@ -4,10 +4,8 @@ using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Common.Types;
-using Features.Goods.Config;
 using Features.Towns.Production.Logic;
 using Features.Towns.Reputation.Data;
-using Features.Trade;
 using UnityEngine;
 
 namespace Features.Towns.Reputation.Logic
@@ -23,8 +21,7 @@ namespace Features.Towns.Reputation.Logic
         public Observable<bool> IsNeglected { get; set; } = new();
 
         private readonly GameplayModel _model;
-        private readonly ReputationConfig _config;
-        private readonly GoodResources _goodResources;
+        private readonly ReputationConfig _reputationConfig;
 
         private readonly Observable<float> _reputation = new();
         private readonly List<IModifier> _modifiers = new();
@@ -33,8 +30,7 @@ namespace Features.Towns.Reputation.Logic
         public ReputationManager(Town town)
         {
             _model = GameplayContext.Instance.Model;
-            _config = ConfigurationManager.Configurations.ReputationConfig;
-            _goodResources = ResourceManager.Instance.GoodResources;
+            _reputationConfig = ConfigurationManager.Configurations.ReputationConfig;
 
             _town = town;
 
@@ -57,10 +53,10 @@ namespace Features.Towns.Reputation.Logic
             if (currentReputation <= 0)
                 return;
 
-            var activationDelay = _config.NeglectData.ActivationDelayInDays;
+            var activationDelay = _reputationConfig.NeglectData.ActivationDelayInDays;
             var message = $"The town has been neglected for more than {activationDelay} days.";
-            var clampedNeglect = Mathf.Min(_config.NeglectData.ReputationCost,
-                currentReputation - _config.NeglectData.ReputationCost);
+            var clampedNeglect = Mathf.Min(_reputationConfig.NeglectData.ReputationCost,
+                currentReputation - _reputationConfig.NeglectData.ReputationCost);
             UpdateReputation(clampedNeglect, message);
         }
 
@@ -96,28 +92,14 @@ namespace Features.Towns.Reputation.Logic
 
         private void Bind()
         {
-            _town.TradeCompleted += OnTradeCompleted;
             _town.DevelopmentManager.Tier.Observe(OnTownUpgrade, false);
             _town.ProductionManager.ProductionAdded += OnProductionBuildingBuilt;
         }
 
         private void Unbind()
         {
-            _town.TradeCompleted -= OnTradeCompleted;
             _town.DevelopmentManager.Tier.StopObserving(OnTownUpgrade);
             _town.ProductionManager.ProductionAdded -= OnProductionBuildingBuilt;
-        }
-
-        private void OnTradeCompleted(TradeInfo tradeInfo)
-        {
-            var tradeVolumePerRep = _config.RewardData.TradeVolumePerReputationPoint;
-            var repChangeFloat = tradeInfo.TotalPrice / tradeVolumePerRep;
-            // round to 1 digit after comma
-            var finalRepChange = Mathf.Floor(repChangeFloat * 10f) * .1f * tradeInfo.HaggleLevel;
-            var goodName = _goodResources.ResourceData[tradeInfo.Good].GoodName;
-            var message =
-                $"Traded {tradeInfo.Amount}x{goodName} worth {tradeInfo.TotalPrice} coin at haggle level {tradeInfo.HaggleLevel}";
-            UpdateReputation(finalRepChange, message);
         }
 
         private void OnProductionBuildingBuilt(Producer producer)
@@ -125,9 +107,9 @@ namespace Features.Towns.Reputation.Logic
             var tier = producer.Tier;
             var repChange = tier switch
             {
-                Tier.Tier1 => _config.RewardData.Tier1ProductionBuilding,
-                Tier.Tier2 => _config.RewardData.Tier2ProductionBuilding,
-                Tier.Tier3 => _config.RewardData.Tier3ProductionBuilding,
+                Tier.Tier1 => _reputationConfig.RewardData.Tier1ProductionBuilding,
+                Tier.Tier2 => _reputationConfig.RewardData.Tier2ProductionBuilding,
+                Tier.Tier3 => _reputationConfig.RewardData.Tier3ProductionBuilding,
                 _ => 0
             };
             var good = producer.ProducedGood;
@@ -139,8 +121,8 @@ namespace Features.Towns.Reputation.Logic
         {
             var repChange = tier switch
             {
-                Tier.Tier2 => _config.RewardData.TownUpgradeTier2,
-                Tier.Tier3 => _config.RewardData.TownUpgradeTier3,
+                Tier.Tier2 => _reputationConfig.RewardData.TownUpgradeTier2,
+                Tier.Tier3 => _reputationConfig.RewardData.TownUpgradeTier3,
                 _ => 0
             };
 

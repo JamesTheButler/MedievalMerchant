@@ -5,6 +5,7 @@ using Common.Infrastructure.Observation;
 using Features.Ticking.Logic;
 using Features.Towns;
 using Features.Trade;
+using Features.Trade.Logic;
 
 namespace Features.Audio.Sfx
 {
@@ -49,7 +50,7 @@ namespace Features.Audio.Sfx
             );
         }
 
-        private void OnTradeCompleted(TradeInfo info)
+        private void OnTradeCompleted(OngoingTrade info)
         {
             Play(GameSoundEffect.TradeCompleted);
         }

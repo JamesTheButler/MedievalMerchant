@@ -11,10 +11,11 @@ namespace Common.Infrastructure.Modifiable
     public sealed class ModifiableVariable : Observable<float>
     {
         public event Action ModifiersChanged;
+        public event Action<IModifier> ModifiersAdded, ModifiersRemoved;
 
         public IReadOnlyList<IModifier> Modifiers => _modifiers;
 
-        public string Description { get; private set; }
+        public string Description { get; }
         public bool IsBiggerBetter { get; }
         public BaseValueModifier BaseValueModifier { get; }
 
@@ -42,6 +43,7 @@ namespace Common.Infrastructure.Modifiable
             _modifiers.Add(modifier);
             ApplyModifier(modifier);
 
+            ModifiersAdded?.Invoke(modifier);
             ModifiersChanged?.Invoke();
         }
 
@@ -54,7 +56,49 @@ namespace Common.Infrastructure.Modifiable
                 return;
 
             UnapplyModifier(modifier);
+            ModifiersRemoved?.Invoke(modifier);
             ModifiersChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Creates a deep copy that is updated alongside the original, i.e. this ModifiableVariable.
+        /// </summary>
+        public ModifiableVariable Copy()
+        {
+            var copy = new ModifiableVariable(Description, IsBiggerBetter, BaseValueModifier);
+            foreach (var modifier in _modifiers)
+            {
+                copy.AddModifier(modifier);
+            }
+
+            ModifiersAdded += copy.AddModifier;
+            ModifiersRemoved += copy.RemoveModifier;
+
+            return copy;
+        }
+
+        public override string ToString()
+        {
+            var allOtherModifiers = Modifiers.Where(modifier => modifier is not Modifiable.BaseValueModifier);
+
+            var builder = new StringBuilder()
+                .AppendLine($"{BaseValueModifier.FormattedValue} .. {BaseValueModifier.Description}");
+
+            if (_modifiers.Count > 1)
+            {
+                builder.AppendLine("====================");
+            }
+
+            if (BaseValueModifier is not null)
+            {
+                builder
+                    .AppendLine(BaseValueModifier.Description)
+                    .AppendLine("--------------------");
+            }
+
+            var nonNullModifiers = allOtherModifiers.Where(modifier => !modifier.Value.Value.IsApproximately(0));
+            builder.AppendJoin("\n", nonNullModifiers.Select(modifier => modifier.Description));
+            return builder.ToString();
         }
 
         private void ApplyModifier(IModifier modifier)
@@ -110,30 +154,6 @@ namespace Common.Infrastructure.Modifiable
         {
             var baseValue = BaseValueModifier?.Value ?? 0f;
             Value = (baseValue + _flatModifiers) * (1 + _percentModifiers);
-        }
-
-        public override string ToString()
-        {
-            var allOtherModifiers = Modifiers.Where(modifier => modifier is not Modifiable.BaseValueModifier);
-
-            var builder = new StringBuilder()
-                .AppendLine($"{BaseValueModifier.FormattedValue} .. {BaseValueModifier.Description}");
-
-            if (_modifiers.Count > 1)
-            {
-                builder.AppendLine("====================");
-            }
-
-            if (BaseValueModifier is not null)
-            {
-                builder
-                    .AppendLine(BaseValueModifier.Description)
-                    .AppendLine("--------------------");
-            }
-
-            var nonNullModifiers = allOtherModifiers.Where(modifier => !modifier.Value.Value.IsApproximately(0));
-            builder.AppendJoin("\n", nonNullModifiers.Select(modifier => modifier.Description));
-            return builder.ToString();
         }
     }
 }

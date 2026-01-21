@@ -6,9 +6,6 @@ namespace Features.Towns.Reputation.Data
     [Serializable]
     public sealed record ReputationRewardData
     {
-        [field: SerializeField]
-        public int TradeVolumePerReputationPoint { get; private set; }
-
         [field: SerializeField, Range(0, 100f)]
         public float Tier1ProductionBuilding { get; private set; }
 

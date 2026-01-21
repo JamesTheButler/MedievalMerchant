@@ -42,16 +42,16 @@ namespace Features.Trade.Logic.Price
             _bindings.UnbindAll();
         }
 
-        private void OnTradeCompleted(TradeInfo tradeInfo)
+        private void OnTradeCompleted(OngoingTrade trade)
         {
-            if (tradeInfo.Town != _town)
+            if (trade.Town != _town)
                 return;
 
-            var good = tradeInfo.Good;
+            var good = trade.Good;
             _goodLogs.TryAdd(good, new DateLog<int>());
             var dateToDeactivate = _gameDateModel.GameDate.Value + _config.TrackedPeriodInDays;
             _goodLogs[good].TryAdd(dateToDeactivate, 0);
-            _goodLogs[good][dateToDeactivate] += tradeInfo.Amount;
+            _goodLogs[good][dateToDeactivate] += trade.Amount;
 
             UpdateModifier(good);
         }

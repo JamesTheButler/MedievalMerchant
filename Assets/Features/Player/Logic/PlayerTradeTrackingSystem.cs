@@ -23,15 +23,15 @@ namespace Features.Player.Logic
             _tradeService.TradeCompleted.StopObserving(OnTradeCompleted);
         }
         
-        private void OnTradeCompleted(TradeInfo info)
+        private void OnTradeCompleted(OngoingTrade trade)
         {
-            if (info.Type == TradeType.Buy)
+            if (trade.TradeType == TradeType.Buy)
             {
-                _tradeTracker.Add(info.Good, info.Amount, info.TotalPrice);
+                _tradeTracker.Add(trade.Good, trade.Amount, trade.TotalPrice);
             }
             else
             {
-                _tradeTracker.Remove(info.Good, info.Amount);
+                _tradeTracker.Remove(trade.Good, trade.Amount);
             }
         }
 

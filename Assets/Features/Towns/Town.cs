@@ -27,8 +27,6 @@ namespace Features.Towns
     {
         private const Tier StartTier = Common.Types.Tier.Tier1;
 
-        public event Action<TradeInfo> TradeCompleted;
-
         public ProductionManager ProductionManager { get; }
         public DevelopmentManager DevelopmentManager { get; }
         public ReputationManager ReputationManager { get; }
@@ -109,11 +107,6 @@ namespace Features.Towns
         public void AddProduction(Good good, int index)
         {
             ProductionManager.AddProducer(good, index);
-        }
-
-        public void ResolveTrade(TradeInfo tradeInfo)
-        {
-            TradeCompleted?.Invoke(tradeInfo);
         }
 
         private void OnTierChanged(Tier tier)

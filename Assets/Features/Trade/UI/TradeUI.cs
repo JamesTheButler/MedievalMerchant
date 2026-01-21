@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using Common.Infrastructure.Gameplay;
-using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Common.Types;
 using Common.UI.Elements;
@@ -11,8 +9,8 @@ using Features.Player.Logic;
 using Features.Towns;
 using Features.Towns.Flags.UI;
 using Features.Towns.Missions;
+using Features.Trade.Haggling;
 using Features.Trade.Logic;
-using Features.Trade.Logic.Price;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -62,26 +60,23 @@ namespace Features.Trade.UI
 
         private readonly Bindings _bindings = new();
 
+        // set up on Initialize
         private GameplayModel _model;
         private TradeService _tradeService;
         private Selection _selection;
-        private TradeTracker _tradeTracker;
 
+        // set up on SetUp (i.e. needs to be cleared in TearDown)
         private Town _town;
         private Good _good;
         private TradeType _tradeType;
-
         private Inventory.Inventory _buyingInventory;
         private Inventory.Inventory _sellingInventory;
-        private PriceManager _priceManager;
-        private ModifiableVariable _observedPrice;
+        private OngoingTrade _ongoingTrade;
 
         private bool _isSetUp;
-        private bool _wasSuccessfullTrade;
-        private float _buyerFunds;
-        private int _tradeAmount;
-        private float _totalPrice;
-        private float _singlePrice;
+        private bool _wasSuccessfulTrade;
+
+        private const HaggleLevel InitialHaggleLevel = HaggleLevel.Fair;
 
         public override void Initialize()
         {
@@ -93,7 +88,6 @@ namespace Features.Trade.UI
             SetUpSlider();
 
             _model = GameplayContext.Instance.Model;
-            _tradeTracker = _model.Player.TradeTracker;
             _tradeService = GameplayContext.Instance.Services.TradeService;
             _selection = GameplayContext.Instance.Selection;
         }
@@ -108,44 +102,45 @@ namespace Features.Trade.UI
 
             _good = good;
             _tradeType = tradeType;
-            _town = _selection.SelectedTown;
-            _priceManager = _town.PriceManager;
-
-            _bindings.Track(
-                _town.ReputationManager.Reputation.Observe(RefreshTownReputationText, true),
-                _town.Inventory.Funds.Observe(RefreshTownFundsText, true),
-                _model.Player.Inventory.Funds.Observe(RefreshPlayerFundsText, true)
-            );
-
-            _town.Missions.MissionAdded += OnMissionAdded;
-            RefreshMissionAmountButton();
-
-            tradeButton.GetText().text = tradeType == TradeType.Buy ? "Buy" : "Sell";
-
-            townNameText.text = _town.Name;
-            townFlagRenderer.SetFlag(_town.FlagInfo);
-
-            goodCell.SetGood(_good);
-            goodDirectionIcon.sprite = tradeType == TradeType.Buy ? playerGetsIcon : playerGivesIcon;
-            coinDirectionIcon.sprite = tradeType == TradeType.Sell ? playerGetsIcon : playerGivesIcon;
-
-            SetUpInventories();
-
-            _observedPrice = _priceManager.GetPrice(good, tradeType);
-
-            _bindings.Track(
-                _observedPrice.Observe(OnGoodPriceChanged)
-            );
-
-            priceTooltip.SetData(_observedPrice);
-
-            SetMaxAmount();
 
             _isSetUp = true;
         }
 
         protected override void OnOpen()
         {
+            _town = _selection.SelectedTown;
+            _ongoingTrade = _tradeService.InitializeTrade(_town, _good, _tradeType);
+            _ongoingTrade.SetHaggleLevel(InitialHaggleLevel);
+
+            lossProfitText.gameObject.SetActive(_tradeType == TradeType.Sell);
+
+            _bindings.Track(
+                _ongoingTrade.TotalPrice.Observe(OnTotalPriceChanged),
+                _ongoingTrade.ReputationChange.Observe(RefreshTownReputationText, false),
+                _ongoingTrade.Profit.Observe(RefreshProfitText),
+                _town.ReputationManager.Reputation.Observe(RefreshTownReputationText, true),
+                _town.Inventory.Funds.Observe(RefreshTownFundsText, true),
+                _model.Player.Inventory.Funds.Observe(RefreshPlayerFundsText, true)
+            );
+
+            // TODO: Use ObservableEvent
+            _town.Missions.MissionAdded += OnMissionAdded;
+            RefreshMissionAmountButton();
+
+            tradeButton.GetText().text = _tradeType == TradeType.Buy ? "Buy" : "Sell";
+            townNameText.text = _town.Name;
+            townFlagRenderer.SetFlag(_town.FlagInfo);
+
+            goodCell.SetGood(_good);
+            goodDirectionIcon.sprite = _tradeType == TradeType.Buy ? playerGetsIcon : playerGivesIcon;
+            coinDirectionIcon.sprite = _tradeType == TradeType.Sell ? playerGetsIcon : playerGivesIcon;
+
+            SetUpInventories();
+
+            priceTooltip.SetData(_ongoingTrade.SinglePrice);
+
+            SetMaxAmount();
+
             gameObject.SetActive(true);
         }
 
@@ -158,22 +153,20 @@ namespace Features.Trade.UI
 
             _bindings.UnbindAll();
 
-            _sellingInventory.GoodUpdated -= OnSellingInventoryGoodUpdated;
             _town.Missions.MissionAdded -= OnMissionAdded;
-            _buyingInventory.Funds.StopObserving(OnBuyingInventoryFundsUpdated);
 
             priceTooltip.SetData(null);
-            _observedPrice = null;
             _buyingInventory = null;
             _sellingInventory = null;
 
             _isSetUp = false;
 
-            if (!_wasSuccessfullTrade)
+            if (!_wasSuccessfulTrade)
             {
-                _tradeService.AbortTrade();
+                _ongoingTrade.Abort();
             }
-            _wasSuccessfullTrade = false;
+
+            _wasSuccessfulTrade = false;
         }
 
         private void OnMissionAdded(Mission mission)
@@ -186,15 +179,8 @@ namespace Features.Trade.UI
 
         private void SetMaxAmount()
         {
-            var maxAffordableGoodAmount = Mathf.FloorToInt(_buyingInventory.Funds.Value / _singlePrice);
+            var maxAffordableGoodAmount = Mathf.FloorToInt(_buyingInventory.Funds.Value / _ongoingTrade.SinglePrice);
             amountSlider.value = Mathf.Min(maxAffordableGoodAmount, amountSlider.maxValue);
-            RefreshTotalPrice();
-        }
-
-        private void OnGoodPriceChanged(float newPrice)
-        {
-            _singlePrice = newPrice;
-            RefreshTotalPrice();
         }
 
         private void SetUpSlider()
@@ -206,9 +192,11 @@ namespace Features.Trade.UI
 
         private void TradeSliderUpdate(float amount)
         {
-            sliderValueText.text = amount.ToString("0");
-            SetAmount((int)amount);
-            RefreshButtonState();
+            var intAmount = (int)amount;
+            sliderValueText.text = intAmount.ToString("0");
+            _ongoingTrade.SetAmount(intAmount);
+            SetAmount(intAmount);
+            RefreshTradeButtonState();
         }
 
         private void SetUpInventories()
@@ -219,9 +207,11 @@ namespace Features.Trade.UI
             _buyingInventory = _tradeType == TradeType.Buy ? player : townInventory;
             _sellingInventory = _tradeType == TradeType.Sell ? player : townInventory;
 
-            _sellingInventory.GoodUpdated += OnSellingInventoryGoodUpdated;
+            _bindings.Track(
+                _sellingInventory.GoodAmountChanged.Observe(OnSellingInventoryGoodUpdated),
+                _buyingInventory.Funds.Observe(RefreshTradeButtonState, true)
+            );
             OnSellingInventoryGoodUpdated(_good, _sellingInventory.Goods[_good]);
-            _buyingInventory.Funds.Observe(OnBuyingInventoryFundsUpdated);
         }
 
         private void SetActiveMissionAmount()
@@ -233,48 +223,32 @@ namespace Features.Trade.UI
             amountSlider.value = mission.RemainingCount;
         }
 
-        private void OnBuyingInventoryFundsUpdated(float newFunds)
-        {
-            _buyerFunds = newFunds;
-            RefreshButtonState();
-        }
-
         private void OnSellingInventoryGoodUpdated(Good good, int amount)
         {
             if (good != _good)
                 return;
 
             amountSlider.maxValue = amount;
-            RefreshTotalPrice();
-            RefreshButtonState();
+            RefreshTradeButtonState();
         }
 
         private void AbortTrade()
         {
+            _ongoingTrade.Abort();
+            _wasSuccessfulTrade = false;
             Close();
         }
 
         private void CompleteTrade()
         {
-            var tradeInfo = new TradeInfo(_town, _tradeType, _good, _tradeAmount, _totalPrice, 1);
-
-            _buyingInventory.RemoveFunds(_totalPrice);
-            _sellingInventory.AddFunds(_totalPrice);
-
-            _buyingInventory.AddGood(_good, _tradeAmount);
-            _sellingInventory.RemoveGood(_good, _tradeAmount);
-            // this should replace the lines above
-            _tradeService.CompleteTrade(tradeInfo);
-
-            _wasSuccessfullTrade = true;
+            _ongoingTrade.Complete();
+            _wasSuccessfulTrade = true;
             Close();
         }
 
         private void SetAmount(int amount)
         {
-            _tradeAmount = amount;
-            goodAmountText.text = $"x{_tradeAmount}";
-            RefreshTotalPrice();
+            goodAmountText.text = $"x{amount}";
         }
 
         private void RefreshMissionAmountButton()
@@ -282,35 +256,20 @@ namespace Features.Trade.UI
             missionAmountButton.gameObject.SetActive(_town.Missions.Missions.ContainsKey(_good));
         }
 
-        private void RefreshTotalPrice()
-        {
-            _totalPrice = _tradeAmount * _singlePrice;
+        # region Prices
 
+        private void OnTotalPriceChanged(float totalPrice)
+        {
             RefreshTotalPriceText();
-            RefreshFundsChangeTexts();
             RefreshTownFundsText();
             RefreshPlayerFundsText();
-
-            lossProfitText.gameObject.SetActive(_tradeType == TradeType.Sell);
-            if (_tradeType == TradeType.Sell)
-            {
-                RefreshLossOrProfitText();
-            }
-        }
-
-        private void RefreshFundsChangeTexts()
-        {
-            var fundsGainedText = $"{_totalPrice:0.#}".WithStyle(Style.Good);
-            var fundsLostText = $"-{_totalPrice:0.#}".WithStyle(Style.Bad);
-            var playerChangeText = _tradeType == TradeType.Sell ? fundsGainedText : fundsLostText;
-
-            playerFundsText.text = $"Funds: {_model.Player.Inventory.Funds.Value:0.#} ({playerChangeText})";
         }
 
         private void RefreshTotalPriceText()
         {
-            var price = $"{_totalPrice:0.##}";
-            if (_tradeType == TradeType.Buy && _tradeAmount > 0)
+            var totalPrice = _ongoingTrade.TotalPrice.Value;
+            var price = $"{totalPrice:0.##}";
+            if (_tradeType == TradeType.Buy && !totalPrice.IsApproximately(0f))
             {
                 price = "-" + price;
             }
@@ -318,34 +277,48 @@ namespace Features.Trade.UI
             coinAmountText.text = price;
         }
 
-        private void RefreshLossOrProfitText()
+        private void RefreshTownFundsText()
         {
-            var trackedInfo = _tradeTracker.TrackedGoods.GetValueOrDefault(_good);
-            if (trackedInfo == null)
+            var total = _ongoingTrade.TotalPrice.Value;
+            var townChangeText = _tradeType == TradeType.Buy
+                ? $"+{total:0.#}".WithStyle(Style.Good)
+                : $"-{total:0.#}".WithStyle(Style.Bad);
+            townFundsText.text = $"Funds: {_town.Inventory.Funds.Value:0.#} ({townChangeText})";
+        }
+
+        private void RefreshPlayerFundsText()
+        {
+            var total = _ongoingTrade.TotalPrice.Value;
+            var playerChangeText = _tradeType == TradeType.Sell
+                ? $"+{total:0.#}".WithStyle(Style.Good)
+                : $"-{total:0.#}".WithStyle(Style.Bad);
+            playerFundsText.text = $"Funds: {_model.Player.Inventory.Funds.Value:0.#} ({playerChangeText})";
+        }
+
+        private void RefreshProfitText(float? profit)
+        {
+            lossProfitText.gameObject.SetActive(profit == null);
+            if (profit == null)
             {
-                Debug.LogWarning($"TradeTracker did not have entry for {_good}. Something's wrong.");
-                lossProfitText.gameObject.SetActive(false);
+                lossProfitText.text = string.Empty;
                 return;
             }
 
-            if (_tradeAmount <= 0)
-            {
-                lossProfitText.gameObject.SetActive(false);
-                return;
-            }
-
-            // diff between what the player bought the goods for and what they're selling it for
-            var difference = _totalPrice - trackedInfo.AveragePrice * _tradeAmount;
-            var style = difference.GetNumberStyle();
-            var differenceText = $"{difference.Sign()}{difference:0.##} coin".WithStyle(style);
-            var formatter = difference < 0 ? NetLossStringFormat : NetProfitStringFormat;
+            var style = profit.Value.GetNumberStyle();
+            var differenceText = $"{profit.Value.Sign()}{profit.Value:0.##} coin".WithStyle(style);
+            var formatter = profit.Value < 0 ? NetLossStringFormat : NetProfitStringFormat;
             var lossOrProfitMessage = string.Format(formatter, differenceText);
             lossProfitText.text = lossOrProfitMessage;
         }
 
-        private void RefreshButtonState()
+        # endregion Prices
+
+        private void RefreshTradeButtonState()
         {
-            var isTradePossible = _buyerFunds >= _totalPrice;
+            var totalPrice = _ongoingTrade.TotalPrice;
+            var buyerFunds = _buyingInventory.Funds;
+
+            var isTradePossible = buyerFunds >= totalPrice;
             tradeButton.interactable = isTradePossible;
             tradeButtonTooltip.SetEnabled(!isTradePossible);
 
@@ -361,23 +334,10 @@ namespace Features.Trade.UI
 
         private void RefreshTownReputationText()
         {
-            townReputationText.text = $"Reputation: {_town.ReputationManager.Reputation.Value:0.#}";
-        }
-
-        private void RefreshTownFundsText()
-        {
-            var townChangeText = _tradeType == TradeType.Buy
-                ? $"+{_totalPrice:0.#}".WithStyle(Style.Good)
-                : $"-{_totalPrice:0.#}".WithStyle(Style.Bad);
-            townFundsText.text = $"Funds: {_town.Inventory.Funds.Value:0.#} ({townChangeText})";
-        }
-
-        private void RefreshPlayerFundsText()
-        {
-            var playerChangeText = _tradeType == TradeType.Sell
-                ? $"+{_totalPrice:0.#}".WithStyle(Style.Good)
-                : $"-{_totalPrice:0.#}".WithStyle(Style.Bad);
-            playerFundsText.text = $"Funds: {_model.Player.Inventory.Funds.Value:0.#} ({playerChangeText})";
+            var currentRep = _town.ReputationManager.Reputation.Value;
+            var repChange = _ongoingTrade.ReputationChange.Value;
+            var repChangeText = $"{repChange.Sign(false)}{repChange:0.#}".WithStyle(repChange.GetNumberStyle());
+            townReputationText.text = $"Reputation: {currentRep:0.#} ({repChangeText})";
         }
     }
 }

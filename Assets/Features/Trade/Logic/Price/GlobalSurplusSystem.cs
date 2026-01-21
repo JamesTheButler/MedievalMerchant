@@ -29,7 +29,7 @@ namespace Features.Trade.Logic.Price
             foreach (var town in _towns)
             {
                 _bindings.Track(
-                    town.Inventory.GoodUpdatedWithOld.Observe(OnGoodUpdated)
+                    town.Inventory.GoodAmountChangedWithOld.Observe(OnGoodUpdated)
                 );
             }
         }

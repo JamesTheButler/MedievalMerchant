@@ -6,13 +6,13 @@ namespace Common.Utility
     {
         private const float DefaultTolerance = 0.0001f;
 
-        public static string Sign(this float value)
+        public static string Sign(this float value, bool forceSignAt0 = true)
         {
             return value switch
             {
                 > DefaultTolerance => "+",
                 < -DefaultTolerance => "",
-                _ => "+/-",
+                _ => forceSignAt0 ? "+/-" : ""
             };
         }
 

@@ -35,18 +35,18 @@ namespace Features.Stats
             _model.TradesAborted++;
         }
 
-        private void OnTradeCompleted(TradeInfo info)
+        private void OnTradeCompleted(OngoingTrade trade)
         {
             _model.TradesCompleted++;
-            if (info.Type == TradeType.Buy)
+            if (trade.TradeType == TradeType.Buy)
             {
-                _model.TotalValueBought += Mathf.Abs(info.TotalPrice);
-                _model.TrackBoughtGood(info.Good, info.Amount);
+                _model.TotalValueBought += Mathf.Abs(trade.TotalPrice);
+                _model.TrackBoughtGood(trade.Good, trade.Amount);
             }
             else
             {
-                _model.TotalValueSold += Mathf.Abs(info.TotalPrice);
-                _model.TrackSoldGood(info.Good, info.Amount);
+                _model.TotalValueSold += Mathf.Abs(trade.TotalPrice);
+                _model.TrackSoldGood(trade.Good, trade.Amount);
             }
         }
     }

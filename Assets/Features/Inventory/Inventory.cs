@@ -13,13 +13,17 @@ namespace Features.Inventory
         public event Action<Good> GoodAdded, GoodRemoved;
         public event Action<Good, int> GoodUpdated;
 
-        public IReadOnlyObservableEvent<Good, int, int> GoodUpdatedWithOld => _goodUpdatedWithOld;
+        public IReadOnlyObservableEvent<Good, int> GoodAmountChanged => _goodAmountChanged;
+        public IReadOnlyObservableEvent<Good, int, int> GoodAmountChangedWithOld => _goodAmountChangedWithOld;
+
         public Observable<float> Funds { get; } = new();
 
         public IInventoryPolicy InventoryPolicy { get; }
         public IReadOnlyDictionary<Good, int> Goods => _goods;
 
-        private readonly ObservableEvent<Good, int, int> _goodUpdatedWithOld = new();
+        private readonly ObservableEvent<Good, int> _goodAmountChanged = new();
+        private readonly ObservableEvent<Good, int, int> _goodAmountChangedWithOld = new();
+
         private readonly Lazy<GoodResources> _goodsInfoManager = new(() => ResourceManager.Instance.GoodResources);
         private readonly Dictionary<Good, int> _goods = new();
 
@@ -70,7 +74,8 @@ namespace Features.Inventory
 
             _goods[good] = newValue;
             GoodUpdated?.Invoke(good, newValue);
-            _goodUpdatedWithOld.Invoke(good, oldValue, newValue);
+            _goodAmountChanged.Invoke(good, newValue);
+            _goodAmountChangedWithOld.Invoke(good, oldValue, newValue);
         }
 
         public void RemoveGood(Good good, int amount)
@@ -90,7 +95,8 @@ namespace Features.Inventory
             }
 
             GoodUpdated?.Invoke(good, newValue);
-            _goodUpdatedWithOld.Invoke(good, oldValue, newValue);
+            _goodAmountChanged.Invoke(good, newValue);
+            _goodAmountChangedWithOld.Invoke(good, oldValue, newValue);
         }
 
         public int Get(Good good)
