@@ -22,8 +22,8 @@ namespace Features.Trade.Haggling
 
         public void Update(HaggleLevel haggleLevel)
         {
-            var sign = _tradeType == TradeType.Sell ? 1 : -1;
-            Value.Value = sign * _haggleConfig.Configs[haggleLevel].CoinDifferencePercentage;
+            var sign = _tradeType == TradeType.Buy ? 1 : -1;
+            Value.Value = sign * _haggleConfig.Configs[haggleLevel].PriceDifferenceOnBuy;
             Description.Value = $"You are haggling {_haggleResources.HaggleLevelNames[haggleLevel]}ly.";
         }
     }

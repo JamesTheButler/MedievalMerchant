@@ -1,5 +1,6 @@
 using System;
 using Common.Infrastructure;
+using Common.UI.Utility;
 using Common.Utility;
 using NaughtyAttributes;
 using TMPro;
@@ -21,16 +22,26 @@ namespace Features.Trade.Haggling.UI
         [SerializeField, Required]
         private GameObject selectionFrame;
 
-        private void Awake()
+        public void SetUp(TradeType tradeType)
         {
             var levelName = ResourceManager.Instance.HaggleResources.HaggleLevelNames[HaggleLevel];
             titleText.text = levelName;
 
             var configs = ConfigurationManager.Configurations.HaggleConfig.Configs[HaggleLevel];
-            var coinFactor = configs.CoinDifferencePercentage;
+            var priceChangeOnBuy = configs.PriceDifferenceOnBuy;
+            // config price change is based on the buying price. for selling, we need to invert it
+            var displayPriceChange = tradeType == TradeType.Buy ? priceChangeOnBuy : priceChangeOnBuy * -1;
             var reputation = configs.ReputationPer100Goods;
-            coinText.text = $"{coinFactor.ToPercentString(true)} coin";
-            reputationText.text = $"{reputation.Sign()}{reputation} Rep";
+
+            var priceChangeStyle = HaggleLevel switch
+            {
+                HaggleLevel.VeryKind or HaggleLevel.Kind => Style.Bad,
+                HaggleLevel.Tough or HaggleLevel.VeryTough => Style.Good,
+                _ => Style.Default
+            };
+
+            coinText.text = $"{displayPriceChange.ToPercentString(true)} coin".WithStyle(priceChangeStyle);
+            reputationText.text = $"{reputation.Sign(false)}{reputation}".WithStyle(reputation.GetNumberStyle());
         }
 
         public void Toggle(bool isToggled)

@@ -23,7 +23,7 @@ namespace Features.Player.Logic
             _tradeService.TradeCompleted.StopObserving(OnTradeCompleted);
         }
         
-        private void OnTradeCompleted(OngoingTrade trade)
+        private void OnTradeCompleted(CompletedTrade trade)
         {
             if (trade.TradeType == TradeType.Buy)
             {

@@ -42,7 +42,7 @@ namespace Features.Trade.Logic.Price
             _bindings.UnbindAll();
         }
 
-        private void OnTradeCompleted(OngoingTrade trade)
+        private void OnTradeCompleted(CompletedTrade trade)
         {
             if (trade.Town != _town)
                 return;

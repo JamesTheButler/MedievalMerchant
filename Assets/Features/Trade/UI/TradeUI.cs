@@ -5,11 +5,11 @@ using Common.UI.Elements;
 using Common.UI.Tooltips;
 using Common.UI.Utility;
 using Common.Utility;
-using Features.Player.Logic;
 using Features.Towns;
 using Features.Towns.Flags.UI;
 using Features.Towns.Missions;
 using Features.Trade.Haggling;
+using Features.Trade.Haggling.UI;
 using Features.Trade.Logic;
 using NaughtyAttributes;
 using TMPro;
@@ -33,6 +33,9 @@ namespace Features.Trade.UI
 
         [SerializeField, Required]
         private GoodCell goodCell;
+
+        [SerializeField, Required]
+        private HaggleGroup haggleGroup;
 
         [SerializeField, Required]
         private Button tradeButton, cancelButton, maxAmountButton, missionAmountButton;
@@ -85,6 +88,8 @@ namespace Features.Trade.UI
             maxAmountButton.onClick.AddListener(SetMaxAmount);
             missionAmountButton.onClick.AddListener(SetActiveMissionAmount);
 
+            haggleGroup.HaggleLevelChanged += OnSelectedHaggleLevelChanged;
+
             SetUpSlider();
 
             _model = GameplayContext.Instance.Model;
@@ -110,6 +115,8 @@ namespace Features.Trade.UI
         {
             _town = _selection.SelectedTown;
             _ongoingTrade = _tradeService.InitializeTrade(_town, _good, _tradeType);
+
+            haggleGroup.SetUp(InitialHaggleLevel, _tradeType);
             _ongoingTrade.SetHaggleLevel(InitialHaggleLevel);
 
             lossProfitText.gameObject.SetActive(_tradeType == TradeType.Sell);
@@ -169,12 +176,9 @@ namespace Features.Trade.UI
             _wasSuccessfulTrade = false;
         }
 
-        private void OnMissionAdded(Mission mission)
+        private void OnSelectedHaggleLevelChanged(HaggleLevel level)
         {
-            if (mission.Good != _good)
-                return;
-
-            RefreshMissionAmountButton();
+            _ongoingTrade.SetHaggleLevel(level);
         }
 
         private void SetMaxAmount()
@@ -197,6 +201,14 @@ namespace Features.Trade.UI
             _ongoingTrade.SetAmount(intAmount);
             SetAmount(intAmount);
             RefreshTradeButtonState();
+        }
+
+        private void OnMissionAdded(Mission mission)
+        {
+            if (mission.Good != _good)
+                return;
+
+            RefreshMissionAmountButton();
         }
 
         private void SetUpInventories()
@@ -297,7 +309,8 @@ namespace Features.Trade.UI
 
         private void RefreshProfitText(float? profit)
         {
-            lossProfitText.gameObject.SetActive(profit == null);
+            lossProfitText.gameObject.SetActive(profit != null);
+
             if (profit == null)
             {
                 lossProfitText.text = string.Empty;

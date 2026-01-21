@@ -13,10 +13,10 @@ namespace Features.Trade.Logic
 {
     public sealed class TradeService : IService
     {
-        public IReadOnlyObservableEvent<OngoingTrade> TradeCompleted => _tradeCompleted;
+        public IReadOnlyObservableEvent<CompletedTrade> TradeCompleted => _tradeCompleted;
         public IReadOnlyObservableEvent TradeAborted => _tradeAborted;
 
-        private readonly ObservableEvent<OngoingTrade> _tradeCompleted = new();
+        private readonly ObservableEvent<CompletedTrade> _tradeCompleted = new();
         private readonly ObservableEvent _tradeAborted = new();
         private readonly Dictionary<OngoingTrade, Bindings> _bindings = new();
 
@@ -52,15 +52,15 @@ namespace Features.Trade.Logic
 
         private void OnTradeCompleted(OngoingTrade trade)
         {
+            _tradeCompleted?.Invoke(trade.AsCompleted());
+
             UpdateTownReputation(trade);
             UpdateInventories(trade);
-
 
             var bindings = _bindings[trade];
             bindings.UnbindAll();
             _bindings.Remove(trade);
 
-            _tradeCompleted?.Invoke(trade);
 
             Debug.Log($"Trade completed: {trade}.");
         }

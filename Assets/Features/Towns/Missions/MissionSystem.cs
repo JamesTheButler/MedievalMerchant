@@ -100,7 +100,7 @@ namespace Features.Towns.Missions
             ResetAvailableGoods();
         }
 
-        private void OnTradeCompleted(OngoingTrade trade)
+        private void OnTradeCompleted(CompletedTrade trade)
         {
             if (trade.Town != _town)
                 return;

@@ -50,7 +50,7 @@ namespace Features.Audio.Sfx
             );
         }
 
-        private void OnTradeCompleted(OngoingTrade info)
+        private void OnTradeCompleted(CompletedTrade info)
         {
             Play(GameSoundEffect.TradeCompleted);
         }

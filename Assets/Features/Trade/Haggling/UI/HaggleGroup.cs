@@ -4,19 +4,22 @@ using UnityEngine;
 
 namespace Features.Trade.Haggling.UI
 {
-    public sealed class HaggleGroupUI : MonoBehaviour
+    public sealed class HaggleGroup : MonoBehaviour
     {
         public event Action<HaggleLevel> HaggleLevelChanged;
 
         [SerializeField]
         private List<HaggleToggle> toggles;
 
-        private HaggleLevel _selectedLevel = HaggleLevel.Fair;
+        private HaggleLevel _selectedLevel;
 
-        private void Awake()
+        public void SetUp(HaggleLevel initialHaggleLevel, TradeType tradeType)
         {
+            _selectedLevel = initialHaggleLevel;
+
             foreach (var toggle in toggles)
             {
+                toggle.SetUp(tradeType);
                 toggle.Selected += OnToggleClicked;
                 toggle.Toggle(toggle.HaggleLevel == _selectedLevel);
             }

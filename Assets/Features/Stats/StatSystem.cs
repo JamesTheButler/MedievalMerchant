@@ -35,7 +35,7 @@ namespace Features.Stats
             _model.TradesAborted++;
         }
 
-        private void OnTradeCompleted(OngoingTrade trade)
+        private void OnTradeCompleted(CompletedTrade trade)
         {
             _model.TradesCompleted++;
             if (trade.TradeType == TradeType.Buy)
