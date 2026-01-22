@@ -6,7 +6,9 @@ using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.Model;
 using Features.Levels.GameModifiers.Events;
 using Features.Map;
+using Features.Map.Overlays;
 using Features.Map.Tiling;
+using Features.Map.Zones;
 using Features.Player.Logic;
 using Features.Stats;
 using Features.Ticking.Logic;
@@ -17,15 +19,16 @@ namespace Common.Infrastructure.Gameplay
 {
     public sealed class GameplayModel
     {
-        public StatsModel Stats { get; set; } = new();
         public TileFlagMap TileFlagMap { get; private set; }
         public PlayerModel Player { get; private set; }
+        public GoodPool GoodPool { get; private set; }
 
+        public StatsModel Stats { get; } = new();
         public GameSpeedModel GameSpeed { get; } = new();
         public DateModel DateModel { get; } = new();
         public LevelConditions Conditions { get; } = new();
         public EventModel Events { get; } = new();
-        public GoodPool GoodPool { get; private set; }
+        public MapModeModel MapModeModel { get; } = new();
 
         public IReadOnlyDictionary<Vector2Int, Town> Towns => _towns;
 

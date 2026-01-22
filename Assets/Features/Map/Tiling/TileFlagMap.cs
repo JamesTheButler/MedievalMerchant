@@ -11,6 +11,7 @@ namespace Features.Map.Tiling
 
         private readonly TileFlags[,] _tiles;
         public readonly Dictionary<Vector2Int, int> TownZLevels = new();
+        public readonly Dictionary<Vector2Int, TownMapTile> TownTileInfos = new();
 
         public TileFlagMap(Vector2Int size, Vector2Int origin)
         {
@@ -29,9 +30,11 @@ namespace Features.Map.Tiling
             _tiles[position.x - Origin.x, position.y - Origin.y].AddType(tileType);
         }
 
-        public void AddTown(Vector3Int position)
+        public void AddTown(Vector3Int position, TownMapTile mapTile)
         {
-            TownZLevels.Add(position.XY() - Origin, position.z);
+            var townPosition = position.XY() - Origin;
+            TownZLevels.Add(townPosition, position.z);
+            TownTileInfos.Add(position.XY(), mapTile);
         }
     }
 }

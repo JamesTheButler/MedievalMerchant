@@ -140,6 +140,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MapModeDefault",
+                    "type": "Button",
+                    "id": "d23efdf3-89b4-4c81-a8b9-004b314b69bc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MapModeZones",
+                    "type": "Button",
+                    "id": "67bb8ede-396f-4fe1-b212-c56ccb57a93d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MapModeTowns",
+                    "type": "Button",
+                    "id": "d8d76b86-98f5-4868-a876-32be7499fa8e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MapModeCycle",
+                    "type": "Button",
+                    "id": "9f2e1d98-7dc2-453d-948b-2cc1844d61fc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -624,6 +660,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "PlayGameFast",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8696e7fc-bf2d-4861-b5ce-67e7adb6acae",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MapModeDefault",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "91f0dc97-02f6-4677-87e7-24e00ee88ddb",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MapModeZones",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0ed7669d-d961-489d-96a6-cd6d5a2ac30e",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MapModeTowns",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "32f49dbe-258a-45ee-9484-5741d89845a8",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MapModeCycle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

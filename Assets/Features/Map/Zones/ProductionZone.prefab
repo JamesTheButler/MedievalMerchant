@@ -100,7 +100,7 @@ MonoBehaviour:
   <AvailableGoods>k__BackingField: 
   config: {fileID: 11400000, guid: 8c97cf0feed1fed4a92b21fd2a031765, type: 2}
   origin: {fileID: 5215426923252200811}
-  <Regions>k__BackingField: 0
+  <Region>k__BackingField: 0
 --- !u!114 &7146294896465820409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
       corner: 1
       m_CornerMode: 1
   m_SpriteShape: {fileID: 11400000, guid: 587b80d6187dd224294be27de54dfccc, type: 2}
-  m_FillPixelPerUnit: 16
+  m_FillPixelPerUnit: 32
   m_StretchTiling: 1
   m_SplineDetail: 16
   m_AdaptiveUV: 0
@@ -166,14 +166,15 @@ MonoBehaviour:
   m_ShadowDetail: 16
   m_ShadowOffset: 0.5
   m_BoundsScale: 2
+  m_UpdateGeometry: 1
   m_Creator: {fileID: 0}
   m_Modifiers: []
   m_ColliderSegment:
-  - {x: -0.99900025, y: -0.99899995}
-  - {x: -0.9990002, y: 0.999}
-  - {x: 0.999, y: 0.99899995}
-  - {x: 0.99899995, y: -0.999}
-  - {x: -0.99900025, y: -0.99899995}
+  - {x: -0.9995004, y: -0.99950004}
+  - {x: -0.9995003, y: 0.99950016}
+  - {x: 0.99950016, y: 0.99950004}
+  - {x: 0.99950004, y: -0.99950016}
+  - {x: -0.9995004, y: -0.99950004}
   m_ShadowSegment: []
 --- !u!1971053207 &760898709323012396
 SpriteShapeRenderer:
@@ -195,6 +196,8 @@ SpriteShapeRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -217,6 +220,7 @@ SpriteShapeRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -235,7 +239,7 @@ SpriteShapeRenderer:
   - {fileID: -537572010, guid: 67ef527ef93537a498be57fc62eaef85, type: 3}
   m_LocalAABB:
     m_Center: {x: -0.00000011920929, y: 0, z: 0}
-    m_Extent: {x: 1.5000002, y: 1.5000001, z: 0}
+    m_Extent: {x: 1.2500002, y: 1.2500001, z: 0}
   m_SpriteSortPoint: 0
 --- !u!60 &1259206981772194238
 PolygonCollider2D:
@@ -283,9 +287,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.99900025, y: -0.99899995}
-      - {x: -0.9990002, y: 0.999}
-      - {x: 0.999, y: 0.99899995}
-      - {x: 0.99899995, y: -0.999}
-      - {x: -0.99900025, y: -0.99899995}
+    - - {x: -0.9995004, y: -0.99950004}
+      - {x: -0.9995003, y: 0.99950016}
+      - {x: 0.99950016, y: 0.99950004}
+      - {x: 0.99950004, y: -0.99950016}
+      - {x: -0.9995004, y: -0.99950004}
   m_UseDelaunayMesh: 0

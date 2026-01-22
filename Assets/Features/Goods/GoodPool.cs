@@ -3,6 +3,7 @@ using Common.Infrastructure;
 using Common.Types;
 using Common.Utility;
 using Features.Map;
+using Features.Map.Zones;
 
 namespace Features.Goods
 {

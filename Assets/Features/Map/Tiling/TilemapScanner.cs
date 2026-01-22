@@ -20,15 +20,13 @@ namespace Features.Map.Tiling
             {
                 var pos = new Vector3Int(x, y, z) + origin;
                 var tileGameObject = tilemap.GetInstantiatedObject(pos);
-                var tileInfo = tileGameObject?.GetComponent<TileInfo>();
-                var tileType = tileInfo?.TileType;
+                var tile = tileGameObject?.GetComponent<MapTile>();
+                if (tile == null) continue;
 
-                if (tileType == null) continue;
-
-                flagMap.AddType(pos.XY(), tileType.Value);
-                if(tileType == TileType.Town)
+                flagMap.AddType(pos.XY(), tile.TileType);
+                if(tile is TownMapTile townTile)
                 {
-                    flagMap.AddTown(pos);
+                    flagMap.AddTown(pos, townTile);
                 }
             }
 

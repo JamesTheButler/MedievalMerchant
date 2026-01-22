@@ -22,13 +22,13 @@ namespace Common.Utility
 
         private void OnDrawGizmosSelected()
         {
-            if (!onSelectionOnly) return;
+            if (!enabled || !onSelectionOnly) return;
             Render();
         }
 
         private void OnDrawGizmos()
         {
-            if (onSelectionOnly) return;
+            if (!enabled || onSelectionOnly) return;
             Render();
         }
 

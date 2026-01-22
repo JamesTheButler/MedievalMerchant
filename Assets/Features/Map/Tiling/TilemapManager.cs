@@ -21,7 +21,7 @@ namespace Features.Map.Tiling
         private Tiles tiles;
 
         [SerializeField]
-        private UnityEvent<Town> onTownClicked, onTownRightClicked;
+        private UnityEvent<Town> onTownClicked, onTownRightClicked, townHovered, townUnhovered;
 
         [SerializeField]
         private UnityEvent onGroundClicked;
@@ -35,12 +35,26 @@ namespace Features.Map.Tiling
         {
             _model = GameplayContext.Instance.Model;
             _navigationService = GameplayContext.Instance.Services.NavigationService;
+            var flagMap = _model.TileFlagMap;
 
             Tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
 
             foreach (var town in _model.Towns.Values)
             {
                 town.Tier.Observe(_ => UpdateTown(town));
+            }
+
+            foreach (var (townPos, townTile) in flagMap.TownTileInfos)
+            {
+                var town = _model.Towns[townPos];
+                townTile.LeftClicked += () => onTownClicked?.Invoke(town);
+                townTile.RightClicked += () =>
+                {
+                    onTownRightClicked?.Invoke(town);
+                    _navigationService.NavigationStarted?.Invoke(town);
+                };
+                townTile.Hovered += () => townHovered?.Invoke(town);
+                townTile.Unhovered += () => townUnhovered?.Invoke(town);
             }
         }
 
@@ -80,7 +94,6 @@ namespace Features.Map.Tiling
             onTownRightClicked?.Invoke(town);
             if (town != null)
             {
-                _navigationService.NavigationStarted?.Invoke(town);
             }
         }
 
@@ -90,7 +103,7 @@ namespace Features.Map.Tiling
 
             if (_model.Towns.TryGetValue(cellPos, out var town))
             {
-                onTownClicked?.Invoke(town);
+                //onTownClicked?.Invoke(town);
             }
             else
             {
