@@ -20,6 +20,8 @@ namespace Features.Towns.Production.Logic
         private readonly Dictionary<Tier, Producer[]> _producers;
         private readonly List<IModifier> _productionModifiers = new();
 
+        public ObservableSum ProductionBuildingCostModifiers { get; } = new();
+
         public ProductionManager(Town town)
         {
             _town = town;
@@ -75,6 +77,16 @@ namespace Features.Towns.Production.Logic
             producer.ProductionRate.AddModifiers(_productionModifiers);
             ProductionAdded?.Invoke(producer);
             ProductionAddedIndexed?.Invoke(producer, index);
+        }
+
+        public void AddConstructionModifier(IModifier modifier)
+        {
+            ProductionBuildingCostModifiers.AddValue(modifier.Value);
+        }
+
+        public void RemoveConstructionModifier(IModifier modifier)
+        {
+            ProductionBuildingCostModifiers.RemoveValue(modifier.Value);
         }
 
         public void AddModifier(IModifier prodBoostModifier, IGoodSelector goodSelector)

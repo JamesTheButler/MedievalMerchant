@@ -11,6 +11,7 @@ using Features.Goods.Config;
 using Features.Player.Logic;
 using Features.Towns.Production.Config;
 using Features.Towns.Production.Logic;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,13 +19,13 @@ namespace Features.Towns.Production.UI.Construction
 {
     public sealed class Tier1ConstructionPopup : Popup
     {
-        [SerializeField]
+        [SerializeField, Required]
         private Transform goodGroupParent;
 
-        [SerializeField]
+        [SerializeField, Required]
         private GameObject goodGroupPrefab;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Button costButton;
 
         private readonly Lazy<RecipeResources> _recipeResources = new(() => ResourceManager.Instance.RecipeResources);
@@ -65,14 +66,15 @@ namespace Features.Towns.Production.UI.Construction
             _town = town;
 
             var productionBuildingCount = _town.ProductionManager.GetProducerCount(Tier.Tier1);
-            var cost = _producerConfig.Value.GetUpgradeCost(Tier.Tier1, productionBuildingCount);
-            if (cost == null)
+            var baseCost = _producerConfig.Value.GetUpgradeCost(Tier.Tier1, productionBuildingCount);
+            if (baseCost == null)
             {
                 Debug.LogError($"The town has no more empty building slots for {Tier.Tier1}.");
                 return;
             }
 
-            _cost = cost.Value;
+            var modifierSum = _town.ProductionManager.ProductionBuildingCostModifiers;
+            _cost = baseCost.Value * (1 + modifierSum);
 
             SetUpButton(town, cellIndex);
             SpawnElements(town);
@@ -84,7 +86,7 @@ namespace Features.Towns.Production.UI.Construction
         {
             // disabled on start, since no element will be selected
             costButton.interactable = false;
-            costButton.GetText().text = _cost.ToString("N2");
+            costButton.GetText().text = _cost.ToString("N0");
 
             costButton.onClick.AddListener(() =>
             {

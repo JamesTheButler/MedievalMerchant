@@ -66,14 +66,15 @@ namespace Features.Towns.Production.UI.Construction
             _town = town;
 
             var productionBuildingCount = _town.ProductionManager.GetProducerCount(Tier.Tier2);
-            var cost = _producerConfig.Value.GetUpgradeCost(Tier.Tier2, productionBuildingCount);
-            if (cost == null)
+            var baseCost = _producerConfig.Value.GetUpgradeCost(Tier.Tier2, productionBuildingCount);
+            if (baseCost == null)
             {
                 Debug.LogError($"The town has no more empty building slots for {Tier.Tier2}.");
                 return;
             }
 
-            _cost = cost.Value;
+            var modifierSum = _town.ProductionManager.ProductionBuildingCostModifiers;
+            _cost = baseCost.Value * (1 + modifierSum);
 
             var producedTier1Good = _town.ProductionManager.GetProducers(Tier.Tier1)[cellIndex];
             if (producedTier1Good == null)
