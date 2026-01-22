@@ -38,7 +38,7 @@ namespace Features.Towns.Overlays
         public override void CleanUp()
         {
             base.CleanUp();
-            _mapModeModel.MapMode.Observe(OnMapModeChanged);
+            _mapModeModel.MapMode.StopObserving(OnMapModeChanged);
         }
 
         public void OnCameraUpdated()

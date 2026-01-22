@@ -166,10 +166,12 @@ namespace Features.Towns.Missions
                 return;
 
             var missionGood = _availableGoods.GetRandom();
+            var gameDate = _gameDateModel.GameDate.Value;
             var mission = new Mission(
                 missionGood,
                 config.Volume,
-                _gameDateModel.GameDate.Value + config.LengthInDays,
+                gameDate,
+                gameDate + config.LengthInDays,
                 type,
                 config.GetReward(),
                 config.GetPenalty());

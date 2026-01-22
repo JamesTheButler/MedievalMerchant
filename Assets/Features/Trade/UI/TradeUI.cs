@@ -127,11 +127,10 @@ namespace Features.Trade.UI
                 _ongoingTrade.Profit.Observe(RefreshProfitText),
                 _town.ReputationModel.Reputation.Observe(RefreshTownReputationText, true),
                 _town.Inventory.Funds.Observe(RefreshTownFundsText, true),
-                _model.Player.Inventory.Funds.Observe(RefreshPlayerFundsText, true)
+                _model.Player.Inventory.Funds.Observe(RefreshPlayerFundsText, true),
+                _town.Missions.MissionAdded.Observe(OnMissionAdded)
             );
 
-            // TODO: Use ObservableEvent
-            _town.Missions.MissionAdded += OnMissionAdded;
             RefreshMissionAmountButton();
 
             tradeButton.GetText().text = _tradeType == TradeType.Buy ? "Buy" : "Sell";
@@ -159,8 +158,6 @@ namespace Features.Trade.UI
                 return;
 
             _bindings.UnbindAll();
-
-            _town.Missions.MissionAdded -= OnMissionAdded;
 
             priceTooltip.SetData(null);
             _buyingInventory = null;

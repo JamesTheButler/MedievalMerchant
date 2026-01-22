@@ -26,8 +26,8 @@ namespace Features.Towns.Missions.UI
         public override void Bind(Town town)
         {
             var missionModel = town.Missions;
-            missionModel.MissionAdded += OnMissionAdded;
-            missionModel.MissionRemoved += OnMissionRemoved;
+            missionModel.MissionAdded.Observe(OnMissionAdded);
+            missionModel.MissionRemoved.Observe(OnMissionRemoved);
 
             foreach (var mission in missionModel.Missions.Values)
             {
@@ -38,8 +38,8 @@ namespace Features.Towns.Missions.UI
         public override void Unbind(Town town)
         {
             var missionModel = town.Missions;
-            missionModel.MissionAdded -= OnMissionAdded;
-            missionModel.MissionRemoved -= OnMissionRemoved;
+            missionModel.MissionAdded.StopObserving(OnMissionAdded);
+            missionModel.MissionRemoved.StopObserving(OnMissionRemoved);
 
             foreach (var mission in missionModel.Missions.Values)
             {

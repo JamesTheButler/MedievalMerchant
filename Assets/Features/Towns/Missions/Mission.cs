@@ -11,6 +11,7 @@ namespace Features.Towns.Missions
 
         public Good Good { get; }
         public int TotalCount { get; }
+        public Date StartDate { get; }
         public Date EndDate { get; }
         public MissionType Type { get; }
 
@@ -22,10 +23,12 @@ namespace Features.Towns.Missions
 
         public bool IsActive { get; private set; } = true;
         public bool IsSucceeded => RemainingCount.Value <= 0;
+        public int TotalLengthInDays => EndDate.AsDays() - StartDate.AsDays();
 
         public Mission(
             Good good,
             int totalCount,
+            Date startDate,
             Date endDate,
             MissionType type,
             IMissionResult reward,
@@ -34,6 +37,7 @@ namespace Features.Towns.Missions
             Good = good;
             TotalCount = totalCount;
             RemainingCount.Value = totalCount;
+            StartDate = startDate;
             EndDate = endDate;
             Type = type;
             Reward = reward;

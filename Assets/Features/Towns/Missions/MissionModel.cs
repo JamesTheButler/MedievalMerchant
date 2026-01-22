@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common.Infrastructure.Observation;
 using Common.Types;
 using Features.Goods.Selector;
 using UnityEngine;
@@ -8,7 +9,9 @@ namespace Features.Towns.Missions
 {
     public sealed class MissionModel
     {
-        public event Action<Mission> MissionAdded, MissionRemoved;
+        public ObservableEvent<Mission> MissionAdded { get; } = new();
+        public ObservableEvent<Mission> MissionRemoved { get; } = new();
+        
         public event Action GoodSelectorChanged;
 
         public IReadOnlyDictionary<Good, Mission> Missions => _missions;
