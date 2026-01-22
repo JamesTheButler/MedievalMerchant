@@ -1,10 +1,9 @@
 using Common.Infrastructure;
 using Common.Utility;
 using Features.Goods.Config;
-using Features.Map;
 using UnityEngine;
 
-namespace Common.UI.Popups
+namespace Features.Map.Zones
 {
     public sealed class ProductionZonePopupHandler : MonoBehaviour
     {
@@ -53,7 +52,7 @@ namespace Common.UI.Popups
                 return;
 
             var worldPosition = _zone.Center.FromXY();
-            var screenPosition = UnityEngine.Camera.main!.WorldToScreenPoint(worldPosition);
+            var screenPosition = Camera.main!.WorldToScreenPoint(worldPosition);
             productionZonePopup.gameObject.transform.position = screenPosition;
         }
 

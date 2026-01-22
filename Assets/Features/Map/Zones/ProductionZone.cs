@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.U2D;
 
-namespace Features.Map
+namespace Features.Map.Zones
 {
     public sealed class ProductionZone : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {

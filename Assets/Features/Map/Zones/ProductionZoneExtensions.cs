@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Features.Map
+namespace Features.Map.Zones
 {
     public static class ProductionZoneExtensions
     {

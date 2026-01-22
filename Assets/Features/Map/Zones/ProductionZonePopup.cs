@@ -2,6 +2,7 @@ using System;
 using Common.Config;
 using Common.Infrastructure;
 using Common.Types;
+using Common.UI.Popups;
 using Common.UI.Tooltips;
 using Common.Utility;
 using NaughtyAttributes;
@@ -9,7 +10,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Common.UI.Popups
+namespace Features.Map.Zones
 {
     public sealed class ProductionZonePopup : Popup
     {

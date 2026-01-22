@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Features.Map
+namespace Features.Map.Zones
 {
     public sealed class ProductionZoneInteractions : MonoBehaviour
     {
