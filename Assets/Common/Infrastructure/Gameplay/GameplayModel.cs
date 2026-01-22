@@ -22,6 +22,7 @@ namespace Common.Infrastructure.Gameplay
         public TileFlagMap TileFlagMap { get; private set; }
         public PlayerModel Player { get; private set; }
         public GoodPool GoodPool { get; private set; }
+        public ProductionZone[] ProductionZones { get; private set; }
 
         public StatsModel Stats { get; } = new();
         public GameSpeedModel GameSpeed { get; } = new();
@@ -44,6 +45,7 @@ namespace Common.Infrastructure.Gameplay
             _towns = towns.ToDictionary(town => town.GridLocation, town => town);
             Player = player;
             TileFlagMap = tileFlagMap;
+            ProductionZones = productionZones;
             GoodPool = new GoodPool(productionZones);
             Conditions.Initialize(conditions);
         }

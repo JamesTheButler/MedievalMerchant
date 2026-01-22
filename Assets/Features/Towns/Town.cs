@@ -8,6 +8,7 @@ using Common.Types;
 using Common.Utility;
 using Features.Goods.Config;
 using Features.Inventory;
+using Features.Map.Tiling;
 using Features.Towns.Config;
 using Features.Towns.Development.Logic;
 using Features.Towns.Development.Logic.Milestones;
@@ -34,6 +35,7 @@ namespace Features.Towns
         public MilestoneModel Milestones { get; }
         public MissionModel Missions { get; }
 
+        public TownMapTile MapTile { get; }
         public string Name { get; }
         public FlagInfo FlagInfo { get; private set; }
         public Vector2Int GridLocation { get; }
@@ -57,7 +59,8 @@ namespace Features.Towns
             Vector2 worldLocation,
             Regions regions,
             IEnumerable<Good> availableGoods,
-            FlagFactory flagFactory)
+            FlagFactory flagFactory,
+            TownMapTile tile)
         {
             _inventoryPolicy = new SlotBasedInventoryPolicy();
 
@@ -65,6 +68,7 @@ namespace Features.Towns
             WorldLocation = worldLocation;
             Regions = regions;
             MainRegion = regions.GetRandom();
+            MapTile = tile;
 
             _townConfig = ConfigurationManager.Configurations.TownConfig;
             var townResources = ResourceManager.Instance.TownResources;

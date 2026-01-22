@@ -2,33 +2,33 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Features.Towns.Overlays
+namespace Features.Map.Zones.Overlays
 {
-    public sealed class TownOverlays : MonoBehaviour
+    public sealed class ProductionZoneOverlays : MonoBehaviour
     {
         [SerializeField, Required]
         private Canvas overlayCanvas;
 
         [SerializeField, Required]
-        private TownOverlay overlayPrefab;
+        private ProductionZoneOverlay overlayPrefab;
 
-        private readonly Dictionary<Town, TownOverlay> _overlays = new();
+        private readonly Dictionary<ProductionZone, ProductionZoneOverlay> _overlays = new();
 
-        public void Show(Town town)
+        public void Show(ProductionZone productionZone)
         {
-            if (!_overlays.TryGetValue(town, out var overlay))
+            if (!_overlays.TryGetValue(productionZone, out var overlay))
             {
                 overlay = Instantiate(overlayPrefab, overlayCanvas.transform);
-                overlay.SetUp(town);
-                _overlays[town] = overlay;
+                overlay.SetUp(productionZone);
+                _overlays[productionZone] = overlay;
             }
 
             overlay.Open();
         }
 
-        public void Hide(Town town)
+        public void Hide(ProductionZone productionZone)
         {
-            if (_overlays.TryGetValue(town, out var overlay))
+            if (_overlays.TryGetValue(productionZone, out var overlay))
             {
                 overlay.Close();
             }

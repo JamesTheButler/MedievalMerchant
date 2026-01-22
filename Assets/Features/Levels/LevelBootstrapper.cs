@@ -28,9 +28,6 @@ namespace Features.Levels
         [SerializeField, Required]
         private LevelInfo debugLevelInfo;
 
-        [SerializeField, Required]
-        private ProductionZoneInteractions productionZoneInteractions;
-
         private void Start()
         {
             var levelInfo = GlobalContext.CurrentLevelInfo ?? debugLevelInfo;
@@ -39,10 +36,9 @@ namespace Features.Levels
             var flagMap = TilemapScanner.Scan(tilemap);
             var townPositions = flagMap.GetAllCells(TileType.Town);
             var zones = level.GetComponentsInChildren<ProductionZone>();
-            productionZoneInteractions.Initialize(zones);
 
             var townFactory = new TownFactory();
-            var towns = townFactory.GenerateTowns(townPositions, zones, tileGrid);
+            var towns = townFactory.GenerateTowns(townPositions, zones, tileGrid, flagMap.TownTiles);
             var player = new PlayerModel(levelInfo.StartPlayerFunds);
 
             var context = GameplayContext.Instance;

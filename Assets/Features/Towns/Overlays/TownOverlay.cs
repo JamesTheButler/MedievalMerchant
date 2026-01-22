@@ -22,9 +22,6 @@ namespace Features.Towns.Overlays
         public event Action Opened;
         public event Action Closed;
 
-        [SerializeField]
-        private float yOffset;
-
         [SerializeField, Required]
         private TownOverlayMissionCell missionCellPrefab;
 
@@ -55,7 +52,7 @@ namespace Features.Towns.Overlays
             _tierResources = ResourceManager.Instance.TierResources;
 
             _town = town;
-            _worldPosition = town.WorldLocation.FromXY();
+            _worldPosition = town.MapTile.OverlayAnchor.transform.position;
 
             nameText.text = _town.Name;
             flagRenderer.SetFlag(_town.FlagInfo);
@@ -94,8 +91,8 @@ namespace Features.Towns.Overlays
 
         public void RefreshPosition()
         {
-            //var screenPosition = Camera.main!.WorldToScreenPoint(_worldPosition);
-            gameObject.transform.position = _worldPosition;
+            var screenPosition = Camera.main!.WorldToScreenPoint(_worldPosition);
+            gameObject.transform.position = screenPosition;
         }
 
         private void OnDateChanged()

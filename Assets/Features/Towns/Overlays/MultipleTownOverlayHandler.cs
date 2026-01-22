@@ -1,17 +1,24 @@
+using Common.Infrastructure.Gameplay;
+
 namespace Features.Towns.Overlays
 {
     public sealed class MultipleTownOverlayHandler : ITownOverlayHandler
     {
         private TownOverlays _townOverlays;
+        private GameplayModel _gameplayModel;
 
         public void SetUp(TownOverlays overlays)
         {
+            _gameplayModel = GameplayContext.Instance.Model;
             _townOverlays = overlays;
         }
 
         public void Enable()
         {
-            _townOverlays.ShowAll();
+            foreach (var town in _gameplayModel.Towns.Values)
+            {
+                _townOverlays.Show(town);
+            }
         }
 
         public void Disable()

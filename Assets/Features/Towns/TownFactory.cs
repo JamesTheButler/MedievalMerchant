@@ -3,6 +3,7 @@ using System.Linq;
 using Common.Types;
 using Common.Utility;
 using Features.Map;
+using Features.Map.Tiling;
 using Features.Map.Zones;
 using Features.Towns.Flags.Logic;
 using UnityEngine;
@@ -16,21 +17,26 @@ namespace Features.Towns
 
         private readonly FlagFactory _flagFactory = new();
 
-        public List<Town> GenerateTowns(List<Vector2Int> townPositions, ProductionZone[] zones, Grid tileGrid)
+        public List<Town> GenerateTowns(
+            List<Vector2Int> townPositions,
+            ProductionZone[] zones,
+            Grid tileGrid,
+            Dictionary<Vector2Int,
+            TownMapTile> tiles)
         {
             var towns = new List<Town>();
             var zonesPerTown = GetZonesPerTown(townPositions, zones);
 
             foreach (var townPosition in townPositions)
             {
-                var town = GenerateTown(townPosition, zonesPerTown[townPosition], tileGrid);
+                var town = GenerateTown(townPosition, zonesPerTown[townPosition], tileGrid, tiles[townPosition]);
                 towns.Add(town);
             }
 
             return towns;
         }
 
-        private Town GenerateTown(Vector2Int townPosition, List<ProductionZone> adjacentZones, Grid tileGrid)
+        private Town GenerateTown(Vector2Int townPosition, List<ProductionZone> adjacentZones, Grid tileGrid, TownMapTile tile)
         {
             var worldPosition = tileGrid.CellToWorld(townPosition.FromXY());
             var townRegions = adjacentZones.Select(zone => zone.Region.AsRegions()).AggregateFlags();
@@ -41,7 +47,8 @@ namespace Features.Towns
                 worldPosition,
                 townRegions,
                 availableGoods,
-                _flagFactory);
+                _flagFactory,
+                tile);
             return town;
         }
 

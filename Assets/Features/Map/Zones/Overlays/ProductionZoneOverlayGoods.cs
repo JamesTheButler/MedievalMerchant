@@ -3,15 +3,12 @@ using Common.UI.Elements;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Common.UI.Popups
+namespace Features.Map.Zones.Overlays
 {
-    public sealed class ZoneGood : MonoBehaviour
+    public sealed class ProductionZoneOverlayGoods : MonoBehaviour
     {
         [SerializeField, Required]
-        private GoodCell tier1Cell;
-
-        [SerializeField, Required]
-        private GoodCell tier2Cell;
+        private GoodCell tier1Cell, tier2Cell;
 
         public void SetUp(Good tier1, Good tier2)
         {

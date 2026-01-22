@@ -44,7 +44,7 @@ namespace Features.Map.Tiling
                 town.Tier.Observe(_ => UpdateTown(town));
             }
 
-            foreach (var (townPos, townTile) in flagMap.TownTileInfos)
+            foreach (var (townPos, townTile) in flagMap.TownTiles)
             {
                 var town = _model.Towns[townPos];
                 townTile.LeftClicked += () => onTownClicked?.Invoke(town);
@@ -89,26 +89,14 @@ namespace Features.Map.Tiling
 
         private void RightClick()
         {
-            var clickedCell = GetCellOnMousePosition();
-            var town = _model.Towns.GetValueOrDefault(clickedCell);
-            onTownRightClicked?.Invoke(town);
-            if (town != null)
-            {
-            }
+            //var clickedCell = GetCellOnMousePosition();
+            //var town = _model.Towns.GetValueOrDefault(clickedCell);
+            //onTownRightClicked?.Invoke(town);
         }
 
         private void LeftClick()
-        {
-            var cellPos = GetCellOnMousePosition();
-
-            if (_model.Towns.TryGetValue(cellPos, out var town))
-            {
-                //onTownClicked?.Invoke(town);
-            }
-            else
-            {
-                onGroundClicked?.Invoke();
-            }
+        {   
+            onGroundClicked?.Invoke();
         }
 
         private Vector2Int GetCellOnMousePosition()

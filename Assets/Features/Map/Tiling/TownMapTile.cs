@@ -12,6 +12,9 @@ namespace Features.Map.Tiling
         [SerializeField, Required]
         private GameObject selectionOutline;
 
+        [field: SerializeField, Required]
+        public Transform OverlayAnchor { get; private set; }
+
         private void Awake()
         {
             selectionOutline.SetActive(false);

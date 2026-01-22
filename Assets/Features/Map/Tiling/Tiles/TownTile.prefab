@@ -33,6 +33,7 @@ Transform:
   m_Children:
   - {fileID: 8114386742676570732}
   - {fileID: 1937191735231944464}
+  - {fileID: 3635748917747457932}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8099838587485764011
@@ -49,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Features.Map.Tiling.TownMapTile
   <TileType>k__BackingField: 4
   selectionOutline: {fileID: 3184797882632667614}
+  <OverlayAnchor>k__BackingField: {fileID: 3635748917747457932}
 --- !u!114 &8324126346983400378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +241,55 @@ SpriteShapeRenderer:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.75000006, y: 0.75000006, z: 0}
   m_SpriteSortPoint: 0
+--- !u!1 &3762317432971575572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3635748917747457932}
+  - component: {fileID: 2996589014912073362}
+  m_Layer: 0
+  m_Name: Overlay Anchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3635748917747457932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3762317432971575572}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.632, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6460943488128556343}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2996589014912073362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3762317432971575572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4caf56faf97477a9c0fdd431f2350a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.Utility.DebugShape
+  shape: 2
+  size: 0.2
+  onSelectionOnly: 0
+  fill: 0
+  color: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &4420950987506835502
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,8 +300,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1937191735231944464}
   - component: {fileID: 8582878761797082271}
-  - component: {fileID: 6233460734814148604}
-  - component: {fileID: 2210910400022567301}
   - component: {fileID: 2614727007952342430}
   m_Layer: 0
   m_Name: Collider
@@ -310,32 +359,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.6
---- !u!114 &6233460734814148604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4420950987506835502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdbce993ec8a478aaf89e162cbb0bf49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.PointerExitForwarder
-  target: {fileID: 1273492462149241560}
---- !u!114 &2210910400022567301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4420950987506835502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da485474bd1e4c34ad87d70f08d5bcb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.PointerEnterForwarder
-  target: {fileID: 1273492462149241560}
 --- !u!114 &2614727007952342430
 MonoBehaviour:
   m_ObjectHideFlags: 0
