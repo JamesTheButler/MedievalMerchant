@@ -28,7 +28,7 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
 
             foreach (var town in gameModel.Towns.Values)
             {
-                town.ReputationManager.AddModifier(_modifier);
+                town.ReputationModel.AddModifier(_modifier);
             }
         }
 
@@ -50,7 +50,7 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
 
             _nextPossibleRepGainDate = _gameDateModel.GameDate.Value + ConfigData.MinDaysBetweenRepGains;
 
-            town.ReputationManager.UpdateReputation(
+            town.ReputationModel.UpdateReputation(
                 _diplomatLevelData.TownEntranceReputation, 
                 "Your diplomat rubbed shoulders with the locals.");
         }

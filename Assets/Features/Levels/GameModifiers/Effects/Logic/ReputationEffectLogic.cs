@@ -20,7 +20,7 @@ namespace Features.Levels.GameModifiers.Effects.Logic
         {
             foreach (var town in _gameplayModel.Towns.Values)
             {
-                town.ReputationManager.AddModifier(_modifier);
+                town.ReputationModel.AddModifier(_modifier);
             }
         }
 
@@ -28,7 +28,7 @@ namespace Features.Levels.GameModifiers.Effects.Logic
         {
             foreach (var town in _gameplayModel.Towns.Values)
             {
-                town.ReputationManager.RemoveModifier(_modifier);
+                town.ReputationModel.RemoveModifier(_modifier);
             }
         }
     }

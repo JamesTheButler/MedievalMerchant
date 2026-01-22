@@ -27,9 +27,9 @@ namespace Features.Levels.Conditions.Logic
             foreach (var town in _model.Towns.Values)
             {
                 _bindings.Track(
-                    town.ReputationManager.Reputation.Observe(OnReputationChanged)
+                    town.ReputationModel.Reputation.Observe(OnReputationChanged)
                 );
-                var repValue = town.ReputationManager.Reputation.Value;
+                var repValue = town.ReputationModel.Reputation.Value;
                 _globalRepSum += repValue;
             }
         }

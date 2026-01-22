@@ -23,21 +23,21 @@ namespace Features.Towns.Missions.Results
             switch (result)
             {
                 case TradeMissionPenalty penalty:
-                    _town.ReputationManager.UpdateReputation(penalty.ReputationPenalty, _missionPenaltyRepLogMessage);
+                    _town.ReputationModel.UpdateReputation(penalty.ReputationPenalty, _missionPenaltyRepLogMessage);
                     _town.DevelopmentManager.AddDevelopmentChange(penalty.GrowthPenalty);
                     break;
                 case TradeMissionReward reward:
                     _player.Value.Inventory.AddFunds(reward.Coin);
-                    _town.ReputationManager.UpdateReputation(reward.Reputation, _missionRewardRepLogMessage);
+                    _town.ReputationModel.UpdateReputation(reward.Reputation, _missionRewardRepLogMessage);
                     _town.DevelopmentManager.AddDevelopmentChange(reward.Growth);
                     break;
                 case UpgradeMissionPenalty penalty:
-                    _town.ReputationManager.UpdateReputation(penalty.ReputationPenalty, _missionPenaltyRepLogMessage);
+                    _town.ReputationModel.UpdateReputation(penalty.ReputationPenalty, _missionPenaltyRepLogMessage);
                     _town.DevelopmentManager.AddDevelopmentChange(penalty.GrowthPenalty);
                     break;
                 case UpgradeMissionReward reward:
                     _town.DevelopmentManager.Upgrade();
-                    _town.ReputationManager.UpdateReputation(reward.ReputationReward, _missionRewardRepLogMessage);
+                    _town.ReputationModel.UpdateReputation(reward.ReputationReward, _missionRewardRepLogMessage);
                     break;
             }
         }

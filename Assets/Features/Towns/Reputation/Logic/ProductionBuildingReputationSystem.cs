@@ -7,13 +7,13 @@ namespace Features.Towns.Reputation.Logic
 {
     public sealed class ProductionBuildingReputationSystem : ISystem
     {
-        private readonly ReputationManager _reputationManager;
+        private readonly ReputationModel _reputationModel;
         private readonly ProductionManager _productionManager;
         private ReputationConfig _reputationConfig;
 
         public ProductionBuildingReputationSystem(Town town)
         {
-            _reputationManager = town.ReputationManager;
+            _reputationModel = town.ReputationModel;
             _productionManager = town.ProductionManager;
         }
 
@@ -41,7 +41,7 @@ namespace Features.Towns.Reputation.Logic
             };
             var good = producer.ProducedGood;
             var message = $"Player constructed a production building ({good}) of {tier.ToDisplayString()}";
-            _reputationManager.UpdateReputation(repChange, message);
+            _reputationModel.UpdateReputation(repChange, message);
         }
     }
 }

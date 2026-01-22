@@ -17,13 +17,13 @@ namespace Features.Levels.GameModifiers.Effects.Logic
             {
                 if (town.MainRegion == EffectData.AllyRegion)
                 {
-                    town.ReputationManager.UpdateReputation(
+                    town.ReputationModel.UpdateReputation(
                         EffectData.StartReputationAlly,
                         "This town is your ally.");
                 }
                 else
                 {
-                    town.ReputationManager.UpdateReputation(EffectData.StartReputationOpponent,
+                    town.ReputationModel.UpdateReputation(EffectData.StartReputationOpponent,
                         "This town is your foe.");
                 }
             }

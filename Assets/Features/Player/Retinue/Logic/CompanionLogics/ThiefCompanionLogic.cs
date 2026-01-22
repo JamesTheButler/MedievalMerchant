@@ -63,7 +63,7 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
             var isThiefCaught = RandomUtility.GetBool(_thiefLevelData.ReputationLossChance);
             if (isThiefCaught)
             {
-                town.ReputationManager.UpdateReputation(_thiefLevelData.ReputationLoss, "Your thief was caught stealing!");
+                town.ReputationModel.UpdateReputation(_thiefLevelData.ReputationLoss, "Your thief was caught stealing!");
                 log += $".. and got caught ({_thiefLevelData.ReputationLoss} rep)";
             }
 

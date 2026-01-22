@@ -49,12 +49,12 @@ namespace Features.Towns.UI
 
             town.Tier.Observe(OnTierChanged);
             town.Descriptor.Observe(OnDescriptorChanged);
-            town.ReputationManager.Reputation.Observe(OnReputationChanged);
+            town.ReputationModel.Reputation.Observe(OnReputationChanged);
             town.Inventory.Funds.Observe(OnFundsChanged);
             town.FundsChange.Observe(OnFundsChangeChanged);
 
             // force reputation icon on bind
-            var reputation = town.ReputationManager.Reputation.Value;
+            var reputation = town.ReputationModel.Reputation.Value;
             OnReputationChanged(reputation * -1, reputation);
         }
 
@@ -94,7 +94,7 @@ namespace Features.Towns.UI
         {
             town.Tier.StopObserving(OnTierChanged);
             town.Descriptor.StopObserving(OnDescriptorChanged);
-            town.ReputationManager.Reputation.StopObserving(OnReputationChanged);
+            town.ReputationModel.Reputation.StopObserving(OnReputationChanged);
             town.Inventory.Funds.StopObserving(OnFundsChanged);
             town.FundsChange.StopObserving(OnFundsChangeChanged);
         }

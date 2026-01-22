@@ -20,7 +20,7 @@ namespace Features.Trade.Logic.Price
 
             _tradeType = tradeType;
             _townName = town.Name;
-            town.ReputationManager.Reputation.Observe(Update);
+            town.ReputationModel.Reputation.Observe(Update);
         }
 
         private void Update(float reputation)

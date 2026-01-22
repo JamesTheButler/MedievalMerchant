@@ -125,7 +125,7 @@ namespace Features.Trade.UI
                 _ongoingTrade.TotalPrice.Observe(OnTotalPriceChanged),
                 _ongoingTrade.ReputationChange.Observe(RefreshTownReputationText, false),
                 _ongoingTrade.Profit.Observe(RefreshProfitText),
-                _town.ReputationManager.Reputation.Observe(RefreshTownReputationText, true),
+                _town.ReputationModel.Reputation.Observe(RefreshTownReputationText, true),
                 _town.Inventory.Funds.Observe(RefreshTownFundsText, true),
                 _model.Player.Inventory.Funds.Observe(RefreshPlayerFundsText, true)
             );
@@ -347,7 +347,7 @@ namespace Features.Trade.UI
 
         private void RefreshTownReputationText()
         {
-            var currentRep = _town.ReputationManager.Reputation.Value;
+            var currentRep = _town.ReputationModel.Reputation.Value;
             var repChange = _ongoingTrade.ReputationChange.Value;
             var repChangeText = $"{repChange.Sign(false)}{repChange:0.#}".WithStyle(repChange.GetNumberStyle());
             townReputationText.text = $"Reputation: {currentRep:0.#} ({repChangeText})";

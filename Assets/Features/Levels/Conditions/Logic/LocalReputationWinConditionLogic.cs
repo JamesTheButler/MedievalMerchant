@@ -26,7 +26,7 @@ namespace Features.Levels.Conditions.Logic
             foreach (var town in _model.Towns.Values)
             {
                 _bindings.Track(
-                    town.ReputationManager.Reputation.Observe(Callback)
+                    town.ReputationModel.Reputation.Observe(Callback)
                 );
                 continue;
 

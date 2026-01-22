@@ -83,7 +83,7 @@ namespace Features.Trade.Logic
             var haggleLevel = _haggleResources.HaggleLevelNames[trade.HaggleLevel];
             var message = $"Traded {trade.Amount}x{good} worth {trade.TotalPrice} coin, haggling {haggleLevel}ly.";
 
-            trade.Town.ReputationManager.UpdateReputation(trade.ReputationChange, message);
+            trade.Town.ReputationModel.UpdateReputation(trade.ReputationChange, message);
         }
 
         private void OnTradeAborted(OngoingTrade trade)

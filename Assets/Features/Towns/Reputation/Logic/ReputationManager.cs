@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Features.Towns.Reputation.Logic
 {
-    public sealed class ReputationManager
+    public sealed class ReputationModel
     {
         public IReadOnlyObservable<float> Reputation => _reputation;
         public IReadOnlyList<ReputationLogEntry> ReputationLog => _reputationLog;
@@ -46,19 +46,6 @@ namespace Features.Towns.Reputation.Logic
         {
             _modifierSum.RemoveValue(modifier.Value);
             _modifiers.Remove(modifier);
-        }
-
-        public void ApplyNeglect()
-        {
-            var currentReputation = Reputation.Value;
-            if (currentReputation <= 0)
-                return;
-
-            var activationDelay = _reputationConfig.NeglectData.ActivationDelayInDays;
-            var message = $"The town has been neglected for more than {activationDelay} days.";
-            var clampedNeglect = Mathf.Min(_reputationConfig.NeglectData.ReputationCost,
-                currentReputation - _reputationConfig.NeglectData.ReputationCost);
-            UpdateReputation(clampedNeglect, message);
         }
     }
 }

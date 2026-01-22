@@ -149,7 +149,7 @@ namespace Features.Cheats
             }
 
             var repChange = int.Parse(parameter);
-            selectedTown.ReputationManager.UpdateReputation(repChange, "You cheated!!");
+            selectedTown.ReputationModel.UpdateReputation(repChange, "You cheated!!");
         }
 
         private void AddTownFunds(string parameter)
@@ -174,7 +174,7 @@ namespace Features.Cheats
                 return;
             }
 
-            selectedTown.ReputationManager.UpdateReputation(200f, "You cheated!!");
+            selectedTown.ReputationModel.UpdateReputation(200f, "You cheated!!");
         }
 
         private void GiveGoods(string parameter)

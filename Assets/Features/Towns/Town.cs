@@ -29,7 +29,7 @@ namespace Features.Towns
 
         public ProductionManager ProductionManager { get; }
         public DevelopmentManager DevelopmentManager { get; }
-        public ReputationManager ReputationManager { get; }
+        public ReputationModel ReputationModel { get; }
         public Inventory.Inventory Inventory { get; }
         public ModifiableVariable FundsChange { get; }
         public PriceManager PriceManager { get; }
@@ -81,7 +81,7 @@ namespace Features.Towns
             Inventory = new Inventory.Inventory(_inventoryPolicy);
             ProductionManager = new ProductionManager(this);
             DevelopmentManager = new DevelopmentManager(this);
-            ReputationManager = new ReputationManager();
+            ReputationModel = new ReputationModel();
             PriceManager = new PriceManager(this);
             Milestones = new MilestoneModel();
             Missions = new MissionModel();

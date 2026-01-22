@@ -2,6 +2,7 @@ using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Types;
 using Features.Towns.Reputation.Data;
+using UnityEngine;
 
 namespace Features.Towns.Reputation.Logic
 {
@@ -24,7 +25,7 @@ namespace Features.Towns.Reputation.Logic
             _model = GameplayContext.Instance.Model;
             _neglectConfig = ConfigurationManager.Configurations.ReputationConfig.NeglectData;
 
-            _town.ReputationManager.Reputation.Observe(OnReputationChanged);
+            _town.ReputationModel.Reputation.Observe(OnReputationChanged);
             _model.DateModel.GameDate.Observe(OnGameDateChanged);
 
             ResetNeglect();
@@ -32,7 +33,7 @@ namespace Features.Towns.Reputation.Logic
 
         public void CleanUp()
         {
-            _town.ReputationManager.Reputation.StopObserving(OnReputationChanged);
+            _town.ReputationModel.Reputation.StopObserving(OnReputationChanged);
             _model.DateModel.GameDate.StopObserving(OnGameDateChanged);
         }
 
@@ -49,15 +50,23 @@ namespace Features.Towns.Reputation.Logic
             if (date < _neglectActivationDate)
                 return;
 
-            _town.ReputationManager.IsNeglected.Value = true;
-            _town.ReputationManager.ApplyNeglect();
+            var currentRep = _town.ReputationModel.Reputation.Value;
+            if (currentRep <= 0)
+                return;
+
+            var activationDelay = _neglectConfig.ActivationDelayInDays;
+            var message = $"The town has been neglected for more than {activationDelay} days.";
+            var clampedNeglect = Mathf.Min(_neglectConfig.ReputationCost, currentRep - _neglectConfig.ReputationCost);
+            _town.ReputationModel.IsNeglected.Value = true;
+            _town.ReputationModel.UpdateReputation(clampedNeglect, message);
+
             _neglectActivationDate = _model.DateModel.GameDate.Value + _neglectConfig.IntervalInDays;
         }
 
         private void ResetNeglect()
         {
             _neglectActivationDate = _model.DateModel.GameDate.Value + _neglectConfig.ActivationDelayInDays;
-            _town.ReputationManager.IsNeglected.Value = false;
+            _town.ReputationModel.IsNeglected.Value = false;
         }
     }
 }
