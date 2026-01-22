@@ -81,7 +81,7 @@ namespace Features.Towns
             Inventory = new Inventory.Inventory(_inventoryPolicy);
             ProductionManager = new ProductionManager(this);
             DevelopmentManager = new DevelopmentManager(this);
-            ReputationManager = new ReputationManager(this);
+            ReputationManager = new ReputationManager();
             PriceManager = new PriceManager(this);
             Milestones = new MilestoneModel();
             Missions = new MissionModel();
