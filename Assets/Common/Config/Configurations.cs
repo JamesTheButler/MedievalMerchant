@@ -10,9 +10,7 @@ using Features.Towns.Development.Config;
 using Features.Towns.Missions.Data;
 using Features.Towns.Production.Config;
 using Features.Towns.Reputation.Data;
-using Features.Trade.Haggling;
 using Features.Trade.Haggling.Data;
-using Features.Trade.UI;
 using NaughtyAttributes;
 using UnityEngine;
 

@@ -14,17 +14,5 @@ namespace Features.Towns.Reputation.Data
 
         [field: SerializeField, Range(0, 100f)]
         public float Tier3ProductionBuilding { get; private set; }
-
-        [field: SerializeField, Range(0, 100f)]
-        public float TownUpgradeTier2 { get; private set; }
-
-        [field: SerializeField, Range(0, 100f)]
-        public float TownUpgradeTier3 { get; private set; }
-        
-        [field: SerializeField, Range(0, 100f)]
-        public float MissionCompleted { get; private set; }
-
-        [field: SerializeField, Range(100f, 0f)]
-        public float MissionExpired { get; private set; }
     }
 }
