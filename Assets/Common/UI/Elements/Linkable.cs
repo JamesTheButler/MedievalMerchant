@@ -10,6 +10,9 @@ namespace Common.UI.Elements
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (string.IsNullOrWhiteSpace(link))
+                return;
+
             Application.OpenURL(link);
         }
     }
