@@ -52,10 +52,6 @@ namespace Features.Towns.UI
             town.ReputationModel.Reputation.Observe(OnReputationChanged);
             town.Inventory.Funds.Observe(OnFundsChanged);
             town.FundsChange.Observe(OnFundsChangeChanged);
-
-            // force reputation icon on bind
-            var reputation = town.ReputationModel.Reputation.Value;
-            OnReputationChanged(reputation * -1, reputation);
         }
 
         private void OnTierChanged(Tier tier)
@@ -69,15 +65,11 @@ namespace Features.Towns.UI
             descriptorText.text = descriptor;
         }
 
-        private void OnReputationChanged(float oldReputation, float newReputation)
+        private void OnReputationChanged(float newReputation)
         {
             reputationText.text = $"{newReputation:0.#}";
             var isHappy = newReputation >= 0;
-            var wasHappy = oldReputation >= 0;
-            if (isHappy != wasHappy)
-            {
-                reputationIcon.sprite = isHappy ? _reputationResources.HappyIcon : _reputationResources.UnhappyIcon;
-            }
+            reputationIcon.sprite = isHappy ? _reputationResources.HappyIcon : _reputationResources.UnhappyIcon;
         }
 
         private void OnFundsChanged(float funds)
