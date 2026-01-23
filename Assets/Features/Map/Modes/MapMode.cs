@@ -1,4 +1,4 @@
-namespace Features.Map
+namespace Features.Map.Modes
 {
     public enum MapMode
     {

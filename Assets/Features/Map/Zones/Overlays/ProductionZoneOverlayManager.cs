@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Observation;
 using Common.UI.Elements;
+using Features.Map.Modes;
 using NaughtyAttributes;
 using UnityEngine;
 

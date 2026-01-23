@@ -288,7 +288,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PanelForegroundAdorned
+      name: PanelForegroundSquare
       rect:
         serializedVersion: 2
         x: 0
@@ -296,8 +296,8 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 5, y: 5, z: 5, w: 5}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 2, y: 2, z: 2, w: 2}
       customData: 
       outline: []
       physicsShape: []
@@ -305,6 +305,28 @@ TextureImporter:
       bones: []
       spriteID: 8d7d634624ebdfd49b92d143349ed463
       internalID: 316280204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PanelBackgroundSquare
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 2, y: 2, z: 2, w: 2}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cc6e4db20aded449969da4ad8597666
+      internalID: -686213194
       vertices: []
       indices: 
       edges: []
@@ -330,10 +352,11 @@ TextureImporter:
       Button: 1744435664
       ButtonHighlight: -1851876982
       PanelBackground: 1774846504
+      PanelBackgroundSquare: -686213194
       PanelForeground: -1884675582
-      PanelForegroundAdorned: 316280204
       PanelForegroundBad: 1802346324
       PanelForegroundGood: -722532917
+      PanelForegroundSquare: 316280204
       TopPanelBackground: -618897181
       TopPanelForeground: 910286587
   mipmapLimitGroupName: 

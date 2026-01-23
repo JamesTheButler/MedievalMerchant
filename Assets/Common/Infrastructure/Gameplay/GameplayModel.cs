@@ -6,6 +6,7 @@ using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.Model;
 using Features.Levels.GameModifiers.Events;
 using Features.Map;
+using Features.Map.Modes;
 using Features.Map.Overlays;
 using Features.Map.Tiling;
 using Features.Map.Zones;

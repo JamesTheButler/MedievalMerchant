@@ -4,7 +4,7 @@ using Common.UI.Elements;
 using Common.Utility;
 using UnityEngine.InputSystem;
 
-namespace Features.Map
+namespace Features.Map.Modes
 {
     public sealed class MapModeInputHandler : InitializableBehavior
     {
@@ -19,6 +19,7 @@ namespace Features.Map
         {
             if (!context.performed)
                 return;
+            
             _mapModeModel.MapMode.Value = MapMode.Default;
         }
 
@@ -26,6 +27,7 @@ namespace Features.Map
         {
             if (!context.performed)
                 return;
+            
             _mapModeModel.MapMode.Value = MapMode.Town;
         }
 
@@ -33,6 +35,7 @@ namespace Features.Map
         {
             if (!context.performed)
                 return;
+            
             _mapModeModel.MapMode.Value = MapMode.Zone;
         }
 
@@ -40,11 +43,8 @@ namespace Features.Map
         {
             if (!context.performed)
                 return;
-
-            var current = _mapModeModel.MapMode.Value;
-            var mapModes = EnumExtensions.Enumerate<MapMode>().ToArray();
-            var nextMode = ((int)current + 1) % mapModes.Length;
-            _mapModeModel.MapMode.Value = (MapMode)nextMode;
+            
+            _mapModeModel.Next();
         }
     }
 }
