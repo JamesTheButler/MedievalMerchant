@@ -1,7 +1,5 @@
-using System.Linq;
 using Common.Infrastructure.Gameplay;
 using Common.UI.Elements;
-using Common.Utility;
 using UnityEngine.InputSystem;
 
 namespace Features.Map.Modes
@@ -28,7 +26,7 @@ namespace Features.Map.Modes
             if (!context.performed)
                 return;
             
-            _mapModeModel.MapMode.Value = MapMode.Town;
+            _mapModeModel.Toggle(MapMode.Town);
         }
 
         public void OnMapModeZonesKey(InputAction.CallbackContext context)
@@ -36,7 +34,7 @@ namespace Features.Map.Modes
             if (!context.performed)
                 return;
             
-            _mapModeModel.MapMode.Value = MapMode.Zone;
+            _mapModeModel.Toggle(MapMode.Zone);
         }
 
         public void OnMapModeCycleKey(InputAction.CallbackContext context)

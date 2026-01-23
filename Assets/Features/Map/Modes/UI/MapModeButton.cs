@@ -40,8 +40,7 @@ namespace Features.Map.Modes.UI
 
         private void OnButtonClick()
         {
-            var currentMode = _mapModeModel.MapMode.Value;
-            _mapModeModel.MapMode.Value = currentMode == mapMode ? MapMode.Default : mapMode;
+            _mapModeModel.Toggle(mapMode);
         }
 
         private void UpdateButtonColor()

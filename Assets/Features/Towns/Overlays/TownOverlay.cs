@@ -35,7 +35,10 @@ namespace Features.Towns.Overlays
         private FlagRenderer flagRenderer;
 
         [SerializeField, Required]
-        private RectTransform allMissionsContainer, upgradeMissionContainer, tradeMissionContainer;
+        private RectTransform upgradeMissionContainer, tradeMissionContainer;
+
+        [SerializeField, Required]
+        private GameObject divider;
 
         private readonly Bindings _bindings = new();
         private readonly Dictionary<Mission, TownOverlayMissionCell> _missionCells = new();
@@ -75,6 +78,7 @@ namespace Features.Towns.Overlays
 
             gameObject.SetActive(true);
             RefreshPosition();
+            RefreshDivider();
         }
 
         public void Close()
@@ -120,7 +124,7 @@ namespace Features.Towns.Overlays
             var missionCell = Instantiate(missionCellPrefab, container);
             missionCell.SetUp(mission.Good, mission.TotalLengthInDays, mission.Type, mission.DaysLeft);
             _missionCells.Add(mission, missionCell);
-            RefreshMissionContainer();
+            RefreshDivider();
         }
 
         private void OnMissionRemoved(Mission mission)
@@ -130,12 +134,12 @@ namespace Features.Towns.Overlays
                 Destroy(cell.gameObject);
             }
 
-            RefreshMissionContainer();
+            RefreshDivider();
         }
 
-        private void RefreshMissionContainer()
+        private void RefreshDivider()
         {
-            allMissionsContainer.gameObject.SetActive(_town.Missions.Missions.Any());
+            divider.SetActive(_town.Missions.Missions.Any());
         }
     }
 }
