@@ -29,9 +29,6 @@ namespace Features.Map.Zones.Overlays
         [SerializeField, Required]
         private Transform zoneGoodContainer;
 
-        [SerializeField, Required]
-        private SimpleTooltipHandler regionIconTooltip;
-
         private readonly Bindings _bindings = new();
 
         private ProductionZone _productionZone;
@@ -44,7 +41,6 @@ namespace Features.Map.Zones.Overlays
             var regionData = regionConfig.Data[zone.Region];
             regionNameText.text = regionData.Name;
             regionIcon.sprite = regionData.Icon;
-            regionIconTooltip.SetData($"Region: {regionData.Name}");
 
             var recipeResources = ResourceManager.Instance.RecipeResources;
             foreach (var good in zone.AvailableGoods)
