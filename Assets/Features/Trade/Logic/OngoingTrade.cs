@@ -110,7 +110,10 @@ namespace Features.Trade.Logic
             var trackedInfo = _tradeTracker.TrackedGoods.GetValueOrDefault(Good);
             if (trackedInfo == null)
             {
-                Debug.LogWarning($"TradeTracker did not have entry for {Good}. Something's wrong.");
+                if (TradeType == TradeType.Sell)
+                {
+                    Debug.LogWarning($"TradeTracker did not have entry for {Good} when selling. Something's wrong.");
+                }
                 Profit.Value = null;
                 return;
             }
