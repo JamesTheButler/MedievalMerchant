@@ -52,7 +52,8 @@ namespace Features.Trade.Logic
 
         private void OnTradeCompleted(OngoingTrade trade)
         {
-            _tradeCompleted?.Invoke(trade.AsCompleted());
+            var completedTrade = trade.AsCompleted();
+            _tradeCompleted?.Invoke(completedTrade);
 
             UpdateTownReputation(trade);
             UpdateInventories(trade);
@@ -62,7 +63,7 @@ namespace Features.Trade.Logic
             _bindings.Remove(trade);
 
 
-            Debug.Log($"Trade completed: {trade}.");
+            Debug.Log($"Trade completed: {completedTrade}.");
         }
 
         private void UpdateInventories(OngoingTrade trade)

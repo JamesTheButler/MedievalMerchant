@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Common.Types;
+using UnityEngine;
 
 namespace Features.Player.Logic
 {
@@ -16,6 +17,7 @@ namespace Features.Player.Logic
             var newTotal = (existingInfo?.TotalPrice ?? 0) + totalPrice;
 
             _trackedGoods[good] = new TradeTrackInfo(newCount, newTotal);
+            Debug.Log($"Tracked {amount}x{good} for {totalPrice} to new amount ({newCount})/total({newTotal})");
         }
 
         public void Remove(Good good, int amount)
@@ -30,7 +32,10 @@ namespace Features.Player.Logic
             }
 
             var newTotal = trackedInfo.TotalPrice - amount * trackedInfo.AveragePrice;
-            _trackedGoods[good] = new TradeTrackInfo(trackedInfo.Amount - amount, newTotal);
+            var newAmount = trackedInfo.Amount - amount;
+            _trackedGoods[good] = new TradeTrackInfo(newAmount, newTotal);
+            
+            Debug.Log($"Removed {amount}x{good} for to new amount ({newAmount})/total: ({newTotal})");
         }
     }
 }

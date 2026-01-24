@@ -72,11 +72,9 @@ namespace Features.Trade.UI
         private Town _town;
         private Good _good;
         private TradeType _tradeType;
-        private Inventory.Inventory _buyingInventory;
-        private Inventory.Inventory _sellingInventory;
+        private Inventory.Inventory _buyingInventory, _sellingInventory;
         private OngoingTrade _ongoingTrade;
 
-        private bool _isSetUp;
         private bool _wasSuccessfulTrade;
 
         private const HaggleLevel InitialHaggleLevel = HaggleLevel.Fair;
@@ -99,16 +97,8 @@ namespace Features.Trade.UI
 
         public void SetUp(Good good, TradeType tradeType)
         {
-            if (_isSetUp)
-            {
-                Debug.LogError("TradeUI was already initialized.");
-                return;
-            }
-
             _good = good;
             _tradeType = tradeType;
-
-            _isSetUp = true;
         }
 
         protected override void OnOpen()
@@ -152,18 +142,12 @@ namespace Features.Trade.UI
 
         protected override void OnClose()
         {
-            gameObject.SetActive(false);
-
-            if (!_isSetUp)
-                return;
-
             _bindings.UnbindAll();
+            gameObject.SetActive(false);
 
             priceTooltip.SetData(null);
             _buyingInventory = null;
             _sellingInventory = null;
-
-            _isSetUp = false;
 
             if (!_wasSuccessfulTrade)
             {
