@@ -35,7 +35,7 @@ namespace Features.Towns
         public MilestoneModel Milestones { get; }
         public MissionModel Missions { get; }
 
-        public TownMapTile MapTile { get; }
+        public Observable<TownMapTile> MapTile { get; }
         public string Name { get; }
         public FlagInfo FlagInfo { get; private set; }
         public Vector2Int GridLocation { get; }
@@ -68,7 +68,7 @@ namespace Features.Towns
             WorldLocation = worldLocation;
             Regions = regions;
             MainRegion = regions.GetRandom();
-            MapTile = tile;
+            MapTile = new Observable<TownMapTile>(tile);
 
             _townConfig = ConfigurationManager.Configurations.TownConfig;
             var townResources = ResourceManager.Instance.TownResources;

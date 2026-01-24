@@ -55,7 +55,7 @@ namespace Features.Towns.Overlays
             _tierResources = ResourceManager.Instance.TierResources;
 
             _town = town;
-            _worldPosition = town.MapTile.OverlayAnchor.transform.position;
+            _worldPosition = town.MapTile.Value.OverlayAnchor.transform.position;
 
             nameText.text = _town.Name;
             flagRenderer.SetFlag(_town.FlagInfo);

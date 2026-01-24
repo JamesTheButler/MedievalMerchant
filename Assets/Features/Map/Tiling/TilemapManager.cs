@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Common.Infrastructure.Gameplay;
+using Common.Infrastructure.Observation;
 using Common.Types;
 using Common.UI.Elements;
 using Common.Utility;
@@ -35,40 +36,32 @@ namespace Features.Map.Tiling
         {
             _model = GameplayContext.Instance.Model;
             _navigationService = GameplayContext.Instance.Services.NavigationService;
-            var flagMap = _model.TileFlagMap;
-
             Tilemap = grid.gameObject.GetComponentInChildren<Tilemap>();
 
             foreach (var town in _model.Towns.Values)
             {
                 town.Tier.Observe(_ => UpdateTown(town));
-            }
-
-            foreach (var (townPos, townTile) in flagMap.TownTiles)
-            {
-                var town = _model.Towns[townPos];
-                townTile.LeftClicked += () => onTownClicked?.Invoke(town);
-                townTile.RightClicked += () =>
-                {
-                    onTownRightClicked?.Invoke(town);
-                    _navigationService.NavigationStarted?.Invoke(town);
-                };
-                townTile.Hovered += () => townHovered?.Invoke(town);
-                townTile.Unhovered += () => townUnhovered?.Invoke(town);
+                town.MapTile.Observe(mapTile => BindMapTile(mapTile, town));
             }
         }
 
-        // TODO - STYLE: should use input system
+        private void BindMapTile(TownMapTile townTile, Town town)
+        {
+            townTile.LeftClicked += () => onTownClicked?.Invoke(town);
+            townTile.RightClicked += () =>
+            {
+                onTownRightClicked?.Invoke(town);
+                _navigationService.NavigationStarted?.Invoke(town);
+            };
+            townTile.Hovered += () => townHovered?.Invoke(town);
+            townTile.Unhovered += () => townUnhovered?.Invoke(town);
+        }
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 LeftClick();
-            }
-
-            if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
-            {
-                RightClick();
             }
         }
 
@@ -82,28 +75,21 @@ namespace Features.Map.Tiling
                 _ => tiles.TownTileT3
             };
 
-            var pos = town.GridLocation;
-            var z = _model.TileFlagMap.TownZLevels.GetValueOrDefault(pos, 5);
-            Tilemap.SetTile(new Vector3Int(pos.x, pos.y, z), tile);
-        }
+            var pos2D = town.GridLocation;
+            var z = _model.TileFlagMap.TownZLevels.GetValueOrDefault(pos2D, 5);
+            var pos3D = new Vector3Int(pos2D.x, pos2D.y, z);
+            Tilemap.SetTile(pos3D, tile);
+            var tileGo = Tilemap.GetInstantiatedObject(pos3D);
+            var mapTile = tileGo.GetComponent<TownMapTile>();
+            if (mapTile == null)
+                return;
 
-        private void RightClick()
-        {
-            //var clickedCell = GetCellOnMousePosition();
-            //var town = _model.Towns.GetValueOrDefault(clickedCell);
-            //onTownRightClicked?.Invoke(town);
+            town.MapTile.Value = mapTile;
         }
 
         private void LeftClick()
-        {   
-            onGroundClicked?.Invoke();
-        }
-
-        private Vector2Int GetCellOnMousePosition()
         {
-            var mouseWorldPos = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
-            var gridPos = grid.WorldToCell(mouseWorldPos).XY();
-            return gridPos;
+            onGroundClicked?.Invoke();
         }
     }
 }
