@@ -1,14 +1,11 @@
-using Common.Utility;
-using UnityEngine;
+using System;
 
 namespace Features.Towns.Development.Config.Milestones
 {
     /// <summary>
-    ///     When a town no longer regresses in its growth without player intervention.
+    /// When a town no longer regresses in its growth without player intervention.
     /// </summary>
-    [CreateAssetMenu(
-        fileName = nameof(SelfSufficienyUpgradeData),
-        menuName = AssetMenu.TownUpgradesFolder + nameof(SelfSufficienyUpgradeData))]
+    [Serializable]
     public sealed class SelfSufficienyUpgradeData : MilestoneUpgradeData
     {
         public override string Description => "The town will no longer decline over time.";

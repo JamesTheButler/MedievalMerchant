@@ -1,8 +1,9 @@
-using UnityEngine;
+using System;
 
 namespace Features.Towns.Development.Config.Milestones
 {
-    public abstract class MilestoneUpgradeData : ScriptableObject
+    [Serializable]
+    public abstract class MilestoneUpgradeData
     {
         public abstract string Description { get; }
     }

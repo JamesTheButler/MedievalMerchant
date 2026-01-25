@@ -79,7 +79,7 @@ namespace Features.Towns.Development.Logic.Milestones
                     break;
 
                 default:
-                    Debug.LogError($"Failed to apply unhandled upgrade {upgrade.name}.");
+                    Debug.LogError($"Failed to apply unhandled upgrade {upgrade.GetType().Name}.");
                     break;
             }
         }
@@ -119,7 +119,7 @@ namespace Features.Towns.Development.Logic.Milestones
                     break;
 
                 default:
-                    Debug.LogError($"Failed to apply unhandled upgrade {upgrade.name}.");
+                    Debug.LogError($"Failed to apply unhandled upgrade {upgrade.GetType().Name}.");
                     break;
             }
         }

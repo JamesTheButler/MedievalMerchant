@@ -45,58 +45,65 @@ MonoBehaviour:
     town1Good1: 3
     town2Good1: 6
     town2Good2: 9
-    town3Good1: 0.25
-    town3Good2: 0.5
-    town3Good3: 1
+    town3Good1: 0.3
+    town3Good2: 0.6
+    town3Good3: 1.2
   <BaseDegrowth>k__BackingField:
     _serializedList:
     - Key: 1
-      Value: -0.25
+      Value: -0.33
     - Key: 2
-      Value: -0.5
+      Value: -0.66
     - Key: 3
-      Value: -0.75
+      Value: -1
   <Milestones>k__BackingField:
     _serializedList:
     - Key: 1
       Value:
         <MilestoneData>k__BackingField:
           _serializedList:
-          - Key: 0.5
+          - Key: 0.33
+            Value:
+              <Icon>k__BackingField: {fileID: 1982855716, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
+              <Upgrades>k__BackingField:
+              - rid: 5229624224403947773
+          - Key: 0.66
             Value:
               <Icon>k__BackingField: {fileID: 1773229017, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
               <Upgrades>k__BackingField:
-              - {fileID: 11400000, guid: 6bf32b5ef1d26a745a420edcda864259, type: 2}
+              - rid: 5229624224403947790
           - Key: 1
             Value:
               <Icon>k__BackingField: {fileID: 8693618367534728744, guid: aa577dc2b9c3e6948a893376afd030f3, type: 3}
               <Upgrades>k__BackingField:
-              - {fileID: 11400000, guid: 74944dd2e8a13284ab92774dedd96fe4, type: 2}
-              - {fileID: 11400000, guid: 6b2dca0b935e81a4d96777285991be9a, type: 2}
+              - rid: 5229624224403947774
+              - rid: 5229624224403947775
     - Key: 2
       Value:
         <MilestoneData>k__BackingField:
           _serializedList:
           - Key: 0.25
             Value:
-              <Icon>k__BackingField: {fileID: 1773229017, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
-              <Upgrades>k__BackingField:
-              - {fileID: 11400000, guid: b84c8c52990f10c449e0679a762cc21c, type: 2}
-          - Key: 0.5
-            Value:
               <Icon>k__BackingField: {fileID: 1982855716, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
               <Upgrades>k__BackingField:
-              - {fileID: 11400000, guid: 09974e0d6f9064d4a989d686a61fbe4d, type: 2}
+              - rid: 5229624224403947777
+          - Key: 0.5
+            Value:
+              <Icon>k__BackingField: {fileID: -1307802876, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
+              <Upgrades>k__BackingField:
+              - rid: 5229624224403947780
           - Key: 0.75
             Value:
               <Icon>k__BackingField: {fileID: 1773229017, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
               <Upgrades>k__BackingField:
-              - {fileID: 11400000, guid: b89a84e4996599b46af59c11c5abdaa6, type: 2}
+              - rid: 5229624224403947781
           - Key: 1
             Value:
               <Icon>k__BackingField: {fileID: -6492548218044149164, guid: aa577dc2b9c3e6948a893376afd030f3, type: 3}
               <Upgrades>k__BackingField:
-              - {fileID: 11400000, guid: ad2f135dd34c49a4ba05ff42ff3b85af, type: 2}
+              - rid: 5229624224403947787
+              - rid: 5229624224403947788
+              - rid: 5229624224403947789
     - Key: 3
       Value:
         <MilestoneData>k__BackingField:
@@ -105,14 +112,78 @@ MonoBehaviour:
             Value:
               <Icon>k__BackingField: {fileID: 1773229017, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
               <Upgrades>k__BackingField:
-              - {fileID: 11400000, guid: 366b690a3f620c04e8dc8ed4b2dbbeef, type: 2}
+              - rid: 5229624224403947786
           - Key: 0.67
             Value:
               <Icon>k__BackingField: {fileID: -1307802876, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
               <Upgrades>k__BackingField:
-              - {fileID: 11400000, guid: 7dfc04d82aae7e446805635c8db8e4f1, type: 2}
+              - rid: 5229624224403947782
           - Key: 1
             Value:
               <Icon>k__BackingField: {fileID: 609887302, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
               <Upgrades>k__BackingField:
-              - {fileID: 11400000, guid: 80f2f995d9e67de4b8bfd38687a6a94b, type: 2}
+              - rid: 5229624224403947783
+              - rid: 5229624224403947784
+              - rid: 5229624224403947791
+  references:
+    version: 2
+    RefIds:
+    - rid: 5229624224403947773
+      type: {class: ProductionBoostUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <ProductionBoost>k__BackingField: 0.1
+    - rid: 5229624224403947774
+      type: {class: ProductionBoostUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <ProductionBoost>k__BackingField: 0.25
+    - rid: 5229624224403947775
+      type: {class: FundsBoostUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <FundsBoost>k__BackingField: 0.25
+    - rid: 5229624224403947777
+      type: {class: ProductionBoostUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <ProductionBoost>k__BackingField: 0.2
+    - rid: 5229624224403947780
+      type: {class: DividendsUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <DividendsPercentage>k__BackingField: 0.05
+    - rid: 5229624224403947781
+      type: {class: FundsBoostUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <FundsBoost>k__BackingField: 0.2
+    - rid: 5229624224403947782
+      type: {class: DividendsUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <DividendsPercentage>k__BackingField: 0.2
+    - rid: 5229624224403947783
+      type: {class: SelfSufficienyUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data: 
+    - rid: 5229624224403947784
+      type: {class: FundsBoostUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <FundsBoost>k__BackingField: 0.5
+    - rid: 5229624224403947786
+      type: {class: FundsBoostUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <FundsBoost>k__BackingField: 0.5
+    - rid: 5229624224403947787
+      type: {class: ProductionBoostUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <ProductionBoost>k__BackingField: 0.25
+    - rid: 5229624224403947788
+      type: {class: PriceBoostUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <PriceBoostPercent>k__BackingField: 0.05
+    - rid: 5229624224403947789
+      type: {class: FundsBoostUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <FundsBoost>k__BackingField: 0.25
+    - rid: 5229624224403947790
+      type: {class: FundsBoostUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <FundsBoost>k__BackingField: 0.1
+    - rid: 5229624224403947791
+      type: {class: ProductionBoostUpgradeData, ns: Features.Towns.Development.Config.Milestones, asm: Assembly-CSharp}
+      data:
+        <ProductionBoost>k__BackingField: 0.25

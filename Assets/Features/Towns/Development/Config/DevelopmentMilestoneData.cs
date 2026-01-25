@@ -13,7 +13,7 @@ namespace Features.Towns.Development.Config
         [field: SerializeField, Required, ShowAssetPreview(32, 32)]
         public Sprite Icon { get; private set; }
 
-        [field: SerializeField]
+        [field: SerializeReference, SubclassSelector]
         public MilestoneUpgradeData[] Upgrades { get; private set; }
 
         public string Description => GenerateDescription();

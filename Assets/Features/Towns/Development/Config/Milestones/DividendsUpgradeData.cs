@@ -1,3 +1,4 @@
+using System;
 using Common.Utility;
 using UnityEngine;
 
@@ -6,9 +7,7 @@ namespace Features.Towns.Development.Config.Milestones
     /// <summary>
     /// Upgrade for automatically transferring part of the towns fund-production to the player.
     /// </summary>
-    [CreateAssetMenu(
-        fileName = nameof(DividendsUpgradeData),
-        menuName = AssetMenu.TownUpgradesFolder + nameof(DividendsUpgradeData))]
+    [Serializable]
     public sealed class DividendsUpgradeData : MilestoneUpgradeData
     {
         [field: SerializeField]

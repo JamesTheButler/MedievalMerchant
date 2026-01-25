@@ -1,11 +1,10 @@
+using System;
 using Common.Utility;
 using UnityEngine;
 
 namespace Features.Towns.Development.Config.Milestones
 {
-    [CreateAssetMenu(
-        fileName = nameof(FundsBoostUpgradeData),
-        menuName = AssetMenu.TownUpgradesFolder + nameof(FundsBoostUpgradeData))]
+    [Serializable]
     public sealed class FundsBoostUpgradeData : MilestoneUpgradeData
     {
         [field: SerializeField]
