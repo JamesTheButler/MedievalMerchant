@@ -88,7 +88,7 @@ namespace Features.Audio.Music
                     this.StopCoroutineSafe(_gameplayLoop);
                     audioSource.clip = _audioResources.StartMenuMusic;
                     audioSource.loop = true;
-                    Debug.Log($"Now playing {_audioResources.StartMenuMusic.name}.");
+                    Debug.Log($"{nameof(MusicPlayer)}: Now playing {_audioResources.StartMenuMusic.name}.");
                     audioSource.Play();
                     break;
                 case MusicMode.Gameplay:
@@ -120,7 +120,7 @@ namespace Features.Audio.Music
                 var nextSong = _activePool.GetRandom();
                 audioSource.clip = nextSong;
                 audioSource.Play();
-                Debug.Log($"Now playing {nextSong.name}.");
+                Debug.Log($"{nameof(MusicPlayer)}: Now playing {nextSong.name}.");
 
                 if (_inactivePool.Count >= _musicConfig.MinGapBetweenRepeats)
                 {

@@ -112,6 +112,7 @@ namespace Common.Camera
         public void FocusCamera(Vector2 worldPosition)
         {
             camera.transform.position = worldPosition.FromXY(camera.transform.position.z);
+            cameraMoved?.Invoke();
         }
 
         private void RefreshKeyboardPanSpeed()
