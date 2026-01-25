@@ -17,7 +17,7 @@ namespace Features.Player.Retinue.Config.LevelDatas
 
         public override string Description => new StringBuilder()
             .AppendLine($"- {SpeedBonus.ToPercentString()} shorter travel times ")
-            .AppendLine($"- {UpkeepReduction.ToPercentString()} lower caravan upkeep")
+            .AppendLine($"- {UpkeepReduction.ToPercentString()} lower upkeep")
             .ToString()
             .WithStyle(Style.Good);
     }
