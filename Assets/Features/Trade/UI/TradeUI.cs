@@ -135,6 +135,7 @@ namespace Features.Trade.UI
 
             priceTooltip.SetData(_ongoingTrade.SinglePrice);
 
+            amountSlider.value = 0;
             SetMaxAmount();
 
             gameObject.SetActive(true);
