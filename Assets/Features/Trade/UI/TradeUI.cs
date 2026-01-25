@@ -75,6 +75,7 @@ namespace Features.Trade.UI
         private Inventory.Inventory _buyingInventory, _sellingInventory;
         private OngoingTrade _ongoingTrade;
 
+        private bool _isStuckToMax;
         private bool _wasSuccessfulTrade;
 
         private const HaggleLevel InitialHaggleLevel = HaggleLevel.Fair;
@@ -178,6 +179,8 @@ namespace Features.Trade.UI
 
         private void TradeSliderUpdate(float amount)
         {
+            _isStuckToMax = Mathf.Approximately(amount, amountSlider.maxValue);
+
             var intAmount = (int)amount;
             sliderValueText.text = intAmount.ToString("0");
             _ongoingTrade.SetAmount(intAmount);
@@ -223,6 +226,11 @@ namespace Features.Trade.UI
                 return;
 
             amountSlider.maxValue = amount;
+            if (_isStuckToMax)
+            {
+                amountSlider.value = amount;
+            }
+
             RefreshTradeButtonState();
         }
 
