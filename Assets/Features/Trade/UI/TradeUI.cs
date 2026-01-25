@@ -233,8 +233,11 @@ namespace Features.Trade.UI
             Close();
         }
 
-        private void CompleteTrade()
+        public void CompleteTrade()
         {
+            if (_ongoingTrade.Amount <= 0)
+                return;
+
             _ongoingTrade.Complete();
             _wasSuccessfulTrade = true;
             Close();

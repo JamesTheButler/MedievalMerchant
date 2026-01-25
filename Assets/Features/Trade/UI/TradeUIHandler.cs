@@ -4,6 +4,7 @@ using Common.UI.Elements;
 using Features.Towns;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Features.Trade.UI
 {
@@ -32,6 +33,17 @@ namespace Features.Trade.UI
             tradeUI.Close();
             tradeUI.SetUp(good, tradeType);
             tradeUI.Open();
+        }
+
+        public void ConfirmIfOpen(InputAction.CallbackContext context)
+        {
+            if (!context.performed)
+                return;
+
+            if (tradeUI.IsOpen)
+            {
+                tradeUI.CompleteTrade();
+            }
         }
 
         private void OnSelectedTownChanged(Town town)

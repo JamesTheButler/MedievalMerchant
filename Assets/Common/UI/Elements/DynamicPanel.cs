@@ -6,12 +6,13 @@ namespace Common.UI.Elements
     {
         public event Action Opened, Closed;
 
-        private bool _isOpen;
+        public bool IsOpen { get; private set; }
+
         private bool _isInitialized;
 
         public override void Initialize()
         {
-            _isOpen = gameObject.activeSelf;
+            IsOpen = gameObject.activeSelf;
 
             if (_isInitialized)
                 return;
@@ -23,10 +24,10 @@ namespace Common.UI.Elements
 
         public void Open()
         {
-            if (_isOpen)
+            if (IsOpen)
                 return;
 
-            _isOpen = true;
+            IsOpen = true;
 
             OnOpen();
 
@@ -35,10 +36,10 @@ namespace Common.UI.Elements
 
         public virtual void Close()
         {
-            if (!_isOpen)
+            if (!IsOpen)
                 return;
 
-            _isOpen = false;
+            IsOpen = false;
 
             OnClose();
 
@@ -47,7 +48,7 @@ namespace Common.UI.Elements
 
         public void Toggle()
         {
-            if (_isOpen)
+            if (IsOpen)
             {
                 Close();
             }
