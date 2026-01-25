@@ -14,6 +14,7 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace Common.UI
@@ -55,6 +56,9 @@ namespace Common.UI
 
         private void Show(bool isWon)
         {
+            var playerInput = FindAnyObjectByType<PlayerInput>();
+            playerInput.enabled = false;
+            
             gameObject.SetActive(true);
             Opened.Invoke();
             titleText.text = isWon ? "Level Finished!".WithStyle(Style.Good) : "Game Over!".WithStyle(Style.Bad);
