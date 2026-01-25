@@ -52,6 +52,7 @@ namespace Features.Towns
 
         private readonly SlotBasedInventoryPolicy _inventoryPolicy;
         private readonly RecipeResources _recipeResources;
+        private readonly TownResources _townResources;
         private readonly TownConfig _townConfig;
 
         public Town(
@@ -72,6 +73,7 @@ namespace Features.Towns
 
             _townConfig = ConfigurationManager.Configurations.TownConfig;
             var townResources = ResourceManager.Instance.TownResources;
+            _townResources = ResourceManager.Instance.TownResources;
             _recipeResources = ResourceManager.Instance.RecipeResources;
             AvailableGoods = availableGoods.ToHashSet();
 
@@ -113,6 +115,7 @@ namespace Features.Towns
 
         private void OnTierChanged(Tier tier)
         {
+            Descriptor.Value = _townResources.TownTypeNames[tier];
             _inventoryPolicy.AddSlots(tier, _townConfig.InventorySlotsPerTier[tier]);
             switch (tier)
             {
