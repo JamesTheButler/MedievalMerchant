@@ -29,8 +29,6 @@ namespace Features.Settings.Logic
                 _audioSettings.InterfaceVolume.Observe(InterfaceVolumeChanged),
                 _audioSettings.SfxVolume.Observe(SfxVolumeChanged)
             );
-            
-            //audioMixer.
         }
 
         public override void CleanUp()
