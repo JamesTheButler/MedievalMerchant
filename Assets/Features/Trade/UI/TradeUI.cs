@@ -290,9 +290,11 @@ namespace Features.Trade.UI
 
         private void RefreshProfitText(float? profit)
         {
-            lossProfitText.gameObject.SetActive(profit != null);
+            var isProfitShowable = profit != null && float.IsFinite(profit.Value);
 
-            if (profit == null)
+            lossProfitText.gameObject.SetActive(isProfitShowable);
+
+            if (!isProfitShowable)
             {
                 lossProfitText.text = string.Empty;
                 return;

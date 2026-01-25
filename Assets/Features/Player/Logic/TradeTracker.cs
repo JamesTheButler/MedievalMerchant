@@ -15,8 +15,8 @@ namespace Features.Player.Logic
             var existingInfo = _trackedGoods.GetValueOrDefault(good);
             var newCount = (existingInfo?.Amount ?? 0) + amount;
             var newTotal = (existingInfo?.TotalPrice ?? 0) + totalPrice;
+            Update(good, newCount, newTotal);
 
-            _trackedGoods[good] = new TradeTrackInfo(newCount, newTotal);
             Debug.Log($"Tracked {amount}x{good} for {totalPrice} to new amount ({newCount})/total({newTotal})");
         }
 
@@ -32,10 +32,22 @@ namespace Features.Player.Logic
             }
 
             var newTotal = trackedInfo.TotalPrice - amount * trackedInfo.AveragePrice;
-            var newAmount = trackedInfo.Amount - amount;
-            _trackedGoods[good] = new TradeTrackInfo(newAmount, newTotal);
-            
-            Debug.Log($"Removed {amount}x{good} for to new amount ({newAmount})/total: ({newTotal})");
+            var newCount = trackedInfo.Amount - amount;
+            Update(good, newCount, newTotal);
+
+            Debug.Log($"Removed {amount}x{good} for to new amount ({newCount})/total: ({newTotal})");
+        }
+
+        private void Update(Good good, int amount, float totalPrice)
+        {
+            if (amount <= 0)
+            {
+                _trackedGoods.Remove(good);
+            }
+            else
+            {
+                _trackedGoods[good] = new TradeTrackInfo(amount, totalPrice);
+            }
         }
     }
 }
