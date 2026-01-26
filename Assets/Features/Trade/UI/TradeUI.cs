@@ -58,6 +58,9 @@ namespace Features.Trade.UI
         [SerializeField, Required]
         private ModifiableTooltipHandler priceTooltip;
 
+        [SerializeField, Required]
+        private CanvasGroup profitGroup;
+
         private const string NetProfitStringFormat = "You will be making a profit of {0} with this trade.";
         private const string NetLossStringFormat = "You will be making a loss of {0} with this trade.";
 
@@ -109,8 +112,6 @@ namespace Features.Trade.UI
 
             haggleGroup.SetUp(InitialHaggleLevel, _tradeType);
             _ongoingTrade.SetHaggleLevel(InitialHaggleLevel);
-
-            lossProfitText.gameObject.SetActive(_tradeType == TradeType.Sell);
 
             _bindings.Track(
                 _ongoingTrade.TotalPrice.Observe(OnTotalPriceChanged),
@@ -304,7 +305,7 @@ namespace Features.Trade.UI
         {
             var isProfitShowable = profit != null && float.IsFinite(profit.Value);
 
-            lossProfitText.gameObject.SetActive(isProfitShowable);
+            profitGroup.alpha = isProfitShowable ? 1f : 0f;
 
             if (!isProfitShowable)
             {
