@@ -15,6 +15,9 @@ namespace Features.Map.Tiling
         [field: SerializeField, Required]
         public Transform OverlayAnchor { get; private set; }
 
+        [SerializeField, Required]
+        private AudioSource upgradeAudioSource;
+        
         private void Awake()
         {
             selectionOutline.SetActive(false);
@@ -42,6 +45,11 @@ namespace Features.Map.Tiling
         {
             selectionOutline.SetActive(false);
             Unhovered?.Invoke();
+        }
+
+        public void PlayUpgradeSfx()
+        {
+            upgradeAudioSource.Play();
         }
     }
 }

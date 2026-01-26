@@ -85,6 +85,11 @@ namespace Features.Map.Tiling
                 return;
 
             town.MapTile.Value = mapTile;
+
+            if (town.Tier.Value != Tier.Tier1)
+            {
+                mapTile.PlayUpgradeSfx();
+            }
         }
 
         private void LeftClick()
