@@ -1,6 +1,6 @@
 using Common.Infrastructure.Global;
 using Common.UI.Elements;
-using Features.Settings.Logic;
+using Features.Audio.Data;
 using Features.Settings.UI;
 using NaughtyAttributes;
 using UnityEngine;

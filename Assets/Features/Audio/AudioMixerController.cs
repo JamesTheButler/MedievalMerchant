@@ -2,11 +2,12 @@
 using Common.Infrastructure.Observation;
 using Common.UI.Elements;
 using Common.Utility;
+using Features.Audio.Data;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Features.Settings.Logic
+namespace Features.Audio
 {
     public sealed class AudioMixerController : InitializableBehavior
     {

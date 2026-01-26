@@ -2,7 +2,7 @@
 using Common.Infrastructure.Global;
 using Common.Infrastructure.Observation;
 
-namespace Features.Settings.Logic
+namespace Features.Audio.Data
 {
     public sealed class AudioSettingsAutoSaveSystem : ISystem
     {

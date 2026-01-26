@@ -2,7 +2,7 @@
 using Common.Infrastructure.Global;
 using Common.Infrastructure.Serialization;
 
-namespace Features.Settings.Logic
+namespace Features.Audio.Data
 {
     public sealed class AudioSettingsPersistenceService : FilePersistenceService<AudioSettingSaveData>
     {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Features.Settings.Logic;
+using Features.Audio.Data;
 
 namespace Common.Infrastructure.Global
 {

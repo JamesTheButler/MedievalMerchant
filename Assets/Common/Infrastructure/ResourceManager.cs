@@ -1,5 +1,6 @@
 using Common.Config;
 using Features.Audio;
+using Features.Audio.Data;
 using Features.Goods.Config;
 using Features.Towns.Config;
 using Features.Towns.Development.UI.DevelopmentGauge;

@@ -4,7 +4,7 @@ using Features.Audio.Sfx;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Features.Audio
+namespace Features.Audio.Data
 {
     [CreateAssetMenu(
         fileName = nameof(AudioResources),

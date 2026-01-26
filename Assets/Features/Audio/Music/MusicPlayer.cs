@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Common.Infrastructure;
@@ -6,6 +5,7 @@ using Common.Infrastructure.Global;
 using Common.Infrastructure.Observation;
 using Common.UI.Elements;
 using Common.Utility;
+using Features.Audio.Data;
 using NaughtyAttributes;
 using UnityEngine;
 
