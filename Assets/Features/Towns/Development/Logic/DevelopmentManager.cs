@@ -34,7 +34,7 @@ namespace Features.Towns.Development.Logic
             _townDevelopmentConfig = ConfigurationManager.Configurations.TownDevelopmentConfig;
             _goodResources = ResourceManager.Instance.GoodResources;
 
-            _town.ProductionManager.ProductionAdded += OnProducerAdded;
+            _town.ProductionManager.ProductionAdded.Observe(OnProducerAdded);
             _town.Inventory.GoodUpdated += OnGoodAdded;
 
             DevelopmentTrend.AddModifier(new BaseDegrowthModifier(Tier));
@@ -42,7 +42,7 @@ namespace Features.Towns.Development.Logic
 
         ~DevelopmentManager()
         {
-            _town.ProductionManager.ProductionAdded -= OnProducerAdded;
+            _town.ProductionManager.ProductionAdded.StopObserving(OnProducerAdded);
             _town.Inventory.GoodUpdated -= OnGoodAdded;
         }
 

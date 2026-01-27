@@ -20,12 +20,12 @@ namespace Features.Towns.Reputation.Logic
         public void Initialize()
         {
             _reputationConfig = ConfigurationManager.Configurations.ReputationConfig;
-            _productionManager.ProductionAdded += OnProductionBuildingBuilt;
+            _productionManager.ProductionAdded.Observe(OnProductionBuildingBuilt);
         }
 
         public void CleanUp()
         {
-            _productionManager.ProductionAdded -= OnProductionBuildingBuilt;
+            _productionManager.ProductionAdded.StopObserving(OnProductionBuildingBuilt);
         }
 
         private void OnProductionBuildingBuilt(Producer producer)

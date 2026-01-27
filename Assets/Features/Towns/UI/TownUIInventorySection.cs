@@ -32,9 +32,8 @@ namespace Features.Towns.UI
                 UpdateGood(good, amount);
             }
 
-            town.ProductionManager.ProductionAdded += OnProducerAdded;
+            town.ProductionManager.ProductionAdded.Observe(OnProducerAdded);
         }
-
 
         public override void Unbind(Town town)
         {
@@ -44,6 +43,7 @@ namespace Features.Towns.UI
             }
 
             town.Tier.StopObserving(OnTownTierChanged);
+            town.ProductionManager.ProductionAdded.StopObserving(OnProducerAdded);
             town.Inventory.GoodUpdated -= UpdateGood;
         }
 

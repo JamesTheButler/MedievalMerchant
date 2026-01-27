@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
+using Common.Infrastructure.Observation;
 using Common.Types;
 using Common.Utility;
 using Features.Goods.Config;
@@ -12,8 +13,8 @@ namespace Features.Towns.Production.Logic
 {
     public sealed class ProductionManager
     {
-        public event Action<Producer> ProductionAdded;
-        public event Action<Producer, int> ProductionAddedIndexed;
+        public ObservableEvent<Producer> ProductionAdded { get; } = new();
+        public ObservableEvent<Producer, int> ProductionAddedIndexed { get; } = new();
 
         private readonly Town _town;
         private readonly GoodResources _goodResources = ResourceManager.Instance.GoodResources;

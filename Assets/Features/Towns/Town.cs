@@ -94,7 +94,7 @@ namespace Features.Towns
             ConsumptionRate = new Observable<float>(consumptionRate);
 
             DevelopmentManager.Tier.Observe(OnTierChanged);
-            ProductionManager.ProductionAdded += OnProducerAdded;
+            ProductionManager.ProductionAdded.Observe(OnProducerAdded);
 
             Inventory.AddFunds(_townConfig.GetStartFunds());
             var baseModifier = new BaseTownFundsProduction(_townConfig.FundRate[StartTier], StartTier);

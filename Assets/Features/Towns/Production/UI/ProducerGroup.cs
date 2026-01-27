@@ -83,7 +83,7 @@ namespace Features.Towns.Production.UI
             if (!_isAvailable)
                 return;
 
-            _productionManager.ProductionAddedIndexed += OnProducerAdded;
+            _productionManager.ProductionAddedIndexed.Observe(OnProducerAdded);
             foreach (var tier in EnumExtensions.Enumerate<Tier>())
             {
                 var producer = _productionManager.GetProducers(tier)[_producerIndex];
@@ -111,7 +111,7 @@ namespace Features.Towns.Production.UI
             {
                 _town.Tier.StopObserving(OnTownTierChanged);
                 _town.Inventory.GoodUpdated -= OnGoodUpdated;
-                _productionManager.ProductionAddedIndexed -= OnProducerAdded;
+                _productionManager.ProductionAddedIndexed.StopObserving(OnProducerAdded);
             }
 
             if (_playerLocation != null)

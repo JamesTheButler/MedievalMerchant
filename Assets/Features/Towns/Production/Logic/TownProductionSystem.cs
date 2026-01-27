@@ -22,7 +22,7 @@ namespace Features.Towns.Production.Logic
         public void Initialize()
         {
             _tickingService = GameplayContext.Instance.Services.TickingService;
-            _town.ProductionManager.ProductionAdded += OnProducerAdded;
+            _town.ProductionManager.ProductionAdded.Observe(OnProducerAdded);
             foreach (var producer in _town.ProductionManager.AllProducers)
             {
                 OnProducerAdded(producer);
@@ -32,7 +32,7 @@ namespace Features.Towns.Production.Logic
 
         public void CleanUp()
         {
-            _town.ProductionManager.ProductionAdded -= OnProducerAdded;
+            _town.ProductionManager.ProductionAdded.StopObserving(OnProducerAdded);
             ClearTickers();
         }
 
