@@ -72,14 +72,15 @@ namespace Features.Levels
         {
             var allyEffect = levelInfo.GameplayModifiers.Effects.FirstOfType<AllyEffectData, EffectData>();
             var levelInfoStartIndex = levelInfo.StartTownIndex;
-            if (levelInfoStartIndex == -1)
-            {
-                levelInfoStartIndex = Random.Range(0, towns.Count);
-            }
 
             var possibleTowns = allyEffect != null
                 ? towns.Where(town => town.MainRegion == allyEffect.AllyRegion).ToList()
                 : towns;
+
+            if (levelInfoStartIndex == -1)
+            {
+                levelInfoStartIndex = Random.Range(0, possibleTowns.Count);
+            }
 
             var startTown = possibleTowns[levelInfoStartIndex];
             player.Location.CurrentTown.Value = startTown;
