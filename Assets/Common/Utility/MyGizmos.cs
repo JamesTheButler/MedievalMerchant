@@ -19,6 +19,16 @@ namespace Common.Utility
                 position + (Vector3.left + Vector3.down) * size);
         }
 
+        public static void DrawRect(Rect rect, Color? color = null)
+        {
+            if (color != null)
+            {
+                Gizmos.color = color.Value;
+            }
+
+            Gizmos.DrawWireCube(rect.center.FromXY(), rect.size.FromXY(1f));
+        }
+
         public static void DrawRectOnCanvas(Canvas canvas, Rect rect, Color color)
         {
             var canvasRectTransform = canvas.GetComponent<RectTransform>();

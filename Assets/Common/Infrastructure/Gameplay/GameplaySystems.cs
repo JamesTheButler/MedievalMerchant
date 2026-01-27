@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Common.Infrastructure.Global;
 using Features.Audio.Sfx;
 using Features.Levels.Conditions.Logic;
 using Features.Levels.GameModifiers.Events;
@@ -50,13 +51,21 @@ namespace Common.Infrastructure.Gameplay
             _systems.Add(new DateSystem());
             _systems.Add(new ConditionSystem());
             _systems.Add(new StatSystem());
-            _systems.Add(new EventSystem());
             _systems.Add(new TutorialSystem());
             _systems.Add(new NotificationPingSystem());
             _systems.Add(new NotificationLoggerSystem());
             _systems.Add(new ProgressionSystem());
             _systems.Add(new GameSfxSystem());
             _systems.Add(new GlobalSurplusSystem());
+
+            if (GlobalContext.CurrentLevelInfo?.IsTutorial ?? false)
+            {
+                _systems.Add(new TutorialMissionSystem());
+            }
+            else
+            {
+                _systems.Add(new EventSystem());
+            }
         }
 
         private void AddPlayerSystems()
@@ -80,10 +89,14 @@ namespace Common.Infrastructure.Gameplay
                 _systems.Add(new TownConsumptionSystem(town));
                 _systems.Add(new DevelopmentMilestoneSystem(town));
                 _systems.Add(new MilestoneModifierSystem(town));
-                _systems.Add(new MissionSystem(town));
                 _systems.Add(new DisinterestSystem(town));
                 _systems.Add(new ProductionBuildingReputationSystem(town));
-                //_systems.Add(new TownNeglectSystem(town)); // TODO - Milestone 0.2.0
+
+                var missionSystem = new MissionSystem(town);
+                _systems.Add(missionSystem);
+
+                var isTutorial = GlobalContext.CurrentLevelInfo?.IsTutorial ?? false;
+                missionSystem.ToggleTradeMissions(!isTutorial);
             }
         }
     }

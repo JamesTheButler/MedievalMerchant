@@ -57,7 +57,7 @@ namespace Features.Trade.Logic
             {
                 var message = tradeType == TradeType.Buy
                     ? $"{townName} does not own any {goodName}."
-                    : $"You do not own that any {goodName}.";
+                    : $"You do not own any {goodName}.";
                 return TradeResult.Failed(message);
             }
 

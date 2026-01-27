@@ -43,6 +43,12 @@ namespace Features.Levels
         [field: SerializeField, Expandable, Required]
         public LevelGameModifierData GameplayModifiers { get; private set; }
 
+        [field: SerializeField]
+        public int StartTownIndex { get; private set; } = -1;
+
+        [field: SerializeField]
+        public bool IsTutorial { get; private set; }
+
         /// <summary>
         ///     Index for internal logic. 0-based.
         /// </summary>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Infrastructure.Gameplay;
@@ -10,10 +11,12 @@ using Features.Map.Tiling;
 using Features.Map.Zones;
 using Features.Player.Logic;
 using Features.Towns;
+using Features.Towns.Initialization;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 namespace Features.Levels
 {
@@ -35,10 +38,15 @@ namespace Features.Levels
             var tilemap = level.GetComponent<Tilemap>();
             var flagMap = TilemapScanner.Scan(tilemap);
             var townPositions = flagMap.GetAllCells(TileType.Town);
+            var townInitializers = level
+                .GetComponentsInChildren<TownInitializer>()
+                .ToDictionary(initializer => initializer.GridPosition, initializer => initializer);
+
             var zones = level.GetComponentsInChildren<ProductionZone>();
 
             var townFactory = new TownFactory();
-            var towns = townFactory.GenerateTowns(townPositions, zones, tileGrid, flagMap.TownTiles);
+            var towns = townFactory.GenerateTowns(townPositions, townInitializers, zones, tileGrid, flagMap.TownTiles);
+
             var player = new PlayerModel(levelInfo.StartPlayerFunds);
 
             var context = GameplayContext.Instance;
@@ -63,11 +71,17 @@ namespace Features.Levels
         private static void SetStartTown(LevelInfo levelInfo, List<Town> towns, PlayerModel player)
         {
             var allyEffect = levelInfo.GameplayModifiers.Effects.FirstOfType<AllyEffectData, EffectData>();
+            var levelInfoStartIndex = levelInfo.StartTownIndex;
+            if (levelInfoStartIndex == -1)
+            {
+                levelInfoStartIndex = Random.Range(0, towns.Count);
+            }
+
             var possibleTowns = allyEffect != null
-                ? towns.Where(town => town.MainRegion == allyEffect.AllyRegion)
+                ? towns.Where(town => town.MainRegion == allyEffect.AllyRegion).ToList()
                 : towns;
 
-            var startTown = possibleTowns.GetRandom();
+            var startTown = possibleTowns[levelInfoStartIndex];
             player.Location.CurrentTown.Value = startTown;
             player.Location.WorldLocation.Value = startTown.WorldLocation;
         }

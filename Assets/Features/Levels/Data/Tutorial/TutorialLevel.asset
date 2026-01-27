@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33a87acc5754ca79b66a078e9b58a40, type: 3}
+  m_Name: TutorialLevel
+  m_EditorClassIdentifier: 
+  <IsEnabled>k__BackingField: 1
+  <DisplayIndex>k__BackingField: 1
+  <MapPrefab>k__BackingField: {fileID: 6144899929789839900, guid: 73f469003f5b69b4396e854ecc1441d1, type: 3}
+  <LevelName>k__BackingField: Tutorial
+  <Description>k__BackingField: Welcome to the game! This level will teach you the
+    basics of trade and town development.
+  <Difficulty>k__BackingField: Easy
+  <DifficultyColor>k__BackingField: {r: 0.14509805, g: 0.4392157, b: 0.16862746, a: 1}
+  <StartPlayerFunds>k__BackingField: 200
+  <Conditions>k__BackingField:
+  - rid: 5229624075333140552
+  <GameplayModifiers>k__BackingField: {fileID: 11400000, guid: e643ce25ea263bc4d8185d52506e977e, type: 2}
+  <StartTownIndex>k__BackingField: 0
+  <IsTutorial>k__BackingField: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 5229624075333140552
+      type: {class: TownTierWinConditionData, ns: Features.Levels.Conditions.Data, asm: Assembly-CSharp}
+      data:
+        <TargetTier>k__BackingField: 2
+        <TargetCount>k__BackingField: 2

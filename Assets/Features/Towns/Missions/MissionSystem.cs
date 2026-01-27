@@ -39,6 +39,8 @@ namespace Features.Towns.Missions
         private GoodPool _goodPool;
         private HashSet<Good> _availableGoods;
 
+        private bool _tradeMissionsEnabled = true;
+
         public MissionSystem(Town town)
         {
             _town = town;
@@ -69,6 +71,11 @@ namespace Features.Towns.Missions
             );
 
             ResetAvailableGoods();
+        }
+
+        public void ToggleTradeMissions(bool isEnabled)
+        {
+            _tradeMissionsEnabled = isEnabled;
         }
 
         public void CleanUp()
@@ -117,6 +124,8 @@ namespace Features.Towns.Missions
         private void OnDayPassed()
         {
             ValidateOngoingMissions();
+            if (!_tradeMissionsEnabled)
+                return;
             TryTriggerTradeMission();
         }
 

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc0d85bad0f94c2491be2589bbdb31c6, type: 3}
+  m_Name: TutorialLevelData
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.GameModifiers.Data.LevelGameModifierData
+  <Title>k__BackingField: Tutorial
+  <Description>k__BackingField: Welcome to the game! This level will teach you the
+    basics of trade and town development.
+  <Effects>k__BackingField:
+  - rid: 4950215272220852482
+  - rid: 4950215272220852483
+  - rid: 4950215272220852484
+  references:
+    version: 2
+    RefIds:
+    - rid: 4950215272220852482
+      type: {class: MovementSpeedEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <SpeedBoostPercent>k__BackingField: 0.1
+    - rid: 4950215272220852483
+      type: {class: PriceEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <TradeTypes>k__BackingField: -1
+        <PriceBoostPercent>k__BackingField: 0.25
+        <GoodSelector>k__BackingField:
+          applyToAll: 1
+          goods: 
+          regions: 15
+          tier: 0
+    - rid: 4950215272220852484
+      type: {class: ProductionEffectData, ns: Features.Levels.GameModifiers.Effects.Data, asm: Assembly-CSharp}
+      data:
+        <ProductionBoostPercent>k__BackingField: 0.5
+        <Selector>k__BackingField:
+          applyToAll: 1
+          goods: 
+          regions: 15
+          tier: 0

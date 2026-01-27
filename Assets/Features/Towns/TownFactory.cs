@@ -6,6 +6,7 @@ using Features.Map;
 using Features.Map.Tiling;
 using Features.Map.Zones;
 using Features.Towns.Flags.Logic;
+using Features.Towns.Initialization;
 using UnityEngine;
 
 namespace Features.Towns
@@ -19,10 +20,10 @@ namespace Features.Towns
 
         public List<Town> GenerateTowns(
             List<Vector2Int> townPositions,
+            Dictionary<Vector2Int, TownInitializer> townInitializers,
             ProductionZone[] zones,
             Grid tileGrid,
-            Dictionary<Vector2Int,
-            TownMapTile> tiles)
+            Dictionary<Vector2Int, TownMapTile> tiles)
         {
             var towns = new List<Town>();
             var zonesPerTown = GetZonesPerTown(townPositions, zones);
@@ -30,13 +31,19 @@ namespace Features.Towns
             foreach (var townPosition in townPositions)
             {
                 var town = GenerateTown(townPosition, zonesPerTown[townPosition], tileGrid, tiles[townPosition]);
+                townInitializers.TryGetValue(townPosition, out var initializer);
+                town.SetUp(initializer?.InitializationData ?? new TownInitializationData());
                 towns.Add(town);
             }
 
             return towns;
         }
 
-        private Town GenerateTown(Vector2Int townPosition, List<ProductionZone> adjacentZones, Grid tileGrid, TownMapTile tile)
+        private Town GenerateTown(
+            Vector2Int townPosition,
+            List<ProductionZone> adjacentZones,
+            Grid tileGrid,
+            TownMapTile tile)
         {
             var worldPosition = tileGrid.CellToWorld(townPosition.FromXY());
             var townRegions = adjacentZones.Select(zone => zone.Region.AsRegions()).AggregateFlags();

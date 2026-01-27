@@ -14,6 +14,7 @@ using Features.Towns.Development.Logic;
 using Features.Towns.Development.Logic.Milestones;
 using Features.Towns.Flags;
 using Features.Towns.Flags.Logic;
+using Features.Towns.Initialization;
 using Features.Towns.Missions;
 using Features.Towns.Production.Logic;
 using Features.Towns.Reputation.Logic;
@@ -36,13 +37,14 @@ namespace Features.Towns
         public MissionModel Missions { get; }
 
         public Observable<TownMapTile> MapTile { get; }
-        public string Name { get; }
-        public FlagInfo FlagInfo { get; private set; }
         public Vector2Int GridLocation { get; }
         public Vector2 WorldLocation { get; }
-        public HashSet<Good> AvailableGoods { get; }
-        public Region MainRegion { get; }
         public Regions Regions { get; }
+        public Region MainRegion { get; }
+        public FlagInfo FlagInfo { get; }
+        public HashSet<Good> AvailableGoods { get; }
+
+        public string Name { get; set; }
 
         // TODO - Feature: each good needs an Observable<float> consumption rate once implement consumption modifiers
         public Observable<float> ConsumptionRate { get; }
@@ -68,17 +70,14 @@ namespace Features.Towns
             GridLocation = gridLocation;
             WorldLocation = worldLocation;
             Regions = regions;
-            MainRegion = regions.GetRandom();
             MapTile = new Observable<TownMapTile>(tile);
 
             _townConfig = ConfigurationManager.Configurations.TownConfig;
-            var townResources = ResourceManager.Instance.TownResources;
             _townResources = ResourceManager.Instance.TownResources;
             _recipeResources = ResourceManager.Instance.RecipeResources;
             AvailableGoods = availableGoods.ToHashSet();
 
-            Name = townResources.NameGenerators[MainRegion].GenerateName();
-
+            MainRegion = regions.GetRandom();
             _inventoryPolicy.AddSlots(StartTier, _townConfig.InventorySlotsPerTier[StartTier]);
 
             // initial funds and goods
@@ -95,17 +94,23 @@ namespace Features.Towns
             ConsumptionRate = new Observable<float>(consumptionRate);
 
             DevelopmentManager.Tier.Observe(OnTierChanged);
-            ProductionManager.ProductionAdded += OnProductionManagerOnProductionAdded;
+            ProductionManager.ProductionAdded += OnProducerAdded;
 
             Inventory.AddFunds(_townConfig.GetStartFunds());
             var baseModifier = new BaseTownFundsProduction(_townConfig.FundRate[StartTier], StartTier);
             FundsChange = new ModifiableVariable("Funds change per day", true, baseModifier);
 
-            var startGood = AvailableGoods.GetRandom();
-            AddProduction(startGood, 0);
-            Inventory.AddGood(startGood, _townConfig.GetStartGoods());
-
             FlagInfo = flagFactory.CreateFlagInfo(MainRegion);
+        }
+
+        public void SetUp(TownInitializationData initializationData)
+        {
+            initializationData.Identity.Initialize(this);
+            initializationData.Production.Initialize(this);
+            foreach (var optional in initializationData.OptionalInitDatas)
+            {
+                optional.Initialize(this);
+            }
         }
 
         public void AddProduction(Good good, int index)
@@ -147,7 +152,7 @@ namespace Features.Towns
             }
         }
 
-        private void OnProductionManagerOnProductionAdded(Producer producer)
+        private void OnProducerAdded(Producer producer)
         {
             _inventoryPolicy.AddSlots(producer.Tier, 1);
         }
