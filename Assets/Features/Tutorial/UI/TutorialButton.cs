@@ -1,5 +1,6 @@
 ﻿using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
+using Common.Infrastructure.Global;
 using Common.UI.Tooltips;
 using Common.UI.Utility;
 using Features.Tutorial.Logic;
@@ -34,7 +35,7 @@ namespace Features.Tutorial.UI
             button.onClick.AddListener(Open);
             _buttonImage = button.GetComponentInChildren<Image>();
             _buttonText = button.GetComponentInChildren<TMP_Text>();
-            _tutorialService = GameplayContext.Instance.Services.TutorialService;
+            _tutorialService = GlobalContext.Instance.Services.TutorialService;
             _tutorialService.TopicCompletionChanged += OnTopicCompleted;
             var topicName = ResourceManager.Instance.TutorialResources.Topics[tutorialTopic].Title;
             tooltip.SetData($"Tutorial: {topicName}");
@@ -50,7 +51,7 @@ namespace Features.Tutorial.UI
 
         private void Open()
         {
-            var service = GameplayContext.Instance.Services.TutorialService;
+            var service = GlobalContext.Instance.Services.TutorialService;
             service.OpenTutorial(tutorialTopic);
         }
 

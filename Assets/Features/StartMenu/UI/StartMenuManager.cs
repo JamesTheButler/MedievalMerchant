@@ -5,6 +5,7 @@ using Common.UI.Elements;
 using Common.Utility;
 using Features.Audio.Music;
 using Features.Feedback.UI;
+using Features.Levels;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -21,7 +22,10 @@ namespace Features.StartMenu.UI
         private TMP_Text pressAnyText;
 
         [SerializeField, Required]
-        private GameObject startScreenGO, levelSelectionGO;
+        private GameObject startScreenGO, levelSelectionGO, tutorialPopupGO;
+
+        [SerializeField, Required]
+        private LevelLoader levelLoader;
 
         [SerializeField, Required]
         private LevelInfoBox levelInfoBox;
@@ -29,12 +33,19 @@ namespace Features.StartMenu.UI
         [SerializeField, Required]
         private FeedbackForm feedbackForm;
 
+        [SerializeField, Required]
+        private LevelInfo tutorialLevelInfo;
+
         private bool _initialized;
         private LevelButton[] _levelButtons;
 
+        public void LoadTutorial()
+        {
+            levelLoader.LoadLevel(tutorialLevelInfo);
+        }
+
         private void Start()
         {
-            ToggleLevelSelection(false);
             // set up first level button
             _levelButtons = levelSelectionGO.GetComponentsInChildren<LevelButton>();
             var firstLevelButton = _levelButtons.First();
@@ -109,6 +120,10 @@ namespace Features.StartMenu.UI
         {
             startScreenGO.SetActive(!on);
             levelSelectionGO.SetActive(on);
+
+            var tutorialService = GlobalContext.Instance.Services.TutorialService;
+            tutorialPopupGO.SetActive(!tutorialService.HasCompletedIntro);
+            tutorialService.SetIntroCompleted();
         }
     }
 }

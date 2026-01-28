@@ -2,6 +2,7 @@
 using Common.Infrastructure.Serialization;
 using Features.Audio.Data;
 using Features.Levels.Serialization;
+using Features.Tutorial.Logic;
 
 namespace Common.Infrastructure.Global
 {
@@ -9,6 +10,7 @@ namespace Common.Infrastructure.Global
     {
         public ISerializer Serializer { get; } = new Serializer();
 
+        public TutorialPersistenceService TutorialPersistenceService { get; private set; }
         public AudioSettingsPersistenceService AudioSettingsPersistenceService { get; private set; }
         public GamePersistenceService GamePersistenceService { get; private set; }
 
@@ -16,9 +18,11 @@ namespace Common.Infrastructure.Global
 
         public void Initialize()
         {
+            TutorialPersistenceService = new TutorialPersistenceService();
             AudioSettingsPersistenceService = new AudioSettingsPersistenceService();
             GamePersistenceService = new GamePersistenceService();
 
+            _services.Add(TutorialPersistenceService);
             _services.Add(AudioSettingsPersistenceService);
             _services.Add(GamePersistenceService);
 

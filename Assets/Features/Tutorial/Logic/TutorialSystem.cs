@@ -15,7 +15,7 @@ namespace Features.Tutorial.Logic
 
         public void Initialize()
         {
-            _tutorialService = GameplayContext.Instance.Services.TutorialService;
+            _tutorialService = GlobalContext.Instance.Services.TutorialService;
             _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
             _gameModel = GameplayContext.Instance.Model;
 

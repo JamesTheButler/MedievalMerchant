@@ -1,5 +1,6 @@
 ﻿using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
+using Common.Infrastructure.Global;
 using Common.UI;
 using Features.Tutorial.Data;
 using Features.Tutorial.Logic;
@@ -21,7 +22,7 @@ namespace Features.Tutorial.UI
         private void Start()
         {
             _tutorialSResources = ResourceManager.Instance.TutorialResources;
-            _tutorialService = GameplayContext.Instance.Services.TutorialService;
+            _tutorialService = GlobalContext.Instance.Services.TutorialService;
             _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
             _tutorialService.OpenTutorialRequest += OpenTutorial;
             tutorialUI.Closed += OnTutorialUiClosed;

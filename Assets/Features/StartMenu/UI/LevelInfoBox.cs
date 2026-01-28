@@ -17,8 +17,8 @@ namespace Features.StartMenu.UI
 {
     public sealed class LevelInfoBox : MonoBehaviour
     {
-        [SerializeField, Scene]
-        private string gameScene;
+        [SerializeField, Required]
+        private LevelLoader levelLoader;
 
         [SerializeField, Required]
         private TMP_Text levelIdText, nameText, completionDateText, descriptionText, difficultyText;
@@ -84,10 +84,7 @@ namespace Features.StartMenu.UI
 
         private void LoadSelectedLevel()
         {
-            Debug.Log($"Loading level {_currentLevelInfo.LevelName}...");
-
-            GlobalContext.CurrentLevelInfo = _currentLevelInfo;
-            SceneManager.LoadScene(gameScene);
+            levelLoader.LoadLevel(_currentLevelInfo);
         }
     }
 }

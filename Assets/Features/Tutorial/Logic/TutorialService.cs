@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Common.Infrastructure;
+using Common.Infrastructure.Global;
 using Common.Utility;
 
 namespace Features.Tutorial.Logic
@@ -11,19 +12,17 @@ namespace Features.Tutorial.Logic
         public event Action<TutorialTopic, bool> TopicCompletionChanged;
         public event Action<TutorialTopic> OpenTutorialRequest;
 
+        public bool HasCompletedIntro { get; private set; }
         public IReadOnlyDictionary<TutorialTopic, bool> CompletedChapters => _completedChapters;
 
-        private readonly TutorialPersistenceService _persistenceService;
-        private readonly Dictionary<TutorialTopic, bool> _completedChapters;
+        private readonly Dictionary<TutorialTopic, bool> _completedChapters =
+            EnumExtensions.MakeDictionary<TutorialTopic, bool>(false);
 
-        public TutorialService(TutorialPersistenceService persistenceService)
-        {
-            _persistenceService = persistenceService;
-            _completedChapters = EnumExtensions.MakeDictionary<TutorialTopic, bool>(false);
-        }
+        private TutorialPersistenceService _persistenceService;
 
         public void Initialize()
         {
+            _persistenceService = GlobalContext.Instance.PersistenceServices.TutorialPersistenceService;
             var persistedTopics = _persistenceService.Load();
 
             foreach (var topic in persistedTopics.CompletedTopics)
@@ -31,6 +30,8 @@ namespace Features.Tutorial.Logic
                 _completedChapters[topic] = true;
                 TopicCompletionChanged?.Invoke(topic, true);
             }
+
+            HasCompletedIntro = persistedTopics.HasCompletedIntro;
         }
 
         public void CleanUp() { }
@@ -46,6 +47,8 @@ namespace Features.Tutorial.Logic
                 TopicCompletionChanged?.Invoke(topic, false);
             }
 
+            HasCompletedIntro = false;
+
             Persist();
         }
 
@@ -54,6 +57,12 @@ namespace Features.Tutorial.Logic
             OpenTutorialRequest?.Invoke(topic);
 
             CompleteTopic(topic);
+        }
+
+        public void SetIntroCompleted()
+        {
+            HasCompletedIntro = true;
+            Persist();
         }
 
         private void CompleteTopic(TutorialTopic topic)
@@ -70,9 +79,10 @@ namespace Features.Tutorial.Logic
         private void Persist()
         {
             var saveData = new TutorialSaveData(_completedChapters
-                .Where(kv => kv.Value)
-                .Select(kv => kv.Key)
-                .ToArray());
+                    .Where(kv => kv.Value)
+                    .Select(kv => kv.Key)
+                    .ToArray(),
+                HasCompletedIntro);
 
             _persistenceService.Save(saveData);
         }

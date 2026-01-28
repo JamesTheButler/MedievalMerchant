@@ -34,7 +34,7 @@ namespace Features.Cheats
             _gameDateModel = _model.DateModel;
             _playerModel = _model.Player;
             _selection = GameplayContext.Instance.Selection;
-            _tutorialService = GameplayContext.Instance.Services.TutorialService;
+            _tutorialService = GlobalContext.Instance.Services.TutorialService;
             _progressModel = GlobalContext.Instance.Model.ProgressModel;
 
             _simpleCommands = new Dictionary<string, Action>

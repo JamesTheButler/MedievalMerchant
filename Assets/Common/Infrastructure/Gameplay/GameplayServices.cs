@@ -8,14 +8,11 @@ using Features.Notifications.Logic;
 using Features.Player.Retinue.Logic;
 using Features.Ticking.Logic;
 using Features.Trade.Logic;
-using Features.Tutorial.Logic;
 
 namespace Common.Infrastructure.Gameplay
 {
     public sealed class GameplayServices
     {
-        public TutorialPersistenceService TutorialPersistenceService { get; private set; }
-        public TutorialService TutorialService { get; private set; }
         public TickingService TickingService { get; private set; }
         public CompanionUpgradeService CompanionUpgradeService { get; private set; }
         public TradeService TradeService { get; private set; }
@@ -30,8 +27,6 @@ namespace Common.Infrastructure.Gameplay
 
         public void Initialize()
         {
-            TutorialPersistenceService = new TutorialPersistenceService();
-            TutorialService = new TutorialService(TutorialPersistenceService);
             TickingService = new TickingService();
             CompanionUpgradeService = new CompanionUpgradeService();
             TradeService = new TradeService();
@@ -42,8 +37,6 @@ namespace Common.Infrastructure.Gameplay
             Cheats = new CheatService();
             NavigationService = new NavigationService();
 
-            _services.Add(TutorialPersistenceService);
-            _services.Add(TutorialService);
             _services.Add(TickingService);
             _services.Add(CompanionUpgradeService);
             _services.Add(TradeService);

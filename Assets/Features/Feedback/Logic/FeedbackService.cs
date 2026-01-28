@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
+using Common.Infrastructure;
 using Common.Infrastructure.Global;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace Features.Feedback.Logic
 {
-    public sealed class FeedbackService
+    public sealed class FeedbackService : IService
     {
         public event Action FeedbackPosted;
 
@@ -40,5 +41,8 @@ namespace Features.Feedback.Logic
 
             FeedbackPosted?.Invoke();
         }
+
+        public void Initialize() { }
+        public void CleanUp() { }
     }
 }

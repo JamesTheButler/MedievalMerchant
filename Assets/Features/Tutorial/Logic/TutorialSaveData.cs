@@ -1,4 +1,4 @@
 ﻿namespace Features.Tutorial.Logic
 {
-    public record TutorialSaveData(TutorialTopic[] CompletedTopics);
+    public record TutorialSaveData(TutorialTopic[] CompletedTopics, bool HasCompletedIntro);
 }
