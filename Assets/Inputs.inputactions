@@ -185,6 +185,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DisableUI",
+                    "type": "Button",
+                    "id": "3351c0c8-00eb-4db6-9cd5-834163ed3d03",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -724,6 +733,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Intentory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ba7b5e34-3bf0-401a-86fe-806c17075de1",
+                    "path": "<Keyboard>/f12",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DisableUI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
