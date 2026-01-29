@@ -1,22 +1,23 @@
 using System.Collections.Generic;
 using System.Text;
 using Common.Infrastructure.Observation;
+using Features.Tutorial.Onboarding.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
-namespace Features.Tutorial.UI
+namespace Features.Tutorial.Onboarding.UI
 {
-    public sealed class TutorialTaskListUI : MonoBehaviour
+    public sealed class OnboardingTaskListUI : MonoBehaviour
     {
         [SerializeField, Required]
         public TMP_Text taskText;
 
-        private List<TutorialTask> _tasks;
+        private List<OnboardingTask> _tasks;
 
         private readonly Bindings _bindings = new();
 
-        public void SetUp(List<TutorialTask> tasks)
+        public void SetUp(List<OnboardingTask> tasks)
         {
             _tasks = tasks;
             RefreshTaskText();

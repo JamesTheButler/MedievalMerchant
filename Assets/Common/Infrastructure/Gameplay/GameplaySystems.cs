@@ -58,11 +58,7 @@ namespace Common.Infrastructure.Gameplay
             _systems.Add(new GameSfxSystem());
             _systems.Add(new GlobalSurplusSystem());
 
-            if (GlobalContext.CurrentLevelInfo?.IsTutorial ?? false)
-            {
-                _systems.Add(new TutorialMissionSystem());
-            }
-            else
+            if (!(GlobalContext.CurrentLevelInfo?.IsTutorial ?? false))
             {
                 _systems.Add(new EventSystem());
             }

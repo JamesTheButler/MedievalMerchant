@@ -1,9 +1,9 @@
 using Common.Infrastructure.Global;
 using Common.UI.Elements;
 
-namespace Features.Tutorial.UI
+namespace Features.Tutorial.Onboarding.UI
 {
-    public sealed class TutorialObjectDestroyer : InitializableBehavior
+    public sealed class OnboardingObjectDestroyer : InitializableBehavior
     {
         public override void Initialize()
         {

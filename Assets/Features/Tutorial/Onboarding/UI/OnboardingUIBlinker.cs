@@ -1,9 +1,9 @@
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Features.Tutorial.UI
+namespace Features.Tutorial.Onboarding.UI
 {
-    public sealed class TutorialUIBlinker : MonoBehaviour
+    public sealed class OnboardingUIBlinker : MonoBehaviour
     {
         [SerializeField, Required]
         private RectTransform rectTransform;

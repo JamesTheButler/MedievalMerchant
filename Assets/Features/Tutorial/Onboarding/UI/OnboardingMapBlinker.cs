@@ -1,9 +1,9 @@
 using Common.Utility;
 using UnityEngine;
 
-namespace Features.Tutorial.UI
+namespace Features.Tutorial.Onboarding.UI
 {
-    public sealed class TutorialMapBlinker : MonoBehaviour
+    public sealed class OnboardingMapBlinker : MonoBehaviour
     {
         public void Show(Vector2 worldLocation)
         {
