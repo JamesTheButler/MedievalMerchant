@@ -1,10 +1,10 @@
 using System.Collections;
 using Common.Infrastructure;
 
-namespace Features.Tutorial.Onboarding.Logic
+namespace Features.Tutorial.Onboarding.Logic.Steps
 {
     public interface IOnboardingStep : IInitializable
     {
-        IEnumerator Run(OnboardingContext context);
+        IEnumerator Run(OnboardingController controller);
     }
 }

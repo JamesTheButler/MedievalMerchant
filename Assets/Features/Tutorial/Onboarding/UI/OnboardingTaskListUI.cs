@@ -13,11 +13,11 @@ namespace Features.Tutorial.Onboarding.UI
         [SerializeField, Required]
         public TMP_Text taskText;
 
-        private List<OnboardingTask> _tasks;
+        private IEnumerable<OnboardingTask> _tasks;
 
         private readonly Bindings _bindings = new();
 
-        public void SetUp(List<OnboardingTask> tasks)
+        public void SetUp(IEnumerable<OnboardingTask> tasks)
         {
             _tasks = tasks;
             RefreshTaskText();
@@ -30,6 +30,13 @@ namespace Features.Tutorial.Onboarding.UI
             }
         }
 
+        public void Clear()
+        {
+            _bindings.UnbindAll();
+            _tasks = new List<OnboardingTask>();
+            RefreshTaskText();
+        }
+        
         private void OnDestroy()
         {
             _bindings.UnbindAll();
