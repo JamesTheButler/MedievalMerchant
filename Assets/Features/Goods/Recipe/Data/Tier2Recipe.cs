@@ -3,7 +3,7 @@ using Common.Types;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Features.Goods.Config
+namespace Features.Goods.Recipe
 {
     [Serializable]
     public sealed class Tier2Recipe

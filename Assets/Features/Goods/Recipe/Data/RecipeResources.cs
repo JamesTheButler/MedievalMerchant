@@ -4,7 +4,7 @@ using Common.Types;
 using Common.Utility;
 using UnityEngine;
 
-namespace Features.Goods.Config
+namespace Features.Goods.Recipe.Data
 {
     [CreateAssetMenu(
         fileName = nameof(RecipeResources),
@@ -19,18 +19,18 @@ namespace Features.Goods.Config
 
         public IReadOnlyList<Tier3Recipe> Tier3Recipes => tier3Recipes;
 
-        private readonly Dictionary<Good, Recipe> _recipes = new();
+        private readonly Dictionary<Good, RecipeInfo> _recipes = new();
 
         public void Initialize()
         {
             _recipes.Clear();
             _recipes.AddValues(
-                tier2Recipes.Select(recipeData => new Recipe(recipeData.Result, recipeData.Component.AsArray())),
+                tier2Recipes.Select(recipeData => new RecipeInfo(recipeData.Result, recipeData.Component.AsArray())),
                 recipe => recipe.Result);
 
             _recipes.AddValues(
                 tier3Recipes.Select(recipeData =>
-                    new Recipe(recipeData.Result, new[] { recipeData.Component1, recipeData.Component2 })),
+                    new RecipeInfo(recipeData.Result, new[] { recipeData.Component1, recipeData.Component2 })),
                 recipe => recipe.Result);
         }
 
@@ -56,9 +56,9 @@ namespace Features.Goods.Config
             return tier3Recipes.FirstOrDefault(recipe => recipe.Result == result);
         }
 
-        public Recipe GetRecipe(Good good)
+        public RecipeInfo GetRecipe(Good good)
         {
-            return _recipes.TryGetValue(good, out var recipe) ? recipe : new Recipe(good);
+            return _recipes.TryGetValue(good, out var recipe) ? recipe : new RecipeInfo(good);
         }
     }
 }

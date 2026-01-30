@@ -1,7 +1,8 @@
 using System.Linq;
 using Common.Types;
+using Features.Goods.Recipe.Data;
 
-namespace Features.Goods.Config
+namespace Features.Goods.Recipe
 {
     public static class RecipeExtension
     {

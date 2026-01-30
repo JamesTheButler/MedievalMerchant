@@ -2,7 +2,7 @@ using System;
 using Common.Types;
 using UnityEngine;
 
-namespace Features.Goods.Config
+namespace Features.Goods.Recipe.Data
 {
     [Serializable]
     public sealed class RecipeConfigData
