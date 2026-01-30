@@ -17,6 +17,7 @@ namespace Features.Goods.Recipe.Data
         [SerializeField]
         private List<Tier3Recipe> tier3Recipes;
 
+        public IReadOnlyList<Tier2Recipe> Tier2Recipes => tier2Recipes;
         public IReadOnlyList<Tier3Recipe> Tier3Recipes => tier3Recipes;
 
         private readonly Dictionary<Good, RecipeInfo> _recipes = new();

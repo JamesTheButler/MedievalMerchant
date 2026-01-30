@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4200094753045236423}
+  - component: {fileID: 8039378628084297424}
   - component: {fileID: 4685852470185685141}
   m_Layer: 5
   m_Name: RecipePanelItem
@@ -39,6 +40,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 120, y: 73}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8039378628084297424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671402944881991142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d634cd6b6f406cbd9dfff02271e892, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Goods.Recipe.UI.RecipePanelItem
+  goodCell: {fileID: 3833683524535519245}
+  goodTitle: {fileID: 5633247139406011948}
+  tierIcon: {fileID: 1874779141923903263}
 --- !u!114 &4685852470185685141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,6 +442,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7137e8531ab370e48962ba0582fdd6bb, type: 3}
+--- !u!114 &3833683524535519245 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -9184146002547335584, guid: 7137e8531ab370e48962ba0582fdd6bb, type: 3}
+  m_PrefabInstance: {fileID: 3871020919449359981}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfdd97214b14cedb102210926049a2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5765123668850118565 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7330017870725814728, guid: 7137e8531ab370e48962ba0582fdd6bb, type: 3}
