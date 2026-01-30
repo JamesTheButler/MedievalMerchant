@@ -6,13 +6,17 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
     public sealed class OnboardingExplainerStep : IOnboardingStep
     {
         private readonly int _messageId;
+        
+        public OnboardingTask Task { get; }
 
-        public OnboardingExplainerStep(int messageId)
+        public OnboardingExplainerStep(int messageId, OnboardingTask task = null)
         {
             _messageId = messageId;
+            Task = task;
         }
 
         public void Initialize() { }
+
 
         public IEnumerator Run(OnboardingController controller)
         {

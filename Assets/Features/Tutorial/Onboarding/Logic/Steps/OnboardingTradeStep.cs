@@ -9,6 +9,7 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
 {
     public sealed class OnboardingTradeStep : IOnboardingStep
     {
+        public OnboardingTask Task { get; }
         private readonly TradeType _tradeType;
         private readonly Good _good;
         private readonly int _amount;
@@ -17,11 +18,12 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
 
         private TradeService _tradeService;
 
-        public OnboardingTradeStep(TradeType tradeType, Good good, int amount)
+        public OnboardingTradeStep(TradeType tradeType, Good good, int amount, OnboardingTask task = null)
         {
             _tradeType = tradeType;
             _good = good;
             _amount = amount;
+            Task = task;
         }
 
         public void Initialize()

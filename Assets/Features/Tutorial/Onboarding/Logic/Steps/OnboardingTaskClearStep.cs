@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEngine;
 
 namespace Features.Tutorial.Onboarding.Logic.Steps
 {
@@ -6,8 +7,16 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
     {
         public void Initialize() { }
 
+        public OnboardingTask Task { get; }
+
+        public OnboardingTaskClearStep(OnboardingTask task = null)
+        {
+            Task = task;
+        }
+
         public IEnumerator Run(OnboardingController controller)
         {
+            yield return new WaitForSeconds(1.5f);
             controller.ClearTasks();
             yield return null;
         }

@@ -5,11 +5,14 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
 {
     public sealed class OnboardingTaskStep : IOnboardingStep
     {
-        private readonly List<string> _tasks;
+        private readonly List<OnboardingTask> _tasks;
 
-        public OnboardingTaskStep(List<string> tasks)
+        public OnboardingTask Task { get; }
+
+        public OnboardingTaskStep(List<OnboardingTask> tasks, OnboardingTask task = null)
         {
             _tasks = tasks;
+            Task = task;
         }
 
         public void Initialize() { }

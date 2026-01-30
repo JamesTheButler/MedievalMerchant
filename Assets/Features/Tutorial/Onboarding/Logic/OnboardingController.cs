@@ -57,21 +57,25 @@ namespace Features.Tutorial.Onboarding.Logic
             _townB = model.Towns.Values.ElementAt(1);
 
             _onboardingResources = ResourceManager.Instance.OnboardingResources;
-            
+
+            var buyHayTask = new OnboardingTask($"Buy 15 Hay in {_townA.Name}");
+            var goToATask = new OnboardingTask($"Travel to {_townB.Name}");
+            var sellHayTask = new OnboardingTask($"Sell 15 Hay in {_townB.Name}");
+
             _steps = new List<IOnboardingStep>
             {
                 new OnboardingExplainerStep(0),
                 new OnboardingExplainerStep(1),
                 new OnboardingExplainerStep(2),
-                new OnboardingTaskStep(new List<string>
+                new OnboardingTaskStep(new List<OnboardingTask>
                 {
-                    $"Buy 15 Hay in {_townA.Name}",
-                    $"Travel to {_townB.Name}",
-                    $"Sell 15 Hay in {_townB.Name}",
+                    buyHayTask,
+                    goToATask,
+                    sellHayTask,
                 }),
-                new OnboardingTradeStep(TradeType.Buy, Good.T1Hay, 15),
-                new OnboardingTravelStep(_townB),
-                new OnboardingTradeStep(TradeType.Sell, Good.T1Hay, 15),
+                new OnboardingTradeStep(TradeType.Buy, Good.T1Hay, 15, buyHayTask),
+                new OnboardingTravelStep(_townB, goToATask),
+                new OnboardingTradeStep(TradeType.Sell, Good.T1Hay, 15, sellHayTask),
                 new OnboardingTaskClearStep(),
             };
         }
@@ -145,9 +149,9 @@ namespace Features.Tutorial.Onboarding.Logic
             uiBlinker.Hide();
         }
 
-        public void AddTasks(List<string> tasks)
+        public void AddTasks(List<OnboardingTask> tasks)
         {
-            taskListUI.SetUp(tasks.Select(taskMsg => new OnboardingTask(taskMsg)));
+            taskListUI.SetUp(tasks);
         }
 
         public void ClearTasks()
@@ -162,6 +166,7 @@ namespace Features.Tutorial.Onboarding.Logic
                 step.Initialize();
                 yield return step.Run(this);
                 step.CleanUp();
+                step.Task?.Complete();
                 yield return new WaitForSeconds(1f);
             }
         }
