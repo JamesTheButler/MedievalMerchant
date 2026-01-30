@@ -12,6 +12,7 @@ using Features.Trade.Haggling;
 using Features.Trade.Haggling.Data;
 using Features.Trade.UI;
 using Features.Tutorial.Data;
+using Features.Tutorial.Onboarding.Data;
 using NaughtyAttributes;
 using UnityEngine;
 using ConditionResources = Features.Levels.Conditions.Config.ConditionResources;
@@ -53,6 +54,9 @@ namespace Common.Infrastructure
         [field: SerializeField, Required]
         public GoodResources GoodResources { get; private set; }
 
+        [field: SerializeField, Required]
+        public OnboardingResources OnboardingResources { get; private set; }
+        
         [field: SerializeField, Required]
         public ProducerResources ProducerResources { get; private set; }
 

@@ -3,14 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AYellowpaper.SerializedCollections;
+using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Types;
 using Common.UI.Elements;
 using Features.Player.Caravan.UI;
 using Features.Towns;
 using Features.Towns.Production.UI;
-using Features.Towns.UI;
 using Features.Trade;
+using Features.Trade.UI;
+using Features.Tutorial.Onboarding.Data;
 using Features.Tutorial.Onboarding.Logic.Steps;
 using Features.Tutorial.Onboarding.UI;
 using NaughtyAttributes;
@@ -38,20 +40,24 @@ namespace Features.Tutorial.Onboarding.Logic
         [SerializeField, Required]
         private TownUIProductionSection townProducerUI;
 
-        [SerializeField]
-        private SerializedDictionary<int, string> explainerTexts;
+        [SerializeField, Required]
+        private TradeUI tradeUI;
 
         private Coroutine _tutorialCoroutine;
 
         private List<IOnboardingStep> _steps;
 
+        private OnboardingResources _onboardingResources;
         private Town _townA, _townB;
 
         public override void Initialize()
         {
-            _townA = GameplayContext.Instance.Model.Towns.Values.ElementAt(0);
-            _townB = GameplayContext.Instance.Model.Towns.Values.ElementAt(1);
+            var model = GameplayContext.Instance.Model;
+            _townA = model.Towns.Values.ElementAt(0);
+            _townB = model.Towns.Values.ElementAt(1);
 
+            _onboardingResources = ResourceManager.Instance.OnboardingResources;
+            
             _steps = new List<IOnboardingStep>
             {
                 new OnboardingExplainerStep(0),
@@ -82,7 +88,7 @@ namespace Features.Tutorial.Onboarding.Logic
 
         public void PostExplainer(int index, Action onNextClicked)
         {
-            var message = explainerTexts
+            var message = _onboardingResources.explainerTexts
                 .GetValueOrDefault(index, "Error")
                 .Replace("Town A", _townA.Name, StringComparison.InvariantCultureIgnoreCase)
                 .Replace("TownA", _townA.Name, StringComparison.InvariantCultureIgnoreCase)
