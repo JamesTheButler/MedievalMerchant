@@ -20,26 +20,6 @@ using UnityEngine;
 
 namespace Features.Tutorial.Onboarding.Logic
 {
-    public sealed class OnboardingStepSegment : IOnboardingStep
-    {
-        public OnboardingTask Task => null;
-
-        private IOnboardingStep[] _steps;
-
-        public OnboardingStepSegment(params IOnboardingStep[] steps)
-        {
-            _steps = steps;
-        }
-
-        public IEnumerator Run(OnboardingController controller)
-        {
-            return _steps.Select(step => step.Run(controller)).GetEnumerator();
-        }
-
-        public void Initialize() { }
-        public void CleanUp() { }
-    }
-
     public sealed class OnboardingController : InitializableBehavior
     {
         [SerializeField, Required]
@@ -65,13 +45,10 @@ namespace Features.Tutorial.Onboarding.Logic
 
         private Coroutine _tutorialCoroutine;
 
-        private List<IOnboardingStep> _steps;
-
         private OnboardingResources _onboardingResources;
         private PlayerModel _player;
         private Town _townA, _townB;
-
-        private int _explainerIndex;
+        private OnboardingSequence _onboardingSequence;
 
         public override void Initialize()
         {
@@ -82,73 +59,13 @@ namespace Features.Tutorial.Onboarding.Logic
 
             _onboardingResources = ResourceManager.Instance.OnboardingResources;
 
-            _steps = new List<IOnboardingStep>
-            {
-                HayDeliverySegment(),
-                BerryPickerSegment(),
-                GameSpeedControlsSegment(),
-
-                new OnboardingExplainerStep(),
-                new OnboardingExplainerStep(),
-            };
-        }
-
-        private OnboardingStepSegment HayDeliverySegment()
-        {
-            var buyHayTask = new OnboardingTask($"Buy 15 Hay in {_townA.Name}");
-            var goToATask = new OnboardingTask($"Travel to {_townB.Name}");
-            var sellHayTask = new OnboardingTask($"Sell 15 Hay in {_townB.Name}");
-
-            var deliverHaySegment = new OnboardingStepSegment(
-                new OnboardingExplainerStep(),
-                new OnboardingExplainerStep(),
-                new OnboardingExplainerStep(),
-                new OnboardingTaskStep(buyHayTask, goToATask, sellHayTask),
-                new OnboardingTradeStep(TradeType.Buy, Good.T1Hay, 15, buyHayTask),
-                new OnboardingTravelStep(_townB, goToATask),
-                new OnboardingTradeStep(TradeType.Sell, Good.T1Hay, 15, sellHayTask),
-                new OnboardingTaskClearStep()
-            );
-            return deliverHaySegment;
-        }
-
-        private OnboardingStepSegment BerryPickerSegment()
-        {
-            var buildBerryPickerTask = new OnboardingTask($"Build berry picker in {_townB.Name}");
-
-            var buildBerryPickerSegment = new OnboardingStepSegment(
-                new OnboardingExplainerStep(),
-                new SimpleOnboardingStep(() =>
-                {
-                    _townA.DevelopmentManager.AddDevelopmentChange(100);
-                    _player.Inventory.Funds.Value = 505f;
-                }),
-                new OnboardingExplainerStep(),
-                new OnboardingExplainerStep(),
-                new OnboardingTaskStep(buildBerryPickerTask),
-                new OnboardingBuildProducerStep(_townB, Good.T1Berries, buildBerryPickerTask),
-                new SimpleOnboardingStep(() =>
-                {
-                    var berryCount = _townB.Inventory.Get(Good.T1Berries);
-                    _townB.Inventory.AddGood(Good.T1Berries, 20 - berryCount);
-                }),
-                new OnboardingTaskClearStep()
-            );
-            return buildBerryPickerSegment;
-        }
-
-        private static OnboardingStepSegment GameSpeedControlsSegment()
-        {
-            var pauseGameTask = new OnboardingTask("Pause the game [Space]");
-            var speedUpGameTask = new OnboardingTask("Set the game speed to fast [F2]");
-
-            return new OnboardingStepSegment(
-                new OnboardingExplainerStep(),
-                new OnboardingExplainerStep(),
-                new OnboardingTaskStep(pauseGameTask, speedUpGameTask),
-                new OnboardingResumeGameTask(pauseGameTask),
-                new OnboardingSetGameSpeedTask(speedUpGameTask),
-                new OnboardingTaskClearStep()
+            _onboardingSequence = new OnboardingSequence(
+                IntroSequence(),
+                HayDeliverySequence(),
+                BerryPickerSequence(),
+                GameSpeedControlsSequence(),
+                BerryDeliverySequence(),
+                FinishOnboardingSequence()
             );
         }
 
@@ -159,20 +76,19 @@ namespace Features.Tutorial.Onboarding.Logic
                 StopCoroutine(_tutorialCoroutine);
             }
 
-            _tutorialCoroutine = StartCoroutine(RunTutorial(_steps));
+            _tutorialCoroutine = StartCoroutine(_onboardingSequence.Run(this));
         }
 
-        public void PostExplainer(Action onNextClicked)
+        public void PostExplainer(int explainerIndex, Action onNextClicked)
         {
             var message = _onboardingResources.explainerTexts
-                .GetValueOrDefault(_explainerIndex, "Error")
+                .GetValueOrDefault(explainerIndex, "Error")
                 .Replace("Town A", _townA.Name, StringComparison.InvariantCultureIgnoreCase)
                 .Replace("TownA", _townA.Name, StringComparison.InvariantCultureIgnoreCase)
                 .Replace("Town B", _townB.Name, StringComparison.InvariantCultureIgnoreCase)
                 .Replace("TownB", _townB.Name, StringComparison.InvariantCultureIgnoreCase);
 
             explainerUI.Show(message, onNextClicked);
-            _explainerIndex++;
         }
 
         public void HideExplainer()
@@ -232,16 +148,120 @@ namespace Features.Tutorial.Onboarding.Logic
             taskListUI.Clear();
         }
 
-        private IEnumerator RunTutorial(IEnumerable<IOnboardingStep> steps)
+        #region Sequences
+
+        private static OnboardingSequence IntroSequence()
         {
-            foreach (var step in steps)
-            {
-                step.Initialize();
-                yield return step.Run(this);
-                step.CleanUp();
-                step.Task?.Complete();
-                yield return new WaitForSeconds(1f);
-            }
+            var mapModeTask = new OnboardingTask("Press [F2] to change the map overlay");
+            return new OnboardingSequence(
+                new OnboardingExplainerStep(0), // 0
+                new OnboardingExplainerStep(1),
+                new OnboardingTaskStep(mapModeTask),
+                new OnboardingMapOverlayStep(mapModeTask),
+                new OnboardingTaskClearStep()
+            );
         }
+
+        private OnboardingSequence HayDeliverySequence()
+        {
+            var buyHayTask = new OnboardingTask($"Buy 15 Hay in {_townA.Name}");
+            var goToATask = new OnboardingTask($"Travel to {_townB.Name}");
+            var sellHayTask = new OnboardingTask($"Sell 15 Hay in {_townB.Name}");
+
+            return new OnboardingSequence(
+                new OnboardingExplainerStep(2), //3
+                new OnboardingTaskStep(buyHayTask, goToATask, sellHayTask),
+                new OnboardingTradeStep(TradeType.Buy, Good.T1Hay, 15, buyHayTask),
+                new OnboardingTravelStep(_townB, goToATask),
+                new OnboardingTradeStep(TradeType.Sell, Good.T1Hay, 15, sellHayTask),
+                new OnboardingTaskClearStep()
+            );
+        }
+
+        private OnboardingSequence BerryPickerSequence()
+        {
+            var buildBerryPickerTask = new OnboardingTask($"Build berry picker in {_townB.Name}");
+
+            var buildBerryPickerSequence = new OnboardingSequence(
+                new OnboardingExplainerStep(3),
+                new SimpleOnboardingStep(() =>
+                {
+                    _townA.DevelopmentManager.AddDevelopmentChange(100);
+                    _player.Inventory.Funds.Value = 505f;
+                }),
+                new OnboardingExplainerStep(4),
+                new OnboardingExplainerStep(5),
+                new OnboardingTaskStep(buildBerryPickerTask),
+                new OnboardingBuildProducerStep(_townB, Good.T1Berries, buildBerryPickerTask),
+                new SimpleOnboardingStep(() =>
+                {
+                    var berryCount = _townB.Inventory.Get(Good.T1Berries);
+                    _townB.Inventory.AddGood(Good.T1Berries, 20 - berryCount);
+                }),
+                new OnboardingTaskClearStep()
+            );
+            return buildBerryPickerSequence;
+        }
+
+        private static OnboardingSequence GameSpeedControlsSequence()
+        {
+            var pauseGameTask = new OnboardingTask("Pause the game [Space]");
+            var speedUpGameTask = new OnboardingTask("Set the game speed to fast [F2]");
+
+            return new OnboardingSequence(
+                new OnboardingExplainerStep(6),
+                new OnboardingExplainerStep(7),
+                new OnboardingTaskStep(pauseGameTask, speedUpGameTask),
+                new OnboardingResumeGameStep(pauseGameTask),
+                new OnboardingSetGameSpeedTask(speedUpGameTask),
+                new OnboardingTaskClearStep()
+            );
+        }
+
+        private OnboardingSequence BerryDeliverySequence()
+        {
+            const int berryCount = 30;
+            const int gameCount = 20;
+            var upgradeCartTask = new OnboardingTask("Upgrade your cart to tier II.");
+            var buyBerriesTask = new OnboardingTask($"Buy {berryCount} berries in {_townB.Name}.");
+            var buyGameTask = new OnboardingTask($"Buy {gameCount} wild game in {_townB.Name}.");
+            var goToATask = new OnboardingTask($"Travel to {_townA.Name}.");
+            var sellBerriesTask = new OnboardingTask($"Sell 30 berries in {_townA.Name}.");
+            var sellGameTask = new OnboardingTask($"Sell 20 wild game in {_townA.Name}.");
+
+            return new OnboardingSequence(
+                new OnboardingExplainerStep(8),
+                new OnboardingExplainerStep(9),
+                new OnboardingTaskStep(
+                    upgradeCartTask,
+                    buyBerriesTask,
+                    buyGameTask,
+                    goToATask,
+                    sellBerriesTask,
+                    sellGameTask),
+                new OnboardingTradeStep(TradeType.Buy, Good.T1Berries, berryCount, buyBerriesTask),
+                new OnboardingTradeStep(TradeType.Buy, Good.T1WildGame, gameCount, buyBerriesTask),
+                new OnboardingTravelStep(_townA, goToATask),
+                new OnboardingTradeStep(TradeType.Sell, Good.T1Berries, berryCount, sellBerriesTask),
+                new OnboardingTradeStep(TradeType.Sell, Good.T1WildGame, gameCount, sellBerriesTask),
+                new OnboardingTaskClearStep()
+            );
+        }
+
+        private OnboardingSequence FinishOnboardingSequence()
+        {
+            var townUpgradeTask = new OnboardingTask($"Upgrade {_townA.Name} to tier II.");
+
+            return new OnboardingSequence(
+                new OnboardingExplainerStep(10),
+                new OnboardingExplainerStep(11),
+                new OnboardingExplainerStep(12),
+                new OnboardingTaskStep(townUpgradeTask),
+                new OnboardingTownUpgradeStep(_townA, Tier.Tier2, townUpgradeTask),
+                new OnboardingTaskClearStep()
+            );
+        }
+
+        #endregion
     }
 }

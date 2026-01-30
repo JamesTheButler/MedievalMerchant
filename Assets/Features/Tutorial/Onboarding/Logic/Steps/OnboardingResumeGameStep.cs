@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace Features.Tutorial.Onboarding.Logic.Steps
 {
-    public sealed class OnboardingResumeGameTask : IOnboardingStep
+    public sealed class OnboardingResumeGameStep : IOnboardingStep
     {
         public OnboardingTask Task { get; }
 
         private GameSpeedModel _gameSpeedModel;
 
-        public OnboardingResumeGameTask(OnboardingTask task)
+        public OnboardingResumeGameStep(OnboardingTask task)
         {
             Task = task;
         }
