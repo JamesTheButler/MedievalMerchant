@@ -1,25 +1,24 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Features.Tutorial.Onboarding.Logic.Steps
 {
-    public sealed class OnboardingTaskStep : IOnboardingStep
+    public sealed class SimpleOnboardingStep : IOnboardingStep
     {
-        private readonly List<OnboardingTask> _tasks;
+        private readonly Action _action;
 
         public OnboardingTask Task => null;
 
-        public OnboardingTaskStep(params OnboardingTask[] tasks)
+        public SimpleOnboardingStep(Action action)
         {
-            _tasks = tasks.ToList();
+            _action = action;
         }
 
         public void Initialize() { }
 
         public IEnumerator Run(OnboardingController controller)
         {
-            controller.AddTasks(_tasks);
+            _action?.Invoke();
             yield return null;
         }
 

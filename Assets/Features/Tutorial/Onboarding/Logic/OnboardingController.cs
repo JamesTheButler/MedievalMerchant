@@ -2,12 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using AYellowpaper.SerializedCollections;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Types;
 using Common.UI.Elements;
 using Features.Player.Caravan.UI;
+using Features.Player.Logic;
 using Features.Towns;
 using Features.Towns.Production.UI;
 using Features.Trade;
@@ -20,6 +20,26 @@ using UnityEngine;
 
 namespace Features.Tutorial.Onboarding.Logic
 {
+    public sealed class OnboardingStepSegment : IOnboardingStep
+    {
+        public OnboardingTask Task => null;
+
+        private IOnboardingStep[] _steps;
+
+        public OnboardingStepSegment(params IOnboardingStep[] steps)
+        {
+            _steps = steps;
+        }
+
+        public IEnumerator Run(OnboardingController controller)
+        {
+            return _steps.Select(step => step.Run(controller)).GetEnumerator();
+        }
+
+        public void Initialize() { }
+        public void CleanUp() { }
+    }
+
     public sealed class OnboardingController : InitializableBehavior
     {
         [SerializeField, Required]
@@ -48,36 +68,88 @@ namespace Features.Tutorial.Onboarding.Logic
         private List<IOnboardingStep> _steps;
 
         private OnboardingResources _onboardingResources;
+        private PlayerModel _player;
         private Town _townA, _townB;
+
+        private int _explainerIndex;
 
         public override void Initialize()
         {
             var model = GameplayContext.Instance.Model;
+            _player = model.Player;
             _townA = model.Towns.Values.ElementAt(0);
             _townB = model.Towns.Values.ElementAt(1);
 
             _onboardingResources = ResourceManager.Instance.OnboardingResources;
 
+            _steps = new List<IOnboardingStep>
+            {
+                HayDeliverySegment(),
+                BerryPickerSegment(),
+                GameSpeedControlsSegment(),
+
+                new OnboardingExplainerStep(),
+                new OnboardingExplainerStep(),
+            };
+        }
+
+        private OnboardingStepSegment HayDeliverySegment()
+        {
             var buyHayTask = new OnboardingTask($"Buy 15 Hay in {_townA.Name}");
             var goToATask = new OnboardingTask($"Travel to {_townB.Name}");
             var sellHayTask = new OnboardingTask($"Sell 15 Hay in {_townB.Name}");
 
-            _steps = new List<IOnboardingStep>
-            {
-                new OnboardingExplainerStep(0),
-                new OnboardingExplainerStep(1),
-                new OnboardingExplainerStep(2),
-                new OnboardingTaskStep(new List<OnboardingTask>
-                {
-                    buyHayTask,
-                    goToATask,
-                    sellHayTask,
-                }),
+            var deliverHaySegment = new OnboardingStepSegment(
+                new OnboardingExplainerStep(),
+                new OnboardingExplainerStep(),
+                new OnboardingExplainerStep(),
+                new OnboardingTaskStep(buyHayTask, goToATask, sellHayTask),
                 new OnboardingTradeStep(TradeType.Buy, Good.T1Hay, 15, buyHayTask),
                 new OnboardingTravelStep(_townB, goToATask),
                 new OnboardingTradeStep(TradeType.Sell, Good.T1Hay, 15, sellHayTask),
-                new OnboardingTaskClearStep(),
-            };
+                new OnboardingTaskClearStep()
+            );
+            return deliverHaySegment;
+        }
+
+        private OnboardingStepSegment BerryPickerSegment()
+        {
+            var buildBerryPickerTask = new OnboardingTask($"Build berry picker in {_townB.Name}");
+
+            var buildBerryPickerSegment = new OnboardingStepSegment(
+                new OnboardingExplainerStep(),
+                new SimpleOnboardingStep(() =>
+                {
+                    _townA.DevelopmentManager.AddDevelopmentChange(100);
+                    _player.Inventory.Funds.Value = 505f;
+                }),
+                new OnboardingExplainerStep(),
+                new OnboardingExplainerStep(),
+                new OnboardingTaskStep(buildBerryPickerTask),
+                new OnboardingBuildProducerStep(_townB, Good.T1Berries, buildBerryPickerTask),
+                new SimpleOnboardingStep(() =>
+                {
+                    var berryCount = _townB.Inventory.Get(Good.T1Berries);
+                    _townB.Inventory.AddGood(Good.T1Berries, 20 - berryCount);
+                }),
+                new OnboardingTaskClearStep()
+            );
+            return buildBerryPickerSegment;
+        }
+
+        private static OnboardingStepSegment GameSpeedControlsSegment()
+        {
+            var pauseGameTask = new OnboardingTask("Pause the game [Space]");
+            var speedUpGameTask = new OnboardingTask("Set the game speed to fast [F2]");
+
+            return new OnboardingStepSegment(
+                new OnboardingExplainerStep(),
+                new OnboardingExplainerStep(),
+                new OnboardingTaskStep(pauseGameTask, speedUpGameTask),
+                new OnboardingResumeGameTask(pauseGameTask),
+                new OnboardingSetGameSpeedTask(speedUpGameTask),
+                new OnboardingTaskClearStep()
+            );
         }
 
         public void StartTutorial()
@@ -90,16 +162,17 @@ namespace Features.Tutorial.Onboarding.Logic
             _tutorialCoroutine = StartCoroutine(RunTutorial(_steps));
         }
 
-        public void PostExplainer(int index, Action onNextClicked)
+        public void PostExplainer(Action onNextClicked)
         {
             var message = _onboardingResources.explainerTexts
-                .GetValueOrDefault(index, "Error")
+                .GetValueOrDefault(_explainerIndex, "Error")
                 .Replace("Town A", _townA.Name, StringComparison.InvariantCultureIgnoreCase)
                 .Replace("TownA", _townA.Name, StringComparison.InvariantCultureIgnoreCase)
                 .Replace("Town B", _townB.Name, StringComparison.InvariantCultureIgnoreCase)
                 .Replace("TownB", _townB.Name, StringComparison.InvariantCultureIgnoreCase);
 
             explainerUI.Show(message, onNextClicked);
+            _explainerIndex++;
         }
 
         public void HideExplainer()
