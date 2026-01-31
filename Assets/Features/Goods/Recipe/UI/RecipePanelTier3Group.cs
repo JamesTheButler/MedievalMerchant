@@ -8,7 +8,7 @@ namespace Features.Goods.Recipe.UI
     {
         [SerializeField, Required]
         private RecipePanelItem tier1ItemA, tier2ItemA, tier1ItemB, tier2ItemB, tier3Item;
-
+        
         public void Setup(Good tier1GoodA, Good tier2GoodA, Good tier1GoodB, Good tier2GoodB, Good tier3Good)
         {
             tier1ItemA.Setup(tier1GoodA);

@@ -29,16 +29,12 @@ namespace Features.Cheats
             EventSystem.current.SetSelectedGameObject(gameObject);
             cheatInput.ActivateInputField();
             cheatInput.Select();
-            var playerInput = FindAnyObjectByType<PlayerInput>();
-            playerInput.SwitchCurrentActionMap(ActionMap.UI);
         }
 
         protected override void OnClose()
         {
             gameObject.SetActive(false);
             cheatInput.text = string.Empty;
-            var playerInput = FindAnyObjectByType<PlayerInput>();
-            playerInput.SwitchCurrentActionMap(ActionMap.Gameplay);
         }
 
         public void ConfirmInput(InputAction.CallbackContext context)

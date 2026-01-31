@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 7046697428895930061}
   - component: {fileID: 194592059522898218}
   - component: {fileID: 8229048895739729844}
+  - component: {fileID: 5115092928642985075}
   m_Layer: 5
   m_Name: FeedbackForm
   m_TagString: Untagged
@@ -235,6 +236,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Features.Audio.PanelSfxTrigger
   panel: {fileID: 7046697428895930061}
+--- !u!114 &5115092928642985075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305228323508372140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680e1f2d799747f3a43620a3a78588cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.DynamicPanelInputBlocker
+  dynamicPanel: {fileID: 7046697428895930061}
 --- !u!1 &6349627639181986601
 GameObject:
   m_ObjectHideFlags: 0

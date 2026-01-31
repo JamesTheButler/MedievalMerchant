@@ -1,7 +1,9 @@
 using Common.Types;
 using Common.UI.Elements;
+using Common.UI.Utility;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Features.Goods.Recipe.UI
 {
@@ -13,13 +15,23 @@ namespace Features.Goods.Recipe.UI
         [SerializeField, Required]
         private RecipePanelTier3Section tier3Section;
 
+        [SerializeField, Required]
+        private Button tierSelectorButton;
+
         private Tier? _selectedTier;
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
             SetUpRecipes();
+            tierSelectorButton.onClick.AddListener(OnTierSelectorClicked);
+
             SetTier(Tier.Tier2);
+        }
+
+        private void OnTierSelectorClicked()
+        {
+            SetTier(_selectedTier == Tier.Tier3 ? Tier.Tier2 : Tier.Tier3);
         }
 
         protected override void OnOpen()
@@ -42,6 +54,7 @@ namespace Features.Goods.Recipe.UI
         {
             if (_selectedTier == tier) return;
 
+            tierSelectorButton.GetText().text = tier.ToDisplayString();
             tier2Section.gameObject.SetActive(tier == Tier.Tier2);
             tier3Section.gameObject.SetActive(tier == Tier.Tier3);
 

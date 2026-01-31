@@ -16,10 +16,10 @@ namespace Features.Settings.UI
         private string startScene;
 
         [SerializeField]
-        private UnityEvent giveUpPressed, feedbackButtonPressed;
+        private UnityEvent giveUpPressed;
 
         [SerializeField, Required]
-        private Button giveUpButton, feedbackButton, cancelButton;
+        private Button giveUpButton, cancelButton;
 
         [SerializeField, Required]
         private TMP_Text feedbackReceivedText;
@@ -32,7 +32,6 @@ namespace Features.Settings.UI
 
             cancelButton.onClick.AddListener(Close);
             giveUpButton.onClick.AddListener(GiveUp);
-            feedbackButton.onClick.AddListener(ReportBug);
         }
 
         private void OnFeedbackPosted()
@@ -53,11 +52,6 @@ namespace Features.Settings.UI
             _feedbackService.FeedbackPosted -= OnFeedbackPosted;
 
             gameObject.SetActive(false);
-        }
-
-        private void ReportBug()
-        {
-            feedbackButtonPressed.Invoke();
         }
 
         private void GiveUp()

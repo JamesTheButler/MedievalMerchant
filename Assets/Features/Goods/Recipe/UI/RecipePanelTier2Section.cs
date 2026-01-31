@@ -13,7 +13,7 @@ namespace Features.Goods.Recipe.UI
     public sealed class RecipePanelTier2Section : MonoBehaviour
     {
         [SerializeField, Required]
-        private GameObject rootObject, groupContainer;
+        private GameObject groupContainer;
 
         [SerializeField, Required]
         private RecipePanelTier2RegionGroup groupPrefab;

@@ -159,11 +159,7 @@ MonoBehaviour:
   giveUpPressed:
     m_PersistentCalls:
       m_Calls: []
-  feedbackButtonPressed:
-    m_PersistentCalls:
-      m_Calls: []
   giveUpButton: {fileID: 8783602621973422606}
-  feedbackButton: {fileID: 6102326299991809414}
   cancelButton: {fileID: 484095111236749311}
   feedbackReceivedText: {fileID: 6353102029250090476}
 --- !u!114 &8029433708494015614
@@ -640,6 +636,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3804264420171853399, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
     - {fileID: 1677941817678281389, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
@@ -681,17 +689,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4806721880360077881, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
   m_PrefabInstance: {fileID: 443988522778118791}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6102326299991809414 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-  m_PrefabInstance: {fileID: 443988522778118791}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1800383782961840061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1830171048242747274
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1035,7 +1032,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5946594589157840641, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
