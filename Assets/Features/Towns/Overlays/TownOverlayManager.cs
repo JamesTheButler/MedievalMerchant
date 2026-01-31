@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Common.Infrastructure.Gameplay;
 using Common.UI.Elements;
-using Features.Map;
 using Features.Map.Modes;
 using NaughtyAttributes;
 using UnityEngine;

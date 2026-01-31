@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Types;
 using Common.Utility;
-using Features.Map;
 using Features.Map.Tiling;
 using Features.Map.Zones;
 using Features.Towns.Flags.Logic;

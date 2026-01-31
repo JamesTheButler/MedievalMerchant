@@ -1,8 +1,6 @@
 using System.Collections;
 using Common.Infrastructure.Gameplay;
 using Features.Map.Modes;
-using Features.Ticking.Logic;
-using UnityEditor.TerrainTools;
 using UnityEngine;
 
 namespace Features.Tutorial.Onboarding.Logic.Steps

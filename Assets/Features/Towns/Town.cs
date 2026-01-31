@@ -6,7 +6,6 @@ using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Common.Types;
 using Common.Utility;
-using Features.Goods.Config;
 using Features.Goods.Recipe.Data;
 using Features.Inventory;
 using Features.Map.Tiling;

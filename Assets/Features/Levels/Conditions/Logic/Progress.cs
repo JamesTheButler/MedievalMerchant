@@ -1,6 +1,5 @@
 using System;
 using Common.Infrastructure.Observation;
-using UnityEngine;
 
 namespace Features.Levels.Conditions.Logic
 {

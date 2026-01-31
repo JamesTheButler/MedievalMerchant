@@ -1,5 +1,4 @@
 using Common.Infrastructure.Gameplay;
-using Common.Types;
 using Features.Levels.GameModifiers.Effects.Data;
 using Features.Levels.GameModifiers.Logic;
 using UnityEngine;

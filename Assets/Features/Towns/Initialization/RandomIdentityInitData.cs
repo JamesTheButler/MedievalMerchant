@@ -1,6 +1,5 @@
 using System;
 using Common.Infrastructure;
-using Features.Towns.Flags.Logic;
 
 namespace Features.Towns.Initialization
 {

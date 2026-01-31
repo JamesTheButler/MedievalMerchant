@@ -8,7 +8,6 @@ using Common.UI.Elements;
 using Common.UI.Utility;
 using Common.Utility;
 using Features.Goods;
-using Features.Goods.Config;
 using Features.Goods.Recipe.Data;
 using Features.Player.Logic;
 using Features.Towns.Production.Config;
