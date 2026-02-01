@@ -21,6 +21,15 @@ namespace Features.Tutorial.Onboarding.Logic
 {
     public sealed class OnboardingController : InitializableBehavior
     {
+        [field: SerializeField, Required]
+        public CaravanPanelUI CaravanPanelUI { get; private set; }
+
+        [field: SerializeField, Required]
+        public TownUIProductionSection TownProducerUI { get; private set; }
+
+        [field: SerializeField, Required]
+        public TradeUI TradeUI { get; private set; }
+
         [SerializeField, Required]
         private OnboardingExplainerUI explainerUI;
 
@@ -32,15 +41,6 @@ namespace Features.Tutorial.Onboarding.Logic
 
         [SerializeField, Required]
         private OnboardingTaskListUI taskListUI;
-
-        [SerializeField, Required]
-        private CaravanPanelUI caravanPanelUI;
-
-        [SerializeField, Required]
-        private TownUIProductionSection townProducerUI;
-
-        [SerializeField, Required]
-        private TradeUI tradeUI;
 
         private Coroutine _tutorialCoroutine;
 
@@ -97,7 +97,7 @@ namespace Features.Tutorial.Onboarding.Logic
 
         public void BlinkPlayerInventoryCell(Good good)
         {
-            var cell = caravanPanelUI
+            var cell = CaravanPanelUI
                 .GetComponentsInChildren<GoodCell>()
                 .FirstOrDefault(cell => cell.Good == good);
 
@@ -109,7 +109,7 @@ namespace Features.Tutorial.Onboarding.Logic
 
         public void BlinkTownProducerCell(Good good)
         {
-            var cell = townProducerUI
+            var cell = TownProducerUI
                 .GetComponentsInChildren<ProductionCell>()
                 .FirstOrDefault(cell => cell.Good == good);
 
@@ -119,7 +119,7 @@ namespace Features.Tutorial.Onboarding.Logic
             Blink(cell.GetComponent<RectTransform>());
         }
 
-        private void Blink(RectTransform targetTransform)
+        public void Blink(RectTransform targetTransform)
         {
             mapBlinker.Hide();
             uiBlinker.Show(targetTransform);
@@ -128,7 +128,7 @@ namespace Features.Tutorial.Onboarding.Logic
         public void Blink(Town town)
         {
             uiBlinker.Hide();
-            mapBlinker.Show(town.WorldLocation);
+            mapBlinker.Show(town.WorldLocation + new Vector2(.5f, .5f));
         }
 
         public void HideBlinker()
@@ -170,9 +170,9 @@ namespace Features.Tutorial.Onboarding.Logic
             return new OnboardingSequence(
                 new OnboardingExplainerStep(2), //3
                 new OnboardingTaskStep(buyHayTask, goToATask, sellHayTask),
-                new OnboardingTradeStep(TradeType.Buy, Good.T1Hay, 15, buyHayTask),
+                new OnboardingTradeStep(TradeType.Buy, Good.T1Hay, 15, _townA, buyHayTask),
                 new OnboardingTravelStep(_townB, goToATask),
-                new OnboardingTradeStep(TradeType.Sell, Good.T1Hay, 15, sellHayTask),
+                new OnboardingTradeStep(TradeType.Sell, Good.T1Hay, 15, _townB, sellHayTask),
                 new OnboardingTaskClearStep()
             );
         }
@@ -238,11 +238,11 @@ namespace Features.Tutorial.Onboarding.Logic
                     goToATask,
                     sellBerriesTask,
                     sellGameTask),
-                new OnboardingTradeStep(TradeType.Buy, Good.T1Berries, berryCount, buyBerriesTask),
-                new OnboardingTradeStep(TradeType.Buy, Good.T1WildGame, gameCount, buyBerriesTask),
+                new OnboardingTradeStep(TradeType.Buy, Good.T1Berries, berryCount, _townA, buyBerriesTask),
+                new OnboardingTradeStep(TradeType.Buy, Good.T1WildGame, gameCount, _townA, buyBerriesTask),
                 new OnboardingTravelStep(_townA, goToATask),
-                new OnboardingTradeStep(TradeType.Sell, Good.T1Berries, berryCount, sellBerriesTask),
-                new OnboardingTradeStep(TradeType.Sell, Good.T1WildGame, gameCount, sellBerriesTask),
+                new OnboardingTradeStep(TradeType.Sell, Good.T1Berries, berryCount, _townB, sellBerriesTask),
+                new OnboardingTradeStep(TradeType.Sell, Good.T1WildGame, gameCount, _townB, sellBerriesTask),
                 new OnboardingTaskClearStep()
             );
         }
