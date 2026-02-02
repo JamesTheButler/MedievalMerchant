@@ -1,6 +1,7 @@
 using System.Collections;
 using Common.Infrastructure.Gameplay;
 using Common.Types;
+using Common.UI.Elements;
 using Features.Towns;
 using Features.Trade;
 using Features.Trade.Logic;
@@ -37,82 +38,45 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
 
         public IEnumerator Run(OnboardingController controller)
         {
-            if (_tradeType == TradeType.Buy)
+            while (_tradedAmount < _amount)
             {
-                while (_tradedAmount < _amount)
+                controller.Blink(_town);
+
+                yield return new WaitUntil(() => controller.TownUI.IsOpen);
+
+                while (true)
                 {
-                    controller.Blink(_town);
-
-                    yield return new WaitUntil(() => controller.TownUI.IsOpen);
-
-                    while (true)
-                    {
-                        if (!controller.TownUI.IsOpen)
-                            break;
-
-                        // wait so that ui can be fully inflated (otherwise cell size is 0,0)
-                        yield return new WaitForEndOfFrame();
-
-                        var cell = controller.TownProducerUI.GetCell(_good);
-                        if (!cell)
-                        {
-                            Debug.LogError($"Could not find cell for good '{_good}'.");
-                            continue;
-                        }
-
-                        controller.Blink(cell);
-
-                        yield return new WaitUntil(() => controller.TradeUI.IsOpen);
-
+                    if (!controller.TownUI.IsOpen)
                         break;
+
+                    // wait so that ui can be fully inflated (otherwise cell size is 0,0)
+                    yield return new WaitForEndOfFrame();
+
+                    GoodCell cell = _tradeType == TradeType.Buy
+                        ? controller.TownProducerUI.GetCell(_good)
+                        : controller.CaravanPanelUI.GetCell(_good);
+
+                    if (!cell)
+                    {
+                        Debug.LogError($"Could not find cell for good '{_good}'.");
+                        continue;
                     }
 
-                    if (!controller.TradeUI.IsOpen)
-                        continue;
+                    controller.Blink(cell);
 
-                    controller.Blink(controller.TradeUI.TradeButton);
+                    yield return new WaitUntil(() => controller.TradeUI.IsOpen);
 
-                    yield return new WaitUntil(() => !controller.TradeUI.IsOpen);
+                    break;
                 }
+
+                if (!controller.TradeUI.IsOpen)
+                    continue;
+
+                controller.Blink(controller.TradeUI.TradeButton);
+
+                yield return new WaitUntil(() => !controller.TradeUI.IsOpen);
             }
-            else
-            {
-                while (_tradedAmount < _amount)
-                {
-                    controller.Blink(_town);
 
-                    yield return new WaitUntil(() => controller.TownUI.IsOpen);
-
-                    while (true)
-                    {
-                        if (!controller.TownUI.IsOpen)
-                            break;
-
-                        // wait so that ui can be fully inflated (otherwise cell size is 0,0)
-                        yield return new WaitForEndOfFrame();
-
-                        var cell = controller.CaravanPanelUI.GetCell(_good);
-                        if (!cell)
-                        {
-                            Debug.LogError($"Could not find cell for good '{_good}'.");
-                            continue;
-                        }
-
-                        controller.Blink(cell);
-
-                        yield return new WaitUntil(() => controller.TradeUI.IsOpen);
-
-                        break;
-                    }
-
-                    if (!controller.TradeUI.IsOpen)
-                        continue;
-
-                    controller.Blink(controller.TradeUI.TradeButton);
-
-                    yield return new WaitUntil(() => !controller.TradeUI.IsOpen);
-                }
-            }
 
             controller.HideBlinker();
         }

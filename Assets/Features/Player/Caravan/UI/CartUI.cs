@@ -25,8 +25,11 @@ namespace Features.Player.Caravan.UI
         [SerializeField, Required]
         private GameObject unlockedParent;
 
+        [field: SerializeField, Required]
+        public Button UpgradeButton { get; private set; }
+
         [SerializeField, Required]
-        private Button unlockButton, upgradeButton;
+        private Button unlockButton;
 
         [SerializeField, Required]
         private Image backgroundImage, cartImage;
@@ -72,7 +75,7 @@ namespace Features.Player.Caravan.UI
 
             _player.Inventory.Funds.Observe(OnPlayerFundsChanged);
 
-            upgradeButton.onClick.AddListener(() =>
+            UpgradeButton.onClick.AddListener(() =>
             {
                 upgradeAction.Invoke();
                 cartUpgradeTooltip.SetData(_cart);
@@ -123,7 +126,7 @@ namespace Features.Player.Caravan.UI
 
         private void OnPlayerFundsChanged(float funds)
         {
-            upgradeButton.interactable = _cart.UpgradeCost <= funds;
+            UpgradeButton.interactable = _cart.UpgradeCost <= funds;
         }
 
         private void SetLocked(bool isLocked)
@@ -142,7 +145,7 @@ namespace Features.Player.Caravan.UI
         private void OnLevelChanged(int level)
         {
             SetLocked(level <= 0);
-            upgradeButton.gameObject.SetActive(level < CaravanConfig.MaxLevel);
+            UpgradeButton.gameObject.SetActive(level < CaravanConfig.MaxLevel);
             UpdateCartImage();
             var sprite = _caravanResources.TierIcons.GetValueOrDefault(level, null);
             tierIcon.sprite = sprite;

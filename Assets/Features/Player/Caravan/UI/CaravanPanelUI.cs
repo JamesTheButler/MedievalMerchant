@@ -76,6 +76,16 @@ namespace Features.Player.Caravan.UI
             PopupManager.Instance.HideActive();
         }
 
+        public InventoryCell GetCell(Good good)
+        {
+            return _occupiedCells.GetValueOrDefault(good);
+        }
+
+        public MonoBehaviour GetUpgradeButton(int cartIndex)
+        {
+            return cartUis[cartIndex].UpgradeButton;
+        }
+
         protected override void OnOpen()
         {
             _uiBridgeService.OpenPanelFromUI(UIPanel.Caravan);
@@ -144,11 +154,6 @@ namespace Features.Player.Caravan.UI
         private void OnUpkeepChanged(float upkeep)
         {
             upkeepText.text = upkeep.ToString("0.##");
-        }
-
-        public InventoryCell GetCell(Good good)
-        {
-            return _occupiedCells.GetValueOrDefault(good);
         }
     }
 }

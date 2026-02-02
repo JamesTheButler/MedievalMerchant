@@ -1,4 +1,5 @@
 using Common.Infrastructure.Gameplay;
+using Common.UI.Elements;
 using Common.Utility;
 using Features.Player.Logic;
 using Features.Towns;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Features.Map.Overlays
 {
-    public sealed class PlayerOverlay : MonoBehaviour
+    public sealed class PlayerOverlay : InitializableBehavior
     {
         [SerializeField, Required]
         private GameObject worldOverlay, townOverlay;
@@ -15,11 +16,12 @@ namespace Features.Map.Overlays
         [SerializeField, Required]
         private new Animation animation;
 
-        private PlayerLocation _playerLocation;
         private readonly GameSpeedAnimationHandler _animationHandler = new();
+
+        private PlayerLocation _playerLocation;
         private float _zLevel;
 
-        private void Start()
+        public override void Initialize()
         {
             _playerLocation = GameplayContext.Instance.Model.Player.Location;
             _zLevel = gameObject.transform.position.z;
@@ -30,8 +32,9 @@ namespace Features.Map.Overlays
             _playerLocation.WorldLocation.Observe(OnWorldLocationChanged);
         }
 
-        private void OnDestroy()
+        public override void CleanUp()
         {
+            base.CleanUp();
             _playerLocation.CurrentTown.StopObserving(OnTownChanged);
             _playerLocation.WorldLocation.StopObserving(OnWorldLocationChanged);
             _animationHandler.CleanUp();

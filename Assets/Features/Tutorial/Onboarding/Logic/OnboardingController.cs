@@ -5,6 +5,7 @@ using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Types;
 using Common.UI.Elements;
+using Features.Map.Modes;
 using Features.Player.Caravan.UI;
 using Features.Player.Logic;
 using Features.Towns;
@@ -17,6 +18,7 @@ using Features.Tutorial.Onboarding.Logic.Steps;
 using Features.Tutorial.Onboarding.UI;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 namespace Features.Tutorial.Onboarding.Logic
 {
@@ -50,6 +52,7 @@ namespace Features.Tutorial.Onboarding.Logic
 
         private OnboardingResources _onboardingResources;
         private PlayerModel _player;
+        private MapModeModel _mapModeModel;
         private Town _townA, _townB;
         private OnboardingSequence _onboardingSequence;
 
@@ -57,13 +60,13 @@ namespace Features.Tutorial.Onboarding.Logic
         {
             var model = GameplayContext.Instance.Model;
             _player = model.Player;
+            _mapModeModel = model.MapModeModel;
             _townA = model.Towns.Values.ElementAt(0);
             _townB = model.Towns.Values.ElementAt(1);
 
             _onboardingResources = ResourceManager.Instance.OnboardingResources;
 
             _onboardingSequence = new OnboardingSequence(
-                //IntroSequence(),
                 HayDeliverySequence(),
                 BerryPickerSequence(),
                 GameSpeedControlsSequence(),
@@ -129,18 +132,6 @@ namespace Features.Tutorial.Onboarding.Logic
 
         #region Sequences
 
-        private static OnboardingSequence IntroSequence()
-        {
-            var mapModeTask = new OnboardingTask("Press [F2] to change the map overlay");
-            return new OnboardingSequence(
-                new OnboardingExplainerStep(0), // 0
-                new OnboardingExplainerStep(1),
-                new OnboardingTaskStep(mapModeTask),
-                new OnboardingMapOverlayStep(mapModeTask),
-                new OnboardingTaskClearStep()
-            );
-        }
-
         private OnboardingSequence HayDeliverySequence()
         {
             var buyHayTask = new OnboardingTask($"Buy 15 Hay in {_townA.Name}");
@@ -148,7 +139,10 @@ namespace Features.Tutorial.Onboarding.Logic
             var sellHayTask = new OnboardingTask($"Sell 15 Hay in {_townB.Name}");
 
             return new OnboardingSequence(
-                new OnboardingExplainerStep(2), //3
+                new OnboardingExplainerStep(0),
+                new OnboardingExplainerStep(1),
+                new SimpleOnboardingStep(() => { _mapModeModel.MapMode.Value = MapMode.Town; }),
+                new OnboardingExplainerStep(2),
                 new OnboardingTaskStep(buyHayTask, goToATask, sellHayTask),
                 new OnboardingTradeStep(TradeType.Buy, Good.T1Hay, 15, _townA, buyHayTask),
                 new OnboardingTravelStep(_townB, goToATask),
@@ -184,8 +178,8 @@ namespace Features.Tutorial.Onboarding.Logic
 
         private static OnboardingSequence GameSpeedControlsSequence()
         {
-            var pauseGameTask = new OnboardingTask("Pause the game [Space]");
-            var speedUpGameTask = new OnboardingTask("Set the game speed to fast [F2]");
+            var pauseGameTask = new OnboardingTask("Un-pause the game [Space]");
+            var speedUpGameTask = new OnboardingTask("Set the game speed to fast [2]");
 
             return new OnboardingSequence(
                 new OnboardingExplainerStep(6),
@@ -218,6 +212,9 @@ namespace Features.Tutorial.Onboarding.Logic
                     goToATask,
                     sellBerriesTask,
                     sellGameTask),
+                // give player enough money to upgrade cart
+                new SimpleOnboardingStep(() => { _player.Inventory.AddFunds(300); }),
+                new OnboardingCartUpgradeStep(2, upgradeCartTask),
                 new OnboardingTradeStep(TradeType.Buy, Good.T1Berries, berryCount, _townA, buyBerriesTask),
                 new OnboardingTradeStep(TradeType.Buy, Good.T1WildGame, gameCount, _townA, buyBerriesTask),
                 new OnboardingTravelStep(_townA, goToATask),
