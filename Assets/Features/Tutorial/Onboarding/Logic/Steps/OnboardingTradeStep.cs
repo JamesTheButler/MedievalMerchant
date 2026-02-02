@@ -79,38 +79,42 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
             {
                 while (_tradedAmount < _amount)
                 {
-                    yield return SellBlinkSequence(controller);
+                    controller.Blink(_town);
+
+                    yield return new WaitUntil(() => controller.TownUI.IsOpen);
+
+                    while (true)
+                    {
+                        if (!controller.TownUI.IsOpen)
+                            break;
+
+                        // wait so that ui can be fully inflated (otherwise cell size is 0,0)
+                        yield return new WaitForEndOfFrame();
+
+                        var cell = controller.CaravanPanelUI.GetCell(_good);
+                        if (!cell)
+                        {
+                            Debug.LogError($"Could not find cell for good '{_good}'.");
+                            continue;
+                        }
+
+                        controller.Blink(cell);
+
+                        yield return new WaitUntil(() => controller.TradeUI.IsOpen);
+
+                        break;
+                    }
+
+                    if (!controller.TradeUI.IsOpen)
+                        continue;
+
+                    controller.Blink(controller.TradeUI.TradeButton);
+
+                    yield return new WaitUntil(() => !controller.TradeUI.IsOpen);
                 }
             }
 
             controller.HideBlinker();
-        }
-
-        private IEnumerator BuyBlinkSequence(OnboardingController controller)
-        {
-            controller.Blink(_town);
-            yield return new WaitUntil(() => controller.TownUI.IsOpen);
-            var cell = controller.TownProducerUI.GetCell(_good);
-            if (!cell)
-            {
-                Debug.LogError($"Could not find cell for good '{_good}'.");
-                yield return null;
-            }
-
-            controller.Blink(cell);
-
-            yield return new WaitUntil(() => controller.TradeUI.IsOpen);
-            controller.Blink(controller.TradeUI.TradeButton);
-        }
-
-        private IEnumerator SellBlinkSequence(OnboardingController controller)
-        {
-            // for sell
-            // - click _town
-            // - click caravan panel ui - goodcell
-            // - click "15/30" button
-            // 
-            yield return null;
         }
 
         private void OnTradeCompleted(CompletedTrade trade)

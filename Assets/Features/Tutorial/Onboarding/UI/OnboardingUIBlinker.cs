@@ -10,12 +10,7 @@ namespace Features.Tutorial.Onboarding.UI
         private float padding = 4f;
 
         [SerializeField, Required]
-        private RectTransform rectTransform, canvasRect;
-
-        private void Awake()
-        {
-            canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
-        }
+        private RectTransform rectTransform;
 
         public void Show(MonoBehaviour target)
         {

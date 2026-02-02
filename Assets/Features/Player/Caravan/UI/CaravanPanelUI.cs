@@ -145,5 +145,10 @@ namespace Features.Player.Caravan.UI
         {
             upkeepText.text = upkeep.ToString("0.##");
         }
+
+        public InventoryCell GetCell(Good good)
+        {
+            return _occupiedCells.GetValueOrDefault(good);
+        }
     }
 }
