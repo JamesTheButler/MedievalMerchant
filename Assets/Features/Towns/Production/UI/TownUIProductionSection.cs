@@ -58,6 +58,17 @@ namespace Features.Towns.Production.UI
             }
         }
 
+        public ProductionCell GetCell(Good good)
+        {
+            foreach (var group in _producerGroups)
+            {
+                var cell = group.GetCell(good);
+                if (cell != null) return cell;
+            }
+
+            return null;
+        }
+
         private void OnUpgradeButtonClicked(ProductionCell productionCell, Tier tier)
         {
             switch (tier)

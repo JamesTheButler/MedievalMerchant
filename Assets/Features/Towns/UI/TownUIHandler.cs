@@ -13,7 +13,7 @@ namespace Features.Towns.UI
 
         private void Start()
         {
-            townUi.Hide();
+            townUi.Close();
             townUi.Initialize();
 
             _selection = GameplayContext.Instance.Selection;
@@ -34,13 +34,13 @@ namespace Features.Towns.UI
             }
 
             townUi.Bind(town);
-            townUi.Show();
+            townUi.Open();
         }
 
         private void DeselectTown()
         {
             townUi.Unbind();
-            townUi.Hide();
+            townUi.Close();
         }
     }
 }

@@ -136,6 +136,11 @@ namespace Features.Towns.Production.UI
             _town = null;
         }
 
+        public ProductionCell GetCell(Good good)
+        {
+            return _producerCellsPerGood.GetValueOrDefault(good, null);
+        }
+
         private void OnTownTierChanged(Tier tier)
         {
             RefreshProducerCellStates();

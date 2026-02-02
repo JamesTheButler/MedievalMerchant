@@ -9,6 +9,7 @@ using Features.Player.Caravan.UI;
 using Features.Player.Logic;
 using Features.Towns;
 using Features.Towns.Production.UI;
+using Features.Towns.UI;
 using Features.Trade;
 using Features.Trade.UI;
 using Features.Tutorial.Onboarding.Data;
@@ -23,6 +24,9 @@ namespace Features.Tutorial.Onboarding.Logic
     {
         [field: SerializeField, Required]
         public CaravanPanelUI CaravanPanelUI { get; private set; }
+
+        [field: SerializeField, Required]
+        public TownUI TownUI { get; private set; }
 
         [field: SerializeField, Required]
         public TownUIProductionSection TownProducerUI { get; private set; }
@@ -59,7 +63,7 @@ namespace Features.Tutorial.Onboarding.Logic
             _onboardingResources = ResourceManager.Instance.OnboardingResources;
 
             _onboardingSequence = new OnboardingSequence(
-                IntroSequence(),
+                //IntroSequence(),
                 HayDeliverySequence(),
                 BerryPickerSequence(),
                 GameSpeedControlsSequence(),
@@ -95,34 +99,10 @@ namespace Features.Tutorial.Onboarding.Logic
             explainerUI.Hide();
         }
 
-        public void BlinkPlayerInventoryCell(Good good)
-        {
-            var cell = CaravanPanelUI
-                .GetComponentsInChildren<GoodCell>()
-                .FirstOrDefault(cell => cell.Good == good);
-
-            if (cell == null)
-                return;
-
-            Blink(cell.GetComponent<RectTransform>());
-        }
-
-        public void BlinkTownProducerCell(Good good)
-        {
-            var cell = TownProducerUI
-                .GetComponentsInChildren<ProductionCell>()
-                .FirstOrDefault(cell => cell.Good == good);
-
-            if (cell == null)
-                return;
-
-            Blink(cell.GetComponent<RectTransform>());
-        }
-
-        public void Blink(RectTransform targetTransform)
+        public void Blink(MonoBehaviour uiElement)
         {
             mapBlinker.Hide();
-            uiBlinker.Show(targetTransform);
+            uiBlinker.Show(uiElement);
         }
 
         public void Blink(Town town)

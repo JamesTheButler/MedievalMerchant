@@ -11,6 +11,11 @@ namespace Common.Utility
             return new Vector2Int(vector.x, vector.y);
         }
 
+        public static Vector2 XY(this Vector3 vector)
+        {
+            return new Vector2(vector.x, vector.y);
+        }
+
         public static Vector3 Clamp(this Vector3 self, Bounds bounds)
         {
             return new Vector3(

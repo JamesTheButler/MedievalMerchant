@@ -20,6 +20,9 @@ namespace Features.Trade.UI
 {
     public sealed class TradeUI : DynamicPanel
     {
+        [field: SerializeField, Required]
+        public Button TradeButton { get; private set; }
+
         [SerializeField, Required]
         private TMP_Text
             goodAmountText,
@@ -38,7 +41,7 @@ namespace Features.Trade.UI
         private HaggleGroup haggleGroup;
 
         [SerializeField, Required]
-        private Button tradeButton, cancelButton, maxAmountButton, missionAmountButton;
+        private Button cancelButton, maxAmountButton, missionAmountButton;
 
         [SerializeField, Required]
         private SimpleTooltipHandler tradeButtonTooltip;
@@ -85,7 +88,7 @@ namespace Features.Trade.UI
 
         public override void Initialize()
         {
-            tradeButton.onClick.AddListener(CompleteTrade);
+            TradeButton.onClick.AddListener(CompleteTrade);
             cancelButton.onClick.AddListener(AbortTrade);
             maxAmountButton.onClick.AddListener(SetMaxAmount);
             missionAmountButton.onClick.AddListener(SetActiveMissionAmount);
@@ -125,7 +128,7 @@ namespace Features.Trade.UI
 
             RefreshMissionAmountButton();
 
-            tradeButton.GetText().text = _tradeType == TradeType.Buy ? "Buy" : "Sell";
+            TradeButton.GetText().text = _tradeType == TradeType.Buy ? "Buy" : "Sell";
             townNameText.text = _town.Name;
             townFlagRenderer.SetFlag(_town.FlagInfo);
 
@@ -328,7 +331,7 @@ namespace Features.Trade.UI
             var buyerFunds = _buyingInventory.Funds;
 
             var isTradePossible = buyerFunds >= totalPrice;
-            tradeButton.interactable = isTradePossible;
+            TradeButton.interactable = isTradePossible;
             tradeButtonTooltip.SetEnabled(!isTradePossible);
 
             if (isTradePossible)

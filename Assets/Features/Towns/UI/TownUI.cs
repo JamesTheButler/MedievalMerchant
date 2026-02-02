@@ -7,13 +7,13 @@ using UnityEngine.EventSystems;
 
 namespace Features.Towns.UI
 {
-    public sealed class TownUI : MonoBehaviour, IPointerClickHandler
+    public sealed class TownUI : DynamicPanel, IPointerClickHandler
     {
         private Town _town;
         private TownUISection[] _sections;
         private UIBridgeService _uiBridgeService;
 
-        public void Initialize()
+        protected override void OnInitialize()
         {
             _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
             _sections = GetComponentsInChildren<TownUISection>();
@@ -42,13 +42,13 @@ namespace Features.Towns.UI
             BindTown(town);
         }
 
-        public void Show()
+        protected override void OnOpen()
         {
             _uiBridgeService.OpenPanelFromUI(UIPanel.Town);
             gameObject.SetActive(true);
         }
 
-        public void Hide()
+        protected override void OnClose()
         {
             gameObject.SetActive(false);
         }

@@ -27,11 +27,9 @@ namespace Common.UI.Elements
             if (IsOpen)
                 return;
 
-            IsOpen = true;
-
             OnOpen();
-
             Opened?.Invoke();
+            IsOpen = true;
         }
 
         public virtual void Close()
@@ -39,11 +37,9 @@ namespace Common.UI.Elements
             if (!IsOpen)
                 return;
 
-            IsOpen = false;
-
             OnClose();
-
             Closed?.Invoke();
+            IsOpen = false;
         }
 
         public void Toggle()
