@@ -3,6 +3,7 @@ using Common.Types;
 using Features.Towns;
 using Features.Towns.Production.Logic;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 namespace Features.Tutorial.Onboarding.Logic.Steps
 {
@@ -43,7 +44,31 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
 
         public IEnumerator Run(OnboardingController controller)
         {
-            yield return new WaitUntil(() => _tradeBuildingExists);
+            while (!_tradeBuildingExists)
+            {
+                yield return new WaitForEndOfFrame();
+                controller.Blink(_town, MouseButton.Left);
+                yield return new WaitUntil(() => controller.TownUI.IsOpen);
+
+                var cell = controller.TownProducerUI.GetCell(1, Tier.Tier1);
+
+                if (!cell)
+                {
+                    Debug.LogError($"Could not find cell for good '{_good}'.");
+                    continue;
+                }
+
+                controller.Blink(cell, MouseButton.Left);
+
+                if (_tradeBuildingExists)
+                    break;
+
+                yield return new WaitUntil(() => _tradeBuildingExists);
+            }
+
+            controller.HideBlinker();
+
+            yield return null;
         }
 
         public void CleanUp()

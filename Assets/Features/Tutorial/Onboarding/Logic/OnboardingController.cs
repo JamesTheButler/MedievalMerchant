@@ -7,7 +7,6 @@ using Common.Types;
 using Common.UI.Elements;
 using Features.Map.Modes;
 using Features.Player.Caravan.UI;
-using Features.Player.Logic;
 using Features.Ticking.Logic;
 using Features.Towns;
 using Features.Towns.Production.UI;
@@ -53,7 +52,6 @@ namespace Features.Tutorial.Onboarding.Logic
 
         private Coroutine _tutorialCoroutine;
         private OnboardingResources _onboardingResources;
-        private PlayerModel _player;
         private MapModeModel _mapModeModel;
         private GameSpeedModel _gameSpeedModel;
 
@@ -63,7 +61,6 @@ namespace Features.Tutorial.Onboarding.Logic
         public override void Initialize()
         {
             var model = GameplayContext.Instance.Model;
-            _player = model.Player;
             _mapModeModel = model.MapModeModel;
             _gameSpeedModel = model.GameSpeed;
 
@@ -147,14 +144,15 @@ namespace Features.Tutorial.Onboarding.Logic
             var sellHayTask = new OnboardingTask($"Sell 15 Hay in {_townB.Name}");
 
             return new OnboardingSequence(DelayBetweenSteps,
-                new SimpleOnboardingStep(() => { _gameSpeedModel.Pause(); }),
+                new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
                 new OnboardingExplainerStep(0),
                 new OnboardingExplainerStep(1),
-                new SimpleOnboardingStep(() => { _mapModeModel.MapMode.Value = MapMode.Town; }),
+                new OnboardingSimpleStep(() => { _mapModeModel.MapMode.Value = MapMode.Town; }),
                 new OnboardingExplainerStep(2),
                 new OnboardingTaskStep(buyHayTask, goToATask, sellHayTask),
-                new SimpleOnboardingStep(() => { _gameSpeedModel.Resume(); }),
+                new OnboardingSimpleStep(() => { _gameSpeedModel.Resume(); }),
                 new OnboardingTradeStep(TradeType.Buy, Good.T1Hay, 15, _townA, buyHayTask),
+                new OnboardingSimpleStep(() => { TownUI.Close(); }),
                 new OnboardingTravelStep(_townB, goToATask),
                 new OnboardingTradeStep(TradeType.Sell, Good.T1Hay, 15, _townB, sellHayTask),
                 new OnboardingTaskClearStep()
@@ -166,19 +164,16 @@ namespace Features.Tutorial.Onboarding.Logic
             var buildBerryPickerTask = new OnboardingTask($"Build berry picker in {_townB.Name}");
 
             var buildBerryPickerSequence = new OnboardingSequence(DelayBetweenSteps,
-                new SimpleOnboardingStep(() => { _gameSpeedModel.Pause(); }),
+                new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
                 new OnboardingExplainerStep(3),
-                new SimpleOnboardingStep(() =>
-                {
-                    _townA.DevelopmentManager.AddDevelopmentChange(100);
-                    _player.Inventory.Funds.Value = 505f;
-                }),
+                new OnboardingEnsureFundsStep(505),
+                new OnboardingSimpleStep(() => { _townA.DevelopmentManager.AddDevelopmentChange(100); }),
                 new OnboardingExplainerStep(4),
                 new OnboardingExplainerStep(5),
                 new OnboardingTaskStep(buildBerryPickerTask),
-                new SimpleOnboardingStep(() => { _gameSpeedModel.Resume(); }),
+                new OnboardingSimpleStep(() => { _gameSpeedModel.Resume(); }),
                 new OnboardingBuildProducerStep(_townB, Good.T1Berries, buildBerryPickerTask),
-                new SimpleOnboardingStep(() =>
+                new OnboardingSimpleStep(() =>
                 {
                     var berryCount = _townB.Inventory.Get(Good.T1Berries);
                     _townB.Inventory.AddGood(Good.T1Berries, 20 - berryCount);
@@ -194,7 +189,7 @@ namespace Features.Tutorial.Onboarding.Logic
             var speedUpGameTask = new OnboardingTask("Set the game speed to fast [2]");
 
             return new OnboardingSequence(DelayBetweenSteps,
-                new SimpleOnboardingStep(() => { _gameSpeedModel.Pause(); }),
+                new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
                 new OnboardingExplainerStep(6),
                 new OnboardingExplainerStep(7),
                 new OnboardingTaskStep(pauseGameTask, speedUpGameTask),
@@ -216,8 +211,8 @@ namespace Features.Tutorial.Onboarding.Logic
             var sellGameTask = new OnboardingTask($"Sell 20 wild game in {_townA.Name}.");
 
             return new OnboardingSequence(DelayBetweenSteps,
-                new WaitUntilOnboardingStep(() => _townB.Inventory.HasGood(Good.T1Berries, berryCount)),
-                new SimpleOnboardingStep(() => { _gameSpeedModel.Pause(); }),
+                new OnboardingWaitUntilStep(() => _townB.Inventory.HasGood(Good.T1Berries, berryCount)),
+                new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
                 new OnboardingExplainerStep(8),
                 new OnboardingExplainerStep(9),
                 new OnboardingTaskStep(
@@ -227,11 +222,11 @@ namespace Features.Tutorial.Onboarding.Logic
                     goToATask,
                     sellBerriesTask,
                     sellGameTask),
-                // give player enough money to upgrade cart
-                new SimpleOnboardingStep(() => { _player.Inventory.AddFunds(500); }),
-                new SimpleOnboardingStep(() => { _gameSpeedModel.Resume(); }),
+                new OnboardingEnsureFundsStep(500),
                 new OnboardingCartUpgradeStep(2, upgradeCartTask),
+                new OnboardingEnsureFundsStep(300),
                 new OnboardingTradeStep(TradeType.Buy, Good.T1Berries, berryCount, _townB, buyBerriesTask),
+                new OnboardingEnsureFundsStep(300),
                 new OnboardingTradeStep(TradeType.Buy, Good.T1WildGame, gameCount, _townB, buyGameTask),
                 new OnboardingTravelStep(_townA, goToATask),
                 new OnboardingTradeStep(TradeType.Sell, Good.T1Berries, berryCount, _townA, sellBerriesTask),
@@ -242,16 +237,24 @@ namespace Features.Tutorial.Onboarding.Logic
 
         private OnboardingSequence FinishOnboardingSequence()
         {
-            var townUpgradeTask = new OnboardingTask($"Upgrade {_townA.Name} to tier II.");
+            var townUpgradeTask = new OnboardingTask($"Upgrade {_townB.Name} to tier II.");
 
             return new OnboardingSequence(DelayBetweenSteps,
-                new SimpleOnboardingStep(() => { _gameSpeedModel.Pause(); }),
+                new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
                 new OnboardingExplainerStep(10),
                 new OnboardingExplainerStep(11),
                 new OnboardingExplainerStep(12),
-                new SimpleOnboardingStep(() => { _gameSpeedModel.Resume(); }),
+                new OnboardingSimpleStep(() => { _gameSpeedModel.Resume(); }),
+                new OnboardingSimpleStep(() =>
+                {
+                    var currentDev = _townB.DevelopmentManager.DevelopmentScore.Value;
+                    if (currentDev > 75f)
+                        return;
+
+                    _townB.DevelopmentManager.AddDevelopmentChange(75f - currentDev);
+                }),
                 new OnboardingTaskStep(townUpgradeTask),
-                new OnboardingTownUpgradeStep(_townA, Tier.Tier2, townUpgradeTask),
+                new OnboardingTownUpgradeStep(_townB, Tier.Tier2, townUpgradeTask),
                 new OnboardingTaskClearStep()
             );
         }

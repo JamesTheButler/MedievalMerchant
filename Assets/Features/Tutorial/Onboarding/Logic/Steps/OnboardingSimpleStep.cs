@@ -1,25 +1,25 @@
 using System;
 using System.Collections;
-using UnityEngine;
 
 namespace Features.Tutorial.Onboarding.Logic.Steps
 {
-    public sealed class WaitUntilOnboardingStep : IOnboardingStep
+    public sealed class OnboardingSimpleStep : IOnboardingStep
     {
-        private readonly Func<bool> _predicate;
+        private readonly Action _action;
 
         public OnboardingTask Task => null;
 
-        public WaitUntilOnboardingStep(Func<bool> predicate)
+        public OnboardingSimpleStep(Action action)
         {
-            _predicate = predicate;
+            _action = action;
         }
 
         public void Initialize() { }
 
         public IEnumerator Run(OnboardingController controller)
         {
-            yield return new WaitUntil(_predicate.Invoke);
+            _action?.Invoke();
+            yield return null;
         }
 
         public void CleanUp() { }

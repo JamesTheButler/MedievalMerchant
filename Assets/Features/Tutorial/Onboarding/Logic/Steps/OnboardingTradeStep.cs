@@ -78,7 +78,6 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
                 yield return new WaitUntil(() => !controller.TradeUI.IsOpen);
             }
 
-
             controller.HideBlinker();
         }
 
