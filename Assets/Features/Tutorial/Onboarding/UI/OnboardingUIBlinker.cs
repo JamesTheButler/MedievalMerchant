@@ -1,6 +1,8 @@
 using Common.UI.Utility;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.UI;
 
 namespace Features.Tutorial.Onboarding.UI
 {
@@ -12,13 +14,19 @@ namespace Features.Tutorial.Onboarding.UI
         [SerializeField, Required]
         private RectTransform rectTransform;
 
-        public void Show(MonoBehaviour target)
+        [SerializeField, Required]
+        private Image mouseButtonImage;
+
+        [SerializeField, Required]
+        private Sprite lmbSprite, rmbSprite;
+
+        public void Show(MonoBehaviour target, MouseButton mouseButton)
         {
             var targetTransform = target?.GetComponent<RectTransform>();
-            Show(targetTransform);
+            Show(targetTransform, mouseButton);
         }
 
-        public void Show(RectTransform targetTransform)
+        public void Show(RectTransform targetTransform, MouseButton mouseButton)
         {
             if (!targetTransform)
             {
@@ -28,6 +36,21 @@ namespace Features.Tutorial.Onboarding.UI
 
             SetBlinkerRectTransform(targetTransform);
             gameObject.SetActive(true);
+
+            switch (mouseButton)
+            {
+                case MouseButton.Left:
+                    mouseButtonImage.sprite = lmbSprite;
+                    mouseButtonImage.gameObject.SetActive(true);
+                    break;
+                case MouseButton.Right:
+                    mouseButtonImage.sprite = rmbSprite;
+                    mouseButtonImage.gameObject.SetActive(true);
+                    break;
+                default:
+                    mouseButtonImage.gameObject.SetActive(false);
+                    break;
+            }
         }
 
         public void Hide()

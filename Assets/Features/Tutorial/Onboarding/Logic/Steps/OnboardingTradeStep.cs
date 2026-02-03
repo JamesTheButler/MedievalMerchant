@@ -6,6 +6,7 @@ using Features.Towns;
 using Features.Trade;
 using Features.Trade.Logic;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 namespace Features.Tutorial.Onboarding.Logic.Steps
 {
@@ -40,7 +41,7 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
         {
             while (_tradedAmount < _amount)
             {
-                controller.Blink(_town);
+                controller.Blink(_town, MouseButton.Left);
 
                 yield return new WaitUntil(() => controller.TownUI.IsOpen);
 
@@ -62,7 +63,7 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
                         continue;
                     }
 
-                    controller.Blink(cell);
+                    controller.Blink(cell, MouseButton.Left);
 
                     yield return new WaitUntil(() => controller.TradeUI.IsOpen);
 
@@ -72,7 +73,7 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
                 if (!controller.TradeUI.IsOpen)
                     continue;
 
-                controller.Blink(controller.TradeUI.TradeButton);
+                controller.Blink(controller.TradeUI.TradeButton, MouseButton.Left);
 
                 yield return new WaitUntil(() => !controller.TradeUI.IsOpen);
             }

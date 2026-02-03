@@ -3,6 +3,7 @@ using Common.Infrastructure.Gameplay;
 using Features.Player.Logic;
 using Features.Towns;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 namespace Features.Tutorial.Onboarding.Logic.Steps
 {
@@ -37,7 +38,7 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
 
         public IEnumerator Run(OnboardingController controller)
         {
-            controller.Blink(_town);
+            controller.Blink(_town, MouseButton.Right);
             yield return new WaitUntil(() => _hasArrived);
             controller.HideBlinker();
         }

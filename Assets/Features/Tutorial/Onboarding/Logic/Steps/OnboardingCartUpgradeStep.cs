@@ -3,6 +3,7 @@ using System.Linq;
 using Common.Infrastructure.Gameplay;
 using Features.Player.Caravan.Logic;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 namespace Features.Tutorial.Onboarding.Logic.Steps
 {
@@ -27,7 +28,7 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
 
         public IEnumerator Run(OnboardingController controller)
         {
-            controller.Blink(controller.CaravanPanelUI.GetUpgradeButton(0));
+            controller.Blink(controller.CaravanPanelUI.GetUpgradeButton(0), MouseButton.Left);
             yield return new WaitUntil(() => _cart1.Level == _level);
             controller.HideBlinker();
         }

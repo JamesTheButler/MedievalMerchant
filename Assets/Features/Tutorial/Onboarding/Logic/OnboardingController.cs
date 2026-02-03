@@ -102,16 +102,16 @@ namespace Features.Tutorial.Onboarding.Logic
             explainerUI.Hide();
         }
 
-        public void Blink(MonoBehaviour uiElement)
+        public void Blink(MonoBehaviour uiElement, MouseButton mouseButton)
         {
             mapBlinker.Hide();
-            uiBlinker.Show(uiElement);
+            uiBlinker.Show(uiElement, mouseButton);
         }
 
-        public void Blink(Town town)
+        public void Blink(Town town, MouseButton mouseButton)
         {
             uiBlinker.Hide();
-            mapBlinker.Show(town.WorldLocation + new Vector2(.5f, .5f));
+            mapBlinker.Show(town.WorldLocation + new Vector2(.5f, .5f), mouseButton);
         }
 
         public void HideBlinker()
