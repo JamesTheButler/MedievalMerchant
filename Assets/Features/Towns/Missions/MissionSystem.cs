@@ -202,6 +202,9 @@ namespace Features.Towns.Missions
             // remove from available goods to ensure no duplicate missions
             _availableGoods.Remove(mission.Good);
 
+            if (mission.Type != MissionType.UpgradeMission)
+                return;
+
             var notification = new MissionStartedNotification(_town, mission);
             _notificationService.PostNotification(notification);
         }
