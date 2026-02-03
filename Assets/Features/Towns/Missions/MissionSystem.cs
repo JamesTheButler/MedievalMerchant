@@ -63,6 +63,10 @@ namespace Features.Towns.Missions
 
             _missionModel.MissionAdded.Observe(OnMissionAdded);
             _missionModel.MissionRemoved.Observe(OnMissionRemoved);
+            foreach (var mission in _missionModel.Missions.Values)
+            {
+                OnMissionAdded(mission);
+            }
 
             _tickingService.DayPassed += OnDayPassed;
             _town.Missions.GoodSelectorChanged += OnGoodSelectorChanged;
@@ -228,8 +232,6 @@ namespace Features.Towns.Missions
             {
                 _availableGoods.Add(mission.Good);
             }
-
-            _missionModel.RemoveMission(mission);
         }
 
         private void OnMissionSucceeded(Mission mission)
@@ -240,6 +242,7 @@ namespace Features.Towns.Missions
             }
 
             _resultHandler.Handle(mission.Reward);
+            _missionModel.RemoveMission(mission);
         }
 
         private void OnMissionFailed(Mission mission)
@@ -252,6 +255,7 @@ namespace Features.Towns.Missions
             var notification = new MissionFailedNotification(_town, mission);
             _notificationService.PostNotification(notification);
             _resultHandler.Handle(mission.Penalty);
+            _missionModel.RemoveMission(mission);
         }
     }
 }
