@@ -20,12 +20,18 @@ namespace Features.Player.Retinue.UI
         private RetinueModel _retinueModel;
         private UIBridgeService _uiBridgeService;
 
-        private void Start()
+        protected override void OnInitialize()
         {
+            base.OnInitialize();
+
             _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
             _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
             _retinueModel.Upkeep.Observe(OnUpkeepChanged);
             upkeepTooltip.SetData(_retinueModel.Upkeep);
+        }
+
+        private void Start()
+        {
             Close();
         }
 
