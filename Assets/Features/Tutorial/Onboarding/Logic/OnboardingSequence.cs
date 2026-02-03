@@ -8,10 +8,12 @@ namespace Features.Tutorial.Onboarding.Logic
     {
         public OnboardingTask Task => null;
 
+        private readonly float _delayBetweenSteps;
         private readonly IOnboardingStep[] _steps;
 
-        public OnboardingSequence(params IOnboardingStep[] steps)
+        public OnboardingSequence(float delayBetweenSteps, params IOnboardingStep[] steps)
         {
+            _delayBetweenSteps = delayBetweenSteps;
             _steps = steps;
         }
 
@@ -25,7 +27,7 @@ namespace Features.Tutorial.Onboarding.Logic
                 yield return step.Run(controller);
                 step.CleanUp();
                 step.Task?.Complete();
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(_delayBetweenSteps);
             }
         }
 

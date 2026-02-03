@@ -16,7 +16,7 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
 
         public IEnumerator Run(OnboardingController controller)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             controller.ClearTasks();
             yield return null;
         }

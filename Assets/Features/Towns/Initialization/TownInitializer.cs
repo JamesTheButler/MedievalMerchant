@@ -15,7 +15,7 @@ namespace Features.Towns.Initialization
             Mathf.FloorToInt(gameObject.transform.position.x),
             Mathf.FloorToInt(gameObject.transform.position.y));
 
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             MyGizmos.DrawRect(new Rect(GridPosition, Vector2.one), tileOutline);
         }
