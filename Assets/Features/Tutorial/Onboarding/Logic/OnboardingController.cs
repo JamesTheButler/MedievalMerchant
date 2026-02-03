@@ -8,6 +8,7 @@ using Common.UI.Elements;
 using Features.Map.Modes;
 using Features.Player.Caravan.UI;
 using Features.Player.Logic;
+using Features.Ticking.Logic;
 using Features.Towns;
 using Features.Towns.Production.UI;
 using Features.Towns.UI;
@@ -53,6 +54,8 @@ namespace Features.Tutorial.Onboarding.Logic
         private OnboardingResources _onboardingResources;
         private PlayerModel _player;
         private MapModeModel _mapModeModel;
+        private GameSpeedModel _gameSpeedModel;
+
         private Town _townA, _townB;
         private OnboardingSequence _onboardingSequence;
 
@@ -61,6 +64,8 @@ namespace Features.Tutorial.Onboarding.Logic
             var model = GameplayContext.Instance.Model;
             _player = model.Player;
             _mapModeModel = model.MapModeModel;
+            _gameSpeedModel = model.GameSpeed;
+
             _townA = model.Towns.Values.ElementAt(0);
             _townB = model.Towns.Values.ElementAt(1);
 
@@ -73,6 +78,8 @@ namespace Features.Tutorial.Onboarding.Logic
                 BerryDeliverySequence(),
                 FinishOnboardingSequence()
             );
+
+            HideBlinker();
         }
 
         public void StartTutorial()
@@ -94,11 +101,13 @@ namespace Features.Tutorial.Onboarding.Logic
                 .Replace("Town B", _townB.Name, StringComparison.InvariantCultureIgnoreCase)
                 .Replace("TownB", _townB.Name, StringComparison.InvariantCultureIgnoreCase);
 
+            _gameSpeedModel.Pause();
             explainerUI.Show(message, onNextClicked);
         }
 
         public void HideExplainer()
         {
+            _gameSpeedModel.Resume();
             explainerUI.Hide();
         }
 
