@@ -13,7 +13,7 @@ namespace Features.Towns.Initialization
         private Good good;
 
         [SerializeField]
-        private int amount;
+        private int amount, lengthInDays = 90;
 
         public override void Initialize(Town town)
         {
@@ -23,7 +23,7 @@ namespace Features.Towns.Initialization
                 good,
                 amount,
                 new Date(1, 1),
-                new Date(90, 1),
+                new Date(1 + lengthInDays, 1),
                 MissionType.TradeMission,
                 tradeMissionConfig.GetReward(),
                 tradeMissionConfig.GetPenalty()));

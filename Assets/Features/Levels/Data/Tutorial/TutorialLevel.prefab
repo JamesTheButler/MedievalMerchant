@@ -50,10 +50,20 @@ MonoBehaviour:
       rid: 5229624270274691168
     <Production>k__BackingField:
       rid: 5229624270274691176
-    <OptionalInitDatas>k__BackingField: []
+    <OptionalInitDatas>k__BackingField:
+    - rid: 1854276959081594952
   references:
     version: 2
     RefIds:
+    - rid: 1854276959081594952
+      type: {class: UpgradeMissionInitData, ns: Features.Towns.Initialization, asm: Assembly-CSharp}
+      data:
+        upgradeMissionGoodSelector:
+          applyToAll: 0
+          goods: 02000000
+          regions: 15
+          tier: 0
+        enforcedMissionLength: 120
     - rid: 5229624270274691168
       type: {class: CustomIdentityInitData, ns: Features.Towns.Initialization, asm: Assembly-CSharp}
       data:
@@ -162,6 +172,7 @@ MonoBehaviour:
       data:
         good: 35
         amount: 15
+        lengthInDays: 120
     - rid: 5229624270274691182
       type: {class: CustomProductionInitData, ns: Features.Towns.Initialization, asm: Assembly-CSharp}
       data:

@@ -61,6 +61,9 @@ namespace Features.Towns.Missions
             _goodPool = GameplayContext.Instance.Model.GoodPool;
             _goodResources = ResourceManager.Instance.GoodResources;
 
+            _missionModel.MissionAdded.Observe(OnMissionAdded);
+            _missionModel.MissionRemoved.Observe(OnMissionRemoved);
+
             _tickingService.DayPassed += OnDayPassed;
             _town.Missions.GoodSelectorChanged += OnGoodSelectorChanged;
 
@@ -105,6 +108,12 @@ namespace Features.Towns.Missions
         private void OnTownTierChanged(Tier tier)
         {
             ResetAvailableGoods();
+        }
+
+        private void OnMissionAdded(Mission mission)
+        {
+            mission.MissionFailed += OnMissionFailed;
+            mission.MissionSucceeded += OnMissionSucceeded;
         }
 
         private void OnTradeCompleted(CompletedTrade trade)
@@ -174,13 +183,15 @@ namespace Features.Towns.Missions
             if (_availableGoods.IsEmpty())
                 return;
 
+            var missionLength = _town.Missions.MissionLengthOverride ?? config.LengthInDays;
+
             var missionGood = _availableGoods.GetRandom();
             var gameDate = _gameDateModel.GameDate.Value;
             var mission = new Mission(
                 missionGood,
                 config.Volume,
                 gameDate,
-                gameDate + config.LengthInDays,
+                gameDate + missionLength,
                 type,
                 config.GetReward(),
                 config.GetPenalty());
@@ -196,9 +207,6 @@ namespace Features.Towns.Missions
 
             _missionModel.AddMission(mission);
 
-            mission.MissionFailed += OnMissionFailed;
-            mission.MissionSucceeded += OnMissionSucceeded;
-
             // remove from available goods to ensure no duplicate missions
             _availableGoods.Remove(mission.Good);
 
@@ -209,7 +217,7 @@ namespace Features.Towns.Missions
             _notificationService.PostNotification(notification);
         }
 
-        private void DisableMission(Mission mission)
+        private void OnMissionRemoved(Mission mission)
         {
             mission.MissionFailed -= OnMissionFailed;
             mission.MissionSucceeded -= OnMissionSucceeded;
@@ -232,8 +240,6 @@ namespace Features.Towns.Missions
             }
 
             _resultHandler.Handle(mission.Reward);
-
-            DisableMission(mission);
         }
 
         private void OnMissionFailed(Mission mission)
@@ -246,8 +252,6 @@ namespace Features.Towns.Missions
             var notification = new MissionFailedNotification(_town, mission);
             _notificationService.PostNotification(notification);
             _resultHandler.Handle(mission.Penalty);
-
-            DisableMission(mission);
         }
     }
 }

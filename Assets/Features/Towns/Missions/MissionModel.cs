@@ -11,10 +11,13 @@ namespace Features.Towns.Missions
     {
         public ObservableEvent<Mission> MissionAdded { get; } = new();
         public ObservableEvent<Mission> MissionRemoved { get; } = new();
-        
+
         public event Action GoodSelectorChanged;
 
         public IReadOnlyDictionary<Good, Mission> Missions => _missions;
+
+        // used for tutorial to set an arbitrary length of upgrade mission
+        public int? MissionLengthOverride { get; private set; }
 
         private readonly Dictionary<Good, Mission> _missions = new();
 
@@ -46,6 +49,11 @@ namespace Features.Towns.Missions
         {
             PermittedGoodsSelector = selector;
             GoodSelectorChanged?.Invoke();
+        }
+
+        public void OverrideMissionLength(int length)
+        {
+            MissionLengthOverride = length;
         }
     }
 }
