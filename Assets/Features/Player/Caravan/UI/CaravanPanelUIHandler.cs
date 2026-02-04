@@ -3,6 +3,8 @@ using Common.Types;
 using Features.Towns;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 namespace Features.Player.Caravan.UI
 {
@@ -14,8 +16,11 @@ namespace Features.Player.Caravan.UI
         private GameplayContext _gameplayContext;
         private Inventory.Inventory _playerInventory;
 
-        public void TogglePanel()
+        public void TogglePanel(InputAction.CallbackContext context)
         {
+            if (!context.performed)
+                return;
+
             caravanPanelUI.Toggle();
         }
 
