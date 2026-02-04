@@ -5,6 +5,7 @@ using Common.UI.Elements;
 using Common.UI.Tooltips;
 using Common.UI.Utility;
 using Common.Utility;
+using Features.Levels;
 using Features.Towns;
 using Features.Towns.Flags.UI;
 using Features.Towns.Missions;
@@ -83,17 +84,23 @@ namespace Features.Trade.UI
 
         private bool _isStuckToMax;
         private bool _wasSuccessfulTrade;
+        private bool _isHagglingEnabled;
 
         private const HaggleLevel InitialHaggleLevel = HaggleLevel.Fair;
 
         public override void Initialize()
         {
+            _isHagglingEnabled = GameplayContext.Instance.LevelInfo.HasFeature(LevelFeatureFlags.Tutorial);
+
             TradeButton.onClick.AddListener(CompleteTrade);
             cancelButton.onClick.AddListener(AbortTrade);
             maxAmountButton.onClick.AddListener(SetMaxAmount);
             missionAmountButton.onClick.AddListener(SetActiveMissionAmount);
 
-            haggleGroup.HaggleLevelChanged += OnSelectedHaggleLevelChanged;
+            if (_isHagglingEnabled)
+            {
+                haggleGroup.HaggleLevelChanged += OnSelectedHaggleLevelChanged;
+            }
 
             SetUpSlider();
 
@@ -113,7 +120,11 @@ namespace Features.Trade.UI
             _town = _selection.SelectedTown;
             _ongoingTrade = _tradeService.InitializeTrade(_town, _good, _tradeType);
 
-            haggleGroup.SetUp(InitialHaggleLevel, _tradeType);
+            if (_isHagglingEnabled)
+            {
+                haggleGroup.SetUp(InitialHaggleLevel, _tradeType);
+            }
+
             _ongoingTrade.SetHaggleLevel(InitialHaggleLevel);
 
             _bindings.Track(

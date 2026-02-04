@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Common.Infrastructure.Global;
 using Features.Audio.Sfx;
+using Features.Levels;
 using Features.Levels.Conditions.Logic;
 using Features.Levels.GameModifiers.Events;
 using Features.Levels.Serialization;
@@ -58,7 +59,7 @@ namespace Common.Infrastructure.Gameplay
             _systems.Add(new GameSfxSystem());
             _systems.Add(new GlobalSurplusSystem());
 
-            if (!(GlobalContext.CurrentLevelInfo?.IsTutorial ?? false))
+            if (!(GameplayContext.Instance.LevelInfo.HasFeature(LevelFeatureFlags.Tutorial)))
             {
                 _systems.Add(new EventSystem());
             }
@@ -91,7 +92,7 @@ namespace Common.Infrastructure.Gameplay
                 var missionSystem = new MissionSystem(town);
                 _systems.Add(missionSystem);
 
-                var isTutorial = GlobalContext.CurrentLevelInfo?.IsTutorial ?? false;
+                var isTutorial = GameplayContext.Instance.LevelInfo.HasFeature(LevelFeatureFlags.Tutorial);
                 missionSystem.ToggleTradeMissions(!isTutorial);
             }
         }

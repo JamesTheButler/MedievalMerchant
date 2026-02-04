@@ -209,7 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2612985004808705794}
   - component: {fileID: 3776163085840766194}
-  - component: {fileID: 7783801020671173836}
+  - component: {fileID: 3488523733671899104}
   m_Layer: 0
   m_Name: OnboardingMapBlinker
   m_TagString: Untagged
@@ -248,7 +248,7 @@ MonoBehaviour:
   lmbSprite: {fileID: 7465233869441490399, guid: 670af5e79dc2d0345976c4966c8622e7, type: 3}
   rmbSprite: {fileID: 1879813724864882134, guid: 670af5e79dc2d0345976c4966c8622e7, type: 3}
   mouseSpriteRenderer: {fileID: 4141143745219632376}
---- !u!114 &7783801020671173836
+--- !u!114 &3488523733671899104
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -257,6 +257,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6817790450525547300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afd0309999664bfb8b1e9b8a7edfe8a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 875631e61a854abe8ff720eb90140672, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Tutorial.UI.TutorialObjectDestroyer
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.FeatureFlagObjectDestroyer
+  keepIf: 8

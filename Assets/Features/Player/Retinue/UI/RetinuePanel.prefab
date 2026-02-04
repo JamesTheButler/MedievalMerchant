@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9018039141337921708}
   - component: {fileID: 8012183369744490901}
   - component: {fileID: 7157196241662777385}
+  - component: {fileID: 1633452121887716120}
   m_Layer: 5
   m_Name: RetinuePanel
   m_TagString: Untagged
@@ -133,6 +134,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Features.Audio.Sfx.PanelSfxTrigger
   panel: {fileID: 3046280733426677061}
+--- !u!114 &1633452121887716120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279657000758623235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875631e61a854abe8ff720eb90140672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.FeatureFlagObjectDestroyer
+  keepIf: 2
 --- !u!1 &1663339716229101076
 GameObject:
   m_ObjectHideFlags: 0

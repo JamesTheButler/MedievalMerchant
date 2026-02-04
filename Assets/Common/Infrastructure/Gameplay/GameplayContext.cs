@@ -1,3 +1,5 @@
+using Common.Infrastructure.Global;
+using Features.Levels;
 using Features.Towns;
 using UnityEngine;
 
@@ -15,6 +17,8 @@ namespace Common.Infrastructure.Gameplay
         public Selection Selection { get; } = new();
         public GameplayServices Services { get; } = new();
 
+        public LevelInfo LevelInfo { get; private set; }
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -24,6 +28,8 @@ namespace Common.Infrastructure.Gameplay
             }
 
             Instance = this;
+
+            LevelInfo = GlobalContext.CurrentLevelInfo!;
         }
 
         private void OnDestroy()

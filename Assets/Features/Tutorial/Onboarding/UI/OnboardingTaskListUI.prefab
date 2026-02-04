@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3757535599513008632}
   - component: {fileID: 8078035951530779131}
+  - component: {fileID: 8203238477964042279}
   - component: {fileID: 1332118036670057797}
   - component: {fileID: 4735076180346729222}
   - component: {fileID: 2766192619751189028}
@@ -61,6 +62,19 @@ MonoBehaviour:
   listItemPrefab: {fileID: 1781050867596657974, guid: f0eb3a0fcfea8da47a30a8a38ee58542, type: 3}
   incompleteTaskIcon: {fileID: -689839832, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
   completedTaskIcon: {fileID: 1590738138, guid: 6c437352748eb6649bd34e6259faca42, type: 3}
+--- !u!114 &8203238477964042279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322291330822132215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875631e61a854abe8ff720eb90140672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.FeatureFlagObjectDestroyer
+  keepIf: 8
 --- !u!222 &1332118036670057797
 CanvasRenderer:
   m_ObjectHideFlags: 0

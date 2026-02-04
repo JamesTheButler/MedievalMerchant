@@ -46,17 +46,22 @@ namespace Features.Levels
         [field: SerializeField]
         public int StartTownIndex { get; private set; } = -1;
 
-        [field: SerializeField]
-        public bool IsTutorial { get; private set; }
+        [SerializeField]
+        private LevelFeatureFlags levelFeatures;
 
         /// <summary>
-        ///     Index for internal logic. 0-based.
+        /// Index for internal logic. 0-based.
         /// </summary>
         public int InternalIndex => DisplayIndex - 1;
 
         /// <summary>
-        ///     For display purposes for strings like 'Level 03'.
+        /// For display purposes for strings like 'Level 03'.
         /// </summary>
         public string LevelNumberText => $"Level {DisplayIndex:D2}";
+
+        public bool HasFeature(LevelFeatureFlags flags)
+        {
+            return (levelFeatures & flags) != 0;
+        }
     }
 }

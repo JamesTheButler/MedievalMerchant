@@ -154,9 +154,10 @@ GameObject:
   - component: {fileID: 3428135891934740650}
   - component: {fileID: 2061553904268519214}
   - component: {fileID: 3697784413889046846}
+  - component: {fileID: 6291137226414444723}
+  - component: {fileID: 258508738004992759}
   - component: {fileID: 4890942972278885054}
   - component: {fileID: 9180337923716317129}
-  - component: {fileID: 6291137226414444723}
   m_Layer: 5
   m_Name: RetinueMiniUI
   m_TagString: Untagged
@@ -206,6 +207,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c477807dc891ed847b885fae77be5db7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinueMiniUI
+--- !u!114 &6291137226414444723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8729310594904343300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb60c59bb3e529845bb02e7b203d23c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Clickable
+  clicked:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &258508738004992759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8729310594904343300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875631e61a854abe8ff720eb90140672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.FeatureFlagObjectDestroyer
+  keepIf: 2
 --- !u!114 &4890942972278885054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,21 +291,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &6291137226414444723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8729310594904343300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb60c59bb3e529845bb02e7b203d23c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Clickable
-  clicked:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &698104681080358629
 PrefabInstance:
   m_ObjectHideFlags: 0
