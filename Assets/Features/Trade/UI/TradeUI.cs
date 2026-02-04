@@ -119,6 +119,16 @@ namespace Features.Trade.UI
             _tradeType = tradeType;
         }
 
+        public void CompleteTrade()
+        {
+            if (_ongoingTrade.Amount <= 0 || _ongoingTrade.Amount > GetMaxAffordableAmount())
+                return;
+
+            _ongoingTrade.Complete();
+            _wasSuccessfulTrade = true;
+            Close();
+        }
+
         protected override void OnOpen()
         {
             _town = _selection.SelectedTown;
@@ -185,8 +195,13 @@ namespace Features.Trade.UI
 
         private void SetMaxAmount()
         {
-            var maxAffordableGoodAmount = Mathf.FloorToInt(_buyingInventory.Funds.Value / _ongoingTrade.SinglePrice);
+            var maxAffordableGoodAmount = GetMaxAffordableAmount();
             amountSlider.value = Mathf.Min(maxAffordableGoodAmount, amountSlider.maxValue);
+        }
+
+        private int GetMaxAffordableAmount()
+        {
+            return Mathf.FloorToInt(_buyingInventory.Funds.Value / _ongoingTrade.SinglePrice);
         }
 
         private void SetUpSlider()
@@ -257,16 +272,6 @@ namespace Features.Trade.UI
         {
             _ongoingTrade.Abort();
             _wasSuccessfulTrade = false;
-            Close();
-        }
-
-        public void CompleteTrade()
-        {
-            if (_ongoingTrade.Amount <= 0)
-                return;
-
-            _ongoingTrade.Complete();
-            _wasSuccessfulTrade = true;
             Close();
         }
 
