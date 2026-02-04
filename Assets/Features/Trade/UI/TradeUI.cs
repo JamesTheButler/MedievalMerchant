@@ -326,7 +326,7 @@ namespace Features.Trade.UI
 
         private void RefreshProfitText(float? profit)
         {
-            var isProfitShowable = profit != null && float.IsFinite(profit.Value);
+            var isProfitShowable = _tradeType == TradeType.Sell && profit != null && float.IsFinite(profit.Value);
 
             profitGroup.alpha = isProfitShowable ? 1f : 0f;
 
