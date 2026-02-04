@@ -40,7 +40,7 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
             _player = GameplayContext.Instance.Model.Player;
             _gameDateModel = GameplayContext.Instance.Model.DateModel;
 
-            _player.Location.CurrentTown.Observe(OnTownChanged);
+            _player.Location.CurrentTown.Observe(OnTownChanged, false);
 
             _isBound = true;
         }
