@@ -14,18 +14,32 @@ namespace Features.Tutorial.Onboarding.UI
         [SerializeField, Required]
         private Button nextButton;
 
+        [SerializeField, Required]
+        private PopupOpenCloseAnimatorHandler animatorHandler;
+
+        private void Awake()
+        {
+            animatorHandler.OnClosed += OnClosedAnimationCompleted;
+        }
+
+        private void OnClosedAnimationCompleted()
+        {
+            gameObject.SetActive(false);
+        }
+
         public void Show(string message, Action onNextClick)
         {
             explainerText.text = message;
             nextButton.onClick.AddListener(() => onNextClick?.Invoke());
             gameObject.SetActive(true);
+            animatorHandler.StartOpenAnimation();
         }
 
         public void Hide()
         {
             explainerText.text = string.Empty;
             nextButton.onClick.RemoveAllListeners();
-            gameObject.SetActive(false);
+            animatorHandler.StartCloseAnimation();
         }
     }
 }
