@@ -30,6 +30,7 @@ namespace Features.Tutorial.Onboarding.UI
         public void Show(string message, Action onNextClick)
         {
             explainerText.text = message;
+            explainerText.alpha = 1f;
             nextButton.onClick.AddListener(() => onNextClick?.Invoke());
             gameObject.SetActive(true);
             animatorHandler.StartOpenAnimation();
@@ -37,7 +38,7 @@ namespace Features.Tutorial.Onboarding.UI
 
         public void Hide()
         {
-            explainerText.text = string.Empty;
+            explainerText.alpha = 0f;
             nextButton.onClick.RemoveAllListeners();
             animatorHandler.StartCloseAnimation();
         }
