@@ -49,7 +49,7 @@ namespace Features.Map.Tiling
 
         public void PlayUpgradeSfx()
         {
-            upgradeAudioSource.Play();
+            //upgradeAudioSource.Play();
         }
     }
 }
