@@ -22,6 +22,9 @@ namespace Features.Tutorial.UI
         [SerializeField, Required]
         private RawImage tutorialImage;
 
+        [SerializeField, Required]
+        private GameObject chapterGroup;
+
         private TutorialTopicData _currentTopic;
         private int _currentChapterIndex = -1;
         private int _chapterCount;
@@ -38,6 +41,7 @@ namespace Features.Tutorial.UI
             _currentTopic = topicData;
             _chapterCount = topicData.Chapters.Count;
             topicTitleText.text = topicData.Title;
+            chapterGroup.gameObject.SetActive(_chapterCount > 1);
             SetChapter(0);
         }
 

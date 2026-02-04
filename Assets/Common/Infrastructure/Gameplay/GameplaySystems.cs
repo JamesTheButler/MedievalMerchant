@@ -52,7 +52,6 @@ namespace Common.Infrastructure.Gameplay
             _systems.Add(new DateSystem());
             _systems.Add(new ConditionSystem());
             _systems.Add(new StatSystem());
-            _systems.Add(new TutorialSystem());
             _systems.Add(new NotificationPingSystem());
             _systems.Add(new NotificationLoggerSystem());
             _systems.Add(new ProgressionSystem());
