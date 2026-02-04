@@ -90,7 +90,7 @@ namespace Features.Trade.UI
 
         public override void Initialize()
         {
-            _isHagglingEnabled = GameplayContext.Instance.LevelInfo.HasFeature(LevelFeatureFlags.Tutorial);
+            _isHagglingEnabled = GameplayContext.Instance.LevelInfo.HasFeature(LevelFeatureFlags.Haggling);
 
             TradeButton.onClick.AddListener(CompleteTrade);
             cancelButton.onClick.AddListener(AbortTrade);
@@ -100,6 +100,10 @@ namespace Features.Trade.UI
             if (_isHagglingEnabled)
             {
                 haggleGroup.HaggleLevelChanged += OnSelectedHaggleLevelChanged;
+            }
+            else
+            {
+                Destroy(haggleGroup.gameObject);
             }
 
             SetUpSlider();
