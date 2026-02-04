@@ -208,8 +208,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2612985004808705794}
+  - component: {fileID: 1691027521439500728}
   - component: {fileID: 3776163085840766194}
-  - component: {fileID: 3488523733671899104}
   m_Layer: 0
   m_Name: OnboardingMapBlinker
   m_TagString: Untagged
@@ -233,6 +233,19 @@ Transform:
   - {fileID: 8466160404201753007}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1691027521439500728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6817790450525547300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 382f7410b9fb47ffa30af0a2d97e1321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.FeatureFlagObjectDestroyer
+  keepIf: 8
 --- !u!114 &3776163085840766194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,16 +261,3 @@ MonoBehaviour:
   lmbSprite: {fileID: 7465233869441490399, guid: 670af5e79dc2d0345976c4966c8622e7, type: 3}
   rmbSprite: {fileID: 1879813724864882134, guid: 670af5e79dc2d0345976c4966c8622e7, type: 3}
   mouseSpriteRenderer: {fileID: 4141143745219632376}
---- !u!114 &3488523733671899104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6817790450525547300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 875631e61a854abe8ff720eb90140672, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.FeatureFlagObjectDestroyer
-  keepIf: 8

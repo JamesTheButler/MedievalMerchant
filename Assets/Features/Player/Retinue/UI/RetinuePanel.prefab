@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 230451350858110445}
   - component: {fileID: 3046280733426677061}
+  - component: {fileID: 5439512857457546651}
   - component: {fileID: 557031372147791225}
   - component: {fileID: 9018039141337921708}
   - component: {fileID: 8012183369744490901}
   - component: {fileID: 7157196241662777385}
-  - component: {fileID: 1633452121887716120}
   m_Layer: 5
   m_Name: RetinuePanel
   m_TagString: Untagged
@@ -57,6 +57,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Retinue.UI.RetinuePanel
   upkeepText: {fileID: 2246832029537089448}
   upkeepTooltip: {fileID: 8613685825678249440}
+--- !u!114 &5439512857457546651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279657000758623235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 382f7410b9fb47ffa30af0a2d97e1321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.FeatureFlagObjectDestroyer
+  keepIf: 2
 --- !u!114 &557031372147791225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,19 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Features.Audio.Sfx.PanelSfxTrigger
   panel: {fileID: 3046280733426677061}
---- !u!114 &1633452121887716120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 279657000758623235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 875631e61a854abe8ff720eb90140672, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.FeatureFlagObjectDestroyer
-  keepIf: 2
 --- !u!1 &1663339716229101076
 GameObject:
   m_ObjectHideFlags: 0
