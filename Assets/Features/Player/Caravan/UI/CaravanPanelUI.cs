@@ -46,6 +46,7 @@ namespace Features.Player.Caravan.UI
                 var cartId = i;
                 cartUis[i].Bind(
                     caravanManager.Carts[i],
+                    i,
                     () => caravanUpgrader.RequestUpgrade(cartId),
                     () => caravanUpgrader.RequestUpgrade(caravanManager.UnlockedCartCount),
                     OnCellAdded);

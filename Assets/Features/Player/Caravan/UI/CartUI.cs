@@ -36,7 +36,7 @@ namespace Features.Player.Caravan.UI
 
         [Header("Header")]
         [SerializeField, Required]
-        private TMP_Text moveSpeedText, upkeepText;
+        private TMP_Text moveSpeedText, upkeepText, waggonText;
 
         [SerializeField, Required]
         private SimpleTooltipHandler moveSpeedTooltip, upkeepTooltip;
@@ -56,13 +56,15 @@ namespace Features.Player.Caravan.UI
 
         private int _lastActiveSlotCount;
 
-        public void Bind(Cart cart, Action upgradeAction, Action unlockAction, Action<InventoryCell> onCellAdded)
+        public void Bind(Cart cart, int index, Action upgradeAction, Action unlockAction,
+            Action<InventoryCell> onCellAdded)
         {
             _player = GameplayContext.Instance.Model.Player;
             _caravanConfig = ConfigurationManager.Configurations.CaravanConfig;
             _caravanResources = ResourceManager.Instance.CaravanResources;
 
             _cart = cart;
+            waggonText.text = $"Waggon {index + 1}";
 
             OnCellAdded += onCellAdded;
 
