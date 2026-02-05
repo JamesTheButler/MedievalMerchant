@@ -93,11 +93,9 @@ namespace Features.Tutorial.Onboarding.Logic
         public void PostExplainer(int explainerIndex, Action onNextClicked)
         {
             var message = _onboardingResources.explainerTexts
-                .GetValueOrDefault(explainerIndex, "Error")
-                .Replace("Town A", _townA.Name, StringComparison.InvariantCultureIgnoreCase)
-                .Replace("TownA", _townA.Name, StringComparison.InvariantCultureIgnoreCase)
-                .Replace("Town B", _townB.Name, StringComparison.InvariantCultureIgnoreCase)
-                .Replace("TownB", _townB.Name, StringComparison.InvariantCultureIgnoreCase);
+                .GetValueOrDefault(explainerIndex, string.Empty)
+                .Replace("TownA", _townA.Name)
+                .Replace("TownB", _townB.Name);
 
             explainerUI.Show(message, onNextClicked);
         }
@@ -237,6 +235,7 @@ namespace Features.Tutorial.Onboarding.Logic
 
         private OnboardingSequence FinishOnboardingSequence()
         {
+            const float townBDevelopmentLevel = 82.5f;
             var townUpgradeTask = new OnboardingTask($"Upgrade {_townB.Name} to tier II.");
 
             return new OnboardingSequence(DelayBetweenSteps,
@@ -248,11 +247,12 @@ namespace Features.Tutorial.Onboarding.Logic
                 new OnboardingSimpleStep(() =>
                 {
                     var currentDev = _townB.DevelopmentManager.DevelopmentScore.Value;
-                    if (currentDev > 75f)
+                    if (currentDev > townBDevelopmentLevel)
                         return;
 
-                    _townB.DevelopmentManager.AddDevelopmentChange(75f - currentDev);
+                    _townB.DevelopmentManager.AddDevelopmentChange(townBDevelopmentLevel - currentDev);
                 }),
+                new OnboardingEnsureFundsStep(800),
                 new OnboardingTaskStep(townUpgradeTask),
                 new OnboardingTownUpgradeStep(_townB, Tier.Tier2, townUpgradeTask),
                 new OnboardingTaskClearStep()
