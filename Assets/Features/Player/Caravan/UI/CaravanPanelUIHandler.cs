@@ -4,7 +4,6 @@ using Features.Towns;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
 
 namespace Features.Player.Caravan.UI
 {
