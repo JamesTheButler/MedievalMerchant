@@ -13,9 +13,9 @@ namespace Features.Levels.Conditions.Model
         public IReadOnlyList<IWinCondition> WinConditions => _winConditions;
         public IReadOnlyList<ILossCondition> LossConditions => _lossConditions;
 
-        public event Action LevelWon;
-        public event Action<ILossCondition> LevelLost;
-        public event Action<int> CompletionCountChanged;
+        public ObservableEvent LevelWon { get; } = new();
+        public ObservableEvent<ILossCondition> LevelLost { get; } = new();
+        public ObservableEvent<int> CompletionCountChanged { get; } = new();
         public Observable<bool> IsLossClose { get; } = new();
 
         private readonly ConditionModelFactory _factory = new();

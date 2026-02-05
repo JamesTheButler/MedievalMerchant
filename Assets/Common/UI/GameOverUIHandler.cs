@@ -18,8 +18,8 @@ namespace Common.UI
         {
             _gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
             _conditions = GameplayContext.Instance.Model.Conditions;
-            _conditions.LevelWon += OnWin;
-            _conditions.LevelLost += OnLoss;
+            _conditions.LevelWon.Observe(OnWin);
+            _conditions.LevelLost.Observe(OnLoss);
 
             gameOverUi.Hide();
         }

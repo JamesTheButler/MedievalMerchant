@@ -19,9 +19,13 @@ namespace Features.Audio.Sfx
         {
             _sfxService = GlobalContext.Instance.Services.SfxService;
 
-            var playerModel = GameplayContext.Instance.Model.Player;
+            var model = GameplayContext.Instance.Model;
+
+            var playerModel = model.Player;
+            var gameSpeedModel = model.GameSpeed;
+            var levelConditions = model.Conditions;
+
             var selection = GameplayContext.Instance.Selection;
-            var gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
             var navigationService = GameplayContext.Instance.Services.NavigationService;
             var tradeService = GameplayContext.Instance.Services.TradeService;
 
@@ -31,8 +35,8 @@ namespace Features.Audio.Sfx
                 navigationService.NavigationStarted.Observe(OnNavigationChanged),
                 tradeService.TradeCompleted.Observe(OnTradeCompleted),
                 //  LevelStarted // no hook exists for this, i think
-                //  LevelConditions.LevelWon += ObsEvnt!
-                //  LevelConditions.LevelLost += ObsEvnt!
+                levelConditions.LevelWon.Observe(() => Play(GameSoundEffect.LevelWon)),
+                levelConditions.LevelLost.Observe(_ => Play(GameSoundEffect.LevelLost)),
                 //  EventModel.EventAdded +=  ObsEvnt!
                 gameSpeedModel.IsPaused.Observe(OnGamePaused),
                 gameSpeedModel.GameSpeed.Observe(OnGameSpeedChanged)
@@ -47,8 +51,6 @@ namespace Features.Audio.Sfx
                 // CartBought
                 // CompanionUpgraded
             );
-
-            var model = GameplayContext.Instance.Model;
 
             foreach (var town in model.Towns.Values)
             {

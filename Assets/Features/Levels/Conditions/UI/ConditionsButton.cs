@@ -23,7 +23,7 @@ namespace Features.Levels.Conditions.UI
             _levelConditions = GameplayContext.Instance.Model.Conditions;
 
             _winConditionCount = _levelConditions.WinConditions.Count;
-            _levelConditions.CompletionCountChanged += UpdateText;
+            _levelConditions.CompletionCountChanged.Observe(UpdateText);
             _levelConditions.IsLossClose.Observe(UpdateIcon);
 
             UpdateText(0);
@@ -32,7 +32,7 @@ namespace Features.Levels.Conditions.UI
 
         private void OnDestroy()
         {
-            _levelConditions.CompletionCountChanged -= UpdateText;
+            _levelConditions.CompletionCountChanged.StopObserving(UpdateText);
             _levelConditions.IsLossClose.StopObserving(UpdateIcon);
         }
 

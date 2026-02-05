@@ -18,12 +18,12 @@ namespace Features.Levels.Serialization
             _gameDateModel = GameplayContext.Instance.Model.DateModel;
             _progressModel = GlobalContext.Instance.Model.ProgressModel;
 
-            _conditions.LevelWon += LevelCompleted;
+            _conditions.LevelWon.Observe(LevelCompleted);
         }
 
         public void CleanUp()
         {
-            _conditions.LevelWon -= LevelCompleted;
+            _conditions.LevelWon.StopObserving(LevelCompleted);
         }
 
         private void LevelCompleted()
