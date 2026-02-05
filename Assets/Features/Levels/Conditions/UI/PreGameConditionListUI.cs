@@ -31,6 +31,7 @@ namespace Features.Levels.Conditions.UI
 
                 listItemScript.Setup(icon, condition.Description);
             }
+            Canvas.ForceUpdateCanvases();
         }
 
         private void Clear()
