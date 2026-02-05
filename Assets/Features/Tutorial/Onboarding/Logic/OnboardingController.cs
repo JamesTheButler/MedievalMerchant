@@ -220,7 +220,7 @@ namespace Features.Tutorial.Onboarding.Logic
                     goToATask,
                     sellBerriesTask,
                     sellGameTask),
-                new OnboardingEnsureFundsStep(500),
+                new OnboardingEnsureFundsStep(800),
                 new OnboardingCartUpgradeStep(2, upgradeCartTask),
                 new OnboardingEnsureFundsStep(300),
                 new OnboardingTradeStep(TradeType.Buy, Good.T1Berries, berryCount, _townB, buyBerriesTask),
@@ -235,7 +235,7 @@ namespace Features.Tutorial.Onboarding.Logic
 
         private OnboardingSequence FinishOnboardingSequence()
         {
-            const float townBDevelopmentLevel = 82.5f;
+            const float townBDevelopmentLevel = 87.5f;
             var townUpgradeTask = new OnboardingTask($"Upgrade {_townB.Name} to tier II.");
 
             return new OnboardingSequence(DelayBetweenSteps,

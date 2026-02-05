@@ -18,6 +18,8 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
         private readonly int _amount;
         private readonly Town _town;
 
+        private readonly Inventory.Inventory _buyerInventory;
+
         private int _tradedAmount;
 
         private TradeService _tradeService;
@@ -29,6 +31,9 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
             _amount = amount;
             _town = town;
             Task = task;
+            _buyerInventory = _tradeType == TradeType.Buy
+                ? GameplayContext.Instance.Model.Player.Inventory
+                : _town.Inventory;
         }
 
         public void Initialize()
@@ -39,7 +44,7 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
 
         public IEnumerator Run(OnboardingController controller)
         {
-            while (_tradedAmount < _amount)
+            while (_tradedAmount < _amount && _buyerInventory.Get(_good) < _amount)
             {
                 controller.Blink(_town, MouseButton.Left);
 
