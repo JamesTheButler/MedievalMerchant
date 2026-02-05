@@ -15,8 +15,8 @@ namespace Common.Infrastructure.Global
         public IReadOnlyList<CompletedLevelSaveData> CompletedLevels => _completedLevels;
         private  GamePersistenceService _persistenceService;
 
-        private readonly List<OngoingLevelSaveData> _ongoingLevels = new(new OngoingLevelSaveData[5]);
-        private readonly List<CompletedLevelSaveData> _completedLevels = new(new CompletedLevelSaveData[5]);
+        private readonly List<OngoingLevelSaveData> _ongoingLevels = new(new OngoingLevelSaveData[LevelCount]);
+        private readonly List<CompletedLevelSaveData> _completedLevels = new(new CompletedLevelSaveData[LevelCount]);
 
         public void Initialize()
         {

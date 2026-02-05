@@ -29,6 +29,8 @@ namespace Features.Levels.Serialization
         private void LevelCompleted()
         {
             var levelIndex = GlobalContext.CurrentLevelInfo!.InternalIndex;
+            if (levelIndex < 0)
+                return;
 
             var previousFinishDate = _progressModel.CompletedLevels[levelIndex]?.CompletionDate;
             var levelSaveData = new CompletedLevelSaveData(_gameDateModel.GameDate.Value);
