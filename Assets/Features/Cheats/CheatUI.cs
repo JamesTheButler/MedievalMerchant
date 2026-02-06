@@ -1,6 +1,5 @@
 using System;
 using Common.Infrastructure.Gameplay;
-using Common.UI.Elements;
 using Common.UI.Elements.Panels;
 using NaughtyAttributes;
 using TMPro;

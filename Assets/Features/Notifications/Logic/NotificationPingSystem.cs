@@ -2,7 +2,6 @@
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.UI;
-using Common.UI.Elements;
 using Common.UI.Elements.Panels;
 using Features.Levels.GameModifiers.Events;
 using Features.Towns;

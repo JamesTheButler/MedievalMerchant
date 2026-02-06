@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Common.Infrastructure.Global;
 using Features.Audio.Sfx;
 using Features.Levels;
 using Features.Levels.Conditions.Logic;
@@ -17,7 +16,6 @@ using Features.Towns.Missions;
 using Features.Towns.Production.Logic;
 using Features.Towns.Reputation.Logic;
 using Features.Trade.Logic.Price;
-using Features.Tutorial.Logic;
 
 namespace Common.Infrastructure.Gameplay
 {

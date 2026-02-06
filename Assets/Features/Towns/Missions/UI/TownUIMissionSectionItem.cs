@@ -1,5 +1,4 @@
 using Common.Infrastructure;
-using Common.UI.Elements;
 using Common.UI.Elements.Cells;
 using Features.Goods.Config;
 using Features.Towns.Missions.Data;

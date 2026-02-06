@@ -1,5 +1,4 @@
 using Common.Infrastructure.Global;
-using Common.UI.Elements;
 using Common.UI.Elements.Panels;
 using NaughtyAttributes;
 using UnityEngine;

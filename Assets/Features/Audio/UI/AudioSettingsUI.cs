@@ -1,4 +1,3 @@
-using Common.UI.Elements;
 using Common.UI.Elements.Panels;
 
 namespace Features.Audio.UI

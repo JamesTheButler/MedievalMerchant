@@ -1,5 +1,4 @@
 ﻿using System;
-using Common.UI.Elements;
 using Common.UI.Elements.Panels;
 using Common.UI.Utility;
 using Features.Notifications.Logic;
