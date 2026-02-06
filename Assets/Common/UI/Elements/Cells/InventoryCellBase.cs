@@ -2,7 +2,7 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
-namespace Common.UI.Elements
+namespace Common.UI.Elements.Cells
 {
     public class InventoryCellBase : GoodCell
     {

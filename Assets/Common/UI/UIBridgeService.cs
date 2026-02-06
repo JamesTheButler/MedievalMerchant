@@ -1,6 +1,7 @@
 ﻿using System;
 using Common.Infrastructure;
 using Common.UI.Elements;
+using Common.UI.Elements.Panels;
 using Features.Tutorial;
 
 namespace Common.UI

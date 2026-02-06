@@ -1,30 +1,32 @@
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-namespace Common.UI.Elements
+namespace Common.UI.Elements.Panels
 {
-    public sealed class DynamicPanelAlphaTweener : InitializableBehavior
+    public sealed class DynamicPanelInputBlocker : InitializableBehavior
     {
         [SerializeField, Required]
         private DynamicPanel dynamicPanel;
 
-        [SerializeField, Required]
-        private AlphaTween alphaTween;
+        private PlayerInput _playerInput;
 
         public override void Initialize()
         {
+            _playerInput = FindAnyObjectByType<PlayerInput>();
+
             dynamicPanel.Opened += OnPanelOpened;
             dynamicPanel.Closed += OnPanelClosed;
         }
 
         private void OnPanelOpened()
         {
-            alphaTween.TweenIn();
+            _playerInput?.SwitchCurrentActionMap(ActionMap.UI);
         }
 
         private void OnPanelClosed()
         {
-            alphaTween.TweenOut();
+            _playerInput?.SwitchCurrentActionMap(ActionMap.Gameplay);
         }
     }
 }

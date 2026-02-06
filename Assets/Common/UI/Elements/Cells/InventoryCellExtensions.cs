@@ -1,7 +1,7 @@
 using Common.Types;
 using JetBrains.Annotations;
 
-namespace Common.UI.Elements
+namespace Common.UI.Elements.Cells
 {
     [PublicAPI]
     public static class InventoryCellExtensions

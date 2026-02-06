@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Common.UI.Elements;
+using Common.UI.Elements.Cells;
 using Common.Utility;
 using Features.Towns.UI;
 using NaughtyAttributes;

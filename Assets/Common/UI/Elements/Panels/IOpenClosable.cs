@@ -1,6 +1,6 @@
 using System;
 
-namespace Common.UI.Elements
+namespace Common.UI.Elements.Panels
 {
     public interface IOpenClosable
     {

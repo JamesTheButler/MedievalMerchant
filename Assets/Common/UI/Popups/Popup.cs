@@ -1,5 +1,6 @@
 using System;
 using Common.UI.Elements;
+using Common.UI.Elements.Panels;
 using UnityEngine;
 
 namespace Common.UI.Popups

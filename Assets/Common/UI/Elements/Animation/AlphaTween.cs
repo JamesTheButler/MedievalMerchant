@@ -2,7 +2,7 @@ using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Common.UI.Elements
+namespace Common.UI.Elements.Animation
 {
     public sealed class AlphaTween : MonoBehaviour
     {
@@ -10,27 +10,26 @@ namespace Common.UI.Elements
         private CanvasGroup canvasGroup;
 
         [SerializeField]
-        private float targetAlpha, inDurationInSec = .5f, outDurationInSec = 0.25f;
+        private float targetAlpha, inDurationInSec = .5f;
 
         [SerializeField]
-        private Ease easeIn = Ease.OutCubic, easeOut = Ease.InCubic;
+        private Ease easeIn = Ease.OutCubic;
 
         private Tween _tween;
 
-        public void TweenIn()
+        public void FadeIn()
         {
             _tween?.Kill();
             _tween = canvasGroup
                 .DOFade(targetAlpha, inDurationInSec)
+                .SetUpdate(true)
                 .SetEase(easeIn);
         }
 
-        public void TweenOut()
+        public void FadeOut()
         {
             _tween?.Kill();
-            _tween = canvasGroup
-                .DOFade(0, outDurationInSec)
-                .SetEase(easeOut);
+            canvasGroup.alpha = 0f;
         }
     }
 }

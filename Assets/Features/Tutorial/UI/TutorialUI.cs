@@ -1,4 +1,5 @@
 ﻿using Common.UI.Elements;
+using Common.UI.Elements.Panels;
 using Common.Utility;
 using Features.Tutorial.Data;
 using NaughtyAttributes;

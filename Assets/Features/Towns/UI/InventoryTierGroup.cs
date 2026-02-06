@@ -3,6 +3,7 @@ using System.Linq;
 using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Elements;
+using Common.UI.Elements.Cells;
 using Common.UI.Tooltips;
 using Features.Goods.Config;
 using NaughtyAttributes;

@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Common.UI.Elements
+namespace Common.UI.Elements.Cells
 {
     public class GoodCell : MonoBehaviour, IPointerClickHandler
     {

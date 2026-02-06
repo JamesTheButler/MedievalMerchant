@@ -1,5 +1,6 @@
 using Common.Types;
 using Common.UI.Elements;
+using Common.UI.Elements.Cells;
 using NaughtyAttributes;
 using UnityEngine;
 

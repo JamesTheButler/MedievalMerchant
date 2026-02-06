@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Common.UI.Elements;
+using Common.UI.Elements.Panels;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;

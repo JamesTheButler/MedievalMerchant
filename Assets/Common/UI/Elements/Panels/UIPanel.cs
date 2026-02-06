@@ -1,4 +1,4 @@
-﻿namespace Common.UI.Elements
+﻿namespace Common.UI.Elements.Panels
 {
     public enum UIPanel
     {

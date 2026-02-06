@@ -3,7 +3,7 @@ using Features.Ticking.Logic;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Common.UI.Elements
+namespace Common.UI.Elements.Panels
 {
     public sealed class DynamicPanelGamePauser : InitializableBehavior
     {

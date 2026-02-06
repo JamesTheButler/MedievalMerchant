@@ -4,6 +4,8 @@ using Common.Infrastructure.Gameplay;
 using Common.Types;
 using Common.UI;
 using Common.UI.Elements;
+using Common.UI.Elements.Cells;
+using Common.UI.Elements.Panels;
 using Common.UI.Popups;
 using Common.UI.Tooltips;
 using Features.Player.Caravan.Logic;

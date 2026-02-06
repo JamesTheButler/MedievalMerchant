@@ -4,7 +4,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Common.UI.Elements
+namespace Common.UI.Elements.Cells
 {
     public sealed class GoodCellClickHandler : InitializableBehavior
     {
