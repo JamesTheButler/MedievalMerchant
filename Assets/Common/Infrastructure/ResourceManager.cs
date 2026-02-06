@@ -1,4 +1,5 @@
 using Common.Config;
+using Common.UI.Elements.Animation;
 using Features.Audio.Data;
 using Features.Goods.Config;
 using Features.Goods.Recipe.Data;
@@ -20,6 +21,9 @@ namespace Common.Infrastructure
     public sealed class ResourceManager : MonoBehaviour
     {
         public static ResourceManager Instance;
+
+        [field: SerializeField, Required]
+        public AnimationResources AnimationResources { get; private set; }
 
         [field: SerializeField, Required]
         public AudioResources AudioResources { get; private set; }
@@ -44,7 +48,7 @@ namespace Common.Infrastructure
 
         [field: SerializeField, Required]
         public FlagResources FlagResources { get; private set; }
-        
+
         [field: SerializeField, Required]
         public HaggleResources HaggleResources { get; private set; }
 
@@ -53,7 +57,7 @@ namespace Common.Infrastructure
 
         [field: SerializeField, Required]
         public OnboardingResources OnboardingResources { get; private set; }
-        
+
         [field: SerializeField, Required]
         public ProducerResources ProducerResources { get; private set; }
 

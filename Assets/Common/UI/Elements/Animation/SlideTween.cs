@@ -1,10 +1,11 @@
+using Common.Infrastructure;
 using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
 
 namespace Common.UI.Elements.Animation
 {
-    public sealed class SlideTween : MonoBehaviour
+    public sealed class SlideTween : InitializableBehavior
     {
         [SerializeField, Required]
         private RectTransform target;
@@ -12,13 +13,17 @@ namespace Common.UI.Elements.Animation
         [SerializeField]
         private Vector2 hiddenAnchoredPos, shownAnchoredPos;
 
-        [SerializeField, Min(0f)]
-        private float durationInSec = 0.5f;
-
         [SerializeField]
         private Ease easeIn = Ease.OutCubic;
 
         private Tween _tween;
+
+        private float _durationInSec;
+
+        public override void Initialize()
+        {
+            _durationInSec = ResourceManager.Instance.AnimationResources.PanelSlideInDurationSeconds;
+        }
 
         public void FadeIn()
         {
@@ -27,7 +32,7 @@ namespace Common.UI.Elements.Animation
             target.anchoredPosition = hiddenAnchoredPos;
 
             _tween = target
-                .DOAnchorPos(shownAnchoredPos, durationInSec)
+                .DOAnchorPos(shownAnchoredPos, _durationInSec)
                 .SetEase(easeIn)
                 .SetUpdate(true)
                 .SetLink(gameObject, LinkBehaviour.KillOnDisable);
