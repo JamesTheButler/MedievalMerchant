@@ -136,8 +136,8 @@ GameObject:
   - component: {fileID: 4104517262134822222}
   - component: {fileID: 3924324254548247369}
   - component: {fileID: 2222067406996460329}
-  - component: {fileID: 5010681966389324454}
   - component: {fileID: 7410234430462167431}
+  - component: {fileID: 779537217055476357}
   m_Layer: 5
   m_Name: GameOverUI
   m_TagString: Untagged
@@ -157,6 +157,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8801189175068889776}
   - {fileID: 4754503320244766000}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -177,21 +178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142f33a817a311942b98f75794bd86f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Opened:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7410234430462167431}
-        m_TargetAssemblyTypeName: Features.Audio.Sfx.UISfxTrigger, Assembly-CSharp
-        m_MethodName: PlaySound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   startScene: StartScene
   titleText: {fileID: 3784425352079475707}
   messageText: {fileID: 1334287731633734137}
@@ -205,36 +191,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2406018815397324359}
   m_CullTransparentMesh: 1
---- !u!114 &5010681966389324454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2406018815397324359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &7410234430462167431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,6 +204,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Features.Audio.Sfx.UISfxTrigger
   uiSoundEffect: 2
+--- !u!114 &779537217055476357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2406018815397324359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b80245fb4d64ac491181266a0887930, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.DynamicPanelAlphaTweener
+  dynamicPanel: {fileID: 3924324254548247369}
+  alphaTween: {fileID: 6195399278310351377}
 --- !u!1 &2665572916948995299
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,4 +1316,117 @@ MonoBehaviour:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4806721880360077881, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
   m_PrefabInstance: {fileID: 1934744785935489803}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5626766743670675160
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4104517262134822222}
+    m_Modifications:
+    - target: {fileID: 2661921726385703287, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_Name
+      value: FadedBackground
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+--- !u!114 &6195399278310351377 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2012036301852685513, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+  m_PrefabInstance: {fileID: 5626766743670675160}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e711ed72c6335af43a5c693b033274bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.CanvasGroupTween
+--- !u!224 &8801189175068889776 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3761157038135460968, guid: 75b83081be231fd44977cdee5b7d255e, type: 3}
+  m_PrefabInstance: {fileID: 5626766743670675160}
   m_PrefabAsset: {fileID: 0}

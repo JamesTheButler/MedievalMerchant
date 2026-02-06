@@ -21,7 +21,7 @@ namespace Common.UI
             _conditions.LevelWon.Observe(OnWin);
             _conditions.LevelLost.Observe(OnLoss);
 
-            gameOverUi.Hide();
+            gameOverUi.Close();
         }
 
         private void OnWin()

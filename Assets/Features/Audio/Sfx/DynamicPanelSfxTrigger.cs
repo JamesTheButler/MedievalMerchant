@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Features.Audio.Sfx
 {
-    public sealed class PanelSfxTrigger : InitializableBehavior
+    public sealed class DynamicPanelSfxTrigger : InitializableBehavior
     {
         [SerializeField, Required]
         private DynamicPanel panel;

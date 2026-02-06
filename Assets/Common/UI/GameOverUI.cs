@@ -13,17 +13,13 @@ using Features.Stats;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace Common.UI
 {
-    public sealed class GameOverUI : InitializableBehavior
+    public sealed class GameOverUI : DynamicPanel
     {
-        [SerializeField]
-        private UnityEvent Opened;
-
         [SerializeField, Scene]
         private string startScene;
 
@@ -54,13 +50,21 @@ namespace Common.UI
             Show(false);
         }
 
+        protected override void OnOpen()
+        {
+            gameObject.SetActive(true);
+        }
+
+        protected override void OnClose()
+        {
+            gameObject.SetActive(false);
+        }
+
         private void Show(bool isWon)
         {
             var playerInput = FindAnyObjectByType<PlayerInput>();
             playerInput.enabled = false;
-            
-            gameObject.SetActive(true);
-            Opened.Invoke();
+
             titleText.text = isWon ? "Level Finished!".WithStyle(Style.Good) : "Game Over!".WithStyle(Style.Bad);
 
             var currentLevel = GlobalContext.CurrentLevelInfo!;
@@ -76,6 +80,7 @@ namespace Common.UI
             var statisticsText = GenerateStatisticsText();
             dynamicStatsText.text = statisticsText;
             Debug.Log($"Game Over Stats: {dynamicStatsText}");
+            Open();
         }
 
         private string GenerateStatisticsText()
@@ -115,11 +120,6 @@ namespace Common.UI
             var favoriteGoodAmount = _statsModel.TradedGoods[favoriteGood];
             var favoriteGoodString = $"{favoriteGoodName} (traded {favoriteGoodAmount} times)";
             return favoriteGoodString;
-        }
-
-        public void Hide()
-        {
-            gameObject.SetActive(false);
         }
 
         public void BackToMainMenu()
