@@ -11,7 +11,6 @@ namespace Features.Levels.Conditions.Logic
 
         private DateModel _currentDateModel;
         private PlayerModel _playerModel;
-
         private Date _bankruptcyDate;
         private bool _isBankrupt;
 
@@ -41,7 +40,7 @@ namespace Features.Levels.Conditions.Logic
                 _isBankrupt = true;
                 _bankruptcyDate = _currentDateModel.GameDate.Value + _condition.MaxBankruptcyDurationInDays;
                 _currentDateModel.GameDate.Observe(OnGameDateChanged);
-                _condition.Progress.SetProgress(0);
+                SetNotBankrupt();
             }
 
             // left bankruptcy countdown
@@ -50,15 +49,21 @@ namespace Features.Levels.Conditions.Logic
                 _isBankrupt = false;
                 _bankruptcyDate = null;
                 _currentDateModel.GameDate.StopObserving(OnGameDateChanged);
-                _condition.Progress.SetProgress(0);
+                SetNotBankrupt();
             }
+        }
+
+        private void SetNotBankrupt()
+        {
+            _condition.Progress.SetProgress(0);
+            _condition.IsClose.Value = false;
         }
 
         private void OnGameDateChanged(Date currentDate)
         {
             if (!_isBankrupt)
             {
-                _condition.Progress.SetProgress(0);
+                SetNotBankrupt();
                 return;
             }
 
@@ -76,6 +81,7 @@ namespace Features.Levels.Conditions.Logic
             }
 
             _condition.Progress.SetProgress(_condition.MaxBankruptcyDurationInDays - diff);
+            _condition.IsClose.Value = diff <= _condition.DaysLeftThreshold;
         }
     }
 }

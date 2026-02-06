@@ -12,6 +12,9 @@ namespace Features.Levels.Conditions.Data
         [field: SerializeField]
         public int BankruptcyFundsThreshold { get; private set; }
 
+        [field: SerializeField]
+        public int DaysLeftThreshold { get; private set; } = 4;
+
         public override ConditionType Type => ConditionType.BankruptcyLossCondition;
 
         public override string Description => "You lose if you run out of coin";

@@ -1,24 +1,43 @@
-using System;
 using System.Collections.Generic;
 using Common.Infrastructure;
+using Common.Infrastructure.Observation;
+using Common.UI.Elements;
 using Common.Utility;
 using Features.Levels.Conditions.Model;
+using NaughtyAttributes;
 using UnityEngine;
 using ConditionResources = Features.Levels.Conditions.Config.ConditionResources;
 
 namespace Features.Levels.Conditions.UI
 {
-    public sealed class InGameConditionListUI : MonoBehaviour
+    public sealed class InGameConditionListUI : InitializableBehavior
     {
-        [SerializeField]
-        private GameObject listItemPrefab;
+        [SerializeField, Required]
+        private InGameConditionListItem listItemPrefab;
 
-        [SerializeField]
+        [SerializeField, Required]
         private GameObject listContainer;
 
-        private readonly Lazy<ConditionResources> _conditionResources =
-            new(() => ResourceManager.Instance.ConditionResources);
-        
+        [SerializeField, Required]
+        private Sprite incompleteIcon, warningIcon, completeIcon;
+
+        private ConditionResources _conditionResources;
+
+        private readonly Dictionary<ICondition, InGameConditionListItem> _listItems = new();
+
+        private readonly Bindings _bindings = new();
+
+        public override void Initialize()
+        {
+            _conditionResources = ResourceManager.Instance.ConditionResources;
+        }
+
+        public override void CleanUp()
+        {
+            base.CleanUp();
+            _bindings.UnbindAll();
+        }
+
         public void Setup(IEnumerable<ICondition> conditions)
         {
             Clear();
@@ -26,17 +45,32 @@ namespace Features.Levels.Conditions.UI
             foreach (var condition in conditions)
             {
                 var listItem = Instantiate(listItemPrefab, listContainer.transform);
-                var listItemScript = listItem.GetComponent<InGameConditionListItem>();
-                var icon = _conditionResources.Value.Conditions[condition.Type].Icon;
+                var icon = _conditionResources.Conditions[condition.Type].Icon;
+                listItem.Setup(condition.Description, icon);
+                _listItems.Add(condition, listItem);
 
-                listItemScript.Setup(condition.Description, icon, condition.Progress);
-                if (condition is not ILossCondition)
+                _bindings.Track(
+                    condition.Progress.CurrentValueText.Observe(listItem.SetProgressText),
+                    condition.Progress.IsCompleted.Observe(isCompleted =>
+                        listItem.SetProgressIcon(isCompleted ? completeIcon : incompleteIcon))
+                );
+
+                if (condition is not ILossCondition lossCondition)
                     continue;
 
-                var warningThreshold = _conditionResources.Value.WarningThresholdPercent;
-                var warningIcon = _conditionResources.Value.WarningIcon;
-                listItemScript.AddThreshold(warningThreshold, warningIcon);
+                _bindings.Track(
+                    lossCondition.IsClose.Observe(isClose => RefreshProgressIcon(condition, isClose))
+                );
             }
+        }
+
+        private void RefreshProgressIcon(ICondition condition, bool isClose)
+        {
+            var listItem = _listItems[condition];
+
+            listItem.SetProgressIcon(condition.Progress.IsCompleted.Value
+                ? completeIcon
+                : isClose ? warningIcon : incompleteIcon);
         }
 
         private void Clear()

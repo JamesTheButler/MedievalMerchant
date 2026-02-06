@@ -1,6 +1,7 @@
 using Common.Utility;
 using Features.Audio.Music;
 using Features.Goods.Config;
+using Features.Levels.Conditions.Data;
 using Features.Levels.GameModifiers.Events.Data;
 using Features.Player.Caravan.Config;
 using Features.Player.Retinue.Config;
@@ -23,9 +24,6 @@ namespace Common.Config
     public sealed class Configurations : ScriptableObject
     {
         [field: SerializeField, Required]
-        public PriceModifierConfig PriceModifierConfig { get; private set; }
-
-        [field: SerializeField, Required]
         public CaravanConfig CaravanConfig { get; private set; }
 
         [field: SerializeField, Required]
@@ -45,6 +43,9 @@ namespace Common.Config
 
         [field: SerializeField, Required]
         public MusicConfig MusicConfig { get; private set; }
+
+        [field: SerializeField, Required]
+        public PriceModifierConfig PriceModifierConfig { get; private set; }
 
         [field: SerializeField, Required]
         public ProducerConfig ProducerConfig { get; private set; }

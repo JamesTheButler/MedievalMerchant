@@ -1,0 +1,20 @@
+using Common.Infrastructure;
+using Features.Notifications.Logic;
+using UnityEngine;
+
+namespace Features.Levels.Conditions.Model
+{
+    public sealed record LossConditionNotification(ILossCondition LossCondition) : Notification(
+        "Loss Imminent",
+        LossCondition.WarningMessage,
+        NotificationType.Bad,
+        Severity.Major,
+        GetIcon(LossCondition))
+    {
+        private static Sprite GetIcon(ILossCondition lossCondition)
+        {
+            var conditionResources = ResourceManager.Instance.ConditionResources;
+            return conditionResources.Conditions[lossCondition.Type].Icon;
+        }
+    }
+}

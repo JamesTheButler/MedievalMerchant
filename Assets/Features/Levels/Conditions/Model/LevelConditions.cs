@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Common.Infrastructure;
 using Common.Infrastructure.Observation;
 using Features.Levels.Conditions.Data;
-using ConditionResources = Features.Levels.Conditions.Config.ConditionResources;
 
 namespace Features.Levels.Conditions.Model
 {
@@ -23,11 +21,8 @@ namespace Features.Levels.Conditions.Model
         private readonly List<ILossCondition> _lossConditions = new();
         private readonly HashSet<ILossCondition> _closeLossConditions = new();
 
-        private ConditionResources _conditionResources;
-
         public void Initialize(IEnumerable<ConditionData> conditions)
         {
-            _conditionResources = ResourceManager.Instance.ConditionResources;
             PopulateConditions(conditions);
         }
 
@@ -46,16 +41,15 @@ namespace Features.Levels.Conditions.Model
                         _lossConditions.Add(lossCondition);
                         lossCondition.Progress.IsCompleted.Observe(
                             isCompleted => OnLossConditionChanged(lossCondition, isCompleted), false);
-                        lossCondition.Progress.CurrentValuePercent.Observe(
-                            percent => OnLossConditionProgressChanged(percent, lossCondition), false);
+                        lossCondition.IsClose.Observe(isClose => OnIsCloseChanged(lossCondition, isClose), false);
                         break;
                 }
             }
         }
 
-        private void OnLossConditionProgressChanged(float currentProgressPercent, ILossCondition lossCondition)
+        private void OnIsCloseChanged(ILossCondition lossCondition, bool isClose)
         {
-            if (currentProgressPercent >= _conditionResources.WarningThresholdPercent)
+            if (isClose)
             {
                 _closeLossConditions.Add(lossCondition);
             }
@@ -64,8 +58,7 @@ namespace Features.Levels.Conditions.Model
                 _closeLossConditions.Remove(lossCondition);
             }
 
-            var anyCloseLossConditions = _closeLossConditions.Any();
-            IsLossClose.Value = anyCloseLossConditions;
+            IsLossClose.Value = _closeLossConditions.Any();
         }
 
         private void OnWinConditionChanged(IWinCondition _)

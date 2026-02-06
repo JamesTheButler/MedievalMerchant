@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Features.Audio.Sfx;
 using Features.Levels;
 using Features.Levels.Conditions.Logic;
+using Features.Levels.Conditions.Model;
 using Features.Levels.GameModifiers.Events;
 using Features.Levels.Serialization;
 using Features.Notifications.Logic;
@@ -49,6 +50,7 @@ namespace Common.Infrastructure.Gameplay
         {
             _systems.Add(new DateSystem());
             _systems.Add(new ConditionSystem());
+            _systems.Add(new LossConditionNotificationSystem());
             _systems.Add(new StatSystem());
             _systems.Add(new NotificationPingSystem());
             _systems.Add(new NotificationLoggerSystem());

@@ -13,6 +13,9 @@ namespace Features.Levels.Conditions.Data
         [field: SerializeField, Range(1, DateModel.LastDayOfYear)]
         public int DeadlineDay { get; private set; } = 1;
 
+        [field: SerializeField]
+        public int DaysLeftWarning { get; private set; } = 7;
+
         public override ConditionType Type => ConditionType.TimeoutCondition;
         public override string Description => GetDescription();
 

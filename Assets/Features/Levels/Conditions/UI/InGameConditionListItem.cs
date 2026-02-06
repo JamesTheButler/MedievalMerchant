@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Common.Utility;
 using Features.Levels.Conditions.Logic;
 using NaughtyAttributes;
 using TMPro;
@@ -11,90 +9,27 @@ namespace Features.Levels.Conditions.UI
     public sealed class InGameConditionListItem : MonoBehaviour
     {
         [SerializeField, Required]
-        private TMP_Text descriptionText;
+        private TMP_Text descriptionText, progressText;
 
         [SerializeField, Required]
-        private TMP_Text progressText;
-
-        [SerializeField, Required]
-        private Image completionImage;
-
-        [SerializeField, Required]
-        private Image iconImage;
-
-        [SerializeField, Required]
-        private Sprite incompleteIcon;
-
-        [SerializeField, Required]
-        private Sprite completeIcon;
+        private Image completionImage, iconImage;
 
         private Progress _progress;
 
-        private readonly SortedDictionary<float, Sprite> _thresholdIcons = new();
-
-        public void Setup(string description, Sprite icon, Progress progress)
+        public void Setup(string description, Sprite icon)
         {
             descriptionText.text = description;
             iconImage.sprite = icon;
-
-            if (progress is null)
-            {
-                progressText.gameObject.SetActive(false);
-                completionImage.sprite = incompleteIcon;
-                return;
-            }
-
-            _progress = progress;
-            _progress.CurrentValueText.Observe(OnProgressTextChanged);
-            _progress.CurrentValuePercent.Observe(OnProgressPercentChanged);
         }
 
-        public void AddThreshold(float threshold, Sprite icon)
-        {
-            _thresholdIcons.Add(threshold, icon);
-        }
-
-        private void OnDestroy()
-        {
-            if (_progress is null) return;
-
-            _progress.CurrentValueText.StopObserving(OnProgressTextChanged);
-            _progress.CurrentValuePercent.StopObserving(OnProgressPercentChanged);
-        }
-
-        private void OnProgressTextChanged(string text)
+        public void SetProgressText(string text)
         {
             progressText.text = text;
         }
 
-        private void OnProgressPercentChanged(float progressInPercent)
+        public void SetProgressIcon(Sprite icon)
         {
-            Sprite selectedIcon;
-
-            if (progressInPercent.IsApproximately(1f))
-            {
-                selectedIcon = completeIcon;
-            }
-            else
-            {
-                Sprite thresholdIcon = null;
-
-                foreach (var (threshold, icon) in _thresholdIcons)
-                {
-                    if (progressInPercent >= threshold)
-                    {
-                        thresholdIcon = icon;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-
-                selectedIcon = thresholdIcon ?? incompleteIcon;
-            }
-
-            completionImage.sprite = selectedIcon;
+            completionImage.sprite = icon;
         }
     }
 }

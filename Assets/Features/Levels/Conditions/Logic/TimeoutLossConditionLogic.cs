@@ -25,10 +25,13 @@ namespace Features.Levels.Conditions.Logic
         {
             _gameDate.GameDate.StopObserving(DateChanged);
         }
-        
+
         private void DateChanged(Date date)
         {
             _condition.Progress.SetProgress(date.AsDays());
+
+            var daysLeft = DateExtensions.DiffInDays(_condition.DeadlineDate, date);
+            _condition.IsClose.Value = daysLeft <= _condition.WarningThresholdDaysLeft;
         }
     }
 }

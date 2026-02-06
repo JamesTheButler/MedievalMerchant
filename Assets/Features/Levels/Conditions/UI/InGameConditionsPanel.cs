@@ -8,10 +8,7 @@ namespace Features.Levels.Conditions.UI
     public sealed class InGameConditionsPanel : DynamicPanel
     {
         [SerializeField, Required]
-        private InGameConditionListUI winConditionListUI;
-
-        [SerializeField, Required]
-        private InGameConditionListUI lossConditionListUI;
+        private InGameConditionListUI winConditionListUI, lossConditionListUI;
 
         public override void Initialize()
         {
