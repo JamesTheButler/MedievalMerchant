@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8029433708494015614}
   - component: {fileID: 1932645880852253868}
   - component: {fileID: 8605367331374816429}
+  - component: {fileID: 4207045251047107608}
   m_Layer: 5
   m_Name: EscapeMenu
   m_TagString: Untagged
@@ -100,6 +101,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.DynamicPanelAlphaTweener
   dynamicPanel: {fileID: 6583390507034786093}
   alphaTween: {fileID: 3131171617150734259}
+--- !u!114 &4207045251047107608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582676733529576235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536b79b074e846c393fea49c9f724291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Panels.DynamicPanelSlideTweener
+  dynamicPanel: {fileID: 6583390507034786093}
+  slideTween: {fileID: 376922466132843684}
 --- !u!1 &2787402749910719439
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +183,7 @@ GameObject:
   - component: {fileID: 2668332613073183988}
   - component: {fileID: 4938916693697007162}
   - component: {fileID: 2630144714996138062}
+  - component: {fileID: 376922466132843684}
   m_Layer: 5
   m_Name: MenuBackground
   m_TagString: Untagged
@@ -267,6 +283,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &376922466132843684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4093151594264517058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d393056c4eb144de971f3a8b4436b49f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Animation.SlideTween
+  target: {fileID: 1581665732108814300}
+  hiddenAnchoredPos: {x: 0, y: 900}
+  shownAnchoredPos: {x: 0, y: 0}
+  durationInSec: 0.5
+  easeIn: 9
 --- !u!1 &5556305550778979006
 GameObject:
   m_ObjectHideFlags: 0

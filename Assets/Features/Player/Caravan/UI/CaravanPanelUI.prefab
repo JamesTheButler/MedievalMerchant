@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 5340986463525574350}
   - component: {fileID: 8259287904787048711}
   - component: {fileID: 8757875084868316881}
+  - component: {fileID: 3710421645648709312}
+  - component: {fileID: 91284021252242493}
   m_Layer: 5
   m_Name: CaravanPanelUI
   m_TagString: Untagged
@@ -215,6 +217,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Features.Audio.Sfx.PanelSfxTrigger
   panel: {fileID: 1675575041870258853}
+--- !u!114 &3710421645648709312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276405225066129319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536b79b074e846c393fea49c9f724291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Panels.DynamicPanelSlideTweener
+  dynamicPanel: {fileID: 1675575041870258853}
+  slideTween: {fileID: 91284021252242493}
+--- !u!114 &91284021252242493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276405225066129319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d393056c4eb144de971f3a8b4436b49f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Animation.SlideTween
+  target: {fileID: 4017078828261712836}
+  hiddenAnchoredPos: {x: 16, y: 527}
+  shownAnchoredPos: {x: 16, y: -72}
+  durationInSec: 0.5
+  easeIn: 9
 --- !u!1 &1321824912317420041
 GameObject:
   m_ObjectHideFlags: 0
