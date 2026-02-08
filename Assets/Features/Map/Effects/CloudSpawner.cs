@@ -19,10 +19,7 @@ namespace Features.Map.Effects
 
         [Header("Spawn")]
         [SerializeField]
-        private float spawnIntervalSeconds = 6f;
-
-        [SerializeField]
-        private float paddingWorldUnits = 2f;
+        private float spawnIntervalSeconds = 6f, paddingWorldUnits = 2f;
 
         [Header("Movement")]
         [SerializeField]
@@ -42,12 +39,16 @@ namespace Features.Map.Effects
 
         public override void Initialize()
         {
+            if (!enabled)
+                return;
+
             var gameSpeedModel = GameplayContext.Instance.Model.GameSpeed;
 
             _bindings.Track(
                 gameSpeedModel.GameSpeed.Observe(OnGameSpeedChanged),
                 gameSpeedModel.IsPaused.Observe(OnIsPausedChanged)
             );
+
 
             StartCoroutine(InitCoroutine());
         }
@@ -78,7 +79,7 @@ namespace Features.Map.Effects
 
         private void Update()
         {
-            if (!_isInitialized || _isPaused)
+            if (!_isInitialized || _isPaused || !enabled)
                 return;
 
             if (Time.time < _nextSpawnTime)
