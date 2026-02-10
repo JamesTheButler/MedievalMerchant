@@ -7,7 +7,6 @@ using Features.Audio.Music;
 using Features.Feedback.UI;
 using Features.Levels;
 using NaughtyAttributes;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,12 +14,6 @@ namespace Features.StartMenu.UI
 {
     public sealed class StartMenuManager : MonoBehaviour
     {
-        [SerializeField, Required]
-        private Animation logoAnimation;
-
-        [SerializeField, Required]
-        private TMP_Text pressAnyText;
-
         [SerializeField, Required]
         private GameObject startScreenGO, levelSelectionGO, tutorialPopupGO;
 
@@ -46,6 +39,8 @@ namespace Features.StartMenu.UI
 
         private void Start()
         {
+            startScreenGO.SetActive(true);
+
             // set up first level button
             _levelButtons = levelSelectionGO.GetComponentsInChildren<LevelButton>();
             var firstLevelButton = _levelButtons.First();
@@ -109,8 +104,6 @@ namespace Features.StartMenu.UI
         {
             if (_initialized) return;
 
-            logoAnimation.Play();
-            pressAnyText.gameObject.SetActive(false);
             ToggleLevelSelection(true);
 
             _initialized = true;
