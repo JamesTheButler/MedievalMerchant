@@ -31,8 +31,11 @@ namespace Features.Player.UI
         {
             var formattedText = $"{fundsChange.Sign()}{fundsChange:0.#}";
 
+            var is0 = fundsChange.IsApproximately(0f);
+            fundsChangeText.gameObject.SetActive(!is0);
+
             Style style;
-            if (fundsChange.IsApproximately(0f))
+            if (is0)
             {
                 style = Style.Default;
             }
