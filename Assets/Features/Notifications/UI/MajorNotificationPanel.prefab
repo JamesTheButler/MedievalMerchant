@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 6927458990718584524}
   - component: {fileID: 7776308426649224834}
   - component: {fileID: 3950971719312682467}
+  - component: {fileID: 6404056663278875435}
+  - component: {fileID: 434261652728524820}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -120,6 +122,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &6404056663278875435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344728416443677627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed40660c6e264e2e91af8a1fbb024b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Tutorial.Onboarding.UI.PopupOpenCloseAnimatorHandler
+  animator: {fileID: 434261652728524820}
+--- !u!95 &434261652728524820
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344728416443677627}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7434a0f053b0c014da2bc5ec1fa25023, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2385765848720883620
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,6 +693,7 @@ MonoBehaviour:
   icon: {fileID: 3230579470656808207}
   closeButton: {fileID: 8443342357357853711}
   pingButton: {fileID: 4675979350371573619}
+  animatorHandler: {fileID: 6404056663278875435}
 --- !u!114 &7260506745035602825
 MonoBehaviour:
   m_ObjectHideFlags: 0

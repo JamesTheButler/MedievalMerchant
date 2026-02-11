@@ -2,6 +2,8 @@
 using Common.UI.Elements.Panels;
 using Common.UI.Utility;
 using Features.Notifications.Logic;
+using Features.Tutorial.Onboarding.UI;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,22 +14,19 @@ namespace Features.Notifications.UI
     {
         public event Action<Notification> Pinged;
 
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text titleText, descriptionText;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Image icon;
 
-        [SerializeField]
+        [SerializeField, Required]
         private Button closeButton, pingButton;
 
-        private Notification _notification;
+        [SerializeField, Required]
+        private PopupOpenCloseAnimatorHandler animatorHandler;
 
-        protected override void OnInitialize()
-        {
-            closeButton.onClick.AddListener(Close);
-            pingButton.onClick.AddListener(PingNotification);
-        }
+        private Notification _notification;
 
         public void Setup(Notification notification)
         {
@@ -46,12 +45,25 @@ namespace Features.Notifications.UI
             icon.sprite = _notification.Icon;
         }
 
+        protected override void OnInitialize()
+        {
+            closeButton.onClick.AddListener(Close);
+            pingButton.onClick.AddListener(PingNotification);
+            animatorHandler.OnClosed += OnClosedAnimationCompleted;
+        }
+
         protected override void OnOpen()
         {
             gameObject.SetActive(true);
+            animatorHandler.StartOpenAnimation();
         }
 
         protected override void OnClose()
+        {
+            animatorHandler.StartCloseAnimation();
+        }
+
+        private void OnClosedAnimationCompleted()
         {
             gameObject.SetActive(false);
         }
