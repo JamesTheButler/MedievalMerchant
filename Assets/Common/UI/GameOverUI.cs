@@ -68,7 +68,7 @@ namespace Common.UI
             titleText.text = isWon ? "Level Finished!".WithStyle(Style.Good) : "Game Over!".WithStyle(Style.Bad);
 
             var currentLevel = GlobalContext.CurrentLevelInfo!;
-            var currentLevelString = $"{currentLevel.LevelNumberText}: {currentLevel.LevelName}"
+            var currentLevelString = $"Level {currentLevel.DisplayIndex:D2}: {currentLevel.LevelName}"
                 .WithStyle(Style.Subtitle);
 
             var message = isWon

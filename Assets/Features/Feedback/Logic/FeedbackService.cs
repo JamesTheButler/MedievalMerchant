@@ -25,7 +25,7 @@ namespace Features.Feedback.Logic
             form.AddField(NameFieldId, senderName);
             form.AddField(FeedbackFieldId, feedback);
             form.AddField(VersionFieldId, Application.version);
-            form.AddField(LevelFieldId, GlobalContext.CurrentLevelInfo?.LevelNumberText ?? "StartScreen");
+            form.AddField(LevelFieldId, GlobalContext.CurrentLevelInfo?.DisplayIndex.ToString() ?? "StartScreen");
 
             using var request = UnityWebRequest.Post(FormUrl, form);
             yield return request.SendWebRequest();

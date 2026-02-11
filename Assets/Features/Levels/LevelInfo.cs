@@ -4,6 +4,7 @@ using Features.Levels.Conditions.Data;
 using Features.Levels.GameModifiers.Data;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Features.Levels
 {
@@ -23,10 +24,10 @@ namespace Features.Levels
         public GameObject MapPrefab { get; private set; }
 
         [field: SerializeField]
-        public string LevelName { get; private set; }
+        public LocalizedString LevelName { get; private set; }
 
         [field: SerializeField]
-        public string Description { get; private set; }
+        public LocalizedString Description { get; private set; }
 
         [field: SerializeField]
         public string Difficulty { get; private set; }
@@ -53,11 +54,6 @@ namespace Features.Levels
         /// Index for internal logic. 0-based.
         /// </summary>
         public int InternalIndex => DisplayIndex - 1;
-
-        /// <summary>
-        /// For display purposes for strings like 'Level 03'.
-        /// </summary>
-        public string LevelNumberText => $"Level {DisplayIndex:D2}";
 
         public bool HasFeature(LevelFeatureFlags flags)
         {

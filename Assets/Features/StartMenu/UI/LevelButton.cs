@@ -1,10 +1,13 @@
 using System;
 using Common.Infrastructure.Global;
 using Common.UI.Tooltips;
+using Common.Utility;
 using Features.Levels;
 using NaughtyAttributes;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Features.StartMenu.UI
@@ -20,8 +23,8 @@ namespace Features.StartMenu.UI
         private Image completeIcon, lockedIcon;
 
         [SerializeField, Required]
-        private TMP_Text numberText, nameText;
-
+        private LocalizeStringEvent levelIndexText, titleText;
+        
         [field: SerializeField, Expandable, Required]
         public LevelInfo LevelInfo { get; private set; }
 
@@ -39,9 +42,11 @@ namespace Features.StartMenu.UI
             tooltip.SetEnabled(!isEnabled);
 
             button.onClick.AddListener(OnClick);
-            numberText.text = LevelInfo.LevelNumberText;
-            nameText.text = LevelInfo.LevelName;
-            var isCompleted = GlobalContext.Instance.Model.ProgressModel.CompletedLevels[LevelInfo.InternalIndex] != null;
+
+            levelIndexText.SetArguments(LevelInfo.DisplayIndex);
+            titleText.StringReference = LevelInfo.LevelName;
+            var progressModel = GlobalContext.Instance.Model.ProgressModel;
+            var isCompleted = progressModel.CompletedLevels[LevelInfo.InternalIndex] != null;
             completeIcon.gameObject.SetActive(isCompleted);
         }
 

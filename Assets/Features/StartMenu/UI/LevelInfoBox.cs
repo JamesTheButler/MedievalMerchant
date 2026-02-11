@@ -10,6 +10,7 @@ using Features.Levels.GameModifiers.UI;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 namespace Features.StartMenu.UI
@@ -20,7 +21,10 @@ namespace Features.StartMenu.UI
         private LevelLoader levelLoader;
 
         [SerializeField, Required]
-        private TMP_Text levelIdText, nameText, completionDateText, descriptionText, difficultyText;
+        private LocalizeStringEvent levelIdText, nameText, descriptionText;
+
+        [SerializeField, Required]
+        private TMP_Text completionDateText, difficultyText;
 
         [SerializeField, Required]
         private PreGameConditionListUI winConditionList, lossConditionList;
@@ -49,9 +53,9 @@ namespace Features.StartMenu.UI
         {
             _currentLevelInfo = levelInfo;
 
-            levelIdText.text = levelInfo.LevelNumberText;
-            nameText.text = levelInfo.LevelName;
-            descriptionText.text = levelInfo.Description;
+            levelIdText.SetArguments(levelInfo.DisplayIndex);
+            nameText.StringReference = levelInfo.LevelName;
+            descriptionText.StringReference = levelInfo.Description;
             var completionDate = GlobalContext.Instance.Model.ProgressModel.CompletedLevels[levelInfo.InternalIndex];
             var isCompleted = completionDate != null;
             completionDateText.enabled = isCompleted;
