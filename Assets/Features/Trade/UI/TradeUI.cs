@@ -16,6 +16,7 @@ using Features.Trade.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Features.Trade.UI
@@ -43,7 +44,7 @@ namespace Features.Trade.UI
         private HaggleGroup haggleGroup;
 
         [SerializeField, Required]
-        private Button cancelButton, maxAmountButton, missionAmountButton;
+        private Button cancelButton, quickButtonMax, quickButtonMission, quickButton15, quickButton30;
 
         [SerializeField, Required]
         private SimpleTooltipHandler tradeButtonTooltip;
@@ -95,8 +96,10 @@ namespace Features.Trade.UI
 
             TradeButton.onClick.AddListener(CompleteTrade);
             cancelButton.onClick.AddListener(AbortTrade);
-            maxAmountButton.onClick.AddListener(SetMaxAmount);
-            missionAmountButton.onClick.AddListener(SetActiveMissionAmount);
+            quickButtonMax.onClick.AddListener(SetMaxAmount);
+            quickButtonMission.onClick.AddListener(SetActiveMissionAmount);
+            quickButton15.onClick.AddListener(() => SetSliderValue(15));
+            quickButton30.onClick.AddListener(() => SetSliderValue(30));
 
             if (_isHagglingEnabled)
             {
@@ -189,6 +192,11 @@ namespace Features.Trade.UI
             _wasSuccessfulTrade = false;
         }
 
+        private void SetSliderValue(int value)
+        {
+            amountSlider.value = Mathf.Min(value, amountSlider.maxValue);
+        }
+
         private void OnSelectedHaggleLevelChanged(HaggleLevel level)
         {
             _ongoingTrade.SetHaggleLevel(level);
@@ -197,7 +205,7 @@ namespace Features.Trade.UI
         private void SetMaxAmount()
         {
             var maxAffordableGoodAmount = GetMaxAffordableAmount();
-            amountSlider.value = Mathf.Min(maxAffordableGoodAmount, amountSlider.maxValue);
+            SetSliderValue(maxAffordableGoodAmount);
         }
 
         private int GetMaxAffordableAmount()
@@ -219,7 +227,7 @@ namespace Features.Trade.UI
             var intAmount = (int)amount;
             sliderValueText.text = intAmount.ToString("0");
             _ongoingTrade.SetAmount(intAmount);
-            SetAmount(intAmount);
+            RefreshGoodAmountText(intAmount);
             RefreshTradeButtonState();
         }
 
@@ -252,7 +260,7 @@ namespace Features.Trade.UI
             if (!hasMission)
                 return;
 
-            amountSlider.value = mission.RemainingCount;
+            SetSliderValue(mission.RemainingCount);
         }
 
         private void OnSellingInventoryGoodUpdated(Good good, int amount)
@@ -276,14 +284,14 @@ namespace Features.Trade.UI
             Close();
         }
 
-        private void SetAmount(int amount)
+        private void RefreshGoodAmountText(int amount)
         {
             goodAmountText.text = $"x{amount}";
         }
 
         private void RefreshMissionAmountButton()
         {
-            missionAmountButton.gameObject.SetActive(_town.Missions.Missions.ContainsKey(_good));
+            quickButtonMission.gameObject.SetActive(_town.Missions.Missions.ContainsKey(_good));
         }
 
         # region Prices
