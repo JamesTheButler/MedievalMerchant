@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Common.UI.Art
 {
-    public sealed class SimpleAnimationHandler : MonoBehaviour
+    public sealed class SimpleAnimatorHandler : MonoBehaviour
     {
         [SerializeField, Required]
         private Animator animator;

@@ -6,6 +6,7 @@ using Common.Utility;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Features.Player.UI
 {
@@ -17,8 +18,8 @@ namespace Features.Player.UI
         [SerializeField, Required]
         private ModifiableTooltipHandler modifiableTooltip;
 
-        [SerializeField, Required]
-        private SimpleAnimationHandler simpleAnimationHandler;
+        [FormerlySerializedAs("simpleAnimationHandler"),SerializeField, Required]
+        private SimpleAnimatorHandler simpleAnimatorHandler;
 
         private ModifiableVariable _fundsChange;
 
@@ -59,7 +60,7 @@ namespace Features.Player.UI
         public void PlayCoinEffect()
         {
             Debug.LogError("Playing Animation");
-            simpleAnimationHandler.Play();
+            simpleAnimatorHandler.Play();
         }
     }
 }
