@@ -1,4 +1,5 @@
 using System;
+using Common.UI.Art;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,7 +18,10 @@ namespace Features.Map.Tiling
 
         [SerializeField, Required]
         private AudioSource upgradeAudioSource;
-        
+
+        [SerializeField, Required]
+        private SimpleAnimationHandler animationHandler;
+
         private void Awake()
         {
             selectionOutline.SetActive(false);
@@ -47,9 +51,10 @@ namespace Features.Map.Tiling
             Unhovered?.Invoke();
         }
 
-        public void PlayUpgradeSfx()
+        public void PlayUpgradeEffects()
         {
-            //upgradeAudioSource.Play();
+            upgradeAudioSource.Play();
+            animationHandler.Play();
         }
     }
 }

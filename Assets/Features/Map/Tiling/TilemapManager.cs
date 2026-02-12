@@ -86,7 +86,7 @@ namespace Features.Map.Tiling
 
             if (town.Tier.Value != Tier.Tier1)
             {
-                mapTile.PlayUpgradeSfx();
+                mapTile.PlayUpgradeEffects();
             }
         }
 
