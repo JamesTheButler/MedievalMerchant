@@ -7,10 +7,13 @@ using Common.Types;
 using Common.Utility;
 using Features.Player.Caravan.Config;
 using Features.Player.Logic;
+using Features.Player.UI;
 using Features.Towns;
 using Features.Tutorial;
 using Features.Tutorial.Logic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace Features.Cheats
@@ -27,7 +30,7 @@ namespace Features.Cheats
 
         private Dictionary<string, Action> _simpleCommands;
         private Dictionary<string, Action<string>> _paramCommands;
-        
+
         public void Initialize()
         {
             _model = GameplayContext.Instance.Model;
@@ -54,6 +57,8 @@ namespace Features.Cheats
                 { "town.grow", SetTownDevelopmentTo100 },
                 { "town.rep", SetTownReputationTo100 },
                 { "town.reputation", SetTownReputationTo100 },
+                { "glint", GlintFunds },
+                { "g", GlintFunds },
             };
 
             _paramCommands = new Dictionary<string, Action<string>>
@@ -113,6 +118,12 @@ namespace Features.Cheats
         }
 
         #region Cheats
+
+        private void GlintFunds()
+        {
+            var playerMiniUI = Object.FindAnyObjectByType<PlayerMiniUI>();
+            playerMiniUI.PlayCoinEffect();
+        }
 
         private void AddTownDevelopment(string parameter)
         {

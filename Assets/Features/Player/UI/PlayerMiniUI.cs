@@ -1,7 +1,9 @@
 using Common.Infrastructure.Modifiable;
+using Common.UI.Art;
 using Common.UI.Tooltips;
 using Common.UI.Utility;
 using Common.Utility;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
@@ -9,11 +11,14 @@ namespace Features.Player.UI
 {
     public sealed class PlayerMiniUI : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField, Required]
         private TMP_Text fundsText, fundsChangeText;
 
-        [SerializeField]
+        [SerializeField, Required]
         private ModifiableTooltipHandler modifiableTooltip;
+
+        [SerializeField, Required]
+        private SimpleAnimationHandler simpleAnimationHandler;
 
         private ModifiableVariable _fundsChange;
 
@@ -49,6 +54,12 @@ namespace Features.Player.UI
             }
 
             fundsChangeText.text = formattedText.WithStyle(style);
+        }
+
+        public void PlayCoinEffect()
+        {
+            Debug.LogError("Playing Animation");
+            simpleAnimationHandler.Play();
         }
     }
 }

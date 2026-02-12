@@ -1,23 +1,45 @@
 using Common.Infrastructure.Gameplay;
-using Features.Player.Logic;
+using Common.Infrastructure.Observation;
+using Common.UI.Elements;
+using Features.Trade;
+using Features.Trade.Logic;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Player.UI
 {
-    public sealed class PlayerMiniUIHandler : MonoBehaviour
+    public sealed class PlayerMiniUIHandler : InitializableBehavior
     {
-        [SerializeField]
+        [SerializeField, Required]
         private PlayerMiniUI playerMiniUI;
 
-        private PlayerModel _player;
+        private readonly Bindings _bindings = new();
 
-        private void Start()
+        public override void Initialize()
         {
-            _player = GameplayContext.Instance.Model.Player;
+            var model = GameplayContext.Instance.Model;
+            var player = model.Player;
+            var tradeService = GameplayContext.Instance.Services.TradeService;
 
-            playerMiniUI.SetFundsChangeTooltipTarget(_player.FundsChange);
-            _player.Inventory.Funds.Observe(OnFundsChanged);
-            _player.FundsChange.Observe(OnFundsChangeChanged);
+            playerMiniUI.SetFundsChangeTooltipTarget(player.FundsChange);
+            _bindings.Track(
+                player.Inventory.Funds.Observe(OnFundsChanged),
+                player.FundsChange.Observe(OnFundsChangeChanged),
+                tradeService.TradeCompleted.Observe(OnTradeCompleted)
+            );
+        }
+
+        private void OnTradeCompleted(CompletedTrade trade)
+        {
+            if (trade.TradeType != TradeType.Sell) return;
+
+            playerMiniUI.PlayCoinEffect();
+        }
+
+        public override void CleanUp()
+        {
+            base.CleanUp();
+            _bindings.UnbindAll();
         }
 
         private void OnFundsChangeChanged(float fundsChange)
@@ -28,11 +50,6 @@ namespace Features.Player.UI
         private void OnFundsChanged(float funds)
         {
             playerMiniUI.SetFunds(funds);
-        }
-
-        private void OnDestroy()
-        {
-            _player.FundsChange.StopObserving(OnFundsChanged);
         }
     }
 }
