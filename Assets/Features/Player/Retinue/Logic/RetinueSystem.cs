@@ -25,9 +25,9 @@ namespace Features.Player.Retinue.Logic
                 { CompanionType.Thief, new ThiefCompanionLogic() },
             };
 
-            foreach (var (companion, level) in _retinueModel.CompanionLevels)
+            foreach (var (companion, model) in _retinueModel.Companions)
             {
-                level.Observe(lvl => UpdateLevel(companion, lvl));
+                model.Level.Observe(lvl => UpdateLevel(companion, lvl));
             }
         }
 

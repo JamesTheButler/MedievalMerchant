@@ -5,9 +5,7 @@ using Common.Utility;
 using Features.Levels;
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Features.StartMenu.UI

@@ -47,7 +47,7 @@ namespace Features.Player.Retinue.UI
 
             InitializeUI();
 
-            _retinueModel.CompanionLevels[companionType].Observe(OnCompanionLevelChanged);
+            _retinueModel.Companions[companionType].Level.Observe(OnCompanionLevelChanged);
         }
 
         private void InitializeUI()

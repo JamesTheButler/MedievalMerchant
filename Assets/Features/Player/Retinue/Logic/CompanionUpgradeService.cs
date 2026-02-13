@@ -36,7 +36,7 @@ namespace Features.Player.Retinue.Logic
             var baseCost = companionConfigData.GetLevelData(newLevel).Cost;
             var cost = new ModifiableVariable("Upgrade Cost", false, new CompanionUpgradeBaseCostModifier(baseCost));
 
-            var negotiatorLevel = _player.RetinueModel.CompanionLevels[CompanionType.Negotiator];
+            var negotiatorLevel = _player.RetinueModel.Companions[CompanionType.Negotiator].Level.Value;
             if (negotiatorLevel > 0)
             {
                 var levelData = _companionConfig.NegotiatorData.GetTypedLevelData(negotiatorLevel);

@@ -1,12 +1,13 @@
 using Common.Infrastructure.Gameplay;
 using Features.Player.Retinue.Logic;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Player.Retinue.UI
 {
     public sealed class RetinueMiniUIHandler : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField, Required]
         private RetinueMiniUI retinueMiniUI;
 
         private RetinueModel _retinueModel;
@@ -15,9 +16,9 @@ namespace Features.Player.Retinue.UI
         {
             _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
             retinueMiniUI.Initialize();
-            foreach (var (companion, levelObservable) in _retinueModel.CompanionLevels)
+            foreach (var (companion, companionModel) in _retinueModel.Companions)
             {
-                levelObservable.Observe(level => OnCompanionLevelChanged(companion, level));
+                companionModel.Level.Observe(level => OnCompanionLevelChanged(companion, level));
             }
         }
 
