@@ -11,23 +11,19 @@ namespace Features.Player.Retinue.Logic
 
         public Dictionary<CompanionType, CompanionModel> Companions { get; } = new();
 
-        private readonly Dictionary<CompanionType, CompanionUpkeepModifier> _upkeepModifiers = new();
-
         public RetinueModel()
         {
             foreach (CompanionType companionType in Enum.GetValues(typeof(CompanionType)))
             {
-                Companions.Add(companionType, new CompanionModel(companionType));
-                var upkeepModifier = new CompanionUpkeepModifier(companionType);
-                _upkeepModifiers.Add(companionType, upkeepModifier);
-                Upkeep.AddModifier(upkeepModifier);
+                var companionModel = new CompanionModel(companionType);
+                Companions.Add(companionType, companionModel);
+                Upkeep.AddModifier(companionModel.UpkeepModifier);
             }
         }
 
         public void SetLevel(CompanionType companionType, int newLevel)
         {
             Companions[companionType].SetLevel(newLevel);
-            _upkeepModifiers[companionType].SetLevel(newLevel);
         }
     }
 }
