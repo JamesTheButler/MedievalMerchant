@@ -1,3 +1,4 @@
+using System.Linq;
 using Common.Infrastructure;
 using Common.UI.Tooltips;
 using Features.Player.Retinue.Config;
@@ -48,7 +49,8 @@ namespace Features.Player.Retinue.UI
                 return;
             }
 
-            priceText.text = $"{levelData.Cost:0.##}";
+            var cost = companionData.MissionConfig.ConfigsPerLevel.ElementAtOrDefault(data.Level - 1)?.Cost;
+            priceText.text = $"{cost:0.##}";
             effectsText.text = levelData.Description;
 
             upkeepText.text = levelData.Upkeep.ToString("0.#");

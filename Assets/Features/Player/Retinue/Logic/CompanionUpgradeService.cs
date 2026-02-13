@@ -23,6 +23,7 @@ namespace Features.Player.Retinue.Logic
 
         public void LevelUpgradeRequested(CompanionType companionType, int newLevel)
         {
+            var companionModel = _player.RetinueModel.Companions[companionType];
             var companionConfigData = _companionConfig.Get(companionType);
             var levels = companionConfigData.Levels;
 
@@ -33,8 +34,10 @@ namespace Features.Player.Retinue.Logic
                 return;
             }
 
-            var baseCost = companionConfigData.GetLevelData(newLevel).Cost;
+
+            var baseCost = companionModel.ActiveMission?.Value.CostMissionItem.RemainingAmount.Value ?? 0f;
             var cost = new ModifiableVariable("Upgrade Cost", false, new CompanionUpgradeBaseCostModifier(baseCost));
+
 
             var negotiatorLevel = _player.RetinueModel.Companions[CompanionType.Negotiator].Level.Value;
             if (negotiatorLevel > 0)
@@ -50,6 +53,8 @@ namespace Features.Player.Retinue.Logic
                 Debug.LogError($"Player does not have enough coin to upgrade ({_player.Inventory.Funds}/{(int)cost})");
                 return;
             }
+
+            Debug.Log($"Upgrading {companionType} to {newLevel} for {cost.Value} (base: {baseCost}).");
 
             _player.RetinueModel.SetLevel(companionType, newLevel);
             _player.Inventory.RemoveFunds((int)cost);

@@ -17,19 +17,24 @@ MonoBehaviour:
     <Name>k__BackingField: Thief
     <Description>k__BackingField: Aqcuires things in creative ways.
     <IsImplemented>k__BackingField: 1
+    <MissionConfig>k__BackingField:
+      <ConfigsPerLevel>k__BackingField:
+      - <Cost>k__BackingField: 100
+        <Items>k__BackingField: []
+      - <Cost>k__BackingField: 250
+        <Items>k__BackingField: []
+      - <Cost>k__BackingField: 1000
+        <Items>k__BackingField: []
     typedLevels:
-    - <Cost>k__BackingField: 100
-      <Upkeep>k__BackingField: 1
+    - <Upkeep>k__BackingField: 1
       <TownEntranceGold>k__BackingField: 5
       <ReputationLossChance>k__BackingField: 0.25
       <ReputationLoss>k__BackingField: 5
-    - <Cost>k__BackingField: 250
-      <Upkeep>k__BackingField: 2
+    - <Upkeep>k__BackingField: 2
       <TownEntranceGold>k__BackingField: 25
       <ReputationLossChance>k__BackingField: 0.1
       <ReputationLoss>k__BackingField: 4
-    - <Cost>k__BackingField: 1000
-      <Upkeep>k__BackingField: 5
+    - <Upkeep>k__BackingField: 5
       <TownEntranceGold>k__BackingField: 75
       <ReputationLossChance>k__BackingField: 0.05
       <ReputationLoss>k__BackingField: 3
@@ -39,17 +44,22 @@ MonoBehaviour:
     <Name>k__BackingField: Navigator
     <Description>k__BackingField: Gets you places.
     <IsImplemented>k__BackingField: 1
+    <MissionConfig>k__BackingField:
+      <ConfigsPerLevel>k__BackingField:
+      - <Cost>k__BackingField: 100
+        <Items>k__BackingField: []
+      - <Cost>k__BackingField: 250
+        <Items>k__BackingField: []
+      - <Cost>k__BackingField: 500
+        <Items>k__BackingField: []
     typedLevels:
-    - <Cost>k__BackingField: 100
-      <Upkeep>k__BackingField: 1
+    - <Upkeep>k__BackingField: 1
       <SpeedBonus>k__BackingField: 0.1
       <UpkeepReduction>k__BackingField: 0.1
-    - <Cost>k__BackingField: 250
-      <Upkeep>k__BackingField: 2
+    - <Upkeep>k__BackingField: 2
       <SpeedBonus>k__BackingField: 0.25
       <UpkeepReduction>k__BackingField: 0.25
-    - <Cost>k__BackingField: 500
-      <Upkeep>k__BackingField: 5
+    - <Upkeep>k__BackingField: 5
       <SpeedBonus>k__BackingField: 0.5
       <UpkeepReduction>k__BackingField: 0.5
   <NegotiatorData>k__BackingField:
@@ -57,17 +67,22 @@ MonoBehaviour:
     <Name>k__BackingField: Negotiator
     <Description>k__BackingField: Strikes quite the bargain.
     <IsImplemented>k__BackingField: 1
+    <MissionConfig>k__BackingField:
+      <ConfigsPerLevel>k__BackingField:
+      - <Cost>k__BackingField: 50
+        <Items>k__BackingField: []
+      - <Cost>k__BackingField: 200
+        <Items>k__BackingField: []
+      - <Cost>k__BackingField: 500
+        <Items>k__BackingField: []
     typedLevels:
-    - <Cost>k__BackingField: 50
-      <Upkeep>k__BackingField: 1
+    - <Upkeep>k__BackingField: 1
       <PriceSavings>k__BackingField: 0.05
       <UpgradeCostReduction>k__BackingField: 0.05
-    - <Cost>k__BackingField: 200
-      <Upkeep>k__BackingField: 2
+    - <Upkeep>k__BackingField: 2
       <PriceSavings>k__BackingField: 0.15
       <UpgradeCostReduction>k__BackingField: 0.15
-    - <Cost>k__BackingField: 500
-      <Upkeep>k__BackingField: 5
+    - <Upkeep>k__BackingField: 5
       <PriceSavings>k__BackingField: 0.25
       <UpgradeCostReduction>k__BackingField: 0.25
   <GuardData>k__BackingField:
@@ -75,38 +90,40 @@ MonoBehaviour:
     <Name>k__BackingField: Guard
     <Description>k__BackingField: Gets you out of spicy situations.
     <IsImplemented>k__BackingField: 0
+    <MissionConfig>k__BackingField:
+      <ConfigsPerLevel>k__BackingField: []
     typedLevels:
-    - <Cost>k__BackingField: 150
-      <Upkeep>k__BackingField: 1
+    - <Upkeep>k__BackingField: 1
       <Strength>k__BackingField: 1
-    - <Cost>k__BackingField: 300
-      <Upkeep>k__BackingField: 1.5
+    - <Upkeep>k__BackingField: 1.5
       <Strength>k__BackingField: 3
-    - <Cost>k__BackingField: 600
-      <Upkeep>k__BackingField: 2
+    - <Upkeep>k__BackingField: 2
       <Strength>k__BackingField: 6
-    - <Cost>k__BackingField: 600
-      <Upkeep>k__BackingField: 2.5
+    - <Upkeep>k__BackingField: 2.5
       <Strength>k__BackingField: 8
-    - <Cost>k__BackingField: 600
-      <Upkeep>k__BackingField: 3
+    - <Upkeep>k__BackingField: 3
       <Strength>k__BackingField: 10
   <DiplomatData>k__BackingField:
     <Icon>k__BackingField: {fileID: -1216225484, guid: 5c0a124b1892e104ea9ed7f437ade6dc, type: 3}
     <Name>k__BackingField: Diplomat
     <Description>k__BackingField: Rubs shoulders with the locals
     <IsImplemented>k__BackingField: 1
+    <MissionConfig>k__BackingField:
+      <ConfigsPerLevel>k__BackingField:
+      - <Cost>k__BackingField: 100
+        <Items>k__BackingField: []
+      - <Cost>k__BackingField: 250
+        <Items>k__BackingField: []
+      - <Cost>k__BackingField: 500
+        <Items>k__BackingField: []
     typedLevels:
-    - <Cost>k__BackingField: 100
-      <Upkeep>k__BackingField: 1
+    - <Upkeep>k__BackingField: 1
       <TownEntranceReputation>k__BackingField: 0.5
       <ReputationBoost>k__BackingField: 0.1
-    - <Cost>k__BackingField: 250
-      <Upkeep>k__BackingField: 2
+    - <Upkeep>k__BackingField: 2
       <TownEntranceReputation>k__BackingField: 1
       <ReputationBoost>k__BackingField: 0.25
-    - <Cost>k__BackingField: 500
-      <Upkeep>k__BackingField: 5
+    - <Upkeep>k__BackingField: 5
       <TownEntranceReputation>k__BackingField: 2
       <ReputationBoost>k__BackingField: 0.5
     <MinDaysBetweenRepGains>k__BackingField: 3
@@ -115,13 +132,18 @@ MonoBehaviour:
     <Name>k__BackingField: Architect
     <Description>k__BackingField: Gets stuff done.
     <IsImplemented>k__BackingField: 1
+    <MissionConfig>k__BackingField:
+      <ConfigsPerLevel>k__BackingField:
+      - <Cost>k__BackingField: 50
+        <Items>k__BackingField: []
+      - <Cost>k__BackingField: 100
+        <Items>k__BackingField: []
+      - <Cost>k__BackingField: 500
+        <Items>k__BackingField: []
     typedLevels:
-    - <Cost>k__BackingField: 50
-      <Upkeep>k__BackingField: 1
+    - <Upkeep>k__BackingField: 1
       <ConstructionPriceReduction>k__BackingField: 0.05
-    - <Cost>k__BackingField: 100
-      <Upkeep>k__BackingField: 2
+    - <Upkeep>k__BackingField: 2
       <ConstructionPriceReduction>k__BackingField: 0.15
-    - <Cost>k__BackingField: 500
-      <Upkeep>k__BackingField: 5
+    - <Upkeep>k__BackingField: 5
       <ConstructionPriceReduction>k__BackingField: 0.3
