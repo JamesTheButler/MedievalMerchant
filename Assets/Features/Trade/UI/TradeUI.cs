@@ -83,6 +83,7 @@ namespace Features.Trade.UI
         private TradeType _tradeType;
         private Inventory.Inventory _buyingInventory, _sellingInventory;
         private OngoingTrade _ongoingTrade;
+        private TradeValidator _tradeValidator;
 
         private bool _isStuckToMax;
         private bool _wasSuccessfulTrade;
@@ -128,6 +129,14 @@ namespace Features.Trade.UI
             if (_ongoingTrade.Amount <= 0 || _ongoingTrade.Amount > GetMaxAffordableAmount())
                 return;
 
+            var tradeValidationResult = _tradeValidator.Validate(_tradeType, _good, _ongoingTrade.Amount);
+            if (!tradeValidationResult.Success)
+            {
+                Debug.LogError($"Attempted to complete invalid trade.: {tradeValidationResult.Error}");
+                //TODO: this should probably be reported to the user via popup
+                return;
+            }
+
             _ongoingTrade.Complete();
             _wasSuccessfulTrade = true;
             Close();
@@ -137,6 +146,7 @@ namespace Features.Trade.UI
         {
             _town = _selection.SelectedTown;
             _ongoingTrade = _tradeService.InitializeTrade(_town, _good, _tradeType);
+            _tradeValidator = new TradeValidator(_model.Player, _town);
 
             if (_isHagglingEnabled)
             {
@@ -284,16 +294,6 @@ namespace Features.Trade.UI
             Close();
         }
 
-        private void RefreshGoodAmountText(int amount)
-        {
-            goodAmountText.text = $"x{amount}";
-        }
-
-        private void RefreshMissionAmountButton()
-        {
-            quickButtonMission.gameObject.SetActive(_town.Missions.Missions.ContainsKey(_good));
-        }
-
         # region Prices
 
         private void OnTotalPriceChanged(float totalPrice)
@@ -354,6 +354,16 @@ namespace Features.Trade.UI
 
         # endregion Prices
 
+        private void RefreshGoodAmountText(int amount)
+        {
+            goodAmountText.text = $"x{amount}";
+        }
+
+        private void RefreshMissionAmountButton()
+        {
+            quickButtonMission.gameObject.SetActive(_town.Missions.Missions.ContainsKey(_good));
+        }
+
         private void RefreshTradeButtonState()
         {
             var totalPrice = _ongoingTrade.TotalPrice;
@@ -366,6 +376,7 @@ namespace Features.Trade.UI
             if (isTradePossible)
                 return;
 
+            // TODO: this should be handled in TradeResult (CompleteTrade())
             var notEnoughCoinMessage = _tradeType == TradeType.Buy
                 ? "You do not have enough coin."
                 : $"{_town.Name} does not have enough coin.";
