@@ -5,6 +5,7 @@ using Features.Levels.Conditions.Data;
 using Features.Levels.GameModifiers.Events.Data;
 using Features.Player.Caravan.Config;
 using Features.Player.Retinue.Config;
+using Features.Player.Retinue.Logic;
 using Features.Ticking.Config;
 using Features.Towns.Config;
 using Features.Towns.Development.Config;

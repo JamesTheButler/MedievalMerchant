@@ -24,7 +24,7 @@ namespace Features.Player.Retinue.Logic
             _level.Value = newLevel;
         }
 
-        public void StartMission(IReadOnlyDictionary<Good, int> targetGoods)
+        public void StartMission(int coinCost, IReadOnlyDictionary<Good, int> targetGoods)
         {
             if (ActiveMission.Value != null)
             {
@@ -32,7 +32,7 @@ namespace Features.Player.Retinue.Logic
                 return;
             }
 
-            ActiveMission.Value = new CompanionMission(targetGoods);
+            ActiveMission.Value = new CompanionMission(coinCost, targetGoods);
         }
     }
 }

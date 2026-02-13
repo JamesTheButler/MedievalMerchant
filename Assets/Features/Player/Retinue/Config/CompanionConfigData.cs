@@ -20,8 +20,11 @@ namespace Features.Player.Retinue.Config
         [field: SerializeField]
         public bool IsImplemented { get; private set; }
 
+        [field: SerializeField]
+        public CompanionMissionConfig MissionConfig { get; private set; }
+
         public abstract IReadOnlyList<CompanionLevelData> Levels { get; }
-        
+
         public int MaxLevel => Levels.Count;
 
         public CompanionLevelData GetLevelData(int level)

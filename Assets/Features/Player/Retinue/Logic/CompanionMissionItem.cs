@@ -1,12 +1,10 @@
 ﻿using Common.Infrastructure.Observation;
-using Common.Types;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Logic
 {
     public sealed class CompanionMissionItem
     {
-        public Good Good { get; }
         public int TargetAmount { get; }
 
         public IReadOnlyObservable<int> RemainingAmount => _remainingAmount;
@@ -15,9 +13,8 @@ namespace Features.Player.Retinue.Logic
 
         private readonly Observable<int> _remainingAmount;
 
-        public CompanionMissionItem(Good good, int targetAmount)
+        public CompanionMissionItem(int targetAmount)
         {
-            Good = good;
             TargetAmount = targetAmount;
             _remainingAmount = new Observable<int>(targetAmount);
         }
@@ -26,7 +23,7 @@ namespace Features.Player.Retinue.Logic
         {
             if (IsCompleted)
             {
-                Debug.LogWarning($"Companion mission '{TargetAmount}x{Good}' is already completed. Skipping delivery.");
+                Debug.LogWarning($"Companion mission is already completed. Skipping delivery.");
                 return;
             }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Common.Utility;
 using Features.Audio.Sfx;
 using Features.Levels;
 using Features.Levels.Conditions.Logic;
@@ -7,6 +8,7 @@ using Features.Levels.GameModifiers.Events;
 using Features.Levels.Serialization;
 using Features.Notifications.Logic;
 using Features.Player.Logic;
+using Features.Player.Retinue;
 using Features.Player.Retinue.Logic;
 using Features.Stats;
 using Features.Ticking.Logic;
@@ -72,6 +74,11 @@ namespace Common.Infrastructure.Gameplay
             _systems.Add(new RetinueSystem());
             _systems.Add(new PlayerMapSpeedSystem());
             _systems.Add(new PlayerInTownPauseSystem());
+
+            foreach (var companion in EnumExtensions.Enumerate<CompanionType>())
+            {
+                _systems.Add(new CompanionMissionSystem(companion));
+            }
         }
 
         private void AddTownSystems()

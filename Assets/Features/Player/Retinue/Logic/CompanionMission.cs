@@ -1,28 +1,31 @@
 ﻿using System.Collections.Generic;
 using Common.Infrastructure.Observation;
 using Common.Types;
-using Common.Utility;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Logic
 {
     public sealed class CompanionMission
     {
+        public CompanionMissionItem CostMissionItem { get; }
         public Dictionary<Good, CompanionMissionItem> MissionItems { get; } = new();
-
-        private readonly HashSet<CompanionMissionItem> _incompleteItems = new();
-
         public ObservableEvent Completed { get; } = new();
 
-        public CompanionMission(IReadOnlyDictionary<Good, int> goods)
+        private int _incompleteItemCount;
+
+        public CompanionMission(int cost, IReadOnlyDictionary<Good, int> goods)
         {
+            CostMissionItem = new CompanionMissionItem(cost);
+            CostMissionItem.IsCompleted.Observe(OnMissionCompleted, false);
+            _incompleteItemCount++;
+
             foreach (var (good, amount) in goods)
             {
-                var item = new CompanionMissionItem(good, amount);
+                var item = new CompanionMissionItem(amount);
 
                 MissionItems.Add(good, item);
-                item.IsCompleted.Observe(isComplete => OnMissionCompleted(item, isComplete), false);
-                _incompleteItems.Add(item);
+                item.IsCompleted.Observe(OnMissionCompleted, false);
+                _incompleteItemCount++;
             }
         }
 
@@ -37,21 +40,21 @@ namespace Features.Player.Retinue.Logic
             item.Deliver(amount);
         }
 
-        private void OnMissionCompleted(CompanionMissionItem item, bool isComplete)
+        public void DeliverCoin(int coinAmount)
         {
-            if (isComplete)
-            {
-                _incompleteItems.Remove(item);
-            }
-            else
-            {
-                _incompleteItems.Add(item);
-            }
+            CostMissionItem.Deliver(coinAmount);
+        }
 
-            if (_incompleteItems.IsEmpty())
-            {
-                Completed.Invoke();
-            }
+        private void OnMissionCompleted(bool isComplete)
+        {
+            if (!isComplete)
+                return;
+            _incompleteItemCount--;
+
+            if (_incompleteItemCount > 0)
+                return;
+
+            Completed.Invoke();
         }
     }
 }
