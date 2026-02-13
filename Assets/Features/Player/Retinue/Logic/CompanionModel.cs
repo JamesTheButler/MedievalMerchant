@@ -1,4 +1,7 @@
-﻿using Common.Infrastructure.Observation;
+﻿using System.Collections.Generic;
+using Common.Infrastructure.Observation;
+using Common.Types;
+using UnityEngine;
 
 namespace Features.Player.Retinue.Logic
 {
@@ -9,6 +12,8 @@ namespace Features.Player.Retinue.Logic
 
         private readonly Observable<int> _level = new();
 
+        public Observable<CompanionMission> ActiveMission { get; } = new();
+
         public CompanionModel(CompanionType companionType)
         {
             CompanionType = companionType;
@@ -17,6 +22,17 @@ namespace Features.Player.Retinue.Logic
         public void SetLevel(int newLevel)
         {
             _level.Value = newLevel;
+        }
+
+        public void StartMission(IReadOnlyDictionary<Good, int> targetGoods)
+        {
+            if (ActiveMission.Value != null)
+            {
+                Debug.LogWarning("Tried starting a companion mission while one is already active.");
+                return;
+            }
+
+            ActiveMission.Value = new CompanionMission(targetGoods);
         }
     }
 }
