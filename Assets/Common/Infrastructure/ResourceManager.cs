@@ -35,9 +35,6 @@ namespace Common.Infrastructure
         public CaravanResources CaravanResources { get; private set; }
 
         [field: SerializeField, Required]
-        public Colors Colors { get; private set; }
-
-        [field: SerializeField, Required]
         public ConditionResources ConditionResources { get; private set; }
 
         [field: SerializeField, Required]

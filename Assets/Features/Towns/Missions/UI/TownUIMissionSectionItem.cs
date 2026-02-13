@@ -29,11 +29,12 @@ namespace Features.Towns.Missions.UI
         [SerializeField, Required]
         private MissionTooltipHandler missionTooltipHandler;
 
-        private Color _defaultDaysLeftIconColor, _badColor;
+        [SerializeField]
+        private Color badColor;
 
+        private Color _defaultDaysLeftIconColor;
         private GoodResources _goodResources;
         private MissionConfig _missionConfig;
-
         private Mission _mission;
 
         public void Initialize()
@@ -43,7 +44,6 @@ namespace Features.Towns.Missions.UI
 
             abortButton.onClick.AddListener(AbortButtonClicked);
             _defaultDaysLeftIconColor = daysLeftIcon.color;
-            _badColor = ResourceManager.Instance.Colors.Bad;
         }
 
         public void Bind(Mission mission)
@@ -86,7 +86,7 @@ namespace Features.Towns.Missions.UI
             daysLeftText.text = $"{daysLeft} days left";
 
             var isCloseToFailure = daysLeft <= _missionConfig.WarningThresholdDays;
-            daysLeftIcon.color = isCloseToFailure ? _badColor : _defaultDaysLeftIconColor;
+            daysLeftIcon.color = isCloseToFailure ? badColor : _defaultDaysLeftIconColor;
         }
 
         private void OnRemainingCountChanged(int remainingCount)

@@ -31,7 +31,6 @@ namespace Features.Towns.Production.UI.Construction
 
         private readonly Lazy<RecipeResources> _recipeResources = new(() => ResourceManager.Instance.RecipeResources);
         private readonly Lazy<GoodResources> _goodResources = new(() => ResourceManager.Instance.GoodResources);
-        private readonly Lazy<Colors> _colors = new(() => ResourceManager.Instance.Colors);
         private readonly Lazy<PlayerModel> _player = new(() => GameplayContext.Instance.Model.Player);
 
         private readonly Lazy<ProducerConfig> _producerConfig =
@@ -176,7 +175,6 @@ namespace Features.Towns.Production.UI.Construction
                 return;
 
             costButton.interactable = isInteractable;
-            costButton.GetText().color = isInteractable ? _colors.Value.FontDark : _colors.Value.Bad;
         }
     }
 }
