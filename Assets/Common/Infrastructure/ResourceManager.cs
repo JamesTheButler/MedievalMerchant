@@ -3,6 +3,7 @@ using Common.UI.Elements.Animation;
 using Features.Audio.Data;
 using Features.Goods.Config;
 using Features.Goods.Recipe.Data;
+using Features.Localization.Data;
 using Features.Towns.Config;
 using Features.Towns.Development.UI.DevelopmentGauge;
 using Features.Towns.Flags.Config;
@@ -51,6 +52,9 @@ namespace Common.Infrastructure
 
         [field: SerializeField, Required]
         public GoodResources GoodResources { get; private set; }
+
+        [field: SerializeField, Required]
+        public LocalizationResources LocalizationResources { get; private set; }
 
         [field: SerializeField, Required]
         public OnboardingResources OnboardingResources { get; private set; }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Common.Types;
 using Common.Utility;
 using Features.Levels.Conditions.Data;
 using Features.Levels.GameModifiers.Data;
@@ -30,10 +31,7 @@ namespace Features.Levels
         public LocalizedString Description { get; private set; }
 
         [field: SerializeField]
-        public string Difficulty { get; private set; }
-
-        [field: SerializeField]
-        public Color DifficultyColor { get; private set; }
+        public Difficulty Difficulty { get; private set; }
 
         [field: SerializeField]
         public float StartPlayerFunds { get; private set; }

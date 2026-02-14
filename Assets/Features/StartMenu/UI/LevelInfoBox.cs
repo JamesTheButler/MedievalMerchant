@@ -1,12 +1,13 @@
 using System.Linq;
+using Common.Infrastructure;
 using Common.Infrastructure.Global;
-using Common.UI.Utility;
 using Common.Utility;
 using Features.Levels;
 using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.UI;
 using Features.Levels.GameModifiers.Effects.Data;
 using Features.Levels.GameModifiers.UI;
+using Features.Localization.Data;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -21,10 +22,10 @@ namespace Features.StartMenu.UI
         private LevelLoader levelLoader;
 
         [SerializeField, Required]
-        private LocalizeStringEvent levelIdText, nameText, descriptionText;
+        private LocalizeStringEvent levelIdText, nameText, descriptionText, difficultyText;
 
         [SerializeField, Required]
-        private TMP_Text completionDateText, difficultyText;
+        private TMP_Text completionDateText;
 
         [SerializeField, Required]
         private PreGameConditionListUI winConditionList, lossConditionList;
@@ -41,8 +42,11 @@ namespace Features.StartMenu.UI
         private AllyEffectData _allyEffect;
         private LevelInfo _currentLevelInfo;
 
+        private LocalizationResources _localizationResources;
+
         private void Awake()
         {
+            _localizationResources = ResourceManager.Instance.LocalizationResources;
             startButton.onClick.AddListener(StartButtonClicked);
             // relevant later, when I add serialization of ongoing games
             continueButton.gameObject.SetActive(false);
@@ -64,7 +68,8 @@ namespace Features.StartMenu.UI
                 completionDateText.text = $"Fastest Win: {completionDate!.CompletionDate.ToDisplayString()}";
             }
 
-            difficultyText.text = $"Difficulty: {levelInfo.Difficulty.WithColor(levelInfo.DifficultyColor)}";
+            // TODO: this used to be "Difficulty: <Difficulty>.WithColor(Difficulty.Color)"
+            difficultyText.StringReference = _localizationResources.Difficulties[levelInfo.Difficulty];
 
             var conditions = levelInfo.Conditions;
             winConditionList.Setup(conditions.OfType<WinConditionData>());
