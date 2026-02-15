@@ -1,0 +1,112 @@
+﻿Potential difficult localization cases
+Reason: dynamic/composed strings or unclear user-facing status.
+
+[Assets\Common\Utility\FloatExtensions.cs:27] Dynamic/composed string: {value}{value}%
+[Assets\Common\Utility\CollectionExtensions.cs:29] Dynamic/composed string: {value}: {value}
+[Assets\Common\UI\Utility\StyleExtensions.cs:21] Dynamic/composed string: <style="{value}">{value}</style>
+[Assets\Common\UI\Utility\StyleExtensions.cs:26] Dynamic/composed string: <color=#{value}>{value}</color>
+[Assets\Common\UI\Tooltips\ModifiableTooltip.cs:51] Dynamic/composed string: {value}
+[Assets\Common\UI\GameOverUI.cs:68] Dynamic/composed string: Level Finished!
+[Assets\Common\UI\GameOverUI.cs:68] Dynamic/composed string: Game Over!
+[Assets\Features\Levels\GameModifiers\UI\TimedGameModifierUIElement.cs:14] Dynamic/composed string: {value} days left
+[Assets\Features\Levels\GameModifiers\UI\GameEventListUI.cs:98] Dynamic/composed string: Ongoing Events ({value})
+[Assets\Features\Levels\GameModifiers\Logic\EffectPercentModifier.cs:12] Dynamic/composed string: {value}: {value}
+[Assets\Common\Types\TierExtensions.cs:9] Dynamic/composed string: Tier {value}
+[Assets\Common\Types\Date.cs:78] Dynamic/composed string: Year: {value}, Day: {value}
+[Assets\Common\Types\Date.cs:83] Dynamic/composed string: Day {value} of Year {value}
+[Assets\Features\Goods\UI\PlayerGoodTooltip.cs:35] Dynamic/composed string: {value}
+[Assets\Features\Goods\UI\PlayerGoodTooltip.cs:53] Dynamic/composed string: {value} {value}
+[Assets\Features\Goods\UI\GoodTooltip.cs:58] Dynamic/composed string: {value}
+[Assets\Features\Goods\UI\GoodTooltip.cs:101] Dynamic/composed string: {value}
+[Assets\Features\Goods\Selector\SpecificGoodsSelector.cs:26] Dynamic/composed string: for {value}
+[Assets\Features\Goods\Selector\SingleGoodSelector.cs:23] Dynamic/composed string: for {value}
+[Assets\Features\Goods\Selector\ComplexGoodSelector.cs:53] Dynamic/composed string: for {value} goods from {value}
+[Assets\Features\Tutorial\UI\TutorialUI.cs:72] Dynamic/composed string: {value}/{value}
+[Assets\Common\Infrastructure\Observation\Observable.cs:83] Dynamic/composed string: >{value}<
+[Assets\Features\Levels\Conditions\UI\ConditionsButton.cs:41] Dynamic/composed string: {value}/{value}
+[Assets\Features\Levels\Conditions\Model\TownTierWinCondition.cs:28] Dynamic/composed string: {value}/{value} Tier {value} towns
+[Assets\Features\Levels\Conditions\Model\TimeoutLossCondition.cs:39] Dynamic/composed string: {value} days left
+[Assets\Features\Levels\Conditions\Model\LocalReputationWinCondition.cs:26] Dynamic/composed string: {value}/{value} towns
+[Assets\Features\Levels\Conditions\Model\GlobalReputationWinCondition.cs:24] Dynamic/composed string: {value}/{value} global reputation
+[Assets\Features\Levels\Conditions\Model\FundsWinCondition.cs:24] Dynamic/composed string: {value}/{value} coin
+[Assets\Features\Levels\Conditions\Model\BankruptcyLossCondition.cs:37] Dynamic/composed string: {value} days left in bankruptcy
+[Assets\Features\Levels\GameModifiers\Effects\Data\DevelopmentEffectData.cs:22] Dynamic/composed string: {value} development change rate
+[Assets\Features\Levels\GameModifiers\Effects\Data\PriceEffectData.cs:38] Dynamic/composed string: {value} to {value}prices {value}
+[Assets\Features\Levels\GameModifiers\Effects\Data\MovementSpeedEffectData.cs:20] Dynamic/composed string: {value} caravan movement speed
+[Assets\Features\Levels\GameModifiers\Effects\Data\ProductionEffectData.cs:27] Dynamic/composed string: {value} production speed {value}
+[Assets\Features\Levels\GameModifiers\Effects\Data\ReputationEffectData.cs:22] Dynamic/composed string: {value} for all reputation changes
+[Assets\Features\StartMenu\UI\VersionText.cs:11] Dynamic/composed string: v. {value}
+[Assets\Features\StartMenu\UI\LevelInfoBox.cs:68] Dynamic/composed string: Fastest Win: {value}
+[Assets\Features\Player\Caravan\UI\NewCartTooltip.cs:44] Dynamic/composed string: Cost: {value}
+[Assets\Features\Player\Caravan\UI\CartUpgradeTooltipDetails.cs:24] Dynamic/composed string: Level {value}
+[Assets\Features\Player\Caravan\UI\CartUpgradeTooltipDetails.cs:25] Dynamic/composed string: Slots: {value}
+[Assets\Features\Player\Caravan\UI\CartUpgradeTooltipDetails.cs:26] Dynamic/composed string: Speed: {value}
+[Assets\Features\Player\Caravan\UI\CartUpgradeTooltipDetails.cs:27] Dynamic/composed string: Upkeep: {value}{value}/day
+[Assets\Features\Player\Caravan\UI\CartUpgradeTooltipDetails.cs:36] Dynamic/composed string: {value}{value}
+[Assets\Features\Player\Caravan\UI\CartUpgradeTooltipDetails.cs:37] Dynamic/composed string: {value}{value}
+[Assets\Features\Player\Caravan\UI\CartUpgradeTooltipDetails.cs:38] Dynamic/composed string: {value}{value}
+[Assets\Features\Player\Caravan\UI\CartUpgradeTooltip.cs:63] Dynamic/composed string: Cost: {value}
+[Assets\Features\Player\Caravan\UI\CartUI.cs:67] Dynamic/composed string: Waggon {value}
+[Assets\Features\Settings\UI\SettingsSliderGroup.cs:14] Dynamic/composed string: {value}
+[Assets\Features\Trade\UI\TradeUI.cs:170] Dynamic/composed string: Buy
+[Assets\Features\Trade\UI\TradeUI.cs:170] Dynamic/composed string: Sell
+[Assets\Features\Trade\UI\TradeUI.cs:322] Dynamic/composed string: +{value}
+[Assets\Features\Trade\UI\TradeUI.cs:323] Dynamic/composed string: -{value}
+[Assets\Features\Trade\UI\TradeUI.cs:324] Dynamic/composed string: Funds: {value} ({value})
+[Assets\Features\Trade\UI\TradeUI.cs:331] Dynamic/composed string: +{value}
+[Assets\Features\Trade\UI\TradeUI.cs:332] Dynamic/composed string: -{value}
+[Assets\Features\Trade\UI\TradeUI.cs:333] Dynamic/composed string: Funds: {value} ({value})
+[Assets\Features\Trade\UI\TradeUI.cs:349] Dynamic/composed string: {value}{value} coin
+[Assets\Features\Trade\UI\TradeUI.cs:359] Dynamic/composed string: x{value}
+[Assets\Features\Trade\UI\TradeUI.cs:391] Dynamic/composed string: {value}{value}
+[Assets\Features\Trade\UI\TradeUI.cs:392] Dynamic/composed string: Reputation: {value} ({value})
+[Assets\Features\Player\Caravan\Logic\CartUpkeepModifier.cs:17] Dynamic/composed string: Upkeep for Cart level {value}
+[Assets\Features\Player\Retinue\UI\CompanionLevelTooltip.cs:53] Dynamic/composed string: {value}
+[Assets\Features\Player\Retinue\UI\CompanionLevelTooltip.cs:57] Dynamic/composed string: Unlock previous levels first
+[Assets\Features\Player\Retinue\UI\CompanionLevelTooltip.cs:57] Dynamic/composed string: (coming soon)
+[Assets\Features\Trade\Logic\Price\ReputationPriceModifier.cs:36] Dynamic/composed string: {value} {value} you! Your reputation: {value}
+[Assets\Features\Trade\Logic\Price\AvailabilityPriceModifier.cs:30] Dynamic/composed string: Availability: {value}
+[Assets\Features\Towns\UI\TownUIHeaderSection.cs:70] Dynamic/composed string: {value}
+[Assets\Features\Towns\UI\TownUIHeaderSection.cs:77] Dynamic/composed string: {value}
+[Assets\Features\Towns\UI\TownUIHeaderSection.cs:82] Dynamic/composed string: {value}{value} /day
+[Assets\Features\Towns\UI\TownUIDevelopmentSection.cs:97] Dynamic/composed string: {value}{value}/day
+[Assets\Features\Player\Retinue\Logic\Modifiers\NegotiatorUpgradeCostModifier.cs:27] Dynamic/composed string: {value} Level {value}
+[Assets\Features\Player\Retinue\Logic\Modifiers\NegotiatorPriceModifier.cs:37] Dynamic/composed string: {value} Level {value}
+[Assets\Features\Player\Retinue\Logic\Modifiers\NavigatorUpkeepModifier.cs:26] Dynamic/composed string: Navigator level {value}
+[Assets\Features\Player\Retinue\Logic\Modifiers\NavigatorSpeedModifier.cs:26] Dynamic/composed string: Navigator level {value}
+[Assets\Features\Player\Retinue\Logic\Modifiers\DiplomatReputationModifier.cs:31] Dynamic/composed string: {value} Level {value}
+[Assets\Features\Player\Retinue\Logic\Modifiers\ArchitectUpgradeCostModifier.cs:31] Dynamic/composed string: {value} Level {value}
+[Assets\Features\Player\Retinue\Config\CompanionConfigData.cs:41] Dynamic/composed string: {value} lvl. {value} {value}
+[Assets\Features\Trade\Haggling\UI\HaggleToggle.cs:43] Dynamic/composed string: {value} coin
+[Assets\Features\Trade\Haggling\UI\HaggleToggle.cs:44] Dynamic/composed string: {value}{value}
+[Assets\Features\Towns\Production\UI\ProducerGroup.cs:79] Dynamic/composed string: Producer {value}
+[Assets\Features\Player\Retinue\Config\LevelDatas\ThiefLevelData.cs:22] Dynamic/composed string: - Steals {value} coin when entering town
+[Assets\Features\Player\Retinue\Config\LevelDatas\ThiefLevelData.cs:23] Dynamic/composed string: - {value} chance of getting caught
+[Assets\Features\Player\Retinue\Config\LevelDatas\ThiefLevelData.cs:24] Dynamic/composed string: - {value} reputation lost when being caught
+[Assets\Features\Towns\Development\UI\DevelopmentMilestoneTooltip.cs:24] Dynamic/composed string: Unlocks at development {value}
+[Assets\Features\Towns\Development\Logic\Milestones\DividendsFundsModifier.cs:32] Dynamic/composed string: Dividends: {value} of {value}s funds
+[Assets\Features\Towns\Production\Logic\BaseTownFundsProduction.cs:19] Dynamic/composed string: Base production for Tier {value} town.
+[Assets\Features\Towns\Missions\MissionFailedNotification.cs:25] Dynamic/composed string: Mission failed: {value}
+[Assets\Features\Towns\Missions\MissionFailedNotification.cs:31] Dynamic/composed string: You did not deliver enough {value} in time. {value} is not happy.
+[Assets\Features\Towns\Missions\Mission.cs:83] Dynamic/composed string: {value} Mission: {value} x{value}.
+[Assets\Features\Towns\Missions\MissionStartedNotification.cs:26] Dynamic/composed string: {value} started: {value} wants {value}.
+[Assets\Features\Towns\Missions\MissionStartedNotification.cs:32] Dynamic/composed string: Deliver {value}x {value} before {value}.
+[Assets\Features\Towns\Missions\UI\TownUIMissionSectionItem.cs:61] Dynamic/composed string: Sell {value} {value}
+[Assets\Features\Towns\Missions\UI\TownUIMissionSectionItem.cs:86] Dynamic/composed string: {value} days left
+[Assets\Features\Towns\Missions\UI\TownUIMissionSectionItem.cs:95] Dynamic/composed string: {value}/{value} delivered
+[Assets\Features\Towns\Missions\UI\MissionTooltip.cs:44] Dynamic/composed string: Trade Mission
+[Assets\Features\Towns\Missions\UI\MissionTooltip.cs:44] Dynamic/composed string: Upgrade Mission
+[Assets\Features\Notifications\UI\MinorNotificationItem.prefab] Possibly placeholder/template text: X
+[Assets\Features\StartMenu\UI\LevelSelection.prefab] Possibly placeholder/template text: v. 0.1.2
+[Assets\Features\Trade\UI\TradeUI.prefab] Possibly placeholder/template text: X
+[Assets\Features\Trade\UI\TradeErrorPopup.prefab] Possibly placeholder/template text: Simple tooltip.
+[Assets\Features\Towns\Missions\UI\TownUIMissionSectionItem.prefab] Possibly placeholder/template text: X
+[Assets\Common\UI\Elements\Button.prefab] Possibly placeholder/template text: Button
+[Assets\Common\UI\Elements\TextInput.prefab] Possibly placeholder/template text: Placeholder
+[Assets\Common\UI\Elements\SimpleTooltipError.prefab] Possibly placeholder/template text: Simple tooltip.
+[Assets\Common\UI\Elements\SimpleTooltip.prefab] Possibly placeholder/template text: Simple tooltip.
+[Assets\Common\UI\Elements\Panel UI Template.prefab] Possibly placeholder/template text: Subtitle
+[Assets\Common\UI\Elements\Panel UI Template.prefab] Possibly placeholder/template text: Contents
+[Assets\Common\UI\Elements\Panel UI Template.prefab] Possibly placeholder/template text: Title
+[Assets\Features\StartMenu\UI\VersionText.cs:11] Possibly placeholder/template text: v. {value}
+[Assets\Features\Player\Retinue\UI\CompanionLevelTooltip.cs:57] Possibly placeholder/template text: (coming soon)
