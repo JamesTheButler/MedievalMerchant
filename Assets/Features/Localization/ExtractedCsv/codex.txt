@@ -1,0 +1,88 @@
+Codex Handover: Localization Extraction Work
+Last updated: 2026-02-15
+Project: C:\Projects\MedievalMerchant
+
+Scope completed
+- Extracted user-facing English strings from Unity project content into feature-based CSV files.
+- Sources scanned included scene/prefab/asset text and hard-coded UI-facing C# strings.
+- Debug logs and obvious non-user-facing strings were excluded where possible.
+- No translation to German/French was done in this phase.
+- Output format is CSV-first, as requested.
+
+Output location
+- Folder: Assets/Features/Localization/ExtractedCsv
+- Files:
+  - audio.csv
+  - common.csv
+  - feedback.csv
+  - goods.csv
+  - levels.csv
+  - localization.csv
+  - map.csv
+  - notifications.csv
+  - player.csv
+  - settings.csv
+  - startmenu.csv
+  - towns.csv
+  - trade.csv
+  - tutorial.csv
+  - difficult-cases.txt
+
+CSV schema
+- Columns:
+  - key
+  - english
+  - comment
+  - source
+- comment contains translator context and usage hints (e.g., short labels/buttons).
+
+Key conventions currently in files
+- Dot-separated segments.
+- Segments are human-readable camelCase where possible.
+- Acronyms are preserved uppercase where applicable (e.g., UI).
+- Example (requested format):
+  - tutorial.onboardingTaskListUI.tasks
+- Feature segment can be camelCase if multi-word (e.g., startMenu).
+
+Important notes on key history
+- Keys were transformed multiple times during cleanup.
+- Final pass rebuilt middle segments from source file/class stems for readability.
+- Corruption safeguards were applied to avoid invalid keys like "...".
+- If further re-keying is performed, validate uniqueness and avoid introducing empty segments.
+
+Current content totals
+- Total strings (rows across CSVs): 365
+- Total words in english column: 1,687
+- Per-file breakdown:
+  - audio.csv: rows=2, words=3
+  - common.csv: rows=42, words=135
+  - feedback.csv: rows=2, words=3
+  - goods.csv: rows=66, words=123
+  - levels.csv: rows=52, words=378
+  - localization.csv: rows=1, words=4
+  - map.csv: rows=1, words=1
+  - notifications.csv: rows=6, words=45
+  - player.csv: rows=55, words=166
+  - settings.csv: rows=3, words=10
+  - startmenu.csv: rows=11, words=51
+  - towns.csv: rows=41, words=126
+  - trade.csv: rows=27, words=68
+  - tutorial.csv: rows=56, words=574
+
+Known caveats
+- Some textSlug segments are still plain lower words by design; they remain readable and dot-separated.
+- Dynamic/composed strings and ambiguous cases are listed in difficult-cases.txt.
+- This extraction is heuristic and may miss runtime-generated strings or strings in binary-only assets.
+
+Recommended next steps (future sessions)
+1. Review difficult-cases.txt and decide localization patterns/placeholders for dynamic strings.
+2. Decide whether to freeze keys now to prevent translation churn.
+3. Import these CSVs into Unity Localization tables (or keep CSV as translation source of truth).
+4. Map hard-coded runtime strings to LocalizedString keys in code and prefabs.
+5. Run in-editor QA pass to catch missed user-facing text.
+
+Guardrails for future Codex sessions
+- Do not run git commands unless explicitly requested.
+- Do not translate content unless explicitly requested.
+- Preserve CSV schema and key stability when possible.
+- If re-keying, generate a key migration map oldKey -> newKey before applying.
