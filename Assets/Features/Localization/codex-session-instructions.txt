@@ -1,0 +1,69 @@
+Codex Session Instructions: CSV Localization Cleanup
+Last updated: 2026-02-15
+Location: C:\Projects\MedievalMerchant\Assets\Features\Localization
+
+Goal
+Clean up localization keys and remove non-localizable rows across all remaining CSV files in:
+- Assets/Features/Localization/CSV
+
+Do not re-clean `common.csv` unless explicitly requested (already cleaned in this session).
+
+Required CSV schema
+- Keep exact columns and order:
+  - key
+  - english
+  - comment
+  - source
+
+Key naming rules
+1. Use logical keys, not source-file mirror keys.
+2. Use this structure:
+   - tableName.categoryOrUseCase.specificPlacement
+3. Keep the third segment camelCase only (do not split it into extra dot segments).
+4. Keep keys short, readable, and purpose-based.
+5. Prefer UI/function meaning over prefab/class naming.
+6. Keep dynamic placeholders in english text intact (e.g. {value}).
+
+Examples
+- Bad:
+  - common.creditsEntry.programming.game.design.UI.design
+- Good:
+  - common.credits.mainDeveloperTitle
+
+Row removal rules (remove rows that should not be localized)
+Remove entries that are:
+1. Proper names/person names that should not be translated (example: Tom Ille).
+2. Template/default prefab placeholders not intended for players:
+   - examples: Button, Placeholder, Line 1, Title Title..., Description Description..., Simple tooltip., zero-width spacer text.
+3. Clearly editor/sample/mock text that is not real runtime player-facing UI.
+
+Keep entries that are clearly player-facing runtime text, even if dynamic/composed.
+
+Ambiguity rule (mandatory)
+If any row is unclear:
+- DO NOT guess.
+- Pause and ask the user for a decision before changing that row.
+This applies to both:
+- key renaming decisions
+- keep/remove decisions
+
+Per-file workflow
+For each CSV file (except common.csv unless requested):
+1. Read full file.
+2. Propose before -> after key mapping for all rows.
+3. Flag uncertain rows and ask user before applying.
+4. After user confirmation, apply key updates and removals.
+5. Validate:
+   - row count change is expected and explained
+   - no duplicate keys
+   - schema unchanged
+6. Report:
+   - renamed keys count
+   - removed rows count
+   - remaining uncertain rows (if any)
+
+Safety / process
+- Do not translate english text unless explicitly requested.
+- Do not run git commands unless explicitly requested.
+- Preserve comments/sources unless removal is requested.
+- If major re-keying is done, provide an oldKey -> newKey list in chat output for traceability.
