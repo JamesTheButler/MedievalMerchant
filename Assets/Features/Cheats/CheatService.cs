@@ -5,6 +5,7 @@ using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Global;
 using Common.Types;
 using Common.Utility;
+using Features.Player.Camp.UI;
 using Features.Player.Caravan.Config;
 using Features.Player.Logic;
 using Features.Player.UI;
@@ -58,7 +59,7 @@ namespace Features.Cheats
                 { "town.rep", SetTownReputationTo100 },
                 { "town.reputation", SetTownReputationTo100 },
                 { "glint", GlintFunds },
-                { "g", GlintFunds },
+                { "camp", EnterCamp },
             };
 
             _paramCommands = new Dictionary<string, Action<string>>
@@ -123,6 +124,12 @@ namespace Features.Cheats
         {
             var playerMiniUI = Object.FindAnyObjectByType<PlayerMiniUI>();
             playerMiniUI.PlayCoinEffect();
+        }
+
+        private void EnterCamp()
+        {
+            var campPanel = Object.FindFirstObjectByType<CampPanelUI>(FindObjectsInactive.Include).gameObject;
+            campPanel.SetActive(true);
         }
 
         private void AddTownDevelopment(string parameter)

@@ -10,10 +10,12 @@ namespace Features.Player.Retinue.Logic
     {
         public CompanionType CompanionType { get; }
         public IReadOnlyObservable<int> Level => _level;
+        public IReadOnlyObservable<float> Upkeep => _upkeep;
         public Observable<CompanionMission> ActiveMission { get; } = new();
         public CompanionUpkeepModifier UpkeepModifier { get; }
 
         private readonly Observable<int> _level = new();
+        private readonly Observable<float> _upkeep = new();
 
         public CompanionModel(CompanionType companionType)
         {

@@ -14,6 +14,7 @@ namespace Features.Player.Camp.UI
     {
         [SerializeField, Required]
         private GameObject outline;
+
         [SerializeField, Required]
         private Image mainImage;
 
