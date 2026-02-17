@@ -1,4 +1,3 @@
-using System;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Observation;
@@ -47,19 +46,23 @@ namespace Features.Player.Camp.UI
         {
             _bindings.Track(
                 _companionModel.Level.Observe(OnLevelChanged),
-                _companionModel.Upkeep.Observe(OnLevelChanged),
+                _companionModel.Upkeep.Observe(OnUpkeepChanged)
             );
-        }
-
-        private void OnLevelChanged(int level)
-        {
-            levelText.SetArguments(level);
-            
         }
 
         public void Unbind()
         {
             _bindings.UnbindAll();
+        }
+
+        private void OnLevelChanged(int level)
+        {
+            levelText.SetArguments(level);
+        }
+
+        private void OnUpkeepChanged(float upkeep)
+        {
+            //levelText.SetArguments(level);
         }
     }
 }
