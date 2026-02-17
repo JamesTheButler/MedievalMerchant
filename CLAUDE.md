@@ -2,59 +2,73 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+
 ## Project Overview
 
-Medieval Merchant is a strategy/trading simulation game built in **Unity 6 (6000.2.x)** with **C#**. The player manages a traveling caravan, trading goods across a medieval world to help towns prosper. Released on Steam in Early Access.
+Medieval Merchant is a strategy/trading simulation game built in **Unity 6 (6000.2.x)** with **C#**. The player manages a traveling caravan, trading goods across a medieval world to help towns prosper. Released on Steam in Early Access. I am using the unity localization package to roll out localizations.
 
-## Build & Run
 
-This is a Unity project — there is no CLI build command. Open the project in Unity Editor (version 6000.2.15f1). The solution file `MedievalMerchant.sln` is auto-generated and gitignored; open it via Unity or Rider/VS for C# editing.
+## Build & Development
 
-Key scenes in `Assets/Scenes/`:
-- `StartScene.unity` — main menu / level select
-- `GameplayScene.unity` — the core gameplay scene
-- `UIDevelopment.unity` — UI testing sandbox
+- **Unity version**: 6000.2.15f1 (Unity 6)
+- **Solution**: `MedievalMerchant.sln` — open in Unity or your IDE
+- **Build outputs**: `Builds/` directory (versioned releases)
+- **No CLI build/test commands**: This is a Unity project — build, run, and test through the Unity Editor
+- **Key packages**: Unity Localization 1.5.9, URP 17.2.0, Input System 1.16.0, NaughtyAttributes, NuGetForUnity (git), SerializeReference Extensions (git)
 
-There are no automated unit tests in the project code; `Test/` directories contain in-editor testing MonoBehaviours (e.g., tooltip tester, tick tester).
+
+## Aim for Claude
+
+I want to make this project localizable and eventually localize it into different languages. I will NOT consider non-RTL languages. The game is fully written in English for now. All strings are hard-coded into .cs files, or written in scriptable objects, prefabs or scenes. We need to extract all strings into localizable string tables (as supported by the Unity localization package). For this, we can use .csv files. It is important to maintain a human-readable structure for the tables and the keys within the tables.
+The project is built in a data-driven way. There is a ConfigManager and ResourceManager that provides singleton-esque access to fundamental data. Configs are data that can be tweaked to influence gameplay, such as a movementspeed variable, or a town growth speed multiplier. Resources are static, such as an icon for a good or the name of a companion. It is important to reflect this data-driven approach in the tables. Keys should be structured to reflect the organization of featuers in the folder structures.
+
 
 ## Architecture
 
-### Two-Tier Context System
+### Two-Layer Context System
 
-The game uses singleton context objects that own all models, services, and systems:
+The game runs on two context singletons that manage lifecycle:
 
-- **`GlobalContext`** (`Assets/Common/Infrastructure/Global/`) — persists across scenes (`DontDestroyOnLoad`). Owns `GlobalModel`, `GlobalServices`, `GlobalSystems`, and `PersistenceServices`.
-- **`GameplayContext`** (`Assets/Common/Infrastructure/Gameplay/`) — exists only during a level. Owns `GameplayModel`, `GameplayServices`, `GameplaySystems`, and `Selection`. Access via `GameplayContext.Instance`.
+- **`GlobalContext`** (`Assets/Common/Infrastructure/Global/`) — persists across scenes via `DontDestroyOnLoad`. Holds `GlobalModel`, `GlobalServices`, `GlobalSystems`, and `PersistenceServices`. Initializes on `Awake()`.
+- **`GameplayContext`** (`Assets/Common/Infrastructure/Gameplay/`) — lives per-level. Holds `GameplayModel`, `GameplaySystems`, `GameplayServices`, and `Selection`. Created when a level scene loads; cleaned up on destroy.
 
-### Model / System / Service Pattern
+Both are accessed via static `Instance` properties.
 
-- **Models** — plain C# classes holding game state via `Observable<T>` and `ModifiableVariable`. No Unity dependencies where possible.
-- **Systems** (`ISystem`) — implement game logic by reacting to model changes. Created per-level in `GameplaySystems` (global systems, player systems, and per-town systems). Not accessed outside init/teardown.
-- **Services** (`IService`) — provide utility operations that other code actively calls (e.g., `TradeService`, `TickingService`, `NavigationService`).
+### Initialization Flow
 
-All implement `IInitializable` (with `Initialize()` and `CleanUp()` lifecycle methods).
+1. `LevelBootstrapper` loads on scene start
+2. Instantiates the map from a prefab
+3. Creates `PlayerModel` and towns via `TownFactory`
+4. Initializes `GameplayContext` with all data
+5. Calls `Initialize()` on all services, systems, and `InitializableBehavior` objects
+6. Applies level game modifiers
 
-### Observable & Modifiable Infrastructure
+All major systems implement `IInitializable` (with `Initialize()` and `CleanUp()` methods).
 
-`Assets/Common/Infrastructure/Observation/`:
-- `Observable<T>` — value wrapper that notifies subscribers on change. Supports `Observe(callback)` which returns an `IBinding` for unsubscription.
-- `ObservableEvent` / `ObservableEvent<T>` — event broadcasting.
+### Observable/Reactive Pattern
 
-`Assets/Common/Infrastructure/Modifiable/`:
-- `ModifiableVariable` — an `Observable<float>` whose value is computed from a `BaseValueModifier` plus stacked `FlatModifier` and `BasePercentageModifier` instances. Formula: `(base + flatSum) * (1 + percentSum)`. This is how all gameplay values (prices, speeds, rates) support dynamic modification from events, upgrades, town levels, etc.
-- `IModifier` — has `Value`, `FormattedValue`, and `Description` observables.
+`Observable<T>` wraps values and fires events on change. UI and systems subscribe via `.Observe()` which returns an `IBinding` for cleanup. `ObservableEvent` variants (0-3 generic params) handle events. This is the primary mechanism for connecting model state to UI.
+
+### Modifiable Variables
+
+`ModifiableVariable` extends `Observable<float>` with a modifier stack. Any gameplay value (prices, speeds, growth rates) can be dynamically modified by events, companion levels, reputation, level settings, etc. Modifiers implement `IModifier` (flat, percentage, average, custom).
 
 ### Data-Driven Configuration
 
-- **`ConfigurationManager`** — singleton MonoBehaviour that selects between debug and release `Configurations` ScriptableObjects. Access configs via `ConfigurationManager.Configurations.TownConfig`, etc.
-- **`ResourceManager`** — singleton MonoBehaviour holding references to all resource ScriptableObjects (art lookups, recipe data, localization, etc.). Access via `ResourceManager.Instance`.
-- **`Configurations`** (`Assets/Common/Config/`) — aggregates all gameplay config SOs (CaravanConfig, TownConfig, GoodConfig, TickConfig, etc.).
+- **`ConfigurationManager`** — singleton with Debug/Release `Configurations` ScriptableObject profiles. Access via `ConfigurationManager.Configurations`. Configs are tweakable gameplay values.
+- **`ResourceManager`** — singleton providing static data (icons, names, recipes, etc.) via 15+ `SerializedDictionary` collections. Resources are read-only reference data.
 
-### Level Bootstrapping
+ScriptableObjects are created via standardized `CreateAssetMenu` paths under `Medieval Merchant/`.
 
-`LevelBootstrapper` in `Assets/Features/Levels/` orchestrates level startup: instantiates the map prefab, scans the tilemap for town positions, creates `Town` instances via `TownFactory`, initializes `GameplayContext.Model`, and applies level-specific gameplay modifiers.
+### Service vs System Distinction
 
-### Feature Organization
+- **`IService`** — persistent feature-level logic (e.g., `NavigationService`, `NotificationService`, `CheatService`)
+- **`ISystem`** — frame-based or tick-based update logic (e.g., `PlayerTickSystem`, `GameSfxSystem`)
+
+Both are managed by their respective containers (`GameplayServices`/`GameplaySystems` or `GlobalServices`/`GlobalSystems`).
+
+
+## Key Features & Organization
 
 `Assets/Features/` contains self-contained feature folders, each typically with subfolders for:
 - `Config/` or `Data/` — ScriptableObjects and data classes
@@ -63,29 +77,34 @@ All implement `IInitializable` (with `Initialize()` and `CleanUp()` lifecycle me
 
 Key features: `Towns/` (production, development, reputation, missions, flags), `Trade/` (trading logic, haggling, price calculation), `Player/` (caravan, retinue/companions), `Goods/` (good types, recipes), `Map/` (tiling, pathfinding, zones), `Levels/` (level data, conditions, game modifiers), `Inventory/`, `Ticking/`, `Localization/`, `Tutorial/`, `Notifications/`, `Audio/`, `Stats/`, `Achievements/`.
 
-### Common Utilities
+### Shared Infrastructure
 
-`Assets/Common/` contains shared code:
-- `Infrastructure/` — core framework (contexts, observable, modifiable, serialization)
-- `UI/` — shared UI components, tooltip system (base classes in `Tooltips/`), inventory UI
-- `Types/` — domain enums and value types (`Good`, `Region`, `Tier`, `Date`, `Availability`, `Difficulty`)
+`Assets/Common/` contains cross-cutting concerns:
+- `Infrastructure/` — contexts, observation, modifiable variables, lifecycle interfaces
+- `Types/` — core types: `Date`, `Difficulty`, `Good`, `Region`, `Tier`
+- `UI/` — shared UI elements, tooltips, inventory UI, utilities
 - `Utility/` — extension methods and helpers
 - `Camera/` — camera management
 
-### Key Third-Party Dependencies
+### Namespace Convention
 
-- **NaughtyAttributes** — inspector enhancements (`[Required]`, `[Expandable]`, etc.)
-- **SerializedCollections** — serializable dictionary support
-- **DOTween** — animation tweening
-- **Unity Localization** (com.unity.localization) — i18n
-- **NuGetForUnity** — NuGet package management
-- **Universal Render Pipeline (URP)** — rendering
-- **SerializeReference Extensions** — polymorphic serialization support
+Namespaces mirror the folder structure:
+- `Common.Infrastructure.Gameplay`, `Common.Infrastructure.Global`, `Common.Infrastructure.Observation`
+- `Common.Types`, `Common.UI`, `Common.Utility`
+- `Features.{FeatureName}.Config`, `Features.{FeatureName}.Logic`, `Features.{FeatureName}.UI`
 
-## Conventions
+### Code Conventions
 
-- Namespaces mirror folder structure (e.g., `Features.Towns.Development.Logic`, `Common.Infrastructure.Modifiable`)
-- ScriptableObjects are used for all configuration and balancing data — create them via `[CreateAssetMenu]`
-- UI components observe models via `Observable.Observe()` and clean up bindings in `CleanUp()`/`OnDestroy()`
-- The `Configs.prefab` in `Assets/Common/Infrastructure/` holds the `ConfigurationManager` singleton
-- The `Resources.prefab` in `Assets/Common/Config/` holds the `ResourceManager` singleton
+- Classes are typically `sealed`
+- Properties favor `readonly`/immutable patterns
+- Modern C# features used: records, init-only properties, nullable reference types
+- `JetBrains.Annotations` for null-safety attributes (`[CanBeNull]`, etc.)
+- NaughtyAttributes for editor: `[Expandable]`, `[Required]`, `[SerializedDictionary]`, `[SubclassSelector]`
+
+
+## Scenes
+
+- `GameplayScene` — main gameplay
+- `StartScene` — main menu and level selection
+- `UIDevelopment` — UI testing/prototyping
+- Test scenes: `TooltipTest`, `TilingTest`
