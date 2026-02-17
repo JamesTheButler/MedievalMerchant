@@ -6,6 +6,7 @@ using Features.Levels;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Localization.Components;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 using UnityEngine.UI;
 
 namespace Features.StartMenu.UI
@@ -22,7 +23,7 @@ namespace Features.StartMenu.UI
 
         [SerializeField, Required]
         private LocalizeStringEvent levelIndexText, titleText;
-        
+
         [field: SerializeField, Expandable, Required]
         public LevelInfo LevelInfo { get; private set; }
 
@@ -41,7 +42,7 @@ namespace Features.StartMenu.UI
 
             button.onClick.AddListener(OnClick);
 
-            levelIndexText.SetArguments(LevelInfo.DisplayIndex);
+            levelIndexText.SetArgument("_LevelIndex", LevelInfo.DisplayIndex);
             titleText.StringReference = LevelInfo.LevelName;
             var progressModel = GlobalContext.Instance.Model.ProgressModel;
             var isCompleted = progressModel.CompletedLevels[LevelInfo.InternalIndex] != null;

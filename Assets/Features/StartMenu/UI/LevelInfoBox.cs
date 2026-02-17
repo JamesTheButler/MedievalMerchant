@@ -22,6 +22,9 @@ namespace Features.StartMenu.UI
         private LevelLoader levelLoader;
 
         [SerializeField, Required]
+        private AllySelectionPanel allySelectionPanel;
+
+        [SerializeField, Required]
         private LocalizeStringEvent levelIdText, nameText, descriptionText, difficultyText;
 
         [SerializeField, Required]
@@ -32,9 +35,6 @@ namespace Features.StartMenu.UI
 
         [SerializeField, Required]
         private GameModifierUIElement levelConditionsElement;
-
-        [SerializeField, Required]
-        private AllySelectionPanel allySelectionPanel;
 
         [SerializeField, Required]
         private Button continueButton, startButton;
@@ -57,7 +57,7 @@ namespace Features.StartMenu.UI
         {
             _currentLevelInfo = levelInfo;
 
-            levelIdText.SetArguments(levelInfo.DisplayIndex);
+            levelIdText.SetArgument("_LevelIndex", levelInfo.DisplayIndex);
             nameText.StringReference = levelInfo.LevelName;
             descriptionText.StringReference = levelInfo.Description;
             var completionDate = GlobalContext.Instance.Model.ProgressModel.CompletedLevels[levelInfo.InternalIndex];
@@ -69,7 +69,7 @@ namespace Features.StartMenu.UI
             }
 
             // TODO: this used to be "Difficulty: <Difficulty>.WithColor(Difficulty.Color)"
-            difficultyText.StringReference = _localizationResources.Difficulties[levelInfo.Difficulty];
+            difficultyText.Update(_localizationResources.Difficulties[levelInfo.Difficulty]);
 
             var conditions = levelInfo.Conditions;
             winConditionList.Setup(conditions.OfType<WinConditionData>());
