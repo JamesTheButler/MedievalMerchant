@@ -1,11 +1,13 @@
 Key,Id,English(en)
-Towns.Missions.TradeMission,,Trade Mission
-Towns.Missions.UpgradeMission,,Upgrade Mission
-Towns.Missions.Sell,,Sell {0} {1}
-Towns.Missions.Delivered,,{0}/{1} delivered
+Towns.Missions.TradeMission.Title,"Shown in mission tooltip over a trade mission in the town ui.",Trade Mission
+Towns.Missions.UpgradeMission.Title,"Shown in mission tooltip over an upgrade mission.",Upgrade Mission
+Towns.Missions.Description,"Shown in mission tooltip. Description of a trade/upgrade mission. {0} is a number, {1} is the name of the good.",Sell {0}x {1}
+Towns.Missions.DeliveryStatus,"Shown in mission tooltip. Status of how many of the demanded goods have been developed. {0} & {1} are numbers, e.g. 5/15 delivered",{0}/{1} delivered
+Towns.Missions.Reward.Title,"Shown in mission tooltip. ",On Success
 Towns.Missions.Reward.Coin,,{0} coin
 Towns.Missions.Reward.Growth,,+{0} growth
 Towns.Missions.Reward.Reputation,,+{0} reputation
+Towns.Missions.Penalty.Title,"Shown in mission tooltip. ",On Failure
 Towns.Missions.Penalty.Growth,,{0} growth
 Towns.Missions.Penalty.Reputation,,{0} reputation
 Towns.Missions.Notifications.Started.Title,,{0} started: {1} wants {2}.
@@ -20,4 +22,19 @@ Towns.Milestones.FundsBoost,,Increases the towns coin production by {0}.
 Towns.Milestones.ProductionBoost,,Boosts the towns good production by {0}.
 Towns.Milestones.PriceBoost,,Improves the towns prices by {0}.
 Towns.Milestones.Dividends,,Receive {0} of the towns coin production.
-Towns.Reputation.BuiltProducer,,Player constructed a production building ({0}) of {1}
+Towns.ReputationTrace.BuiltProducer,"Every player action that influences a towns reputation is tracked. There will be a list these tracked actions in a timeline. This is one of those entries and should explain why the reputation of a town changed at a given time. {0} is name of production building.",You constructed a {0}.
+Towns.ReputationTrace.Neglected,"Every player action that influences a towns reputation is tracked. There will be a list these tracked actions in a timeline. This is one of those entries and should explain why the reputation of a town changed at a given time. {0} is a number",The town has been neglected for more than {0} days.
+Towns.ReputationTrace.MissionReward,"Every player action that influences a towns reputation is tracked. There will be a list these tracked actions in a timeline. This is one of those entries and should explain why the reputation of a town changed at a given time. {0} is a town name.",You supplied {0} with the goods they wanted.
+Towns.ReputationTrace.MissionPenalty,"Every player action that influences a towns reputation is tracked. There will be a list these tracked actions in a timeline. This is one of those entries and should explain why the reputation of a town changed at a given time. {0} is a town name.",You failed to supply {0} in time.
+Towns.Missions.UpgradeDescription,,Completing this mission will upgrade this town to the next tier.
+Towns.Production.BaseFunds,,Base production for tier {0} town.
+Towns.Milestones.DividendsModifier,"When a town is developed to a certain level, the player gets dividends each day. This is the description of that.{0} is a number; {1} is a town name",Dividends: {0} of {1}s funds
+Towns.Title.Tier1,"Title for a tier I town. Displayed in the town UI on the right, below the town name.",Village
+Towns.Title.Tier2,"Title for a tier II town. Displayed in the town UI on the right, below the town name.",Town
+Towns.Title.Tier3,"Title for a tier III town. Displayed in the town UI on the right, below the town name.",City
+Towns.UI.TownInventory.Title,"Header for a section the town UI.",Town Inventory
+Towns.UI.Development.Title,"Header for a section the town UI.",Development
+Towns.UI.ProductionBuildings.Title,"Header for a section the town UI.",Production Buildings
+Towns.UI.TradeMissions.Title,"Header for a section the town UI.",Trade Missions
+Towns.UI.UpgradeMission.Title,"Header for a section the town UI. Only shown when there is an active upgrade mission.",Upgrade Mission
+Towns.UI.Milestone,,Milestone
