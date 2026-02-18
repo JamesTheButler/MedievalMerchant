@@ -42,7 +42,7 @@ namespace Features.StartMenu.UI
 
             button.onClick.AddListener(OnClick);
 
-            levelIndexText.SetArgument("_LevelIndex", LevelInfo.DisplayIndex);
+            levelIndexText.SetArguments(LevelInfo.DisplayIndex);
             titleText.StringReference = LevelInfo.LevelName;
             var progressModel = GlobalContext.Instance.Model.ProgressModel;
             var isCompleted = progressModel.CompletedLevels[LevelInfo.InternalIndex] != null;

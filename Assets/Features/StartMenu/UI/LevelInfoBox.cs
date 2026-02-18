@@ -57,7 +57,7 @@ namespace Features.StartMenu.UI
         {
             _currentLevelInfo = levelInfo;
 
-            levelIdText.SetArgument("_LevelIndex", levelInfo.DisplayIndex);
+            levelIdText.SetArguments(levelInfo.DisplayIndex);
             nameText.StringReference = levelInfo.LevelName;
             descriptionText.StringReference = levelInfo.Description;
             var completionDate = GlobalContext.Instance.Model.ProgressModel.CompletedLevels[levelInfo.InternalIndex];
