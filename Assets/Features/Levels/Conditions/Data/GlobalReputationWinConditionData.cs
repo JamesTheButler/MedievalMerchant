@@ -11,7 +11,6 @@ namespace Features.Levels.Conditions.Data
 
         public override ConditionType Type => ConditionType.GlobalRepWinCondition;
 
-        public override string Description =>
-            $"Reach an average of {GlobalAverageReputation} reputation across all towns.";
+        public override string Description => formatter.GetLocalizedString(GlobalAverageReputation);
     }
 }

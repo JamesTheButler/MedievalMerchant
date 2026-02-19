@@ -13,11 +13,9 @@ namespace Features.Levels.Conditions.Model
         public Observable<bool> IsClose { get; } = new();
         public int DaysLeftThreshold { get; }
 
-        public string WarningMessage =>
-            $"Your coffers are running dry. You have {DaysLeftThreshold} days to put coin back in your purse.";
+        public string WarningMessage => _data.WarningMessage;
 
-        public string GameOverMessage =>
-            $"You've run out of coin! You were bankrupt for more than {MaxBankruptcyDurationInDays} days.";
+        public string GameOverMessage => _data.GameOverMessage;
 
         public int BankruptcyFundsThreshold => _data.BankruptcyFundsThreshold;
         public int MaxBankruptcyDurationInDays => _data.MaxBankruptcyDurationInDays;

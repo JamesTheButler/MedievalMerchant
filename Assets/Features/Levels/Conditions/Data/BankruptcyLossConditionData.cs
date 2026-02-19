@@ -17,6 +17,9 @@ namespace Features.Levels.Conditions.Data
 
         public override ConditionType Type => ConditionType.BankruptcyLossCondition;
 
-        public override string Description => "You lose if you run out of coin";
+        public override string Description => formatter.GetLocalizedString();
+
+        public override string WarningMessage => warningMessageFormatter.GetLocalizedString(DaysLeftThreshold);
+        public override string GameOverMessage => gameOverMessageFormatter.GetLocalizedString(MaxBankruptcyDurationInDays);
     }
 }

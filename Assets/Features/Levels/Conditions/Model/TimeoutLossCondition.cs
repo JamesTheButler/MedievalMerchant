@@ -15,19 +15,15 @@ namespace Features.Levels.Conditions.Model
 
         public int WarningThresholdDaysLeft { get; }
 
-        public string WarningMessage =>
-            $"You're running out of time! You have {WarningThresholdDaysLeft} days left to win.";
-
-        public string GameOverMessage =>
-            $"You've run out of time! You had until {DeadlineDate.ToDisplayString()} to win.";
-
         public ConditionType Type => _data.Type;
         public string Description => _data.Description;
+        public string WarningMessage => _data.WarningMessage;
+        public string GameOverMessage => _data.GameOverMessage;
 
         public TimeoutLossCondition(TimeoutLossConditionData data)
         {
             _data = data;
-            DeadlineDate = new Date(data.DeadlineDay, data.DeadlineYear);
+            DeadlineDate = new Date(1, data.DeadlineYear);
             WarningThresholdDaysLeft = data.DaysLeftWarning;
 
             Progress = new Progress(DeadlineDate.AsDays(), FormatProgress);

@@ -33,8 +33,7 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  <Difficulty>k__BackingField: Easy
-  <DifficultyColor>k__BackingField: {r: 0.14509805, g: 0.4392157, b: 0.16862746, a: 1}
+  <Difficulty>k__BackingField: 0
   <StartPlayerFunds>k__BackingField: 1000
   <Conditions>k__BackingField:
   - rid: 5229624075333140555
@@ -50,21 +49,92 @@ MonoBehaviour:
     - rid: 5229624075333140552
       type: {class: TownTierWinConditionData, ns: Features.Levels.Conditions.Data, asm: Assembly-CSharp}
       data:
+        formatter:
+          m_TableReference:
+            m_TableCollectionName: GUID:97e00ec0c5f6dcc4f8742ddc1553364e
+          m_TableEntryReference:
+            m_KeyId: 858440818697
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
         <TargetTier>k__BackingField: 3
         <TargetCount>k__BackingField: 3
     - rid: 5229624075333140553
       type: {class: FundsWinConditionData, ns: Features.Levels.Conditions.Data, asm: Assembly-CSharp}
       data:
+        formatter:
+          m_TableReference:
+            m_TableCollectionName: GUID:97e00ec0c5f6dcc4f8742ddc1553364e
+          m_TableEntryReference:
+            m_KeyId: 858440818698
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
         <FundsToReach>k__BackingField: 5000
     - rid: 5229624075333140554
       type: {class: TimeoutLossConditionData, ns: Features.Levels.Conditions.Data, asm: Assembly-CSharp}
       data:
+        formatter:
+          m_TableReference:
+            m_TableCollectionName: GUID:97e00ec0c5f6dcc4f8742ddc1553364e
+          m_TableEntryReference:
+            m_KeyId: 858440818692
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        warningMessageFormatter:
+          m_TableReference:
+            m_TableCollectionName: GUID:97e00ec0c5f6dcc4f8742ddc1553364e
+          m_TableEntryReference:
+            m_KeyId: 858440818694
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        gameOverMessageFormatter:
+          m_TableReference:
+            m_TableCollectionName: GUID:97e00ec0c5f6dcc4f8742ddc1553364e
+          m_TableEntryReference:
+            m_KeyId: 858440818695
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
         <DeadlineYear>k__BackingField: 1
-        <DeadlineDay>k__BackingField: 365
         <DaysLeftWarning>k__BackingField: 90
     - rid: 5229624075333140555
       type: {class: BankruptcyLossConditionData, ns: Features.Levels.Conditions.Data, asm: Assembly-CSharp}
       data:
+        formatter:
+          m_TableReference:
+            m_TableCollectionName: GUID:97e00ec0c5f6dcc4f8742ddc1553364e
+          m_TableEntryReference:
+            m_KeyId: 858432430080
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        warningMessageFormatter:
+          m_TableReference:
+            m_TableCollectionName: GUID:97e00ec0c5f6dcc4f8742ddc1553364e
+          m_TableEntryReference:
+            m_KeyId: 858440818688
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        gameOverMessageFormatter:
+          m_TableReference:
+            m_TableCollectionName: GUID:97e00ec0c5f6dcc4f8742ddc1553364e
+          m_TableEntryReference:
+            m_KeyId: 858440818689
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
         <MaxBankruptcyDurationInDays>k__BackingField: 14
         <BankruptcyFundsThreshold>k__BackingField: 0
         <DaysLeftThreshold>k__BackingField: 14

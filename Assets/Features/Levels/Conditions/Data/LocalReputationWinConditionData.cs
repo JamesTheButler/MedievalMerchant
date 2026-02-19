@@ -10,6 +10,6 @@ namespace Features.Levels.Conditions.Data
         public int MinRepPerTown { get; private set; } = 10;
 
         public override ConditionType Type => ConditionType.LocalRepWinCondition;
-        public override string Description => $"Maintain a reputation of {MinRepPerTown} in all towns.";
+        public override string Description => formatter.GetLocalizedString(MinRepPerTown);
     }
 }

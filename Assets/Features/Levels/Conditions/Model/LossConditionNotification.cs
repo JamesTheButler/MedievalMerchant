@@ -5,7 +5,6 @@ using UnityEngine;
 namespace Features.Levels.Conditions.Model
 {
     public sealed record LossConditionNotification(ILossCondition LossCondition) : Notification(
-        "Loss Imminent",
         LossCondition.WarningMessage,
         NotificationType.Bad,
         Severity.Major,
