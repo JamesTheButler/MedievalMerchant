@@ -24,7 +24,7 @@ namespace Features.Notifications.Logic
 
         private void LogNotification(Notification notif)
         {
-            Debug.Log($"({_gameDateModel.GameDate.Value.ToDisplayString()}) {notif.Severity} Notification {notif.Title}: {notif.Description}");
+            Debug.Log($"({_gameDateModel.GameDate.Value.ToDisplayString()}) {notif.Severity} Notification {notif.GetType().Name}: {notif.Description}");
         }
     }
 }

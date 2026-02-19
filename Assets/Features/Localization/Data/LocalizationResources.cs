@@ -13,5 +13,8 @@ namespace Features.Localization.Data
     {
         [field: SerializeField, SerializedDictionary]
         public SerializedDictionary<Difficulty, LocalizedString> Difficulties { get; private set; }
+        
+        [field: SerializeField]
+        public NotificationLocalizationResources NotificationResources { get; private set; }
     }
 }

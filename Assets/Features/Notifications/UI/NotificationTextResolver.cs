@@ -16,7 +16,7 @@ namespace Features.Notifications.UI
             return notification switch
             {
                 LossConditionNotification =>
-                    _notifLocalization.LossImminentNotification.GetLocalizedString(),
+                    _notifLocalization.LossImminentNotificationTitle.GetLocalizedString(),
                 EventExpiredNotification notif =>
                     _notifLocalization.EventExpiredNotification.GetLocalizedString(notif.GameEvent.Title),
                 EventStartedNotification notif =>
