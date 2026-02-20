@@ -38,6 +38,12 @@ namespace Features.Localization.UI
 
         private void Refresh()
         {
+            if (textfield == null)
+            {
+                Debug.LogError($"No textfield was assigned on {transform.parent?.name ?? ""}.{gameObject.name}");
+                return;
+            }
+
             textfield.text = staticString.IsEmpty ? "<none>" : staticString.GetLocalizedString();
         }
     }
