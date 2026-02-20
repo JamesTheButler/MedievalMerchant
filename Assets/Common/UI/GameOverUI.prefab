@@ -1119,7 +1119,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1503763905334434093, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_fontSize
-      value: 20
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1503763905334434093, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 1503763905334434093, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_fontSizeBase
@@ -1127,7 +1131,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2221790527321945402, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_Name
-      value: Button
+      value: Back to Menu Button
       objectReference: {fileID: 0}
     - target: {fileID: 4806721880360077881, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_Pivot.x
@@ -1215,15 +1219,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5165203022748418147, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5165203022748418147, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5165203022748418147, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5165203022748418147, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5165203022748418147, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1231,7 +1239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5165203022748418147, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 5165203022748418147, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1240,10 +1248,6 @@ PrefabInstance:
     - target: {fileID: 5165203022748418147, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5708727304049907424, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
-      propertyPath: m_Type
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5708727304049907424, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
@@ -1277,6 +1281,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6535927126705003236, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+      propertyPath: staticString.m_TableEntryReference.m_KeyId
+      value: 1064582471684
+      objectReference: {fileID: 0}
+    - target: {fileID: 6535927126705003236, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+      propertyPath: staticString.m_TableReference.m_TableCollectionName
+      value: GUID:681de063b46dec0429f6cb4e7ce41956
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3804264420171853399, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
     m_RemovedGameObjects:
@@ -1286,6 +1298,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2221790527321945402, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3745728231263068573}
+    - targetCorrespondingSourceObject: {fileID: 4212881486466791452, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5259743256657700912}
   m_SourcePrefab: {fileID: 100100000, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
 --- !u!1 &291883603844099633 stripped
 GameObject:
@@ -1307,11 +1322,30 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: 32
-  m_PreferredWidth: 150
+  m_PreferredWidth: 250
   m_PreferredHeight: 32
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!1 &2355014569116918551 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4212881486466791452, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+  m_PrefabInstance: {fileID: 1934744785935489803}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5259743256657700912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2355014569116918551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
+  m_HorizontalFit: 2
+  m_VerticalFit: 0
 --- !u!224 &6371872418927776050 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4806721880360077881, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
