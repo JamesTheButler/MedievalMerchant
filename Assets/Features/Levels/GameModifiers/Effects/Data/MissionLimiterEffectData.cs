@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Infrastructure;
 using Common.Types;
 using Features.Goods.Selector;
 using NaughtyAttributes;
@@ -9,15 +10,21 @@ namespace Features.Levels.GameModifiers.Effects.Data
     [Serializable]
     public sealed class MissionLimiterEffectData : EffectData
     {
-        [field: SerializeField, InfoBox("Regions that the town CANNOT have to be affected.")]
-        public Regions UnaffectedRegions { get; private set; }
+        [field: SerializeField, InfoBox("Regions that towns will ONLY request goods from.")]
+        public Region MissionRegion { get; private set; }
 
         [field: SerializeField]
         public GoodSelectorData GoodSelector { get; private set; }
 
-        [SerializeField]
-        private string manualDescription;
+        public override string Description
+        {
 
-        public override string Description => manualDescription;
+            get
+            {
+                var missionResources = ResourceManager.Instance.RegionResources;
+                var missionName = missionResources.Data[MissionRegion].Name;
+                return $"Non-{missionName} towns will only request goods from {missionName} towns.";
+            }
+        }
     }
 }
