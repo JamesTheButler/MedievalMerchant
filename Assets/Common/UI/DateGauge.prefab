@@ -85,6 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6009524701475724369}
   - component: {fileID: 8201679130315593475}
+  - component: {fileID: 27165064818054104}
   m_Layer: 5
   m_Name: DateGauge
   m_TagString: Untagged
@@ -126,6 +127,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dateText: {fileID: 2750253570636788429}
+--- !u!114 &27165064818054104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4980605295093043142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 1
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  text:
+    m_TableReference:
+      m_TableCollectionName: GUID:681de063b46dec0429f6cb4e7ce41956
+    m_TableEntryReference:
+      m_KeyId: 740719653249024
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  defaultText: 
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &6219031406879565762
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,7 +168,6 @@ GameObject:
   - component: {fileID: 1502796771097119084}
   - component: {fileID: 6571402983747133281}
   - component: {fileID: 2750253570636788429}
-  - component: {fileID: 1032054770448326666}
   m_Layer: 5
   m_Name: Game Date Text
   m_TagString: Untagged
@@ -264,33 +294,3 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &1032054770448326666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6219031406879565762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleTooltipHandler
-  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
-  enabledOnStart: 1
-  hideOnClick: 0
-  useSelfAsOrigin: 1
-  originTransform: {fileID: 0}
-  text:
-    m_TableReference:
-      m_TableCollectionName: GUID:681de063b46dec0429f6cb4e7ce41956
-    m_TableEntryReference:
-      m_KeyId: 740719653249024
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  defaultText: 
-  references:
-    version: 2
-    RefIds: []
