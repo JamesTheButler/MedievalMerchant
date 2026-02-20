@@ -7,16 +7,11 @@ namespace Common.Utility
 {
     public static class LocalizationExtensions
     {
-        public static void SetText(this TMP_Text text, LocalizedString localizedString)
+        public static void SetLocalizedText(this TMP_Text text, LocalizedString localizedString)
         {
             text.text = localizedString.GetLocalizedString();
         }
 
-        public static void Update(this LocalizeStringEvent localizer, LocalizedString localizedString)
-        {
-            localizer.StringReference = localizedString;
-            localizer.RefreshString();
-        }
 
         public static void SetArguments(this LocalizeStringEvent localizer, params object[] args)
         {
@@ -24,9 +19,19 @@ namespace Common.Utility
             localizer.RefreshString();
         }
 
-        public static void SetArgument(this LocalizeStringEvent localizer, string name, int value)
+        public static void SetSmartArgument(this LocalizeStringEvent localizer, string name, int value)
         {
             localizer.StringReference.Add(name, new IntVariable { Value = value });
+            localizer.RefreshString();
+        }
+
+        public static void SetSmartArguments(this LocalizeStringEvent localizer, params (string Key, int Value)[] args)
+        {
+            foreach (var (key, value) in args)
+            {
+                localizer.StringReference.Add(key, new IntVariable { Value = value });
+            }
+
             localizer.RefreshString();
         }
     }

@@ -1,7 +1,6 @@
 using Common.Infrastructure;
 using Features.Levels.Conditions.Model;
 using Features.Levels.GameModifiers.Events;
-using Features.Localization;
 using Features.Localization.Data;
 using Features.Notifications.Logic;
 using Features.Towns.Missions;

@@ -4,9 +4,10 @@ using Common.UI.Tooltips;
 using Common.Utility;
 using Features.Levels;
 using NaughtyAttributes;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.Localization.SmartFormat.PersistentVariables;
 using UnityEngine.UI;
 
 namespace Features.StartMenu.UI
@@ -21,8 +22,11 @@ namespace Features.StartMenu.UI
         [SerializeField, Required]
         private Image completeIcon, lockedIcon;
 
+        [SerializeField]
+        private LocalizedString levelIndexString;
+
         [SerializeField, Required]
-        private LocalizeStringEvent levelIndexText, titleText;
+        private TMP_Text levelIndexText, levelNameText;
 
         [field: SerializeField, Expandable, Required]
         public LevelInfo LevelInfo { get; private set; }
@@ -42,8 +46,8 @@ namespace Features.StartMenu.UI
 
             button.onClick.AddListener(OnClick);
 
-            levelIndexText.SetArguments(LevelInfo.DisplayIndex);
-            titleText.StringReference = LevelInfo.LevelName;
+            levelIndexText.text = levelIndexString.GetLocalizedString(new { _int_LevelIndex = LevelInfo.DisplayIndex });
+            levelNameText.text = LevelInfo.LevelName.GetLocalizedString();
             var progressModel = GlobalContext.Instance.Model.ProgressModel;
             var isCompleted = progressModel.CompletedLevels[LevelInfo.InternalIndex] != null;
             completeIcon.gameObject.SetActive(isCompleted);
