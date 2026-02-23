@@ -12,7 +12,6 @@ namespace Common.Utility
             text.text = localizedString.GetLocalizedString();
         }
 
-
         public static void SetArguments(this LocalizeStringEvent localizer, params object[] args)
         {
             localizer.StringReference.Arguments = args;

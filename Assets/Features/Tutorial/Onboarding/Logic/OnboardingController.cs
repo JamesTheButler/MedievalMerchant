@@ -58,6 +58,8 @@ namespace Features.Tutorial.Onboarding.Logic
         private Town _townA, _townB;
         private OnboardingSequence _onboardingSequence;
 
+        private object _townNameObject;
+
         public override void Initialize()
         {
             var model = GameplayContext.Instance.Model;
@@ -66,6 +68,8 @@ namespace Features.Tutorial.Onboarding.Logic
 
             _townA = model.Towns.Values.ElementAt(0);
             _townB = model.Towns.Values.ElementAt(1);
+
+            _townNameObject = new { TownA = _townA.Name, TownB = _townB.Name };
 
             _onboardingResources = ResourceManager.Instance.OnboardingResources;
 
@@ -92,12 +96,11 @@ namespace Features.Tutorial.Onboarding.Logic
 
         public void PostExplainer(int explainerIndex, Action onNextClicked)
         {
-            var message = _onboardingResources.explainerTexts
-                .GetValueOrDefault(explainerIndex, string.Empty)
-                .Replace("TownA", _townA.Name)
-                .Replace("TownB", _townB.Name);
+            var message = _onboardingResources.explainerTexts.GetValueOrDefault(explainerIndex, null);
+            if (message == null)
+                return;
 
-            explainerUI.Show(message, onNextClicked);
+            explainerUI.Show(message.GetLocalizedString(_townNameObject), onNextClicked);
         }
 
         public void HideExplainer()
@@ -133,7 +136,7 @@ namespace Features.Tutorial.Onboarding.Logic
             taskListUI.Clear();
         }
 
-        #region Sequences
+            #region Sequences
 
         private OnboardingSequence HayDeliverySequence()
         {

@@ -1,6 +1,7 @@
 using AYellowpaper.SerializedCollections;
 using Common.Utility;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Features.Tutorial.Onboarding.Data
 {
@@ -11,6 +12,6 @@ namespace Features.Tutorial.Onboarding.Data
     public sealed class OnboardingResources : ScriptableObject
     {
         [SerializeField]
-        public SerializedDictionary<int, string> explainerTexts;
+        public SerializedDictionary<int, LocalizedString> explainerTexts;
     }
 }
