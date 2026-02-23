@@ -9,7 +9,7 @@ namespace Editor
         private const string
             TablesFolder = "Assets/Features/Localization/Data/Tables",
             CscRspPath = "Assets/csc.rsp",
-            SharedTableDataEnding = "Shared Data.asset",
+            SharedTableDataEnding = "SharedData.asset",
             StringTableEnding = "_en.asset",
             AdditionalFileLineFormat = "/additionalfile:\"{0}\"";
 
