@@ -1,7 +1,6 @@
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Observation;
-using Features.Levels.GameModifiers.Events;
 using Features.Notifications.Logic;
 
 namespace Features.Levels.Conditions.Model

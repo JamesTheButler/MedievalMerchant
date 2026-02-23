@@ -1,4 +1,5 @@
 ﻿using Common.Infrastructure.Gameplay;
+using Common.Types;
 using Common.Utility;
 using Features.Goods.Selector;
 using Features.Levels.GameModifiers.Effects.Data;
@@ -18,7 +19,7 @@ namespace Features.Levels.GameModifiers.Effects.Logic
             var towns = GameplayContext.Instance.Model.Towns.Values;
             foreach (var town in towns)
             {
-                if (!town.Regions.Intersects(EffectData.UnaffectedRegions))
+                if (!town.Regions.Contains(EffectData.MissionRegion))
                 {
                     town.Missions.LimitGoodSelection(EffectData.GoodSelector.Selector);
                 }
@@ -30,7 +31,7 @@ namespace Features.Levels.GameModifiers.Effects.Logic
             var towns = GameplayContext.Instance.Model.Towns.Values;
             foreach (var town in towns)
             {
-                if (!town.Regions.Intersects(EffectData.UnaffectedRegions))
+                if (!town.Regions.Contains(EffectData.MissionRegion))
                 {
                     town.Missions.LimitGoodSelection(IGoodSelector.All);
                 }

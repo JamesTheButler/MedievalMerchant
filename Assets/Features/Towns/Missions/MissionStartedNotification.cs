@@ -5,27 +5,12 @@ using UnityEngine;
 
 namespace Features.Towns.Missions
 {
-    public sealed record MissionStartedNotification : Notification
+    public sealed record MissionStartedNotification(Town Town, Mission Mission) : Notification(
+        GetDescription(Mission),
+        NotificationType.Info,
+        Mission.Type == MissionType.TradeMission ? Severity.Minor : Severity.Major,
+        GetIcon(Mission.Good))
     {
-        public Town Town { get; }
-
-        public MissionStartedNotification(Town town, Mission mission) : base(
-            GetTitle(town, mission),
-            GetDescription(mission),
-            NotificationType.Info,
-            mission.Type == MissionType.TradeMission ? Severity.Minor : Severity.Major,
-            GetIcon(mission.Good))
-        {
-            Town = town;
-        }
-
-        private static string GetTitle(Town town, Mission mission)
-        {
-            var config = ResourceManager.Instance.GoodResources.ResourceData[mission.Good];
-            var missionTitle = mission.Type == MissionType.TradeMission ? "Trade Mission" : "Upgrade Mission";
-            return $"{missionTitle} started: {town.Name} wants {config.GoodName}.";
-        }
-
         private static string GetDescription(Mission mission)
         {
             var config = ResourceManager.Instance.GoodResources.ResourceData[mission.Good];

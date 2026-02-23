@@ -32,7 +32,7 @@ namespace Features.Notifications.UI
 
         private void OnNotifPosted(Notification notification)
         {
-            text.text = notification.Title;
+            text.text = notification.GetType().Name;
             backgroundImage.color = _colors[_runningIndex++ % _colors.Count];
         }
     }

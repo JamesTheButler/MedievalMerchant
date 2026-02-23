@@ -11,7 +11,7 @@ using Features.Localization.Data;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization.Components;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace Features.StartMenu.UI
@@ -22,19 +22,19 @@ namespace Features.StartMenu.UI
         private LevelLoader levelLoader;
 
         [SerializeField, Required]
-        private LocalizeStringEvent levelIdText, nameText, descriptionText, difficultyText;
+        private AllySelectionPanel allySelectionPanel;
+
+        [SerializeField]
+        private LocalizedString bestTimeString, levelIndexString;
 
         [SerializeField, Required]
-        private TMP_Text completionDateText;
+        private TMP_Text difficultyText, bestTimeText, levelIdText, nameText, descriptionText;
 
         [SerializeField, Required]
         private PreGameConditionListUI winConditionList, lossConditionList;
 
         [SerializeField, Required]
         private GameModifierUIElement levelConditionsElement;
-
-        [SerializeField, Required]
-        private AllySelectionPanel allySelectionPanel;
 
         [SerializeField, Required]
         private Button continueButton, startButton;
@@ -57,19 +57,22 @@ namespace Features.StartMenu.UI
         {
             _currentLevelInfo = levelInfo;
 
-            levelIdText.SetArguments(levelInfo.DisplayIndex);
-            nameText.StringReference = levelInfo.LevelName;
-            descriptionText.StringReference = levelInfo.Description;
+            levelIdText.text = levelIndexString.GetLocalizedString(new { _int_LevelIndex = levelInfo.DisplayIndex });
+            nameText.text = levelInfo.LevelName.GetLocalizedString();
+            descriptionText.text = levelInfo.Description.GetLocalizedString();
             var completionDate = GlobalContext.Instance.Model.ProgressModel.CompletedLevels[levelInfo.InternalIndex];
             var isCompleted = completionDate != null;
-            completionDateText.enabled = isCompleted;
+            bestTimeText.gameObject.SetActive(isCompleted);
             if (isCompleted)
             {
-                completionDateText.text = $"Fastest Win: {completionDate!.CompletionDate.ToDisplayString()}";
+                bestTimeText.text = bestTimeString.GetLocalizedString(new
+                {
+                    IntDay = completionDate!.CompletionDate.Day,
+                    IntYear = completionDate!.CompletionDate.Year,
+                });
             }
 
-            // TODO: this used to be "Difficulty: <Difficulty>.WithColor(Difficulty.Color)"
-            difficultyText.StringReference = _localizationResources.Difficulties[levelInfo.Difficulty];
+            difficultyText.SetLocalizedText(_localizationResources.Difficulties[levelInfo.Difficulty]);
 
             var conditions = levelInfo.Conditions;
             winConditionList.Setup(conditions.OfType<WinConditionData>());

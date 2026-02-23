@@ -313,11 +313,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7966626219046704449}
+  - component: {fileID: 6040418796603789253}
   - component: {fileID: 8215929376569660172}
   - component: {fileID: 7283425566506399116}
   - component: {fileID: 6654662069752181108}
   - component: {fileID: 793353278530732114}
-  - component: {fileID: 6040418796603789253}
   m_Layer: 5
   m_Name: MoveSpeedGroup
   m_TagString: Untagged
@@ -346,6 +346,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 35.7}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6040418796603789253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3928413348129660872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 1
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  text:
+    m_TableReference:
+      m_TableCollectionName: GUID:d6b424ddbd874184eabee36fbbdb7560
+    m_TableEntryReference:
+      m_KeyId: 3611726088986624
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  defaultText: 
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &8215929376569660172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,24 +460,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6040418796603789253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3928413348129660872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
-  enabledOnStart: 1
-  hideOnClick: 0
-  useSelfAsOrigin: 1
-  originTransform: {fileID: 0}
-  defaultText: Movementspeed
 --- !u!1 &4393624893519922598
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,6 +473,7 @@ GameObject:
   - component: {fileID: 4365356994641886879}
   - component: {fileID: 6447586569426636279}
   - component: {fileID: 1178174713048417412}
+  - component: {fileID: 4908713122285629961}
   m_Layer: 5
   m_Name: CaravanIcon
   m_TagString: Untagged
@@ -504,8 +517,29 @@ MonoBehaviour:
   hideOnClick: 0
   useSelfAsOrigin: 1
   originTransform: {fileID: 0}
-  defaultTitle: Your Caravan
-  defaultDescription: 'Press [Q]'
+  defaultTitleString:
+    m_TableReference:
+      m_TableCollectionName: GUID:d6b424ddbd874184eabee36fbbdb7560
+    m_TableEntryReference:
+      m_KeyId: 3613604998766592
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  defaultDescriptionString:
+    m_TableReference:
+      m_TableCollectionName: GUID:d6b424ddbd874184eabee36fbbdb7560
+    m_TableEntryReference:
+      m_KeyId: 3613654067929088
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  defaultTitle: 
+  defaultDescription: 
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4365356994641886879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,6 +598,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4908713122285629961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4393624893519922598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92298c71e3dfe6848bb37cde9a6997a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.ClickForwarder
+  target: {fileID: 5323372488923505928}
 --- !u!1 &5225788959526487714
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,8 +931,29 @@ MonoBehaviour:
   hideOnClick: 0
   useSelfAsOrigin: 1
   originTransform: {fileID: 0}
-  defaultTitle: Caravan Upkeep
-  defaultDescription: Is only active when you are traveling between towns.
+  defaultTitleString:
+    m_TableReference:
+      m_TableCollectionName: GUID:d6b424ddbd874184eabee36fbbdb7560
+    m_TableEntryReference:
+      m_KeyId: 3611776080896000
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  defaultDescriptionString:
+    m_TableReference:
+      m_TableCollectionName: GUID:d6b424ddbd874184eabee36fbbdb7560
+    m_TableEntryReference:
+      m_KeyId: 3612831934013440
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  defaultTitle: 
+  defaultDescription: 
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &8657722422520361494
 GameObject:
   m_ObjectHideFlags: 0

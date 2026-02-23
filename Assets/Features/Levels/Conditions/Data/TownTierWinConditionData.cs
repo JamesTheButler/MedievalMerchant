@@ -15,6 +15,6 @@ namespace Features.Levels.Conditions.Data
         public int TargetCount { get; private set; } = 1;
 
         public override ConditionType Type => ConditionType.TownTierWinCondition;
-        public override string Description => $"Develop {TargetCount} towns to Tier {TargetTier.ToRomanNumeral()}.";
+        public override string Description => formatter.GetLocalizedString(TargetCount, TargetTier.ToRomanNumeral());
     }
 }

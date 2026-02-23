@@ -60,12 +60,24 @@ MonoBehaviour:
   button: {fileID: 3535024903831170673}
   completeIcon: {fileID: 3166571185122919638}
   lockedIcon: {fileID: 295845634925056450}
-  levelIndexText: {fileID: 8310078694685135429}
-  titleText: {fileID: 6690472090576181974}
+  levelIndexString:
+    m_TableReference:
+      m_TableCollectionName: GUID:68c5c92f2f4734246a3940472a960c30
+    m_TableEntryReference:
+      m_KeyId: 31624117837824
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  levelIndexText: {fileID: 2566039651495891676}
+  levelNameText: {fileID: 870996929858787919}
   <LevelInfo>k__BackingField: {fileID: 0}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   selectedColor: {r: 1, g: 0.92941177, b: 0.84705883, a: 1}
   tooltip: {fileID: 1218046554434541027}
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1218046554434541027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,7 +95,19 @@ MonoBehaviour:
   hideOnClick: 0
   useSelfAsOrigin: 1
   originTransform: {fileID: 0}
+  text:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   defaultText: Coming soon
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3535024903831170673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,9 +430,9 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 3
   m_Spacing: 0
-  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -534,7 +558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4833215302764452591, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 362
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4833215302764452591, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_SizeDelta.y
@@ -590,7 +614,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_text
-      value: Level 01
+      value: <loc>Level 01
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_fontSize
@@ -617,6 +641,10 @@ PrefabInstance:
       value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4281479730
       objectReference: {fileID: 0}
@@ -632,7 +660,8 @@ PrefabInstance:
       propertyPath: m_EditorClassIdentifier
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1016231570279540700, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -642,17 +671,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4833215302764452591, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
   m_PrefabInstance: {fileID: 6524783749071850652}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8310078694685135429 stripped
+--- !u!114 &2566039651495891676 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3017381740119629529, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
   m_PrefabInstance: {fileID: 6524783749071850652}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_EditorClassIdentifier: 
 --- !u!1001 &8432621276545270799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -691,7 +720,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4833215302764452591, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 362
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4833215302764452591, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_SizeDelta.y
@@ -747,11 +776,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_text
-      value: Simple Beginnings
+      value: <loc> Level Name Level Name
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_margin.y
       value: -8.2872715
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+      propertyPath: m_margin.z
+      value: -54.48419
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_fontColor.b
@@ -777,24 +810,25 @@ PrefabInstance:
       propertyPath: m_EditorClassIdentifier
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1016231570279540700, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
---- !u!224 &3897223269780037344 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4833215302764452591, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
-  m_PrefabInstance: {fileID: 8432621276545270799}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6690472090576181974 stripped
+--- !u!114 &870996929858787919 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3017381740119629529, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
   m_PrefabInstance: {fileID: 8432621276545270799}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_EditorClassIdentifier: 
+--- !u!224 &3897223269780037344 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4833215302764452591, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+  m_PrefabInstance: {fileID: 8432621276545270799}
+  m_PrefabAsset: {fileID: 0}
