@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: SourceGenTest_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 9ff99d03c0ae0344abfae5586d0fe997, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 1739500476379431004
+  m_TableData:
+  - m_Id: 18042413056
+    m_Localized: nothing special. no placeholders.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144353878016
+    m_Localized: '{0} position {1} args'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 223106129920
+    m_Localized: Smart. No Args.
+    m_Metadata:
+      m_Items:
+      - rid: 1739500476379431004
+  - m_Id: 313619210240
+    m_Localized: Smart. Int arg {_int_Argument}
+    m_Metadata:
+      m_Items:
+      - rid: 1739500476379431004
+  - m_Id: 604217368576
+    m_Localized: Smart. String arg {_string_Argument}
+    m_Metadata:
+      m_Items:
+      - rid: 1739500476379431004
+  - m_Id: 715907489792
+    m_Localized: Smart. Simple default arg {ArgumentWithoutPrefix}
+    m_Metadata:
+      m_Items:
+      - rid: 1739500476379431004
+  - m_Id: 1149208453120
+    m_Localized: Smart. No table name in key {Whatever}
+    m_Metadata:
+      m_Items:
+      - rid: 1739500476379431004
+  - m_Id: 1007768133632
+    m_Localized: 'int: {_int_Arg1}, string: {_string_Arg2}, default: {Arg3}, default2:{Arg4}'
+    m_Metadata:
+      m_Items:
+      - rid: 1739500476379431004
+  - m_Id: 2573870915584
+    m_Localized: 'int: {_int_Arg1}, int repeated {_int_Arg1}'
+    m_Metadata:
+      m_Items:
+      - rid: 1739500476379431004
+  references:
+    version: 2
+    RefIds:
+    - rid: 1739500476379431004
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 223106129920
+        - id: 715907489792
+        - id: 604217368576
+        - id: 313619210240
+        - id: 1149208453120
+        - id: 2573870915584
+        - id: 1007768133632
