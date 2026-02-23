@@ -24,17 +24,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 518102409216
-    m_Localized: 'Tutorial: {0}'
+    m_Localized: 'Tutorial: {TutorialName}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518102409217
-    m_Localized: Travel to {0}
+    m_Localized: Travel to {TownName}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518102409218
-    m_Localized: Build {0} in {1}
+    m_Localized: Build {ProducerName} in {TownName}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518102409219
     m_Localized: 'Un-pause the game [Space]'
     m_Metadata:
@@ -44,21 +47,25 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 518102409221
-    m_Localized: Upgrade your cart to tier II.
+    m_Localized: Upgrade your cart to tier {Tier}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518102409222
-    m_Localized: Buy {0} {1} in {2}.
+    m_Localized: Buy {_int_Amount} {GoodName} in {TownName}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518106603520
-    m_Localized: Sell {0} {1} in {2}.
+    m_Localized: Sell {_int_Amount} {GoodName} in {TownName}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518106603521
-    m_Localized: Upgrade {0} to tier II.
+    m_Localized: Upgrade {TownName} to tier {Tier}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518106603522
     m_Localized: 'Welcome, Merchant! This is a game about trade.
 
@@ -76,7 +83,8 @@ MonoBehaviour:
       Towns grow by consuming the goods you sell them, through trade missions
       and in various other ways.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518106603524
     m_Localized: It looks like {TownB} has an active trade mission for hay right
       now. You are currently in  {TownA} , which happens to produce hay. Buy 15 hay,
@@ -94,12 +102,14 @@ MonoBehaviour:
     m_Localized: In the meantime, {TownA} got ready to be upgraded. To upgrade towns
       to the next tier, you need to fulfill their upgrade missions.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518106603527
     m_Localized: '{TownA} needs berries to upgrade. The forest near {TownB} has berries.
       Build a berry picker in TownB and buy 30 berries.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518106603528
     m_Localized: Nicely done! Investing in production buildings not only produces
       goods in the town, but also bumps up the towns development and your reputation
@@ -111,14 +121,16 @@ MonoBehaviour:
       upgrade mission. You can wait here and let some days pass by unpausing the
       game via [Space]. To further speed up time, press [2].
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518106603530
     m_Localized: There are now enough berries. Deliver them to {TownA} to complete
       their upgrade. While you're at it, you should also buy some wild game. The
       more goods a town has bought, the faster they develop. And the better your
       margins!
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518106603531
     m_Localized: To fit more than one good into your caravan, you must first upgrade
       your cart. Upgrading your carts makes them faster and adds more storage space.
@@ -131,12 +143,14 @@ MonoBehaviour:
       can buy more goods off of you at once. Upgrading a town also unlocks the next
       tier of goods, which have much better earning potential for you.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518106603533
     m_Localized: It's time to find your own fortune now. With everything you've learned,
       go ahead and help {TownB} get to tier II.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518106603534
     m_Localized: '{TownA} has some untapped resources in the neighboring fields.
       Build more production buildings, ship goods back and forth and help {TownB}
@@ -144,9 +158,10 @@ MonoBehaviour:
 
       Good luck out there!'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 1854277321561473028
   - m_Id: 518106603535
-    m_Localized: Intro
+    m_Localized: Introduction
     m_Metadata:
       m_Items: []
   - m_Id: 518106603536
@@ -210,15 +225,6 @@ MonoBehaviour:
   - m_Id: 518106603547
     m_Localized: To win you need to satisfy all win conditions and manage to not
       trigger any losing condition.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 518106603548
-    m_Localized: Tutorials
-    m_Metadata:
-      m_Items: []
-  - m_Id: 518106603549
-    m_Localized: If you ever wonder how things work, look out for buttons with question
-      marks. They open further tutorials.
     m_Metadata:
       m_Items: []
   - m_Id: 518106603550
@@ -484,3 +490,18 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 518106603524
+        - id: 518102409217
+        - id: 518102409218
+        - id: 518102409222
+        - id: 518106603520
+        - id: 518106603521
+        - id: 518106603523
+        - id: 518106603526
+        - id: 518106603527
+        - id: 518106603529
+        - id: 518106603530
+        - id: 518106603532
+        - id: 518106603533
+        - id: 518106603534
+        - id: 518102409216
+        - id: 518102409221
