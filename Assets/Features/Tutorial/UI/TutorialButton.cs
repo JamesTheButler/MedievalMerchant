@@ -6,6 +6,7 @@ using Features.Tutorial.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace Features.Tutorial.UI
@@ -24,6 +25,9 @@ namespace Features.Tutorial.UI
         [SerializeField, Required]
         private Sprite defaultBackground, highlightedBackground;
 
+        [SerializeField]
+        private LocalizedString tooltipString;
+
         private TutorialService _tutorialService;
 
         private TMP_Text _buttonText;
@@ -37,7 +41,7 @@ namespace Features.Tutorial.UI
             _tutorialService = GlobalContext.Instance.Services.TutorialService;
             _tutorialService.TopicCompletionChanged += OnTopicCompleted;
             var topicName = ResourceManager.Instance.TutorialResources.Topics[tutorialTopic].Title;
-            tooltip.SetData($"Tutorial: {topicName}");
+            tooltip.SetData(tooltipString.GetLocalizedString(new { TutorialName = topicName }));
             MarkAsCompleted(_tutorialService.CompletedChapters[tutorialTopic]);
         }
 

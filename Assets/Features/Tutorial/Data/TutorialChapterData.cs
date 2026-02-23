@@ -1,19 +1,20 @@
 ﻿using System;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Features.Tutorial.Data
 {
     [Serializable]
     public sealed class TutorialChapterData
     {
-        [field: SerializeField]
-        public string Title { get; private set; }
+        [SerializeField]
+        private LocalizedString title, description;
 
-        [field: SerializeField, Multiline]
-        public string Description { get; private set; }
-
-        [field: SerializeField, ShowAssetPreview(128,128)]
+        [field: SerializeField, ShowAssetPreview(128, 128)]
         public Texture2D Image { get; private set; }
+
+        public string Title => title.GetLocalizedString();
+        public string Description => description.GetLocalizedString();
     }
 }

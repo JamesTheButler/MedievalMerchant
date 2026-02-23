@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Common.Utility;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Features.Tutorial.Data
 {
@@ -9,10 +10,12 @@ namespace Features.Tutorial.Data
         menuName = AssetMenu.ResourceFolder + nameof(TutorialTopicData))]
     public sealed class TutorialTopicData : ScriptableObject
     {
-        [field: SerializeField]
-        public string Title { get; private set; }
-        
+        [SerializeField]
+        private LocalizedString title;
+
         [field: SerializeField]
         public List<TutorialChapterData> Chapters { get; private set; }
+
+        public string Title => title.GetLocalizedString();
     }
 }
