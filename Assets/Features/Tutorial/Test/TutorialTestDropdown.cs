@@ -21,8 +21,8 @@ namespace Features.Tutorial.Test
         {
             _dropdown = GetComponent<TMP_Dropdown>();
 
-            var topics = tutorialResources.Topics.Keys
-                .Select(topic => topic.ToString())
+            var topics = tutorialResources.Topics.Values
+                .Select(topic => topic.Title)
                 .ToList();
 
             _dropdown.ClearOptions();
