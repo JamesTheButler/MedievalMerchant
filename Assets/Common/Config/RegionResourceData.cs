@@ -1,6 +1,7 @@
 using System;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Common.Config
 {
@@ -10,7 +11,9 @@ namespace Common.Config
         [field: SerializeField, Required]
         public Sprite Icon { get; private set; }
 
-        [field: SerializeField]
-        public string Name { get; private set; }
+        [SerializeField]
+        private LocalizedString name;
+
+        public string Name => name.GetLocalizedString();
     }
 }
