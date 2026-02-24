@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Unity.Localization.Roslyn;
 
@@ -13,7 +12,7 @@ namespace Unity.Localization.Roslyn;
 /// depending on Unity's runtime types.
 ///
 /// Expects two files per table:
-///   - SharedData asset  (*_Shared_Data.asset)   — provides ID → Key mapping
+///   - SharedData asset  (*SharedData.asset)     — provides ID -> Key mapping and table collection name/GUID
 ///   - Language asset    (*_en.asset, etc.)       — provides localized text, smart-string flags, args
 /// </summary>
 internal static class LocalizationAssetParser
@@ -21,25 +20,30 @@ internal static class LocalizationAssetParser
     public static SharedTableData ParseSharedData(AdditionalText assetText, CancellationToken cancellationToken)
     {
         var guid = string.Empty;
+        var tableCollectionName = string.Empty;
         var entries = new Dictionary<long, string>();
 
         long currentId = -1;
         var inEntries = false;
         var entriesIndent = -1;
-/*
-        foreach (var rawLine in assetText.GetText(cancellationToken).Lines)
+
+        foreach (var rawLine in assetText.GetText(cancellationToken)!.Lines)
         {
             var line = rawLine.ToString().TrimStart();
             var indent = rawLine.ToString().Length - line.Length;
 
-            // Top-level GUID
-            if (TryGetValue(line, "m_TableCollectionNameGuidString", out var g))
+            if (TryGetValue(line, "m_TableCollectionNameGuidString", out var foundGuid))
             {
-                guid = g;
+                guid = foundGuid;
                 continue;
             }
 
-            // Detect the m_Entries list — record indent so we know when it ends
+            if (TryGetValue(line, "m_TableCollectionName", out var foundName))
+            {
+                tableCollectionName = foundName;
+                continue;
+            }
+
             if (line == "m_Entries:")
             {
                 inEntries = true;
@@ -54,9 +58,9 @@ internal static class LocalizationAssetParser
             if (!inEntries) continue;
 
             var stripped = line.TrimStart('-', ' ');
-            if (TryGetValue(stripped, "m_Id", out var idStr) && long.TryParse(idStr, out var id))
+            if (TryGetValue(stripped, "m_Id", out var idStr) && long.TryParse(idStr, out var parsedId))
             {
-                currentId = id;
+                currentId = parsedId;
                 continue;
             }
 
@@ -65,32 +69,27 @@ internal static class LocalizationAssetParser
                 entries[currentId] = key;
                 currentId = -1;
             }
-        }*/
+        }
 
-        return new SharedTableData(guid, entries);
+        return new SharedTableData(guid, tableCollectionName, entries);
     }
 
     /// <summary>
     /// Parse a language asset file into a <see cref="TableInfo"/>.
     /// </summary>
-    /// <param name="assetText">Full text of the language .asset file.</param>
-    /// <param name="sharedData">Parsed shared data (for GUID validation and key lookup).</param>
-    /// <param name="originalText">The <see cref="Microsoft.CodeAnalysis.AdditionalText"/> wrapper (may be null in tests).</param>
-    /// <param name="className">Override for the generated class name; defaults to table collection name.</param>
     public static TableInfo Parse(
         string assetText,
         SharedTableData sharedData,
-        AdditionalText? originalText = null,
         string? className = null)
     {
-        // ---- Step 1: validate GUID cross-reference -------------------------
+        // Step 1: validate GUID cross-reference
         string? langSharedGuid = null;
-      /*  foreach (var line in EnumerateLines(assetText))
+        foreach (var line in EnumerateLines(assetText))
         {
-            var m = Regex.Match(line, @"m_SharedData:.*guid:\s*([a-f0-9]+)");
-            if (m.Success)
+            var match = Regex.Match(line, @"m_SharedData:.*guid:\s*([a-f0-9]+)");
+            if (match.Success)
             {
-                langSharedGuid = m.Groups[1].Value;
+                langSharedGuid = match.Groups[1].Value;
                 break;
             }
         }
@@ -102,43 +101,28 @@ internal static class LocalizationAssetParser
             throw new InvalidDataException(
                 $"GUID mismatch: SharedData has '{sharedData.Guid}', language asset references '{langSharedGuid}'.");
 
-        // ---- Step 2: collect all RIDs that are SmartFormatTag --------------
-        var smartRids = new HashSet<string>(); // rid values of SmartFormatTag entries
-        var smartIds = new HashSet<long>(); // entry IDs explicitly listed under SmartFormatTag
-
-        // We do a two-pass parse of the references block to first find SmartFormatTag rids,
-        // then collect the IDs stored inside them.
+        // Step 2: collect all entry IDs that are smart strings
+        var smartRids = new HashSet<string>();
+        var smartIds = new HashSet<long>();
         CollectSmartInfo(assetText, smartRids, smartIds);
 
-        // ---- Step 3: parse m_TableData -------------------------------------
+        // Step 3: parse m_TableData
         var tableEntries = ParseTableData(assetText, sharedData, smartIds);
 
-        // Derive class name from the first key's table-name prefix, or from SharedData
+        // Derive class name from table collection name
         var resolvedClassName = className
                                 ?? DeriveClassName(sharedData)
                                 ?? "LocalizationTable";
-*/
-        return new TableInfo(originalText!, "");
+
+        return new TableInfo(sharedData.TableCollectionName, resolvedClassName, tableEntries);
     }
 
     // -----------------------------------------------------------------------
-    //  Shared data helpers
+    //  Smart string collection
     // -----------------------------------------------------------------------
 
     private static void CollectSmartInfo(string assetText, HashSet<string> smartRids, HashSet<long> smartIds)
     {
-        // We need to correlate:
-        //   - rid: <X>
-        //     type: {class: SmartFormatTag ...}
-        //     data:
-        //       m_Entries:
-        //       - id: <Y>
-        //       m_SharedEntries:
-        //       - id: <Z>
-        //
-        // Strategy: track the last seen rid; when we see SmartFormatTag on the type line, record the rid.
-        // Then collect all id: lines until the next rid: or end of references block.
-
         string? lastRid = null;
         var inSmartBlock = false;
         var inRefIds = false;
@@ -159,7 +143,7 @@ internal static class LocalizationAssetParser
             if (TryGetValue(line.TrimStart('-', ' '), "rid", out var rid))
             {
                 lastRid = rid;
-                inSmartBlock = false; // reset until we confirm type
+                inSmartBlock = false;
                 continue;
             }
 
@@ -171,12 +155,16 @@ internal static class LocalizationAssetParser
             }
 
             if (inSmartBlock && TryGetValue(line.TrimStart('-', ' '), "id", out var idStr)
-                             && long.TryParse(idStr, out var id))
+                             && long.TryParse(idStr, out var entryId))
             {
-                smartIds.Add(id);
+                smartIds.Add(entryId);
             }
         }
     }
+
+    // -----------------------------------------------------------------------
+    //  Table data parsing
+    // -----------------------------------------------------------------------
 
     private static EntryInfo[] ParseTableData(
         string assetText,
@@ -203,7 +191,6 @@ internal static class LocalizationAssetParser
             // references: at indent 2 ends table data
             if (inTableData && indent <= 2 && line.StartsWith("references:"))
             {
-                // flush last
                 if (currentId >= 0 && currentLocalized is not null)
                     results.Add(BuildEntry(currentId, currentLocalized, sharedData, smartIds));
 
@@ -212,7 +199,6 @@ internal static class LocalizationAssetParser
 
             if (!inTableData) continue;
 
-            // New entry starts with "- m_Id:" (the dash is part of the YAML list item)
             if (line.StartsWith("- m_Id:"))
             {
                 // flush previous
@@ -220,9 +206,9 @@ internal static class LocalizationAssetParser
                     results.Add(BuildEntry(currentId, currentLocalized, sharedData, smartIds));
 
                 var idPart = line.TrimStart('-', ' ');
-                if (TryGetValue(idPart, "m_Id", out var idStr) && long.TryParse(idStr, out var id))
+                if (TryGetValue(idPart, "m_Id", out var idStr) && long.TryParse(idStr, out var parsedId))
                 {
-                    currentId = id;
+                    currentId = parsedId;
                     currentLocalized = null;
                 }
 
@@ -231,7 +217,6 @@ internal static class LocalizationAssetParser
 
             if (currentId >= 0 && TryGetValue(line, "m_Localized", out var localized))
             {
-                // Strip surrounding single quotes Unity sometimes adds
                 currentLocalized = localized.Trim('\'');
             }
         }
@@ -261,6 +246,10 @@ internal static class LocalizationAssetParser
         return new EntryInfo(id, key, localizedText, args);
     }
 
+    // -----------------------------------------------------------------------
+    //  Argument extraction
+    // -----------------------------------------------------------------------
+
     // Matches smart placeholders: {Name}, {_int_Name}, {_string_Name:Formatter}
     // Excludes purely numeric positional args like {0}
     private static readonly Regex SmartPlaceholderRegex =
@@ -275,15 +264,15 @@ internal static class LocalizationAssetParser
         var seen = new Dictionary<string, EntryArg>(StringComparer.Ordinal);
         var ordered = new List<EntryArg>();
 
-        foreach (Match m in SmartPlaceholderRegex.Matches(text))
+        foreach (Match match in SmartPlaceholderRegex.Matches(text))
         {
-            var raw = m.Groups["n"].Value;
-            var formatter = m.Groups["fmt"].Success ? m.Groups["fmt"].Value : null;
+            var raw = match.Groups["name"].Value;
+            var formatter = match.Groups["fmt"].Success ? match.Groups["fmt"].Value : null;
 
-            if (seen.ContainsKey(raw)) continue; // deduplicate repeated args
+            if (seen.ContainsKey(raw)) continue;
 
             var (argName, argType) = ParseArgNameAndType(raw);
-            var arg = new EntryArg(argName, argType, formatter);
+            var arg = new EntryArg(argName, argType, raw, formatter);
             seen[raw] = arg;
             ordered.Add(arg);
         }
@@ -296,22 +285,21 @@ internal static class LocalizationAssetParser
         var maxIndex = -1;
         var formatters = new Dictionary<int, string?>();
 
-        foreach (Match m in PositionalPlaceholderRegex.Matches(text))
+        foreach (Match match in PositionalPlaceholderRegex.Matches(text))
         {
-            var idx = int.Parse(m.Groups["idx"].Value);
+            var idx = int.Parse(match.Groups["idx"].Value);
             if (idx > maxIndex) maxIndex = idx;
-            if (m.Groups["fmt"].Success && !formatters.ContainsKey(idx))
-                formatters[idx] = m.Groups["fmt"].Value;
+            if (match.Groups["fmt"].Success && !formatters.ContainsKey(idx))
+                formatters[idx] = match.Groups["fmt"].Value;
         }
 
         if (maxIndex < 0) return Array.Empty<EntryArg>();
 
         var args = new EntryArg[maxIndex + 1];
-        for (var i = 0; i <= maxIndex; i++)
+        for (var index = 0; index <= maxIndex; index++)
         {
-            formatters.TryGetValue(i, out var fmt);
-            // Positional args are untyped — default to object/string per convention
-            args[i] = new EntryArg($"arg{i}", "object", fmt);
+            formatters.TryGetValue(index, out var fmt);
+            args[index] = new EntryArg($"arg{index}", "object", fmt);
         }
 
         return args;
@@ -320,22 +308,17 @@ internal static class LocalizationAssetParser
     /// <summary>
     /// Converts a raw placeholder name like "_int_MyArg" into ("MyArg", "int").
     /// Supported prefixes: _int_, _string_, _float_, _double_, _bool_, _long_
-    /// No prefix → ("Name", "string")
+    /// No prefix -> ("Name", "string")
     /// </summary>
     private static (string name, string type) ParseArgNameAndType(string raw)
     {
-        var span = raw.AsSpan();
-
-        return ("", "");/*
-        
-        if (span.StartsWith("_".AsSpan(), StringComparison.Ordinal))
+        if (raw.Length > 1 && raw[0] == '_')
         {
-            // find second underscore
             var second = raw.IndexOf('_', 1);
             if (second > 1)
             {
-                var prefix = raw[1..second].ToLowerInvariant();
-                var name = raw[(second + 1)..];
+                var prefix = raw.Substring(1, second - 1).ToLowerInvariant();
+                var name = raw.Substring(second + 1);
 
                 var type = prefix switch
                 {
@@ -345,15 +328,14 @@ internal static class LocalizationAssetParser
                     "double" => "double",
                     "bool" => "bool",
                     "long" => "long",
-                    _ => "string" // unknown prefix → string
+                    _ => "string"
                 };
 
                 return (name, type);
             }
         }
 
-        // No recognised prefix — treat entire name as the arg name, type = string
-        return (raw, "string");*/
+        return (raw, "string");
     }
 
     // -----------------------------------------------------------------------
@@ -362,14 +344,17 @@ internal static class LocalizationAssetParser
 
     private static string DeriveClassName(SharedTableData sharedData)
     {
-        // Use the first key to derive the table prefix (everything before the first dot)
-  /*      foreach (var kv in sharedData.Entries)
+        if (!string.IsNullOrEmpty(sharedData.TableCollectionName))
+            return sharedData.TableCollectionName;
+
+        // Fallback: use the first key to derive the table prefix
+        foreach (var keyValuePair in sharedData.Entries)
         {
-            var key = kv.Value;
+            var key = keyValuePair.Value;
             var dot = key.IndexOf('.');
-            return dot > 0 ? key[..dot] : key;
+            return dot > 0 ? key.Substring(0, dot) : key;
         }
-*/
+
         return "LocalizationTable";
     }
 
@@ -379,18 +364,15 @@ internal static class LocalizationAssetParser
     /// </summary>
     private static bool TryGetValue(string line, string key, out string value)
     {
-     /*   var prefix = key + ":";
+        var prefix = key + ":";
         if (!line.StartsWith(prefix))
         {
             value = string.Empty;
             return false;
         }
 
-        value = line[prefix.Length..].Trim();
-       */
-     value = string.Empty;
-
-     return true;
+        value = line.Substring(prefix.Length).Trim();
+        return true;
     }
 
     private static IEnumerable<string> EnumerateLines(string text)

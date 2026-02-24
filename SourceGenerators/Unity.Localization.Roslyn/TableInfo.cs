@@ -1,5 +1,3 @@
-﻿using Microsoft.CodeAnalysis;
-
 namespace Unity.Localization.Roslyn;
 
-internal sealed record TableInfo(AdditionalText OriginalText, string Name);
+internal sealed record TableInfo(string TableCollectionName, string ClassName, EntryInfo[] Entries);
