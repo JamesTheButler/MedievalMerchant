@@ -1,6 +1,7 @@
 using System;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Features.Goods.Config
 {
@@ -16,10 +17,10 @@ namespace Features.Goods.Config
         [field: SerializeField, ShowAssetPreview]
         public Sprite SellIcon { get; private set; }
 
-        [field: SerializeField]
-        public string DisplayString { get; private set; }
+        [SerializeField]
+        private LocalizedString displayString, description;
 
-        [field: SerializeField]
-        public string Description { get; private set; }
+        public string DisplayString => displayString.GetLocalizedString();
+        public string Description => description.GetLocalizedString();
     }
 }
