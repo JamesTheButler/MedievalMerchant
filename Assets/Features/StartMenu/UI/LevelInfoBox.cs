@@ -67,8 +67,8 @@ namespace Features.StartMenu.UI
             {
                 bestTimeText.text = bestTimeString.GetLocalizedString(new
                 {
-                    IntDay = completionDate!.CompletionDate.Day,
-                    IntYear = completionDate!.CompletionDate.Year,
+                    _int_Day = completionDate!.CompletionDate.Day,
+                    _int_Year = completionDate!.CompletionDate.Year,
                 });
             }
 
