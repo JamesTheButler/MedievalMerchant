@@ -2,6 +2,7 @@ using Common.Types;
 using Common.Utility;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Features.Goods.Config
 {
@@ -9,8 +10,10 @@ namespace Features.Goods.Config
         menuName = AssetMenu.ConfigDataFolder + nameof(GoodResourceData))]
     public sealed class GoodResourceData : ScriptableObject
     {
-        [field: SerializeField]
-        public string GoodName { get; private set; }
+        [SerializeField]
+        private LocalizedString goodName, productionBuildingName;
+
+        public string GoodName => goodName.GetLocalizedString();
         
         [field: SerializeField]
         public string PluralWorld { get; private set; }
