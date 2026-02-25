@@ -35,7 +35,7 @@ namespace Features.Player.Retinue.Logic
             }
 
 
-            var baseCost = companionModel.ActiveMission?.Value.CostMissionItem.RemainingAmount.Value ?? 0f;
+            var baseCost = companionModel.ActiveMission?.Value.CoinCost.RemainingAmount.Value ?? 0f;
             var cost = new ModifiableVariable("Upgrade Cost", false, new CompanionUpgradeBaseCostModifier(baseCost));
 
 

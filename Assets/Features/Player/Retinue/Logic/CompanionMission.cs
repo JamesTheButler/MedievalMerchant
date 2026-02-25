@@ -7,7 +7,7 @@ namespace Features.Player.Retinue.Logic
 {
     public sealed class CompanionMission
     {
-        public CompanionMissionItem CostMissionItem { get; }
+        public CompanionMissionItem CoinCost { get; }
         public Dictionary<Good, CompanionMissionItem> MissionItems { get; } = new();
         public ObservableEvent Completed { get; } = new();
 
@@ -15,8 +15,8 @@ namespace Features.Player.Retinue.Logic
 
         public CompanionMission(int cost, IReadOnlyDictionary<Good, int> goods)
         {
-            CostMissionItem = new CompanionMissionItem(cost);
-            CostMissionItem.IsCompleted.Observe(OnMissionCompleted, false);
+            CoinCost = new CompanionMissionItem(cost);
+            CoinCost.IsCompleted.Observe(OnMissionCompleted, false);
             _incompleteItemCount++;
 
             foreach (var (good, amount) in goods)
@@ -42,7 +42,7 @@ namespace Features.Player.Retinue.Logic
 
         public void DeliverCoin(int coinAmount)
         {
-            CostMissionItem.Deliver(coinAmount);
+            CoinCost.Deliver(coinAmount);
         }
 
         private void OnMissionCompleted(bool isComplete)
