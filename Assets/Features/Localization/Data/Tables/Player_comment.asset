@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: comment
   m_SharedData: {fileID: 11400000, guid: ff03fea2efc05eb4b8adc11fc8973523, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 1739500523766939800
   m_TableData:
   - m_Id: 83302014976
     m_Localized: Shown in the campsite UI > Companion Tent
@@ -26,6 +27,17 @@ MonoBehaviour:
     m_Localized: Shown in the campsite UI > Companion Tent
     m_Metadata:
       m_Items: []
+  - m_Id: 286261699928064
+    m_Localized: Shown in any UI where we display the level of a companion.
+    m_Metadata:
+      m_Items:
+      - rid: 1739500523766939800
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1739500523766939800
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 286261699928064

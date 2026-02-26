@@ -60,6 +60,8 @@ namespace Features.Cheats
                 { "town.reputation", SetTownReputationTo100 },
                 { "glint", GlintFunds },
                 { "camp", EnterCamp },
+                { "camp.companions", OpenCompanionCampPanel },
+                { "camp.comp", OpenCompanionCampPanel },
             };
 
             _paramCommands = new Dictionary<string, Action<string>>
@@ -128,8 +130,14 @@ namespace Features.Cheats
 
         private void EnterCamp()
         {
-            var campPanel = Object.FindFirstObjectByType<CampPanelUI>(FindObjectsInactive.Include).gameObject;
-            campPanel.SetActive(true);
+            var campPanel = Object.FindFirstObjectByType<   CampsitePanelUI>(FindObjectsInactive.Include);
+            campPanel?.Open();
+        }
+
+        private void OpenCompanionCampPanel()
+        {
+            var panel = Object.FindFirstObjectByType<CampsiteCompanionPanelUI>(FindObjectsInactive.Include);
+            panel?.Open();
         }
 
         private void AddTownDevelopment(string parameter)
