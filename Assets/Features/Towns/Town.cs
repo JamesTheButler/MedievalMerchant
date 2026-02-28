@@ -78,7 +78,6 @@ namespace Features.Towns
             AvailableGoods = availableGoods.ToHashSet();
 
             MainRegion = regions.GetRandom();
-            _inventoryPolicy.AddSlots(StartTier, _townConfig.InventorySlotsPerTier[StartTier]);
 
             // initial funds and goods
             Inventory = new Inventory.Inventory(_inventoryPolicy);
