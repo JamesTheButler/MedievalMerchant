@@ -115,7 +115,9 @@ namespace Common.UI
             if (_statsModel.TradedGoods.IsEmpty())
                 return StateNotFoundsString;
 
-            var favoriteGood = _statsModel.TradedGoods.Max(kvPair => kvPair.Key);
+            var favoriteGood = _statsModel.TradedGoods
+                .OrderByDescending(kvPair => kvPair.Value)
+                .First().Key;
             var favoriteGoodName = _goodResources.ResourceData[favoriteGood].GoodName;
             var favoriteGoodAmount = _statsModel.TradedGoods[favoriteGood];
             var favoriteGoodString = $"{favoriteGoodName} (traded {favoriteGoodAmount} times)";
