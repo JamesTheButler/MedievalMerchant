@@ -10,6 +10,7 @@ namespace Features.Trade.Logic
                 trade.Good,
                 trade.Amount,
                 trade.TotalPrice,
+                trade.ReputationChange,
                 trade.HaggleLevel);
         }
     }

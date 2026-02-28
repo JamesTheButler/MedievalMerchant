@@ -10,5 +10,6 @@ namespace Features.Trade.Logic
         Good Good,
         int Amount,
         float TotalPrice,
+        float ReputationChange,
         HaggleLevel HaggleLevel);
 }
