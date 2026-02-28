@@ -297,7 +297,19 @@ MonoBehaviour:
   hideOnClick: 0
   useSelfAsOrigin: 1
   originTransform: {fileID: 0}
+  text:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   defaultText: 
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1240540959404278832
 GameObject:
   m_ObjectHideFlags: 0
@@ -3576,9 +3588,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1656416748303948140, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
       propertyPath: m_text
-      value: '15
-
-'
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2087371950831924603, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
       propertyPath: m_Name
@@ -3696,7 +3706,9 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -16
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6383553523153246885, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
+    - {fileID: 1543477093907954412, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3871,7 +3883,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1656416748303948140, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
       propertyPath: m_text
-      value: Fullfill Mission
+      value: Fulfill Mission
       objectReference: {fileID: 0}
     - target: {fileID: 2087371950831924603, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
       propertyPath: m_Name
@@ -3979,15 +3991,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5011604528879419426, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 118.58
+      value: 114.72
       objectReference: {fileID: 0}
     - target: {fileID: 5011604528879419426, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 126.58
+      value: 122.72
       objectReference: {fileID: 0}
     - target: {fileID: 5011604528879419426, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383553523153246885, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
+      propertyPath: staticString.m_TableEntryReference.m_KeyId
+      value: 3582509017817088
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383553523153246885, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
+      propertyPath: staticString.m_TableReference.m_TableCollectionName
+      value: GUID:7b8f8b3f3104a264099230988226cdf7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4263,7 +4283,9 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -16
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6383553523153246885, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
+    - {fileID: 1543477093907954412, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -4292,6 +4314,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7170524352402431732}
     m_Modifications:
+    - target: {fileID: 1656416748303948140, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
+      propertyPath: m_text
+      value: Max
+      objectReference: {fileID: 0}
     - target: {fileID: 2087371950831924603, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
       propertyPath: m_Name
       value: Quick Trade Button Max
@@ -4403,6 +4429,14 @@ PrefabInstance:
     - target: {fileID: 5011604528879419426, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383553523153246885, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
+      propertyPath: staticString.m_TableEntryReference.m_KeyId
+      value: 3582558938423296
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383553523153246885, guid: 28d8cf56e4315814191de37a60121eaa, type: 3}
+      propertyPath: staticString.m_TableReference.m_TableCollectionName
+      value: GUID:7b8f8b3f3104a264099230988226cdf7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
