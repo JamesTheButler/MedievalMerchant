@@ -63,13 +63,13 @@ namespace Features.StartMenu.UI
 
         private static void InitializeEverything()
         {
-            var behaviors = Resources.FindObjectsOfTypeAll<InitializableBehavior>();
+            var behaviors = FindObjectsByType<InitializableBehavior>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (var behavior in behaviors)
             {
                 behavior.Initialize();
             }
 
-            var singletons = Resources.FindObjectsOfTypeAll<InitializableSingleton>();
+            var singletons = FindObjectsByType<InitializableSingleton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (var singleton in singletons)
             {
                 singleton.Initialize();

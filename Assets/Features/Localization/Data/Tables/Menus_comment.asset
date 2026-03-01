@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: comment
   m_SharedData: {fileID: 11400000, guid: 681de063b46dec0429f6cb4e7ce41956, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 1739500596695924826
   m_TableData:
   - m_Id: 720119731806208
     m_Localized: Shown in the Esc-menu on the "back to menu" and "quit game" button
@@ -77,6 +78,61 @@ MonoBehaviour:
     m_Localized: Shown when hovering player icon.
     m_Metadata:
       m_Items: []
+  - m_Id: 3747057624506368
+    m_Localized: Button shown on carts that can be bought.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 740719653249024
+    m_Localized: Shown when hovering the date in the top right.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772091394613248
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064582471681
+    m_Localized: 'Shown after winning a level.
+
+      Leave the <style> tag intact,
+      it colors part of the text.
+
+      Example: "Congratulations! You successfully
+      completed Level 02: Teach a man to fish"'
+    m_Metadata:
+      m_Items:
+      - rid: 1739500596695924826
+  - m_Id: 1064582471682
+    m_Localized: 'Shown after losing a level.
+
+      Example: You failed to complete
+      Level 02: Teach a man to fish'
+    m_Metadata:
+      m_Items:
+      - rid: 1739500596695924826
+  - m_Id: 1064582471683
+    m_Localized: 'Shown in the end-of-game stats in the "favorite good" line.
+
+      Example:
+      Berries (traded 2300 times)'
+    m_Metadata:
+      m_Items:
+      - rid: 1739500596695924826
+  - m_Id: 1064569888768
+    m_Localized: Shown after winning a level.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1064582471680
+    m_Localized: Shown after losing a level.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1739500596695924826
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 1064582471681
+        - id: 1064582471682
+        - id: 1064582471683

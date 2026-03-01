@@ -14,6 +14,7 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization;
 using UnityEngine.SceneManagement;
 
 namespace Common.UI
@@ -25,6 +26,13 @@ namespace Common.UI
 
         [SerializeField, Required]
         private TMP_Text titleText, messageText, failureText, dynamicStatsText;
+
+        [SerializeField]
+        private LocalizedString levelWonTitle,
+            levelLosTitle,
+            levelWonDescription,
+            levelLostDescription,
+            favoriteGoodString;
 
         private const string StateNotFoundsString = "-";
 
@@ -65,15 +73,21 @@ namespace Common.UI
             var playerInput = FindAnyObjectByType<PlayerInput>();
             playerInput.enabled = false;
 
-            titleText.text = isWon ? "Level Finished!".WithStyle(Style.Good) : "Game Over!".WithStyle(Style.Bad);
+            titleText.text = isWon
+                ? levelWonTitle.GetLocalizedString().WithStyle(Style.Good)
+                : levelLosTitle.GetLocalizedString().WithStyle(Style.Bad);
 
             var currentLevel = GlobalContext.CurrentLevelInfo!;
-            var currentLevelString = $"Level {currentLevel.DisplayIndex:D2}: {currentLevel.LevelName}"
-                .WithStyle(Style.Subtitle);
+
+            var levelDataObj = new
+            {
+                _int_LevelIndex = currentLevel.DisplayIndex,
+                LevelName = currentLevel.LevelName
+            };
 
             var message = isWon
-                ? $"Congratulations! You successfully completed {currentLevelString}"
-                : $"You failed to complete {currentLevelString}";
+                ? levelWonDescription.GetLocalizedString(levelDataObj)
+                : levelLostDescription.GetLocalizedString(levelDataObj);
 
             messageText.text = message;
             failureText.gameObject.SetActive(!isWon);
@@ -89,11 +103,9 @@ namespace Common.UI
             var t2TownCount = towns.Count(town => town.Tier.Value == Tier.Tier2);
             var t3TownCount = towns.Count(town => town.Tier.Value == Tier.Tier3);
             var averageRep = towns.Average(town => town.ReputationModel.Reputation.Value);
-            var productionBuildingCount =
-                towns.Sum(town => town.ProductionManager.AllProducers.Count())
-                - towns.Count; // each town starts with one producer
 
-            var favoriteGoodString = GenerateFavoriteGoodString();
+            // we subtract towns.Count as each town starts with one producer that the player has not built
+            var productionBuildingCount = towns.Sum(town => town.ProductionManager.AllProducers.Count()) - towns.Count;
 
             var stringBuilder = new StringBuilder();
             stringBuilder
@@ -104,7 +116,7 @@ namespace Common.UI
                 .AppendLine(productionBuildingCount.ToString())
                 .AppendLine(_statsModel.TotalGoodsTraded.ToString())
                 .AppendLine(_statsModel.TotalValueBought.ToString("0.#"))
-                .AppendLine(favoriteGoodString)
+                .AppendLine(GenerateFavoriteGoodString())
                 .AppendLine(averageRep.ToString("0.#"));
 
             return stringBuilder.ToString();
@@ -115,11 +127,18 @@ namespace Common.UI
             if (_statsModel.TradedGoods.IsEmpty())
                 return StateNotFoundsString;
 
-            var favoriteGood = _statsModel.TradedGoods.Max(kvPair => kvPair.Key);
+            var favoriteGood = _statsModel.TradedGoods
+                .OrderByDescending(kvPair => kvPair.Value)
+                .First().Key;
             var favoriteGoodName = _goodResources.ResourceData[favoriteGood].GoodName;
             var favoriteGoodAmount = _statsModel.TradedGoods[favoriteGood];
-            var favoriteGoodString = $"{favoriteGoodName} (traded {favoriteGoodAmount} times)";
-            return favoriteGoodString;
+
+            var favoriteGoodInfo = new
+            {
+                GoodName = favoriteGoodName,
+                _int_Amount = favoriteGoodAmount
+            };
+            return favoriteGoodString.GetLocalizedString(favoriteGoodInfo);
         }
 
         public void BackToMainMenu()

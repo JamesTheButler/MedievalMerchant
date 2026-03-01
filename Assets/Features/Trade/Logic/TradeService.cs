@@ -53,20 +53,20 @@ namespace Features.Trade.Logic
         private void OnTradeCompleted(OngoingTrade trade)
         {
             var completedTrade = trade.AsCompleted();
-            _tradeCompleted?.Invoke(completedTrade);
 
-            UpdateTownReputation(trade);
-            UpdateInventories(trade);
+            UpdateTownReputation(completedTrade);
+            UpdateInventories(completedTrade);
+
+            _tradeCompleted?.Invoke(completedTrade);
 
             var bindings = _bindings[trade];
             bindings.UnbindAll();
             _bindings.Remove(trade);
 
-
             Debug.Log($"Trade completed: {completedTrade}.");
         }
 
-        private void UpdateInventories(OngoingTrade trade)
+        private void UpdateInventories(CompletedTrade trade)
         {
             var buyer = trade.TradeType == TradeType.Buy ? _player.Inventory : trade.Town.Inventory;
             var seller = trade.TradeType != TradeType.Buy ? _player.Inventory : trade.Town.Inventory;
@@ -78,7 +78,7 @@ namespace Features.Trade.Logic
             seller.RemoveGood(trade.Good, trade.Amount);
         }
 
-        private void UpdateTownReputation(OngoingTrade trade)
+        private void UpdateTownReputation(CompletedTrade trade)
         {
             var good = _goodResources.ResourceData[trade.Good].GoodName;
             var haggleLevel = _haggleResources.HaggleLevelNames[trade.HaggleLevel];

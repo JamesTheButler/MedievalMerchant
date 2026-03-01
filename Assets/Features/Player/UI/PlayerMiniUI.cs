@@ -59,7 +59,6 @@ namespace Features.Player.UI
 
         public void PlayCoinEffect()
         {
-            Debug.LogError("Playing Animation");
             simpleAnimatorHandler.Play();
         }
     }
