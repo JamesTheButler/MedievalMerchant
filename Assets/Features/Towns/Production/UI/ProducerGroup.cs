@@ -5,7 +5,6 @@ using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Types;
 using Common.UI.Elements.Cells;
-using Common.UI.Utility;
 using Common.Utility;
 using Features.Goods;
 using Features.Goods.Recipe.Data;
@@ -15,6 +14,7 @@ using Features.Towns.Production.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Features.Towns.Production.UI
 {
@@ -36,6 +36,9 @@ namespace Features.Towns.Production.UI
 
         [SerializeField, Required]
         private TMP_Text titleText;
+
+        [SerializeField]
+        private LocalizedString emptyProducerString;
 
         private readonly Dictionary<Tier, ProductionCell> _producerCellsPerTier = new();
         private readonly Dictionary<Good, ProductionCell> _producerCellsPerGood = new();
@@ -76,7 +79,7 @@ namespace Features.Towns.Production.UI
 
             _isAvailable = isAvailable;
             unavailableGroup.SetActive(!isAvailable);
-            titleText.text = $"Producer {_producerIndex + 1}".WithStyle(Style.Subtitle);
+            titleText.text = emptyProducerString.GetLocalizedString(new { _int_ProducerIndex = _producerIndex + 1 });
 
             _playerLocation.CurrentTown.Observe(OnPlayerTownChanged);
 
@@ -140,7 +143,7 @@ namespace Features.Towns.Production.UI
         {
             return _producerCellsPerGood.GetValueOrDefault(good, null);
         }
-        
+
         public ProductionCell GetCell(Tier tier)
         {
             return _producerCellsPerTier[tier];
@@ -214,9 +217,8 @@ namespace Features.Towns.Production.UI
                     cell.SetState(doesAnyRecipeExist
                         ? ProductionCell.State.Upgradeable
                         : ProductionCell.State.MissingRecipes);
-                }
-
                     break;
+                }
             }
         }
 
@@ -242,8 +244,9 @@ namespace Features.Towns.Production.UI
                 return;
             }
 
-            if (producer.Tier == Tier.Tier3
-                || !_town.ProductionManager.HasProducer(producer.Tier + 1, producerIndex))
+
+            var isHighestTierProducer = !_town.ProductionManager.HasProducer(producer.Tier + 1, producerIndex);
+            if (producer.Tier == Tier.Tier3 || isHighestTierProducer)
             {
                 titleText.text = _producerResources.producerNames[producer.ProducedGood];
             }

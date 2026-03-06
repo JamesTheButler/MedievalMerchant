@@ -24,7 +24,7 @@ namespace Features.Trade.Haggling.UI
 
         public void SetUp(TradeType tradeType)
         {
-            var levelName = ResourceManager.Instance.HaggleResources.HaggleLevelNames[HaggleLevel];
+            var levelName = ResourceManager.Instance.HaggleResources.GetName(HaggleLevel);
             titleText.text = levelName;
 
             var configs = ConfigurationManager.Configurations.HaggleConfig.Configs[HaggleLevel];

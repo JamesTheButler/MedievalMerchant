@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 7f6196adc66f8b14caf6564f33feb127, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 3853118801594024016
   m_TableData:
   - m_Id: 1012338221056
     m_Localized: Trade Mission
@@ -27,11 +28,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803969
-    m_Localized: Sell {0}x {1}
+    m_Localized: Sell {_int_Amount}x {GoodName}
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803970
-    m_Localized: '{0}/{1} delivered'
+    m_Localized: '{_int_CurrentValue}/{_intMaxValue} delivered'
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803971
@@ -87,9 +88,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803984
-    m_Localized: Producer {0}
+    m_Localized: Producer {_int_ProducerIndex}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 1012350803985
     m_Localized: The town will no longer decline over time.
     m_Metadata:
@@ -196,4 +198,10 @@ MonoBehaviour:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 3853118801594024016
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 1012350803984

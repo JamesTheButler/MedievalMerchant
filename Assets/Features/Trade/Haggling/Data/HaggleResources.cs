@@ -1,6 +1,7 @@
 using AYellowpaper.SerializedCollections;
 using Common.Utility;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Features.Trade.Haggling.Data
 {
@@ -9,7 +10,17 @@ namespace Features.Trade.Haggling.Data
         menuName = AssetMenu.ResourceFolder + nameof(HaggleResources))]
     public sealed class HaggleResources : ScriptableObject
     {
-        [field: SerializeField, SerializedDictionary]
-        public SerializedDictionary<HaggleLevel, string> HaggleLevelNames { get; private set; }
+        [SerializeField, SerializedDictionary]
+        private SerializedDictionary<HaggleLevel, LocalizedString> haggleLevelNames, haggleLevelDescriptions;
+
+        public string GetName(HaggleLevel level)
+        {
+            return haggleLevelNames[level].GetLocalizedString();
+        }
+
+        public string GetDescription(HaggleLevel level)
+        {
+            return haggleLevelDescriptions[level].GetLocalizedString();
+        }
     }
 }

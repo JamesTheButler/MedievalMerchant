@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: d6b424ddbd874184eabee36fbbdb7560, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 3853118810525007872
   m_TableData:
   - m_Id: 13422780416
     m_Localized: This text is localized.
@@ -39,9 +40,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2884120351825920
-    m_Localized: Tier {0}
+    m_Localized: Tier {Tier}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118810525007872
   - m_Id: 2884722595160064
     m_Localized: from modifiers
     m_Metadata:
@@ -80,4 +82,10 @@ MonoBehaviour:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 3853118810525007872
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 2884120351825920

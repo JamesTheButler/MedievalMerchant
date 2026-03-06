@@ -1,3 +1,4 @@
+using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Observation;
 using Common.Types;
@@ -7,6 +8,7 @@ using Common.UI.Tooltips;
 using Common.UI.Utility;
 using Common.Utility;
 using Features.Levels;
+using Features.Localization.Data;
 using Features.Towns;
 using Features.Towns.Flags.UI;
 using Features.Towns.Missions;
@@ -16,7 +18,6 @@ using Features.Trade.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Features.Trade.UI
@@ -67,15 +68,13 @@ namespace Features.Trade.UI
         [SerializeField, Required]
         private CanvasGroup profitGroup;
 
-        private const string NetProfitStringFormat = "You will be making a profit of {0} with this trade.";
-        private const string NetLossStringFormat = "You will be making a loss of {0} with this trade.";
-
         private readonly Bindings _bindings = new();
 
         // set up on Initialize
         private GameplayModel _model;
         private TradeService _tradeService;
         private Selection _selection;
+        private TradeLocalizationResources _loc;
 
         // set up on SetUp (i.e. needs to be cleared in TearDown)
         private Town _town;
@@ -93,6 +92,11 @@ namespace Features.Trade.UI
 
         public override void Initialize()
         {
+            _model = GameplayContext.Instance.Model;
+            _tradeService = GameplayContext.Instance.Services.TradeService;
+            _selection = GameplayContext.Instance.Selection;
+            _loc = ResourceManager.Instance.LocalizationResources.TradeStrings;
+
             _isHagglingEnabled = GameplayContext.Instance.LevelInfo.HasFeature(LevelFeatureFlags.Haggling);
 
             TradeButton.onClick.AddListener(CompleteTrade);
@@ -112,10 +116,6 @@ namespace Features.Trade.UI
             }
 
             SetUpSlider();
-
-            _model = GameplayContext.Instance.Model;
-            _tradeService = GameplayContext.Instance.Services.TradeService;
-            _selection = GameplayContext.Instance.Selection;
         }
 
         public void SetUp(Good good, TradeType tradeType)
@@ -167,7 +167,8 @@ namespace Features.Trade.UI
 
             RefreshMissionAmountButton();
 
-            TradeButton.GetText().text = _tradeType == TradeType.Buy ? "Buy" : "Sell";
+            var tradeTypeString = _tradeType == TradeType.Buy ? _loc.BuyString : _loc.SellString;
+            TradeButton.GetText().text = tradeTypeString.GetLocalizedString();
             townNameText.text = _town.Name;
             townFlagRenderer.SetFlag(_town.FlagInfo);
 
@@ -317,20 +318,35 @@ namespace Features.Trade.UI
 
         private void RefreshTownFundsText()
         {
-            var total = _ongoingTrade.TotalPrice.Value;
-            var townChangeText = _tradeType == TradeType.Buy
-                ? $"+{total:0.#}".WithStyle(Style.Good)
-                : $"-{total:0.#}".WithStyle(Style.Bad);
-            townFundsText.text = $"Funds: {_town.Inventory.Funds.Value:0.#} ({townChangeText})";
+            var fundsChange = _ongoingTrade.TotalPrice.Value;
+            var fundsChangeText = _tradeType == TradeType.Buy
+                ? $"+{fundsChange:0.#}".WithStyle(Style.Good)
+                : $"-{fundsChange:0.#}".WithStyle(Style.Bad);
+
+            var dataObject = new
+            {
+                _int_Current = _town.Inventory.Funds.Value,
+                Change = fundsChangeText,
+            };
+
+
+            townFundsText.text = _loc.FundsSummary.GetLocalizedString(dataObject);
         }
 
         private void RefreshPlayerFundsText()
         {
-            var total = _ongoingTrade.TotalPrice.Value;
-            var playerChangeText = _tradeType == TradeType.Sell
-                ? $"+{total:0.#}".WithStyle(Style.Good)
-                : $"-{total:0.#}".WithStyle(Style.Bad);
-            playerFundsText.text = $"Funds: {_model.Player.Inventory.Funds.Value:0.#} ({playerChangeText})";
+            var fundsChange = _ongoingTrade.TotalPrice.Value;
+            var fundsChangeText = _tradeType == TradeType.Sell
+                ? $"+{fundsChange:0.#}".WithStyle(Style.Good)
+                : $"-{fundsChange:0.#}".WithStyle(Style.Bad);
+
+            var dataObject = new
+            {
+                _int_Current = _model.Player.Inventory.Funds.Value,
+                Change = fundsChangeText,
+            };
+
+            playerFundsText.text = _loc.FundsSummary.GetLocalizedString(dataObject);
         }
 
         private void RefreshProfitText(float? profit)
@@ -345,11 +361,9 @@ namespace Features.Trade.UI
                 return;
             }
 
-            var style = profit.Value.GetNumberStyle();
-            var differenceText = $"{profit.Value.Sign()}{profit.Value:0.##} coin".WithStyle(style);
-            var formatter = profit.Value < 0 ? NetLossStringFormat : NetProfitStringFormat;
-            var lossOrProfitMessage = string.Format(formatter, differenceText);
-            lossProfitText.text = lossOrProfitMessage;
+            var netString = profit.Value < 0 ? _loc.NetLossString : _loc.NetProfitString;
+            var netObject = new { _int_Amount = profit.Value };
+            lossProfitText.text = netString.GetLocalizedString(netObject);
         }
 
         # endregion Prices
@@ -376,10 +390,9 @@ namespace Features.Trade.UI
             if (isTradePossible)
                 return;
 
-            // TODO: this should be handled in TradeResult (CompleteTrade())
             var notEnoughCoinMessage = _tradeType == TradeType.Buy
-                ? "You do not have enough coin."
-                : $"{_town.Name} does not have enough coin.";
+                ? _loc.YouNotEnoughCoin.GetLocalizedString()
+                : _loc.TownNotEnoughCoin.GetLocalizedString(new { TownName = _town.Name });
 
             tradeButtonTooltip.SetData(notEnoughCoinMessage);
         }
@@ -389,7 +402,14 @@ namespace Features.Trade.UI
             var currentRep = _town.ReputationModel.Reputation.Value;
             var repChange = _ongoingTrade.ReputationChange.Value;
             var repChangeText = $"{repChange.Sign(false)}{repChange:0.#}".WithStyle(repChange.GetNumberStyle());
-            townReputationText.text = $"Reputation: {currentRep:0.#} ({repChangeText})";
+
+            var dataObject = new
+            {
+                _int_Current = currentRep,
+                Change = repChangeText,
+            };
+
+            townReputationText.text = _loc.ReputationSummary.GetLocalizedString(dataObject);
         }
     }
 }

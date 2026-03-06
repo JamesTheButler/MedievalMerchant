@@ -16,24 +16,28 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 7b8f8b3f3104a264099230988226cdf7, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 3853118801594024029
   m_TableData:
   - m_Id: 13917708288
-    m_Localized: You will be making a profit of {0} with this trade.
+    m_Localized: You will be making a profit of {_int_Amount} coin with this trade.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024029
   - m_Id: 13930291200
-    m_Localized: You will be making a loss of {0} with this trade.
+    m_Localized: You will be making a loss  of {_int_Amount} coin with this trade.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024029
   - m_Id: 13930291201
     m_Localized: You do not have enough coin.
     m_Metadata:
       m_Items: []
   - m_Id: 13930291202
-    m_Localized: '{0} does not have enough coin.'
+    m_Localized: '{TownName} does not have enough coin.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024029
   - m_Id: 13930291203
     m_Localized: coin
     m_Metadata:
@@ -43,9 +47,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13930291205
-    m_Localized: '{0} cannot buy {1} as they are not {2} yet.'
+    m_Localized: '{Town} must be of tier {Tier} to buy {Good}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024029
   - m_Id: 13930291206
     m_Localized: Base price for {0} goods
     m_Metadata:
@@ -86,37 +91,8 @@ MonoBehaviour:
     m_Localized: They bought {0} {1} in the last {2} days.
     m_Metadata:
       m_Items: []
-  - m_Id: 13930291216
-    m_Localized: Travel to and select a town to trade.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13930291217
-    m_Localized: Travel to {0} to trade with them.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13930291218
-    m_Localized: '{0} is producing {1} themselves. They aren''t interested in buying
-      it.'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13930291219
-    m_Localized: '{0} does not own any {1}.'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13930291220
-    m_Localized: You do not own any {0}.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13930291221
-    m_Localized: '{0} does not own {1} {2}.'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13930291222
-    m_Localized: You do not own {1} {2}.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 13930291223
-    m_Localized: All {0} inventory slots are full.
+  - m_Id: 5931436018851840
+    m_Localized: Travel to a town to trade.
     m_Metadata:
       m_Items: []
   - m_Id: 13930291224
@@ -183,6 +159,70 @@ MonoBehaviour:
     m_Localized: Max
     m_Metadata:
       m_Items: []
+  - m_Id: 5801351647420416
+    m_Localized: per 100 goods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5802583598391296
+    m_Localized: Trade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5806327224426496
+    m_Localized: 'Funds: {_int_Current:0.#} ({Change})'
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024029
+  - m_Id: 5807677698039808
+    m_Localized: 'Reputation: {_int_Current:0.#} ({Change})'
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024029
+  - m_Id: 5931540234723328
+    m_Localized: Travel to {TownName} to trade with them.
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024029
+  - m_Id: 5931618450104320
+    m_Localized: '{TownName} is producing {GoodName} themselves. They aren''t interested
+      in buying it.'
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024029
+  - m_Id: 5931804257771520
+    m_Localized: '{TownName} cannot buy {GoodName} as they are not {Tier} yet.'
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024029
+  - m_Id: 5932011754184704
+    m_Localized: You do not own any {GoodName}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5932150292045824
+    m_Localized: '{TownName} does not own any {GoodName}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5932190007910400
+    m_Localized: '{TownName} does not own enough {GoodName}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5932228343848960
+    m_Localized: You do not own that enough {GoodName}.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 3853118801594024029
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 13917708288
+        - id: 5806327224426496
+        - id: 13930291202
+        - id: 5807677698039808
+        - id: 13930291200
+        - id: 13930291205
+        - id: 5931540234723328
+        - id: 5931618450104320
+        - id: 5931804257771520

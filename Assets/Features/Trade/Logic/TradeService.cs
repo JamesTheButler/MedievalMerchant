@@ -81,7 +81,7 @@ namespace Features.Trade.Logic
         private void UpdateTownReputation(CompletedTrade trade)
         {
             var good = _goodResources.ResourceData[trade.Good].GoodName;
-            var haggleLevel = _haggleResources.HaggleLevelNames[trade.HaggleLevel];
+            var haggleLevel = _haggleResources.GetName(trade.HaggleLevel);
             var message = $"Traded {trade.Amount}x{good} worth {trade.TotalPrice} coin, haggling {haggleLevel}ly.";
 
             trade.Town.ReputationModel.UpdateReputation(trade.ReputationChange, message);
