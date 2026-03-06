@@ -21,9 +21,6 @@ namespace Features.Settings.UI
         [SerializeField, Required]
         private Button giveUpButton, cancelButton;
 
-        [SerializeField, Required]
-        private TMP_Text feedbackReceivedText;
-
         private FeedbackService _feedbackService;
 
         protected override void OnInitialize()
@@ -36,7 +33,7 @@ namespace Features.Settings.UI
 
         private void OnFeedbackPosted()
         {
-            feedbackReceivedText.gameObject.SetActive(true);
+            Debug.Log("Feedback has been sent.");
         }
 
         protected override void OnOpen()
@@ -44,7 +41,6 @@ namespace Features.Settings.UI
             _feedbackService.FeedbackPosted += OnFeedbackPosted;
 
             gameObject.SetActive(true);
-            feedbackReceivedText.gameObject.SetActive(false);
         }
 
         protected override void OnClose()

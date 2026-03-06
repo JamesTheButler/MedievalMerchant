@@ -58,6 +58,7 @@ namespace Features.Cheats
                 { "town.grow", SetTownDevelopmentTo100 },
                 { "town.rep", SetTownReputationTo100 },
                 { "town.reputation", SetTownReputationTo100 },
+                { "town.reputation.all", SetTownReputationTo100InAll },
                 { "glint", GlintFunds },
                 { "camp", EnterCamp },
                 { "camp.companions", OpenCompanionCampPanel },
@@ -201,6 +202,14 @@ namespace Features.Cheats
             }
 
             selectedTown.ReputationModel.UpdateReputation(200f, "You cheated!!");
+        }
+        
+        private void SetTownReputationTo100InAll()
+        {
+            foreach(var town in _model.Towns.Values)
+            {
+                town.ReputationModel.UpdateReputation(200f, "You cheated!!");
+            }
         }
 
         private void GiveGoods(string parameter)
