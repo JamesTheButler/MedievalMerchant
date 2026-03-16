@@ -30,11 +30,13 @@ MonoBehaviour:
   - m_Id: 1012350803969
     m_Localized: Sell {_int_Amount}x {GoodName}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 1012350803970
-    m_Localized: '{_int_CurrentValue}/{_intMaxValue} delivered'
+    m_Localized: '{_int_CurrentValue}/{_int_MaxValue} delivered'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 1012350803971
     m_Localized: On Success
     m_Metadata:
@@ -165,7 +167,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1012354998283
-    m_Localized: Trade Missions
+    m_Localized: Trade Mission
     m_Metadata:
       m_Items: []
   - m_Id: 1012354998284
@@ -196,6 +198,15 @@ MonoBehaviour:
     m_Localized: 'Funds:'
     m_Metadata:
       m_Items: []
+  - m_Id: 9365838569136128
+    m_Localized: Trade Missions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9366581619449856
+    m_Localized: '{_int_Days} days left'
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024016
   references:
     version: 2
     RefIds:
@@ -205,3 +216,6 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 1012350803984
+        - id: 9366581619449856
+        - id: 1012350803970
+        - id: 1012350803969

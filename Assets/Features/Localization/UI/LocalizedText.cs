@@ -46,5 +46,12 @@ namespace Features.Localization.UI
 
             textfield.text = staticString.IsEmpty ? "<none>" : staticString.GetLocalizedString();
         }
+
+        public void SetArgs(object args)
+        {
+            staticString.Arguments = new[] { args };
+
+            Refresh();
+        }
     }
 }

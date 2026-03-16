@@ -22,5 +22,14 @@ namespace Common.Utility
                 _ => string.Join(", ", array[..^1]) + " and " + array[^1]
             };
         }
+
+        public static string TrimStart(this string str, string trim)
+        {
+            if (string.IsNullOrEmpty(str) || !str.StartsWith(trim))
+                return str;
+
+            return str[trim.Length..];
+        }
+        
     }
 }

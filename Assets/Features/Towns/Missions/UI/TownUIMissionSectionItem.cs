@@ -1,9 +1,9 @@
 using Common.Infrastructure;
 using Common.UI.Elements.Cells;
 using Features.Goods.Config;
+using Features.Localization.UI;
 using Features.Towns.Missions.Data;
 using NaughtyAttributes;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +24,7 @@ namespace Features.Towns.Missions.UI
         private Button abortButton;
 
         [SerializeField, Required]
-        private TMP_Text titleText, countText, daysLeftText;
+        private LocalizedText titleText, countText, daysLeftText;
 
         [SerializeField, Required]
         private MissionTooltipHandler missionTooltipHandler;
@@ -55,16 +55,17 @@ namespace Features.Towns.Missions.UI
 
             _mission = mission;
 
-            var currentAmount = mission.RemainingCount;
-
             var goodName = _goodResources.ResourceData[mission.Good].GoodName;
-            titleText.text = $"Sell {mission.TotalCount} {goodName}";
+            var args = new
+            {
+                _int_Amount = mission.TotalCount,
+                GoodName = goodName,
+            };
+            titleText.SetArgs(args);
             goodCell.SetGood(mission.Good);
 
             var isHighlighted = mission.Type == MissionType.UpgradeMission;
             background.sprite = isHighlighted ? highlightedBackground : defaultBackground;
-
-            countText.text = currentAmount.ToString();
 
             missionTooltipHandler.SetData(mission);
 
@@ -83,7 +84,8 @@ namespace Features.Towns.Missions.UI
 
         private void OnDaysLeftChanged(int daysLeft)
         {
-            daysLeftText.text = $"{daysLeft} days left";
+            var args = new { _int_Days = daysLeft };
+            daysLeftText.SetArgs(args);
 
             var isCloseToFailure = daysLeft <= _missionConfig.WarningThresholdDays;
             daysLeftIcon.color = isCloseToFailure ? badColor : _defaultDaysLeftIconColor;
@@ -92,7 +94,12 @@ namespace Features.Towns.Missions.UI
         private void OnRemainingCountChanged(int remainingCount)
         {
             var deliveredCount = _mission.TotalCount - remainingCount;
-            countText.text = $"{deliveredCount}/{_mission.TotalCount} delivered";
+            var args = new
+            {
+                _int_CurrentValue = deliveredCount,
+                _int_MaxValue = _mission.TotalCount,
+            };
+            countText.SetArgs(args);
         }
 
         private void AbortButtonClicked()
