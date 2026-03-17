@@ -4,12 +4,14 @@ using Common.Types;
 using Common.UI.Elements;
 using Common.UI.Tooltips;
 using Common.Utility;
+using Features.Localization.Data;
 using Features.Towns.Development.Config;
 using Features.Towns.Missions.Results;
 using Features.Towns.Reputation.Data;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Features.Towns.Missions.UI
 {
@@ -17,6 +19,9 @@ namespace Features.Towns.Missions.UI
     {
         [SerializeField, Required]
         private Sprite coinIcon;
+
+        [SerializeField]
+        private LocalizedString tradeMissionTitle, upgradeMissionTitle;
 
         [SerializeField, Required]
         private TMP_Text titleText, descriptionText;
@@ -27,6 +32,7 @@ namespace Features.Towns.Missions.UI
         [SerializeField, Required]
         private TextWithIconElement detailItemPrefab;
 
+        private MissionLocalizationResources _loc;
         private TownDevelopmentConfig _townDevelopmentConfig;
         private ReputationResources _reputationResources;
 
@@ -34,6 +40,7 @@ namespace Features.Towns.Missions.UI
         {
             base.Awake();
 
+            _loc = ResourceManager.Instance.LocalizationResources.MissionStrings;
             _townDevelopmentConfig = ConfigurationManager.Configurations.TownDevelopmentConfig;
             _reputationResources = ResourceManager.Instance.ReputationResources;
         }
@@ -41,7 +48,8 @@ namespace Features.Towns.Missions.UI
         protected override void UpdateUI(Mission data)
         {
             Reset();
-            titleText.text = data.Type == MissionType.TradeMission ? "Trade Mission" : "Upgrade Mission";
+            var titleString = data.Type == MissionType.TradeMission ? tradeMissionTitle : upgradeMissionTitle;
+            titleText.text = titleString.GetLocalizedString();
             descriptionText.gameObject.SetActive(data.Type == MissionType.UpgradeMission);
 
             RenderResult(data.Reward);
@@ -62,24 +70,24 @@ namespace Features.Towns.Missions.UI
 
             switch (result)
             {
-                case TradeMissionPenalty tradePenalty:
+                case TradeMissionPenalty penalty:
                     var trendDownIcon = growthTrendData[DevelopmentTrend.Down].Icon;
-                    AddResultDetailItem($"{tradePenalty.GrowthPenalty} growth", trendDownIcon, penaltyGroup);
-                    AddResultDetailItem($"{tradePenalty.ReputationPenalty} reputation", unhappyIcon, penaltyGroup);
+                    AddResultDetailItem(_loc.TradeMissionGrowthPenalty(penalty.Growth), trendDownIcon, penaltyGroup);
+                    AddResultDetailItem(_loc.TradeMissionReputationPenalty(penalty.Reputation), unhappyIcon, penaltyGroup);
                     break;
-                case TradeMissionReward tradeReward:
+                case TradeMissionReward reward:
                     var trendUpIcon = growthTrendData[DevelopmentTrend.Up].Icon;
-                    AddResultDetailItem($"{tradeReward.Coin} coin", coinIcon, rewardGroup);
-                    AddResultDetailItem($"+{tradeReward.Growth} growth", trendUpIcon, rewardGroup);
-                    AddResultDetailItem($"+{tradeReward.Reputation} reputation", happyIcon, rewardGroup);
+                    AddResultDetailItem(_loc.TradeMissionCoinReward(reward.Coin), coinIcon, rewardGroup);
+                    AddResultDetailItem(_loc.TradeMissionGrowthReward(reward.Growth), trendUpIcon, rewardGroup);
+                    AddResultDetailItem(_loc.TradeMissionReputationReward(reward.Reputation), happyIcon, rewardGroup);
                     break;
-                case UpgradeMissionPenalty upgradePenalty:
+                case UpgradeMissionPenalty penalty:
                     var trendVeryDownIcon = growthTrendData[DevelopmentTrend.VeryDown].Icon;
-                    AddResultDetailItem($"{upgradePenalty.GrowthPenalty} growth", trendVeryDownIcon, penaltyGroup);
-                    AddResultDetailItem($"{upgradePenalty.ReputationPenalty} reputation", unhappyIcon, penaltyGroup);
+                    AddResultDetailItem(_loc.UpgradeMissionGrowthPenalty(penalty.Growth), trendVeryDownIcon, penaltyGroup);
+                    AddResultDetailItem(_loc.UpgradeMissionReputationPenalty(penalty.Reputation), unhappyIcon, penaltyGroup);
                     break;
-                case UpgradeMissionReward upgradeReward:
-                    AddResultDetailItem($"+{upgradeReward.ReputationReward} reputation", happyIcon, rewardGroup);
+                case UpgradeMissionReward reward:
+                    AddResultDetailItem(_loc.UpgradeMissionReputationReward(reward.ReputationReward), happyIcon, rewardGroup);
                     break;
                 default: throw new ArgumentOutOfRangeException(nameof(result));
             }

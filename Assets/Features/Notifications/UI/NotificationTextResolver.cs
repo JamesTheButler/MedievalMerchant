@@ -21,8 +21,6 @@ namespace Features.Notifications.UI
                     _notifLocalization.EventExpiredNotification.GetLocalizedString(notif.GameEvent.Title),
                 EventStartedNotification notif =>
                     _notifLocalization.EventStartedNotification.GetLocalizedString(notif.GameEvent.Title),
-                MissionFailedNotification notif =>
-                    _notifLocalization.MissionFailedNotification.GetLocalizedString(notif.Town.Name),
                 MissionStartedNotification notif =>
                     GetMissionStartedTitle(notif),
             };

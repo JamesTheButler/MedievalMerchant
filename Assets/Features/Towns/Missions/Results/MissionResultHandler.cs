@@ -23,8 +23,8 @@ namespace Features.Towns.Missions.Results
             switch (result)
             {
                 case TradeMissionPenalty penalty:
-                    _town.ReputationModel.UpdateReputation(penalty.ReputationPenalty, _missionPenaltyRepLogMessage);
-                    _town.DevelopmentManager.AddDevelopmentChange(penalty.GrowthPenalty);
+                    _town.ReputationModel.UpdateReputation(penalty.Reputation, _missionPenaltyRepLogMessage);
+                    _town.DevelopmentManager.AddDevelopmentChange(penalty.Growth);
                     break;
                 case TradeMissionReward reward:
                     _player.Value.Inventory.AddFunds(reward.Coin);
@@ -32,8 +32,8 @@ namespace Features.Towns.Missions.Results
                     _town.DevelopmentManager.AddDevelopmentChange(reward.Growth);
                     break;
                 case UpgradeMissionPenalty penalty:
-                    _town.ReputationModel.UpdateReputation(penalty.ReputationPenalty, _missionPenaltyRepLogMessage);
-                    _town.DevelopmentManager.AddDevelopmentChange(penalty.GrowthPenalty);
+                    _town.ReputationModel.UpdateReputation(penalty.Reputation, _missionPenaltyRepLogMessage);
+                    _town.DevelopmentManager.AddDevelopmentChange(penalty.Growth);
                     break;
                 case UpgradeMissionReward reward:
                     _town.DevelopmentManager.Upgrade();

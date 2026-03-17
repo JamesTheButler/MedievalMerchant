@@ -22,5 +22,8 @@ namespace Features.Localization.Data
 
         [field: SerializeField]
         public TradeLocalizationResources TradeStrings { get; private set; }
+        
+        [field: SerializeField]
+        public MissionLocalizationResources MissionStrings { get; private set; }
     }
 }

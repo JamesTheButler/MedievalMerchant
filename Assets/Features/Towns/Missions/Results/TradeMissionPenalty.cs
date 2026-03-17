@@ -1,4 +1,4 @@
 ﻿namespace Features.Towns.Missions.Results
 {
-    public record TradeMissionPenalty(float ReputationPenalty, float GrowthPenalty) : IMissionResult;
+    public record TradeMissionPenalty(float Reputation, float Growth) : IMissionResult;
 }

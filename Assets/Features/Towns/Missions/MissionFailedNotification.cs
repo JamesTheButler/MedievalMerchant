@@ -10,12 +10,19 @@ namespace Features.Towns.Missions
         public Town Town { get; }
 
         public MissionFailedNotification(Town town, Mission mission) : base(
+            GetTitle(town),
             GetDescription(town, mission),
             NotificationType.Bad,
             Severity.Minor,
             GetIcon(mission.Good))
         {
             Town = town;
+        }
+
+        private static string GetTitle(Town town)
+        {
+            var loc = ResourceManager.Instance.LocalizationResources.NotificationResources;
+            return loc.MissionFailedNotification.GetLocalizedString(town.Name);
         }
 
         private static string GetDescription(Town town, Mission mission)
