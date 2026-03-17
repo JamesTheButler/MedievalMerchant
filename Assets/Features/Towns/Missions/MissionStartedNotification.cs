@@ -6,23 +6,23 @@ using UnityEngine;
 namespace Features.Towns.Missions
 {
     public sealed record MissionStartedNotification(Town Town, Mission Mission) : Notification(
-        GetTitle(town, mission),
-        GetDescription(Mission),
+        GetTitle(Town, Mission),
+        GetDescription(Town, Mission),
         NotificationType.Info,
         Mission.Type == MissionType.TradeMission ? Severity.Minor : Severity.Major,
         GetIcon(Mission.Good))
     {
-        private static string GetTitle(object town, object mission)
-        {
-            
-        }
-
-        private static string GetDescription(Mission mission)
+        private static string GetTitle(Town town, Mission mission)
         {
             var loc = ResourceManager.Instance.LocalizationResources.MissionStrings;
-            var config = ResourceManager.Instance.GoodResources.ResourceData[mission.Good];
-            return $"Deliver {mission.TotalCount}x {config.GoodName} before {mission.EndDate}.";
-            return loc.GetMissionStartedDescription()
+            return loc.GetMissionStartedTitle(town.Name);
+        }
+
+        private static string GetDescription(Town town, Mission mission)
+        {
+            var loc = ResourceManager.Instance.LocalizationResources.MissionStrings;
+            var goodConfig = ResourceManager.Instance.GoodResources.ResourceData[mission.Good];
+            return loc.GetMissionStartedDescription(town.Name, goodConfig.GoodName, mission.TotalCount);
         }
 
         private static Sprite GetIcon(Good missionGood)

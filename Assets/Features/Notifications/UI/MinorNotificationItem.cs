@@ -38,8 +38,7 @@ namespace Features.Notifications.UI
                 _ => Style.Default
             };
 
-            var notificationTextResolver = new NotificationTextResolver();
-            titleText.text = notificationTextResolver.GetTitle(notification).WithStyle(style);
+            titleText.text = notification.Title.WithStyle(style);
             descriptionText.text = notification.Description;
             icon.gameObject.SetActive(notification.Icon != null);
             icon.sprite = notification.Icon;
