@@ -1,7 +1,9 @@
 using System.Linq;
 using Common.Infrastructure;
 using Common.UI.Tooltips;
+using Features.Localization.Data;
 using Features.Player.Retinue.Config;
+using Features.Player.Retinue.Config.Resources;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -25,12 +27,16 @@ namespace Features.Player.Retinue.UI
         private GameObject priceGroup, lockedGroup;
 
         private CompanionConfig _configData;
+        private CompanionResources _companionResources;
+        private CompanionLocalizationResources _loc;
 
         protected override void Awake()
         {
             base.Awake();
 
             _configData = ConfigurationManager.Configurations.CompanionConfig;
+            _loc = ResourceManager.Instance.LocalizationResources.Player.Companions;
+            _companionResources = ResourceManager.Instance.CompanionResources;
         }
 
         protected override void UpdateUI(Data data)
@@ -41,7 +47,8 @@ namespace Features.Player.Retinue.UI
             priceGroup.gameObject.SetActive(data.State != CompanionLevelUI.State.Unlocked);
             lockedGroup.gameObject.SetActive(data.State == CompanionLevelUI.State.Locked);
 
-            levelText.text = companionData.DisplayString(data.Level);
+            var companionName = _companionResources.Get(data.CompanionType).Name;
+            levelText.text = _loc.CompanionDisplayString(companionName, data.Level);
 
             if (levelData == null)
             {

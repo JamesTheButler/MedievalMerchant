@@ -1,22 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using NaughtyAttributes;
+using Features.Player.Retinue.Config.LevelDatas;
 using UnityEngine;
 
-namespace Features.Player.Retinue.Config
+namespace Features.Player.Retinue.Config.CompanionDatas
 {
     [Serializable]
     public abstract class CompanionConfigData
     {
-        [field: SerializeField, Required, ShowAssetPreview]
-        public Sprite Icon { get; private set; }
-
-        [field: SerializeField]
-        public string Name { get; private set; }
-
-        [field: SerializeField]
-        public string Description { get; private set; }
-
         [field: SerializeField]
         public bool IsImplemented { get; private set; }
 
@@ -33,12 +24,6 @@ namespace Features.Player.Retinue.Config
                 return null;
 
             return Levels[level - 1];
-        }
-
-        public string DisplayString(int level)
-        {
-            var comingSoonSuffix = IsImplemented ? string.Empty : " - (coming soon)";
-            return $"{Name} lvl. {level} {comingSoonSuffix}";
         }
     }
 }

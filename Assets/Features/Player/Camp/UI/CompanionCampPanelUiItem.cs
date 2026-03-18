@@ -8,6 +8,7 @@ using Common.UI.InventoryUI;
 using Common.Utility;
 using Features.Player.Retinue;
 using Features.Player.Retinue.Config;
+using Features.Player.Retinue.Config.Resources;
 using Features.Player.Retinue.Logic;
 using NaughtyAttributes;
 using TMPro;
@@ -44,6 +45,7 @@ namespace Features.Player.Camp.UI
         private InventoryCell goodItemPrefab;
 
         private CompanionConfig _companionConfig;
+        private CompanionResource _companionResource;
         private CompanionModel _companionModel;
 
         private readonly Bindings _bindings = new(), _missionBindings = new();
@@ -51,10 +53,11 @@ namespace Features.Player.Camp.UI
         private void Awake()
         {
             _companionConfig = ConfigurationManager.Configurations.CompanionConfig;
+            _companionResource = ResourceManager.Instance.CompanionResources.Get(companionType);
             _companionModel = GameplayContext.Instance.Model.Player.RetinueModel.Companions[companionType];
 
-            companionIcon.sprite = _companionConfig.Get(companionType).Icon;
-            nameText.text = _companionConfig.Get(companionType).Name;
+            companionIcon.sprite = _companionResource.Icon;
+            nameText.text = _companionResource.Name;
 
             upgradeGoodsContainer.DestroyChildren();
             effectsContainer.DestroyChildren();

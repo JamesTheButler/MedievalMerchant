@@ -1,13 +1,14 @@
 using System;
 using System.Text;
-using Common.UI.Utility;
+using Common.Infrastructure;
 using Common.Utility;
+using Features.Player.Retinue.Config.Resources;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Config.LevelDatas
 {
     [Serializable]
-    public class DiplomatLevelData : CompanionLevelData
+    public sealed class DiplomatLevelData : CompanionLevelData
     {
         [field: SerializeField, Range(0, 100)]
         public float TownEntranceReputation { get; private set; }
@@ -15,10 +16,11 @@ namespace Features.Player.Retinue.Config.LevelDatas
         [field: SerializeField]
         public float ReputationBoost { get; private set; }
 
+        private DiplomatCompanionResource Resource => ResourceManager.Instance.CompanionResources.Diplomat;
+
         public override string Description => new StringBuilder()
-            .AppendLine($"- +{TownEntranceReputation} reputation when entering town")
-            .AppendLine($"- {ReputationBoost.ToPercentString()} bonus for all reputation gains")
-            .ToString()
-            .WithStyle(Style.Good);
+            .AppendLine($"- {Resource.TownEntranceRepString.GetLocalizedString(TownEntranceReputation)}")
+            .AppendLine($"- {Resource.RepBoostString.GetLocalizedString(ReputationBoost.ToPercentString())}")
+            .ToString();
     }
 }

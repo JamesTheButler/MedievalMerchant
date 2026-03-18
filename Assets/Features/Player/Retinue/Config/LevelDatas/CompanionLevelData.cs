@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Features.Player.Retinue.Config
+namespace Features.Player.Retinue.Config.LevelDatas
 {
     [Serializable]
     public abstract class CompanionLevelData

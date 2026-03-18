@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Features.Player.Retinue.Config.LevelDatas;
 using UnityEngine;
 
-namespace Features.Player.Retinue.Config
+namespace Features.Player.Retinue.Config.CompanionDatas
 {
     [Serializable]
     public abstract class CompanionConfigData<T> : CompanionConfigData

@@ -1,19 +1,21 @@
 using System;
 using System.Text;
-using Common.UI.Utility;
+using Common.Infrastructure;
+using Features.Player.Retinue.Config.Resources;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Config.LevelDatas
 {
     [Serializable]
-    public class GuardLevelData : CompanionLevelData
+    public sealed class GuardLevelData : CompanionLevelData
     {
         [field: SerializeField]
         public int Strength { get; private set; }
 
+        private GuardCompanionResource Resource => ResourceManager.Instance.CompanionResources.Guard;
+        
         public override string Description => new StringBuilder()
-            .AppendLine($"- {Strength} combat strength")
-            .ToString()
-            .WithStyle(Style.Good);
+            .AppendLine($"- {Resource.StrengthString.GetLocalizedString(Strength)}")
+            .ToString();
     }
 }

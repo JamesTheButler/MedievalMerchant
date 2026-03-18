@@ -3,10 +3,10 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Localization;
 
-namespace Features.Player.Retinue.Config
+namespace Features.Player.Retinue.Config.Resources
 {
     [Serializable]
-    public sealed class CompanionResource
+    public abstract class CompanionResource
     {
         [field: SerializeField, Required, ShowAssetPreview]
         public Sprite Icon { get; private set; }

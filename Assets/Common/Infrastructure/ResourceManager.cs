@@ -4,6 +4,8 @@ using Features.Audio.Data;
 using Features.Goods.Config;
 using Features.Goods.Recipe.Data;
 using Features.Localization.Data;
+using Features.Player.Retinue.Config;
+using Features.Player.Retinue.Config.Resources;
 using Features.Towns.Config;
 using Features.Towns.Development.UI.DevelopmentGauge;
 using Features.Towns.Flags.Config;
@@ -34,6 +36,9 @@ namespace Common.Infrastructure
 
         [field: SerializeField, Required]
         public CaravanResources CaravanResources { get; private set; }
+
+        [field: SerializeField, Required]
+        public CompanionResources CompanionResources { get; private set; }
 
         [field: SerializeField, Required]
         public ConditionResources ConditionResources { get; private set; }

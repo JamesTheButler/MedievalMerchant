@@ -9,5 +9,8 @@ namespace Features.Localization.Data
     {
         [field: SerializeField]
         public LocalizedString FundsChangeModifier { get; private set; }
+
+        [field: SerializeField]
+        public CompanionLocalizationResources Companions { get; private set; }
     }
 }

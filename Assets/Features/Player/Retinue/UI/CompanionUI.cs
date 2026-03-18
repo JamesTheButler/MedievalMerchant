@@ -3,6 +3,8 @@ using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Utility;
 using Features.Player.Retinue.Config;
+using Features.Player.Retinue.Config.CompanionDatas;
+using Features.Player.Retinue.Config.Resources;
 using Features.Player.Retinue.Logic;
 using NaughtyAttributes;
 using TMPro;
@@ -34,6 +36,7 @@ namespace Features.Player.Retinue.UI
         private RetinueModel _retinueModel;
         private CompanionConfigData _configData;
         private CompanionUpgradeService _companionUpgradeService;
+        private CompanionResource _companionResource;
 
         private readonly List<CompanionLevelUI> _levelUIs = new();
 
@@ -41,6 +44,7 @@ namespace Features.Player.Retinue.UI
 
         private void Start()
         {
+            _companionResource = ResourceManager.Instance.CompanionResources.Get(companionType);
             _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
             _configData = ConfigurationManager.Configurations.CompanionConfig.Get(companionType);
             _companionUpgradeService = GameplayContext.Instance.Services.CompanionUpgradeService;
@@ -53,9 +57,9 @@ namespace Features.Player.Retinue.UI
         private void InitializeUI()
         {
             levelUiParent.DestroyChildren();
-            nameText.text = _configData.Name;
-            descriptionText.text = _configData.Description;
-            companionIcon.sprite = _configData.Icon;
+            nameText.text = _companionResource.Name;
+            descriptionText.text = _companionResource.Description;
+            companionIcon.sprite = _companionResource.Icon;
             companionIcon.color = _configData.IsImplemented ? Color.white : Color.white.WithAlpha(0.5f);
             fadeOutImage.enabled = !_configData.IsImplemented;
 

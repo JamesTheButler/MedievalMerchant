@@ -1,13 +1,14 @@
 using System;
 using System.Text;
-using Common.UI.Utility;
+using Common.Infrastructure;
 using Common.Utility;
+using Features.Player.Retinue.Config.Resources;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Config.LevelDatas
 {
     [Serializable]
-    public class NavigatorLevelData : CompanionLevelData
+    public sealed class NavigatorLevelData : CompanionLevelData
     {
         [field: SerializeField]
         public float SpeedBonus { get; private set; }
@@ -15,10 +16,11 @@ namespace Features.Player.Retinue.Config.LevelDatas
         [field: SerializeField]
         public float UpkeepReduction { get; private set; }
 
+        private NavigatorCompanionResource Resource => ResourceManager.Instance.CompanionResources.Navigator;
+        
         public override string Description => new StringBuilder()
-            .AppendLine($"- {SpeedBonus.ToPercentString()} shorter travel times ")
-            .AppendLine($"- {UpkeepReduction.ToPercentString()} lower upkeep")
-            .ToString()
-            .WithStyle(Style.Good);
+            .AppendLine($"- {Resource.SpeedBonusString.GetLocalizedString(SpeedBonus.ToPercentString())}")
+            .AppendLine($"- {Resource.UpkeepReductionString.GetLocalizedString(UpkeepReduction.ToPercentString())}")
+            .ToString();
     }
 }

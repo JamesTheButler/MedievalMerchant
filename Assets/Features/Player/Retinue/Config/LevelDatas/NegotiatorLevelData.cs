@@ -1,13 +1,14 @@
 using System;
 using System.Text;
-using Common.UI.Utility;
+using Common.Infrastructure;
 using Common.Utility;
+using Features.Player.Retinue.Config.Resources;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Config.LevelDatas
 {
     [Serializable]
-    public class NegotiatorLevelData : CompanionLevelData
+    public sealed class NegotiatorLevelData : CompanionLevelData
     {
         [field: SerializeField]
         public float PriceSavings { get; private set; }
@@ -15,10 +16,11 @@ namespace Features.Player.Retinue.Config.LevelDatas
         [field: SerializeField]
         public float UpgradeCostReduction { get; private set; }
 
+        private NegotiatorCompanionResource Resource => ResourceManager.Instance.CompanionResources.Negotiator;
+
         public override string Description => new StringBuilder()
-            .AppendLine($"- {PriceSavings.ToPercentString()} better prices")
-            .AppendLine($"- {UpgradeCostReduction.ToPercentString()} reduction of caravan upgrade costs")
-            .ToString()
-            .WithStyle(Style.Good);
+            .AppendLine($"- {Resource.PriceSavingsString.GetLocalizedString(PriceSavings.ToPercentString())}")
+            .AppendLine($"- {Resource.UpgradeCostReductionString.GetLocalizedString(UpgradeCostReduction.ToPercentString())}")
+            .ToString();
     }
 }
