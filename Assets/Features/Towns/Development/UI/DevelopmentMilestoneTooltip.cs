@@ -1,5 +1,6 @@
 using Common.UI.Tooltips;
 using Common.Utility;
+using Features.Localization.UI;
 using Features.Towns.Development.UI.DevelopmentGauge;
 using NaughtyAttributes;
 using TMPro;
@@ -13,7 +14,10 @@ namespace Features.Towns.Development.UI
         public record Data(DevelopmentMilestone.Data MilestoneData, bool IsUnlocked);
 
         [SerializeField, Required]
-        private TMP_Text descriptionText, effectsText;
+        private TMP_Text effectsText;
+
+        [SerializeField, Required]
+        private LocalizedText descriptionText;
 
         [SerializeField, Required]
         private Image milestoneIcon;
@@ -21,7 +25,9 @@ namespace Features.Towns.Development.UI
         protected override void UpdateUI(Data data)
         {
             milestoneIcon.sprite = data.MilestoneData.Icon;
-            descriptionText.text = $"Unlocks at development {data.MilestoneData.ThresholdPercent.ToPercentString()}";
+
+            var args = new { Percentage = data.MilestoneData.ThresholdPercent.ToPercentString() };
+            descriptionText.SetArgs(args);
             effectsText.text = data.MilestoneData.Description;
             descriptionText.gameObject.SetActive(!data.IsUnlocked);
         }

@@ -1,3 +1,4 @@
+using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Features.Inventory;
@@ -8,23 +9,21 @@ namespace Features.Player.Logic
 {
     public sealed class PlayerModel
     {
-        public PlayerLocation Location { get; } = new();
+        public readonly Observable<float> SpeedInTilesPerDay = new(1f);
 
+        public PlayerLocation Location { get; } = new();
         public ModifiableVariable MovementSpeed => CaravanManager.MoveSpeed;
 
-        public Observable<float> SpeedInTilesPerDay = new(1f);
-
         public ModifiableVariable FundsChange { get; }
-
         public Inventory.Inventory Inventory { get; }
-
         public RetinueModel RetinueModel { get; }
         public CaravanManager CaravanManager { get; }
         public TradeTracker TradeTracker { get; }
 
         public PlayerModel(float startFunds)
         {
-            FundsChange = new ModifiableVariable("Funds per day", true);
+            var loc = ResourceManager.Instance.LocalizationResources.Player;
+            FundsChange = new ModifiableVariable(loc.FundsChangeModifier.GetLocalizedString(), true);
 
             RetinueModel = new RetinueModel();
             CaravanManager = new CaravanManager();

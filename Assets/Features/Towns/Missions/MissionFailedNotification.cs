@@ -10,7 +10,7 @@ namespace Features.Towns.Missions
         public Town Town { get; }
 
         public MissionFailedNotification(Town town, Mission mission) : base(
-            GetTitle(town),
+            GetTitle(town, mission),
             GetDescription(town, mission),
             NotificationType.Bad,
             Severity.Minor,
@@ -19,16 +19,19 @@ namespace Features.Towns.Missions
             Town = town;
         }
 
-        private static string GetTitle(Town town)
+        private static string GetTitle(Town town, Mission mission)
         {
-            var loc = ResourceManager.Instance.LocalizationResources.NotificationResources;
-            return loc.MissionFailedNotification.GetLocalizedString(town.Name);
+            var loc = ResourceManager.Instance.LocalizationResources.MissionStrings;
+            return mission.Type == MissionType.TradeMission
+                ? loc.GetTradeMissionFailedTitle(town.Name)
+                : loc.GetUpgradeMissionFailedTitle(town.Name);
         }
 
         private static string GetDescription(Town town, Mission mission)
         {
-            var config = ResourceManager.Instance.GoodResources.ResourceData[mission.Good];
-            return $"You did not deliver enough {config.GoodName} in time. {town.Name} is not happy.";
+            var loc = ResourceManager.Instance.LocalizationResources.MissionStrings;
+            var goodName = ResourceManager.Instance.GoodResources.ResourceData[mission.Good].GoodName;
+            return loc.GetMissionFailedDescription(town.Name, goodName);
         }
 
         private static Sprite GetIcon(Good missionGood)

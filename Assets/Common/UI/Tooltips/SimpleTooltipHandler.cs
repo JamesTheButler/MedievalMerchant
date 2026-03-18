@@ -7,7 +7,7 @@ namespace Common.UI.Tooltips
     {
         [SerializeField]
         private LocalizedString text;
-        
+
         [SerializeField]
         private string defaultText;
 
@@ -20,10 +20,10 @@ namespace Common.UI.Tooltips
                 SetData(text.GetLocalizedString());
                 return;
             }
-            
+
             if (!string.IsNullOrEmpty(defaultText))
             {
-                SetData("<not localized>"+defaultText);
+                SetData("<not localized>" + defaultText);
             }
         }
     }

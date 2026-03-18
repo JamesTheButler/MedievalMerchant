@@ -1,5 +1,5 @@
+using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
-using Common.Utility;
 
 namespace Features.Towns.Development.Logic.Milestones
 {
@@ -29,7 +29,8 @@ namespace Features.Towns.Development.Logic.Milestones
 
         private static string GetDescription(float value, Town town)
         {
-            return $"Dividends: {value.ToPercentString()} of {town.Name}s funds";
+            var loc = ResourceManager.Instance.LocalizationResources.Town;
+            return loc.DividendsFundsModifier(value, town.Name);
         }
     }
 }

@@ -15,14 +15,5 @@ namespace Features.Localization.Data
 
         [field: SerializeField]
         public LocalizedString EventStartedNotification { get; private set; }
-
-        [field: SerializeField]
-        public LocalizedString TradeMissionStartedNotification { get; private set; }
-
-        [field: SerializeField]
-        public LocalizedString UpgradeMissionStartedNotification { get; private set; }
-
-        [field: SerializeField]
-        public LocalizedString MissionFailedNotification { get; private set; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using Common.Infrastructure;
+using Common.Types;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -16,9 +18,11 @@ namespace Features.Localization.Data
             upgradeMissionReputationReward,
             upgradeMissionGrowthPenalty,
             upgradeMissionReputationPenalty,
-            missionStartedTitle,
+            tradeMissionStartedTitle,
+            upgradeMissionStartedTitle,
             missionStartedDescription,
-            missionFailedTitle,
+            tradeMissionFailedTitle,
+            upgradeMissionFailedTitle,
             missionFailedDescription;
 
         public string TradeMissionCoinReward(float value)
@@ -61,29 +65,54 @@ namespace Features.Localization.Data
             return ResolveMissionDetailString(upgradeMissionReputationPenalty, value);
         }
 
-        public string GetMissionStartedTitle(string townName)
+        public string GetTradeMissionStartedTitle(string townName, string goodName)
         {
-            return missionStartedTitle.GetLocalizedString(new { TownName = townName });
-        }
-
-        public string GetMissionStartedDescription(string townName, string goodName, int goodAmount)
-        {
-            return missionStartedTitle.GetLocalizedString(new
+            var args = new
             {
                 TownName = townName,
+                GoodName = goodName
+            };
+            return tradeMissionStartedTitle.GetLocalizedString(args);
+        }
+
+        public string GetUpgradeMissionStartedTitle(string townName, string goodName)
+        {
+            var args = new
+            {
+                TownName = townName,
+                GoodName = goodName
+            };
+            return upgradeMissionStartedTitle.GetLocalizedString(args);
+        }
+
+        public string GetMissionStartedDescription(string goodName, int goodAmount, Date date)
+        {
+            return missionStartedDescription.GetLocalizedString(new
+            {
                 GoodName = goodName,
-                _int_Amount = goodAmount
+                _int_Amount = goodAmount,
+                Date = date.ToDisplayString()
             });
         }
 
-        public string GetMissionFailedTitle(string townName)
+        public string GetTradeMissionFailedTitle(string townName)
         {
-            return missionFailedTitle.GetLocalizedString(new { TownName = townName });
+            return tradeMissionFailedTitle.GetLocalizedString(new { TownName = townName });
         }
 
-        public string GetMissionFailedDescription(string townName)
+        public string GetUpgradeMissionFailedTitle(string townName)
         {
-            return missionFailedTitle.GetLocalizedString(new { TownName = townName });
+            return upgradeMissionFailedTitle.GetLocalizedString(new { TownName = townName });
+        }
+
+        public string GetMissionFailedDescription(string townName, string goodName)
+        {
+            var args = new
+            {
+                TownName = townName,
+                GoodName = goodName
+            };
+            return missionFailedDescription.GetLocalizedString(args);
         }
 
         private string ResolveMissionDetailString(LocalizedString s, float value)

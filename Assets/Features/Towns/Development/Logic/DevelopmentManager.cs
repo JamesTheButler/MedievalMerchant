@@ -15,7 +15,7 @@ namespace Features.Towns.Development.Logic
     public sealed class DevelopmentManager
     {
         public Observable<Tier> Tier { get; } = new(Common.Types.Tier.Tier1);
-        public ModifiableVariable DevelopmentTrend { get; } = new("Development Trend", true);
+        public ModifiableVariable DevelopmentTrend { get; }
         public IReadOnlyObservable<float> DevelopmentScore => _developmentScore;
         public Observable<DevelopmentTrend> GrowthTrend { get; } = new();
 
@@ -34,6 +34,10 @@ namespace Features.Towns.Development.Logic
             _townDevelopmentConfig = ConfigurationManager.Configurations.TownDevelopmentConfig;
             _goodResources = ResourceManager.Instance.GoodResources;
 
+            var loc = ResourceManager.Instance.LocalizationResources.Town;
+            var modifierTitle = loc.DevTrendModifierTitle.GetLocalizedString();
+            DevelopmentTrend =  new ModifiableVariable(modifierTitle, true);
+            
             _town.ProductionManager.ProductionAdded.Observe(OnProducerAdded);
             _town.Inventory.GoodUpdated += OnGoodAdded;
 

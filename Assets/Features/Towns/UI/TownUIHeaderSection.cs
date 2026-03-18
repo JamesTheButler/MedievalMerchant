@@ -2,7 +2,6 @@
 using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Tooltips;
-using Common.Utility;
 using Features.Towns.Flags.UI;
 using Features.Towns.Reputation.Data;
 using NaughtyAttributes;
@@ -54,6 +53,15 @@ namespace Features.Towns.UI
             town.FundsChange.Observe(OnFundsChangeChanged);
         }
 
+        public override void Unbind(Town town)
+        {
+            town.Tier.StopObserving(OnTierChanged);
+            town.Descriptor.StopObserving(OnDescriptorChanged);
+            town.ReputationModel.Reputation.StopObserving(OnReputationChanged);
+            town.Inventory.Funds.StopObserving(OnFundsChanged);
+            town.FundsChange.StopObserving(OnFundsChangeChanged);
+        }
+
         private void OnTierChanged(Tier tier)
         {
             var tierSprite = _tierResources.Icons[tier];
@@ -79,16 +87,7 @@ namespace Features.Towns.UI
 
         private void OnFundsChangeChanged(float fundsChange)
         {
-            fundsChangeText.text = $"{fundsChange.Sign()}{fundsChange:0.#} /day";
-        }
-
-        public override void Unbind(Town town)
-        {
-            town.Tier.StopObserving(OnTierChanged);
-            town.Descriptor.StopObserving(OnDescriptorChanged);
-            town.ReputationModel.Reputation.StopObserving(OnReputationChanged);
-            town.Inventory.Funds.StopObserving(OnFundsChanged);
-            town.FundsChange.StopObserving(OnFundsChangeChanged);
+            fundsChangeText.text = $"{fundsChange:+0.0;-0.0;0.0}";
         }
     }
 }

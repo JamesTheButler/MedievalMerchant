@@ -66,29 +66,26 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803978
-    m_Localized: 'Trade mission started: {0} wants {1}'
+    m_Localized: 'Trade mission started: {TownName} wants {GoodName}'
     m_Metadata:
-      m_Items: []
-  - m_Id: 1012350803979
-    m_Localized: Deliver {0}x {1} before {2}.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1012350803980
-    m_Localized: 'Mission failed: {0}'
-    m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 1012350803981
-    m_Localized: You did not deliver enough {0} in time. {1} is not happy.
+    m_Localized: You did not deliver enough {GoodName} in time. {TownName} is not
+      happy.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 1012350803982
-    m_Localized: Base degrowth for a {0} town
+    m_Localized: Base degrowth for a tier {TierRoman} town
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 1012350803983
-    m_Localized: Unlocked when town reaches {0}.
+    m_Localized: Unlocked when town reaches tier {TierRoman}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 1012350803984
     m_Localized: Producer {_int_ProducerIndex}
     m_Metadata:
@@ -115,33 +112,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803990
-    m_Localized: You constructed a {0}.
+    m_Localized: You constructed a {ProducerName}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 1012350803991
-    m_Localized: The town has been neglected for more than {0} days.
+    m_Localized: The town has been neglected for more than {_int_DayCount} days.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 1012354998272
-    m_Localized: You supplied {0} with the goods they wanted.
+    m_Localized: You supplied {TownName} with the goods they wanted.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 1012354998273
-    m_Localized: You failed to supply {0} in time.
+    m_Localized: You failed to supply {TownName} in time.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 1012354998274
     m_Localized: Completing this mission will upgrade this town to the next tier.
     m_Metadata:
       m_Items: []
   - m_Id: 1012354998275
-    m_Localized: Base production for tier {0} town.
+    m_Localized: Base production for tier {TierRoman} town.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 1012354998276
-    m_Localized: 'Dividends: {0} of {1}s funds'
+    m_Localized: 'Dividends: {Percentag} of {TownName}s funds production'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 1012354998277
     m_Localized: Village
     m_Metadata:
@@ -171,9 +174,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 363113791578112
-    m_Localized: 'Upgrade mission started: {0} wants {1}'
+    m_Localized: 'Upgrade mission started: {TownName} wants {GoodName}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 3853118801594024016
   - m_Id: 769364610473984
     m_Localized: Travel here to buy goods and construct buildings.
     m_Metadata:
@@ -199,6 +203,52 @@ MonoBehaviour:
     m_Localized: Trade Missions
     m_Metadata:
       m_Items: []
+  - m_Id: 9792743279648768
+    m_Localized: Development Trend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9792829137051648
+    m_Localized: Funds Change per day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9794157716398080
+    m_Localized: 'Development: {_float_Development:0.#}'
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024016
+  - m_Id: 9795676020891648
+    m_Localized: 'Unlocks at development of {Percentage} '
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024016
+  - m_Id: 9800870599286784
+    m_Localized: '{_int_GoodAmount} tier {TierRoman} foreign goods in storage.'
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024016
+  - m_Id: 9802808854274048
+    m_Localized: '{_int_Amount} tier {TierRoman} production buildings.'
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024016
+  - m_Id: 10103628044918784
+    m_Localized: Base degrowth for a tier {TierRoman} town
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024016
+  - m_Id: 10145543511564288
+    m_Localized: Deliver {_int_Amount}x {GoodName} before {Date}.
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024016
+  - m_Id: 10147731268919296
+    m_Localized: Trade mission failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10147803230593024
+    m_Localized: Upgrade mission failed
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -211,3 +261,20 @@ MonoBehaviour:
         - id: 9366581619449856
         - id: 1012350803970
         - id: 1012350803969
+        - id: 1012350803983
+        - id: 1012350803982
+        - id: 1012354998275
+        - id: 9794157716398080
+        - id: 9795676020891648
+        - id: 9800870599286784
+        - id: 1012354998276
+        - id: 10103628044918784
+        - id: 9802808854274048
+        - id: 1012350803978
+        - id: 1012350803981
+        - id: 363113791578112
+        - id: 1012354998272
+        - id: 1012354998273
+        - id: 10145543511564288
+        - id: 1012350803991
+        - id: 1012350803990

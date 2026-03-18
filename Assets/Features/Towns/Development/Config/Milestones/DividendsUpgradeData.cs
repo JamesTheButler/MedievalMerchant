@@ -1,5 +1,4 @@
 using System;
-using Common.Utility;
 using UnityEngine;
 
 namespace Features.Towns.Development.Config.Milestones
@@ -13,7 +12,6 @@ namespace Features.Towns.Development.Config.Milestones
         [field: SerializeField]
         public float DividendsPercentage { get; private set; }
 
-        public override string Description =>
-            $"Receive {DividendsPercentage.ToPercentString()} of the towns coin production.";
+        public override string Description => Loc.Dividends(DividendsPercentage);
     }
 }

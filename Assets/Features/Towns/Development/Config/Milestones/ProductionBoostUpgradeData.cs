@@ -1,5 +1,4 @@
 using System;
-using Common.Utility;
 using UnityEngine;
 
 namespace Features.Towns.Development.Config.Milestones
@@ -10,7 +9,6 @@ namespace Features.Towns.Development.Config.Milestones
         [field: SerializeField]
         public float ProductionBoost { get; private set; }
 
-        public override string Description =>
-            $"Boosts the towns good production by {ProductionBoost.ToPercentString()}.";
+        public override string Description => Loc.ProductionBoost(ProductionBoost);
     }
 }

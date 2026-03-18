@@ -1,3 +1,4 @@
+using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Types;
 using Common.Utility;
@@ -16,7 +17,9 @@ namespace Features.Towns.Production.Logic
 
         private static string GetDescription(Tier townTier)
         {
-            return $"Base production for Tier {townTier.ToRomanNumeral()} town.";
+            var loc = ResourceManager.Instance.LocalizationResources.Town;
+            var args = new { TierRoman = townTier.ToRomanNumeral() };
+            return loc.FundsChangeBaseRate.GetLocalizedString(args);
         }
     }
 }

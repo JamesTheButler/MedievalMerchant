@@ -1,4 +1,5 @@
 using System;
+using Common.Infrastructure;
 using UnityEngine;
 
 namespace Common.Types
@@ -73,14 +74,10 @@ namespace Common.Types
             return date + -days;
         }
 
-        public override string ToString()
-        {
-            return $"Year: {Year}, Day: {Day}";
-        }
-
         public string ToDisplayString()
         {
-            return $"Day {Day} of Year {Year}";
+            var loc = ResourceManager.Instance.LocalizationResources;
+            return loc.Date(this);
         }
     }
 }

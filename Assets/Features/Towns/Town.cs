@@ -48,7 +48,7 @@ namespace Features.Towns
 
         // TODO - Feature: each good needs an Observable<float> consumption rate once implement consumption modifiers
         public Observable<float> ConsumptionRate { get; }
-        public Observable<string> Descriptor { get; } = new("Town");
+        public Observable<string> Descriptor { get; } = new();
 
         public IReadOnlyObservable<Tier> Tier => DevelopmentManager.Tier;
 
@@ -75,6 +75,7 @@ namespace Features.Towns
             _townConfig = ConfigurationManager.Configurations.TownConfig;
             _townResources = ResourceManager.Instance.TownResources;
             _recipeResources = ResourceManager.Instance.RecipeResources;
+
             AvailableGoods = availableGoods.ToHashSet();
 
             MainRegion = regions.GetRandom();
@@ -97,7 +98,10 @@ namespace Features.Towns
 
             Inventory.AddFunds(_townConfig.GetStartFunds());
             var baseModifier = new BaseTownFundsProduction(_townConfig.FundRate[StartTier], StartTier);
-            FundsChange = new ModifiableVariable("Funds change per day", true, baseModifier);
+
+            var loc = ResourceManager.Instance.LocalizationResources.Town;
+            var modifierTitle = loc.FundsChangeModifierTitle.GetLocalizedString();
+            FundsChange = new ModifiableVariable(modifierTitle, true, baseModifier);
 
             FlagInfo = flagFactory.CreateFlagInfo(MainRegion);
         }
@@ -106,6 +110,7 @@ namespace Features.Towns
         {
             initializationData.Identity.Initialize(this);
             initializationData.Production.Initialize(this);
+
             foreach (var optional in initializationData.OptionalInitDatas)
             {
                 optional.Initialize(this);
@@ -119,10 +124,12 @@ namespace Features.Towns
 
         private void OnTierChanged(Tier tier)
         {
-            Descriptor.Value = _townResources.TownTypeNames[tier];
+            Descriptor.Value = _townResources.GetTownDescriptor(tier);
             _inventoryPolicy.AddSlots(tier, _townConfig.InventorySlotsPerTier[tier]);
             switch (tier)
             {
+                case Common.Types.Tier.Tier1:
+                    break;
                 case Common.Types.Tier.Tier2:
                     var t2Goods = new List<Good>();
                     foreach (var good in AvailableGoods)

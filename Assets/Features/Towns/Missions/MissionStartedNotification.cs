@@ -15,14 +15,17 @@ namespace Features.Towns.Missions
         private static string GetTitle(Town town, Mission mission)
         {
             var loc = ResourceManager.Instance.LocalizationResources.MissionStrings;
-            return loc.GetMissionStartedTitle(town.Name);
+            var goodName = ResourceManager.Instance.GoodResources.ResourceData[mission.Good].GoodName;
+            return mission.Type == MissionType.TradeMission
+                ? loc.GetTradeMissionStartedTitle(town.Name, goodName)
+                : loc.GetUpgradeMissionStartedTitle(town.Name, goodName);
         }
 
         private static string GetDescription(Town town, Mission mission)
         {
             var loc = ResourceManager.Instance.LocalizationResources.MissionStrings;
-            var goodConfig = ResourceManager.Instance.GoodResources.ResourceData[mission.Good];
-            return loc.GetMissionStartedDescription(town.Name, goodConfig.GoodName, mission.TotalCount);
+            var goodName = ResourceManager.Instance.GoodResources.ResourceData[mission.Good].GoodName;
+            return loc.GetMissionStartedDescription(goodName, mission.TotalCount, mission.EndDate);
         }
 
         private static Sprite GetIcon(Good missionGood)

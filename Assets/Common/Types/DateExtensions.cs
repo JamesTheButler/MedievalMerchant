@@ -1,4 +1,6 @@
-﻿namespace Common.Types
+﻿using Common.Infrastructure;
+
+namespace Common.Types
 {
     public static class DateExtensions
     {

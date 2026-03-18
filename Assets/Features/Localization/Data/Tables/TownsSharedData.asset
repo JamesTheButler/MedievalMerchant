@@ -33,59 +33,51 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803971
-    m_Key: Towns.Missions.Reward.Title
+    m_Key: Towns.Missions.Details.Reward.Title
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803972
-    m_Key: Towns.Missions.Reward.Coin
+    m_Key: Towns.Missions.Details.Reward.Coin
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803973
-    m_Key: Towns.Missions.Reward.Growth
+    m_Key: Towns.Missions.Details.Reward.Growth
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803974
-    m_Key: Towns.Missions.Reward.Reputation
+    m_Key: Towns.Missions.Details.Reward.Reputation
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803975
-    m_Key: Towns.Missions.Penalty.Title
+    m_Key: Towns.Missions.Details.Penalty.Title
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803976
-    m_Key: Towns.Missions.Penalty.Growth
+    m_Key: Towns.Missions.Details.Penalty.Growth
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803977
-    m_Key: Towns.Missions.Penalty.Reputation
+    m_Key: Towns.Missions.Details.Penalty.Reputation
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803978
-    m_Key: Towns.Missions.TradeMission.Notif.Started
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1012350803979
-    m_Key: Towns.Missions.Notifications.Started.Description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1012350803980
-    m_Key: Towns.Missions.Notif.Failed.Title
+    m_Key: Towns.Missions.Notification.Started.Title.Trade
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803981
-    m_Key: Towns.Missions.Notif.Failed.Description
+    m_Key: Towns.Missions.Notification.Failed.Description
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803982
-    m_Key: Towns.Development.BaseDegrowth
+    m_Key: Towns.Development.Modifier.BaseDegrowth
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803983
-    m_Key: Towns.TierLocked
+    m_Key: Towns.Inventory.TierLocked
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803984
-    m_Key: Towns.Producer
+    m_Key: Towns.Production.Title
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803985
@@ -105,7 +97,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803989
-    m_Key: Towns.Milestones.Dividends
+    m_Key: Towns.Milestones.Dividends.Title
     m_Metadata:
       m_Items: []
   - m_Id: 1012350803990
@@ -129,11 +121,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1012354998275
-    m_Key: Towns.Production.BaseFunds
+    m_Key: Towns.Production.BaseRate
     m_Metadata:
       m_Items: []
   - m_Id: 1012354998276
-    m_Key: Towns.Milestones.DividendsModifier
+    m_Key: Towns.Development.Modifier.Dividends
     m_Metadata:
       m_Items: []
   - m_Id: 1012354998277
@@ -153,7 +145,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1012354998281
-    m_Key: Towns.UI.Development.Title
+    m_Key: Towns.Development.Title
     m_Metadata:
       m_Items: []
   - m_Id: 1012354998282
@@ -161,11 +153,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1012354998285
-    m_Key: Towns.UI.Milestone
+    m_Key: Towns.Milestones.Title
     m_Metadata:
       m_Items: []
   - m_Id: 363113791578112
-    m_Key: Towns.Missions.UpgradeMission.Notif.Started
+    m_Key: Towns.Missions.Notification.Started.Title.Upgrade
     m_Metadata:
       m_Items: []
   - m_Id: 769364610473984
@@ -177,11 +169,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 770979639812096
-    m_Key: Towns.UI.Reputation
+    m_Key: Towns.Reputation.Title
     m_Metadata:
       m_Items: []
   - m_Id: 771024715997184
-    m_Key: Towns.UI.Funds
+    m_Key: Towns.Funds.Title
     m_Metadata:
       m_Items: []
   - m_Id: 9366581619449856
@@ -190,6 +182,46 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 9388413328285696
     m_Key: Towns.Missions.TradeMission.Title.Multiple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9792743279648768
+    m_Key: Towns.Development.Trend.Modifier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9792829137051648
+    m_Key: Towns.FundsChange.Modifier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9794157716398080
+    m_Key: Towns.Development.Slider
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9795676020891648
+    m_Key: Towns.Milestones.ThresholdMessage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9800870599286784
+    m_Key: Towns.Development.Modifier.StoredGoods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9802808854274048
+    m_Key: Towns.Development.Modifier.Producer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10103628044918784
+    m_Key: Towns.FundsChange.Modifier.Base
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10145543511564288
+    m_Key: Towns.Missions.Notification.Started.Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10147731268919296
+    m_Key: Towns.Missions.Notification.Failed.Title.Trade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10147803230593024
+    m_Key: Towns.Missions.Notification.Failed.Title.Upgrade
     m_Metadata:
       m_Items: []
   m_Metadata:

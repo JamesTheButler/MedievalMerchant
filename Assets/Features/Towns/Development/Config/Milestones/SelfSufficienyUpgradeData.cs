@@ -8,6 +8,6 @@ namespace Features.Towns.Development.Config.Milestones
     [Serializable]
     public sealed class SelfSufficienyUpgradeData : MilestoneUpgradeData
     {
-        public override string Description => "The town will no longer decline over time.";
+        public override string Description => Loc.SelfSufficiency();
     }
 }

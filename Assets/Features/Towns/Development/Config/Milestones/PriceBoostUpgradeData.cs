@@ -1,5 +1,4 @@
 using System;
-using Common.Utility;
 using UnityEngine;
 
 namespace Features.Towns.Development.Config.Milestones
@@ -10,6 +9,6 @@ namespace Features.Towns.Development.Config.Milestones
         [field: SerializeField]
         public float PriceBoostPercent { get; private set; }
 
-        public override string Description => $"Improves the towns prices by {PriceBoostPercent.ToPercentString()}.";
+        public override string Description => Loc.PriceBoost(PriceBoostPercent);
     }
 }
