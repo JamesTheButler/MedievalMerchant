@@ -65,9 +65,6 @@ namespace Common.Infrastructure
         public OnboardingResources OnboardingResources { get; private set; }
 
         [field: SerializeField, Required]
-        public ProducerResources ProducerResources { get; private set; }
-
-        [field: SerializeField, Required]
         public RecipeResources RecipeResources { get; private set; }
 
         [field: SerializeField, Required]

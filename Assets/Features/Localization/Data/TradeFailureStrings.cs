@@ -42,28 +42,28 @@ namespace Features.Localization.Data
             return insufficientTier.GetLocalizedString(dataObject);
         }
 
-        public string InsufficientGoodYou(string townName, string goodName)
+        public string InsufficientGoodYou(string goodName)
         {
-            var dataObject = new { TownName = townName, GoodName = goodName };
+            var dataObject = new { GoodName = goodName };
             return insufficientGoodYou.GetLocalizedString(dataObject);
         }
 
-        public string InsufficientGoodTown(string goodName)
+        public string InsufficientGoodTown(string townName, string goodName)
         {
-            var dataObject = new { GoodName = goodName };
+            var dataObject = new { TownName = townName, GoodName = goodName };
             return insufficientGoodTown.GetLocalizedString(dataObject);
         }
 
-        public string InsufficientAmountYou(string townName, string goodName)
-        {
-            var dataObject = new { TownName = townName, GoodName = goodName };
-         return   insufficientAmountYou.GetLocalizedString(dataObject);
-        }
-
-        public string InsufficientAmountTown(string goodName)
+        public string InsufficientAmountYou(string goodName)
         {
             var dataObject = new { GoodName = goodName };
-           return  insufficientAmountTown.GetLocalizedString(dataObject);
+            return insufficientAmountYou.GetLocalizedString(dataObject);
+        }
+
+        public string InsufficientAmountTown(string townName, string goodName)
+        {
+            var dataObject = new { TownName = townName, GoodName = goodName };
+            return insufficientAmountTown.GetLocalizedString(dataObject);
         }
     }
 }

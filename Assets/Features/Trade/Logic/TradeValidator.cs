@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Types;
 using Features.Goods.Config;
+using Features.Localization.Data;
 using Features.Player.Logic;
 using Features.Towns;
 
@@ -12,12 +13,14 @@ namespace Features.Trade.Logic
         private readonly PlayerModel _player;
         private readonly Town _town;
         private readonly GoodResources _goodResources;
+        private readonly TradeFailureStrings _loc;
 
         public TradeValidator(PlayerModel player, Town town)
         {
             _player = player;
             _town = town;
             _goodResources = ResourceManager.Instance.GoodResources;
+            _loc = ResourceManager.Instance.LocalizationResources.TradeStrings.FailureStrings;
         }
 
         public TradeResult Validate(TradeType tradeType, Good good, int amount)
@@ -26,23 +29,21 @@ namespace Features.Trade.Logic
             var goodName = _goodResources.ResourceData[good].GoodName;
 
             if (_town == null)
-                return TradeResult.Failed("Travel to and select a town to trade.");
+                return TradeResult.Failed(_loc.NoTownSelected());
 
             if (_town != _player.Location.CurrentTown.Value)
-                return TradeResult.Failed($"Travel to {townName} to trade with them.");
+                return TradeResult.Failed(_loc.WrongTownSelected(_town.Name));
 
             var buyingInventory = tradeType == TradeType.Buy ? _player.Inventory : _town.Inventory;
             var sellingInventory = tradeType == TradeType.Sell ? _player.Inventory : _town.Inventory;
 
             if (tradeType == TradeType.Sell && _town.ProductionManager.IsProduced(good))
-                return TradeResult.Failed(
-                    $"{townName} is producing {goodName} themselves. They aren't interested in buying it.");
+                return TradeResult.Failed(_loc.GoodProducedInTown(townName, goodName));
 
             var goodTier = _goodResources.ResourceData[good].Tier;
             if (tradeType == TradeType.Sell && _town.Tier.Value < goodTier)
             {
-                return TradeResult.Failed(
-                    $"{townName} cannot buy {goodName} as they are not {goodTier.ToDisplayString()} yet.");
+                return TradeResult.Failed(_loc.InsufficientTier(townName, goodName, goodTier));
             }
 
             // check if inventory policy prevents the purchase of the good
@@ -55,16 +56,16 @@ namespace Features.Trade.Logic
             if (availableAmount == 0)
             {
                 var message = tradeType == TradeType.Buy
-                    ? $"{townName} does not own any {goodName}."
-                    : $"You do not own any {goodName}.";
+                    ? _loc.InsufficientGoodTown(townName, goodName)
+                    : _loc.InsufficientGoodYou(goodName);
                 return TradeResult.Failed(message);
             }
 
             if (availableAmount < amount)
             {
                 var message = tradeType == TradeType.Buy
-                    ? $"{townName} does not own enough {goodName}."
-                    : $"You do not own enough {goodName}.";
+                    ? _loc.InsufficientAmountTown(townName, goodName)
+                    : _loc.InsufficientAmountYou(goodName);
                 return TradeResult.Failed(message);
             }
 
