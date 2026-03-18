@@ -7,9 +7,9 @@ using Common.Types;
 using Common.UI.Elements.Cells;
 using Common.Utility;
 using Features.Goods;
+using Features.Goods.Config;
 using Features.Goods.Recipe.Data;
 using Features.Player.Logic;
-using Features.Towns.Production.Config;
 using Features.Towns.Production.Logic;
 using NaughtyAttributes;
 using TMPro;
@@ -44,7 +44,7 @@ namespace Features.Towns.Production.UI
         private readonly Dictionary<Good, ProductionCell> _producerCellsPerGood = new();
 
         private RecipeResources _recipeResources;
-        private ProducerResources _producerResources;
+        private GoodResources _goodResources;
         private PlayerLocation _playerLocation;
         private GoodPool _globalGoodPool;
         private Town _town;
@@ -55,7 +55,7 @@ namespace Features.Towns.Production.UI
         public void Initialize(int producerIndex)
         {
             _recipeResources = ResourceManager.Instance.RecipeResources;
-            _producerResources = ResourceManager.Instance.ProducerResources;
+            _goodResources = ResourceManager.Instance.GoodResources;
             _playerLocation = GameplayContext.Instance.Model.Player.Location;
             _globalGoodPool = GameplayContext.Instance.Model.GoodPool;
 
@@ -248,7 +248,7 @@ namespace Features.Towns.Production.UI
             var isHighestTierProducer = !_town.ProductionManager.HasProducer(producer.Tier + 1, producerIndex);
             if (producer.Tier == Tier.Tier3 || isHighestTierProducer)
             {
-                titleText.text = _producerResources.producerNames[producer.ProducedGood];
+                titleText.text = _goodResources.ResourceData[producer.ProducedGood].BuildingName;
             }
 
             var producerCell = _producerCellsPerTier[producer.Tier];

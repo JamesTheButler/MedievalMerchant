@@ -24,7 +24,6 @@ namespace Features.Trade.Logic
         {
             var townName = _town.Name;
             var goodName = _goodResources.ResourceData[good].GoodName;
-            var muchOrMany = _goodResources.ResourceData[good].PluralWorld;
 
             if (_town == null)
                 return TradeResult.Failed("Travel to and select a town to trade.");
@@ -64,8 +63,8 @@ namespace Features.Trade.Logic
             if (availableAmount < amount)
             {
                 var message = tradeType == TradeType.Buy
-                    ? $"{townName} does not own that {muchOrMany} {goodName}."
-                    : $"You do not own that {muchOrMany} {goodName}.";
+                    ? $"{townName} does not own enough {goodName}."
+                    : $"You do not own enough {goodName}.";
                 return TradeResult.Failed(message);
             }
 

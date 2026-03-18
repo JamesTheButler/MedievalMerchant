@@ -11,7 +11,6 @@ using Features.Map.Modes;
 using Features.Player.Caravan.UI;
 using Features.Ticking.Logic;
 using Features.Towns;
-using Features.Towns.Production.Config;
 using Features.Towns.Production.UI;
 using Features.Towns.UI;
 using Features.Trade;
@@ -58,7 +57,6 @@ namespace Features.Tutorial.Onboarding.Logic
         private OnboardingResources _onboardingResources;
         private OnboardingLocalizationResources _localizationResources;
         private GoodResources _goodResources;
-        private ProducerResources _producerResources;
 
         private MapModeModel _mapModeModel;
         private GameSpeedModel _gameSpeedModel;
@@ -78,7 +76,6 @@ namespace Features.Tutorial.Onboarding.Logic
             _onboardingResources = resourceManager.OnboardingResources;
             _localizationResources = resourceManager.LocalizationResources.OnboardingResources;
             _goodResources = resourceManager.GoodResources;
-            _producerResources = resourceManager.ProducerResources;
 
             _townA = model.Towns.Values.ElementAt(0);
             _townB = model.Towns.Values.ElementAt(1);
@@ -178,7 +175,7 @@ namespace Features.Tutorial.Onboarding.Logic
 
         private OnboardingSequence BerryPickerSequence()
         {
-            var producerName = _producerResources.producerNames[Good.T1Berries];
+            var producerName = _goodResources.ResourceData[Good.T1Berries].BuildingName;
 
             var taskString = _localizationResources.BuildProducerTask(_townB.Name, producerName);
             var buildBerryPickerTask = new OnboardingTask(taskString);

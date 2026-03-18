@@ -1,5 +1,6 @@
 using Common.Infrastructure;
 using Common.Types;
+using Features.Goods.Config;
 using Features.Towns.Production.Config;
 using Features.Towns.Production.Logic;
 using Features.Towns.Reputation.Data;
@@ -11,7 +12,7 @@ namespace Features.Towns.Reputation.Logic
         private readonly ReputationModel _reputationModel;
         private readonly ProductionManager _productionManager;
         private ReputationConfig _reputationConfig;
-        private ProducerResources _producerResources;
+        private GoodResources _goodResources;
 
         public ProductionBuildingReputationSystem(Town town)
         {
@@ -22,7 +23,7 @@ namespace Features.Towns.Reputation.Logic
         public void Initialize()
         {
             _reputationConfig = ConfigurationManager.Configurations.ReputationConfig;
-            _producerResources = ResourceManager.Instance.ProducerResources;
+            _goodResources = ResourceManager.Instance.GoodResources;
             _productionManager.ProductionAdded.Observe(OnProductionBuildingBuilt);
         }
 
@@ -42,7 +43,7 @@ namespace Features.Towns.Reputation.Logic
                 Tier.Tier3 => reputationRewardData.Tier3ProductionBuilding,
                 _ => 0
             };
-            var producerName = _producerResources.producerNames[producer.ProducedGood];
+            var producerName = _goodResources.ResourceData[producer.ProducedGood];
             var message = $"You constructed a {producerName}";
             _reputationModel.UpdateReputation(repChange, message);
         }

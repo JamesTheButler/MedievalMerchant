@@ -14,10 +14,8 @@ namespace Features.Goods.Config
         private LocalizedString goodName, productionBuildingName;
 
         public string GoodName => goodName.GetLocalizedString();
+        public string BuildingName => productionBuildingName.GetLocalizedString();
         
-        [field: SerializeField]
-        public string PluralWorld { get; private set; }
-
         [field: SerializeField]
         public Tier Tier { get; private set; }
 
