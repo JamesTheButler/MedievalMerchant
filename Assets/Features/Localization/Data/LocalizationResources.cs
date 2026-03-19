@@ -16,7 +16,7 @@ namespace Features.Localization.Data
         public SerializedDictionary<Difficulty, LocalizedString> Difficulties { get; private set; }
 
         [SerializeField]
-        private LocalizedString date;
+        private LocalizedString date, perDay, cost;
 
         [field: SerializeField]
         public MissionLocalizationResources MissionStrings { get; private set; }
@@ -45,6 +45,17 @@ namespace Features.Localization.Data
             };
 
             return date.GetLocalizedString(args);
+        }
+
+        public string PerDay(string value)
+        {
+            return perDay.GetLocalizedString(value);
+        }
+
+        public string Cost(float value)
+        {
+            var args = new { _float_Cost = value };
+            return cost.GetLocalizedString(args);
         }
     }
 }

@@ -1,8 +1,10 @@
+using Common.Infrastructure;
 using Common.UI.Utility;
 using Common.Utility;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace Features.Player.Caravan.UI
@@ -18,13 +20,17 @@ namespace Features.Player.Caravan.UI
         [SerializeField, Required]
         private TMP_Text slotDiffText, speedDiffText, upkeepDiffText;
 
+        [SerializeField]
+        private LocalizedString cartLevelString;
+
         public void SetUp(Sprite icon, int level, int slotCount, float speed, float upkeep)
         {
+            var loc = ResourceManager.Instance.LocalizationResources;
             tierIcon.sprite = icon;
-            tierText.text = $"Level {level.ToRomanNumeral()}";
-            slotText.text = $"Slots: {slotCount}";
-            speedText.text = $"Speed: {speed:0.#}";
-            upkeepText.text = $"Upkeep: {upkeep.Sign()}{upkeep:0.#}/day";
+            tierText.text = cartLevelString.GetLocalizedString(level.ToRomanNumeral());
+            slotText.text = slotCount.ToString();
+            speedText.text = speed.ToString("0.#");
+            upkeepText.text = loc.PerDay(upkeep.ToString("+0.#;-0.#;0"));
 
             slotDiffText.gameObject.SetActive(false);
             speedDiffText.gameObject.SetActive(false);
@@ -33,9 +39,9 @@ namespace Features.Player.Caravan.UI
 
         public void SetDiffs(int slotDiff, float speedDiff, float upkeepDiff)
         {
-            slotDiffText.text = $"{slotDiff.Sign()}{slotDiff}".WithStyle(Style.Good);
-            speedDiffText.text = $"{speedDiff.Sign()}{speedDiff}".WithStyle(Style.Good);
-            upkeepDiffText.text = $"{upkeepDiff.Sign()}{upkeepDiff}".WithStyle(Style.Bad);
+            slotDiffText.text = $"{slotDiff:+0;-0;0}".WithStyle(Style.Good);
+            speedDiffText.text = $"{speedDiff:+0.#;-0.#;0}".WithStyle(Style.Good);
+            upkeepDiffText.text = $"{upkeepDiff:+0.#;-0.#;0}".WithStyle(Style.Bad);
 
             slotDiffText.gameObject.SetActive(true);
             speedDiffText.gameObject.SetActive(true);

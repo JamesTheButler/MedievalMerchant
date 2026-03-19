@@ -1,6 +1,7 @@
 using Common.Infrastructure;
 using Common.UI.Tooltips;
 using Features.Goods.Config;
+using Features.Localization.Data;
 using Features.Player.Caravan.Config;
 using Features.Player.Caravan.Logic;
 using NaughtyAttributes;
@@ -19,10 +20,13 @@ namespace Features.Player.Caravan.UI
 
         private CaravanConfig _caravanConfig;
         private CaravanResources _caravanResources;
+        private LocalizationResources _loc;
 
         protected override void Awake()
         {
             base.Awake();
+
+            _loc = ResourceManager.Instance.LocalizationResources;
             _caravanResources = ResourceManager.Instance.CaravanResources;
             _caravanConfig = ConfigurationManager.Configurations.CaravanConfig;
         }
@@ -41,7 +45,7 @@ namespace Features.Player.Caravan.UI
                 levelOneData.MoveSpeed,
                 levelOneData.Upkeep);
 
-            costText.text = $"Cost: {cart.UpgradeCost.Value:0.#}";
+            costText.text = _loc.Cost(cart.UpgradeCost.Value);
         }
 
         public override void Reset() { }
