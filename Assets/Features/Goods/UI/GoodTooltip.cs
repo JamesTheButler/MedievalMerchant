@@ -9,6 +9,7 @@ using Features.Trade;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace Features.Goods.UI
@@ -24,6 +25,9 @@ namespace Features.Goods.UI
         [SerializeField, Required]
         private Image goodImage, tierImage, regionImage;
 
+        [SerializeField]
+        private LocalizedString sellPriceString, buyPriceString; 
+        
         private GoodResources _goodResources;
         private GoodConfig _goodConfig;
         private TierResources _tierIcons;
@@ -55,7 +59,7 @@ namespace Features.Goods.UI
             var regionIcon = _region.Data[goodData.Regions.GetRandom()];
 
             nameText.text = goodData.GoodName;
-            priceText.text = $"{price:0.##}";
+            priceText.text = $"{price:0.00}";
 
             goodImage.sprite = goodData.Icon;
             tierImage.sprite = tierIcon;
@@ -82,23 +86,26 @@ namespace Features.Goods.UI
 
             if (buyPrice != null)
             {
-                currentPriceLabel.text = "Sells for";
+                currentPriceLabel.gameObject.SetActive(true);
+                currentPriceLabel.text = sellPriceString.GetLocalizedString();
                 buyPrice.Observe(OnTownPriceChanged);
             }
             else if (sellPrice != null)
             {
-                currentPriceLabel.text = "Buys for";
+                currentPriceLabel.gameObject.SetActive(true);
+                currentPriceLabel.text = buyPriceString.GetLocalizedString();
                 sellPrice.Observe(OnTownPriceChanged);
             }
             else
             {
+                currentPriceLabel.gameObject.SetActive(false);
                 Debug.LogError($"There is neither a buy nor sell price available in {_town.Name} for {_good}.");
             }
         }
 
         private void OnTownPriceChanged(float price)
         {
-            currentPriceText.text = $"{price:0.##}";
+            currentPriceText.text = $"{price:0.00}";
         }
 
         public override void Reset()

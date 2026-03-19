@@ -32,7 +32,7 @@ namespace Features.Goods.UI
             base.UpdateUI(data);
 
             var purchasedAverage = _tradeTracker.TrackedGoods.GetValueOrDefault(data)?.AveragePrice ?? 0f;
-            averagePurchasePriceText.text = $"{purchasedAverage:0.##}";
+            averagePurchasePriceText.text = $"{purchasedAverage:0.00}";
 
             _selection.SelectedTown.Observe(OnSelectedTownChanged);
         }
