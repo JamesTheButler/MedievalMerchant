@@ -23,6 +23,12 @@ namespace Features.Localization.Data
         public LocalizedString FundsChangeModifierTitle { get; private set; }
 
         [field: SerializeField]
+        public LocalizedString ProductionRate { get; private set; }
+
+        [field: SerializeField]
+        public LocalizedString ConsumptionRate { get; private set; }
+
+        [field: SerializeField]
         public TownMilestonesLocalizationResources Milestones { get; private set; }
 
         [SerializeField]
@@ -38,6 +44,7 @@ namespace Features.Localization.Data
 
             return storeGoodsModifier.GetLocalizedString(args);
         }
+
         public string ProducerDevelopmentModifier(int producerCount, Tier tier)
         {
             var args = new
@@ -48,6 +55,7 @@ namespace Features.Localization.Data
 
             return producerModifier.GetLocalizedString(args);
         }
+
         public string DividendsFundsModifier(float percentage, string townName)
         {
             var args = new

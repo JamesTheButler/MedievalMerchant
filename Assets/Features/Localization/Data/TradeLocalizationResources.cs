@@ -32,6 +32,9 @@ namespace Features.Localization.Data
         public LocalizedString ReputationSummary { get; private set; }
 
         [field: SerializeField]
+        public LocalizedString PricePerGood { get; private set; }
+
+        [field: SerializeField]
         public TradeFailureStrings FailureStrings { get; private set; }
     }
 }

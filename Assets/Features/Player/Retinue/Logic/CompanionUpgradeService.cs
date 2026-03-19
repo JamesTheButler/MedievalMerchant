@@ -1,6 +1,7 @@
 ﻿using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Modifiable;
+using Features.Localization.Data;
 using Features.Player.Logic;
 using Features.Player.Retinue.Config;
 using Features.Player.Retinue.Logic.Modifiers;
@@ -12,11 +13,13 @@ namespace Features.Player.Retinue.Logic
     {
         private CompanionConfig _companionConfig;
         private PlayerModel _player;
+        private LocalizationResources _loc;
 
         public void Initialize()
         {
             _companionConfig = ConfigurationManager.Configurations.CompanionConfig;
             _player = GameplayContext.Instance.Model.Player;
+            _loc = ResourceManager.Instance.LocalizationResources;
         }
 
         public void CleanUp() { }
@@ -34,10 +37,9 @@ namespace Features.Player.Retinue.Logic
                 return;
             }
 
-
             var baseCost = companionModel.ActiveMission?.Value.CoinCost.RemainingAmount.Value ?? 0f;
-            var cost = new ModifiableVariable("Upgrade Cost", false, new CompanionUpgradeBaseCostModifier(baseCost));
-
+            var cost = new ModifiableVariable(_loc.Player.UpgradeCost, false,
+                new CompanionUpgradeBaseCostModifier(baseCost));
 
             var negotiatorLevel = _player.RetinueModel.Companions[CompanionType.Negotiator].Level.Value;
             if (negotiatorLevel > 0)

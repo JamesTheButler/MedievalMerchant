@@ -6,6 +6,7 @@ using Common.Infrastructure.Modifiable;
 using Common.Types;
 using Features.Goods.Config;
 using Features.Goods.Selector;
+using Features.Localization.Data;
 using Features.Towns;
 
 namespace Features.Trade.Logic.Price
@@ -21,6 +22,7 @@ namespace Features.Trade.Logic.Price
         private readonly AvailabilityCalculator _availabilityCalculator;
         private readonly GoodResources _goodResources;
         private readonly GoodConfig _goodConfig;
+        private readonly TradeLocalizationResources _loc;
 
         private readonly Dictionary<IModifier, IGoodSelector> _modifiers = new();
 
@@ -32,6 +34,7 @@ namespace Features.Trade.Logic.Price
             _availabilityCalculator = new AvailabilityCalculator(town);
             _goodResources = ResourceManager.Instance.GoodResources;
             _goodConfig = ConfigurationManager.Configurations.GoodConfig;
+            _loc = ResourceManager.Instance.LocalizationResources.TradeStrings;
         }
 
         public ModifiableVariable GetPrice(Good good)
@@ -47,7 +50,7 @@ namespace Features.Trade.Logic.Price
             var basePriceModifier = new BasePriceModifier(goodBasePrice, goodTier);
 
             var price = new ModifiableVariable(
-                "Price per Good",
+                _loc.PricePerGood.GetLocalizedString(),
                 _tradeType == TradeType.Sell,
                 basePriceModifier);
             _cache.Add(good, price);

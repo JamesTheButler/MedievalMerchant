@@ -3,6 +3,7 @@ using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Types;
 using Features.Goods.Config;
+using Features.Localization.Data;
 using Features.Towns.Production.Config;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace Features.Towns.Production.Logic
 
         public IReadOnlyDictionary<Good, ModifiableVariable> IngredientConsumptionRates => _ingredientConsumptionRates;
 
+        private readonly LocalizationResources _loc;
         private readonly GoodResources _goodResources;
         private readonly ProducerConfig _producerConfig;
 
@@ -26,6 +28,7 @@ namespace Features.Towns.Production.Logic
         {
             ProducedGood = producedGood;
 
+            _loc = ResourceManager.Instance.LocalizationResources;
             _goodResources = ResourceManager.Instance.GoodResources;
             _producerConfig = ConfigurationManager.Configurations.ProducerConfig;
             var recipeConfig = ResourceManager.Instance.RecipeResources;
@@ -33,13 +36,13 @@ namespace Features.Towns.Production.Logic
             Tier = _goodResources.ResourceData[producedGood].Tier;
 
             var baseProductionRate = new BaseProductionValue(producedGood);
-            ProductionRate = new ModifiableVariable("Production Rate", true, baseProductionRate);
+            ProductionRate = new ModifiableVariable(_loc.Town.ProductionRate.GetLocalizedString(), true, baseProductionRate);
             var recipe = recipeConfig.GetRecipe(producedGood);
 
             var baseConsumptionRate = new BaseConsumptionValue();
             foreach (var ingredient in recipe.Components)
             {
-                var consumptionModVar = new ModifiableVariable("Consumption Rate", false, baseConsumptionRate);
+                var consumptionModVar = new ModifiableVariable(_loc.Town.ConsumptionRate.GetLocalizedString(), false, baseConsumptionRate);
                 _ingredientConsumptionRates.Add(ingredient, consumptionModVar);
             }
 

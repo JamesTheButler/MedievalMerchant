@@ -35,8 +35,7 @@ namespace Features.Towns.Development.Logic
             _goodResources = ResourceManager.Instance.GoodResources;
 
             var loc = ResourceManager.Instance.LocalizationResources.Town;
-            var modifierTitle = loc.DevTrendModifierTitle.GetLocalizedString();
-            DevelopmentTrend =  new ModifiableVariable(modifierTitle, true);
+            DevelopmentTrend =  new ModifiableVariable(loc.DevTrendModifierTitle.GetLocalizedString(), true);
             
             _town.ProductionManager.ProductionAdded.Observe(OnProducerAdded);
             _town.Inventory.GoodUpdated += OnGoodAdded;
