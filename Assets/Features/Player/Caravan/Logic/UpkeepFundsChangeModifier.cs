@@ -5,7 +5,7 @@ namespace Features.Player.Caravan.Logic
 {
     public sealed class UpkeepFundsChangeModifier : FlatModifier
     {
-        public UpkeepFundsChangeModifier(Observable<float> upkeep, string originName) :
-            base(upkeep.Invert(), $"{originName} Upkeep") { }
+        public UpkeepFundsChangeModifier(Observable<float> upkeep, string description) :
+            base(upkeep.Invert(), description) { }
     }
 }

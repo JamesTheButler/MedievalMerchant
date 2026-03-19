@@ -1,3 +1,4 @@
+using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 
 namespace Features.Player.Caravan.Logic
@@ -14,7 +15,7 @@ namespace Features.Player.Caravan.Logic
 
         private static string GetDescription(int cartLevel)
         {
-            return $"Upkeep for Cart level {cartLevel}";
+            return ResourceManager.Instance.LocalizationResources.Player.CartUpkeep(cartLevel);
         }
     }
 }

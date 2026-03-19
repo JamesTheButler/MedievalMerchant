@@ -1,7 +1,6 @@
 using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Features.Localization.Data;
-using Features.Player.Retinue.Config;
 using Features.Player.Retinue.Config.CompanionDatas;
 using Features.Player.Retinue.Config.Resources;
 
