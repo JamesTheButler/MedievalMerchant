@@ -7,10 +7,16 @@ namespace Features.Localization.Data
     [Serializable]
     public sealed class PlayerLocalizationResources
     {
-        [field: SerializeField]
-        public LocalizedString FundsChangeModifier { get; private set; }
+        [SerializeField]
+        private LocalizedString fundsChangeModifier, movementSpeed, caravanUpkeep, retinueUpkeep, upgradeCost;
 
         [field: SerializeField]
         public CompanionLocalizationResources Companions { get; private set; }
+
+        public string FundsChangeModifier => fundsChangeModifier.GetLocalizedString();
+        public string MovementSpeed => movementSpeed.GetLocalizedString();
+        public string CaravanUpkeep => caravanUpkeep.GetLocalizedString();
+        public string RetinueUpkeep => retinueUpkeep.GetLocalizedString();
+        public string UpgradeCost => upgradeCost.GetLocalizedString();
     }
 }

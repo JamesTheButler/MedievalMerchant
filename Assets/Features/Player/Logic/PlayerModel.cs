@@ -23,7 +23,7 @@ namespace Features.Player.Logic
         public PlayerModel(float startFunds)
         {
             var loc = ResourceManager.Instance.LocalizationResources.Player;
-            FundsChange = new ModifiableVariable(loc.FundsChangeModifier.GetLocalizedString(), true);
+            FundsChange = new ModifiableVariable(loc.FundsChangeModifier, true);
 
             RetinueModel = new RetinueModel();
             CaravanManager = new CaravanManager();

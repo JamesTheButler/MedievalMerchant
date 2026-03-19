@@ -13,6 +13,7 @@ using Features.Player.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace Features.Player.Caravan.UI
@@ -37,6 +38,9 @@ namespace Features.Player.Caravan.UI
         [Header("Header")]
         [SerializeField, Required]
         private TMP_Text moveSpeedText, upkeepText, waggonText;
+
+        [SerializeField]
+        private LocalizedString moveSpeedTooltipString, upkeepTooltipString, cartString;
 
         [SerializeField, Required]
         private SimpleTooltipHandler moveSpeedTooltip, upkeepTooltip;
@@ -64,7 +68,7 @@ namespace Features.Player.Caravan.UI
             _caravanResources = ResourceManager.Instance.CaravanResources;
 
             _cart = cart;
-            waggonText.text = $"Waggon {index + 1}";
+            waggonText.text = cartString.GetLocalizedString(index + 1);
 
             OnCellAdded += onCellAdded;
 
@@ -218,14 +222,14 @@ namespace Features.Player.Caravan.UI
         {
             var moveSpeed = _cart.MoveSpeed.Value.ToString("N0");
             moveSpeedText.text = moveSpeed;
-            moveSpeedTooltip.SetData($"Movement Speed: {moveSpeed}");
+            moveSpeedTooltip.SetData(moveSpeedTooltipString.GetLocalizedString(moveSpeed));
         }
 
         private void UpdateUpkeepText()
         {
             var upkeep = _cart.Upkeep.Value.ToString("N0");
             upkeepText.text = upkeep;
-            upkeepTooltip.SetData($"Upkeep: {upkeep}");
+            upkeepTooltip.SetData(upkeepTooltipString.GetLocalizedString(upkeep));
         }
 
         private void HoverTextfield(

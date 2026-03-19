@@ -33,14 +33,15 @@ namespace Features.Player.Caravan.Logic
         public CaravanManager()
         {
             _caravanConfig = ConfigurationManager.Configurations.CaravanConfig;
-            _averageSpeedModifier = new AverageBaseValueModifier("Movement Speed");
+            var loc = ResourceManager.Instance.LocalizationResources.Player;
+            _averageSpeedModifier = new AverageBaseValueModifier(loc.MovementSpeed);
             MoveSpeed = new ModifiableVariable(
-                "Movement Speed",
+                loc.MovementSpeed,
                 true,
                 _averageSpeedModifier);
 
             Upkeep = new ModifiableVariable(
-                "Caravan Upkeep",
+                loc.CaravanUpkeep,
                 false,
                 new BaseUpkeepModifier(_caravanConfig.BaseUpkeep));
 
