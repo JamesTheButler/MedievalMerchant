@@ -2,6 +2,7 @@ using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Types;
 using Features.Goods.Config;
+using Features.Localization.Data;
 
 namespace Features.Trade.Logic.Price
 {
@@ -12,6 +13,7 @@ namespace Features.Trade.Logic.Price
     {
         private readonly PriceModifierConfig _config = ConfigurationManager.Configurations.PriceModifierConfig;
         private readonly AvailabilityResources _resources = ResourceManager.Instance.AvailabilityResources;
+        private readonly TradeLocalizationResources _loc = ResourceManager.Instance.LocalizationResources.TradeStrings;
 
         public AvailabilityPriceModifier(Availability availability) : base(0, string.Empty)
         {
@@ -27,7 +29,7 @@ namespace Features.Trade.Logic.Price
         private string GetDescription(Availability availability)
         {
             var availabilityString = _resources.Resources[availability].DisplayString;
-            return $"Availability: {availabilityString}";
+            return _loc.AvailabilityLabel(availabilityString);
         }
     }
 }

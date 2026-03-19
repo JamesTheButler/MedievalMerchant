@@ -213,6 +213,43 @@ MonoBehaviour:
     m_Localized: Price per good
     m_Metadata:
       m_Items: []
+  - m_Id: 10492272505217024
+    m_Localized: 'This town is growing tired of {GoodName}.
+
+      They bought {_int_Amount}
+      {GoodName} in the last {_int_Days} days.
+
+      ({Percentage} per {_int_StepSize}
+      goods)'
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024029
+  - m_Id: 10493472256516096
+    m_Localized: Good from foreign region
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10493489272807424
+    m_Localized: Good from local region
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10493452765585408
+    m_Localized: 'There is a global surplus of {_int_Amount} {GoodName}.
+
+      ({Percentage}
+      per {_int_StepSize} goods)'
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024029
+  - m_Id: 10495380182491136
+    m_Localized: '{TownName} likes you! Your reputation: {_float_Reputation:0.0}'
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024029
+  - m_Id: 10495427385188352
+    m_Localized: '{TownName} dislikes you! Your reputation: {_float_Reputation:0.0}'
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024029
   references:
     version: 2
     RefIds:
@@ -230,3 +267,7 @@ MonoBehaviour:
         - id: 5931540234723328
         - id: 5931618450104320
         - id: 5931804257771520
+        - id: 10493452765585408
+        - id: 10492272505217024
+        - id: 10495427385188352
+        - id: 10495380182491136

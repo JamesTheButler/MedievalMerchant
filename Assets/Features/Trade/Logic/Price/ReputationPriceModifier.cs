@@ -1,5 +1,6 @@
 ﻿using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
+using Features.Localization.Data;
 using Features.Towns;
 using Features.Towns.Reputation.Data;
 
@@ -12,10 +13,12 @@ namespace Features.Trade.Logic.Price
     {
         private readonly TradeType _tradeType;
         private readonly ReputationConfig _reputationConfig;
+        private readonly TradeLocalizationResources _loc;
         private readonly string _townName;
 
         public ReputationPriceModifier(Town town, TradeType tradeType) : base(0f, string.Empty)
         {
+            _loc = ResourceManager.Instance.LocalizationResources.TradeStrings;
             _reputationConfig = ConfigurationManager.Configurations.ReputationConfig;
 
             _tradeType = tradeType;
@@ -32,8 +35,13 @@ namespace Features.Trade.Logic.Price
         private string GetDescription(float reputation)
         {
             var townLikesPlayer = reputation >= 0;
-            var likesOrDislikes = townLikesPlayer ? "likes" : "dislikes";
-            return $"{_townName} {likesOrDislikes} you! Your reputation: {reputation:0.#}";
+            var localizedString = townLikesPlayer ? _loc.ReputationLikeModifier : _loc.ReputationDislikeModifier;
+            var args = new
+            {
+                TownName = _townName,
+                _float_Reputation = reputation,
+            };
+            return localizedString.GetLocalizedString(args);
         }
 
         private float GetValue(float reputation)

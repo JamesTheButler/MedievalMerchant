@@ -8,7 +8,8 @@ namespace Features.Trade.Logic.Price
     /// </summary>
     public sealed class LocalGoodPriceModifier : BasePercentageModifier
     {
-        public LocalGoodPriceModifier() : base(0, "Good from local region.")
+        public LocalGoodPriceModifier() : base(0,
+            ResourceManager.Instance.LocalizationResources.TradeStrings.LocalGoodModifier)
         {
             Value.Value = ConfigurationManager.Configurations.GoodConfig.LocalGoodPriceModifier;
         }

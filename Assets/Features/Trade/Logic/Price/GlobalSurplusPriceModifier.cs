@@ -1,8 +1,7 @@
-using System.Text;
 using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Types;
-using Common.Utility;
+using Features.Localization.Data;
 using UnityEngine;
 
 namespace Features.Trade.Logic.Price
@@ -11,11 +10,13 @@ namespace Features.Trade.Logic.Price
     {
         private readonly string _goodName;
         private readonly GlobalSurplusModiferConfigData _config;
+        private readonly TradeLocalizationResources _loc;
 
         private int _previousStep;
 
         public GlobalSurplusPriceModifier(Good good, int value) : base(0f, string.Empty)
         {
+            _loc = ResourceManager.Instance.LocalizationResources.TradeStrings;
             _config = ConfigurationManager.Configurations.PriceModifierConfig.GlobalSurplusModiferConfig;
             var goodRes = ResourceManager.Instance.GoodResources;
             _goodName = goodRes.ResourceData[good].GoodName;
@@ -25,11 +26,11 @@ namespace Features.Trade.Logic.Price
 
         public void Update(int amount)
         {
-            var descriptionStringBuilder = new StringBuilder()
-                .AppendLine($"There is a global surplus of {amount} {_goodName}.")
-                .AppendLine($"({_config.PriceReductionPerStep.ToPercentString()} per {_config.GoodsPerStep} goods)");
-
-            Description.Value = descriptionStringBuilder.ToString();
+            Description.Value = _loc.GlobalSurplusDescription(
+                amount,
+                _goodName,
+                _config.PriceReductionPerStep,
+                _config.GoodsPerStep);
 
             // amount adjusted to start threshold
             var adjustedAmount = amount - _config.StartThreshold;

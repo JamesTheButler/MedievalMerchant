@@ -8,7 +8,7 @@ namespace Features.Levels.GameModifiers.Logic
 
         private static string GetDescription(EffectOrigin origin)
         {
-            // should come out at "Event: Heavy Rain" or "Level Modifier: Golden Times"
+            // should come out as "Event: Heavy Rain" or "Level Modifier: Golden Times"
             return $"{origin.Type}: {origin.Title}";
         }
     }

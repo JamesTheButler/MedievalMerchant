@@ -13,7 +13,8 @@ namespace Features.Localization.Data
             fundsBoost,
             productionBoost,
             priceBoost,
-            dividends;
+            dividends,
+            milestoneTitle;
 
         public string SelfSufficiency()
         {
@@ -39,5 +40,7 @@ namespace Features.Localization.Data
         {
             return dividends.GetLocalizedString(percentage.ToPercentString());
         }
+
+        public string Title => milestoneTitle.GetLocalizedString();
     }
 }
