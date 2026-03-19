@@ -20,7 +20,7 @@ namespace Features.Player.Retinue.UI
 
         private CompanionConfig _configData;
         private CompanionResources _companionResources;
-        private CompanionLocalizationResources _loc;
+        private LocalizationResources _loc;
 
         protected override void Awake()
         {
@@ -28,7 +28,7 @@ namespace Features.Player.Retinue.UI
 
             _configData = ConfigurationManager.Configurations.CompanionConfig;
             _companionResources = ResourceManager.Instance.CompanionResources;
-            _loc = ResourceManager.Instance.LocalizationResources.Player.Companions;
+            _loc = ResourceManager.Instance.LocalizationResources;
         }
 
         protected override void UpdateUI(Data data)
@@ -37,11 +37,12 @@ namespace Features.Player.Retinue.UI
             var levelData = companionData.GetLevelData(data.Level);
 
             var resource = _companionResources.Get(data.CompanionType);
-            titleText.text = _loc.CompanionDisplayString(resource.Name, data.Level);
+            titleText.text = _loc.Player.Companions.CompanionDisplayString(resource.Name, data.Level);
             descriptionText.text = resource.Description;
 
             upkeepLine.SetActive(levelData != null);
-            upkeepText.text = levelData?.Upkeep.ToString("0.#") ?? string.Empty;
+
+            upkeepText.text = levelData == null ? string.Empty : _loc.PerDay(levelData.Upkeep.ToString("0.#"));
             effectsText.text = levelData?.Description ?? string.Empty;
         }
 
