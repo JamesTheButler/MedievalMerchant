@@ -263,6 +263,15 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
+    upkeepBase:
+      m_TableReference:
+        m_TableCollectionName: GUID:ff03fea2efc05eb4b8adc11fc8973523
+      m_TableEntryReference:
+        m_KeyId: 8218389110546432
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     upgradeCost:
       m_TableReference:
         m_TableCollectionName: GUID:ff03fea2efc05eb4b8adc11fc8973523
@@ -272,11 +281,29 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
+    upgradeCostBase:
+      m_TableReference:
+        m_TableCollectionName: GUID:ff03fea2efc05eb4b8adc11fc8973523
+      m_TableEntryReference:
+        m_KeyId: 8218475655815168
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     cartUpkeep:
       m_TableReference:
         m_TableCollectionName: GUID:ff03fea2efc05eb4b8adc11fc8973523
       m_TableEntryReference:
         m_KeyId: 8204009954304000
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    average:
+      m_TableReference:
+        m_TableCollectionName: GUID:ff03fea2efc05eb4b8adc11fc8973523
+      m_TableEntryReference:
+        m_KeyId: 8220151972323328
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
@@ -391,6 +418,60 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
+    availabilityLabel:
+      m_TableReference:
+        m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
+      m_TableEntryReference:
+        m_KeyId: 13930291211
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    disinterestModifier:
+      m_TableReference:
+        m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
+      m_TableEntryReference:
+        m_KeyId: 10492272505217024
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    globalSurplusModifier:
+      m_TableReference:
+        m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
+      m_TableEntryReference:
+        m_KeyId: 10493452765585408
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    foreignGoodModifier:
+      m_TableReference:
+        m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
+      m_TableEntryReference:
+        m_KeyId: 10493472256516096
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    localGoodModifier:
+      m_TableReference:
+        m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
+      m_TableEntryReference:
+        m_KeyId: 10493489272807424
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    priceBase:
+      m_TableReference:
+        m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
+      m_TableEntryReference:
+        m_KeyId: 13930291206
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     <FailureStrings>k__BackingField:
       noTownSelected:
         m_TableReference:
@@ -464,51 +545,6 @@ MonoBehaviour:
         m_FallbackState: 0
         m_WaitForCompletion: 0
         m_LocalVariables: []
-    availabilityLabel:
-      m_TableReference:
-        m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
-      m_TableEntryReference:
-        m_KeyId: 13930291211
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-    disinterestModifier:
-      m_TableReference:
-        m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
-      m_TableEntryReference:
-        m_KeyId: 10492272505217024
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-    globalSurplusModifier:
-      m_TableReference:
-        m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
-      m_TableEntryReference:
-        m_KeyId: 10493452765585408
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-    foreignGoodModifier:
-      m_TableReference:
-        m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
-      m_TableEntryReference:
-        m_KeyId: 10493472256516096
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-    localGoodModifier:
-      m_TableReference:
-        m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
-      m_TableEntryReference:
-        m_KeyId: 10493489272807424
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
   <Town>k__BackingField:
     <DevBaseRate>k__BackingField:
       m_TableReference:
@@ -548,18 +584,27 @@ MonoBehaviour:
       m_LocalVariables: []
     <ProductionRate>k__BackingField:
       m_TableReference:
-        m_TableCollectionName: 
+        m_TableCollectionName: GUID:7f6196adc66f8b14caf6564f33feb127
       m_TableEntryReference:
-        m_KeyId: 0
+        m_KeyId: 10483233905926144
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
     <ConsumptionRate>k__BackingField:
       m_TableReference:
-        m_TableCollectionName: 
+        m_TableCollectionName: GUID:7f6196adc66f8b14caf6564f33feb127
       m_TableEntryReference:
-        m_KeyId: 0
+        m_KeyId: 10483292676513792
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    <ConsumptionRateBase>k__BackingField:
+      m_TableReference:
+        m_TableCollectionName: GUID:7f6196adc66f8b14caf6564f33feb127
+      m_TableEntryReference:
+        m_KeyId: 10502205816659968
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
@@ -642,6 +687,15 @@ MonoBehaviour:
         m_TableCollectionName: GUID:7f6196adc66f8b14caf6564f33feb127
       m_TableEntryReference:
         m_KeyId: 1012354998276
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    productionRateBase:
+      m_TableReference:
+        m_TableCollectionName: GUID:7f6196adc66f8b14caf6564f33feb127
+      m_TableEntryReference:
+        m_KeyId: 10502089361809408
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0

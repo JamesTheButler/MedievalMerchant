@@ -29,10 +29,13 @@ namespace Features.Localization.Data
         public LocalizedString ConsumptionRate { get; private set; }
 
         [field: SerializeField]
+        public LocalizedString ConsumptionRateBase { get; private set; }
+
+        [field: SerializeField]
         public TownMilestonesLocalizationResources Milestones { get; private set; }
 
         [SerializeField]
-        private LocalizedString storeGoodsModifier, producerModifier, dividendsModifier;
+        private LocalizedString storeGoodsModifier, producerModifier, dividendsModifier, productionRateBase;
 
         public string StoredGoodsDevelopmentModifier(int goodCount, Tier tier)
         {
@@ -65,6 +68,11 @@ namespace Features.Localization.Data
             };
 
             return dividendsModifier.GetLocalizedString(args);
+        }
+
+        public string ProductionRateBase(Tier tier)
+        {
+            return productionRateBase.GetLocalizedString(new { TierRoman = tier.ToRomanNumeral() });
         }
     }
 }

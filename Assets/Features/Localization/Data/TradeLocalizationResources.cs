@@ -48,7 +48,8 @@ namespace Features.Localization.Data
             disinterestModifier,
             globalSurplusModifier,
             foreignGoodModifier,
-            localGoodModifier;
+            localGoodModifier,
+            priceBase;
 
         [field: SerializeField]
         public TradeFailureStrings FailureStrings { get; private set; }
@@ -89,6 +90,15 @@ namespace Features.Localization.Data
                 _int_StepSize = stepSize
             };
             return globalSurplusModifier.GetLocalizedString(args);
+        }
+
+        public string BasePrice(Tier tier)
+        {
+            var args = new
+            {
+                TierRoman = tier.ToRomanNumeral()
+            };
+            return priceBase.GetLocalizedString(args);
         }
     }
 }

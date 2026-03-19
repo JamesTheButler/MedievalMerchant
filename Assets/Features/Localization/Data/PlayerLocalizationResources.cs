@@ -8,7 +8,15 @@ namespace Features.Localization.Data
     public sealed class PlayerLocalizationResources
     {
         [SerializeField]
-        private LocalizedString fundsChangeModifier, movementSpeed, caravanUpkeep, retinueUpkeep, upgradeCost, cartUpkeep;
+        private LocalizedString fundsChangeModifier,
+            movementSpeed,
+            caravanUpkeep,
+            retinueUpkeep,
+            upkeepBase,
+            upgradeCost,
+            upgradeCostBase,
+            cartUpkeep,
+            average;
 
         [field: SerializeField]
         public CompanionLocalizationResources Companions { get; private set; }
@@ -17,8 +25,16 @@ namespace Features.Localization.Data
         public string MovementSpeed => movementSpeed.GetLocalizedString();
         public string CaravanUpkeep => caravanUpkeep.GetLocalizedString();
         public string RetinueUpkeep => retinueUpkeep.GetLocalizedString();
+        public string UpkeepBase => upkeepBase.GetLocalizedString();
         public string UpgradeCost => upgradeCost.GetLocalizedString();
         
+        public string UpgradeCostBase(int level) => upgradeCostBase.GetLocalizedString(level);
         public string CartUpkeep(int level) => cartUpkeep.GetLocalizedString(level);
+
+        // e.g. Average movement speed
+        public string Average(string attribute)
+        {
+            return average.GetLocalizedString(attribute.ToLower());
+        }
     }
 }
