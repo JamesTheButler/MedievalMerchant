@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Linq;
-using Common.Config;
 using Common.Infrastructure;
 using Common.Types;
 using Common.Utility;
 using Features.Goods.Config;
+using Features.Localization.Data;
 
 namespace Features.Goods.Selector
 {
     public sealed class ComplexGoodSelector : IGoodSelector
     {
         private readonly Lazy<GoodResources> _goodResources = new(() => ResourceManager.Instance.GoodResources);
-        private readonly Lazy<RegionResources> _regionResources = new(() => ResourceManager.Instance.RegionResources);
+
+        private readonly Lazy<GoodLocalizationResources> _loc = new(() =>
+            ResourceManager.Instance.LocalizationResources.Goods);
 
         private readonly Tier? _selectedTier;
         private readonly Regions _selectedRegions;
@@ -26,31 +27,28 @@ namespace Features.Goods.Selector
         {
             var configData = _goodResources.Value.ResourceData[good];
             // HACK: _selectedTier is set from inspector 
-            return (_selectedTier == null || _selectedTier == 0|| _selectedTier == configData.Tier) &&
+            return (_selectedTier == null || _selectedTier == 0 || _selectedTier == configData.Tier) &&
                    _selectedRegions.Intersects(configData.Regions);
         }
 
         public string ToDisplayString()
         {
-            var tierString = _selectedTier is null or 0 ? "all" : _selectedTier.Value.ToDisplayString();
+            var anyTier = _selectedTier is null or 0;
+            var allRegions = (_selectedRegions & Regions.All) == Regions.All;
 
-            string regionsString;
-            if ((_selectedRegions & Regions.All) == Regions.All)
+            return (anyTier, allRegions) switch
             {
-                regionsString = "all regions";
-            }
-            else
-            {
-                regionsString = EnumExtensions.Enumerate<Region>()
-                    .Where(region => _selectedRegions.Contains(region))
-                    .Select(region => _regionResources.Value.Data[region].Name)
-                    .JoinWithAnd();
-            }
-
-            // e.g. "for Tier1 goods from Oceans, Fields and Mountains"
-            // e.g. "for all goods from Oceans"
-            // e.g. "for Tier2 goods from all regions"
-            return $"for {tierString} goods from {regionsString}";
+                // for all goods from all regions
+                (true, true) => _loc.Value.ComplexGoods_AnyTierAllRegions,
+                // for all goods from {region list}
+                (true, false) => _loc.Value.ComplexGoods_AnyTierSpecificRegions(_selectedRegions),
+                // for tier X goods from all regions
+                (false, true) => _loc.Value.ComplexGoods_SpecificTierAllRegions(_selectedTier!.Value),
+                // for tier X goods from {region list}
+                (false, false) => _loc.Value.ComplexGoods_SpecificTierSpecificRegions(
+                    _selectedTier!.Value,
+                    _selectedRegions),
+            };
         }
     }
 }

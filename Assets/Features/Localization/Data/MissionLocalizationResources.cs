@@ -1,5 +1,4 @@
 ﻿using System;
-using Common.Infrastructure;
 using Common.Types;
 using UnityEngine;
 using UnityEngine.Localization;

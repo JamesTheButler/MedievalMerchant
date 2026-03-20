@@ -1,5 +1,4 @@
 ﻿using System;
-using Common.Infrastructure;
 using Common.Types;
 using Common.Utility;
 using UnityEngine;
@@ -94,10 +93,7 @@ namespace Features.Localization.Data
 
         public string BasePrice(Tier tier)
         {
-            var args = new
-            {
-                TierRoman = tier.ToRomanNumeral()
-            };
+            var args = new { TierRoman = tier.ToRomanNumeral() };
             return priceBase.GetLocalizedString(args);
         }
     }

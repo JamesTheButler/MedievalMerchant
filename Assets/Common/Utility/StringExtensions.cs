@@ -10,19 +10,6 @@ namespace Common.Utility
             return str[..1].ToUpper() + str[1..];
         }
 
-        public static string JoinWithAnd(this IEnumerable<string> strings)
-        {
-            var array = strings.ToArray();
-            var count = array.Length;
-
-            return count switch
-            {
-                0 => string.Empty,
-                1 => array[0],
-                _ => string.Join(", ", array[..^1]) + " and " + array[^1]
-            };
-        }
-
         public static string TrimStart(this string str, string trim)
         {
             if (string.IsNullOrEmpty(str) || !str.StartsWith(trim))

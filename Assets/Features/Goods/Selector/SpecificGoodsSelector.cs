@@ -1,29 +1,31 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Common.Infrastructure;
 using Common.Types;
-using Common.Utility;
+using Features.Localization.Data;
 
 namespace Features.Goods.Selector
 {
     public sealed class SpecificGoodsSelector : IGoodSelector
     {
-        private readonly Good[] _good;
+        private readonly Lazy<GoodLocalizationResources> _loc = new(() =>
+            ResourceManager.Instance.LocalizationResources.Goods);
 
-        public SpecificGoodsSelector(Good[] good)
+        private readonly Good[] _goods;
+
+        public SpecificGoodsSelector(Good[] goods)
         {
-            _good = good;
+            _goods = goods;
         }
 
         public bool Matches(Good good)
         {
-            return _good.Contains(good);
+            return _goods.Contains(good);
         }
 
         public string ToDisplayString()
         {
-            var goodResources = ResourceManager.Instance.GoodResources;
-            var names = _good.Select(good => goodResources.ResourceData[good].GoodName);
-            return $"for {names.JoinWithAnd()}"; // e.g. "for Berries, Logs, Flax and Wheat"
+            return _loc.Value.SpecificGoods(_goods);
         }
     }
 }
