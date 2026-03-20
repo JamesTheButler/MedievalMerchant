@@ -4,9 +4,11 @@ using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Elements.Cells;
 using Common.UI.Tooltips;
+using Common.Utility;
 using Features.Goods.Config;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace Features.Towns.UI
@@ -25,6 +27,9 @@ namespace Features.Towns.UI
         [SerializeField]
         private Tier tier;
 
+        [SerializeField]
+        private LocalizedString lockedString;
+
         private GoodResources _goodResources;
 
         private readonly Dictionary<Good, InventoryCell> _occupiedCells = new();
@@ -34,9 +39,9 @@ namespace Features.Towns.UI
         {
             _goodResources = ResourceManager.Instance.GoodResources;
             tierIcon.sprite = ResourceManager.Instance.TierResources.Icons[tier];
-            
+
             GatherCells();
-            lockedTooltip.SetData($"Unlocked when town reaches {tier.ToDisplayString()}.");
+            lockedTooltip.SetData(lockedString.GetLocalizedString(new { TierRoman = tier.ToRomanNumeral() }));
         }
 
         public void UpdateGood(Good good, int amount)

@@ -3,13 +3,14 @@ using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Tooltips;
 using Common.UI.Utility;
-using Common.Utility;
+using Features.Localization.Data;
 using Features.Towns.Development.Config;
 using Features.Towns.Development.Logic;
 using Features.Towns.Development.UI.DevelopmentGauge;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace Features.Towns.UI
@@ -31,14 +32,19 @@ namespace Features.Towns.UI
         [SerializeField, Required]
         private ModifiableTooltipHandler developmentTrendTooltip;
 
+        [SerializeField]
+        private LocalizedString developmentString;
+
         private TownDevelopmentConfig _townDevelopmentConfig;
 
         private Town _town;
         private DevelopmentManager _developmentManager;
+        private LocalizationResources _loc;
 
         public override void Initialize()
         {
             _townDevelopmentConfig = ConfigurationManager.Configurations.TownDevelopmentConfig;
+            _loc = ResourceManager.Instance.LocalizationResources;
         }
 
         public override void Bind(Town town)
@@ -88,13 +94,15 @@ namespace Features.Towns.UI
         private void UpdateDevelopmentScore(float score)
         {
             developmentSlider.SetDevelopment(score);
-            developmentTooltip.SetData($"Development: {score:0.#}");
+            var args = new { _float_Development = score };
+            developmentTooltip.SetData(developmentString.GetLocalizedString(args));
         }
 
         private void UpdateDevelopmentTrend(float trend)
         {
             var style = trend.GetNumberStyle();
-            developmentTrendText.text = $"{trend.Sign()}{trend:0.##}/day".WithStyle(style);
+            var trendString = $"{trend:+0.0#;-0.0#;0}";
+            developmentTrendText.text = _loc.PerDay(trendString).WithStyle(style);
 
             UpdateGrowthModifierTooltip();
         }
