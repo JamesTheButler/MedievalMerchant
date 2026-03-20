@@ -25,6 +25,9 @@ namespace Features.Localization.Data
         public MissionLocalizationResources MissionStrings { get; private set; }
 
         [field: SerializeField]
+        public ModifierLocalizationResources Modifiers { get; private set; }
+
+        [field: SerializeField]
         public NotificationLocalizationResources NotificationResources { get; private set; }
 
         [field: SerializeField]

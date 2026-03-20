@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: adad512837bf8774ab6812d9fd0f6086, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 7663118221313572956
   m_TableData:
   - m_Id: 1036262531072
     m_Localized: Back to Basics
@@ -134,9 +135,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1036279308310
-    m_Localized: Non-Ocean towns only request Ocean goods in their missions.
+    m_Localized: Non-{RegionName} towns only request {RegionName} goods in their
+      missions.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7663118221313572956
   - m_Id: 1036279308311
     m_Localized: Times of Mistrust
     m_Metadata:
@@ -148,33 +151,40 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1036279308313
-    m_Localized: '{0} development change rate'
+    m_Localized: '{Percentage} development change rate'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7663118221313572956
   - m_Id: 1036279308314
-    m_Localized: '{0} caravan movement speed'
+    m_Localized: '{Percentage} caravan movement speed'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7663118221313572956
   - m_Id: 1036279308315
-    m_Localized: '{0} to prices {1}'
+    m_Localized: '{Percentage} to prices {GoodSelector}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7663118221313572956
   - m_Id: 1036279308316
-    m_Localized: '{0} to purchase prices {1}'
+    m_Localized: '{Percentage} to purchase prices {GoodSelector}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7663118221313572956
   - m_Id: 1036279308317
-    m_Localized: '{0} to sale prices {1}'
+    m_Localized: '{Percentage} to sale prices {GoodSelector}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7663118221313572956
   - m_Id: 1036279308318
-    m_Localized: '{0} production speed {1}'
+    m_Localized: '{Percentage} production speed {GoodSelector}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7663118221313572956
   - m_Id: 1036279308319
-    m_Localized: '{0} for all reputation changes'
+    m_Localized: '{Percentage} for all reputation changes'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7663118221313572956
   - m_Id: 1036279308320
     m_Localized: Your allies will start the game with a high reputation of you.
     m_Metadata:
@@ -209,4 +219,17 @@ MonoBehaviour:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7663118221313572956
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 1036279308313
+        - id: 1036279308314
+        - id: 1036279308315
+        - id: 1036279308316
+        - id: 1036279308317
+        - id: 1036279308318
+        - id: 1036279308319
+        - id: 1036279308310

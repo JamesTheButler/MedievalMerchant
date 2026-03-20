@@ -1,6 +1,5 @@
 ﻿using System;
 using Common.UI.Utility;
-using Common.Utility;
 using UnityEngine;
 
 namespace Features.Levels.GameModifiers.Effects.Data
@@ -17,9 +16,8 @@ namespace Features.Levels.GameModifiers.Effects.Data
         {
             get
             {
-                var valueString = DevelopmentBoostPercent.ToPercentString(true);
                 var style = DevelopmentBoostPercent.GetNumberStyle();
-                return $"{valueString} development change rate".WithStyle(style);
+                return Loc.DevelopmentEffect(DevelopmentBoostPercent).WithStyle(style);
             }
         }
     }

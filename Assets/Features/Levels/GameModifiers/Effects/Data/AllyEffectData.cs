@@ -15,7 +15,7 @@ namespace Features.Levels.GameModifiers.Effects.Data
 
         public Region? AllyRegion { get; private set; }
 
-        public override string Description => "Your allies will start the game with a high reputation of you.";
+        public override string Description => Loc.AllyEffectDescription;
 
         public void SetRegion(Region region)
         {

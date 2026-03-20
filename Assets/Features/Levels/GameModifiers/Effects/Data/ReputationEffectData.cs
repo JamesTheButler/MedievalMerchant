@@ -1,6 +1,5 @@
 ﻿using System;
 using Common.UI.Utility;
-using Common.Utility;
 using UnityEngine;
 
 namespace Features.Levels.GameModifiers.Effects.Data
@@ -17,9 +16,8 @@ namespace Features.Levels.GameModifiers.Effects.Data
         {
             get
             {
-                var valueString = ReputationBoostPercent.ToPercentString(true);
                 var style = ReputationBoostPercent.GetNumberStyle();
-                return $"{valueString} for all reputation changes".WithStyle(style);
+                return Loc.ReputationEffect(ReputationBoostPercent).WithStyle(style);
             }
         }
     }

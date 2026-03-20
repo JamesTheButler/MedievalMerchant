@@ -1,6 +1,5 @@
 ﻿using System;
 using Common.UI.Utility;
-using Common.Utility;
 using UnityEngine;
 
 namespace Features.Levels.GameModifiers.Effects.Data
@@ -15,9 +14,8 @@ namespace Features.Levels.GameModifiers.Effects.Data
         {
             get
             {
-                var valueString = SpeedBoostPercent.ToPercentString(true);
-                var style = SpeedBoostPercent > 0 ? Style.Good : Style.Bad;
-                return $"{valueString} caravan movement speed".WithStyle(style);
+                var style = SpeedBoostPercent.GetNumberStyle();
+                return Loc.MovementSpeedEffect(SpeedBoostPercent).WithStyle(style);
             }
         }
     }

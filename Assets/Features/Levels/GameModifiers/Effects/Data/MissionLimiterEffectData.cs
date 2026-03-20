@@ -18,12 +18,10 @@ namespace Features.Levels.GameModifiers.Effects.Data
 
         public override string Description
         {
-
             get
             {
-                var missionResources = ResourceManager.Instance.RegionResources;
-                var missionName = missionResources.Data[MissionRegion].Name;
-                return $"Non-{missionName} towns will only request goods from {missionName} towns.";
+                var regionName = ResourceManager.Instance.RegionResources.Data[MissionRegion].Name;
+                return Loc.MissionLimiterEffect(regionName);
             }
         }
     }

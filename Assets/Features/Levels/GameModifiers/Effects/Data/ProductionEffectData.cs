@@ -1,6 +1,5 @@
 ﻿using System;
 using Common.UI.Utility;
-using Common.Utility;
 using Features.Goods.Selector;
 using UnityEngine;
 
@@ -21,10 +20,9 @@ namespace Features.Levels.GameModifiers.Effects.Data
         {
             get
             {
-                var valueString = ProductionBoostPercent.ToPercentString(true);
                 var selectorString = Selector.Selector.ToDisplayString();
                 var style = ProductionBoostPercent > 0 ? Style.Good : Style.Bad;
-                return $"{valueString} production speed {selectorString}".WithStyle(style);
+                return Loc.ProductionEffect(ProductionBoostPercent, selectorString).WithStyle(style);
             }
         }
     }

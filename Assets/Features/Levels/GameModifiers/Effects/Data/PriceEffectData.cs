@@ -25,17 +25,16 @@ namespace Features.Levels.GameModifiers.Effects.Data
         {
             get
             {
-                var valueString = PriceBoostPercent.ToPercentString(true);
-                var tradeTypeString = TradeTypes switch
-                {
-                    TradeTypes.All => "",
-                    TradeTypes.Buy => "purchase ",
-                    TradeTypes.Sell => "sale ",
-                    _ => ""
-                };
                 var selectorString = GoodSelector.Selector.ToDisplayString();
-                var style = PriceBoostPercent > 0 ? Style.Good : Style.Bad;
-                return $"{valueString} to {tradeTypeString}prices {selectorString}".WithStyle(style);
+                var style = PriceBoostPercent.GetNumberStyle();
+
+                var tradeString = TradeTypes switch
+                {
+                    TradeTypes.Buy => Loc.BuyPriceEffect(PriceBoostPercent, selectorString),
+                    TradeTypes.Sell => Loc.SellPriceEffect(PriceBoostPercent, selectorString),
+                    _ => Loc.PriceEffect(PriceBoostPercent, selectorString),
+                };
+                return tradeString.WithStyle(style);
             }
         }
     }
