@@ -15,4 +15,4 @@ The keys are organized roughly along the different sections of the UI.
 - Testing Towns.Milestones.*: select town, open console [F9] and type `town.upgrade`. This will upgrade the town by one tier, showing you new milestones. You can do this for tier 1, 2 and 3 of a town.
 - Testing Towns.Missions.*: 
     - Trade missions cannot be cheated but should popup regularly. All trade missions have the same strings.
-    - Upgrade missions can be cheated: select town, open console [F9] and type `town.grow`. This will grow the town to development 100, triggering an upgrade mission
+    - Upgrade missions can be cheated: select town, open console [F9] and type `town.grow`. This will grow the town to development 100, triggering an upgrade mission.
