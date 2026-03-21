@@ -20,12 +20,14 @@ MonoBehaviour:
     - rid: 3853118801594024029
   m_TableData:
   - m_Id: 13917708288
-    m_Localized: You will be making a profit of {_int_Amount} coin with this trade.
+    m_Localized: You will be making a profit of {_int_Amount:0.##} coin with this
+      trade.
     m_Metadata:
       m_Items:
       - rid: 3853118801594024029
   - m_Id: 13930291200
-    m_Localized: You will be making a loss  of {_int_Amount} coin with this trade.
+    m_Localized: You will be making a loss  of {_int_Amount:0.##} coin with this
+      trade.
     m_Metadata:
       m_Items:
       - rid: 3853118801594024029
@@ -210,6 +212,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 3853118801594024029
+  - m_Id: 11182149794226176
+    m_Localized: '{Percentage} coin'
+    m_Metadata:
+      m_Items:
+      - rid: 3853118801594024029
+  - m_Id: 11231630933843968
+    m_Localized: '{0} rep'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -231,3 +242,4 @@ MonoBehaviour:
         - id: 10492272505217024
         - id: 10495427385188352
         - id: 10495380182491136
+        - id: 11182149794226176

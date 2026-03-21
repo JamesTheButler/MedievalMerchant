@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Common.Utility
 {
     public static class StringExtensions

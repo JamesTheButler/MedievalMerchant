@@ -48,7 +48,9 @@ namespace Features.Localization.Data
             globalSurplusModifier,
             foreignGoodModifier,
             localGoodModifier,
-            priceBase;
+            priceBase,
+            haggleCoinEffect,
+            haggleRepEffect;
 
         [field: SerializeField]
         public TradeFailureStrings FailureStrings { get; private set; }
@@ -95,6 +97,17 @@ namespace Features.Localization.Data
         {
             var args = new { TierRoman = tier.ToRomanNumeral() };
             return priceBase.GetLocalizedString(args);
+        }
+
+        public string HaggleCoinEffect(float percentage)
+        {
+            var args = new { Percentage = percentage.ToPercentString(true) };
+            return haggleCoinEffect.GetLocalizedString(args);
+        }
+
+        public string HaggleRepEffect(float reputation)
+        {
+            return haggleRepEffect.GetLocalizedString($"{reputation:+0.#;-0.#;0}");
         }
     }
 }

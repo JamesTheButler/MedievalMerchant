@@ -77,6 +77,7 @@ namespace Features.Goods.UI
             _town = newTown;
             if (newTown == null)
             {
+                currentPriceLabel.gameObject.SetActive(false);
                 currentPriceText.text = "-";
                 return;
             }

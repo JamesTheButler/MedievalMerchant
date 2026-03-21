@@ -1,7 +1,6 @@
 using System;
 using Common.Types;
 using Common.Utility;
-using Features.Localization.UI;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -41,7 +40,7 @@ namespace Features.Localization.Data
         {
             var args = new
             {
-                _int_GoodCount = goodCount,
+                _int_Amount = goodCount,
                 TierRoman = tier
             };
 

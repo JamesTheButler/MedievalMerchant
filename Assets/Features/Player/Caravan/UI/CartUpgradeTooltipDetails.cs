@@ -29,8 +29,8 @@ namespace Features.Player.Caravan.UI
             tierIcon.sprite = icon;
             tierText.text = cartLevelString.GetLocalizedString(level.ToRomanNumeral());
             slotText.text = slotCount.ToString();
-            speedText.text = speed.ToString("0.#");
-            upkeepText.text = loc.PerDay(upkeep.ToString("+0.#;-0.#;0"));
+            speedText.text = $"{speed:0.#}";
+            upkeepText.text = loc.PerDay($"{upkeep:+0.#;-0.#;0}");
 
             slotDiffText.gameObject.SetActive(false);
             speedDiffText.gameObject.SetActive(false);

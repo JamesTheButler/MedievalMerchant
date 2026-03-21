@@ -1,7 +1,6 @@
 using System;
 using Common.Infrastructure;
 using Common.UI.Utility;
-using Common.Utility;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -40,8 +39,9 @@ namespace Features.Trade.Haggling.UI
                 _ => Style.Default
             };
 
-            coinText.text = $"{displayPriceChange.ToPercentString(true)} coin".WithStyle(priceChangeStyle);
-            reputationText.text = $"{reputation.Sign(false)}{reputation}".WithStyle(reputation.GetNumberStyle());
+            var loc = ResourceManager.Instance.LocalizationResources.TradeStrings;
+            coinText.text = loc.HaggleCoinEffect(displayPriceChange).WithStyle(priceChangeStyle);
+            reputationText.text = loc.HaggleRepEffect(reputation).WithStyle(reputation.GetNumberStyle());
         }
 
         public void Toggle(bool isToggled)
