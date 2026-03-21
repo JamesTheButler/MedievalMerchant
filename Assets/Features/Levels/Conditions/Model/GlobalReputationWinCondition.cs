@@ -1,11 +1,14 @@
+using Common.Infrastructure;
 using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.Logic;
+using Features.Localization.Data;
 
 namespace Features.Levels.Conditions.Model
 {
     public sealed class GlobalReputationWinCondition : IWinCondition
     {
         private readonly GlobalReputationWinConditionData _data;
+        private readonly ConditionsLocalizationResources _loc;
 
         public Progress Progress { get; }
 
@@ -15,13 +18,14 @@ namespace Features.Levels.Conditions.Model
 
         public GlobalReputationWinCondition(GlobalReputationWinConditionData data)
         {
+            _loc = ResourceManager.Instance.LocalizationResources.Conditions;
             _data = data;
             Progress = new Progress(GlobalAverageReputationTarget, FormatProgress);
         }
 
-        private static string FormatProgress(int currentValue, int maxValue)
+        private string FormatProgress(int currentValue, int maxValue)
         {
-            return $"{currentValue}/{maxValue} global reputation";
+            return _loc.GlobalRepProgress(currentValue, maxValue);
         }
     }
 }

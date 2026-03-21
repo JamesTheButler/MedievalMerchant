@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 97e00ec0c5f6dcc4f8742ddc1553364e, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 7663118221313572960
   m_TableData:
   - m_Id: 858432430080
     m_Localized: You lose if you run out of coin
@@ -91,6 +92,35 @@ MonoBehaviour:
     m_Localized: Level Modifier & Events
     m_Metadata:
       m_Items: []
+  - m_Id: 11178560887676928
+    m_Localized: '{_int_Current}/{_int_Max} coin'
+    m_Metadata:
+      m_Items:
+      - rid: 7663118221313572960
+  - m_Id: 11179208861507584
+    m_Localized: '{_int_Current}/{_int_Max} global reputation'
+    m_Metadata:
+      m_Items:
+      - rid: 7663118221313572960
+  - m_Id: 11179471370412032
+    m_Localized: '{_int_Current}/{_int_Max} towns'
+    m_Metadata:
+      m_Items:
+      - rid: 7663118221313572960
+  - m_Id: 11179585279320064
+    m_Localized: '{_int_Current}/{_int_Max} tier {TierRoman} towns'
+    m_Metadata:
+      m_Items:
+      - rid: 7663118221313572960
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7663118221313572960
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 11178560887676928
+        - id: 11179208861507584
+        - id: 11179471370412032
+        - id: 11179585279320064

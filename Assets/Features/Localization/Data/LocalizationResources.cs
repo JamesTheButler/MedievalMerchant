@@ -19,6 +19,9 @@ namespace Features.Localization.Data
         private LocalizedString date, perDay, cost, and;
 
         [field: SerializeField]
+        public ConditionsLocalizationResources Conditions { get; private set; }
+
+        [field: SerializeField]
         public GoodLocalizationResources Goods { get; private set; }
 
         [field: SerializeField]

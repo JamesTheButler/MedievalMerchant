@@ -1,17 +1,19 @@
-using Common.Infrastructure.Observation;
+using Common.Infrastructure;
 using Common.Types;
 using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.Logic;
+using Features.Localization.Data;
 
 namespace Features.Levels.Conditions.Model
 {
     public sealed class TimeoutLossCondition : ILossCondition
     {
         private readonly TimeoutLossConditionData _data;
+        private readonly ConditionsLocalizationResources _loc;
 
         public Progress Progress { get; }
         public Date DeadlineDate { get; }
-        public Observable<bool> IsClose { get; } = new();
+        public Common.Infrastructure.Observation.Observable<bool> IsClose { get; } = new();
 
         public int WarningThresholdDaysLeft { get; }
 
@@ -22,6 +24,7 @@ namespace Features.Levels.Conditions.Model
 
         public TimeoutLossCondition(TimeoutLossConditionData data)
         {
+            _loc = ResourceManager.Instance.LocalizationResources.Conditions;
             _data = data;
             DeadlineDate = new Date(1, data.DeadlineYear);
             WarningThresholdDaysLeft = data.DaysLeftWarning;
@@ -29,10 +32,9 @@ namespace Features.Levels.Conditions.Model
             Progress = new Progress(DeadlineDate.AsDays(), FormatProgress);
         }
 
-        private static string FormatProgress(int currentValue, int maxValue)
+        private string FormatProgress(int currentValue, int maxValue)
         {
-            var daysLeft = maxValue - currentValue;
-            return $"{daysLeft} days left";
+            return _loc.TimeoutProgress(maxValue - currentValue);
         }
     }
 }

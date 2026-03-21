@@ -1,7 +1,9 @@
+using Common.Infrastructure;
 using Common.Types;
 using Common.Utility;
 using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.Logic;
+using Features.Localization.Data;
 
 namespace Features.Levels.Conditions.Model
 {
@@ -14,10 +16,12 @@ namespace Features.Levels.Conditions.Model
         public ConditionType Type => _data.Type;
         public string Description => _data.Description;
 
+        private readonly ConditionsLocalizationResources _loc;
         private readonly TownTierWinConditionData _data;
 
         public TownTierWinCondition(TownTierWinConditionData data)
         {
+            _loc = ResourceManager.Instance.LocalizationResources.Conditions;
             _data = data;
 
             Progress = new Progress(TargetCount, FormatProgress);
@@ -25,7 +29,7 @@ namespace Features.Levels.Conditions.Model
 
         private string FormatProgress(int currentValue, int maxValue)
         {
-            return $"{currentValue}/{maxValue} Tier {TargetTier.ToRomanNumeral()} towns";
+            return _loc.TownTierProgress(currentValue, maxValue, TargetTier);
         }
     }
 }
