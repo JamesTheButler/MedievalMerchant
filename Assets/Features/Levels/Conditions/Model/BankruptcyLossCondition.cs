@@ -16,7 +16,6 @@ namespace Features.Levels.Conditions.Model
         public int DaysLeftThreshold { get; }
 
         public string WarningMessage => _data.WarningMessage;
-
         public string GameOverMessage => _data.GameOverMessage;
 
         public int BankruptcyFundsThreshold => _data.BankruptcyFundsThreshold;

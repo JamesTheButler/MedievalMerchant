@@ -7,6 +7,7 @@ using Features.Levels.GameModifiers.Effects.Data;
 using Features.Levels.GameModifiers.Effects.Logic;
 using Features.Levels.GameModifiers.Events;
 using Features.Levels.GameModifiers.Events.Data;
+using Features.Localization.Data;
 using UnityEngine;
 
 namespace Features.Levels.GameModifiers.Logic
@@ -15,6 +16,7 @@ namespace Features.Levels.GameModifiers.Logic
     {
         private EventModel _eventModel;
         private DateModel _gameDateModel;
+        private ModifierLocalizationResources _loc;
 
         private readonly Dictionary<(GameModifierData, EffectData), IEffectLogic> _logics = new();
         private readonly Dictionary<GameModifierData, GameEvent> _eventDatasToEvents = new();
@@ -23,6 +25,7 @@ namespace Features.Levels.GameModifiers.Logic
         {
             _eventModel = GameplayContext.Instance.Model.Events;
             _gameDateModel = GameplayContext.Instance.Model.DateModel;
+            _loc = ResourceManager.Instance.LocalizationResources.Modifiers;
         }
 
         public void CleanUp() { }
@@ -31,9 +34,9 @@ namespace Features.Levels.GameModifiers.Logic
         {
             var origin = modifierData switch
             {
-                EventGameModifierData eventData => new EffectOrigin("Event", eventData.Title),
-                LevelGameModifierData conditionData => new EffectOrigin("Level Condition", conditionData.Title),
-                _ => new EffectOrigin(modifierData.GetType().Name, "Unknown")
+                EventGameModifierData eventData => new EffectOrigin(_loc.EventModifier, eventData.Title),
+                LevelGameModifierData conditionData => new EffectOrigin(_loc.LevelConditionModifier, conditionData.Title),
+                _ => new EffectOrigin(modifierData.GetType().Name, string.Empty)
             };
 
             if (modifierData is EventGameModifierData eventModifierData)

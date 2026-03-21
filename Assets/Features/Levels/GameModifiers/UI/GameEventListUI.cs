@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Common.Infrastructure.Gameplay;
 using Common.Utility;
 using Features.Levels.GameModifiers.Events;
+using Features.Localization.UI;
 using NaughtyAttributes;
-using TMPro;
 using UnityEngine;
 
 namespace Features.Levels.GameModifiers.UI
@@ -15,7 +15,7 @@ namespace Features.Levels.GameModifiers.UI
         private GameObject eventContainer;
 
         [SerializeField, Required]
-        private TMP_Text label;
+        private LocalizedText header;
 
         [SerializeField, Required]
         private GameObject eventItemPrefab;
@@ -51,7 +51,7 @@ namespace Features.Levels.GameModifiers.UI
 
             _uiElements.Clear();
             _handlers.Clear();
-    
+
             if (_gameEventModel != null)
             {
                 _gameEventModel.EventAdded -= OnEventAdded;
@@ -95,7 +95,7 @@ namespace Features.Levels.GameModifiers.UI
 
         private void UpdateHeader()
         {
-            label.text = $"Ongoing Events ({_gameEventModel.OngoingEvents.Count})";
+            header.SetArgs(_gameEventModel.OngoingEvents.Count);
         }
     }
 }

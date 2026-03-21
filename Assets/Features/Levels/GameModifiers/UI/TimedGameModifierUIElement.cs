@@ -1,5 +1,5 @@
-﻿using NaughtyAttributes;
-using TMPro;
+﻿using Features.Localization.UI;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Levels.GameModifiers.UI
@@ -7,11 +7,11 @@ namespace Features.Levels.GameModifiers.UI
     public sealed class TimedGameModifierUIElement : GameModifierUIElement
     {
         [SerializeField, Required]
-        private TMP_Text timeText;
+        private LocalizedText timeText;
 
         public void SetTimeLeft(int timeLeft)
         {
-            timeText.text = $"{timeLeft} days left";
+            timeText.SetArgs(timeLeft);
         }
     }
 }

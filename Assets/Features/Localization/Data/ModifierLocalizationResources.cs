@@ -19,11 +19,15 @@ namespace Features.Localization.Data
             buyPriceEffect,
             sellPriceEffect,
             productionEffect,
-            reputationEffect;
+            reputationEffect,
+            eventModifier,
+            levelConditionModifier;
 
         public string AllyEffectDescription => allyEffect.GetLocalizedString();
         public string AllyEffect => allyEffect.GetLocalizedString();
         public string FoeEffect => allyEffect.GetLocalizedString();
+        public string EventModifier => eventModifier.GetLocalizedString();
+        public string LevelConditionModifier => levelConditionModifier.GetLocalizedString();
 
         public string DevelopmentEffect(float value)
         {
