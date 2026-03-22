@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Types;
+using Common.Utility;
 using Features.Goods.Config;
 using Features.Trade;
 
@@ -38,7 +39,7 @@ namespace Features.Inventory
 
             return canFitGood
                 ? TradeResult.Succeeded()
-                : TradeResult.Failed($"There are no more empty slots for {goodTier.ToDisplayString()}");
+                : TradeResult.Failed($"There are no more empty slots for tier {goodTier.ToRomanNumeral()}");
         }
     }
 }
