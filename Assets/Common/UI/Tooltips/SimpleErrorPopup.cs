@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Common.UI.Elements
+namespace Common.UI.Tooltips
 {
     public sealed class SimpleErrorPopup : MonoBehaviour
     {

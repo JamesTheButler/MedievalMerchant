@@ -2,6 +2,7 @@ using Common.Infrastructure.Gameplay;
 using Common.Types;
 using Common.UI.Elements;
 using Common.UI.Elements.Cells;
+using Common.UI.Tooltips;
 using Features.Player.Logic;
 using Features.Towns;
 using Features.Trade.Logic;
