@@ -1,3 +1,4 @@
+using System.Collections;
 using Common.UI.Elements.Panels;
 using NaughtyAttributes;
 using UnityEngine;
@@ -19,23 +20,38 @@ namespace Features.Localization.UI
         [SerializeField, Required]
         private Locale englishLocale, frenchLocale;
 
+        private bool _isChangingLocale;
+
         private void Awake()
         {
-            englishToggle.onValueChanged.AddListener(_ => SetLocale(englishLocale));
-            frenchToggle.onValueChanged.AddListener(_ => SetLocale(frenchLocale));
+            englishToggle.onValueChanged.AddListener(isOn => { if (isOn) SetLocale(englishLocale); });
+            frenchToggle.onValueChanged.AddListener(isOn => { if (isOn) SetLocale(frenchLocale); });
         }
 
         private void SetLocale(Locale locale)
         {
+            if (_isChangingLocale)
+                return;
+
             if (LocalizationSettings.SelectedLocale == locale)
                 return;
 
+            _isChangingLocale = true;
+            StartCoroutine(ChangeLocaleAndReload(locale));
+        }
+
+        private IEnumerator ChangeLocaleAndReload(Locale locale)
+        {
+            yield return LocalizationSettings.InitializationOperation;
             LocalizationSettings.SelectedLocale = locale;
+            yield return LocalizationSettings.SelectedLocaleAsync;
             SceneManager.LoadScene(startScene);
         }
 
         protected override void OnOpen()
         {
+            _isChangingLocale = false;
+
             var locale = LocalizationSettings.SelectedLocale;
 
             if (locale == frenchLocale)

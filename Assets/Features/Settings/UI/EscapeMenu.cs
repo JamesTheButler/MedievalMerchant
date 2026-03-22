@@ -2,7 +2,6 @@ using Common.Infrastructure.Global;
 using Common.UI.Elements.Panels;
 using Features.Feedback.Logic;
 using NaughtyAttributes;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
