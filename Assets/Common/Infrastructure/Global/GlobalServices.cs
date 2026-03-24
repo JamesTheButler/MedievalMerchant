@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Features.Audio.Music;
 using Features.Audio.Sfx;
 using Features.Feedback.Logic;
+using Features.Localization.Logic;
 using Features.Tutorial.Logic;
 
 namespace Common.Infrastructure.Global
@@ -12,16 +13,19 @@ namespace Common.Infrastructure.Global
         public FeedbackService FeedbackService { get; private set; }
         public SfxService SfxService { get; private set; }
         public MusicService MusicService { get; private set; }
+        public LocaleService LocaleService { get; private set; }
 
         private readonly List<IService> _services = new();
 
         public void Initialize()
         {
+            LocaleService = new LocaleService();
             TutorialService = new TutorialService();
             FeedbackService = new FeedbackService();
             SfxService = new SfxService();
             MusicService = new MusicService();
 
+            _services.Add(LocaleService);
             _services.Add(TutorialService);
             _services.Add(FeedbackService);
             _services.Add(SfxService);

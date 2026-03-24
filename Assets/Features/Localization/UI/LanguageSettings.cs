@@ -1,4 +1,5 @@
 using System.Collections;
+using Common.Infrastructure.Global;
 using Common.UI.Elements.Panels;
 using NaughtyAttributes;
 using UnityEngine;
@@ -43,6 +44,7 @@ namespace Features.Localization.UI
         private IEnumerator ChangeLocaleAndReload(Locale locale)
         {
             yield return LocalizationSettings.InitializationOperation;
+            GlobalContext.Instance.Services.LocaleService.SaveLocale(locale);
             LocalizationSettings.SelectedLocale = locale;
             yield return LocalizationSettings.SelectedLocaleAsync;
             SceneManager.LoadScene(startScene);
