@@ -4,6 +4,7 @@ using Common.Types;
 using Common.UI.Tooltips;
 using Features.Goods.Config;
 using Features.Goods.UI;
+using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,17 +20,11 @@ namespace Common.UI.Elements.Cells
         public Good? Good { get; private set; }
 
         [SerializeField, Required]
-        private Image goodIcon;
+        private Image goodIcon, disabledIcon, cornerIcon;
 
-        [SerializeField, Required]
-        private Image disabledIcon;
-
-        [SerializeField, Required]
-        private Image cornerIcon;
-
-        [SerializeField, Required]
+        [SerializeField]
         protected GoodTooltipHandler tooltipHandler;
-        
+
         [SerializeField, Required]
         protected SimpleTooltipHandler messageTooltip;
 
@@ -47,7 +42,7 @@ namespace Common.UI.Elements.Cells
         {
             Good = good;
 
-            tooltipHandler.SetEnabled(good != null);
+            tooltipHandler?.SetEnabled(good != null);
 
             if (good == null)
             {
@@ -59,7 +54,7 @@ namespace Common.UI.Elements.Cells
             var goodConfigData = GoodsConfig.Value.ResourceData[good!.Value];
             goodIcon.gameObject.SetActive(true);
             goodIcon.sprite = goodConfigData.Icon;
-            tooltipHandler.SetData(good.Value);
+            tooltipHandler?.SetData(good.Value);
 
             OnSetGood(good);
         }
@@ -71,10 +66,14 @@ namespace Common.UI.Elements.Cells
             disabledIcon.gameObject.SetActive(!isEnabled);
         }
 
-        public void SetCornerIcon(Sprite icon)
+        public void EnableCornerIcon(bool isEnabled = true, Sprite icon = null)
         {
-            cornerIcon.gameObject.SetActive(true);
-            cornerIcon.sprite = icon;
+            cornerIcon.gameObject.SetActive(isEnabled);
+
+            if (icon != null)
+            {
+                cornerIcon.sprite = icon;
+            }
         }
 
         public void OnPointerClick(PointerEventData eventData)
