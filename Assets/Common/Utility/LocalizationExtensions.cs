@@ -12,6 +12,11 @@ namespace Common.Utility
             text.text = localizedString.GetLocalizedString();
         }
 
+        public static string GetLocalizedStringOptional(this LocalizedString localizedString)
+        {
+            return localizedString.IsEmpty ? string.Empty : localizedString.GetLocalizedString();
+        }
+
         public static void SetArguments(this LocalizeStringEvent localizer, params object[] args)
         {
             localizer.StringReference.Arguments = args;
