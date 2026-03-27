@@ -35,6 +35,7 @@ namespace Features.Player.Retinue.UI
 
         private RetinueModel _retinueModel;
         private CompanionConfigData _configData;
+        private CompanionUpgradeService _companionUpgradeService;
         private CompanionResource _companionResource;
 
         private readonly List<CompanionLevelUI> _levelUIs = new();
@@ -46,6 +47,7 @@ namespace Features.Player.Retinue.UI
             _companionResource = ResourceManager.Instance.CompanionResources.Get(companionType);
             _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
             _configData = ConfigurationManager.Configurations.CompanionConfig.Get(companionType);
+            _companionUpgradeService = GameplayContext.Instance.Services.CompanionUpgradeService;
 
             InitializeUI();
 
@@ -70,6 +72,7 @@ namespace Features.Player.Retinue.UI
 
                 // increment index by 1 as lvl 0 means nothing is upgraded
                 levelUIScript.Setup(i + 1, companionType);
+                levelUIScript.UnlockRequested += _companionUpgradeService.LevelUpgradeRequested;
 
                 _levelUIs.Add(levelUIScript);
             }
