@@ -8,23 +8,14 @@ namespace Common.UI.Tooltips
         [SerializeField]
         private LocalizedString text;
 
-        [SerializeField]
-        private string defaultText;
-
         protected override void Start()
         {
             base.Start();
 
-            if (!text.IsEmpty)
-            {
-                SetData(text.GetLocalizedString());
+            if (text.IsEmpty)
                 return;
-            }
 
-            if (!string.IsNullOrEmpty(defaultText))
-            {
-                SetData("<not localized>" + defaultText);
-            }
+            SetData(text.GetLocalizedString());
         }
     }
 }
