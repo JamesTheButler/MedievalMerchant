@@ -4,6 +4,7 @@ using Common.Infrastructure;
 using Common.Types;
 using Common.Utility;
 using Features.Goods.Config;
+using Features.Localization.Data;
 using Features.Trade;
 
 namespace Features.Inventory
@@ -11,6 +12,7 @@ namespace Features.Inventory
     public sealed class SlotBasedInventoryPolicy : IInventoryPolicy
     {
         private readonly Lazy<GoodResources> _goodsConfig = new(() => ResourceManager.Instance.GoodResources);
+        private readonly Lazy<TradeFailureStrings> _loc = new(() => ResourceManager.Instance.LocalizationResources.TradeStrings.FailureStrings);
 
         private readonly Dictionary<Tier, int> _slotsPerTier = new()
         {
@@ -39,7 +41,7 @@ namespace Features.Inventory
 
             return canFitGood
                 ? TradeResult.Succeeded()
-                : TradeResult.Failed($"There are no more empty slots for tier {goodTier.ToRomanNumeral()}");
+                : TradeResult.Failed(_loc.Value.InsufficientSlots(goodTier));
         }
     }
 }

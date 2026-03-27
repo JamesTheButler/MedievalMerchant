@@ -17,7 +17,8 @@ namespace Features.Localization.Data
             insufficientGoodYou,
             insufficientGoodTown,
             insufficientAmountYou,
-            insufficientAmountTown;
+            insufficientAmountTown,
+            insufficientSlots;
 
         public string NoTownSelected()
         {
@@ -64,6 +65,12 @@ namespace Features.Localization.Data
         {
             var dataObject = new { TownName = townName, GoodName = goodName };
             return insufficientAmountTown.GetLocalizedString(dataObject);
+        }
+        
+        public string InsufficientSlots(Tier tier)
+        {
+            var dataObject = new { Tier = tier.ToRomanNumeral() };
+            return insufficientSlots.GetLocalizedString(dataObject);
         }
     }
 }
