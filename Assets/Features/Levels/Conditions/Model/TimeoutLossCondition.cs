@@ -1,4 +1,5 @@
 using Common.Infrastructure;
+using Common.Infrastructure.Observation;
 using Common.Types;
 using Features.Levels.Conditions.Data;
 using Features.Levels.Conditions.Logic;
@@ -13,7 +14,7 @@ namespace Features.Levels.Conditions.Model
 
         public Progress Progress { get; }
         public Date DeadlineDate { get; }
-        public Common.Infrastructure.Observation.Observable<bool> IsClose { get; } = new();
+        public Observable<bool> IsClose { get; } = new();
 
         public int WarningThresholdDaysLeft { get; }
 
@@ -26,7 +27,7 @@ namespace Features.Levels.Conditions.Model
         {
             _loc = ResourceManager.Instance.LocalizationResources.Conditions;
             _data = data;
-            DeadlineDate = new Date(1, data.DeadlineYear);
+            DeadlineDate = new Date(DateModel.LastDayOfYear, data.DeadlineYear);
             WarningThresholdDaysLeft = data.DaysLeftWarning;
 
             Progress = new Progress(DeadlineDate.AsDays(), FormatProgress);

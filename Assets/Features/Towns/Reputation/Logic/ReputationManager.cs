@@ -17,7 +17,6 @@ namespace Features.Towns.Reputation.Logic
 
         public Observable<bool> IsNeglected { get; } = new();
 
-        private readonly ReputationConfig _reputationConfig = ConfigurationManager.Configurations.ReputationConfig;
         private readonly Observable<float> _reputation = new();
         private readonly List<ReputationLogEntry> _reputationLog = new();
         private readonly ObservableSum _modifierSum = new();
