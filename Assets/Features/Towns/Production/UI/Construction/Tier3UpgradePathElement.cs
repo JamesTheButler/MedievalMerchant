@@ -63,7 +63,7 @@ namespace Features.Towns.Production.UI.Construction
             cell.SetGood(data.Good);
             if (data.IsProduced)
             {
-                cell.SetCornerIcon(isProducedIcon);
+                cell.EnableCornerIcon(isProducedIcon);
             }
         }
 

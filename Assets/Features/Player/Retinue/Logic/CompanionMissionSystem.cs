@@ -4,6 +4,7 @@ using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Types;
 using Features.Player.Retinue.Config;
+using UnityEngine;
 
 namespace Features.Player.Retinue.Logic
 {
@@ -13,6 +14,7 @@ namespace Features.Player.Retinue.Logic
 
         private CompanionConfig _companionConfig;
         private CompanionModel _companionModel;
+        private RetinueModel _retinueModel;
 
         public CompanionMissionSystem(CompanionType companionType)
         {
@@ -22,7 +24,8 @@ namespace Features.Player.Retinue.Logic
         public void Initialize()
         {
             _companionConfig = ConfigurationManager.Configurations.CompanionConfig;
-            _companionModel = GameplayContext.Instance.Model.Player.RetinueModel.Companions[_companionType];
+            _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
+            _companionModel = _retinueModel.Companions[_companionType];
 
             _companionModel.Level.Observe(OnLevelChanged);
         }
@@ -34,23 +37,45 @@ namespace Features.Player.Retinue.Logic
 
         private void OnLevelChanged(int level)
         {
-            var missionConfig = _companionConfig.Get(_companionModel.CompanionType).MissionConfig;
+            _companionModel.ActiveMission.Value = null;
 
+            var missionConfig = _companionConfig.Get(_companionModel.CompanionType).MissionConfig;
             var nextMissionConfig = missionConfig.ConfigsPerLevel.ElementAtOrDefault(level);
+
             if (nextMissionConfig == null)
-            {
-                _companionModel.ActiveMission.Value = null;
                 return;
-            }
+
+            var coinCost = ApplyNegotiatorDiscount(nextMissionConfig.Cost);
 
             var missionTargets = new Dictionary<Good, int>();
-
             foreach (var item in nextMissionConfig.Items)
             {
                 missionTargets.Add(item.Good, item.Amount);
             }
 
-            _companionModel.StartMission(nextMissionConfig.Cost, missionTargets);
+            _companionModel.StartMission(coinCost, missionTargets);
+            _companionModel.ActiveMission.Value.Completed.Observe(OnMissionCompleted);
+        }
+
+        private int ApplyNegotiatorDiscount(int baseCost)
+        {
+            var negotiatorLevel = _retinueModel.Companions[CompanionType.Negotiator].Level.Value;
+            if (negotiatorLevel <= 0)
+                return baseCost;
+
+            var levelData = _companionConfig.NegotiatorData.GetTypedLevelData(negotiatorLevel);
+            if (levelData == null)
+                return baseCost;
+
+            var discountedCost = baseCost * (1f - levelData.UpgradeCostReduction);
+            return Mathf.RoundToInt(discountedCost);
+        }
+
+        private void OnMissionCompleted()
+        {
+            var newLevel = _companionModel.Level.Value + 1;
+            Debug.Log($"Companion {_companionType} mission completed. Upgrading to level {newLevel}.");
+            _companionModel.SetLevel(newLevel);
         }
     }
 }

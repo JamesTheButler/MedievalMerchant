@@ -19,8 +19,8 @@ namespace Features.Player.Retinue.Config.LevelDatas
         private NavigatorCompanionResource Resource => ResourceManager.Instance.CompanionResources.Navigator;
         
         public override string Description => new StringBuilder()
-            .AppendLine($"- {Resource.SpeedBonusString.GetLocalizedString(SpeedBonus.ToPercentString())}")
-            .AppendLine($"- {Resource.UpkeepReductionString.GetLocalizedString(UpkeepReduction.ToPercentString())}")
+            .AppendLine(Resource.SpeedBonusString.GetLocalizedString(SpeedBonus.ToPercentString()))
+            .AppendLine(Resource.UpkeepReductionString.GetLocalizedString(UpkeepReduction.ToPercentString()))
             .ToString();
     }
 }

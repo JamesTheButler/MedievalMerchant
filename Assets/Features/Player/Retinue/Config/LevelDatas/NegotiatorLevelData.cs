@@ -19,8 +19,8 @@ namespace Features.Player.Retinue.Config.LevelDatas
         private NegotiatorCompanionResource Resource => ResourceManager.Instance.CompanionResources.Negotiator;
 
         public override string Description => new StringBuilder()
-            .AppendLine($"- {Resource.PriceSavingsString.GetLocalizedString(PriceSavings.ToPercentString())}")
-            .AppendLine($"- {Resource.UpgradeCostReductionString.GetLocalizedString(UpgradeCostReduction.ToPercentString())}")
+            .AppendLine(Resource.PriceSavingsString.GetLocalizedString(PriceSavings.ToPercentString()))
+            .AppendLine(Resource.UpgradeCostReductionString.GetLocalizedString(UpgradeCostReduction.ToPercentString()))
             .ToString();
     }
 }

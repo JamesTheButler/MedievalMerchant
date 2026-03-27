@@ -15,7 +15,7 @@ namespace Features.Player.Retinue.Config.LevelDatas
         private GuardCompanionResource Resource => ResourceManager.Instance.CompanionResources.Guard;
         
         public override string Description => new StringBuilder()
-            .AppendLine($"- {Resource.StrengthString.GetLocalizedString(Strength)}")
+            .AppendLine(Resource.StrengthString.GetLocalizedString(Strength))
             .ToString();
     }
 }

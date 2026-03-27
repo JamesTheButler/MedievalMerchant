@@ -27,7 +27,7 @@ namespace Features.Player.Retinue.Logic
                 return;
             }
 
-            _remainingAmount.Value = Mathf.Max(0, TargetAmount - amount);
+            _remainingAmount.Value = Mathf.Max(0, _remainingAmount.Value - amount);
             if (_remainingAmount.Value > 0)
                 return;
 

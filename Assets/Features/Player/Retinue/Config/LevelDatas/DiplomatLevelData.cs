@@ -19,8 +19,8 @@ namespace Features.Player.Retinue.Config.LevelDatas
         private DiplomatCompanionResource Resource => ResourceManager.Instance.CompanionResources.Diplomat;
 
         public override string Description => new StringBuilder()
-            .AppendLine($"- {Resource.TownEntranceRepString.GetLocalizedString(TownEntranceReputation)}")
-            .AppendLine($"- {Resource.RepBoostString.GetLocalizedString(ReputationBoost.ToPercentString())}")
+            .AppendLine(Resource.TownEntranceRepString.GetLocalizedString(TownEntranceReputation))
+            .AppendLine(Resource.RepBoostString.GetLocalizedString(ReputationBoost.ToPercentString()))
             .ToString();
     }
 }

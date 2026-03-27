@@ -31,12 +31,6 @@ namespace Features.Player.Retinue.Logic
 
         public void StartMission(int coinCost, IReadOnlyDictionary<Good, int> targetGoods)
         {
-            if (ActiveMission.Value != null)
-            {
-                Debug.LogWarning("Tried starting a companion mission while one is already active.");
-                return;
-            }
-
             ActiveMission.Value = new CompanionMission(coinCost, targetGoods);
         }
     }

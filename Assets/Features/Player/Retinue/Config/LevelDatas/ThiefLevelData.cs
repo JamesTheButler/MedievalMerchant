@@ -23,9 +23,9 @@ namespace Features.Player.Retinue.Config.LevelDatas
         private ThiefCompanionResource Resource => ResourceManager.Instance.CompanionResources.Thief;
         
         public override string Description => new StringBuilder()
-            .AppendLine($"- {Resource.TownEntranceGoldString.GetLocalizedString(TownEntranceGold)}")
-            .AppendLine($"- {Resource.ReputationLossChanceString.GetLocalizedString(ReputationLossChance.ToPercentString())}".WithStyle(Style.Bad))
-            .AppendLine($"- {Resource.ReputationLossString.GetLocalizedString(ReputationLoss)}".WithStyle(Style.Bad))
+            .AppendLine(Resource.TownEntranceGoldString.GetLocalizedString(TownEntranceGold))
+            .AppendLine(Resource.ReputationLossChanceString.GetLocalizedString(ReputationLossChance.ToPercentString()).WithStyle(Style.Bad))
+            .AppendLine(Resource.ReputationLossString.GetLocalizedString(ReputationLoss).WithStyle(Style.Bad))
             .ToString();
     }
 }

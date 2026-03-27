@@ -2,6 +2,7 @@ using System;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Observation;
+using Common.Types;
 using Common.UI.Elements;
 using Common.UI.Elements.Cells;
 using Common.UI.InventoryUI;
@@ -43,6 +44,9 @@ namespace Features.Player.Camp.UI
 
         [SerializeField, Required]
         private InventoryCell goodItemPrefab;
+
+        [SerializeField, Required]
+        private CompanionDeliveryPanel deliveryPanel;
 
         private CompanionConfig _companionConfig;
         private CompanionResource _companionResource;
@@ -97,6 +101,9 @@ namespace Features.Player.Camp.UI
             var levelInfo = _companionConfig.Get(companionType).GetLevelData(level);
             foreach (var line in levelInfo.Description.Split(Environment.NewLine))
             {
+                if (line == string.Empty)
+                    continue;
+
                 var effectListItem = Instantiate(effectListItemPrefab, effectsContainer);
                 effectListItem.Text.text = line;
             }
@@ -113,16 +120,47 @@ namespace Features.Player.Camp.UI
         private void TrackMissionItems()
         {
             var mission = _companionModel.ActiveMission.Value;
+            if (mission == null)
+                return;
 
             foreach (var (good, item) in mission.MissionItems)
             {
                 var cell = Instantiate(goodItemPrefab, upgradeGoodsContainer);
                 cell.SetGood(good);
+                //cell.EnableCornerIcon(false);
                 _missionBindings.Track(item.RemainingAmount.Observe(cell.SetAmount));
+                _missionBindings.Track(item.IsCompleted.Observe(isCompleted => cell.EnableCornerIcon(isCompleted)));
+
+                var capturedGood = good;
+                cell.Clicked += () => OnGoodCellClicked(capturedGood);
             }
 
             var coinCell = Instantiate(costItemPrefab, upgradeGoodsContainer);
             _missionBindings.Track(mission.CoinCost.RemainingAmount.Observe(coinCell.SetAmount));
+            coinCell.Clicked += OnCoinCellClicked;
+        }
+
+        private void OnGoodCellClicked(Good good)
+        {
+            var mission = _companionModel.ActiveMission.Value;
+            if (mission == null)
+                return;
+
+            if (!mission.MissionItems.TryGetValue(good, out var item) || item.IsCompleted.Value)
+                return;
+
+            deliveryPanel.SetUpForGood(companionType, good);
+            deliveryPanel.Open();
+        }
+
+        private void OnCoinCellClicked()
+        {
+            var mission = _companionModel.ActiveMission.Value;
+            if (mission == null || mission.CoinCost.IsCompleted.Value)
+                return;
+
+            deliveryPanel.SetUpForCoin(companionType);
+            deliveryPanel.Open();
         }
     }
 }

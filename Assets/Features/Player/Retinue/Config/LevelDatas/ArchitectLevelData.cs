@@ -16,7 +16,7 @@ namespace Features.Player.Retinue.Config.LevelDatas
         private ArchitectCompanionResource Resource => ResourceManager.Instance.CompanionResources.Architect;
         
         public override string Description => new StringBuilder()
-            .AppendLine($"- {Resource.CostReductionString.GetLocalizedString(ConstructionPriceReduction.ToPercentString())}")
+            .AppendLine(Resource.CostReductionString.GetLocalizedString(ConstructionPriceReduction.ToPercentString()))
             .ToString();
     }
 }

@@ -15,6 +15,7 @@ namespace Common.Infrastructure.Gameplay
     {
         public TickingService TickingService { get; private set; }
         public CompanionUpgradeService CompanionUpgradeService { get; private set; }
+        public CompanionDeliveryService CompanionDeliveryService { get; private set; }
         public TradeService TradeService { get; private set; }
         public GameModifierService GameModifierService { get; private set; }
         public NotificationService NotificationService { get; private set; }
@@ -29,6 +30,7 @@ namespace Common.Infrastructure.Gameplay
         {
             TickingService = new TickingService();
             CompanionUpgradeService = new CompanionUpgradeService();
+            CompanionDeliveryService = new CompanionDeliveryService();
             TradeService = new TradeService();
             GameModifierService = new GameModifierService();
             NotificationService = new NotificationService();
@@ -39,6 +41,7 @@ namespace Common.Infrastructure.Gameplay
 
             _services.Add(TickingService);
             _services.Add(CompanionUpgradeService);
+            _services.Add(CompanionDeliveryService);
             _services.Add(TradeService);
             _services.Add(GameModifierService);
             _services.Add(NotificationService);
