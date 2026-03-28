@@ -1,9 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Observation;
-using Common.UI.Elements;
 using Common.Utility;
 using Features.Player.Logic;
 using Features.Ticking.Logic;
@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Features.Map.Pathfinding
 {
-    public sealed class RoadTraveler : InitializableBehavior
+    public sealed class RoadTraveler : MonoBehaviour
     {
         [SerializeField, Range(0, 0.45f)]
         public float smoothing = 0.2f;
@@ -20,52 +20,65 @@ namespace Features.Map.Pathfinding
         [SerializeField]
         private Grid tileGrid;
 
+        public event Action<Town> Arrived;
+        public event Action Departed;
+
         private readonly Bindings _bindings = new();
 
         private RoadGraph _graph;
-        private PlayerModel _player;
-        private PlayerLocation _playerLocation;
+        private IMapLocation _mapLocation;
         private GameSpeedModel _gameSpeedModel;
-        private NavigationService _navigationService;
 
         private float _mapSpeed;
         private float _fastSpeedMultiplier;
 
-        private Town _town;
+        private Town _targetTown;
+        private bool _isSetUp;
 
-        public override void Initialize()
+        public void Setup(
+            IMapLocation mapLocation,
+            IReadOnlyObservable<float> speed,
+            RoadGraph graph,
+            Grid grid = null)
         {
-            var model = GameplayContext.Instance.Model;
+            _mapLocation = mapLocation;
+            _graph = graph;
 
-            _graph = RoadGraphBuilder.Build(model.TileFlagMap);
-            _player = model.Player;
-            _playerLocation = _player.Location;
+            if (grid != null)
+                tileGrid = grid;
+
+            var model = GameplayContext.Instance.Model;
             _gameSpeedModel = model.GameSpeed;
-            _navigationService = GameplayContext.Instance.Services.NavigationService;
 
             var tickConfig = ConfigurationManager.Configurations.TickConfig;
             _fastSpeedMultiplier = tickConfig.SecondsPerDayDefault / tickConfig.SecondsPerDayFast;
 
-            _bindings.Track(
-                _player.SpeedInTilesPerDay.Observe(OnMapSpeedChanged),
-                _navigationService.NavigationStarted.Observe(TravelTo)
-            );
+            _bindings.Track(speed.Observe(OnMapSpeedChanged));
+            _isSetUp = true;
         }
 
-        public override void CleanUp()
+        public void CleanUp()
         {
-            base.CleanUp();
             _bindings.UnbindAll();
+            StopAllCoroutines();
+            _targetTown = null;
+            _isSetUp = false;
         }
 
-        private void TravelTo(Town town)
+        private void OnDestroy()
         {
-            if (town == _playerLocation.CurrentTown.Value || town == null || town == _town)
+            CleanUp();
+        }
+
+        public void TravelTo(Town town)
+        {
+            if (!_isSetUp) return;
+            if (town == _mapLocation.CurrentTown.Value || town == null || town == _targetTown)
                 return;
 
-            _town = town;
+            _targetTown = town;
 
-            var startCell = tileGrid.WorldToCell(_playerLocation.WorldLocation.Value).XY();
+            var startCell = tileGrid.WorldToCell(_mapLocation.WorldLocation.Value).XY();
             var endCell = town.GridLocation;
 
             startCell = NearestRoadCell(startCell);
@@ -131,8 +144,8 @@ namespace Features.Map.Pathfinding
 
             var smoothed = SmoothCorners(points, smoothing);
 
-            smoothed[0] = _playerLocation.WorldLocation.Value;
-            _playerLocation.CurrentTown.Value = null;
+            smoothed[0] = _mapLocation.WorldLocation.Value;
+            Departed?.Invoke();
 
             for (var i = 1; i < smoothed.Count; i++)
             {
@@ -148,13 +161,14 @@ namespace Features.Map.Pathfinding
 
                     traveled += Mathf.Max(0.01f, GetMapSpeed()) * Time.deltaTime;
                     var u = Mathf.Clamp01(traveled / dist);
-                    _playerLocation.WorldLocation.Value = Vector3.Lerp(a, b, u);
+                    _mapLocation.WorldLocation.Value = Vector3.Lerp(a, b, u);
                 }
             }
 
             // we arrived
-            _playerLocation.CurrentTown.Value = _town;
-            _town = null;
+            var arrivedTown = _targetTown;
+            _targetTown = null;
+            Arrived?.Invoke(arrivedTown);
         }
 
         private float GetMapSpeed()
@@ -184,7 +198,7 @@ namespace Features.Map.Pathfinding
                     v2.sqrMagnitude < 0.001f ||
                     Vector3.Dot(v1.normalized, v2.normalized) < -0.999f)
                 {
-                    // straight or 180* turn—don’t cut
+                    // straight or 180* turn—don't cut
                     outPoints.Add(current);
                     continue;
                 }
