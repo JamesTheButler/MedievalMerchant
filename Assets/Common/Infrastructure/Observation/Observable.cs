@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 
 namespace Common.Infrastructure.Observation
 {
     public class Observable<T> : IReadOnlyObservable<T>
     {
+        private static readonly EqualityComparer<T> Comparer = EqualityComparer<T>.Default;
+
         private event Action ValueChangeWithoutValue;
         private event Action<T> ValueChanged;
         private event Action<T, T> ValueChangedWithOldValue;
@@ -13,7 +16,7 @@ namespace Common.Infrastructure.Observation
             get => _value;
             set
             {
-                if ((_value == null && value == null) || (_value?.Equals(value) ?? false)) return;
+                if (Comparer.Equals(_value, value)) return;
 
                 var oldValue = _value;
                 _value = value;
