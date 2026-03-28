@@ -60,13 +60,11 @@ namespace Features.Map.Pathfinding
 
         private void TravelTo(Town town)
         {
-            if (town == _playerLocation.CurrentTown.Value || town == null)
-                return;
-
-            if (town == _town)
+            if (town == _playerLocation.CurrentTown.Value || town == null || town == _town)
                 return;
 
             _town = town;
+
             var startCell = tileGrid.WorldToCell(_playerLocation.WorldLocation.Value).XY();
             var endCell = town.GridLocation;
 
