@@ -63,12 +63,13 @@ namespace Features.Map.Pathfinding
             if (town == _playerLocation.CurrentTown.Value || town == null)
                 return;
 
+            if (town == _town)
+                return;
+
             _town = town;
             var startCell = tileGrid.WorldToCell(_playerLocation.WorldLocation.Value).XY();
             var endCell = town.GridLocation;
 
-            // BUG: when changing between target towns mid-travel, we get buggy-ness from this.
-            //   we'd want to continue wherever we are right now, if we are already on a road tile
             startCell = NearestRoadCell(startCell);
             endCell = NearestRoadCell(endCell);
 
@@ -132,7 +133,7 @@ namespace Features.Map.Pathfinding
 
             var smoothed = SmoothCorners(points, smoothing);
 
-            _playerLocation.WorldLocation.Value = smoothed[0];
+            smoothed[0] = _playerLocation.WorldLocation.Value;
             _playerLocation.CurrentTown.Value = null;
 
             for (var i = 1; i < smoothed.Count; i++)
