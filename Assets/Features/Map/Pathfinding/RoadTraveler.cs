@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Observation;
 using Common.UI.Elements;
@@ -11,7 +12,6 @@ using UnityEngine;
 
 namespace Features.Map.Pathfinding
 {
-    // TODO - CORE: this is not generic, but it should be. anything that can walk on roads should be able to use this
     public sealed class RoadTraveler : InitializableBehavior
     {
         [SerializeField, Range(0, 0.45f)]
@@ -29,6 +29,7 @@ namespace Features.Map.Pathfinding
         private NavigationService _navigationService;
 
         private float _mapSpeed;
+        private float _fastSpeedMultiplier;
 
         private Town _town;
 
@@ -41,6 +42,9 @@ namespace Features.Map.Pathfinding
             _playerLocation = _player.Location;
             _gameSpeedModel = model.GameSpeed;
             _navigationService = GameplayContext.Instance.Services.NavigationService;
+
+            var tickConfig = ConfigurationManager.Configurations.TickConfig;
+            _fastSpeedMultiplier = tickConfig.SecondsPerDayDefault / tickConfig.SecondsPerDayFast;
 
             _bindings.Track(
                 _player.SpeedInTilesPerDay.Observe(OnMapSpeedChanged),
@@ -137,18 +141,15 @@ namespace Features.Map.Pathfinding
                 var b = smoothed[i];
                 var dist = Vector3.Distance(a, b);
 
-                var dur = dist / Mathf.Max(0.01f, GetMapSpeed());
-                var elapsed = 0f;
-                while (elapsed < dur)
+                var traveled = 0f;
+                while (traveled < dist)
                 {
-                    // pause movement while game is paused
-                    yield return new WaitUntil(() => !_gameSpeedModel.IsPaused.Value);
-
-                    elapsed += Time.deltaTime;
-                    var u = Mathf.Clamp01(elapsed / dur);
-                    _playerLocation.WorldLocation.Value = Vector3.Lerp(a, b, u);
-
                     yield return null;
+                    if (_gameSpeedModel.IsPaused.Value) continue;
+
+                    traveled += Mathf.Max(0.01f, GetMapSpeed()) * Time.deltaTime;
+                    var u = Mathf.Clamp01(traveled / dist);
+                    _playerLocation.WorldLocation.Value = Vector3.Lerp(a, b, u);
                 }
             }
 
@@ -159,20 +160,23 @@ namespace Features.Map.Pathfinding
 
         private float GetMapSpeed()
         {
-            return _mapSpeed;
+            return _gameSpeedModel.GameSpeed.Value == GameSpeed.Normal
+                ? _mapSpeed
+                : _mapSpeed * _fastSpeedMultiplier;
         }
 
-        private static List<Vector3> SmoothCorners(List<Vector3> pts, float cut)
+        private static List<Vector3> SmoothCorners(List<Vector3> points, float cut)
         {
-            if (pts.Count <= 2 || cut <= 0f) return pts;
+            if (points.Count <= 2 || cut <= 0f)
+                return points;
 
-            var outPoints = new List<Vector3>(pts.Count * 2) { pts[0] };
+            var outPoints = new List<Vector3>(points.Count * 2) { points[0] };
 
-            for (var i = 1; i < pts.Count - 1; i++)
+            for (var i = 1; i < points.Count - 1; i++)
             {
-                var previous = pts[i - 1];
-                var current = pts[i];
-                var next = pts[i + 1];
+                var previous = points[i - 1];
+                var current = points[i];
+                var next = points[i + 1];
 
                 var v1 = current - previous;
                 var v2 = next - current;
@@ -203,7 +207,7 @@ namespace Features.Map.Pathfinding
                 outPoints.Add(b);
             }
 
-            outPoints.Add(pts[^1]);
+            outPoints.Add(points[^1]);
             return outPoints;
         }
     }
