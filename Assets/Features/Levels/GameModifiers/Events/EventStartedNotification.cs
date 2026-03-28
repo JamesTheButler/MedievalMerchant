@@ -15,7 +15,7 @@ namespace Features.Levels.GameModifiers.Events
     {
         private static string GetTitle(EventGameModifierData gameEvent)
         {
-            var loc = ResourceManager.Instance.LocalizationResources.NotificationResources;
+            var loc = ResourceManager.Instance.LocalizationResources.Notifications;
             return loc.EventStartedNotification.GetLocalizedString(gameEvent.Title);
         }
     }

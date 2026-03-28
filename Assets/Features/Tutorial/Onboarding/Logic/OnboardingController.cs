@@ -74,7 +74,7 @@ namespace Features.Tutorial.Onboarding.Logic
 
             var resourceManager = ResourceManager.Instance;
             _onboardingResources = resourceManager.OnboardingResources;
-            _localizationResources = resourceManager.LocalizationResources.OnboardingResources;
+            _localizationResources = resourceManager.LocalizationResources.Onboarding;
             _goodResources = resourceManager.GoodResources;
 
             _townA = model.Towns.Values.ElementAt(0);

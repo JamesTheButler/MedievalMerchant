@@ -14,7 +14,7 @@ namespace Features.Towns.Missions
     {
         private static string GetTitle(Town town, Mission mission)
         {
-            var loc = ResourceManager.Instance.LocalizationResources.MissionStrings;
+            var loc = ResourceManager.Instance.LocalizationResources.Missions;
             var goodName = ResourceManager.Instance.GoodResources.ResourceData[mission.Good].GoodName;
             return mission.Type == MissionType.TradeMission
                 ? loc.GetTradeMissionStartedTitle(town.Name, goodName)
@@ -23,7 +23,7 @@ namespace Features.Towns.Missions
 
         private static string GetDescription(Town town, Mission mission)
         {
-            var loc = ResourceManager.Instance.LocalizationResources.MissionStrings;
+            var loc = ResourceManager.Instance.LocalizationResources.Missions;
             var goodName = ResourceManager.Instance.GoodResources.ResourceData[mission.Good].GoodName;
             return loc.GetMissionStartedDescription(goodName, mission.TotalCount, mission.EndDate);
         }

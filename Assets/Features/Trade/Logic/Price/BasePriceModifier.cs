@@ -10,7 +10,7 @@ namespace Features.Trade.Logic.Price
 
         private static string GetDescription(Tier goodTier)
         {
-            return ResourceManager.Instance.LocalizationResources.TradeStrings.BasePrice(goodTier);
+            return ResourceManager.Instance.LocalizationResources.Trade.BasePrice(goodTier);
         }
     }
 }

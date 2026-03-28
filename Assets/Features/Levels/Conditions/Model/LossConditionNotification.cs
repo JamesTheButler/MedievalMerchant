@@ -13,7 +13,7 @@ namespace Features.Levels.Conditions.Model
     {
         private static string GetTitle()
         {
-            var loc = ResourceManager.Instance.LocalizationResources.NotificationResources;
+            var loc = ResourceManager.Instance.LocalizationResources.Notifications;
             return loc.LossImminentNotificationTitle.GetLocalizedString();
         }
 

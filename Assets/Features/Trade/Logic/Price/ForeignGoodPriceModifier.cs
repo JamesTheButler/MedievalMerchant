@@ -9,7 +9,7 @@ namespace Features.Trade.Logic.Price
     public sealed class ForeignGoodPriceModifier : BasePercentageModifier
     {
         public ForeignGoodPriceModifier() : base(0,
-            ResourceManager.Instance.LocalizationResources.TradeStrings.ForeignGoodModifier)
+            ResourceManager.Instance.LocalizationResources.Trade.ForeignGoodModifier)
         {
             Value.Value = ConfigurationManager.Configurations.GoodConfig.ForeignGoodPriceModifier;
         }

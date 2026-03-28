@@ -20,7 +20,7 @@ namespace Features.Trade.Logic
             _player = player;
             _town = town;
             _goodResources = ResourceManager.Instance.GoodResources;
-            _loc = ResourceManager.Instance.LocalizationResources.TradeStrings.FailureStrings;
+            _loc = ResourceManager.Instance.LocalizationResources.Trade.FailureStrings;
         }
 
         public TradeResult Validate(TradeType tradeType, Good good, int amount)

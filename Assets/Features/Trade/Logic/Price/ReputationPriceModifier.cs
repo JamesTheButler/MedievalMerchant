@@ -18,7 +18,7 @@ namespace Features.Trade.Logic.Price
 
         public ReputationPriceModifier(Town town, TradeType tradeType) : base(0f, string.Empty)
         {
-            _loc = ResourceManager.Instance.LocalizationResources.TradeStrings;
+            _loc = ResourceManager.Instance.LocalizationResources.Trade;
             _reputationConfig = ConfigurationManager.Configurations.ReputationConfig;
 
             _tradeType = tradeType;

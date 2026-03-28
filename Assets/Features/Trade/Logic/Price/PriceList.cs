@@ -34,7 +34,7 @@ namespace Features.Trade.Logic.Price
             _availabilityCalculator = new AvailabilityCalculator(town);
             _goodResources = ResourceManager.Instance.GoodResources;
             _goodConfig = ConfigurationManager.Configurations.GoodConfig;
-            _loc = ResourceManager.Instance.LocalizationResources.TradeStrings;
+            _loc = ResourceManager.Instance.LocalizationResources.Trade;
         }
 
         public ModifiableVariable GetPrice(Good good)
