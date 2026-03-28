@@ -40,6 +40,7 @@ namespace Features.Levels.Conditions.UI
 
         public void Setup(IEnumerable<ICondition> conditions)
         {
+            Initialize();
             Clear();
 
             foreach (var condition in conditions)
