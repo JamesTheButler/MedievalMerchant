@@ -17,17 +17,20 @@ namespace Features.Goods.UI
     public class GoodTooltip : TooltipBase<Good>
     {
         [SerializeField, Required]
-        private TMP_Text nameText, priceText, currentPriceText;
-            
-        [SerializeField, Required]
         protected TMP_Text currentPriceLabel;
+
+        [SerializeField, Required]
+        private TMP_Text nameText, priceText, currentPriceText;
+
+        [SerializeField, Required]
+        protected GameObject currentPriceLine;
 
         [SerializeField, Required]
         private Image goodImage, tierImage, regionImage;
 
         [SerializeField]
-        private LocalizedString sellPriceString, buyPriceString; 
-        
+        private LocalizedString sellPriceString, buyPriceString;
+
         private GoodResources _goodResources;
         private GoodConfig _goodConfig;
         private TierResources _tierIcons;
@@ -77,7 +80,7 @@ namespace Features.Goods.UI
             _town = newTown;
             if (newTown == null)
             {
-                currentPriceLabel.gameObject.SetActive(false);
+                currentPriceLine.SetActive(false);
                 currentPriceText.text = "-";
                 return;
             }
@@ -87,19 +90,19 @@ namespace Features.Goods.UI
 
             if (buyPrice != null)
             {
-                currentPriceLabel.gameObject.SetActive(true);
+                currentPriceLine.SetActive(true);
                 currentPriceLabel.text = sellPriceString.GetLocalizedString();
                 buyPrice.Observe(OnTownPriceChanged);
             }
             else if (sellPrice != null)
             {
-                currentPriceLabel.gameObject.SetActive(true);
+                currentPriceLine.SetActive(true);
                 currentPriceLabel.text = buyPriceString.GetLocalizedString();
                 sellPrice.Observe(OnTownPriceChanged);
             }
             else
             {
-                currentPriceLabel.gameObject.SetActive(false);
+                currentPriceLine.SetActive(false);
                 Debug.LogError($"There is neither a buy nor sell price available in {_town.Name} for {_good}.");
             }
         }

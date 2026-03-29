@@ -40,7 +40,7 @@ namespace Features.Towns.Missions.UI
         {
             base.Awake();
 
-            _loc = ResourceManager.Instance.LocalizationResources.MissionStrings;
+            _loc = ResourceManager.Instance.LocalizationResources.Missions;
             _townDevelopmentConfig = ConfigurationManager.Configurations.TownDevelopmentConfig;
             _reputationResources = ResourceManager.Instance.ReputationResources;
         }

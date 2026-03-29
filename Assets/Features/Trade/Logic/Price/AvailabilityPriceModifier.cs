@@ -13,7 +13,7 @@ namespace Features.Trade.Logic.Price
     {
         private readonly PriceModifierConfig _config = ConfigurationManager.Configurations.PriceModifierConfig;
         private readonly AvailabilityResources _resources = ResourceManager.Instance.AvailabilityResources;
-        private readonly TradeLocalizationResources _loc = ResourceManager.Instance.LocalizationResources.TradeStrings;
+        private readonly TradeLocalizationResources _loc = ResourceManager.Instance.LocalizationResources.Trade;
 
         public AvailabilityPriceModifier(Availability availability) : base(0, string.Empty)
         {

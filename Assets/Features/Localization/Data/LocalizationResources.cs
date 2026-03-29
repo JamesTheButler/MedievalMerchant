@@ -25,25 +25,25 @@ namespace Features.Localization.Data
         public GoodLocalizationResources Goods { get; private set; }
 
         [field: SerializeField]
-        public MissionLocalizationResources MissionStrings { get; private set; }
+        public MissionLocalizationResources Missions { get; private set; }
 
         [field: SerializeField]
         public ModifierLocalizationResources Modifiers { get; private set; }
 
         [field: SerializeField]
-        public NotificationLocalizationResources NotificationResources { get; private set; }
+        public NotificationLocalizationResources Notifications { get; private set; }
 
         [field: SerializeField]
         public PlayerLocalizationResources Player { get; private set; }
 
         [field: SerializeField]
-        public TradeLocalizationResources TradeStrings { get; private set; }
+        public TradeLocalizationResources Trade { get; private set; }
 
         [field: SerializeField]
         public TownLocalizationResources Town { get; private set; }
 
         [field: SerializeField]
-        public OnboardingLocalizationResources OnboardingResources { get; private set; }
+        public OnboardingLocalizationResources Onboarding { get; private set; }
 
         public string Date(Date value)
         {

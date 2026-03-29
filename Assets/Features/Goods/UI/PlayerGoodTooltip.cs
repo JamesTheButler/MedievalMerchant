@@ -39,6 +39,7 @@ namespace Features.Goods.UI
 
         public override void Reset()
         {
+            base.Reset();
             _selection.SelectedTown.StopObserving(OnSelectedTownChanged);
         }
 

@@ -39,7 +39,7 @@ namespace Features.Trade.Haggling.UI
                 _ => Style.Default
             };
 
-            var loc = ResourceManager.Instance.LocalizationResources.TradeStrings;
+            var loc = ResourceManager.Instance.LocalizationResources.Trade;
             coinText.text = loc.HaggleCoinEffect(displayPriceChange).WithStyle(priceChangeStyle);
             reputationText.text = loc.HaggleRepEffect(reputation).WithStyle(reputation.GetNumberStyle());
         }

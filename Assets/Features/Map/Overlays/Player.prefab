@@ -100,6 +100,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9083068851031128905}
   - component: {fileID: 1704905213321389092}
+  - component: {fileID: 2869802911856002194}
+  - component: {fileID: 8370909630783619497}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -139,6 +141,33 @@ MonoBehaviour:
   worldOverlay: {fileID: 4428025070580408259}
   townOverlay: {fileID: 8696927674295139997}
   animation: {fileID: 6321651708739456761}
+--- !u!114 &2869802911856002194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7088861313033453189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5a8d514857804f479c42ea76805d15b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Map.Pathfinding.PlayerTravelerSetup
+  roadTraveler: {fileID: 8370909630783619497}
+--- !u!114 &8370909630783619497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7088861313033453189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7b02c70208f46bdacddfaca5e23362f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Map.Pathfinding.RoadTraveler
+  smoothing: 0.2
+  tileGrid: {fileID: 0}
 --- !u!1 &8696927674295139997
 GameObject:
   m_ObjectHideFlags: 0

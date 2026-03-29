@@ -20,20 +20,19 @@ namespace Features.Trade.Logic
             _player = player;
             _town = town;
             _goodResources = ResourceManager.Instance.GoodResources;
-            _loc = ResourceManager.Instance.LocalizationResources.TradeStrings.FailureStrings;
+            _loc = ResourceManager.Instance.LocalizationResources.Trade.FailureStrings;
         }
 
         public TradeResult Validate(TradeType tradeType, Good good, int amount)
         {
-            var townName = _town.Name;
-            var goodName = _goodResources.ResourceData[good].GoodName;
-
             if (_town == null)
                 return TradeResult.Failed(_loc.NoTownSelected());
 
             if (_town != _player.Location.CurrentTown.Value)
                 return TradeResult.Failed(_loc.WrongTownSelected(_town.Name));
 
+            var townName = _town.Name;
+            var goodName = _goodResources.ResourceData[good].GoodName;
             var buyingInventory = tradeType == TradeType.Buy ? _player.Inventory : _town.Inventory;
             var sellingInventory = tradeType == TradeType.Sell ? _player.Inventory : _town.Inventory;
 

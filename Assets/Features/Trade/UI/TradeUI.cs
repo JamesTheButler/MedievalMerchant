@@ -95,7 +95,7 @@ namespace Features.Trade.UI
             _model = GameplayContext.Instance.Model;
             _tradeService = GameplayContext.Instance.Services.TradeService;
             _selection = GameplayContext.Instance.Selection;
-            _loc = ResourceManager.Instance.LocalizationResources.TradeStrings;
+            _loc = ResourceManager.Instance.LocalizationResources.Trade;
 
             _isHagglingEnabled = GameplayContext.Instance.LevelInfo.HasFeature(LevelFeatureFlags.Haggling);
 

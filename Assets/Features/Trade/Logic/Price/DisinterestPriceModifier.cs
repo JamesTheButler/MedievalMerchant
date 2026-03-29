@@ -16,7 +16,7 @@ namespace Features.Trade.Logic.Price
 
         public DisinterestPriceModifier(Good good, int value) : base(0f, string.Empty)
         {
-            _loc = ResourceManager.Instance.LocalizationResources.TradeStrings;
+            _loc = ResourceManager.Instance.LocalizationResources.Trade;
             _config = ConfigurationManager.Configurations.PriceModifierConfig.DisinterestModiferConfig;
 
             var goodRes = ResourceManager.Instance.GoodResources;
