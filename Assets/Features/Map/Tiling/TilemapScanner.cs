@@ -24,9 +24,10 @@ namespace Features.Map.Tiling
                 if (tile == null) continue;
 
                 flagMap.AddType(pos.XY(), tile.TileType);
-                if(tile is TownMapTile townTile)
+                switch (tile)
                 {
-                    flagMap.AddTown(pos, townTile);
+                    case TownMapTile townTile: flagMap.AddTown(pos, townTile); break;
+                    case CampMapTile campTile: flagMap.AddCamp(pos, campTile); break;
                 }
             }
 

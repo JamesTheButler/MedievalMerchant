@@ -8,5 +8,6 @@ namespace Features.Map.Tiling
         Town = 4,
         Road = 5,
         Fields = 6,
+        Camp = 7,
     }
 }

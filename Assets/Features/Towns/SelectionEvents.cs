@@ -14,5 +14,10 @@ namespace Features.Towns
         {
             GameplayContext.Instance.Selection.Deselect();
         }
+
+        public void SelectCamp()
+        {
+            GameplayContext.Instance.Selection.SelectCamp();
+        }
     }
 }

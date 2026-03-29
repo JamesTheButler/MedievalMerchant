@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Common.Infrastructure.Gameplay;
 using Common.Types;
 using Common.UI.Elements;
+using Features.Player.Camp.Logic;
 using Features.Towns;
 using NaughtyAttributes;
 using UnityEngine;
@@ -23,6 +24,9 @@ namespace Features.Map.Tiling
         private UnityEvent<Town> onTownClicked, onTownRightClicked, townHovered, townUnhovered;
 
         [SerializeField]
+        private UnityEvent onCampClicked, onCampRightClicked;
+
+        [SerializeField]
         private UnityEvent onGroundClicked;
 
         public Tilemap Tilemap { get; private set; }
@@ -41,6 +45,11 @@ namespace Features.Map.Tiling
                 town.Tier.Observe(_ => UpdateTown(town));
                 town.MapTile.Observe(mapTile => BindMapTile(mapTile, town));
             }
+
+            if (_model.Camp != null)
+            {
+                _model.Camp.MapTile.Observe(BindCampTile);
+            }
         }
 
         private void BindMapTile(TownMapTile townTile, Town town)
@@ -53,6 +62,19 @@ namespace Features.Map.Tiling
             };
             townTile.Hovered += () => townHovered?.Invoke(town);
             townTile.Unhovered += () => townUnhovered?.Invoke(town);
+        }
+
+        private void BindCampTile(CampMapTile campTile)
+        {
+            if (campTile == null)
+                return;
+
+            campTile.LeftClicked += () => onCampClicked?.Invoke();
+            campTile.RightClicked += () =>
+            {
+                onCampRightClicked?.Invoke();
+                _navigationService.NavigationStarted?.Invoke(_model.Camp);
+            };
         }
 
         private void Update()

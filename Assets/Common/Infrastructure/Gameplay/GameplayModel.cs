@@ -8,6 +8,7 @@ using Features.Levels.GameModifiers.Events;
 using Features.Map.Modes;
 using Features.Map.Tiling;
 using Features.Map.Zones;
+using Features.Player.Camp.Logic;
 using Features.Player.Logic;
 using Features.Stats;
 using Features.Ticking.Logic;
@@ -29,6 +30,7 @@ namespace Common.Infrastructure.Gameplay
         public LevelConditions Conditions { get; } = new();
         public EventModel Events { get; } = new();
         public MapModeModel MapModeModel { get; } = new();
+        public Camp Camp { get; private set; }
 
         public IReadOnlyDictionary<Vector2Int, Town> Towns => _towns;
 
@@ -47,6 +49,11 @@ namespace Common.Infrastructure.Gameplay
             ProductionZones = productionZones;
             GoodPool = new GoodPool(productionZones);
             Conditions.Initialize(conditions);
+        }
+
+        public void SetCamp(Camp camp)
+        {
+            Camp = camp;
         }
     }
 }

@@ -25,5 +25,8 @@ namespace Features.Map.Tiling
 
         [field: SerializeField, Required]
         public TileBase FrameTile2 { get; private set; }
+
+        [field: SerializeField]
+        public TileBase CampTile { get; private set; }
     }
 }

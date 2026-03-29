@@ -8,6 +8,7 @@ using Features.Audio.Music;
 using Features.Levels.GameModifiers.Effects.Data;
 using Features.Map.Tiling;
 using Features.Map.Zones;
+using Features.Player.Camp.Logic;
 using Features.Player.Logic;
 using Features.Towns;
 using Features.Towns.Initialization;
@@ -50,6 +51,22 @@ namespace Features.Levels
 
             var context = GameplayContext.Instance;
             context.Model.Initialize(player, towns, flagMap, levelInfo.Conditions, zones);
+
+            var campPositions = flagMap.GetAllCells(TileType.Camp);
+            if (campPositions.Count > 0)
+            {
+                var campPos = campPositions[0];
+                var campWorldPos = tileGrid.CellToWorld(campPos.FromXY()).XY();
+                var campTile = flagMap.CampTiles[campPos];
+                var camp = new Camp(campPos, campWorldPos, campTile);
+                context.Model.SetCamp(camp);
+            }
+
+            if (campPositions.Count > 1)
+            {
+                Debug.LogError($"There are more than one camp in {levelInfo.LevelName.GetLocalizedString()}.");
+            }
+
             context.Services.Initialize();
             context.Systems.Initialize();
 

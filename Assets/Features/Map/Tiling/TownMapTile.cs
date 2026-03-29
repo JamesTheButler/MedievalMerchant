@@ -3,7 +3,6 @@ using Common.UI.Art;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 namespace Features.Map.Tiling
 {
@@ -20,7 +19,7 @@ namespace Features.Map.Tiling
         [SerializeField, Required]
         private AudioSource upgradeAudioSource;
 
-        [FormerlySerializedAs("animationHandler"),SerializeField, Required]
+        [SerializeField, Required]
         private SimpleAnimatorHandler animatorHandler;
 
         private void Awake()
