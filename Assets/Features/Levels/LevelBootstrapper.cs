@@ -82,7 +82,7 @@ namespace Features.Levels
             }
 
             var startTown = possibleTowns[levelInfoStartIndex];
-            player.Location.CurrentTown.Value = startTown;
+            player.Location.MapLocation.Value = startTown;
             player.Location.WorldLocation.Value = startTown.WorldLocation;
         }
 

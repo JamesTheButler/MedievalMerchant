@@ -1,6 +1,7 @@
 ﻿using Common.Infrastructure.Gameplay;
 using Common.Types;
 using Common.Utility;
+using Features.Map.Pathfinding;
 using Features.Player.Logic;
 using Features.Player.Retinue.Config.CompanionDatas;
 using Features.Player.Retinue.Config.LevelDatas;
@@ -40,14 +41,14 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
             _player = GameplayContext.Instance.Model.Player;
             _gameDateModel = GameplayContext.Instance.Model.DateModel;
 
-            _player.Location.CurrentTown.Observe(OnTownChanged, false);
+            _player.Location.MapLocation.Observe(OnLocationChanged, false);
 
             _isBound = true;
         }
 
-        private void OnTownChanged(Town town)
+        private void OnLocationChanged(IMapLocation location)
         {
-            if (town == null || _thiefLevelData == null) return;
+            if (location is not Town town || _thiefLevelData == null) return;
 
             if (_gameDateModel.GameDate.Value < _nextPossibleTheftDate)
                 return;

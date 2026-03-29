@@ -2,6 +2,7 @@ using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Global;
 using Common.Infrastructure.Observation;
+using Features.Map.Pathfinding;
 using Features.Ticking.Logic;
 using Features.Towns;
 using Features.Towns.Production.Logic;
@@ -30,7 +31,7 @@ namespace Features.Audio.Sfx
             var tradeService = GameplayContext.Instance.Services.TradeService;
 
             _bindings.Track(
-                playerModel.Location.CurrentTown.Observe(PlayerLocationChanged),
+                playerModel.Location.MapLocation.Observe(PlayerLocationChanged),
                 selection.SelectedTown.Observe(SelectedTownChanged),
                 navigationService.NavigationStarted.Observe(OnNavigationChanged),
                 tradeService.TradeCompleted.Observe(OnTradeCompleted),
@@ -75,7 +76,7 @@ namespace Features.Audio.Sfx
             _bindings.UnbindAll();
         }
 
-        private void OnNavigationChanged(Town town)
+        private void OnNavigationChanged(IMapLocation location)
         {
             Play(GameSoundEffect.NavigationChanged);
         }
@@ -104,9 +105,9 @@ namespace Features.Audio.Sfx
             Play(GameSoundEffect.TownSelected);
         }
 
-        private void PlayerLocationChanged(Town town)
+        private void PlayerLocationChanged(IMapLocation location)
         {
-            var effect = town == null ? GameSoundEffect.TownLeft : GameSoundEffect.TownEntered;
+            var effect = location == null ? GameSoundEffect.TownLeft : GameSoundEffect.TownEntered;
             Play(effect);
         }
 

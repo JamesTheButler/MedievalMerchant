@@ -1,5 +1,6 @@
 ﻿using Common.Infrastructure.Gameplay;
 using Common.Types;
+using Features.Map.Pathfinding;
 using Features.Player.Retinue.Config.CompanionDatas;
 using Features.Player.Retinue.Config.LevelDatas;
 using Features.Player.Retinue.Logic.Modifiers;
@@ -22,7 +23,7 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
             var gameModel = GameplayContext.Instance.Model;
 
             var player = GameplayContext.Instance.Model.Player;
-            player.Location.CurrentTown.Observe(OnTownChanged);
+            player.Location.MapLocation.Observe(OnLocationChanged);
             
             _gameDateModel = GameplayContext.Instance.Model.DateModel;
 
@@ -41,9 +42,9 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
             _modifier.Update(level);
         }
         
-        private void OnTownChanged(Town town)
+        private void OnLocationChanged(IMapLocation location)
         {
-            if (town == null || _diplomatLevelData == null) return;
+            if (location is not Town town || _diplomatLevelData == null) return;
 
             if (_gameDateModel.GameDate.Value < _nextPossibleRepGainDate)
                 return;

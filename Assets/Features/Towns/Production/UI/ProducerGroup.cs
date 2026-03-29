@@ -9,6 +9,7 @@ using Common.Utility;
 using Features.Goods;
 using Features.Goods.Config;
 using Features.Goods.Recipe.Data;
+using Features.Map.Pathfinding;
 using Features.Player.Logic;
 using Features.Towns.Production.Logic;
 using NaughtyAttributes;
@@ -81,7 +82,7 @@ namespace Features.Towns.Production.UI
             unavailableGroup.SetActive(!isAvailable);
             titleText.text = emptyProducerString.GetLocalizedString(new { _int_ProducerIndex = _producerIndex + 1 });
 
-            _playerLocation.CurrentTown.Observe(OnPlayerTownChanged);
+            _playerLocation.MapLocation.Observe(OnPlayerLocationChanged);
 
             if (!_isAvailable)
                 return;
@@ -119,7 +120,7 @@ namespace Features.Towns.Production.UI
 
             if (_playerLocation != null)
             {
-                _playerLocation.CurrentTown.StopObserving(OnPlayerTownChanged);
+                _playerLocation.MapLocation.StopObserving(OnPlayerLocationChanged);
             }
 
             arrowT1T2.SetActive(false);
@@ -320,9 +321,9 @@ namespace Features.Towns.Production.UI
             deliveryCell.SetAmount(_town.Inventory.Get(t2GoodToDeliver));
         }
 
-        private void OnPlayerTownChanged(Town town)
+        private void OnPlayerLocationChanged(IMapLocation location)
         {
-            notHereBlockerGroup.SetActive(_town != town);
+            notHereBlockerGroup.SetActive(_town != location);
         }
     }
 }

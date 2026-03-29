@@ -1,13 +1,12 @@
 using Common.Infrastructure.Observation;
 using Features.Map.Pathfinding;
-using Features.Towns;
 using UnityEngine;
 
 namespace Features.Player.Logic
 {
-    public sealed class PlayerLocation : IMapLocation
+    public sealed class PlayerLocation : IMapEntity
     {
         public Observable<Vector2> WorldLocation { get; } = new();
-        public Observable<Town> CurrentTown { get; } = new();
+        public Observable<IMapLocation> MapLocation { get; } = new();
     }
 }

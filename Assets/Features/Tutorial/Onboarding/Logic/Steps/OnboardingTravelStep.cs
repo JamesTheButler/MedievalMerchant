@@ -1,5 +1,6 @@
 using System.Collections;
 using Common.Infrastructure.Gameplay;
+using Features.Map.Pathfinding;
 using Features.Player.Logic;
 using Features.Towns;
 using UnityEngine;
@@ -25,12 +26,12 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
         public void Initialize()
         {
             _playerLocation = GameplayContext.Instance.Model.Player.Location;
-            _playerLocation.CurrentTown.Observe(OnTownChanged);
+            _playerLocation.MapLocation.Observe(OnLocationChanged);
         }
 
-        private void OnTownChanged(Town town)
+        private void OnLocationChanged(IMapLocation location)
         {
-            if (town == _town)
+            if (location == _town)
             {
                 _hasArrived = true;
             }
@@ -45,7 +46,7 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
 
         public void CleanUp()
         {
-            _playerLocation.CurrentTown.StopObserving(OnTownChanged);
+            _playerLocation.MapLocation.StopObserving(OnLocationChanged);
         }
     }
 }

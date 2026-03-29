@@ -1,9 +1,9 @@
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Features.Localization.Data;
+using Features.Map.Pathfinding;
 using Features.Player.Caravan.Logic;
 using Features.Player.Retinue.Logic;
-using Features.Towns;
 
 namespace Features.Player.Logic
 {
@@ -14,7 +14,7 @@ namespace Features.Player.Logic
         private PlayerModel _playerModel;
         private PlayerLocation _playerLocation;
         private PlayerLocalizationResources _loc;
-        
+
         private UpkeepFundsChangeModifier _caravanUpkeepFundsModifier, _retinueUpkeepFundsModifier;
 
         public void Initialize()
@@ -22,7 +22,7 @@ namespace Features.Player.Logic
             _loc = ResourceManager.Instance.LocalizationResources.Player;
             _playerModel = GameplayContext.Instance.Model.Player;
             _playerLocation = _playerModel.Location;
-            _playerLocation.CurrentTown.Observe(OnTownEntered);
+            _playerLocation.MapLocation.Observe(OnLocationChanged);
 
             _caravanManager = GameplayContext.Instance.Model.Player.CaravanManager;
             _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
@@ -32,9 +32,9 @@ namespace Features.Player.Logic
             _playerModel.FundsChange.AddModifier(_retinueUpkeepFundsModifier);
         }
 
-        private void OnTownEntered(Town town)
+        private void OnLocationChanged(IMapLocation location)
         {
-            if (town == null)
+            if (location == null)
             {
                 _playerModel.FundsChange.AddModifier(_caravanUpkeepFundsModifier);
             }
@@ -46,7 +46,7 @@ namespace Features.Player.Logic
 
         public void CleanUp()
         {
-            _playerLocation.CurrentTown.StopObserving(OnTownEntered);
+            _playerLocation.MapLocation.StopObserving(OnLocationChanged);
         }
     }
 }

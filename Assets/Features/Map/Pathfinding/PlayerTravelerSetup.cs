@@ -1,7 +1,6 @@
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Observation;
 using Common.UI.Elements;
-using Features.Towns;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -48,16 +47,16 @@ namespace Features.Map.Pathfinding
             }
         }
 
-        private void OnArrived(Town town)
+        private void OnArrived(IMapLocation location)
         {
             var player = GameplayContext.Instance.Model.Player;
-            player.Location.CurrentTown.Value = town;
+            player.Location.MapLocation.Value = location;
         }
 
         private void OnDeparted()
         {
             var player = GameplayContext.Instance.Model.Player;
-            player.Location.CurrentTown.Value = null;
+            player.Location.MapLocation.Value = null;
         }
     }
 }

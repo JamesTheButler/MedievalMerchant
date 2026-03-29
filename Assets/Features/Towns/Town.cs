@@ -19,11 +19,12 @@ using Features.Towns.Missions;
 using Features.Towns.Production.Logic;
 using Features.Towns.Reputation.Logic;
 using Features.Trade.Logic.Price;
+using Features.Map.Pathfinding;
 using UnityEngine;
 
 namespace Features.Towns
 {
-    public sealed class Town
+    public sealed class Town : IMapLocation
     {
         private const Tier StartTier = Common.Types.Tier.Tier1;
 

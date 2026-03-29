@@ -2,8 +2,8 @@ using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Observation;
 using Features.Map;
+using Features.Map.Pathfinding;
 using Features.Ticking.Logic;
-using Features.Towns;
 
 namespace Features.Player.Logic
 {
@@ -22,7 +22,7 @@ namespace Features.Player.Logic
             _navigationService = GameplayContext.Instance.Services.NavigationService;
 
             _bindings.Track(
-                _playerLocation.CurrentTown.Observe(OnTownChanged),
+                _playerLocation.MapLocation.Observe(OnLocationChanged),
                 _navigationService.NavigationStarted.Observe(OnNavigationStarted)
             );
         }
@@ -32,14 +32,14 @@ namespace Features.Player.Logic
             _bindings.UnbindAll();
         }
 
-        private void OnTownChanged(Town town)
+        private void OnLocationChanged(IMapLocation location)
         {
-            if (town == null) return;
+            if (location == null) return;
 
             _gameSpeedModel.Pause();
         }
 
-        private void OnNavigationStarted(Town town)
+        private void OnNavigationStarted(IMapLocation location)
         {
             _gameSpeedModel.Resume();
         }

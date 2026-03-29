@@ -28,7 +28,7 @@ namespace Features.Trade.Logic
             if (_town == null)
                 return TradeResult.Failed(_loc.NoTownSelected());
 
-            if (_town != _player.Location.CurrentTown.Value)
+            if (_town != _player.Location.MapLocation.Value)
                 return TradeResult.Failed(_loc.WrongTownSelected(_town.Name));
 
             var townName = _town.Name;

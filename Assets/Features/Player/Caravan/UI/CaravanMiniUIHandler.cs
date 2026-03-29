@@ -1,7 +1,7 @@
 using Common.Infrastructure.Gameplay;
+using Features.Map.Pathfinding;
 using Features.Player.Caravan.Logic;
 using Features.Player.Logic;
-using Features.Towns;
 using UnityEngine;
 
 namespace Features.Player.Caravan.UI
@@ -17,7 +17,7 @@ namespace Features.Player.Caravan.UI
         private void Start()
         {
             _player = GameplayContext.Instance.Model.Player;
-            _player.Location.CurrentTown.Observe(OnPlayerEnteredTown);
+            _player.Location.MapLocation.Observe(OnPlayerEnteredLocation);
 
             _caravanManager = _player.CaravanManager;
             _caravanManager.MoveSpeed.Observe(OnMoveSpeedChanged);
@@ -34,10 +34,10 @@ namespace Features.Player.Caravan.UI
             caravanMiniUI.SetMoveSpeed(moveSpeed);
         }
 
-        private void OnPlayerEnteredTown(Town town)
+        private void OnPlayerEnteredLocation(IMapLocation location)
         {
-            // toggle when player leaves town
-            caravanMiniUI.ToggleUpkeep(town == null);
+            // toggle when player leaves location
+            caravanMiniUI.ToggleUpkeep(location == null);
         }
     }
 }

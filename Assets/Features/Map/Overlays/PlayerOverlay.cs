@@ -1,8 +1,8 @@
 using Common.Infrastructure.Gameplay;
 using Common.UI.Elements;
 using Common.Utility;
+using Features.Map.Pathfinding;
 using Features.Player.Logic;
-using Features.Towns;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -28,37 +28,37 @@ namespace Features.Map.Overlays
 
             _animationHandler.Initialize(animation);
 
-            _playerLocation.CurrentTown.Observe(OnTownChanged);
+            _playerLocation.MapLocation.Observe(OnLocationChanged);
             _playerLocation.WorldLocation.Observe(OnWorldLocationChanged);
         }
 
         public override void CleanUp()
         {
             base.CleanUp();
-            _playerLocation.CurrentTown.StopObserving(OnTownChanged);
+            _playerLocation.MapLocation.StopObserving(OnLocationChanged);
             _playerLocation.WorldLocation.StopObserving(OnWorldLocationChanged);
             _animationHandler.CleanUp();
         }
 
         private void OnWorldLocationChanged(Vector2 worldLocation)
         {
-            if (_playerLocation.CurrentTown.Value != null)
+            if (_playerLocation.MapLocation.Value != null)
                 return;
 
             gameObject.transform.localPosition = worldLocation.FromXY(_zLevel);
         }
 
-        private void OnTownChanged(Town town)
+        private void OnLocationChanged(IMapLocation location)
         {
-            var isInTown = town != null;
+            var isAtLocation = location != null;
 
-            townOverlay.SetActive(isInTown);
-            worldOverlay.SetActive(!isInTown);
+            townOverlay.SetActive(isAtLocation);
+            worldOverlay.SetActive(!isAtLocation);
 
-            if (!isInTown)
+            if (!isAtLocation)
                 return;
 
-            gameObject.transform.localPosition = town.WorldLocation.FromXY(_zLevel);
+            gameObject.transform.localPosition = location.WorldLocation.FromXY(_zLevel);
         }
     }
 }
