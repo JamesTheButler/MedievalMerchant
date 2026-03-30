@@ -2,11 +2,9 @@ using Common.Infrastructure.Gameplay;
 using Common.Types;
 using Common.UI.Elements;
 using Common.UI.Elements.Cells;
-using Common.UI.Tooltips;
 using Features.Player.Logic;
 using Features.Towns;
 using Features.Trade.Logic;
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,9 +17,6 @@ namespace Features.Trade.UI
 
         [SerializeField]
         private TradeType tradeType;
-
-        [SerializeField, Required]
-        private SimpleErrorPopup errorPopupPrefab;
 
         private PlayerModel _player;
         private Selection _selection;

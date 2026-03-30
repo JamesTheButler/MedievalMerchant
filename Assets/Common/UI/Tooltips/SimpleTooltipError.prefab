@@ -88,7 +88,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 97690656
+  m_TextStyleHashCode: -1243527163
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 1633610182956398613}
   - component: {fileID: -2008164284476246594}
   - component: {fileID: 4997227304912111818}
+  - component: {fileID: 7138413686477476872}
   m_Layer: 5
   m_Name: SimpleTooltipError
   m_TagString: Untagged
@@ -319,3 +320,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
   m_VerticalFit: 2
+--- !u!114 &7138413686477476872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7373911500606536191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1425bf16df89d284ba63c36fcdb7234f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Animation.BlinkTween
+  canvasGroup: {fileID: -2795876213761683402}
+  fadeDuration: 0.08
+  startFadeAlpha: 0.25
+  blinkCount: 2
