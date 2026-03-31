@@ -70,7 +70,15 @@ namespace Features.Levels
             context.Services.Initialize();
             context.Systems.Initialize();
 
-            SetStartTown(levelInfo, towns, player);
+            if (context.Model.Camp != null)
+            {
+                player.Location.MapLocation.Value = context.Model.Camp;
+                player.Location.WorldLocation.Value = context.Model.Camp.WorldLocation;
+            }
+            else
+            {
+                SetStartTown(levelInfo, towns, player);
+            }
 
             player.CaravanManager.UpgradeCart(0);
 
