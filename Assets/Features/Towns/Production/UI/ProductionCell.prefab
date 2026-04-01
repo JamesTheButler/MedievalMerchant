@@ -178,7 +178,6 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  defaultText: There are no available production recipes for this building.
   references:
     version: 2
     RefIds: []
@@ -196,7 +195,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2326368747380873812, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2335126984185299119, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
       propertyPath: m_margin.w
@@ -342,6 +341,7 @@ PrefabInstance:
     - {fileID: 4248308205964919256, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4677852672478612483, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
+    - {fileID: 2326368747380873812, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7330017870725814728, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
       insertIndex: -1
@@ -360,17 +360,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6170300655208893452}
   m_SourcePrefab: {fileID: 100100000, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
---- !u!114 &2941781977282835925 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2776188808676176578, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
-  m_PrefabInstance: {fileID: 1032536098755577623}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3331616451337603000 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2335126984185299119, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
@@ -405,10 +394,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goodIcon: {fileID: 7002302021534190047}
-  disabledIcon: {fileID: 2941781977282835925}
   cornerIcon: {fileID: 5337675294218737587}
   tooltipHandler: {fileID: 7275113186717250825}
   messageTooltip: {fileID: 8752071904842174190}
+  disabledAlpha: 0.5
   amountText: {fileID: 3331616451337603000}
   amountTextSecondary: {fileID: 7184678915189191951}
   rootCanvasGroup: {fileID: 7875724559877150340}

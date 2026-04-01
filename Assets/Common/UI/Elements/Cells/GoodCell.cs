@@ -2,6 +2,7 @@ using System;
 using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Tooltips;
+using Common.Utility;
 using Features.Goods.Config;
 using Features.Goods.UI;
 using JetBrains.Annotations;
@@ -20,13 +21,16 @@ namespace Common.UI.Elements.Cells
         public Good? Good { get; private set; }
 
         [SerializeField, Required]
-        private Image goodIcon, disabledIcon, cornerIcon;
+        private Image goodIcon, cornerIcon;
 
         [SerializeField]
         protected GoodTooltipHandler tooltipHandler;
 
         [SerializeField, Required]
         protected SimpleTooltipHandler messageTooltip;
+
+        [SerializeField]
+        private float disabledAlpha = 0.5f;
 
         protected readonly Lazy<GoodResources> GoodsConfig = new(() => ResourceManager.Instance.GoodResources);
 
@@ -63,7 +67,7 @@ namespace Common.UI.Elements.Cells
 
         public void SetEnabled(bool isEnabled)
         {
-            disabledIcon.gameObject.SetActive(!isEnabled);
+            goodIcon.color = goodIcon.color.WithAlpha(isEnabled ? 1f : disabledAlpha);
         }
 
         public void EnableCornerIcon(bool isEnabled = true, Sprite icon = null)

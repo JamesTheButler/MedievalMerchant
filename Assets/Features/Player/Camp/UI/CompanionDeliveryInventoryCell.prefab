@@ -25,12 +25,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6477116365447094534}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7949521389597973550}
+  m_Father: {fileID: 3534635152414443095}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.50980395, g: 0.39607847, b: 0.24313727, a: 1}
+  m_Color: {r: 0.23529413, g: 0.18039216, b: 0.1254902, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -207,14 +207,19 @@ PrefabInstance:
     - {fileID: 7683751165650186782, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 7330017870725814728, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
-      insertIndex: -1
+    - targetCorrespondingSourceObject: {fileID: 4244255683702047665, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
+      insertIndex: 1
       addedObject: {fileID: 7867598158150109615}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5228330734817415516, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3289646784092047063}
   m_SourcePrefab: {fileID: 100100000, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
+--- !u!224 &3534635152414443095 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4244255683702047665, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
+  m_PrefabInstance: {fileID: 858828529045587430}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4856543843664221370 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5228330734817415516, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
@@ -262,8 +267,4 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!224 &7949521389597973550 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7330017870725814728, guid: 0fced0f86062b5d448b8fb6989ac9599, type: 3}
-  m_PrefabInstance: {fileID: 858828529045587430}
-  m_PrefabAsset: {fileID: 0}
+  unhoverOnAwake: 1

@@ -7,10 +7,21 @@ namespace Common.UI.Elements
 {
     public sealed class Hoverable : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        public event Action Hovered, Unhovered;
+
+        [SerializeField]
+        private bool unhoverOnAwake;
+
         [SerializeField]
         private UnityEvent onHoverStart, onHoverEnd;
-        
-        public event Action Hovered, Unhovered;
+
+        private void Awake()
+        {
+            if (!unhoverOnAwake) return;
+
+            onHoverEnd.Invoke();
+            Unhovered?.Invoke();
+        }
 
         public void OnPointerEnter(PointerEventData eventData)
         {

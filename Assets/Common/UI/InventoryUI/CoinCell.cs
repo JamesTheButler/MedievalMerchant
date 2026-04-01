@@ -18,6 +18,9 @@ namespace Common.UI.InventoryUI
         [SerializeField, Required]
         private TMP_Text amountText, amountTextSecondary;
 
+        [SerializeField]
+        private float disabledAlpha = 0.5f;
+
         public void SetAmount(int amount)
         {
             var amountString = amount.ToString();
@@ -28,7 +31,7 @@ namespace Common.UI.InventoryUI
 
             amountText?.gameObject.SetActive(!isCompleted);
             completedIcon.gameObject.SetActive(isCompleted);
-            icon.color = icon.color.WithAlpha(isCompleted ? 0.25f : 1f);
+            icon.color = icon.color.WithAlpha(isCompleted ? disabledAlpha : 1f);
         }
 
         public void OnPointerClick(PointerEventData eventData)
