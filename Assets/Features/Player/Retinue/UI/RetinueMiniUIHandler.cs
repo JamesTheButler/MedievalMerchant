@@ -1,4 +1,6 @@
+using System;
 using Common.Infrastructure.Gameplay;
+using Common.Infrastructure.Observation;
 using Features.Player.Retinue.Logic;
 using NaughtyAttributes;
 using UnityEngine;
@@ -11,6 +13,7 @@ namespace Features.Player.Retinue.UI
         private RetinueMiniUI retinueMiniUI;
 
         private RetinueModel _retinueModel;
+        private readonly Bindings _bindings = new();
 
         private void Start()
         {
@@ -18,8 +21,13 @@ namespace Features.Player.Retinue.UI
             retinueMiniUI.Initialize();
             foreach (var (companion, companionModel) in _retinueModel.Companions)
             {
-                companionModel.Level.Observe(level => OnCompanionLevelChanged(companion, level));
+                _bindings.Track(companionModel.Level.Observe(level => OnCompanionLevelChanged(companion, level)));
             }
+        }
+
+        private void OnDestroy()
+        {
+            _bindings.UnbindAll();
         }
 
         private void OnCompanionLevelChanged(CompanionType companion, int level)

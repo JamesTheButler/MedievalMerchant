@@ -28,13 +28,16 @@ namespace Features.Player.Camp.UI
         private Image companionIcon;
 
         [SerializeField, Required]
-        private TMP_Text nameText, levelText, upkeepValueText;
+        private TMP_Text nameText, levelText, upkeepValueText, descriptionText, forHireText;
 
         [SerializeField]
         private LocalizedString levelString;
 
         [SerializeField, Required]
         private RectTransform effectsContainer, upgradeGoodsContainer;
+
+        [SerializeField, Required]
+        private GameObject notHiredDetails, hiredDetails;
 
         [SerializeField, Required]
         private DefaultListItem effectListItemPrefab;
@@ -62,6 +65,7 @@ namespace Features.Player.Camp.UI
 
             companionIcon.sprite = _companionResource.Icon;
             nameText.text = _companionResource.Name;
+            descriptionText.text = _companionResource.Description;
 
             upgradeGoodsContainer.DestroyChildren();
             effectsContainer.DestroyChildren();
@@ -92,11 +96,19 @@ namespace Features.Player.Camp.UI
 
         private void OnLevelChanged(int level)
         {
-            levelText.text = levelString.GetLocalizedString(new { _int_Level = level });
+            var isHired = level > 0;
+
+            forHireText.gameObject.SetActive(!isHired);
+            notHiredDetails.SetActive(!isHired);
+
+            levelText.gameObject.SetActive(isHired);
+            hiredDetails.SetActive(isHired);
+
+            if (!isHired)
+                return;
 
             effectsContainer.DestroyChildren();
-            if (level <= 0)
-                return;
+            levelText.text = levelString.GetLocalizedString(new { _int_Level = level });
 
             var levelInfo = _companionConfig.Get(companionType).GetLevelData(level);
             foreach (var line in levelInfo.Description.Split(Environment.NewLine))
@@ -127,7 +139,7 @@ namespace Features.Player.Camp.UI
             {
                 var cell = Instantiate(goodItemPrefab, upgradeGoodsContainer);
                 cell.SetGood(good);
-                //cell.EnableCornerIcon(false);
+
                 _missionBindings.Track(item.RemainingAmount.Observe(cell.SetAmount));
                 _missionBindings.Track(item.IsCompleted.Observe(isCompleted => cell.EnableCornerIcon(isCompleted)));
 

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
+using Common.Infrastructure.Observation;
 using Common.Utility;
 using Features.Player.Retinue.Config;
 using Features.Player.Retinue.Config.CompanionDatas;
@@ -52,6 +54,11 @@ namespace Features.Player.Retinue.UI
             InitializeUI();
 
             _retinueModel.Companions[companionType].Level.Observe(OnCompanionLevelChanged);
+        }
+
+        private void OnDestroy()
+        {
+            _retinueModel.Companions[companionType].Level.StopObserving(OnCompanionLevelChanged);
         }
 
         private void InitializeUI()
