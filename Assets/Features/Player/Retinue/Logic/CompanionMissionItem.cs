@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Features.Player.Retinue.Logic
 {
-    public sealed class CompanionMissionItem
+    public abstract class CompanionMissionItem
     {
         public int TargetAmount { get; }
 

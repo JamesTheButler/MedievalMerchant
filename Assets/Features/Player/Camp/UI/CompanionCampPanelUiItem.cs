@@ -105,7 +105,7 @@ namespace Features.Player.Camp.UI
             notHiredDetails.SetActive(!isHired);
             levelText.gameObject.SetActive(isHired);
             hiredDetails.SetActive(isHired);
-            
+
             upgradeText.text = isHired ? deliveryString.GetLocalizedString() : hireString.GetLocalizedString();
 
             if (!isHired)
@@ -114,7 +114,7 @@ namespace Features.Player.Camp.UI
             levelText.text = levelString.GetLocalizedString(new { _int_Level = level });
 
             effectsContainer.DestroyChildren();
-            
+
             var companionConfigData = _companionConfig.Get(companionType);
             var levelInfo = companionConfigData.GetLevelData(level);
             foreach (var line in levelInfo.Description.Split(Environment.NewLine))
@@ -173,7 +173,7 @@ namespace Features.Player.Camp.UI
             if (!mission.MissionItems.TryGetValue(good, out var item) || item.IsCompleted.Value)
                 return;
 
-            deliveryPanel.SetUpForGood(companionType, good);
+            deliveryPanel.SetUp(companionType, item);
             deliveryPanel.Open();
         }
 
@@ -183,7 +183,7 @@ namespace Features.Player.Camp.UI
             if (mission == null || mission.CoinCost.IsCompleted.Value)
                 return;
 
-            deliveryPanel.SetUpForCoin(companionType);
+            deliveryPanel.SetUp(companionType, mission.CoinCost);
             deliveryPanel.Open();
         }
     }

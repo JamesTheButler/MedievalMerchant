@@ -23,9 +23,9 @@ namespace Features.Localization.Data
             eventModifier,
             levelConditionModifier;
 
-        public string AllyEffectDescription => allyEffect.GetLocalizedString();
+        public string AllyEffectDescription => allyEffectDescription.GetLocalizedString();
         public string AllyEffect => allyEffect.GetLocalizedString();
-        public string FoeEffect => allyEffect.GetLocalizedString();
+        public string FoeEffect => foeEffect.GetLocalizedString();
         public string EventModifier => eventModifier.GetLocalizedString();
         public string LevelConditionModifier => levelConditionModifier.GetLocalizedString();
 

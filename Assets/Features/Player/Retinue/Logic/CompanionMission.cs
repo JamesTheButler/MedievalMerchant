@@ -15,13 +15,13 @@ namespace Features.Player.Retinue.Logic
 
         public CompanionMission(int cost, IReadOnlyDictionary<Good, int> goods)
         {
-            CoinCost = new CompanionMissionItem(cost);
+            CoinCost = new CompanionMissionCoinItem(cost);
             CoinCost.IsCompleted.Observe(OnMissionCompleted, false);
             _incompleteItemCount++;
 
             foreach (var (good, amount) in goods)
             {
-                var item = new CompanionMissionItem(amount);
+                var item = new CompanionMissionGoodItem(good, amount);
 
                 MissionItems.Add(good, item);
                 item.IsCompleted.Observe(OnMissionCompleted, false);

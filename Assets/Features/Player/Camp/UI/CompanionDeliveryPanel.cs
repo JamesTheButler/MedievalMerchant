@@ -1,5 +1,4 @@
 using Common.Infrastructure.Gameplay;
-using Common.Types;
 using Common.UI.Elements.Cells;
 using Common.UI.Elements.Panels;
 using Common.UI.InventoryUI;
@@ -19,7 +18,7 @@ namespace Features.Player.Camp.UI
         private Slider amountSlider;
 
         [SerializeField, Required]
-        private TMP_Text sliderValueText;
+        private TMP_Text sliderValueText, coinSubstituteText;
 
         [SerializeField, Required]
         private InventoryCell goodCell;
@@ -28,15 +27,14 @@ namespace Features.Player.Camp.UI
         private CoinCell coinCell;
 
         [SerializeField, Required]
-        private Button deliverButton;
+        private Button deliverButton, coinSubstituteButton;
 
         private PlayerModel _playerModel;
         private RetinueModel _retinueModel;
         private CompanionDeliveryService _deliveryService;
 
         private CompanionType _companionType;
-        private Good? _good;
-        private bool _isCoinDelivery;
+        private CompanionMissionItem _missionItem;
 
         protected override void OnInitialize()
         {
@@ -45,53 +43,50 @@ namespace Features.Player.Camp.UI
             _deliveryService = GameplayContext.Instance.Services.CompanionDeliveryService;
 
             deliverButton.onClick.AddListener(OnDeliverClicked);
+            coinSubstituteButton.onClick.AddListener(OnSubstituteClicked);
             amountSlider.onValueChanged.AddListener(OnSliderValueChanged);
         }
 
-        public void SetUpForGood(CompanionType companionType, Good good)
+        public void SetUp(CompanionType companionType, CompanionMissionItem missionItem)
         {
             _companionType = companionType;
-            _good = good;
-            _isCoinDelivery = false;
-        }
-
-        public void SetUpForCoin(CompanionType companionType)
-        {
-            _companionType = companionType;
-            _good = null;
-            _isCoinDelivery = true;
+            _missionItem = missionItem;
         }
 
         protected override void OnOpen()
         {
             gameObject.SetActive(true);
 
-            coinCell.gameObject.SetActive(_isCoinDelivery);
-            goodCell.gameObject.SetActive(!_isCoinDelivery);
-
             var mission = _retinueModel.Companions[_companionType].ActiveMission.Value;
             int inventoryAmount, remainingAmount;
 
-            if (_isCoinDelivery)
+            if (_missionItem is CompanionMissionGoodItem goodMissionItem)
             {
-                inventoryAmount = Mathf.FloorToInt(_playerModel.Inventory.Funds.Value);
-                remainingAmount = mission.CoinCost.RemainingAmount.Value;
-                coinCell.SetAmount(remainingAmount);
-            }
-            else
-            {
-                var good = _good!.Value;
+                coinCell.gameObject.SetActive(false);
+                goodCell.gameObject.SetActive(true);
+                coinSubstituteButton.gameObject.SetActive(true);
+                var good = goodMissionItem.Good;
                 inventoryAmount = _playerModel.Inventory.Get(good);
                 remainingAmount = mission.MissionItems[good].RemainingAmount.Value;
                 goodCell.Update(good, remainingAmount);
             }
+            else
+            {
+                coinCell.gameObject.SetActive(true);
+                goodCell.gameObject.SetActive(false);
+                coinSubstituteButton.gameObject.SetActive(false);
+
+                inventoryAmount = Mathf.FloorToInt(_playerModel.Inventory.Funds.Value);
+                remainingAmount = mission.CoinCost.RemainingAmount.Value;
+                coinCell.SetAmount(remainingAmount);
+            }
 
             var maxDeliverable = Mathf.Min(inventoryAmount, remainingAmount);
-            amountSlider.maxValue = maxDeliverable;
+            amountSlider.maxValue = remainingAmount;
             amountSlider.value = maxDeliverable;
-            //OnSliderValueChanged(maxDeliverable);
 
             RefreshDeliverButton();
+            RefreshSubstituteButton();
         }
 
         protected override void OnClose()
@@ -104,6 +99,7 @@ namespace Features.Player.Camp.UI
             var intValue = (int)value;
             sliderValueText.text = intValue.ToString();
             RefreshDeliverButton();
+            RefreshSubstituteButton();
         }
 
         private void OnDeliverClicked()
@@ -112,21 +108,51 @@ namespace Features.Player.Camp.UI
             if (amount <= 0)
                 return;
 
-            if (_isCoinDelivery)
+            _deliveryService.Deliver(_missionItem, amount);
+
+            Close();
+        }
+
+        private void OnSubstituteClicked()
+        {
+            var amount = (int)amountSlider.value;
+            if (amount <= 0)
+                return;
+
+            if (_missionItem is not CompanionMissionGoodItem goodMissionItem)
             {
-                _deliveryService.DeliverCoin(_companionType, amount);
+                Debug.LogError("Substitute payments only work for good mission items. Something went wrong.");
+                return;
             }
-            else
-            {
-                _deliveryService.DeliverGood(_companionType, _good!.Value, amount);
-            }
+
+            _deliveryService.Substitute(goodMissionItem, amount);
 
             Close();
         }
 
         private void RefreshDeliverButton()
         {
-            deliverButton.interactable = (int)amountSlider.value > 0;
+            var selectedAmount = (int)amountSlider.value;
+            var amountInInventory = _missionItem is CompanionMissionGoodItem goodMissionItem
+                ? _playerModel.Inventory.Get(goodMissionItem.Good)
+                : _playerModel.Inventory.Funds.Value;
+
+            deliverButton.interactable = selectedAmount > 0 && selectedAmount <= amountInInventory;
+        }
+
+        private void RefreshSubstituteButton()
+        {
+            if (_missionItem is not CompanionMissionGoodItem goodMissionItem)
+                return;
+
+            var selectedAmount = (int)amountSlider.value;
+            var substituteCost = selectedAmount * goodMissionItem.SubstituteCostSingle;
+
+            coinSubstituteButton.interactable =
+                selectedAmount > 0 &&
+                substituteCost <= _playerModel.Inventory.Funds.Value;
+
+            coinSubstituteText.text = $"{substituteCost:0.#}";
         }
     }
 }

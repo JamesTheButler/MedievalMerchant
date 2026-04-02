@@ -28,6 +28,9 @@ namespace Features.Player.Retinue.Config
         [field: SerializeField]
         public ArchitectCompanionData ArchitectData { get; private set; }
 
+        [field: SerializeField]
+        public float GoodMissionSubstituteFactor { get; private set; } = 3f;
+        
         public CompanionConfigData Get(CompanionType companionType)
         {
             return companionType switch

@@ -9,84 +9,59 @@ namespace Features.Player.Retinue.Logic
     public sealed class CompanionDeliveryService : IService
     {
         private PlayerModel _player;
-        private RetinueModel _retinueModel;
         private Inventory.Inventory _playerInventory;
 
         public void Initialize()
         {
             _player = GameplayContext.Instance.Model.Player;
             _playerInventory = _player.Inventory;
-            _retinueModel = _player.RetinueModel;
         }
 
         public void CleanUp() { }
 
-        public void DeliverGood(CompanionType companionType, Good good, int amount)
+        public void Substitute(CompanionMissionGoodItem goodMissionItem, int goodAmount)
         {
-            if (amount <= 0)
-                return;
-
-            var companion = _retinueModel.Companions[companionType];
-            var mission = companion.ActiveMission.Value;
-
-            if (mission == null)
+            var coinAmount = goodAmount * goodMissionItem.SubstituteCostSingle;
+            if (!_player.Inventory.HasFunds(coinAmount))
             {
-                Debug.LogWarning($"No active mission for {companionType}.");
+                Debug.LogWarning($"Player does not have {coinAmount} coin to substitute for {goodMissionItem.Good}.");
                 return;
             }
 
-            if (!mission.MissionItems.TryGetValue(good, out var missionItem))
-            {
-                Debug.LogWarning($"Mission for {companionType} does not require {good}.");
-                return;
-            }
-
-            if (missionItem.IsCompleted.Value)
-                return;
-
-            var deliverAmount = Mathf.Min(amount, missionItem.RemainingAmount.Value);
-            if (deliverAmount <= 0)
-                return;
-
-            if (!_player.Inventory.HasGood(good, deliverAmount))
-            {
-                Debug.LogWarning($"Player does not have {deliverAmount}x {good}.");
-                return;
-            }
-
-            _playerInventory.RemoveGood(good, deliverAmount);
-            mission.Deliver(good, deliverAmount);
+            goodMissionItem.Deliver(goodAmount);
+            _player.Inventory.RemoveFunds(coinAmount);
         }
 
-        public void DeliverCoin(CompanionType companionType, int amount)
+        public void Deliver(CompanionMissionItem missionItem, int amount)
         {
-            if (amount <= 0)
+            var deliverableAmount = Mathf.Min(amount, missionItem.RemainingAmount.Value);
+            if (deliverableAmount <= 0)
                 return;
 
-            var companion = _retinueModel.Companions[companionType];
-            var mission = companion.ActiveMission.Value;
-
-            if (mission == null)
+            switch (missionItem)
             {
-                Debug.LogWarning($"No active mission for {companionType}.");
-                return;
+                case CompanionMissionGoodItem goodMissionItem:
+                    if (!_player.Inventory.HasGood(goodMissionItem.Good, deliverableAmount))
+                    {
+                        Debug.LogWarning($"Player does not have {deliverableAmount}x {goodMissionItem.Good}.");
+                        return;
+                    }
+
+                    _player.Inventory.RemoveGood(goodMissionItem.Good, deliverableAmount);
+                    break;
+
+                case CompanionMissionCoinItem:
+                    if (!_playerInventory.HasFunds(deliverableAmount))
+                    {
+                        Debug.LogWarning($"Player does not have {deliverableAmount} funds.");
+                        return;
+                    }
+
+                    _player.Inventory.RemoveFunds(deliverableAmount);
+                    break;
             }
 
-            if (mission.CoinCost.IsCompleted.Value)
-                return;
-
-            var deliverAmount = Mathf.Min(amount, mission.CoinCost.RemainingAmount.Value);
-            if (deliverAmount <= 0)
-                return;
-
-            if (!_playerInventory.HasFunds(deliverAmount))
-            {
-                Debug.LogWarning($"Player does not have {deliverAmount} funds.");
-                return;
-            }
-
-            _playerInventory.RemoveFunds(deliverAmount);
-            mission.DeliverCoin(deliverAmount);
+            missionItem.Deliver(amount);
         }
     }
 }
