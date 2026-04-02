@@ -28,10 +28,10 @@ namespace Features.Player.Camp.UI
         private Image companionIcon;
 
         [SerializeField, Required]
-        private TMP_Text nameText, levelText, upkeepValueText, descriptionText, forHireText;
+        private TMP_Text nameText, levelText, upkeepValueText, descriptionText, forHireText, upgradeText;
 
         [SerializeField]
-        private LocalizedString levelString;
+        private LocalizedString levelString, deliveryString, hireString;
 
         [SerializeField, Required]
         private RectTransform effectsContainer, upgradeGoodsContainer;
@@ -47,6 +47,9 @@ namespace Features.Player.Camp.UI
 
         [SerializeField, Required]
         private InventoryCell goodItemPrefab;
+
+        [SerializeField, Required]
+        private GameObject upgradeGroup;
 
         [SerializeField, Required]
         private CompanionDeliveryPanel deliveryPanel;
@@ -100,17 +103,20 @@ namespace Features.Player.Camp.UI
 
             forHireText.gameObject.SetActive(!isHired);
             notHiredDetails.SetActive(!isHired);
-
             levelText.gameObject.SetActive(isHired);
             hiredDetails.SetActive(isHired);
+            
+            upgradeText.text = isHired ? deliveryString.GetLocalizedString() : hireString.GetLocalizedString();
 
             if (!isHired)
                 return;
 
-            effectsContainer.DestroyChildren();
             levelText.text = levelString.GetLocalizedString(new { _int_Level = level });
 
-            var levelInfo = _companionConfig.Get(companionType).GetLevelData(level);
+            effectsContainer.DestroyChildren();
+            
+            var companionConfigData = _companionConfig.Get(companionType);
+            var levelInfo = companionConfigData.GetLevelData(level);
             foreach (var line in levelInfo.Description.Split(Environment.NewLine))
             {
                 if (line == string.Empty)
@@ -120,8 +126,14 @@ namespace Features.Player.Camp.UI
                 effectListItem.Text.text = line;
             }
 
+            // missions
             ResetUpgradeMissions();
-            TrackMissionItems();
+            var isMaxLevel = level >= companionConfigData.MaxLevel;
+            upgradeGroup.SetActive(!isMaxLevel);
+            if (!isMaxLevel)
+            {
+                TrackMissionItems();
+            }
         }
 
         private void OnUpkeepChanged(float upkeep)
