@@ -4,6 +4,7 @@ using Features.Audio.Data;
 using Features.Goods.Config;
 using Features.Goods.Recipe.Data;
 using Features.Localization.Data;
+using Features.Player.Camp.Data;
 using Features.Player.Retinue.Config;
 using Features.Player.Retinue.Config.Resources;
 using Features.Towns.Config;
@@ -33,6 +34,9 @@ namespace Common.Infrastructure
 
         [field: SerializeField, Required]
         public AvailabilityResources AvailabilityResources { get; private set; }
+
+        [field: SerializeField, Required]
+        public CampsiteResources CampsiteResources { get; private set; }
 
         [field: SerializeField, Required]
         public CaravanResources CaravanResources { get; private set; }
