@@ -2,12 +2,14 @@ using Common.Infrastructure.Gameplay;
 using Common.UI.Elements.Cells;
 using Common.UI.Elements.Panels;
 using Common.UI.InventoryUI;
+using Common.UI.Tooltips;
 using Features.Player.Logic;
 using Features.Player.Retinue;
 using Features.Player.Retinue.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace Features.Player.Camp.UI
@@ -28,6 +30,12 @@ namespace Features.Player.Camp.UI
 
         [SerializeField, Required]
         private Button deliverButton, coinSubstituteButton;
+
+        [SerializeField, Required]
+        private SimpleTooltipHandler deliverTooltip, coinSubstituteTooltip;
+
+        [SerializeField]
+        private LocalizedString notEnoughCoinString, notEnoughGoodString;
 
         private PlayerModel _playerModel;
         private RetinueModel _retinueModel;
@@ -65,6 +73,7 @@ namespace Features.Player.Camp.UI
                 coinCell.gameObject.SetActive(false);
                 goodCell.gameObject.SetActive(true);
                 coinSubstituteButton.gameObject.SetActive(true);
+                deliverTooltip.SetData(notEnoughGoodString.GetLocalizedString());
                 var good = goodMissionItem.Good;
                 inventoryAmount = _playerModel.Inventory.Get(good);
                 remainingAmount = mission.MissionItems[good].RemainingAmount.Value;
@@ -74,6 +83,7 @@ namespace Features.Player.Camp.UI
             {
                 coinCell.gameObject.SetActive(true);
                 goodCell.gameObject.SetActive(false);
+                deliverTooltip.SetData(notEnoughCoinString.GetLocalizedString());
                 coinSubstituteButton.gameObject.SetActive(false);
 
                 inventoryAmount = Mathf.FloorToInt(_playerModel.Inventory.Funds.Value);
@@ -137,7 +147,9 @@ namespace Features.Player.Camp.UI
                 ? _playerModel.Inventory.Get(goodMissionItem.Good)
                 : _playerModel.Inventory.Funds.Value;
 
-            deliverButton.interactable = selectedAmount > 0 && selectedAmount <= amountInInventory;
+            var isInteractable = selectedAmount > 0 && selectedAmount <= amountInInventory;
+            deliverButton.interactable = isInteractable;
+            deliverTooltip.SetEnabled(!isInteractable && selectedAmount != 0);
         }
 
         private void RefreshSubstituteButton()
@@ -148,10 +160,9 @@ namespace Features.Player.Camp.UI
             var selectedAmount = (int)amountSlider.value;
             var substituteCost = selectedAmount * goodMissionItem.SubstituteCostSingle;
 
-            coinSubstituteButton.interactable =
-                selectedAmount > 0 &&
-                substituteCost <= _playerModel.Inventory.Funds.Value;
-
+            var interactable = selectedAmount > 0 && substituteCost <= _playerModel.Inventory.Funds.Value;
+            coinSubstituteButton.interactable = interactable;
+            coinSubstituteTooltip.SetEnabled(!interactable && selectedAmount != 0);
             coinSubstituteText.text = $"{substituteCost:0.#}";
         }
     }

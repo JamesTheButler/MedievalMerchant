@@ -309,6 +309,29 @@ MonoBehaviour:
   coinCell: {fileID: 6106532422702003618}
   deliverButton: {fileID: 6156151240350473975}
   coinSubstituteButton: {fileID: 6604629062802047141}
+  deliverTooltip: {fileID: 2956559488288471625}
+  coinSubstituteTooltip: {fileID: 7730955959475113703}
+  notEnoughCoinString:
+    m_TableReference:
+      m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
+    m_TableEntryReference:
+      m_KeyId: 13930291201
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  notEnoughGoodString:
+    m_TableReference:
+      m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
+    m_TableEntryReference:
+      m_KeyId: 15622948470644736
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!222 &7527706546168002499
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -623,6 +646,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2221790527321945402, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2114719749597005669}
+    - targetCorrespondingSourceObject: {fileID: 2221790527321945402, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2956559488288471625}
     - targetCorrespondingSourceObject: {fileID: 4212881486466791452, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1452721249978963613}
@@ -646,6 +672,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 2
   m_VerticalFit: 0
+--- !u!114 &2956559488288471625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818579160825789644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 0
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  text:
+    m_TableReference:
+      m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
+    m_TableEntryReference:
+      m_KeyId: 15622948470644736
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &4440179582586647018 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4212881486466791452, guid: 60380833e0ea23f40877d37250ce3015, type: 3}
@@ -1723,7 +1778,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7640409567795513778, guid: 182333c480d56ab4ea533c0a29480bd1, type: 3}
       propertyPath: m_Name
-      value: TwoSidedButton
+      value: Substitute Button
       objectReference: {fileID: 0}
     - target: {fileID: 7823034830527547276, guid: 182333c480d56ab4ea533c0a29480bd1, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1785,8 +1840,45 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 58623929609681345, guid: 182333c480d56ab4ea533c0a29480bd1, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7640409567795513778, guid: 182333c480d56ab4ea533c0a29480bd1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7730955959475113703}
   m_SourcePrefab: {fileID: 100100000, guid: 182333c480d56ab4ea533c0a29480bd1, type: 3}
+--- !u!1 &1728174791242867358 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7640409567795513778, guid: 182333c480d56ab4ea533c0a29480bd1, type: 3}
+  m_PrefabInstance: {fileID: 9075744826357607212}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7730955959475113703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728174791242867358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: ffe8c9b243e235549901459fcd498d18, type: 3}
+  enabledOnStart: 0
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  text:
+    m_TableReference:
+      m_TableCollectionName: GUID:7b8f8b3f3104a264099230988226cdf7
+    m_TableEntryReference:
+      m_KeyId: 13930291201
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!224 &5447736463275793821 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3920870175890306737, guid: 182333c480d56ab4ea533c0a29480bd1, type: 3}
@@ -1797,7 +1889,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2764047945650924425, guid: 182333c480d56ab4ea533c0a29480bd1, type: 3}
   m_PrefabInstance: {fileID: 9075744826357607212}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1728174791242867358}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
