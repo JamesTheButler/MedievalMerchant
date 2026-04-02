@@ -3,6 +3,7 @@ using System.Linq;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Types;
+using Features.Goods;
 using Features.Player.Retinue.Config;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Features.Player.Retinue.Logic
         private CompanionConfig _companionConfig;
         private CompanionModel _companionModel;
         private RetinueModel _retinueModel;
+        private GoodPool _goodPool;
 
         public CompanionMissionSystem(CompanionType companionType)
         {
@@ -26,6 +28,7 @@ namespace Features.Player.Retinue.Logic
             _companionConfig = ConfigurationManager.Configurations.CompanionConfig;
             _retinueModel = GameplayContext.Instance.Model.Player.RetinueModel;
             _companionModel = _retinueModel.Companions[_companionType];
+            _goodPool = GameplayContext.Instance.Model.GoodPool;
 
             _companionModel.Level.Observe(OnLevelChanged);
         }
@@ -48,9 +51,18 @@ namespace Features.Player.Retinue.Logic
             var coinCost = ApplyNegotiatorDiscount(nextMissionConfig.Cost);
 
             var missionTargets = new Dictionary<Good, int>();
-            foreach (var item in nextMissionConfig.Items)
+            foreach (var (goodTier, countData) in nextMissionConfig.ItemsPerTier)
             {
-                missionTargets.Add(item.Good, item.Amount);
+                var poolSize = _goodPool.GetSize(goodTier);
+                var pickedGoods = new HashSet<Good>();
+                while (pickedGoods.Count < countData.AmountOfDifferentGoods && pickedGoods.Count < poolSize)
+                {
+                    var pickedGood = _goodPool.GetRandom(goodTier);
+                    if (!pickedGoods.Add(pickedGood))
+                        continue;
+
+                    missionTargets.Add(pickedGood, countData.CountPerGood);
+                }
             }
 
             _companionModel.StartMission(coinCost, missionTargets);

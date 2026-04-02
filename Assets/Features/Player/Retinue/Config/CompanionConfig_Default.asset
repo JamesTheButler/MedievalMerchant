@@ -13,22 +13,38 @@ MonoBehaviour:
   m_Name: CompanionConfig_Default
   m_EditorClassIdentifier: 
   <ThiefData>k__BackingField:
-    <Icon>k__BackingField: {fileID: -558682726, guid: 5c0a124b1892e104ea9ed7f437ade6dc, type: 3}
-    <Name>k__BackingField: Thief
-    <Description>k__BackingField: Aqcuires things in creative ways.
     <IsImplemented>k__BackingField: 1
     <MissionConfig>k__BackingField:
       <ConfigsPerLevel>k__BackingField:
       - <Cost>k__BackingField: 100
-        <Items>k__BackingField:
-        - <Amount>k__BackingField: 3
-          <Good>k__BackingField: 0
-        - <Amount>k__BackingField: 5
-          <Good>k__BackingField: 7
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 3
       - <Cost>k__BackingField: 250
-        <Items>k__BackingField: []
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 3
+              <CountPerGood>k__BackingField: 5
+          - Key: 2
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 3
       - <Cost>k__BackingField: 1000
-        <Items>k__BackingField: []
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 1
+              <CountPerGood>k__BackingField: 10
+          - Key: 2
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 3
+              <CountPerGood>k__BackingField: 5
     typedLevels:
     - <Upkeep>k__BackingField: 1
       <TownEntranceGold>k__BackingField: 5
@@ -44,18 +60,42 @@ MonoBehaviour:
       <ReputationLoss>k__BackingField: 3
     <MinDaysBetweenThefts>k__BackingField: 1
   <NavigatorData>k__BackingField:
-    <Icon>k__BackingField: {fileID: 1761304294, guid: 5c0a124b1892e104ea9ed7f437ade6dc, type: 3}
-    <Name>k__BackingField: Navigator
-    <Description>k__BackingField: Gets you places.
     <IsImplemented>k__BackingField: 1
     <MissionConfig>k__BackingField:
       <ConfigsPerLevel>k__BackingField:
       - <Cost>k__BackingField: 100
-        <Items>k__BackingField: []
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 3
       - <Cost>k__BackingField: 250
-        <Items>k__BackingField: []
-      - <Cost>k__BackingField: 500
-        <Items>k__BackingField: []
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 3
+              <CountPerGood>k__BackingField: 5
+          - Key: 2
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 1
+              <CountPerGood>k__BackingField: 3
+      - <Cost>k__BackingField: 1000
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 7
+          - Key: 2
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 5
+          - Key: 3
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 1
+              <CountPerGood>k__BackingField: 3
     typedLevels:
     - <Upkeep>k__BackingField: 1
       <SpeedBonus>k__BackingField: 0.1
@@ -67,18 +107,42 @@ MonoBehaviour:
       <SpeedBonus>k__BackingField: 0.5
       <UpkeepReduction>k__BackingField: 0.5
   <NegotiatorData>k__BackingField:
-    <Icon>k__BackingField: {fileID: 255806927, guid: 5c0a124b1892e104ea9ed7f437ade6dc, type: 3}
-    <Name>k__BackingField: Negotiator
-    <Description>k__BackingField: Strikes quite the bargain.
     <IsImplemented>k__BackingField: 1
     <MissionConfig>k__BackingField:
       <ConfigsPerLevel>k__BackingField:
       - <Cost>k__BackingField: 50
-        <Items>k__BackingField: []
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 3
       - <Cost>k__BackingField: 200
-        <Items>k__BackingField: []
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 3
+              <CountPerGood>k__BackingField: 5
+          - Key: 2
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 1
+              <CountPerGood>k__BackingField: 3
       - <Cost>k__BackingField: 500
-        <Items>k__BackingField: []
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 7
+          - Key: 2
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 5
+          - Key: 3
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 1
+              <CountPerGood>k__BackingField: 3
     typedLevels:
     - <Upkeep>k__BackingField: 1
       <PriceSavings>k__BackingField: 0.05
@@ -90,9 +154,6 @@ MonoBehaviour:
       <PriceSavings>k__BackingField: 0.25
       <UpgradeCostReduction>k__BackingField: 0.25
   <GuardData>k__BackingField:
-    <Icon>k__BackingField: {fileID: -1942871456, guid: 5c0a124b1892e104ea9ed7f437ade6dc, type: 3}
-    <Name>k__BackingField: Guard
-    <Description>k__BackingField: Gets you out of spicy situations.
     <IsImplemented>k__BackingField: 0
     <MissionConfig>k__BackingField:
       <ConfigsPerLevel>k__BackingField: []
@@ -108,18 +169,42 @@ MonoBehaviour:
     - <Upkeep>k__BackingField: 3
       <Strength>k__BackingField: 10
   <DiplomatData>k__BackingField:
-    <Icon>k__BackingField: {fileID: -1216225484, guid: 5c0a124b1892e104ea9ed7f437ade6dc, type: 3}
-    <Name>k__BackingField: Diplomat
-    <Description>k__BackingField: Rubs shoulders with the locals
     <IsImplemented>k__BackingField: 1
     <MissionConfig>k__BackingField:
       <ConfigsPerLevel>k__BackingField:
       - <Cost>k__BackingField: 100
-        <Items>k__BackingField: []
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 3
       - <Cost>k__BackingField: 250
-        <Items>k__BackingField: []
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 3
+              <CountPerGood>k__BackingField: 5
+          - Key: 2
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 1
+              <CountPerGood>k__BackingField: 3
       - <Cost>k__BackingField: 500
-        <Items>k__BackingField: []
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 7
+          - Key: 2
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 5
+          - Key: 3
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 1
+              <CountPerGood>k__BackingField: 3
     typedLevels:
     - <Upkeep>k__BackingField: 1
       <TownEntranceReputation>k__BackingField: 0.5
@@ -132,18 +217,42 @@ MonoBehaviour:
       <ReputationBoost>k__BackingField: 0.5
     <MinDaysBetweenRepGains>k__BackingField: 3
   <ArchitectData>k__BackingField:
-    <Icon>k__BackingField: {fileID: 824890814, guid: 5c0a124b1892e104ea9ed7f437ade6dc, type: 3}
-    <Name>k__BackingField: Architect
-    <Description>k__BackingField: Gets stuff done.
     <IsImplemented>k__BackingField: 1
     <MissionConfig>k__BackingField:
       <ConfigsPerLevel>k__BackingField:
       - <Cost>k__BackingField: 50
-        <Items>k__BackingField: []
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 3
       - <Cost>k__BackingField: 100
-        <Items>k__BackingField: []
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 3
+              <CountPerGood>k__BackingField: 5
+          - Key: 2
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 1
+              <CountPerGood>k__BackingField: 3
       - <Cost>k__BackingField: 500
-        <Items>k__BackingField: []
+        <ItemsPerTier>k__BackingField:
+          _serializedList:
+          - Key: 1
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 7
+          - Key: 2
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 2
+              <CountPerGood>k__BackingField: 5
+          - Key: 3
+            Value:
+              <AmountOfDifferentGoods>k__BackingField: 1
+              <CountPerGood>k__BackingField: 3
     typedLevels:
     - <Upkeep>k__BackingField: 1
       <ConstructionPriceReduction>k__BackingField: 0.05
@@ -151,3 +260,4 @@ MonoBehaviour:
       <ConstructionPriceReduction>k__BackingField: 0.15
     - <Upkeep>k__BackingField: 5
       <ConstructionPriceReduction>k__BackingField: 0.3
+  <GoodMissionSubstituteFactor>k__BackingField: 3
