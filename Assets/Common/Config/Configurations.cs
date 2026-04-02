@@ -1,11 +1,10 @@
 using Common.Utility;
 using Features.Audio.Music;
 using Features.Goods.Config;
-using Features.Levels.Conditions.Data;
 using Features.Levels.GameModifiers.Events.Data;
+using Features.Player.Camp.Logic;
 using Features.Player.Caravan.Config;
 using Features.Player.Retinue.Config;
-using Features.Player.Retinue.Logic;
 using Features.Ticking.Config;
 using Features.Towns.Config;
 using Features.Towns.Development.Config;
@@ -24,6 +23,9 @@ namespace Common.Config
         order = 0)]
     public sealed class Configurations : ScriptableObject
     {
+        [field: SerializeField, Required]
+        public CampConfig CampConfig { get; private set; }
+
         [field: SerializeField, Required]
         public CaravanConfig CaravanConfig { get; private set; }
 

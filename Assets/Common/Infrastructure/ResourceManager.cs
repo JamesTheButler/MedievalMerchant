@@ -36,7 +36,7 @@ namespace Common.Infrastructure
         public AvailabilityResources AvailabilityResources { get; private set; }
 
         [field: SerializeField, Required]
-        public CampsiteResources CampsiteResources { get; private set; }
+        public CampResources CampResources { get; private set; }
 
         [field: SerializeField, Required]
         public CaravanResources CaravanResources { get; private set; }

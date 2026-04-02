@@ -9,6 +9,8 @@ namespace Features.Trade
         [CanBeNull]
         public string Error { get; }
 
+        public bool HasError => Error != null;
+
         public static TradeResult Succeeded() => new(true, null);
         public static TradeResult Failed(string error) => new(false, error);
 

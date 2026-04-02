@@ -32,17 +32,16 @@ namespace Features.Trade.Logic
                 return TradeResult.Failed(_loc.WrongTownSelected(_town.Name));
 
             var townName = _town.Name;
-            var goodName = _goodResources.ResourceData[good].GoodName;
             var buyingInventory = tradeType == TradeType.Buy ? _player.Inventory : _town.Inventory;
             var sellingInventory = tradeType == TradeType.Sell ? _player.Inventory : _town.Inventory;
 
             if (tradeType == TradeType.Sell && _town.ProductionManager.IsProduced(good))
-                return TradeResult.Failed(_loc.GoodProducedInTown(townName, goodName));
+                return TradeResult.Failed(_loc.GoodProducedInTown(townName, good));
 
             var goodTier = _goodResources.ResourceData[good].Tier;
             if (tradeType == TradeType.Sell && _town.Tier.Value < goodTier)
             {
-                return TradeResult.Failed(_loc.InsufficientTier(townName, goodName, goodTier));
+                return TradeResult.Failed(_loc.InsufficientTier(townName, good, goodTier));
             }
 
             // check if inventory policy prevents the purchase of the good
@@ -55,16 +54,16 @@ namespace Features.Trade.Logic
             if (availableAmount == 0)
             {
                 var message = tradeType == TradeType.Buy
-                    ? _loc.InsufficientGoodTown(townName, goodName)
-                    : _loc.InsufficientGoodYou(goodName);
+                    ? _loc.InsufficientGoodTown(townName, good)
+                    : _loc.InsufficientGoodYou(good);
                 return TradeResult.Failed(message);
             }
 
             if (availableAmount < amount)
             {
                 var message = tradeType == TradeType.Buy
-                    ? _loc.InsufficientAmountTown(townName, goodName)
-                    : _loc.InsufficientAmountYou(goodName);
+                    ? _loc.InsufficientAmountTown(townName, good)
+                    : _loc.InsufficientAmountYou(good);
                 return TradeResult.Failed(message);
             }
 

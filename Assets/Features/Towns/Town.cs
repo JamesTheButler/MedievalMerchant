@@ -53,7 +53,7 @@ namespace Features.Towns
 
         public IReadOnlyObservable<Tier> Tier => DevelopmentManager.Tier;
 
-        private readonly SlotBasedInventoryPolicy _inventoryPolicy;
+        private readonly SlotsPerTierInventoryPolicy _inventoryPolicy;
         private readonly RecipeResources _recipeResources;
         private readonly TownResources _townResources;
         private readonly TownConfig _townConfig;
@@ -66,7 +66,7 @@ namespace Features.Towns
             FlagFactory flagFactory,
             TownMapTile tile)
         {
-            _inventoryPolicy = new SlotBasedInventoryPolicy();
+            _inventoryPolicy = new SlotsPerTierInventoryPolicy();
 
             GridLocation = gridLocation;
             WorldLocation = worldLocation;

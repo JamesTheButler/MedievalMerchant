@@ -1,18 +1,22 @@
-using Common.Infrastructure.Observation;
+using System;
+using Common.Infrastructure;
 using Common.Types;
+using Features.Localization.Data;
 using Features.Trade;
 
 namespace Features.Inventory
 {
     public sealed class SlotCountInventoryPolicy : IInventoryPolicy
     {
-        private readonly Observable<int> _slotCountObservable;
-
+        private int _slotCount;
         private Inventory _inventory;
 
-        public SlotCountInventoryPolicy(Observable<int> slotCountObservable)
+        private readonly Lazy<TradeFailureStrings> _loc = new(() =>
+            ResourceManager.Instance.LocalizationResources.Trade.FailureStrings);
+
+        public SlotCountInventoryPolicy(int slotCount)
         {
-            _slotCountObservable = slotCountObservable;
+            SetSlotCount(slotCount);
         }
 
         public void SetInventory(Inventory inventory)
@@ -20,13 +24,17 @@ namespace Features.Inventory
             _inventory = inventory;
         }
 
+        public void SetSlotCount(int slotCount)
+        {
+            _slotCount = slotCount;
+        }
+
         public TradeResult CanAdd(Good good, int amount)
         {
-            var slotCount = _slotCountObservable.Value;
-            var canAdd = _inventory.HasGood(good) || slotCount > _inventory.Goods.Count;
+            var canAdd = _inventory.HasGood(good) || _slotCount > _inventory.Goods.Count;
             return canAdd
                 ? TradeResult.Succeeded()
-                : TradeResult.Failed($"All {slotCount} inventory slots are full.");
+                : TradeResult.Failed(_loc.Value.InsufficientSpace());
         }
     }
 }
