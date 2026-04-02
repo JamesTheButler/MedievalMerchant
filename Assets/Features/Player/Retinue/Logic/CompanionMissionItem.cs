@@ -23,7 +23,7 @@ namespace Features.Player.Retinue.Logic
         {
             if (IsCompleted)
             {
-                Debug.LogWarning($"Companion mission is already completed. Skipping delivery.");
+                Debug.LogWarning("Companion mission is already completed. Skipping delivery.");
                 return;
             }
 

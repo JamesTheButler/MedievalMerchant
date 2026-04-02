@@ -32,6 +32,13 @@ namespace Features.Player.Retinue.Logic
         public void StartMission(int coinCost, IReadOnlyDictionary<Good, int> targetGoods)
         {
             ActiveMission.Value = new CompanionMission(coinCost, targetGoods);
+            ActiveMission.Value.Completed.Observe(OnMissionCompleted);
+        }
+
+        private void OnMissionCompleted()
+        {
+            ActiveMission.Value.Completed.StopObserving(OnMissionCompleted);
+            ActiveMission.Value = null;
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Features.Player.Camp.UI
         private LocalizedString levelString, deliveryString, hireString;
 
         [SerializeField, Required]
-        private RectTransform effectsContainer, upgradeGoodsContainer;
+        private RectTransform effectsContainer, missionItemContainer;
 
         [SerializeField, Required]
         private GameObject notHiredDetails, hiredDetails;
@@ -70,30 +70,27 @@ namespace Features.Player.Camp.UI
             nameText.text = _companionResource.Name;
             descriptionText.text = _companionResource.Description;
 
-            upgradeGoodsContainer.DestroyChildren();
+            missionItemContainer.DestroyChildren();
             effectsContainer.DestroyChildren();
         }
 
         public void Bind()
         {
+            Unbind();
+
             _bindings.Track(
                 _companionModel.Level.Observe(OnLevelChanged),
-                _companionModel.Upkeep.Observe(OnUpkeepChanged)
+                _companionModel.Upkeep.Observe(OnUpkeepChanged),
+                _companionModel.ActiveMission.Observe(OnActiveMissionChanged)
             );
-
-            TrackMissionItems();
-        }
-
-        private void ResetUpgradeMissions()
-        {
-            _missionBindings.UnbindAll();
-            upgradeGoodsContainer.DestroyChildren();
         }
 
         public void Unbind()
         {
             _bindings.UnbindAll();
-            ResetUpgradeMissions();
+            _missionBindings.UnbindAll();
+
+            missionItemContainer.DestroyChildren();
             effectsContainer.DestroyChildren();
         }
 
@@ -113,8 +110,6 @@ namespace Features.Player.Camp.UI
 
             levelText.text = levelString.GetLocalizedString(new { _int_Level = level });
 
-            effectsContainer.DestroyChildren();
-
             var companionConfigData = _companionConfig.Get(companionType);
             var levelInfo = companionConfigData.GetLevelData(level);
             foreach (var line in levelInfo.Description.Split(Environment.NewLine))
@@ -125,15 +120,6 @@ namespace Features.Player.Camp.UI
                 var effectListItem = Instantiate(effectListItemPrefab, effectsContainer);
                 effectListItem.Text.text = line;
             }
-
-            // missions
-            ResetUpgradeMissions();
-            var isMaxLevel = level >= companionConfigData.MaxLevel;
-            upgradeGroup.SetActive(!isMaxLevel);
-            if (!isMaxLevel)
-            {
-                TrackMissionItems();
-            }
         }
 
         private void OnUpkeepChanged(float upkeep)
@@ -141,15 +127,19 @@ namespace Features.Player.Camp.UI
             upkeepValueText.text = upkeep.ToString("0.#");
         }
 
-        private void TrackMissionItems()
+        private void OnActiveMissionChanged(CompanionMission mission)
         {
-            var mission = _companionModel.ActiveMission.Value;
+            missionItemContainer.DestroyChildren();
+            _missionBindings.UnbindAll();
+
+            upgradeGroup.SetActive(mission != null);
+
             if (mission == null)
                 return;
 
             foreach (var (good, item) in mission.MissionItems)
             {
-                var cell = Instantiate(goodItemPrefab, upgradeGoodsContainer);
+                var cell = Instantiate(goodItemPrefab, missionItemContainer);
                 cell.SetGood(good);
 
                 _missionBindings.Track(item.RemainingAmount.Observe(cell.SetAmount));
@@ -159,7 +149,7 @@ namespace Features.Player.Camp.UI
                 cell.Clicked += () => OnGoodCellClicked(capturedGood);
             }
 
-            var coinCell = Instantiate(costItemPrefab, upgradeGoodsContainer);
+            var coinCell = Instantiate(costItemPrefab, missionItemContainer);
             _missionBindings.Track(mission.CoinCost.RemainingAmount.Observe(coinCell.SetAmount));
             coinCell.Clicked += OnCoinCellClicked;
         }
