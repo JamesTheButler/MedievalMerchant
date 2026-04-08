@@ -216,11 +216,18 @@ namespace Features.Cheats
         private void GiveGoods(string parameter)
         {
             var playerInventory = GameplayContext.Instance.Model.Player.Inventory;
-            var good = Enum.Parse<Good>(parameter, true);
 
-            if (playerInventory.InventoryPolicy.CanAdd(good, 50).Success)
+            var good = ReadAsGood(parameter);
+
+            if (good == null)
             {
-                playerInventory.AddGood(good, 50);
+                Debug.LogError($"Could not parse parameter {parameter} as a good.");
+                return;
+            }
+
+            if (playerInventory.InventoryPolicy.CanAdd(good.Value, 50).Success)
+            {
+                playerInventory.AddGood(good.Value, 50);
             }
         }
 
@@ -228,16 +235,29 @@ namespace Features.Cheats
         {
             var campStorageService = GameplayContext.Instance.Services.CampsiteStorageService;
             var playerInventory = GameplayContext.Instance.Model.Player.Inventory;
-            var good = Enum.Parse<Good>(parameter, true);
-            campStorageService.TransferToCamp(good, playerInventory.Get(good));
+            var good = ReadAsGood(parameter);
+            if (good == null)
+            {
+                Debug.LogError($"Could not parse parameter {parameter} as a good.");
+                return;
+            }
+
+            campStorageService.TransferToCamp(good.Value, playerInventory.Get(good.Value));
         }
 
         private void TakeFromCampStorage(string parameter)
         {
             var campStorageService = GameplayContext.Instance.Services.CampsiteStorageService;
             var campInventory = GameplayContext.Instance.Model.Camp.Inventory;
-            var good = Enum.Parse<Good>(parameter, true);
-            campStorageService.TransferToPlayer(good, campInventory.Get(good));
+            var good = ReadAsGood(parameter);
+
+            if (good == null)
+            {
+                Debug.LogError($"Could not parse parameter {parameter} as a good.");
+                return;
+            }
+
+            campStorageService.TransferToPlayer(good.Value, campInventory.Get(good.Value));
         }
 
         private void UpgradeSelectedTown()
@@ -393,6 +413,23 @@ namespace Features.Cheats
         public void HandleInvalidInput(string input)
         {
             ReportError($"Invalid cheat '{input}' has been entered.");
+        }
+
+        private Good? ReadAsGood(string parameter)
+        {
+            if (Enum.TryParse<Good>(parameter, true, out var good))
+                return good;
+
+            if (Enum.TryParse<Good>("T1" + parameter, true, out var good2))
+                return good2;
+
+            if (Enum.TryParse<Good>("T2" + parameter, true, out var good3))
+                return good3;
+
+            if (Enum.TryParse<Good>("T3" + parameter, true, out var good4))
+                return good4;
+
+            return null;
         }
 
         #endregion

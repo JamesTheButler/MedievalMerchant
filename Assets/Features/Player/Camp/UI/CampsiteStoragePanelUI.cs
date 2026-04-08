@@ -36,7 +36,7 @@ namespace Features.Player.Camp.UI
             if (cell.Good == null) return;
 
             var good = cell.Good!.Value;
-            _storageService.TransferToCamp(good, _campsite.Inventory.Get(good));
+            _storageService.TransferToPlayer(good, _campsite.Inventory.Get(good));
         }
 
         protected override void OnOpen()
