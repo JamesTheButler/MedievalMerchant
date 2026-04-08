@@ -13,7 +13,6 @@ using Features.Towns;
 using Features.Tutorial;
 using Features.Tutorial.Logic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
@@ -69,6 +68,8 @@ namespace Features.Cheats
             {
                 { "day", SetDay },
                 { "funds", AddFunds },
+                { "camp.store", StoreInCamp },
+                { "camp.take", TakeFromCampStorage },
                 { "reset.level", ResetLevelProgress },
                 { "tutorial", OpenTutorial },
                 { "give", GiveGoods },
@@ -131,7 +132,7 @@ namespace Features.Cheats
 
         private void EnterCamp()
         {
-            var campPanel = Object.FindFirstObjectByType<   CampsitePanelUI>(FindObjectsInactive.Include);
+            var campPanel = Object.FindFirstObjectByType<CampsitePanelUI>(FindObjectsInactive.Include);
             campPanel?.Open();
         }
 
@@ -203,10 +204,10 @@ namespace Features.Cheats
 
             selectedTown.ReputationModel.UpdateReputation(200f, "You cheated!!");
         }
-        
+
         private void SetTownReputationTo100InAll()
         {
-            foreach(var town in _model.Towns.Values)
+            foreach (var town in _model.Towns.Values)
             {
                 town.ReputationModel.UpdateReputation(200f, "You cheated!!");
             }
@@ -221,6 +222,22 @@ namespace Features.Cheats
             {
                 playerInventory.AddGood(good, 50);
             }
+        }
+
+        private void StoreInCamp(string parameter)
+        {
+            var campStorageService = GameplayContext.Instance.Services.CampsiteStorageService;
+            var playerInventory = GameplayContext.Instance.Model.Player.Inventory;
+            var good = Enum.Parse<Good>(parameter, true);
+            campStorageService.TransferToCamp(good, playerInventory.Get(good));
+        }
+
+        private void TakeFromCampStorage(string parameter)
+        {
+            var campStorageService = GameplayContext.Instance.Services.CampsiteStorageService;
+            var campInventory = GameplayContext.Instance.Model.Camp.Inventory;
+            var good = Enum.Parse<Good>(parameter, true);
+            campStorageService.TransferToPlayer(good, campInventory.Get(good));
         }
 
         private void UpgradeSelectedTown()

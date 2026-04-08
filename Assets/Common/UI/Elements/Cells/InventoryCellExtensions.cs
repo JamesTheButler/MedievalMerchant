@@ -6,7 +6,7 @@ namespace Common.UI.Elements.Cells
     [PublicAPI]
     public static class InventoryCellExtensions
     {
-        public static void Update(this InventoryCellBase cell, Good? good, int amount)
+        public static void Update(this InventoryCellBase cell, Good good, int amount)
         {
             cell.SetGood(good);
             cell.SetAmount(amount);
@@ -14,7 +14,8 @@ namespace Common.UI.Elements.Cells
 
         public static void Reset(this InventoryCellBase cell)
         {
-            cell.Update(null, 0);
+            cell.SetGood(null);
+            cell.SetAmount(0);
         }
 
         public static bool HasGood(this InventoryCellBase cell)

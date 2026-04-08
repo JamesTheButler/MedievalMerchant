@@ -5,6 +5,7 @@ using Features.Cheats;
 using Features.Levels.GameModifiers.Logic;
 using Features.Map;
 using Features.Notifications.Logic;
+using Features.Player.Camp.Logic;
 using Features.Player.Retinue.Logic;
 using Features.Ticking.Logic;
 using Features.Trade.Logic;
@@ -16,6 +17,7 @@ namespace Common.Infrastructure.Gameplay
         public TickingService TickingService { get; private set; }
         public CompanionUpgradeService CompanionUpgradeService { get; private set; }
         public CompanionDeliveryService CompanionDeliveryService { get; private set; }
+        public CampsiteStorageService CampsiteStorageService { get; private set; }
         public TradeService TradeService { get; private set; }
         public GameModifierService GameModifierService { get; private set; }
         public NotificationService NotificationService { get; private set; }
@@ -31,6 +33,7 @@ namespace Common.Infrastructure.Gameplay
             TickingService = new TickingService();
             CompanionUpgradeService = new CompanionUpgradeService();
             CompanionDeliveryService = new CompanionDeliveryService();
+            CampsiteStorageService = new CampsiteStorageService();
             TradeService = new TradeService();
             GameModifierService = new GameModifierService();
             NotificationService = new NotificationService();
@@ -42,6 +45,7 @@ namespace Common.Infrastructure.Gameplay
             _services.Add(TickingService);
             _services.Add(CompanionUpgradeService);
             _services.Add(CompanionDeliveryService);
+            _services.Add(CampsiteStorageService);
             _services.Add(TradeService);
             _services.Add(GameModifierService);
             _services.Add(NotificationService);

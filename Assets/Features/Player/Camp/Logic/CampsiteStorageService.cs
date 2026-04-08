@@ -8,7 +8,7 @@ using Features.Trade;
 
 namespace Features.Player.Camp.Logic
 {
-    public sealed class CampTransferService : IService
+    public sealed class CampsiteStorageService : IService
     {
         private Inventory.Inventory _camp, _player;
         private TradeFailureStrings _loc;
@@ -41,7 +41,7 @@ namespace Features.Player.Camp.Logic
 
             return TradeResult.Succeeded();
         }
-        
+
         public TradeResult TransferToCamp(Good good, int amount)
         {
             return Transfer(_player, _camp, good, amount, _loc.InsufficientGoodYou);

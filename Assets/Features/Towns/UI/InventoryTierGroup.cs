@@ -100,7 +100,7 @@ namespace Features.Towns.UI
             foreach (var inventoryCell in GetComponentsInChildren<InventoryCell>())
             {
                 _inventoryCells.Add(inventoryCell);
-                inventoryCell.Update(null, 0);
+                inventoryCell.Reset();
             }
         }
     }
