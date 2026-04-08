@@ -8,8 +8,8 @@ namespace Features.Player.Camp.UI
     public sealed class CampsitePanelUI : DynamicPanel
     {
         [SerializeField]
-        private GameObject companionTentButton; 
-        
+        private GameObject companionTentButton;
+
         private bool _isInteractable = true;
 
         public bool IsInteractable => _isInteractable;

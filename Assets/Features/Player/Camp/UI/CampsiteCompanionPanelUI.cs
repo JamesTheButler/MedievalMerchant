@@ -2,7 +2,7 @@ using Common.UI.Elements.Panels;
 
 namespace Features.Player.Camp.UI
 {
-    public class CampsiteCompanionPanelUI : DynamicPanel
+    public sealed class CampsiteCompanionPanelUI : DynamicPanel
     {
         private CompanionCampPanelUiItem[] _companionGroups;
 

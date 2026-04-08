@@ -19,7 +19,7 @@ using UnityEngine.UI;
 
 namespace Features.Player.Camp.UI
 {
-    public class CompanionCampPanelUiItem : MonoBehaviour
+    public sealed class CompanionCampPanelUiItem : MonoBehaviour
     {
         [SerializeField]
         private CompanionType companionType;
