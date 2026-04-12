@@ -16,9 +16,10 @@ Only these files are considered:
 The script compares entries by stable m_Id and always reports the latest key
 from HEAD, which naturally handles key renames.
 
+Requires: fpdf2 (pip install fpdf2)
+
 Usage:
     python LocReport.py <from_commit>
-    python LocReport.py <from_commit> --output LocReport.md
     python LocReport.py <from_commit> --max-commits 100
     python LocReport.py <from_commit> --force
 """
@@ -29,6 +30,7 @@ import argparse
 import subprocess
 import sys
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
@@ -64,6 +66,16 @@ class ChangedEntry:
     new_english: str
 
 
+@dataclass(frozen=True)
+class ReportData:
+    from_commit_short: str
+    to_commit_short: str
+    start_date: datetime
+    end_date: datetime
+    new_entries: Sequence[NewEntry]
+    changed_entries: Sequence[ChangedEntry]
+
+
 def main() -> int:
     arguments = parse_arguments()
 
@@ -75,6 +87,9 @@ def main() -> int:
         validate_commit(arguments.from_commit)
         ensure_reasonable_commit_range(arguments.from_commit, arguments.max_commits, arguments.force)
 
+        start_date = get_commit_date(arguments.from_commit, repository_root)
+        head_date = get_commit_date("HEAD", repository_root)
+
         start_snapshot = load_project_snapshot(arguments.from_commit, repository_root)
         head_snapshot = load_project_snapshot("HEAD", repository_root)
 
@@ -83,23 +98,26 @@ def main() -> int:
         head_commit = get_git_stdout(["rev-parse", "--short", "HEAD"], repository_root).strip()
         start_commit = get_git_stdout(["rev-parse", "--short", arguments.from_commit], repository_root).strip()
 
-        markdown_report = render_markdown_report(
+        report_data = ReportData(
             from_commit_short=start_commit,
             to_commit_short=head_commit,
+            start_date=start_date,
+            end_date=head_date,
             new_entries=new_entries,
             changed_entries=changed_entries,
         )
 
+        markdown_report = render_markdown_report(report_data)
         print(markdown_report)
 
-        if arguments.output_path is not None:
-            output_path = Path(arguments.output_path)
-            if not output_path.is_absolute():
-                output_path = repository_root / output_path
-            output_path.parent.mkdir(parents=True, exist_ok=True)
-            output_path.write_text(markdown_report, encoding="utf-8")
-            print(file=sys.stderr)
-            print(f"Wrote report to: {output_path}", file=sys.stderr)
+        pdf_filename = (
+            f"Localization_Change_Report_"
+            f"{start_date.strftime('%d%m%Y')}_{head_date.strftime('%d%m%Y')}.pdf"
+        )
+        folder_name = f"Changelogs"
+        pdf_path = repository_root / folder_name / pdf_filename
+        render_pdf_report(report_data, pdf_path)
+        print(f"\nPDF: {pdf_path}", file=sys.stderr)
 
         return 0
 
@@ -118,11 +136,6 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "from_commit",
         help="Git commit SHA, ref, or tag to compare against HEAD.",
-    )
-    parser.add_argument(
-        "--output",
-        dest="output_path",
-        help="Optional output path for the generated Markdown report.",
     )
     parser.add_argument(
         "--max-commits",
@@ -164,6 +177,13 @@ def validate_commit(commit_ref: str) -> None:
         get_git_stdout(["rev-parse", "--verify", f"{commit_ref}^{{commit}}"])
     except LocReportError as error:
         raise LocReportError(f"Commit could not be found: {commit_ref}") from error
+
+
+def get_commit_date(commit_ref: str, repository_root: Path) -> datetime:
+    date_text = get_git_stdout(
+        ["log", "-1", "--format=%ai", commit_ref], repository_root
+    ).strip()
+    return datetime.strptime(date_text[:19], "%Y-%m-%d %H:%M:%S")
 
 
 def ensure_reasonable_commit_range(from_commit: str, max_commits: int, force: bool) -> None:
@@ -413,27 +433,153 @@ def build_report_entries(
     return new_entries, changed_entries
 
 
-def render_markdown_report(
-    from_commit_short: str,
-    to_commit_short: str,
-    new_entries: Sequence[NewEntry],
-    changed_entries: Sequence[ChangedEntry],
-) -> str:
+def render_pdf_report(data: ReportData, output_path: Path) -> None:
+    from fpdf import FPDF
+
+    pdf = FPDF(orientation="L", format="A4")
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+
+    title = (
+        f"Localization Change Report "
+        f"{data.start_date.strftime('%d/%m/%Y')} - {data.end_date.strftime('%d/%m/%Y')}"
+    )
+    pdf.set_font("Helvetica", "B", 16)
+    pdf.cell(0, 10, title, new_x="LMARGIN", new_y="NEXT", align="C")
+
+    pdf.set_font("Helvetica", "", 9)
+    pdf.cell(
+        0, 6,
+        f"From: {data.from_commit_short}  |  To: {data.to_commit_short}",
+        new_x="LMARGIN", new_y="NEXT", align="C",
+    )
+    pdf.ln(6)
+
+    pdf.set_font("Helvetica", "B", 13)
+    pdf.cell(0, 8, "New localized strings", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(2)
+
+    if data.new_entries:
+        _render_pdf_table(
+            pdf,
+            headers=["Table", "Key", "English"],
+            col_widths=[55, 80, 140],
+            rows=[[e.table_name, e.key, e.english] for e in data.new_entries],
+        )
+    else:
+        pdf.set_font("Helvetica", "I", 10)
+        pdf.cell(0, 6, "None.", new_x="LMARGIN", new_y="NEXT")
+
+    pdf.ln(6)
+
+    pdf.set_font("Helvetica", "B", 13)
+    pdf.cell(0, 8, "Changed English strings", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(2)
+
+    if data.changed_entries:
+        _render_pdf_table(
+            pdf,
+            headers=["Table", "Key", "Old English", "New English"],
+            col_widths=[45, 70, 80, 80],
+            rows=[
+                [e.table_name, e.key, e.old_english, e.new_english]
+                for e in data.changed_entries
+            ],
+        )
+    else:
+        pdf.set_font("Helvetica", "I", 10)
+        pdf.cell(0, 6, "None.", new_x="LMARGIN", new_y="NEXT")
+
+    pdf.output(str(output_path))
+
+
+def _render_pdf_table(
+    pdf: "FPDF",
+    headers: Sequence[str],
+    col_widths: Sequence[int],
+    rows: Sequence[Sequence[str]],
+) -> None:
+    line_height = 6
+
+    pdf.set_font("Helvetica", "B", 9)
+    pdf.set_fill_color(220, 220, 220)
+    for header, width in zip(headers, col_widths):
+        pdf.cell(width, line_height, header, border=1, fill=True)
+    pdf.ln(line_height)
+
+    pdf.set_font("Helvetica", "", 8)
+    for row in rows:
+        max_lines = 1
+        wrapped: List[List[str]] = []
+        for cell_text, width in zip(row, col_widths):
+            char_width = pdf.get_string_width("x")
+            max_chars = max(int(width / char_width) - 1, 10)
+            lines = _wrap_text(cell_text, max_chars)
+            wrapped.append(lines)
+            max_lines = max(max_lines, len(lines))
+
+        row_height = line_height * max_lines
+
+        if pdf.get_y() + row_height > pdf.h - pdf.b_margin:
+            pdf.add_page()
+            pdf.set_font("Helvetica", "B", 9)
+            pdf.set_fill_color(220, 220, 220)
+            for header, width in zip(headers, col_widths):
+                pdf.cell(width, line_height, header, border=1, fill=True)
+            pdf.ln(line_height)
+            pdf.set_font("Helvetica", "", 8)
+
+        x_start = pdf.get_x()
+        y_start = pdf.get_y()
+
+        for col_index, (lines, width) in enumerate(zip(wrapped, col_widths)):
+            x = x_start + sum(col_widths[:col_index])
+            for line_index, line_text in enumerate(lines):
+                pdf.set_xy(x, y_start + line_index * line_height)
+                pdf.cell(width, line_height, line_text)
+            pdf.set_xy(x, y_start)
+            pdf.cell(width, row_height, "", border=1)
+
+        pdf.set_xy(x_start, y_start + row_height)
+
+
+def _wrap_text(text: str, max_chars: int) -> List[str]:
+    if len(text) <= max_chars:
+        return [text]
+
     lines: List[str] = []
-    lines.append("# Localization Change Report")
-    lines.append(f"From: `{from_commit_short}`")
-    lines.append(f"To: `{to_commit_short}`")
+    remaining = text
+    while remaining:
+        if len(remaining) <= max_chars:
+            lines.append(remaining)
+            break
+        split_at = remaining.rfind(" ", 0, max_chars)
+        if split_at <= 0:
+            split_at = max_chars
+        lines.append(remaining[:split_at])
+        remaining = remaining[split_at:].lstrip()
+
+    return lines if lines else [""]
+
+
+def render_markdown_report(data: ReportData) -> str:
+    lines: List[str] = []
+    lines.append(
+        f"# Localization Change Report "
+        f"{data.start_date.strftime('%d/%m/%Y')} - {data.end_date.strftime('%d/%m/%Y')}"
+    )
+    lines.append(f"From: `{data.from_commit_short}` | To: `{data.to_commit_short}`")
     lines.append("")
 
     lines.append("## New localized strings")
     lines.append("")
-    if new_entries:
+    if data.new_entries:
         lines.extend(
             render_markdown_table(
                 headers=["Table", "Key", "English"],
                 rows=[
                     [entry.table_name, entry.key, entry.english]
-                    for entry in new_entries
+                    for entry in data.new_entries
                 ],
             )
         )
@@ -443,13 +589,13 @@ def render_markdown_report(
 
     lines.append("## Changed English strings")
     lines.append("")
-    if changed_entries:
+    if data.changed_entries:
         lines.extend(
             render_markdown_table(
                 headers=["Table", "Key", "Old English", "New English"],
                 rows=[
                     [entry.table_name, entry.key, entry.old_english, entry.new_english]
-                    for entry in changed_entries
+                    for entry in data.changed_entries
                 ],
             )
         )
