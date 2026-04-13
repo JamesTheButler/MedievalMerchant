@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Features.Player.Camp.UI
 {
-    public sealed class CampsiteStoragePanelUI : DynamicPanel
+    public sealed class CampsiteStorageUI : DynamicPanel
     {
         [SerializeField, Required]
         private InventoryCellContainer inventoryCells;

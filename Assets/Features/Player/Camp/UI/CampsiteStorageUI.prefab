@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 7647152960465553479}
   - component: {fileID: 4843774759012915856}
   - component: {fileID: 3572520237357310015}
-  - component: {fileID: 3020077665120105854}
+  - component: {fileID: 5325232741246551512}
   m_Layer: 5
   m_Name: Background with Retinue
   m_TagString: Untagged
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &3020077665120105854
+--- !u!114 &5325232741246551512
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -258,10 +258,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4790750990626641271}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 382f7410b9fb47ffa30af0a2d97e1321, type: 3}
+  m_Script: {fileID: 11500000, guid: ca22309f9cb14aa9bb95733d5772cebe, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.FeatureFlagObjectDestroyer
-  keepIf: 2
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.FeatureFlags.FeatureFlagObjectEnabler
+  flags: 2
+  condition: 0
+  action: 0
 --- !u!1 &4962248032054372796
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +297,7 @@ RectTransform:
   m_Father: {fileID: 103224036102563925}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -351,7 +353,7 @@ GameObject:
   - component: {fileID: 8851367292149923560}
   - component: {fileID: 5816869838534075592}
   m_Layer: 5
-  m_Name: CampsiteStoragePanelUI
+  m_Name: CampsiteStorageUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -564,7 +566,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2852368459798313109
 RectTransform:
   m_ObjectHideFlags: 0
@@ -654,7 +656,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca22309f9cb14aa9bb95733d5772cebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Features.Levels.FeatureFlags.FeatureFlagObjectEnabler
-  enableIf: 2
+  flags: 2
+  condition: 0
+  action: 1
 --- !u!1 &6804017833405662761
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,11 +1250,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1016231570279540700, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: staticString.m_TableEntryReference.m_KeyId
-      value: 518110797854
+      value: 17738325132140544
       objectReference: {fileID: 0}
     - target: {fileID: 1016231570279540700, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: staticString.m_TableReference.m_TableCollectionName
-      value: GUID:6deeca01110b62f428f9ebb535eb63e7
+      value: GUID:681de063b46dec0429f6cb4e7ce41956
       objectReference: {fileID: 0}
     - target: {fileID: 2845166165479156792, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_Name
@@ -1338,7 +1342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_text
-      value: Companions
+      value: Storage
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_fontSize
