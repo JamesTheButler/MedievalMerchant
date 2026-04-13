@@ -1,6 +1,6 @@
 using System;
 
-namespace Features.Levels
+namespace Features.Levels.FeatureFlags
 {
     [Flags]
     public enum LevelFeatureFlags

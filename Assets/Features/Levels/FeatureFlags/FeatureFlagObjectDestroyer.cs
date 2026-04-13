@@ -2,7 +2,7 @@ using Common.Infrastructure.Gameplay;
 using Common.UI.Elements;
 using UnityEngine;
 
-namespace Features.Levels
+namespace Features.Levels.FeatureFlags
 {
     public sealed class FeatureFlagObjectDestroyer : InitializableBehavior
     {
