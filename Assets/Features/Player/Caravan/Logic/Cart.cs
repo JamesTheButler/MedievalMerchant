@@ -1,3 +1,4 @@
+using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Features.Player.Caravan.Config;
@@ -28,7 +29,8 @@ namespace Features.Player.Caravan.Logic
             Upkeep.Value = upkeep;
 
             _baseCostModifier = new CartUpgradeBaseCostModifier(level + 1);
-            UpgradeCost = new ModifiableVariable("Upgrade Cost", false, _baseCostModifier);
+            var loc = ResourceManager.Instance.LocalizationResources.Player;
+            UpgradeCost = new ModifiableVariable(loc.UpgradeCost, false, _baseCostModifier);
         }
 
         public void Update(int level, CaravanUpgradeData upgradeData)
