@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
+using Common.Types;
 using Common.UI.Elements.Cells;
 using Common.UI.Tooltips;
 using Common.UI.Utility;
@@ -130,6 +131,11 @@ namespace Features.Player.Caravan.UI
             upkeepUpgradeIcon.enabled = false;
         }
 
+        public void UpdateCell(int index, Good good, int amount)
+        {
+            inventoryCells[index].Update(good, amount);
+        }
+        
         private void OnPlayerFundsChanged(float funds)
         {
             UpgradeButton.interactable = _cart.UpgradeCost <= funds;

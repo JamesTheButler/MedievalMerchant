@@ -4,7 +4,7 @@ namespace Features.Player.Logic
 {
     public static class InventorySlotMapperExtension
     {
-        public static (int CartIndex, int SlotIndex) GetOrAddSlotIndex(this InventorySlotMapper self, Good good)
+        public static (int CartIndex, int SlotIndex) GetOrAddSlotIndexC(this InventorySlotMapper self, Good good)
         {
             var index = self.GetOrAddSlotIndex(good);
             var cartIndex = index % 4;

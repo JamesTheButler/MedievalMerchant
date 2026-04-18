@@ -44,6 +44,9 @@ namespace Common.UI.Elements.Cells
 
         public void SetGood(Good? good)
         {
+            if (Good == good)
+                return;
+
             Good = good;
 
             tooltipHandler?.SetEnabled(good != null);

@@ -4,9 +4,19 @@ using Common.Infrastructure.Observation;
 using Features.Inventory;
 using Features.Player.Caravan.Logic;
 using Features.Player.Retinue.Logic;
+using JetBrains.Annotations;
 
 namespace Features.Player.Logic
 {
+    public sealed class CaravanSlotInventorySystem : ISystem
+    {
+        private Inventory.Inventory _inventory;
+        private CaravanManager _caravan;
+
+        public void Initialize() { }
+        public void CleanUp() { }
+    }
+
     public sealed class PlayerModel
     {
         public readonly Observable<float> SpeedInTilesPerDay = new(1f);
@@ -21,7 +31,7 @@ namespace Features.Player.Logic
         public TradeTracker TradeTracker { get; }
 
         private readonly SlotCountInventoryPolicy _inventoryPolicy;
-        
+
         public PlayerModel(float startFunds)
         {
             var loc = ResourceManager.Instance.LocalizationResources.Player;
@@ -36,7 +46,7 @@ namespace Features.Player.Logic
 
             Inventory = new Inventory.Inventory(_inventoryPolicy);
             Inventory.AddFunds(startFunds);
-            
+
             CaravanManager.SlotCount.Observe(RefreshInventoryPolicy);
         }
 

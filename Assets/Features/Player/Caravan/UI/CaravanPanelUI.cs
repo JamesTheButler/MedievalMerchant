@@ -8,6 +8,7 @@ using Common.UI.Elements.Panels;
 using Common.UI.Popups;
 using Common.UI.Tooltips;
 using Features.Player.Caravan.Logic;
+using Features.Player.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -30,7 +31,6 @@ namespace Features.Player.Caravan.UI
         private readonly Dictionary<Good, InventoryCell> _occupiedCells = new();
 
         private CaravanManager _caravanManager;
-        private Inventory.Inventory _playerInventory;
         private UIBridgeService _uiBridgeService;
 
         public void Setup(CaravanManager caravanManager)
@@ -62,14 +62,9 @@ namespace Features.Player.Caravan.UI
 
         public void UpdateGood(Good good, int amount)
         {
-            if (_occupiedCells.ContainsKey(good))
-            {
-                UpdateExistingGood(good, amount);
-            }
-            else
-            {
-                AddNewGood(good, amount);
-            }
+            var (cart, slot) = _caravanManager.SlotMapper.GetOrAddSlotIndexC(good);
+
+            cartUis[cart].UpdateCell(slot, good, amount);
         }
 
         // background click should close popups
