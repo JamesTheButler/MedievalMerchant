@@ -1,5 +1,4 @@
 using Common.Infrastructure.Gameplay;
-using Common.Types;
 using Features.Towns;
 using NaughtyAttributes;
 using UnityEngine;
@@ -13,7 +12,6 @@ namespace Features.Player.Caravan.UI
         private CaravanPanelUI caravanPanelUI;
 
         private GameplayContext _gameplayContext;
-        private Inventory.Inventory _playerInventory;
 
         public void TogglePanel(InputAction.CallbackContext context)
         {
@@ -26,25 +24,13 @@ namespace Features.Player.Caravan.UI
         private void Start()
         {
             _gameplayContext = GameplayContext.Instance;
-            _playerInventory = _gameplayContext.Model.Player.Inventory;
-            caravanPanelUI.Setup(_gameplayContext.Model.Player.CaravanManager);
+            caravanPanelUI.Setup();
             _gameplayContext.Selection.SelectedTown.Observe(OpenPanel, false);
-            _playerInventory.GoodUpdated += OnGoodUpdated;
-            foreach (var (good, amount) in _playerInventory.Goods)
-            {
-                caravanPanelUI.UpdateGood(good, amount);
-            }
         }
 
         private void OnDestroy()
         {
             _gameplayContext.Selection.SelectedTown.StopObserving(OpenPanel);
-            _playerInventory.GoodUpdated -= OnGoodUpdated;
-        }
-
-        private void OnGoodUpdated(Good good, int amount)
-        {
-            caravanPanelUI.UpdateGood(good, amount);
         }
 
         private void OpenPanel(Town town)

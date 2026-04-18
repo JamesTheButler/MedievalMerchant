@@ -4,14 +4,13 @@ using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Features.Player.Caravan.Config;
-using Features.Player.Logic;
+
 using UnityEngine;
 
 namespace Features.Player.Caravan.Logic
 {
     public sealed class CaravanManager
     {
-        public InventorySlotMapper SlotMapper { get; } = new();
         public ModifiableVariable Upkeep { get; }
         public ModifiableVariable MoveSpeed { get; }
         public int UnlockedCartCount => Carts.Count(cart => cart.Level > 0);
@@ -86,10 +85,6 @@ namespace Features.Player.Caravan.Logic
         private void SlotCountChanged(int cartIndex, int oldCount, int newCount)
         {
             SlotCount.Value += -oldCount + newCount;
-            for (var i = oldCount + 1; i <= newCount; i++)
-            {
-                SlotMapper.AddSlot(cartIndex * 4 + i); // maps slots of carts from 0 to 15
-            }
         }
 
         private void RefreshTotals(int cartId)

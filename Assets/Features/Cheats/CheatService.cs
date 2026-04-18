@@ -73,6 +73,7 @@ namespace Features.Cheats
                 { "reset.level", ResetLevelProgress },
                 { "tutorial", OpenTutorial },
                 { "give", GiveGoods },
+                { "drop", DropGoods },
                 { "town.grow", AddTownDevelopment },
                 { "town.rep", SetTownReputation },
                 { "town.reputation", SetTownReputation },
@@ -229,6 +230,24 @@ namespace Features.Cheats
             {
                 playerInventory.AddGood(good.Value, 50);
             }
+            else
+            {
+                Debug.LogError($"Couldn't add {good}. No inventory space available.");
+            }
+        }
+        private void DropGoods(string parameter)
+        {
+            var playerInventory = GameplayContext.Instance.Model.Player.Inventory;
+
+            var good = ReadAsGood(parameter);
+
+            if (good == null)
+            {
+                Debug.LogError($"Could not parse parameter {parameter} as a good.");
+                return;
+            }
+
+            playerInventory.RemoveGood(good.Value, 100_000);
         }
 
         private void StoreInCamp(string parameter)

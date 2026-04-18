@@ -264,10 +264,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goodIcon: {fileID: 8032559758518226632}
-  disabledIcon: {fileID: 2776188808676176578}
   cornerIcon: {fileID: 4920030285414879396}
   tooltipHandler: {fileID: 7683751165650186782}
   messageTooltip: {fileID: 8584376674820508153}
+  disabledAlpha: 0.5
   amountText: {fileID: 2335126984185299119}
   amountTextSecondary: {fileID: 7917703577623015960}
 --- !u!114 &7683751165650186782
@@ -313,7 +313,6 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  defaultText: 
   references:
     version: 2
     RefIds: []
@@ -409,7 +408,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5677706690017893343
 RectTransform:
   m_ObjectHideFlags: 0
@@ -548,7 +547,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1878005919333935002
 RectTransform:
   m_ObjectHideFlags: 0

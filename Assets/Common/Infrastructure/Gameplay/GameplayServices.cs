@@ -6,6 +6,7 @@ using Features.Levels.GameModifiers.Logic;
 using Features.Map;
 using Features.Notifications.Logic;
 using Features.Player.Camp.Logic;
+using Features.Player.Caravan.Logic;
 using Features.Player.Retinue.Logic;
 using Features.Ticking.Logic;
 using Features.Trade.Logic;
@@ -25,6 +26,7 @@ namespace Common.Infrastructure.Gameplay
         public CameraService CameraService { get; private set; }
         public CheatService Cheats { get; private set; }
         public NavigationService NavigationService { get; private set; }
+        public CaravanSlotService CaravanSlotService { get; private set; }
 
         private readonly List<IService> _services = new();
 
@@ -41,6 +43,7 @@ namespace Common.Infrastructure.Gameplay
             CameraService = new CameraService();
             Cheats = new CheatService();
             NavigationService = new NavigationService();
+            CaravanSlotService = new CaravanSlotService();
 
             _services.Add(TickingService);
             _services.Add(CompanionUpgradeService);
@@ -53,6 +56,7 @@ namespace Common.Infrastructure.Gameplay
             _services.Add(CameraService);
             _services.Add(Cheats);
             _services.Add(NavigationService);
+            _services.Add(CaravanSlotService);
 
             foreach (var service in _services)
             {

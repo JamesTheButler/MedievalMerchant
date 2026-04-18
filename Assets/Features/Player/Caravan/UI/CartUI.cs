@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
+using Common.Infrastructure.Observation;
 using Common.Types;
 using Common.UI.Elements.Cells;
 using Common.UI.Tooltips;
 using Common.UI.Utility;
 using Common.Utility;
 using Features.Goods.Config;
+using Features.Inventory;
 using Features.Player.Caravan.Config;
 using Features.Player.Caravan.Logic;
 using Features.Player.Logic;
@@ -52,17 +54,15 @@ namespace Features.Player.Caravan.UI
         [SerializeField, Required]
         private CartTooltipHandler cartUnlockTooltip, cartUpgradeTooltip;
 
-        public event Action<InventoryCell> OnCellAdded;
-
         private PlayerModel _player;
         private Cart _cart;
         private CaravanConfig _caravanConfig;
         private CaravanResources _caravanResources;
+        private readonly Bindings _slotBindings = new();
 
         private int _lastActiveSlotCount;
 
-        public void Bind(Cart cart, int index, Action upgradeAction, Action unlockAction,
-            Action<InventoryCell> onCellAdded)
+        public void Bind(Cart cart, int index, Action upgradeAction, Action unlockAction)
         {
             _player = GameplayContext.Instance.Model.Player;
             _caravanConfig = ConfigurationManager.Configurations.CaravanConfig;
@@ -71,14 +71,19 @@ namespace Features.Player.Caravan.UI
             _cart = cart;
             waggonText.text = cartString.GetLocalizedString(index + 1);
 
-            OnCellAdded += onCellAdded;
-
             ResetSlots();
 
             _cart.Level.Observe(OnLevelChanged);
             _cart.MoveSpeed.Observe(OnMoveSpeedChanged);
             _cart.Upkeep.Observe(OnUpkeepChanged);
             _cart.SlotCount.Observe(OnSlotCountChanged);
+
+            for (var slotIndex = 0; slotIndex < cart.Slots.Length; slotIndex++)
+            {
+                var cellIndex = slotIndex;
+                var binding = cart.Slots[slotIndex].Observe(entry => OnSlotChanged(cellIndex, entry));
+                _slotBindings.Track(binding);
+            }
 
             _player.Inventory.Funds.Observe(OnPlayerFundsChanged);
 
@@ -100,11 +105,18 @@ namespace Features.Player.Caravan.UI
             if (_cart == null)
                 return;
 
+            _slotBindings.UnbindAll();
+
             _cart.Level.StopObserving(OnLevelChanged);
             _cart.MoveSpeed.StopObserving(OnMoveSpeedChanged);
             _cart.Upkeep.StopObserving(OnUpkeepChanged);
             _cart.SlotCount.StopObserving(OnSlotCountChanged);
             _cart = null;
+        }
+
+        public InventoryCell GetInventoryCell(int slotIndex)
+        {
+            return inventoryCells[slotIndex];
         }
 
         public void HoverNextLevel()
@@ -131,11 +143,19 @@ namespace Features.Player.Caravan.UI
             upkeepUpgradeIcon.enabled = false;
         }
 
-        public void UpdateCell(int index, Good good, int amount)
+        private void OnSlotChanged(int cellIndex, InventoryEntry entry)
         {
-            inventoryCells[index].Update(good, amount);
+            var cell = inventoryCells[cellIndex];
+            if (entry != null)
+            {
+                cell.Update(entry.Good, entry.Amount);
+            }
+            else
+            {
+                cell.Reset();
+            }
         }
-        
+
         private void OnPlayerFundsChanged(float funds)
         {
             UpgradeButton.interactable = _cart.UpgradeCost <= funds;
@@ -161,7 +181,6 @@ namespace Features.Player.Caravan.UI
             UpdateCartImage();
             var sprite = _caravanResources.TierIcons.GetValueOrDefault(level, null);
             tierIcon.sprite = sprite;
-            // hide make icon transparent if not shown
             tierIcon.color = sprite == null ? Color.clear : Color.white;
 
             if (level >= CaravanConfig.MaxLevel)
@@ -216,9 +235,8 @@ namespace Features.Player.Caravan.UI
 
             for (var slotIndex = _lastActiveSlotCount; slotIndex < slotCount; slotIndex++)
             {
-                var cell = inventoryCells[slotIndex];
-                cell.gameObject.SetActive(true);
-                OnCellAdded?.Invoke(cell);
+                inventoryCells[slotIndex].gameObject.SetActive(true);
+                inventoryCells[slotIndex].Reset();
             }
 
             _lastActiveSlotCount = slotCount;
