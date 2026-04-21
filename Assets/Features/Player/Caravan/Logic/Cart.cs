@@ -1,5 +1,8 @@
+using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
+using Common.Types;
+using Features.Inventory;
 using Features.Player.Caravan.Config;
 
 namespace Features.Player.Caravan.Logic
@@ -12,6 +15,8 @@ namespace Features.Player.Caravan.Logic
         public Observable<float> Upkeep { get; } = new();
 
         public ModifiableVariable UpgradeCost { get; }
+
+        public Observable<InventoryEntry>[] Slots { get; } = new Observable<InventoryEntry>[4];
 
         private readonly CartUpgradeBaseCostModifier _baseCostModifier;
 
@@ -27,8 +32,14 @@ namespace Features.Player.Caravan.Logic
             MoveSpeed.Value = moveSpeed;
             Upkeep.Value = upkeep;
 
+            for (var i = 0; i < Slots.Length; i++)
+            {
+                Slots[i] = new Observable<InventoryEntry>();
+            }
+
             _baseCostModifier = new CartUpgradeBaseCostModifier(level + 1);
-            UpgradeCost = new ModifiableVariable("Upgrade Cost", false, _baseCostModifier);
+            var loc = ResourceManager.Instance.LocalizationResources.Player;
+            UpgradeCost = new ModifiableVariable(loc.UpgradeCost, false, _baseCostModifier);
         }
 
         public void Update(int level, CaravanUpgradeData upgradeData)
@@ -39,6 +50,16 @@ namespace Features.Player.Caravan.Logic
             Upkeep.Value = upgradeData.Upkeep;
 
             _baseCostModifier.Update(level + 1);
+        }
+
+        public void UpdateSlot(int slotIndex, Good good, int amount)
+        {
+            Slots[slotIndex].Value = new InventoryEntry(good, amount);
+        }
+
+        public void ClearSlot(int slotIndex)
+        {
+            Slots[slotIndex].Value = null;
         }
     }
 }

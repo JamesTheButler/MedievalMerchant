@@ -28,9 +28,10 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
 
         public IEnumerator Run(OnboardingController controller)
         {
-            controller.Blink(controller.CaravanPanelUI.GetUpgradeButton(0), MouseButton.Left);
-            yield return new WaitUntil(() => _cart1.Level == _level);
-            controller.HideBlinker();
+            //controller.Blink(controller.CaravanPanelUI.GetUpgradeButton(0), MouseButton.Left);
+            //yield return new WaitUntil(() => _cart1.Level == _level);
+            //controller.HideBlinker();
+            yield return null;
         }
 
         public void CleanUp() { }

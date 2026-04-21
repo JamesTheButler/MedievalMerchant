@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
+using Common.Infrastructure.Observation;
 using Common.UI.Elements.Cells;
 using Common.UI.Tooltips;
 using Common.UI.Utility;
@@ -18,13 +19,10 @@ using UnityEngine.UI;
 
 namespace Features.Player.Caravan.UI
 {
-    public sealed class CartUI : MonoBehaviour
+    public sealed class CartStatsUI : MonoBehaviour
     {
         [SerializeField]
-        private List<InventoryCell> inventoryCells;
-
-        [SerializeField, Required]
-        private GameObject unlockedParent;
+        private List<GoodCell> slots;
 
         [field: SerializeField, Required]
         public Button UpgradeButton { get; private set; }
@@ -33,52 +31,48 @@ namespace Features.Player.Caravan.UI
         private Button unlockButton;
 
         [SerializeField, Required]
-        private Image backgroundImage, cartImage;
+        private GameObject unlockedParent;
 
         [Header("Header")]
         [SerializeField, Required]
-        private TMP_Text moveSpeedText, upkeepText, waggonText;
+        private TMP_Text moveSpeedText, upkeepText;
 
         [SerializeField]
-        private LocalizedString moveSpeedTooltipString, upkeepTooltipString, cartString;
+        private LocalizedString moveSpeedTooltipString, upkeepTooltipString;
 
         [SerializeField, Required]
         private SimpleTooltipHandler moveSpeedTooltip, upkeepTooltip;
 
         [SerializeField, Required]
-        private Image tierIcon, moveSpeedUpgradeIcon, upkeepUpgradeIcon, faderImage;
-
-        [SerializeField, Required]
         private CartTooltipHandler cartUnlockTooltip, cartUpgradeTooltip;
 
-        public event Action<InventoryCell> OnCellAdded;
+        [SerializeField, Required]
+        private Image backgroundImage, cartImage;
+
+        [SerializeField, Required]
+        private Image tierIcon, moveSpeedUpgradeIcon, upkeepUpgradeIcon, faderImage;
+
+        private readonly Bindings _bindings = new();
 
         private PlayerModel _player;
         private Cart _cart;
-        private CaravanConfig _caravanConfig;
         private CaravanResources _caravanResources;
+        private CaravanConfig _caravanConfig;
 
         private int _lastActiveSlotCount;
 
-        public void Bind(Cart cart, int index, Action upgradeAction, Action unlockAction,
-            Action<InventoryCell> onCellAdded)
+        public void Bind(Cart cart, int index, Action upgradeAction, Action unlockAction)
         {
             _player = GameplayContext.Instance.Model.Player;
             _caravanConfig = ConfigurationManager.Configurations.CaravanConfig;
             _caravanResources = ResourceManager.Instance.CaravanResources;
 
-            _cart = cart;
-            waggonText.text = cartString.GetLocalizedString(index + 1);
-
-            OnCellAdded += onCellAdded;
-
-            ResetSlots();
-
-            _cart.Level.Observe(OnLevelChanged);
-            _cart.MoveSpeed.Observe(OnMoveSpeedChanged);
-            _cart.Upkeep.Observe(OnUpkeepChanged);
-            _cart.SlotCount.Observe(OnSlotCountChanged);
-
+            _bindings.Track(
+                _cart.Level.Observe(OnLevelChanged),
+                _cart.MoveSpeed.Observe(OnMoveSpeedChanged),
+                _cart.Upkeep.Observe(OnUpkeepChanged),
+                _cart.SlotCount.Observe(OnSlotCountChanged)
+            );
             _player.Inventory.Funds.Observe(OnPlayerFundsChanged);
 
             UpgradeButton.onClick.AddListener(() =>
@@ -92,18 +86,6 @@ namespace Features.Player.Caravan.UI
             cartUpgradeTooltip.SetData(_cart);
             cartUnlockTooltip.SetData(_cart);
             Unhover();
-        }
-
-        public void Unbind()
-        {
-            if (_cart == null)
-                return;
-
-            _cart.Level.StopObserving(OnLevelChanged);
-            _cart.MoveSpeed.StopObserving(OnMoveSpeedChanged);
-            _cart.Upkeep.StopObserving(OnUpkeepChanged);
-            _cart.SlotCount.StopObserving(OnSlotCountChanged);
-            _cart = null;
         }
 
         public void HoverNextLevel()
@@ -130,24 +112,6 @@ namespace Features.Player.Caravan.UI
             upkeepUpgradeIcon.enabled = false;
         }
 
-        private void OnPlayerFundsChanged(float funds)
-        {
-            UpgradeButton.interactable = _cart.UpgradeCost <= funds;
-        }
-
-        private void SetLocked(bool isLocked)
-        {
-            unlockButton.gameObject.SetActive(isLocked);
-            unlockedParent.gameObject.SetActive(!isLocked);
-            Fade(isLocked);
-        }
-
-        private void Fade(bool isFaded)
-        {
-            faderImage.enabled = isFaded;
-            backgroundImage.color = isFaded ? Color.white.WithAlpha(0.5f) : Color.white;
-        }
-
         private void OnLevelChanged(int level)
         {
             SetLocked(level <= 0);
@@ -155,7 +119,6 @@ namespace Features.Player.Caravan.UI
             UpdateCartImage();
             var sprite = _caravanResources.TierIcons.GetValueOrDefault(level, null);
             tierIcon.sprite = sprite;
-            // hide make icon transparent if not shown
             tierIcon.color = sprite == null ? Color.clear : Color.white;
 
             if (level >= CaravanConfig.MaxLevel)
@@ -163,6 +126,45 @@ namespace Features.Player.Caravan.UI
                 Unhover();
                 cartUpgradeTooltip.SetEnabled(false);
             }
+        }
+
+        private void HoverTextfield(
+            TMP_Text textField,
+            float oldValue,
+            float newValue,
+            bool isBiggerBetter)
+        {
+            if (oldValue.IsApproximately(newValue))
+                return;
+
+            var isBigger = newValue > oldValue;
+            var style = isBigger == isBiggerBetter ? Style.Good : Style.Bad;
+
+            textField.text = newValue.ToString("N0").WithStyle(style);
+        }
+
+        private void UpdateMoveSpeedText()
+        {
+            var moveSpeed = _cart.MoveSpeed.Value.ToString("N0");
+            moveSpeedText.text = moveSpeed;
+            moveSpeedTooltip.SetData(moveSpeedTooltipString.GetLocalizedString(moveSpeed));
+        }
+
+        private void UpdateUpkeepText()
+        {
+            var upkeep = _cart.Upkeep.Value.ToString("N0");
+            upkeepText.text = upkeep;
+            upkeepTooltip.SetData(upkeepTooltipString.GetLocalizedString(upkeep));
+        }
+
+        private void OnMoveSpeedChanged(float moveSpeed)
+        {
+            UpdateMoveSpeedText();
+        }
+
+        private void OnUpkeepChanged(float upkeep)
+        {
+            UpdateUpkeepText();
         }
 
         private void UpdateCartImage()
@@ -180,25 +182,16 @@ namespace Features.Player.Caravan.UI
             cartImage.enabled = true;
         }
 
-        private void OnMoveSpeedChanged(float moveSpeed)
+        private void OnPlayerFundsChanged(float funds)
         {
-            UpdateMoveSpeedText();
+            UpgradeButton.interactable = _cart.UpgradeCost <= funds;
         }
 
-        private void OnUpkeepChanged(float upkeep)
+        private void SetLocked(bool isLocked)
         {
-            UpdateUpkeepText();
-        }
-
-        private void ResetSlots()
-        {
-            foreach (var slot in inventoryCells)
-            {
-                slot.gameObject.SetActive(false);
-                slot.Reset();
-            }
-
-            _lastActiveSlotCount = 0;
+            unlockButton.gameObject.SetActive(isLocked);
+            unlockedParent.gameObject.SetActive(!isLocked);
+            Fade(isLocked);
         }
 
         private void OnSlotCountChanged(int slotCount)
@@ -210,41 +203,17 @@ namespace Features.Player.Caravan.UI
 
             for (var slotIndex = _lastActiveSlotCount; slotIndex < slotCount; slotIndex++)
             {
-                var cell = inventoryCells[slotIndex];
-                cell.gameObject.SetActive(true);
-                OnCellAdded?.Invoke(cell);
+                slots[slotIndex].gameObject.SetActive(true);
+                slots[slotIndex].SetGood(null);
             }
 
             _lastActiveSlotCount = slotCount;
         }
 
-        private void UpdateMoveSpeedText()
+        private void Fade(bool isFaded)
         {
-            var moveSpeed = _cart.MoveSpeed.Value.ToString("N0");
-            moveSpeedText.text = moveSpeed;
-            moveSpeedTooltip.SetData(moveSpeedTooltipString.GetLocalizedString(moveSpeed));
-        }
-
-        private void UpdateUpkeepText()
-        {
-            var upkeep = _cart.Upkeep.Value.ToString("N0");
-            upkeepText.text = upkeep;
-            upkeepTooltip.SetData(upkeepTooltipString.GetLocalizedString(upkeep));
-        }
-
-        private void HoverTextfield(
-            TMP_Text textField,
-            float oldValue,
-            float newValue,
-            bool isBiggerBetter)
-        {
-            if (oldValue.IsApproximately(newValue))
-                return;
-
-            var isBigger = newValue > oldValue;
-            var style = isBigger == isBiggerBetter ? Style.Good : Style.Bad;
-
-            textField.text = newValue.ToString("N0").WithStyle(style);
+            faderImage.enabled = isFaded;
+            backgroundImage.color = isFaded ? Color.white.WithAlpha(0.5f) : Color.white;
         }
     }
 }

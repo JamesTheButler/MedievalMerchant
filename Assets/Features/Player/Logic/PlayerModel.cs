@@ -21,7 +21,7 @@ namespace Features.Player.Logic
         public TradeTracker TradeTracker { get; }
 
         private readonly SlotCountInventoryPolicy _inventoryPolicy;
-        
+
         public PlayerModel(float startFunds)
         {
             var loc = ResourceManager.Instance.LocalizationResources.Player;
@@ -36,8 +36,6 @@ namespace Features.Player.Logic
 
             Inventory = new Inventory.Inventory(_inventoryPolicy);
             Inventory.AddFunds(startFunds);
-            
-            CaravanManager.SlotCount.Observe(RefreshInventoryPolicy);
         }
 
         private void RefreshInventoryPolicy(int slotCount)

@@ -7,6 +7,7 @@ using Common.Types;
 using Common.Utility;
 using Features.Player.Camp.UI;
 using Features.Player.Caravan.Config;
+using Features.Player.Caravan.Logic;
 using Features.Player.Logic;
 using Features.Player.UI;
 using Features.Towns;
@@ -73,10 +74,12 @@ namespace Features.Cheats
                 { "reset.level", ResetLevelProgress },
                 { "tutorial", OpenTutorial },
                 { "give", GiveGoods },
+                { "drop", DropGoods },
                 { "town.grow", AddTownDevelopment },
                 { "town.rep", SetTownReputation },
                 { "town.reputation", SetTownReputation },
                 { "town.funds", AddTownFunds },
+                { "cart.upgrade", UpgradeCart },
             };
         }
 
@@ -193,6 +196,18 @@ namespace Features.Cheats
             selectedTown.Inventory.AddFunds(fundsChange);
         }
 
+        private void UpgradeCart(string parameter)
+        {
+            var cartIndex = int.Parse(parameter);
+            if (cartIndex is < 0 or >= CaravanConfig.MaxCartCount)
+            {
+                Debug.LogError("CartIndex is out of range.");
+                return;
+            }
+
+            _playerModel.CaravanManager.UpgradeCart(cartIndex);
+        }
+
         private void SetTownReputationTo100()
         {
             var selectedTown = _selection.SelectedTown.Value;
@@ -221,7 +236,7 @@ namespace Features.Cheats
 
             if (good == null)
             {
-                Debug.LogError($"Could not parse parameter {parameter} as a good.");
+                Debug.LogError($"Could not parse parameter as a good: '{parameter}'");
                 return;
             }
 
@@ -229,6 +244,25 @@ namespace Features.Cheats
             {
                 playerInventory.AddGood(good.Value, 50);
             }
+            else
+            {
+                Debug.LogError($"Couldn't add {good}. No inventory space available.");
+            }
+        }
+
+        private void DropGoods(string parameter)
+        {
+            var playerInventory = GameplayContext.Instance.Model.Player.Inventory;
+
+            var good = ReadAsGood(parameter);
+
+            if (good == null)
+            {
+                Debug.LogError($"Could not parse parameter {parameter} as a good.");
+                return;
+            }
+
+            playerInventory.RemoveGood(good.Value, 100_000);
         }
 
         private void StoreInCamp(string parameter)
