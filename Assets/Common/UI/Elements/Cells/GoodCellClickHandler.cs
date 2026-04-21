@@ -8,14 +8,14 @@ namespace Common.UI.Elements.Cells
 {
     public sealed class GoodCellClickHandler : InitializableBehavior
     {
+        [SerializeField, HideIf(nameof(autoFindCells))]
+        private List<GoodCell> goodCells;
+
         [SerializeField]
         private UnityEvent<GoodCell> cellClicked;
 
         [SerializeField]
         private bool autoFindCells;
-
-        [SerializeField, HideIf(nameof(autoFindCells))]
-        private List<GoodCell> goodCells;
 
         public override void Initialize()
         {

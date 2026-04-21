@@ -16,8 +16,7 @@ namespace Features.Player.Caravan.Logic
 
         public ModifiableVariable UpgradeCost { get; }
 
-        private readonly Observable<InventoryEntry>[] _slots = new Observable<InventoryEntry>[4];
-        public Observable<InventoryEntry>[] Slots => _slots;
+        public Observable<InventoryEntry>[] Slots { get; } = new Observable<InventoryEntry>[4];
 
         private readonly CartUpgradeBaseCostModifier _baseCostModifier;
 
@@ -33,9 +32,9 @@ namespace Features.Player.Caravan.Logic
             MoveSpeed.Value = moveSpeed;
             Upkeep.Value = upkeep;
 
-            for (var i = 0; i < _slots.Length; i++)
+            for (var i = 0; i < Slots.Length; i++)
             {
-                _slots[i] = new Observable<InventoryEntry>();
+                Slots[i] = new Observable<InventoryEntry>();
             }
 
             _baseCostModifier = new CartUpgradeBaseCostModifier(level + 1);
@@ -55,12 +54,12 @@ namespace Features.Player.Caravan.Logic
 
         public void UpdateSlot(int slotIndex, Good good, int amount)
         {
-            _slots[slotIndex].Value = new InventoryEntry(good, amount);
+            Slots[slotIndex].Value = new InventoryEntry(good, amount);
         }
 
         public void ClearSlot(int slotIndex)
         {
-            _slots[slotIndex].Value = null;
+            Slots[slotIndex].Value = null;
         }
     }
 }

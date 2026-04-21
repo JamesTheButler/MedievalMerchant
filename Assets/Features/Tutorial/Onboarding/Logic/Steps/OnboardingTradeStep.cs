@@ -31,6 +31,7 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
             _amount = amount;
             _town = town;
             Task = task;
+
             _buyerInventory = _tradeType == TradeType.Buy
                 ? GameplayContext.Instance.Model.Player.Inventory
                 : _town.Inventory;
@@ -60,7 +61,7 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
 
                     GoodCell cell = _tradeType == TradeType.Buy
                         ? controller.TownProducerUI.GetCell(_good)
-                        : controller.CaravanPanelUI.GetCell(_good);
+                        : controller.CartInventoryUI.GetCell(_good);
 
                     if (!cell)
                     {

@@ -24,7 +24,6 @@ namespace Features.Player.Caravan.UI
         private void Start()
         {
             _gameplayContext = GameplayContext.Instance;
-            caravanPanelUI.Setup();
             _gameplayContext.Selection.SelectedTown.Observe(OpenPanel, false);
         }
 

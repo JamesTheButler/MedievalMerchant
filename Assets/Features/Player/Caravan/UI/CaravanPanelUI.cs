@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using Common.Infrastructure.Gameplay;
-using Common.Types;
+using Common.Infrastructure.Observation;
 using Common.UI;
-using Common.UI.Elements.Cells;
 using Common.UI.Elements.Panels;
 using Common.UI.Popups;
 using Common.UI.Tooltips;
@@ -22,35 +20,20 @@ namespace Features.Player.Caravan.UI
         [SerializeField, Required]
         private ModifiableTooltipHandler moveSpeedTooltip, upkeepTooltip;
 
-        [SerializeField]
-        private List<CartUI> cartUis;
-
-        private CaravanSlotService _slotService;
-        private UIBridgeService _uiBridgeService;
         private CaravanManager _caravanManager;
+        private UIBridgeService _uiBridgeService;
 
-        public void Setup()
+        private readonly Bindings _bindings = new();
+
+        public override void Initialize()
         {
             _uiBridgeService = GameplayContext.Instance.Services.UIBridgeService;
             _caravanManager = GameplayContext.Instance.Model.Player.CaravanManager;
-            _slotService = GameplayContext.Instance.Services.CaravanSlotService;
 
-            // TODO - STYLE: it's not so nice to have a random business logic class in here.
-            //   This would have to be in the view model layer. Probably should be system.
-            var caravanUpgrader = new CaravanUpgrader();
-
-            for (var i = 0; i < _caravanManager.Carts.Count; i++)
-            {
-                var cartId = i;
-                cartUis[i].Bind(
-                    _caravanManager.Carts[i],
-                    i,
-                    () => caravanUpgrader.RequestUpgrade(cartId),
-                    () => caravanUpgrader.RequestUpgrade(_caravanManager.UnlockedCartCount));
-            }
-
-            _caravanManager.MoveSpeed.Observe(OnMoveSpeedChanged);
-            _caravanManager.Upkeep.Observe(OnUpkeepChanged);
+            _bindings.Track(
+                _caravanManager.MoveSpeed.Observe(OnMoveSpeedChanged),
+                _caravanManager.Upkeep.Observe(OnUpkeepChanged)
+            );
 
             moveSpeedTooltip.SetData(_caravanManager.MoveSpeed);
             upkeepTooltip.SetData(_caravanManager.Upkeep);
@@ -60,22 +43,6 @@ namespace Features.Player.Caravan.UI
         public void OnPointerClick(PointerEventData eventData)
         {
             PopupManager.Instance.HideActive();
-        }
-
-        public InventoryCell GetCell(Good good)
-        {
-            var slot = _slotService.GetSlotForGood(good);
-
-            if (slot == null)
-                return null;
-
-            var (cartIndex, slotIndex) = slot.Value;
-            return cartUis[cartIndex].GetInventoryCell(slotIndex);
-        }
-
-        public MonoBehaviour GetUpgradeButton(int cartIndex)
-        {
-            return cartUis[cartIndex].UpgradeButton;
         }
 
         protected override void OnOpen()
@@ -89,15 +56,9 @@ namespace Features.Player.Caravan.UI
             gameObject.SetActive(false);
         }
 
-        private void OnDestroy()
+        public override void CleanUp()
         {
-            foreach (var cartUI in cartUis)
-            {
-                cartUI.Unbind();
-            }
-
-            _caravanManager.MoveSpeed.StopObserving(OnMoveSpeedChanged);
-            _caravanManager.Upkeep.StopObserving(OnUpkeepChanged);
+            _bindings.UnbindAll();
         }
 
         private void OnMoveSpeedChanged(float moveSpeed)

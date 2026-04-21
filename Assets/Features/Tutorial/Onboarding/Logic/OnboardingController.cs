@@ -27,7 +27,7 @@ namespace Features.Tutorial.Onboarding.Logic
     public sealed class OnboardingController : InitializableBehavior
     {
         [field: SerializeField, Required]
-        public CaravanPanelUI CaravanPanelUI { get; private set; }
+        public CaravanInventoryUI CartInventoryUI { get; private set; }
 
         [field: SerializeField, Required]
         public TownUI TownUI { get; private set; }
