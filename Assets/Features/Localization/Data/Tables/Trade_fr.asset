@@ -59,7 +59,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5931540234723328
-    m_Localized: "Voyagez jusqu'\xE0 {TownName} afin de commercer avec eux."
+    m_Localized: "Voyagez jusqu'\xE0 {TownName} afin d'y commercer."
     m_Metadata:
       m_Items:
       - rid: 3853118801594024030
@@ -92,7 +92,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13930291231
-    m_Localized: "Vous n\xE9gocier justement"
+    m_Localized: "Vous n\xE9gociez justement"
     m_Metadata:
       m_Items: []
   - m_Id: 13930291232
@@ -100,7 +100,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13930291233
-    m_Localized: "Vous n\xE9gocier g\xE9n\xE9reusement"
+    m_Localized: "Vous n\xE9gociez g\xE9n\xE9reusement"
     m_Metadata:
       m_Items: []
   - m_Id: 13930291235
@@ -126,13 +126,14 @@ MonoBehaviour:
       m_Items:
       - rid: 3853118801594024030
   - m_Id: 5931618450104320
-    m_Localized: "{GoodName} : {TownName} produit d\xE9j\xE0 ce bien. Ils ne veulent
-      pas en acheter davantage."
+    m_Localized: "{TownName} produit d\xE9j\xE0 {GoodName}. Ils ne veulent pas en
+      acheter davantage."
     m_Metadata:
       m_Items:
       - rid: 3853118801594024030
   - m_Id: 5931804257771520
-    m_Localized: 
+    m_Localized: '{TownName} ne peut pas acheter {GoodName} car elle n''est pas niveau
+      {Tier}.'
     m_Metadata:
       m_Items:
       - rid: 3853118801594024030
@@ -145,7 +146,7 @@ MonoBehaviour:
   - m_Id: 10492272505217024
     m_Localized: "Cette ville se lasse de ce bien : {GoodName}.\nIls ont achet\xE9
       {_int_Amount} {GoodName} au cours des {_int_Days} derniers jours.\n({Percentage}
-      chaque {_int_StepSize} biens)"
+      pour chaque {_int_StepSize} biens)"
     m_Metadata:
       m_Items:
       - rid: 3853118801594024030
@@ -171,22 +172,22 @@ MonoBehaviour:
       m_Items:
       - rid: 3853118801594024030
   - m_Id: 5932228343848960
-    m_Localized: "Vous ne poss\xE9dez pas assez "
+    m_Localized: "Vous poss\xE9dez {GoodName} en quantit\xE9 insuffisante."
     m_Metadata:
       m_Items:
       - rid: 3853118801594024030
   - m_Id: 5932150292045824
-    m_Localized: 
+    m_Localized: "{TownName} ne poss\xE8de pas {GoodName}. "
     m_Metadata:
       m_Items:
       - rid: 3853118801594024030
   - m_Id: 5932011754184704
-    m_Localized: 
+    m_Localized: "Vous ne poss\xE9dez pas {GoodName}. "
     m_Metadata:
       m_Items:
       - rid: 3853118801594024030
   - m_Id: 15673468191236096
-    m_Localized: "Stockage du campement : R\xE9serves en {GoodName} insuffisantes."
+    m_Localized: "R\xE9serve du campement : {GoodName} en quantit\xE9 insuffisante."
     m_Metadata:
       m_Items:
       - rid: 3853118801594024030
@@ -199,7 +200,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 15672924626214912
-    m_Localized: Il n'y a plus d'espace dans le stockage de votre campement.
+    m_Localized: "Il n'y a plus d'espace dans la r\xE9serve de votre campement."
     m_Metadata:
       m_Items: []
   - m_Id: 15672768715546624
