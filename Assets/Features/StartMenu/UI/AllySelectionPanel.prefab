@@ -284,8 +284,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
   m_Padding:
-    m_Left: 16
-    m_Right: 16
+    m_Left: 0
+    m_Right: 0
     m_Top: 8
     m_Bottom: 8
   m_ChildAlignment: 1
@@ -506,8 +506,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_text
-      value: You start with a great reputation in towns of the selected region. All
-        other regions do not like you however.
+      value: 'Choose an allied region and gain their favour.
+
+        Pick carefully,
+        as this will cose you quite some reputation in all remaining regions.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+      propertyPath: m_lineSpacing
+      value: -25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+      propertyPath: m_paragraphSpacing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_TextStyleHashCode
@@ -516,6 +526,10 @@ PrefabInstance:
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_VerticalAlignment
       value: 4096
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_EditorClassIdentifier
@@ -548,7 +562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: 48
+  m_MinHeight: 71
   m_PreferredWidth: -1
   m_PreferredHeight: 24
   m_FlexibleWidth: -1
@@ -1211,10 +1225,6 @@ PrefabInstance:
     - target: {fileID: 3666912301575144555, guid: 4b2968c76ba29a0419d33fe8f3654f9c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6429045092793749971, guid: 4b2968c76ba29a0419d33fe8f3654f9c, type: 3}
-      propertyPath: m_PixelsPerUnitMultiplier
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7754801419339816202, guid: 4b2968c76ba29a0419d33fe8f3654f9c, type: 3}
       propertyPath: <Region>k__BackingField
