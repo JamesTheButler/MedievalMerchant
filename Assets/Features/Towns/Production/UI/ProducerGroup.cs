@@ -7,15 +7,12 @@ using Common.Types;
 using Common.UI.Elements.Cells;
 using Common.Utility;
 using Features.Goods;
-using Features.Goods.Config;
 using Features.Goods.Recipe.Data;
 using Features.Map.Pathfinding;
 using Features.Player.Logic;
 using Features.Towns.Production.Logic;
 using NaughtyAttributes;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace Features.Towns.Production.UI
 {
@@ -36,16 +33,12 @@ namespace Features.Towns.Production.UI
         private GameObject arrowT1T2, arrowT2T3, arrowT2T3Delivery, notHereBlockerGroup;
 
         [SerializeField, Required]
-        private TMP_Text titleText;
-
-        [SerializeField]
-        private LocalizedString emptyProducerString;
+        private ProducerTooltipHandler tooltip;
 
         private readonly Dictionary<Tier, ProductionCell> _producerCellsPerTier = new();
         private readonly Dictionary<Good, ProductionCell> _producerCellsPerGood = new();
 
         private RecipeResources _recipeResources;
-        private GoodResources _goodResources;
         private PlayerLocation _playerLocation;
         private GoodPool _globalGoodPool;
         private Town _town;
@@ -56,7 +49,6 @@ namespace Features.Towns.Production.UI
         public void Initialize(int producerIndex)
         {
             _recipeResources = ResourceManager.Instance.RecipeResources;
-            _goodResources = ResourceManager.Instance.GoodResources;
             _playerLocation = GameplayContext.Instance.Model.Player.Location;
             _globalGoodPool = GameplayContext.Instance.Model.GoodPool;
 
@@ -65,6 +57,7 @@ namespace Features.Towns.Production.UI
             _producerCellsPerTier.Add(Tier.Tier1, t1Cell);
             _producerCellsPerTier.Add(Tier.Tier2, t2Cell);
             _producerCellsPerTier.Add(Tier.Tier3, t3Cell);
+
 
             foreach (var (tier, cell) in _producerCellsPerTier)
             {
@@ -80,9 +73,10 @@ namespace Features.Towns.Production.UI
 
             _isAvailable = isAvailable;
             unavailableGroup.SetActive(!isAvailable);
-            titleText.text = emptyProducerString.GetLocalizedString(new { _int_ProducerIndex = _producerIndex + 1 });
 
             _playerLocation.MapLocation.Observe(OnPlayerLocationChanged);
+
+            tooltip.SetData(new ProducerTooltip.Data(town, _producerIndex));
 
             if (!_isAvailable)
                 return;
@@ -245,13 +239,6 @@ namespace Features.Towns.Production.UI
                 return;
             }
 
-
-            var isHighestTierProducer = !_town.ProductionManager.HasProducer(producer.Tier + 1, producerIndex);
-            if (producer.Tier == Tier.Tier3 || isHighestTierProducer)
-            {
-                titleText.text = _goodResources.ResourceData[producer.ProducedGood].BuildingName;
-            }
-
             var producerCell = _producerCellsPerTier[producer.Tier];
             producerCell.SetGood(producer.ProducedGood);
             producerCell.SetAmount(0);
@@ -309,7 +296,7 @@ namespace Features.Towns.Production.UI
             var tier3Good = _producerCellsPerTier[Tier.Tier3].Good;
             if (tier2Good == null || tier3Good == null)
             {
-                Debug.LogError($"Could not toggle cell on t2cell {tier2Good}, t3 cell {tier3Good}");
+                Debug.LogError($"Could not toggle cell on t2cell '{tier2Good}', t3 cell '{tier3Good}'");
                 return;
             }
 

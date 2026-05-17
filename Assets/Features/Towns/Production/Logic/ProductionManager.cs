@@ -39,14 +39,24 @@ namespace Features.Towns.Production.Logic
             .Concat(_producers[Tier.Tier3])
             .WhereNotNull();
 
-        public bool IsProduced(Good good)
-        {
-            return _producers.Values.Any(producers => producers.Any(producer => producer?.ProducedGood == good));
-        }
-
         public Producer[] GetProducers(Tier tier)
         {
             return _producers[tier];
+        }
+
+        public IReadOnlyDictionary<Tier, Producer> GetProducers(int index)
+        {
+            return new Dictionary<Tier, Producer>
+            {
+                { Tier.Tier1, _producers[Tier.Tier1][index] },
+                { Tier.Tier2, _producers[Tier.Tier2][index] },
+                { Tier.Tier3, _producers[Tier.Tier3][index] },
+            };
+        }
+
+        public bool IsProduced(Good good)
+        {
+            return _producers.Values.Any(producers => producers.Any(producer => producer?.ProducedGood == good));
         }
 
         public bool HasProducer(Tier tier, int index)
