@@ -219,6 +219,9 @@ GameObject:
   - component: {fileID: 943554439891316406}
   - component: {fileID: 2348233757657313550}
   - component: {fileID: 8251990000707511959}
+  - component: {fileID: 694315218074151277}
+  - component: {fileID: 65883823668955374}
+  - component: {fileID: 3532033291590077660}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -283,6 +286,61 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &694315218074151277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962248032054372796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e711ed72c6335af43a5c693b033274bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.CanvasGroupTween
+  canvasGroup: {fileID: 65883823668955374}
+  targetAlpha: 0.75
+  inDurationInSec: 0.5
+  easeIn: 9
+--- !u!225 &65883823668955374
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962248032054372796}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &3532033291590077660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962248032054372796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb60c59bb3e529845bb02e7b203d23c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Clickable
+  clicked:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8973396853007175542}
+        m_TargetAssemblyTypeName: Features.Player.Camp.UI.CampsiteCaravanUI, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5344599859129420967
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +356,7 @@ GameObject:
   - component: {fileID: 5816869838534075592}
   - component: {fileID: 6958763715835061238}
   m_Layer: 5
-  m_Name: CampsiteCaravanUI
+  m_Name: CampsiteCartsPanelUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,7 +441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Panels.DynamicPanelAlphaTweener
   dynamicPanel: {fileID: 8973396853007175542}
-  alphaTween: {fileID: 0}
+  alphaTween: {fileID: 694315218074151277}
 --- !u!1 &6014436960443101480
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,12 +1277,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1252819836556530930, guid: 50f23ebbf5e25a74584f535e346c44e8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8973396853007175542}
+    - target: {fileID: 1252819836556530930, guid: 50f23ebbf5e25a74584f535e346c44e8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Close
       objectReference: {fileID: 0}
     - target: {fileID: 1252819836556530930, guid: 50f23ebbf5e25a74584f535e346c44e8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Features.Player.Camp.UI.CampsiteStoragePanelUI, Assembly-CSharp
+      value: Features.Player.Camp.UI.CampsiteCaravanUI, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6285358257360067294, guid: 50f23ebbf5e25a74584f535e346c44e8, type: 3}
       propertyPath: m_fontSizeBase

@@ -3,7 +3,7 @@ using Common.UI.Elements.Panels;
 
 namespace Features.Player.Camp.UI
 {
-    public sealed class CampsiteCaravanUI : DynamicPanel
+    public sealed class CampsiteCartsPanelUI : DynamicPanel
     {
         private readonly Bindings _bindings = new();
 

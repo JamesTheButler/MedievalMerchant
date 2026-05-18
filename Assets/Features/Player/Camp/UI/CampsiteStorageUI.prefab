@@ -691,6 +691,7 @@ GameObject:
   - component: {fileID: 8251990000707511959}
   - component: {fileID: 8035609938880308306}
   - component: {fileID: 4346487537664162813}
+  - component: {fileID: 2143749463558555196}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -783,6 +784,34 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2143749463558555196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962248032054372796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb60c59bb3e529845bb02e7b203d23c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Clickable
+  clicked:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3066867446775977738}
+        m_TargetAssemblyTypeName: Features.Player.Caravan.UI.CaravanInventoryUI,
+          Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5264676368200775255
 GameObject:
   m_ObjectHideFlags: 0
@@ -4574,7 +4603,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1628084178059003113, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 35.68
+      value: 47.57
       objectReference: {fileID: 0}
     - target: {fileID: 1628084178059003113, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_SizeDelta.y
@@ -4582,7 +4611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1628084178059003113, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 35.84
+      value: 43.785
       objectReference: {fileID: 0}
     - target: {fileID: 1628084178059003113, guid: fdbd18f68aadb8a4b9ad96a41dc2b9f2, type: 3}
       propertyPath: m_AnchoredPosition.y
