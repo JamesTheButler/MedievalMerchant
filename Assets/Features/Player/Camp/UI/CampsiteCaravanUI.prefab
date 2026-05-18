@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 3802370051553062948}
   - component: {fileID: 8851367292149923560}
   - component: {fileID: 5816869838534075592}
+  - component: {fileID: 6958763715835061238}
   m_Layer: 5
   m_Name: CampsiteCaravanUI
   m_TagString: Untagged
@@ -369,6 +370,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5344599859129420967}
   m_CullTransparentMesh: 1
+--- !u!114 &6958763715835061238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5344599859129420967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b80245fb4d64ac491181266a0887930, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Panels.DynamicPanelAlphaTweener
+  dynamicPanel: {fileID: 8973396853007175542}
+  alphaTween: {fileID: 0}
 --- !u!1 &6014436960443101480
 GameObject:
   m_ObjectHideFlags: 0

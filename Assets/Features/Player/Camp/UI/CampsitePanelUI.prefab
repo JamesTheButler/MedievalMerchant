@@ -100,6 +100,8 @@ GameObject:
   - component: {fileID: 2689207327079382679}
   - component: {fileID: 840305387924738220}
   - component: {fileID: 8988110375955538626}
+  - component: {fileID: 7262738318761445100}
+  - component: {fileID: 7549697063924268693}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -164,6 +166,34 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7262738318761445100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359820628967997940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e711ed72c6335af43a5c693b033274bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.CanvasGroupTween
+  canvasGroup: {fileID: 7549697063924268693}
+  targetAlpha: 0.75
+  inDurationInSec: 0.5
+  easeIn: 9
+--- !u!225 &7549697063924268693
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359820628967997940}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1525910651763509514
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,8 +747,9 @@ GameObject:
   - component: {fileID: 3972828891100332717}
   - component: {fileID: 8977029777428837609}
   - component: {fileID: 3577210987528308368}
-  - component: {fileID: 625118772735145304}
   - component: {fileID: 1197329266846929962}
+  - component: {fileID: 6226677563646487946}
+  - component: {fileID: 625118772735145304}
   m_Layer: 5
   m_Name: CampsitePanelUI
   m_TagString: Untagged
@@ -773,14 +804,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Panels.DynamicPanelGamePauser
   dynamicPanel: {fileID: 8977029777428837609}
---- !u!222 &625118772735145304
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8639325692483405724}
-  m_CullTransparentMesh: 1
 --- !u!114 &1197329266846929962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -794,6 +817,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Features.Audio.Sfx.DynamicPanelSfxTrigger
   panel: {fileID: 8977029777428837609}
+--- !u!114 &6226677563646487946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8639325692483405724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b80245fb4d64ac491181266a0887930, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Panels.DynamicPanelAlphaTweener
+  dynamicPanel: {fileID: 8977029777428837609}
+  alphaTween: {fileID: 7262738318761445100}
+--- !u!222 &625118772735145304
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8639325692483405724}
+  m_CullTransparentMesh: 1
 --- !u!1001 &201183813129572580
 PrefabInstance:
   m_ObjectHideFlags: 0
