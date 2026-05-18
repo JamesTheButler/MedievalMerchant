@@ -22,7 +22,7 @@ namespace Common.UI.Elements.Cells
             if (autoFindCells)
             {
                 goodCells = gameObject
-                    .GetComponentsInChildren<GoodCell>()
+                    .GetComponentsInChildren<GoodCell>(true)
                     .ToList();
             }
 

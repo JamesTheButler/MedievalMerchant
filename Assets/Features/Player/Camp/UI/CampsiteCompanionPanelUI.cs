@@ -4,11 +4,11 @@ namespace Features.Player.Camp.UI
 {
     public sealed class CampsiteCompanionPanelUI : DynamicPanel
     {
-        private CompanionCampPanelUiItem[] _companionGroups;
+        private CampsiteCompanionPanelUiItem[] _companionGroups;
 
         public override void Initialize()
         {
-            _companionGroups = GetComponentsInChildren<CompanionCampPanelUiItem>();
+            _companionGroups = GetComponentsInChildren<CampsiteCompanionPanelUiItem>();
         }
 
         protected override void OnOpen()

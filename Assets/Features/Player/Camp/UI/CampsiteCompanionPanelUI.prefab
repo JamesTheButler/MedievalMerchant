@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 943554439891316406}
   - component: {fileID: 2348233757657313550}
   - component: {fileID: 8251990000707511959}
+  - component: {fileID: 5908385521099501695}
+  - component: {fileID: 1884401612730275050}
+  - component: {fileID: 4068950531233462152}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -75,6 +78,62 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5908385521099501695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962248032054372796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e711ed72c6335af43a5c693b033274bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.CanvasGroupTween
+  canvasGroup: {fileID: 1884401612730275050}
+  targetAlpha: 0.75
+  inDurationInSec: 0.5
+  easeIn: 9
+--- !u!225 &1884401612730275050
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962248032054372796}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &4068950531233462152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962248032054372796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb60c59bb3e529845bb02e7b203d23c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Clickable
+  clicked:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7923303922326582699}
+        m_TargetAssemblyTypeName: Features.Player.Camp.UI.CampsiteCompanionPanelUI,
+          Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5344599859129420967
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,6 +146,7 @@ GameObject:
   - component: {fileID: 7923303922326582699}
   - component: {fileID: 8851367292149923560}
   - component: {fileID: 5816869838534075592}
+  - component: {fileID: 1937979282401672427}
   m_Layer: 5
   m_Name: CampsiteCompanionPanelUI
   m_TagString: Untagged
@@ -148,6 +208,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5344599859129420967}
   m_CullTransparentMesh: 1
+--- !u!114 &1937979282401672427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5344599859129420967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b80245fb4d64ac491181266a0887930, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Panels.DynamicPanelAlphaTweener
+  dynamicPanel: {fileID: 7923303922326582699}
+  alphaTween: {fileID: 5908385521099501695}
 --- !u!1 &5669018093055661710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1421,6 +1495,10 @@ PrefabInstance:
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_fontSize
       value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+      propertyPath: m_margin.y
+      value: -12.386719
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_fontSizeBase
