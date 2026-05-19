@@ -25,8 +25,14 @@ namespace Features.Localization.UI
 
         private void Awake()
         {
-            englishToggle.onValueChanged.AddListener(isOn => { if (isOn) SetLocale(englishLocale); });
-            frenchToggle.onValueChanged.AddListener(isOn => { if (isOn) SetLocale(frenchLocale); });
+            englishToggle.onValueChanged.AddListener(isOn =>
+            {
+                if (isOn) SetLocale(englishLocale);
+            });
+            frenchToggle.onValueChanged.AddListener(isOn =>
+            {
+                if (isOn) SetLocale(frenchLocale);
+            });
         }
 
         private void SetLocale(Locale locale)
@@ -46,7 +52,7 @@ namespace Features.Localization.UI
             yield return LocalizationSettings.InitializationOperation;
             GlobalContext.Instance.Services.LocaleService.SaveLocale(locale);
             LocalizationSettings.SelectedLocale = locale;
-            yield return LocalizationSettings.SelectedLocaleAsync;
+            yield return LocalizationSettings.StringDatabase.GetAllTables(locale);
             SceneManager.LoadScene(startScene);
         }
 
