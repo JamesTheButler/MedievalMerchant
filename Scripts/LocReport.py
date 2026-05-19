@@ -460,12 +460,20 @@ def render_pdf_report(data: ReportData, output_path: Path) -> None:
     pdf.ln(2)
 
     if data.new_entries:
-        _render_pdf_table(
-            pdf,
-            headers=["Table", "Key", "English"],
-            col_widths=[55, 80, 140],
-            rows=[[e.table_name, e.key, e.english] for e in data.new_entries],
-        )
+        new_by_table: Dict[str, List] = {}
+        for e in data.new_entries:
+            new_by_table.setdefault(e.table_name, []).append(e)
+        for table_name, entries in new_by_table.items():
+            pdf.set_font("Helvetica", "B", 11)
+            pdf.cell(0, 7, table_name, new_x="LMARGIN", new_y="NEXT")
+            pdf.ln(1)
+            _render_pdf_table(
+                pdf,
+                headers=["Key", "English"],
+                col_widths=[100, 175],
+                rows=[[e.key, e.english] for e in entries],
+            )
+            pdf.ln(4)
     else:
         pdf.set_font("Helvetica", "I", 10)
         pdf.cell(0, 6, "None.", new_x="LMARGIN", new_y="NEXT")
@@ -477,15 +485,20 @@ def render_pdf_report(data: ReportData, output_path: Path) -> None:
     pdf.ln(2)
 
     if data.changed_entries:
-        _render_pdf_table(
-            pdf,
-            headers=["Table", "Key", "Old English", "New English"],
-            col_widths=[45, 70, 80, 80],
-            rows=[
-                [e.table_name, e.key, e.old_english, e.new_english]
-                for e in data.changed_entries
-            ],
-        )
+        changed_by_table: Dict[str, List] = {}
+        for e in data.changed_entries:
+            changed_by_table.setdefault(e.table_name, []).append(e)
+        for table_name, entries in changed_by_table.items():
+            pdf.set_font("Helvetica", "B", 11)
+            pdf.cell(0, 7, table_name, new_x="LMARGIN", new_y="NEXT")
+            pdf.ln(1)
+            _render_pdf_table(
+                pdf,
+                headers=["Key", "Old English", "New English"],
+                col_widths=[90, 105, 105],
+                rows=[[e.key, e.old_english, e.new_english] for e in entries],
+            )
+            pdf.ln(4)
     else:
         pdf.set_font("Helvetica", "I", 10)
         pdf.cell(0, 6, "None.", new_x="LMARGIN", new_y="NEXT")
@@ -574,34 +587,42 @@ def render_markdown_report(data: ReportData) -> str:
     lines.append("## New localized strings")
     lines.append("")
     if data.new_entries:
-        lines.extend(
-            render_markdown_table(
-                headers=["Table", "Key", "English"],
-                rows=[
-                    [entry.table_name, entry.key, entry.english]
-                    for entry in data.new_entries
-                ],
+        tables: Dict[str, List] = {}
+        for entry in data.new_entries:
+            tables.setdefault(entry.table_name, []).append(entry)
+        for table_name, entries in tables.items():
+            lines.append(f"### {table_name}")
+            lines.append("")
+            lines.extend(
+                render_markdown_table(
+                    headers=["Key", "English"],
+                    rows=[[e.key, e.english] for e in entries],
+                )
             )
-        )
+            lines.append("")
     else:
         lines.append("None.")
-    lines.append("")
+        lines.append("")
 
     lines.append("## Changed English strings")
     lines.append("")
     if data.changed_entries:
-        lines.extend(
-            render_markdown_table(
-                headers=["Table", "Key", "Old English", "New English"],
-                rows=[
-                    [entry.table_name, entry.key, entry.old_english, entry.new_english]
-                    for entry in data.changed_entries
-                ],
+        changed_tables: Dict[str, List] = {}
+        for entry in data.changed_entries:
+            changed_tables.setdefault(entry.table_name, []).append(entry)
+        for table_name, entries in changed_tables.items():
+            lines.append(f"### {table_name}")
+            lines.append("")
+            lines.extend(
+                render_markdown_table(
+                    headers=["Key", "Old English", "New English"],
+                    rows=[[e.key, e.old_english, e.new_english] for e in entries],
+                )
             )
-        )
+            lines.append("")
     else:
         lines.append("None.")
-    lines.append("")
+        lines.append("")
 
     return "\n".join(lines)
 
