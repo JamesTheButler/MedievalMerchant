@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
 """
-LocMissingReport.py
+LocTranslatedReport.py
 
-Report which English localization entries are missing or empty in a given
-target language, by reading the Unity Localization asset files directly from
-the working tree.
+Report all strings that have been translated for a given language, reading
+Unity Localization asset files directly from the working tree.
 
-An entry is considered missing when:
-  - The m_Id exists in the English table but has no entry in the target table, OR
-  - The target entry's m_Localized value is empty or whitespace.
+An entry is considered translated when its m_Id exists in both the English
+table and the target language table and the m_Localized value is non-empty.
 
 Requires: fpdf2 (pip install fpdf2)
 
 Usage:
-    python LocMissingReport.py <language>
-    python LocMissingReport.py fr
-    python LocMissingReport.py de
+    python LocTranslatedReport.py <language>
+    python LocTranslatedReport.py fr
+    python LocTranslatedReport.py de
 """
 
 from __future__ import annotations
@@ -25,26 +23,27 @@ import sys
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Sequence, Tuple
+from typing import Dict, List, Optional, Sequence
 
 
 LOCALIZATION_RELATIVE_DIR = Path("Assets/Features/Localization/Data/Tables")
 
 
-class LocMissingReportError(Exception):
+class LocTranslatedReportError(Exception):
     pass
 
 
 @dataclass(frozen=True)
-class MissingEntry:
+class TranslatedEntry:
     key: str
     english: str
+    translated: str
 
 
 @dataclass(frozen=True)
 class TableResult:
     table_name: str
-    missing: List[MissingEntry]
+    entries: List[TranslatedEntry]
 
 
 @dataclass(frozen=True)
@@ -54,8 +53,8 @@ class ReportData:
     tables: List[TableResult]
 
     @property
-    def total_missing(self) -> int:
-        return sum(len(t.missing) for t in self.tables)
+    def total_translated(self) -> int:
+        return sum(len(t.entries) for t in self.tables)
 
 
 def main() -> int:
@@ -82,7 +81,7 @@ def main() -> int:
 
         folder_name = "Changelogs"
         pdf_filename = (
-            f"Localization_Missing_{arguments.language.upper()}_"
+            f"Localization_Translated_{arguments.language.upper()}_"
             f"{report_data.generated_at.strftime('%d%m%Y')}.pdf"
         )
         pdf_path = repository_root / folder_name / pdf_filename
@@ -93,7 +92,7 @@ def main() -> int:
 
         return 0
 
-    except LocMissingReportError as error:
+    except LocTranslatedReportError as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1
     except KeyboardInterrupt:
@@ -103,11 +102,11 @@ def main() -> int:
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Report missing translations for a given language."
+        description="Report all translated strings for a given language."
     )
     parser.add_argument(
         "language",
-        help="Language identifier to check (e.g. fr, de, es).",
+        help="Language identifier to report on (e.g. fr, de, es).",
     )
     return parser.parse_args()
 
@@ -125,10 +124,10 @@ def resolve_repository_root() -> Path:
             errors="replace",
         )
     except FileNotFoundError as error:
-        raise LocMissingReportError("Git executable not found.") from error
+        raise LocTranslatedReportError("Git executable not found.") from error
 
     if result.returncode != 0 or not result.stdout.strip():
-        raise LocMissingReportError(
+        raise LocTranslatedReportError(
             "Could not determine the git repository root. Run this script inside the repository."
         )
 
@@ -137,13 +136,12 @@ def resolve_repository_root() -> Path:
 
 def ensure_localization_directory_exists(localization_directory: Path) -> None:
     if not localization_directory.is_dir():
-        raise LocMissingReportError(
+        raise LocTranslatedReportError(
             f"Localization directory does not exist: {localization_directory}"
         )
 
 
 def discover_languages(localization_directory: Path) -> List[str]:
-    """Return all locale IDs that have at least one translation table, excluding 'en'."""
     languages = set()
     for asset_file in localization_directory.glob("*_*.asset"):
         parts = asset_file.stem.rsplit("_", 1)
@@ -158,7 +156,7 @@ def validate_language(localization_directory: Path, language: str) -> None:
     known = discover_languages(localization_directory)
     if language not in known:
         available = ", ".join(known) if known else "(none found)"
-        raise LocMissingReportError(
+        raise LocTranslatedReportError(
             f"Unknown language '{language}'. Available languages: {available}"
         )
 
@@ -190,32 +188,31 @@ def build_report(
         target_path = localization_directory / f"{table_name}_{language}.asset"
         shared_path = resolve_shared_data_path(localization_directory, table_name)
 
-        if not english_path.exists():
+        if not english_path.exists() or not target_path.exists():
             continue
 
         if not shared_path:
-            raise LocMissingReportError(
+            raise LocTranslatedReportError(
                 f"No SharedData asset found for table '{table_name}'."
             )
 
         id_to_key = parse_shared_data_asset(shared_path)
         id_to_english = parse_language_asset(english_path)
+        id_to_target = parse_language_asset(target_path)
 
-        if target_path.exists():
-            id_to_target = parse_language_asset(target_path)
-        else:
-            id_to_target = {}
-
-        missing: List[MissingEntry] = []
+        entries: List[TranslatedEntry] = []
         for entry_id in sorted(id_to_english.keys()):
-            english_text = id_to_english[entry_id]
-            target_text = id_to_target.get(entry_id, "")
-            if not target_text.strip():
+            translated_text = id_to_target.get(entry_id, "")
+            if translated_text.strip():
                 key = id_to_key.get(entry_id, f"<missing key for id {entry_id}>")
-                missing.append(MissingEntry(key=key, english=english_text))
+                entries.append(TranslatedEntry(
+                    key=key,
+                    english=id_to_english[entry_id],
+                    translated=translated_text,
+                ))
 
-        if missing:
-            results.append(TableResult(table_name=table_name, missing=missing))
+        if entries:
+            results.append(TableResult(table_name=table_name, entries=entries))
 
     return results
 
@@ -244,14 +241,14 @@ def parse_shared_data_asset(path: Path) -> Dict[int, str]:
             try:
                 current_id = int(value_text)
             except ValueError as error:
-                raise LocMissingReportError(
+                raise LocTranslatedReportError(
                     f"Invalid integer for m_Id in {path.name}, line {line_number}: {value_text}"
                 ) from error
             continue
 
         if stripped.startswith("m_Key:"):
             if current_id is None:
-                raise LocMissingReportError(
+                raise LocTranslatedReportError(
                     f"Encountered m_Key before m_Id in {path.name}, line {line_number}."
                 )
             id_to_key[current_id] = parse_yaml_scalar(stripped[len("m_Key:"):].strip())
@@ -273,14 +270,14 @@ def parse_language_asset(path: Path) -> Dict[int, str]:
             try:
                 current_id = int(value_text)
             except ValueError as error:
-                raise LocMissingReportError(
+                raise LocTranslatedReportError(
                     f"Invalid integer for m_Id in {path.name}, line {line_number}: {value_text}"
                 ) from error
             continue
 
         if stripped.startswith("m_Localized:"):
             if current_id is None:
-                raise LocMissingReportError(
+                raise LocTranslatedReportError(
                     f"Encountered m_Localized before m_Id in {path.name}, line {line_number}."
                 )
             id_to_localized[current_id] = parse_yaml_scalar(stripped[len("m_Localized:"):].strip())
@@ -320,25 +317,25 @@ def _decode_yaml_double_quoted(s: str) -> str:
 def render_markdown_report(data: ReportData) -> str:
     lines: List[str] = []
     lines.append(
-        f"# Missing Translations — {data.language.upper()} "
+        f"# Translated Strings - {data.language.upper()} "
         f"({data.generated_at.strftime('%d/%m/%Y')})"
     )
     lines.append("")
 
-    if data.total_missing == 0:
-        lines.append(f"All entries are translated into `{data.language}`.")
+    if data.total_translated == 0:
+        lines.append(f"No translated entries found for `{data.language}`.")
         return "\n".join(lines)
 
-    lines.append(f"**{data.total_missing} missing entries** across {len(data.tables)} table(s).")
+    lines.append(f"**{data.total_translated} translated entries** across {len(data.tables)} table(s).")
     lines.append("")
 
     for table_result in data.tables:
-        lines.append(f"## {table_result.table_name}  ({len(table_result.missing)} missing)")
+        lines.append(f"## {table_result.table_name}  ({len(table_result.entries)} entries)")
         lines.append("")
         lines.extend(
             render_markdown_table(
-                headers=["Key", "English"],
-                rows=[[e.key, e.english] for e in table_result.missing],
+                headers=["Key", "English", data.language.upper()],
+                rows=[[e.key, e.english, e.translated] for e in table_result.entries],
             )
         )
         lines.append("")
@@ -368,7 +365,6 @@ def escape_markdown_cell(value: object) -> str:
 
 
 def _to_latin1(text: str) -> str:
-    """Replace common Unicode typographic characters, then drop anything still outside latin-1."""
     replacements = {
         "—": "-",   # em dash
         "–": "-",   # en dash
@@ -392,40 +388,41 @@ def render_pdf_report(data: ReportData, output_path: Path) -> None:
     pdf.add_page()
 
     title = _to_latin1(
-        f"Missing Translations - {data.language.upper()} "
+        f"Translated Strings - {data.language.upper()} "
         f"({data.generated_at.strftime('%d/%m/%Y')})"
     )
     pdf.set_font("Helvetica", "B", 16)
     pdf.cell(0, 10, title, new_x="LMARGIN", new_y="NEXT", align="C")
     pdf.ln(4)
 
-    if data.total_missing == 0:
+    if data.total_translated == 0:
         pdf.set_font("Helvetica", "I", 11)
-        pdf.cell(0, 8, f"All entries are translated into '{data.language}'.", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 8, f"No translated entries found for '{data.language}'.", new_x="LMARGIN", new_y="NEXT")
         pdf.output(str(output_path))
         return
 
     pdf.set_font("Helvetica", "", 10)
     pdf.cell(
         0, 6,
-        f"{data.total_missing} missing entries across {len(data.tables)} table(s).",
+        f"{data.total_translated} translated entries across {len(data.tables)} table(s).",
         new_x="LMARGIN", new_y="NEXT",
     )
     pdf.ln(4)
 
+    lang_header = data.language.upper()
     for table_result in data.tables:
         pdf.set_font("Helvetica", "B", 13)
         pdf.cell(
             0, 8,
-            f"{table_result.table_name}  ({len(table_result.missing)} missing)",
+            f"{table_result.table_name}  ({len(table_result.entries)} entries)",
             new_x="LMARGIN", new_y="NEXT",
         )
         pdf.ln(1)
         _render_pdf_table(
             pdf,
-            headers=["Key", "English"],
-            col_widths=[100, 175],
-            rows=[[e.key, _to_latin1(e.english)] for e in table_result.missing],
+            headers=["Key", "English", lang_header],
+            col_widths=[80, 120, 120],
+            rows=[[e.key, _to_latin1(e.english), _to_latin1(e.translated)] for e in table_result.entries],
         )
         pdf.ln(5)
 

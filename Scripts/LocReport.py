@@ -118,6 +118,8 @@ def main() -> int:
         pdf_path = repository_root / folder_name / pdf_filename
         render_pdf_report(report_data, pdf_path)
         print(f"\nPDF: {pdf_path}", file=sys.stderr)
+        import os
+        os.startfile(pdf_path)
 
         return 0
 
@@ -386,7 +388,36 @@ def parse_int_value(line: str, expected_key: str, file_label: str, commit_ref: s
 
 def parse_string_value(line: str, expected_key: str) -> str:
     prefix = f"{expected_key}:"
-    return line[len(prefix):].strip()
+    raw = line[len(prefix):].strip()
+    return parse_yaml_scalar(raw)
+
+
+def parse_yaml_scalar(raw: str) -> str:
+    if len(raw) >= 2 and raw[0] == '"' and raw[-1] == '"':
+        return _decode_yaml_double_quoted(raw[1:-1])
+    if len(raw) >= 2 and raw[0] == "'" and raw[-1] == "'":
+        return raw[1:-1].replace("''", "'")
+    return raw
+
+
+def _decode_yaml_double_quoted(s: str) -> str:
+    import re
+
+    def replace_escape(m: "re.Match[str]") -> str:
+        esc = m.group(0)
+        if esc == "\\n":  return "\n"
+        if esc == "\\r":  return "\r"
+        if esc == "\\t":  return "\t"
+        if esc == "\\\\":  return "\\"
+        if esc == '\\"':  return '"'
+        if esc == "\\'":  return "'"
+        if esc == "\\0":  return "\0"
+        if esc.startswith("\\x"):  return chr(int(esc[2:], 16))
+        if esc.startswith("\\u"):  return chr(int(esc[2:], 16))
+        if esc.startswith("\\U"):  return chr(int(esc[2:], 16))
+        return esc
+
+    return re.sub(r'\\(?:x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8}|[nrt\\"\'0])', replace_escape, s)
 
 
 def build_report_entries(
