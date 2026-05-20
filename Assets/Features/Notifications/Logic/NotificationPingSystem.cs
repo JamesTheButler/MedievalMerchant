@@ -3,6 +3,7 @@ using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.UI;
 using Common.UI.Elements.Panels;
+using Features.Levels.Conditions.Model;
 using Features.Levels.GameModifiers.Events;
 using Features.Towns;
 using Features.Towns.Missions;
@@ -45,6 +46,9 @@ namespace Features.Notifications.Logic
                     break;
                 case MissionStartedNotification missionStartedNotification:
                     PingTown(missionStartedNotification.Town);
+                    break;
+                case LossConditionNotification:
+                    _uiBridgeService.OpenPanelFromBackend(UIPanel.WinLossConditions);
                     break;
                 default:
                     Debug.LogError($"Unhandled notification ping {notification.GetType().Name}");
