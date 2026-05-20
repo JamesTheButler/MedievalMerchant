@@ -80,6 +80,8 @@ namespace Features.StartMenu.UI
             levelConditionsElement.Setup(levelInfo.GameplayModifiers);
 
             _allyEffect = levelInfo.GameplayModifiers.Effects.FirstOfType<AllyEffectData, EffectData>();
+            
+            Canvas.ForceUpdateCanvases();
         }
 
         private void StartButtonClicked()
