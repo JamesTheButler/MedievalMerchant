@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
+using Common.Utility;
 
 namespace Features.Player.Retinue.Logic
 {
@@ -15,7 +16,7 @@ namespace Features.Player.Retinue.Logic
         {
             var loc = ResourceManager.Instance.LocalizationResources;
             Upkeep = new ModifiableVariable(loc.Player.RetinueUpkeep, false);
-            foreach (CompanionType companionType in Enum.GetValues(typeof(CompanionType)))
+            foreach (var companionType in EnumExtensions.Enumerate<CompanionType>())
             {
                 var companionModel = new CompanionModel(companionType);
                 Companions.Add(companionType, companionModel);

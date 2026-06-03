@@ -7,6 +7,8 @@ using Common.UI.Elements;
 using Common.UI.Elements.Cells;
 using Common.UI.InventoryUI;
 using Common.Utility;
+using Features.Map.Pathfinding;
+using Features.Player.Logic;
 using Features.Player.Retinue;
 using Features.Player.Retinue.Config;
 using Features.Player.Retinue.Config.CompanionDatas;
@@ -55,6 +57,8 @@ namespace Features.Player.Camp.UI
         [SerializeField, Required]
         private CompanionDeliveryPanel deliveryPanel;
 
+        private PlayerLocation _playerLocation;
+        private Logic.Camp _campLocation;
         private CompanionConfig _companionConfig;
         private CompanionConfigData _companionConfigData;
         private CompanionResource _companionResource;
@@ -62,9 +66,12 @@ namespace Features.Player.Camp.UI
 
         private readonly Bindings _bindings = new(), _missionBindings = new();
         private int _currentLevel;
+        private bool _isInteractive;
 
         private void Awake()
         {
+            _playerLocation = GameplayContext.Instance.Model.Player.Location;
+            _campLocation = GameplayContext.Instance.Model.Camp;
             _companionConfig = ConfigurationManager.Configurations.CompanionConfig;
             _companionResource = ResourceManager.Instance.CompanionResources.Get(companionType);
             _companionModel = GameplayContext.Instance.Model.Player.RetinueModel.Companions[companionType];
@@ -84,10 +91,16 @@ namespace Features.Player.Camp.UI
             Unbind();
 
             _bindings.Track(
+                _playerLocation.MapLocation.Observe(OnPlayerLocationChanged),
                 _companionModel.Level.Observe(OnLevelChanged),
                 _companionModel.Upkeep.Observe(OnUpkeepChanged),
                 _companionModel.ActiveMission.Observe(OnActiveMissionChanged)
             );
+        }
+
+        private void OnPlayerLocationChanged(IMapLocation location)
+        {
+            _isInteractive = location == _campLocation;
         }
 
         public void Unbind()
@@ -130,7 +143,7 @@ namespace Features.Player.Camp.UI
             levelText.gameObject.SetActive(isHired);
             hiredDetails.SetActive(isHired);
 
-            if(!ignoreUpdateSection)
+            if (!ignoreUpdateSection)
             {
                 upgradeText.text = isHired ? deliveryString.GetLocalizedString() : hireString.GetLocalizedString();
             }
@@ -191,6 +204,9 @@ namespace Features.Player.Camp.UI
 
         private void OnGoodCellClicked(Good good)
         {
+            if (!_isInteractive)
+                return;
+
             var mission = _companionModel.ActiveMission.Value;
             if (mission == null)
                 return;
@@ -204,12 +220,20 @@ namespace Features.Player.Camp.UI
 
         private void OnCoinCellClicked()
         {
+            if (!_isInteractive)
+                return;
+
             var mission = _companionModel.ActiveMission.Value;
             if (mission == null || mission.CoinCost.IsCompleted.Value)
                 return;
 
             deliveryPanel.SetUp(companionType, mission.CoinCost);
             deliveryPanel.Open();
+        }
+
+        public void SetInteractive(bool isInteractive)
+        {
+            _isInteractive = isInteractive;
         }
     }
 }
