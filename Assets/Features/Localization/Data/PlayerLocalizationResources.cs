@@ -27,7 +27,7 @@ namespace Features.Localization.Data
         public string RetinueUpkeep => retinueUpkeep.GetLocalizedString();
         public string UpkeepBase => upkeepBase.GetLocalizedString();
         public string UpgradeCost => upgradeCost.GetLocalizedString();
-        
+
         public string UpgradeCostBase(int level) => upgradeCostBase.GetLocalizedString(level);
         public string CartUpkeep(int level) => cartUpkeep.GetLocalizedString(level);
 

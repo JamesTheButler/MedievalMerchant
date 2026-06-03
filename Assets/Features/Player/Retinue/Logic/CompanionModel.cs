@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Common.Infrastructure;
+using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Common.Types;
 using Features.Player.Retinue.Logic.Modifiers;
@@ -8,19 +10,27 @@ namespace Features.Player.Retinue.Logic
 {
     public sealed class CompanionModel
     {
+        public string Name { get; }
         public CompanionType CompanionType { get; }
         public IReadOnlyObservable<int> Level => _level;
-        public IReadOnlyObservable<float> Upkeep => _upkeep;
+        public ModifiableVariable Upkeep { get; }
         public Observable<CompanionMission> ActiveMission { get; } = new();
         public CompanionUpkeepModifier UpkeepModifier { get; }
 
         private readonly Observable<int> _level = new();
-        private readonly Observable<float> _upkeep = new();
 
         public CompanionModel(CompanionType companionType)
         {
+            var configData = ResourceManager.Instance.CompanionResources.Get(companionType);
+
+            Name = configData.Name;
             CompanionType = companionType;
             UpkeepModifier = new CompanionUpkeepModifier(companionType);
+
+            var loc = ResourceManager.Instance.LocalizationResources;
+            Upkeep = new ModifiableVariable(loc.Player.Companions.CompanionUpkeep(Name), false);
+
+            Upkeep.AddModifier(UpkeepModifier);
         }
 
         public void SetLevel(int newLevel)
