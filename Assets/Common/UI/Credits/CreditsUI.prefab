@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7255358845321407008
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33,10 +33,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2784351125981479443}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 364.36, y: -10}
-  m_SizeDelta: {x: 16, y: 16}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3180644493394684023
 CanvasRenderer:
@@ -162,6 +162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5850698273604512721}
   - component: {fileID: 1686105044121722289}
+  - component: {fileID: 1789581189594452695}
   m_Layer: 5
   m_Name: Melissa Group
   m_TagString: Untagged
@@ -216,6 +217,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1789581189594452695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3629751892862861176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a9ddc1e47d90943bf26b75d5be49ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Linkable
+  link: 
 --- !u!1 &3859350915630886945
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +240,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2784351125981479443}
   - component: {fileID: 2166105972630959871}
+  - component: {fileID: 3861339116647433047}
   m_Layer: 5
   m_Name: Tifany Group
   m_TagString: Untagged
@@ -280,6 +295,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &3861339116647433047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3859350915630886945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a9ddc1e47d90943bf26b75d5be49ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Linkable
+  link: https://www.linkedin.com/in/tifany-keyaert-b812b1399
 --- !u!1 &5307190550324386048
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,7 +1151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4056155872366204062, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4818989564727367841, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1159,23 +1187,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8262055772801432981, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8262055772801432981, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8262055772801432981, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8262055772801432981, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 367.035
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8262055772801432981, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8796145252220892232, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
       propertyPath: staticString.m_TableEntryReference.m_KeyId
@@ -1197,7 +1225,8 @@ PrefabInstance:
       propertyPath: link
       value: https://juanjosound.itch.io/
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8958840432163815304, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3794556330845235173, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
@@ -1206,13 +1235,34 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3794556330845235173, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5850698273604512721}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6308264600391691722, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3821593282040845202}
   m_SourcePrefab: {fileID: 100100000, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
 --- !u!224 &3925064694155678518 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3794556330845235173, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
   m_PrefabInstance: {fileID: 202760303550592211}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6150558441504659737 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6308264600391691722, guid: 054613be6c7fa574ea035d1ca014ebc1, type: 3}
+  m_PrefabInstance: {fileID: 202760303550592211}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3821593282040845202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6150558441504659737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a9ddc1e47d90943bf26b75d5be49ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Linkable
+  link: https://www.linkedin.com/in/damien-l%C3%A9onard-71b0213ab/
 --- !u!1001 &548649358732874438
 PrefabInstance:
   m_ObjectHideFlags: 0
