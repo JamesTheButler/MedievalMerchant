@@ -9,7 +9,7 @@ namespace Features.Player.Retinue.UI
 
         public void Initialize()
         {
-            var progressGroups = GetComponentsInChildren<RetinueMiniProgressGroup>();
+            var progressGroups = GetComponentsInChildren<RetinueMiniProgressGroup>(includeInactive: true);
 
             foreach (var group in progressGroups)
             {
@@ -17,7 +17,7 @@ namespace Features.Player.Retinue.UI
                 _progressGroupDict.Add(group.CompanionType, group);
             }
         }
-        
+
         public void SetProgress(CompanionType companionType, int level)
         {
             _progressGroupDict[companionType].SetProgress(level);
