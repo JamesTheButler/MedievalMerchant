@@ -9,6 +9,7 @@ using Common.UI.InventoryUI;
 using Common.Utility;
 using Features.Player.Retinue;
 using Features.Player.Retinue.Config;
+using Features.Player.Retinue.Config.CompanionDatas;
 using Features.Player.Retinue.Config.Resources;
 using Features.Player.Retinue.Logic;
 using NaughtyAttributes;
@@ -55,10 +56,12 @@ namespace Features.Player.Camp.UI
         private CompanionDeliveryPanel deliveryPanel;
 
         private CompanionConfig _companionConfig;
+        private CompanionConfigData _companionConfigData;
         private CompanionResource _companionResource;
         private CompanionModel _companionModel;
 
         private readonly Bindings _bindings = new(), _missionBindings = new();
+        private int _currentLevel;
 
         private void Awake()
         {
@@ -69,6 +72,8 @@ namespace Features.Player.Camp.UI
             companionIcon.sprite = _companionResource.Icon;
             nameText.text = _companionResource.Name;
             descriptionText.text = _companionResource.Description;
+
+            _companionConfigData = _companionConfig.Get(companionType);
 
             missionItemContainer.DestroyChildren();
             effectsContainer.DestroyChildren();
@@ -94,7 +99,29 @@ namespace Features.Player.Camp.UI
             effectsContainer.DestroyChildren();
         }
 
+        public void HoverNextLevel()
+        {
+            if (_currentLevel == _companionConfigData.MaxLevel)
+                return;
+
+            SetLevelInfo(_currentLevel + 1, true);
+        }
+
+        public void UnhoverNextLevel()
+        {
+            if (_currentLevel == _companionConfigData.MaxLevel)
+                return;
+
+            SetLevelInfo(_currentLevel, true);
+        }
+
         private void OnLevelChanged(int level)
+        {
+            _currentLevel = level;
+            SetLevelInfo(level, false);
+        }
+
+        private void SetLevelInfo(int level, bool ignoreUpdateSection)
         {
             var isHired = level > 0;
 
@@ -103,16 +130,24 @@ namespace Features.Player.Camp.UI
             levelText.gameObject.SetActive(isHired);
             hiredDetails.SetActive(isHired);
 
-            upgradeText.text = isHired ? deliveryString.GetLocalizedString() : hireString.GetLocalizedString();
+            if(!ignoreUpdateSection)
+            {
+                upgradeText.text = isHired ? deliveryString.GetLocalizedString() : hireString.GetLocalizedString();
+            }
 
             if (!isHired)
                 return;
 
             levelText.text = levelString.GetLocalizedString(new { _int_Level = level });
 
-            var companionConfigData = _companionConfig.Get(companionType);
-            var levelInfo = companionConfigData.GetLevelData(level);
-            foreach (var line in levelInfo.Description.Split(Environment.NewLine))
+            var levelInfo = _companionConfigData.GetLevelData(level);
+            SetLevelDetails(levelInfo.Description);
+        }
+
+        private void SetLevelDetails(string description)
+        {
+            effectsContainer.DestroyChildren();
+            foreach (var line in description.Split(Environment.NewLine))
             {
                 if (line == string.Empty)
                     continue;
