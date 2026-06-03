@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using Common.UI.Elements;
 using Common.UI.Elements.Panels;
+using Common.Utility;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -8,6 +11,9 @@ namespace Common.UI.Utility
 {
     public sealed class EscapablePanelManager : MonoBehaviour
     {
+        [SerializeField, Required]
+        private PlayerInput playerInput;
+
         [SerializeField]
         private UnityEvent escapeFallthrough;
 
@@ -50,12 +56,15 @@ namespace Common.UI.Utility
 
             _activePanels.Add(panel);
             panel.Closed += OnPanelClosed;
+            ToggleGameplayInputMap();
+
             return;
 
             void OnPanelClosed()
             {
                 _activePanels.Remove(panel);
                 panel.Closed -= OnPanelClosed;
+                ToggleGameplayInputMap();
             }
         }
 
@@ -71,6 +80,12 @@ namespace Common.UI.Utility
             var next = _activePanels[lastIndex];
             _activePanels.RemoveAt(lastIndex);
             next.Close();
+        }
+
+        private void ToggleGameplayInputMap()
+        {
+            var activeMap = _activePanels.IsEmpty() ? ActionMap.Gameplay : ActionMap.UI;
+            playerInput.SwitchCurrentActionMap(activeMap);
         }
     }
 }

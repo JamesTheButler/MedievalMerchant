@@ -12,6 +12,10 @@ namespace Common.UI.Elements
                 ActionMap.UI => "UI",
                 _ => "Gameplay"
             };
+
+            if (playerInput.currentActionMap.name == mapId)
+                return;
+
             playerInput.SwitchCurrentActionMap(mapId);
         }
     }
