@@ -1,0 +1,91 @@
+# A pure row/column container — no CanvasRenderer, no visuals of its own,
+# just positions its children. Swap the guid on the layout component to
+# 59f8146938fff824cb5fd77236b75775 for a VerticalLayoutGroup instead of
+# HorizontalLayoutGroup (30649d3a9faa99c48a7b1166b86bf2a0). Drop the
+# ContentSizeFitter block if the container should keep a fixed size instead
+# of shrinking/growing to fit its children.
+#
+# m_ChildControlWidth/Height: 0 means children keep their own size (from their
+# own RectTransform.sizeDelta or a LayoutElement) and the group only
+# positions them — set to 1 if you want the group to force children to fill
+# available space instead.
+
+--- !u!1 &{FILEID_GAMEOBJECT}
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: {FILEID_RECTTRANSFORM}}
+  - component: {fileID: {FILEID_LAYOUTGROUP}}
+  - component: {fileID: {FILEID_CONTENTSIZEFITTER}}
+  m_Layer: 5
+  m_Name: {NAME}
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &{FILEID_RECTTRANSFORM}
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: {FILEID_GAMEOBJECT}}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  # {CHILD_FILEID_1}, {CHILD_FILEID_2}, ... in visual/sibling order
+  - {fileID: 0}
+  m_Father: {fileID: {PARENT_FILEID}}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &{FILEID_LAYOUTGROUP}
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: {FILEID_GAMEOBJECT}}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 3
+  m_Spacing: 8
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &{FILEID_CONTENTSIZEFITTER}
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: {FILEID_GAMEOBJECT}}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
+  m_HorizontalFit: 0
+  m_VerticalFit: 2

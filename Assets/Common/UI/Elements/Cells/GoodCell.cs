@@ -21,7 +21,7 @@ namespace Common.UI.Elements.Cells
         public Good? Good { get; private set; }
 
         [SerializeField, Required]
-        private Image goodIcon, cornerIcon;
+        private Image goodIcon, cornerIcon, background;
 
         [SerializeField]
         protected GoodTooltipHandler tooltipHandler;
@@ -64,6 +64,12 @@ namespace Common.UI.Elements.Cells
             tooltipHandler?.SetData(good.Value);
 
             OnSetGood(good);
+        }
+
+        public void ChangeBackground(Sprite image, Color? color = null)
+        {
+            background.sprite = image;
+            background.color = color ?? Color.white;
         }
 
         protected virtual void OnSetGood(Good? good) { }
