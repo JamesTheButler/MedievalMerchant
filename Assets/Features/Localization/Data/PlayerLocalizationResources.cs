@@ -29,7 +29,16 @@ namespace Features.Localization.Data
         public string UpgradeCost => upgradeCost.GetLocalizedString();
 
         public string UpgradeCostBase(int level) => upgradeCostBase.GetLocalizedString(level);
-        public string CartUpkeep(int level) => cartUpkeep.GetLocalizedString(level);
+
+        public string CartUpkeep(int cartIndex, int level)
+        {
+            var args = new
+            {
+                _int_Level = level,
+                _int_Index = cartIndex,
+            };
+            return cartUpkeep.GetLocalizedString(args);
+        }
 
         // e.g. Average movement speed
         public string Average(string attribute)

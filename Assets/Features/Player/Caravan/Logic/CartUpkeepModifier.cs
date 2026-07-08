@@ -5,17 +5,22 @@ namespace Features.Player.Caravan.Logic
 {
     public sealed class CartUpkeepModifier : FlatModifier
     {
-        public CartUpkeepModifier(float value, int cartLevel) : base(value, GetDescription(cartLevel)) { }
+        private readonly int _index;
+
+        public CartUpkeepModifier(int index, float value, int cartLevel) : base(value, GetDescription(index, cartLevel))
+        {
+            _index = index;
+        }
 
         public void Update(float value, int cartLevel)
         {
             Value.Value = value;
-            Description.Value = GetDescription(cartLevel);
+            Description.Value = GetDescription(_index, cartLevel);
         }
 
-        private static string GetDescription(int cartLevel)
+        private static string GetDescription(int index, int cartLevel)
         {
-            return ResourceManager.Instance.LocalizationResources.Player.CartUpkeep(cartLevel);
+            return ResourceManager.Instance.LocalizationResources.Player.CartUpkeep(index, cartLevel);
         }
     }
 }

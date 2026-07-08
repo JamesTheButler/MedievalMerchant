@@ -93,7 +93,7 @@ namespace Features.Player.Caravan.Logic
             var cart = _carts[cartId];
             if (modifier is null)
             {
-                var newModifier = new CartUpkeepModifier(cart.Upkeep, cart.Level);
+                var newModifier = new CartUpkeepModifier(cartId, cart.Upkeep, cart.Level);
                 _cartUpkeepModifiers[cartId] = newModifier;
                 Upkeep.AddModifier(newModifier);
             }
