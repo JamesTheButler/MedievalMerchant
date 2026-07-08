@@ -4,7 +4,6 @@ using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Features.Player.Caravan.Config;
-
 using UnityEngine;
 
 namespace Features.Player.Caravan.Logic
@@ -50,8 +49,7 @@ namespace Features.Player.Caravan.Logic
                 var cart = new Cart();
                 _carts.Add(cart);
 
-                var cartId = i;
-                cart.SlotCount.Observe((oldCount, newCount) => SlotCountChanged(cartId, oldCount, newCount));
+                cart.SlotCount.Observe(SlotCountChanged);
             }
         }
 
@@ -82,7 +80,7 @@ namespace Features.Player.Caravan.Logic
             RefreshTotals(cartId);
         }
 
-        private void SlotCountChanged(int cartIndex, int oldCount, int newCount)
+        private void SlotCountChanged(int oldCount, int newCount)
         {
             SlotCount.Value += -oldCount + newCount;
         }
@@ -93,7 +91,8 @@ namespace Features.Player.Caravan.Logic
             var cart = _carts[cartId];
             if (modifier is null)
             {
-                var newModifier = new CartUpkeepModifier(cartId, cart.Upkeep, cart.Level);
+                var displayIndex = cartId + 1;
+                var newModifier = new CartUpkeepModifier(displayIndex, cart.Upkeep, cart.Level);
                 _cartUpkeepModifiers[cartId] = newModifier;
                 Upkeep.AddModifier(newModifier);
             }
