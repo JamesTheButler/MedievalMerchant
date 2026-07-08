@@ -72,6 +72,11 @@ namespace Common.UI.Elements.Cells
             background.color = color ?? Color.white;
         }
 
+        public void ChangeBackground(Color color)
+        {
+            background.color = color;
+        }
+
         protected virtual void OnSetGood(Good? good) { }
 
         public void SetEnabled(bool isEnabled)

@@ -56,3 +56,39 @@ m_OnClick:
 ```
 
 True nested-prefab-instance YAML (a `PrefabInstance` document with `m_Modification` overrides pointing at `Button.prefab` via `m_SourcePrefab`) is possible in Force-Text mode but nontrivial to hand-author correctly. For now, when a description calls for a button, **compose the same component set `Button.prefab` uses** (Image + Button + Hoverable, plus TextMeshProUGUI child, plus `LocalizedText` if the label needs localization) rather than attempting a raw nested `PrefabInstance` — copy the real field values from `Button.prefab` itself as your source of truth.
+
+## Instancing a custom-authored prefab N times (e.g. repeating a card/cell component)
+
+When you need several copies of a *custom* prefab you (or the project) already built as its own standalone `.prefab` file — not `Button.prefab`, something project-specific like a card component — a true nested `PrefabInstance` is the right tool and is much less risky than it sounds, especially if the file you're editing already contains other nested instances to copy the shape from (very common in this project's dialog templates). The minimal recipe per copy:
+
+```yaml
+--- !u!1001 &<FRESH_FILEID>
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: <PARENT_RECTTRANSFORM_FILEID>}   # where it's placed in the outer prefab
+    m_Modifications:
+    - target: {fileID: <SOURCE_ROOT_GAMEOBJECT_FILEID>, guid: <SOURCE_PREFAB_GUID>, type: 3}
+      propertyPath: m_Name
+      value: My Instance Name        # only override what actually differs per copy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: <SOURCE_PREFAB_GUID>, type: 3}
+```
+
+If anything elsewhere in the outer file (a layout group's `m_Children`, or your panel script's `[SerializeField]` list) needs to reference a specific object *inside* that instance, declare a **stripped** object for it — same fileID space as everything else in this file, but only identifying fields, no data:
+
+```yaml
+--- !u!224 &<FRESH_FILEID> stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: <SOURCE_OBJECT_FILEID_IN_THE_SOURCE_PREFAB>, guid: <SOURCE_PREFAB_GUID>, type: 3}
+  m_PrefabInstance: {fileID: <THE_PREFABINSTANCE_FILEID_ABOVE>}
+  m_PrefabAsset: {fileID: 0}
+```
+
+Find `<SOURCE_..._FILEID>` values by reading the source `.prefab` directly (e.g. its root GameObject's own fileID for the root RectTransform, or a specific MonoBehaviour's fileID to reference that component). You need one stripped block per object you must reference from outside, not one per object in the whole source tree — most of the source prefab's internals don't need a stripped counterpart at all. Repeat the `PrefabInstance` + stripped blocks per copy (fresh fileIDs each time, same `m_SourcePrefab` guid), and append the resulting stripped RectTransform fileIDs into whatever parent's `m_Children` array positions them.

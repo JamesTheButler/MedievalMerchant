@@ -22,10 +22,10 @@ namespace Features.Player.Caravan.UI
     public sealed class CartStatsUI : MonoBehaviour
     {
         [SerializeField]
-        private List<GoodCell> slots;
+        private List<GoodCell> inventoryCells;
 
-        [field: SerializeField, Required]
-        public Button UpgradeButton { get; private set; }
+        [SerializeField, Required]
+        private Button upgradeButton;
 
         [SerializeField, Required]
         private Button unlockButton;
@@ -33,9 +33,15 @@ namespace Features.Player.Caravan.UI
         [SerializeField, Required]
         private GameObject unlockedParent;
 
+        [SerializeField, Required]
+        private GameObject headerGroup;
+
         [Header("Header")]
         [SerializeField, Required]
-        private TMP_Text moveSpeedText, upkeepText;
+        private TMP_Text moveSpeedText;
+
+        [SerializeField, Required]
+        private TMP_Text upkeepText;
 
         [SerializeField]
         private LocalizedString moveSpeedTooltipString, upkeepTooltipString;
@@ -50,7 +56,19 @@ namespace Features.Player.Caravan.UI
         private Image backgroundImage, cartImage;
 
         [SerializeField, Required]
-        private Image tierIcon, moveSpeedUpgradeIcon, upkeepUpgradeIcon, faderImage;
+        private Image tierIcon, moveSpeedUpgradeIcon, upkeepUpgradeIcon;
+
+        [SerializeField, Required]
+        private TMP_Text waggonText;
+
+        [SerializeField]
+        private LocalizedString cartString;
+
+        [SerializeField]
+        private Color lockedSlotColor = new(0.5f, 0.5f, 0.5f, 0.5f);
+
+        [SerializeField]
+        private Color previewSlotColor = new(0.4f, 1f, 0.4f, 0.85f);
 
         private readonly Bindings _bindings = new();
 
@@ -59,13 +77,20 @@ namespace Features.Player.Caravan.UI
         private CaravanResources _caravanResources;
         private CaravanConfig _caravanConfig;
 
-        private int _lastActiveSlotCount;
-
         public void Bind(Cart cart, int index, Action upgradeAction, Action unlockAction)
         {
             _player = GameplayContext.Instance.Model.Player;
             _caravanConfig = ConfigurationManager.Configurations.CaravanConfig;
             _caravanResources = ResourceManager.Instance.CaravanResources;
+            _cart = cart;
+
+            waggonText.text = cartString.GetLocalizedString(index + 1);
+
+            foreach (var slot in inventoryCells)
+            {
+                slot.gameObject.SetActive(true);
+                slot.SetGood(null);
+            }
 
             _bindings.Track(
                 _cart.Level.Observe(OnLevelChanged),
@@ -75,11 +100,9 @@ namespace Features.Player.Caravan.UI
             );
             _player.Inventory.Funds.Observe(OnPlayerFundsChanged);
 
-            UpgradeButton.onClick.AddListener(() =>
+            upgradeButton.onClick.AddListener(() =>
             {
                 upgradeAction.Invoke();
-                cartUpgradeTooltip.SetData(_cart);
-                HoverNextLevel();
             });
 
             unlockButton.onClick.AddListener(unlockAction.Invoke);
@@ -101,6 +124,11 @@ namespace Features.Player.Caravan.UI
 
             moveSpeedUpgradeIcon.enabled = true;
             upkeepUpgradeIcon.enabled = true;
+
+            for (var i = _cart.SlotCount.Value; i < upgradeData.SlotCount; i++)
+            {
+                inventoryCells[i].ChangeBackground(previewSlotColor);
+            }
         }
 
         public void Unhover()
@@ -110,12 +138,23 @@ namespace Features.Player.Caravan.UI
 
             moveSpeedUpgradeIcon.enabled = false;
             upkeepUpgradeIcon.enabled = false;
+
+            RefreshSlotLocks();
+        }
+
+        private void RefreshSlotLocks()
+        {
+            for (var i = 0; i < inventoryCells.Count; i++)
+            {
+                var slotColor = i < _cart.SlotCount.Value ? Color.white : lockedSlotColor;
+                inventoryCells[i].ChangeBackground(slotColor);
+            }
         }
 
         private void OnLevelChanged(int level)
         {
             SetLocked(level <= 0);
-            UpgradeButton.gameObject.SetActive(level < CaravanConfig.MaxLevel);
+            upgradeButton.gameObject.SetActive(level is > 0 and < CaravanConfig.MaxLevel);
             UpdateCartImage();
             var sprite = _caravanResources.TierIcons.GetValueOrDefault(level, null);
             tierIcon.sprite = sprite;
@@ -184,7 +223,7 @@ namespace Features.Player.Caravan.UI
 
         private void OnPlayerFundsChanged(float funds)
         {
-            UpgradeButton.interactable = _cart.UpgradeCost <= funds;
+            upgradeButton.interactable = _cart.UpgradeCost <= funds;
         }
 
         private void SetLocked(bool isLocked)
@@ -196,23 +235,11 @@ namespace Features.Player.Caravan.UI
 
         private void OnSlotCountChanged(int slotCount)
         {
-            if (slotCount < _lastActiveSlotCount)
-            {
-                Debug.LogError("Slot count reduction is not supported!.");
-            }
-
-            for (var slotIndex = _lastActiveSlotCount; slotIndex < slotCount; slotIndex++)
-            {
-                slots[slotIndex].gameObject.SetActive(true);
-                slots[slotIndex].SetGood(null);
-            }
-
-            _lastActiveSlotCount = slotCount;
+            RefreshSlotLocks();
         }
 
         private void Fade(bool isFaded)
         {
-            faderImage.enabled = isFaded;
             backgroundImage.color = isFaded ? Color.white.WithAlpha(0.5f) : Color.white;
         }
     }

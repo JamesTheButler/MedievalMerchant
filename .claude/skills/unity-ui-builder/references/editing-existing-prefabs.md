@@ -2,6 +2,11 @@
 
 This is the higher-risk path — a mistake here corrupts a real, already-working prefab, unlike creating a fresh file. Follow this sequence:
 
+0. **If the script you're editing looks unfinished or orphaned (nothing instantiates/binds it), audit it for the two bug classes that produce that state before adding new behavior on top:**
+   - **Field-name/serialized-key mismatch.** Unity serializes a `[SerializeField]` by the C# field's *name*, not by declaration order or type. If the field was renamed after the prefab was authored, the prefab's YAML still has the *old* key (e.g. `inventoryCells:` in the file) while the C# now declares `slots` — Unity silently deserializes this as an empty/default value, with no import error. Confirm every field name in the script actually appears as a YAML key in the prefab's `MonoBehaviour` block for that component; if one is missing where you'd expect it (and a similarly-named key exists instead), that's almost certainly a stale rename, not a field that's supposed to be empty. Fixing the C# name back to match existing prefab data is usually far lower-risk than hand-editing the serialized array.
+   - **Uninitialized model reference.** A `Bind(Model model, ...)` method that reads `_model.Something` without a line assigning `_model = model;` somewhere in it will null-ref the instant it runs. Skim every `Bind`/`Init` method for this before trusting it works.
+   - Also expect **stale cosmetic strings** like `m_EditorClassIdentifier` or a `UnityEvent` call's `m_TargetAssemblyTypeName` to still name an old class after a rename (e.g. `CartUI` where the script is now `CartStatsUI`) — these are editor-convenience caches, not functional wiring (the real link is the `m_Script` guid / `m_Target` fileID), so leave them alone rather than "fixing" them.
+
 1. **Re-read the full current file immediately before editing.** Never rely on a version read earlier in the conversation or on the worked example's numbers — fileIDs are unique per file and unrelated to any other prefab, and the file may have changed since you last looked at it.
 
 2. **Locate the target parent's `RectTransform` block** and its `m_Children` array. This is where you'll insert the new subtree's root fileID, at whatever index gives the sibling order you want (see `yaml-anatomy.md` — `m_Children` order = visual order inside layout groups).

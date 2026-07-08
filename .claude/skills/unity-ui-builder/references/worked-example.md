@@ -2,6 +2,8 @@
 
 A real, hand-built (pre-skill) example demonstrating hierarchy, layout groups, cell reuse, and `Observable` binding together — `Assets/Features/Player/Camp/UI/CampsiteCartUI.prefab` + `Assets/Features/Player/Camp/UI/DetailedCartUI.cs` + `Assets/Common/UI/Elements/Cells/GoodCell.cs`. Read the actual files for full detail; this is the map.
 
+Note: this project has a *second*, more feature-complete sibling attempt at the same "cart" UI — `Assets/Features/Player/Caravan/UI/CartStatsUI.cs` / `.prefab` — which additionally shows a locked/unlocked state split, a hover-preview mechanic, and affordability-based button interactivity. Both were orphaned (unwired) when found. If a task touches cart UI again, check which one (if either) has since been wired up and built upon, rather than assuming this simpler one is still the active version.
+
 ## Hierarchy
 
 ```

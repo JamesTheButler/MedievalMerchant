@@ -42,6 +42,7 @@ Check the sketch against this list. Ask about an item only if it's actually ambi
 - **Reuse vs. build**: does a described element map to something that already exists (`InventoryCell`, `GoodCell`, `Button.prefab`, `DynamicPanel`) rather than needing new YAML? Prefer reuse — see the checklist below.
 - **Standalone vs. insertion**: is this a new prefab, or does it slot into an existing one? (See `references/editing-existing-prefabs.md` if the latter.)
 - **Styling gaps** (font, color, icon): default to whatever the nearest existing similar UI element already uses, and say so explicitly rather than silently inventing a style.
+- **Fits the container?** Before laying out several fixed-size elements (e.g. reusing an existing card prefab N times) inside an existing panel, do the arithmetic: sum of element widths/heights + spacing + the container's padding, against that container's actual available size. A `HorizontalLayoutGroup`/`VerticalLayoutGroup` with `ChildControlWidth/Height: 0` will not shrink children to fit — it'll just overflow. If it doesn't fit, restructure (e.g. a grid instead of a single row) rather than resizing shared dialog chrome, unless the user asked for a bigger panel.
 
 ### 3. Confirm before writing anything
 
