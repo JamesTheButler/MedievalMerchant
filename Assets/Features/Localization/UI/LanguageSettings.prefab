@@ -255,10 +255,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LanguageSettings
   startScene: StartScene
-  englishToggle: {fileID: 6529189811604811001}
-  frenchToggle: {fileID: 6698110032655121009}
-  englishLocale: {fileID: 11400000, guid: 7857639030b8bc94c9585a0c6ef5c176, type: 2}
-  frenchLocale: {fileID: 11400000, guid: 9b1d24f31a69ba34e82cbbaef206179c, type: 2}
+  languages:
+  - <Toggle>k__BackingField: {fileID: 6529189811604811001}
+    <Locale>k__BackingField: {fileID: 11400000, guid: 7857639030b8bc94c9585a0c6ef5c176, type: 2}
+  - <Toggle>k__BackingField: {fileID: 6698110032655121009}
+    <Locale>k__BackingField: {fileID: 11400000, guid: 9b1d24f31a69ba34e82cbbaef206179c, type: 2}
+  - <Toggle>k__BackingField: {fileID: 2340195376299335351}
+    <Locale>k__BackingField: {fileID: 11400000, guid: f697e902224af9d409a5022f5ed62b7f, type: 2}
 --- !u!114 &7158722355999456360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,7 +437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8636007031433150316, guid: 29e58449d60309c4db8c35dc1a1608ea, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8816628826580666226, guid: 29e58449d60309c4db8c35dc1a1608ea, type: 3}
       propertyPath: m_text
@@ -450,6 +453,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2248507482471102750, guid: 29e58449d60309c4db8c35dc1a1608ea, type: 3}
   m_PrefabInstance: {fileID: 894584857237555599}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2340195376299335351 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7214386032285194065, guid: 29e58449d60309c4db8c35dc1a1608ea, type: 3}
+  m_PrefabInstance: {fileID: 894584857237555599}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Toggle
 --- !u!1001 &1743240745958050631
 PrefabInstance:
   m_ObjectHideFlags: 0

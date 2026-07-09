@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Common.Infrastructure.Global;
 using Common.UI.Elements.Panels;
@@ -12,27 +13,37 @@ namespace Features.Localization.UI
 {
     public sealed class LanguageSettingsUI : DynamicPanel
     {
+        [Serializable]
+        private sealed class LanguageOption
+        {
+            [field: SerializeField, Required]
+            public Toggle Toggle { get; private set; }
+
+            [field: SerializeField, Required]
+            public Locale Locale { get; private set; }
+        }
+
         [SerializeField, Scene]
         private string startScene;
 
-        [SerializeField, Required]
-        private Toggle englishToggle, frenchToggle;
-
-        [SerializeField, Required]
-        private Locale englishLocale, frenchLocale;
+        [SerializeField]
+        private LanguageOption[] languages;
 
         private bool _isChangingLocale;
 
         private void Awake()
         {
-            englishToggle.onValueChanged.AddListener(isOn =>
+            foreach (var language in languages)
             {
-                if (isOn) SetLocale(englishLocale);
-            });
-            frenchToggle.onValueChanged.AddListener(isOn =>
-            {
-                if (isOn) SetLocale(frenchLocale);
-            });
+                var locale = language.Locale;
+                language.Toggle.onValueChanged.AddListener(isOn =>
+                {
+                    if (isOn)
+                    {
+                        SetLocale(locale);
+                    }
+                });
+            }
         }
 
         private void SetLocale(Locale locale)
@@ -60,16 +71,19 @@ namespace Features.Localization.UI
         {
             _isChangingLocale = false;
 
-            var locale = LocalizationSettings.SelectedLocale;
+            var selectedLocale = LocalizationSettings.SelectedLocale;
+            var selectedToggle = languages[0].Toggle;
 
-            if (locale == frenchLocale)
+            foreach (var language in languages)
             {
-                frenchToggle.SetIsOnWithoutNotify(true);
+                if (language.Locale != selectedLocale)
+                    continue;
+
+                selectedToggle = language.Toggle;
+                break;
             }
-            else
-            {
-                englishToggle.SetIsOnWithoutNotify(true);
-            }
+
+            selectedToggle.SetIsOnWithoutNotify(true);
 
             gameObject.SetActive(true);
         }
