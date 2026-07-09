@@ -12,6 +12,7 @@ using Features.Player.Logic;
 using Features.Player.Retinue;
 using Features.Player.Retinue.Config;
 using Features.Player.Retinue.Config.CompanionDatas;
+using Features.Player.Retinue.Config.LevelDatas;
 using Features.Player.Retinue.Config.Resources;
 using Features.Player.Retinue.Logic;
 using NaughtyAttributes;
@@ -154,13 +155,13 @@ namespace Features.Player.Camp.UI
             levelText.text = levelString.GetLocalizedString(new { _int_Level = level });
 
             var levelInfo = _companionConfigData.GetLevelData(level);
-            SetLevelDetails(levelInfo.Description);
+            SetLevelDetails(levelInfo);
         }
 
-        private void SetLevelDetails(string description)
+        private void SetLevelDetails(CompanionLevelData levelInfo)
         {
             effectsContainer.DestroyChildren();
-            foreach (var line in description.Split(Environment.NewLine))
+            foreach (var line in levelInfo.Description.Split(Environment.NewLine))
             {
                 if (line == string.Empty)
                     continue;
@@ -168,6 +169,8 @@ namespace Features.Player.Camp.UI
                 var effectListItem = Instantiate(effectListItemPrefab, effectsContainer);
                 effectListItem.Text.text = line;
             }
+
+            OnUpkeepChanged(levelInfo.Upkeep);
         }
 
         private void OnUpkeepChanged(float upkeep)
