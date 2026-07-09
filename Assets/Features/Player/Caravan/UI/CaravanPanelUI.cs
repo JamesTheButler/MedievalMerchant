@@ -9,11 +9,15 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Features.Player.Caravan.UI
 {
     public sealed class CaravanPanelUI : DynamicPanel, IPointerClickHandler
     {
+        [SerializeField, Required]
+        private RectTransform rootTransform;
+
         [SerializeField, Required]
         private TMP_Text moveSpeedText, upkeepText;
 
@@ -32,7 +36,8 @@ namespace Features.Player.Caravan.UI
 
             _bindings.Track(
                 _caravanManager.MoveSpeed.Observe(OnMoveSpeedChanged),
-                _caravanManager.Upkeep.Observe(OnUpkeepChanged)
+                _caravanManager.Upkeep.Observe(OnUpkeepChanged),
+                _caravanManager.CartUnlocked.Observe(OnCartCountChanged)
             );
 
             moveSpeedTooltip.SetData(_caravanManager.MoveSpeed);
@@ -69,6 +74,11 @@ namespace Features.Player.Caravan.UI
         private void OnUpkeepChanged(float upkeep)
         {
             upkeepText.text = upkeep.ToString("0.##");
+        }
+
+        private void OnCartCountChanged()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rootTransform);
         }
     }
 }
