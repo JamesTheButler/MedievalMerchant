@@ -32,7 +32,7 @@ namespace Features.Feedback.UI
             if (messageInput.text == "")
                 return;
 
-            StartCoroutine(_feedbackService.PostFeedback(nameInput.text, messageInput.text));
+            _feedbackService.PostFeedback(nameInput.text, messageInput.text);
             Close();
         }
 

@@ -30,21 +30,21 @@ namespace Features.Settings.UI
             giveUpButton.onClick.AddListener(GiveUp);
         }
 
-        private void OnFeedbackPosted()
+        private static void OnFeedbackPosted()
         {
             Debug.Log("Feedback has been sent.");
         }
 
         protected override void OnOpen()
         {
-            _feedbackService.FeedbackPosted += OnFeedbackPosted;
+            _feedbackService.FeedbackPosted.Observe(OnFeedbackPosted);
 
             gameObject.SetActive(true);
         }
 
         protected override void OnClose()
         {
-            _feedbackService.FeedbackPosted -= OnFeedbackPosted;
+            _feedbackService.FeedbackPosted.StopObserving(OnFeedbackPosted);
 
             gameObject.SetActive(false);
         }
