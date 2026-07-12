@@ -2,7 +2,6 @@
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Types;
-using Features.Goods.Config;
 using Features.Localization.Data;
 using Features.Trade;
 
