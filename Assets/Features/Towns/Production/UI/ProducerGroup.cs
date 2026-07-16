@@ -78,6 +78,8 @@ namespace Features.Towns.Production.UI
 
             tooltip.SetData(new ProducerTooltip.Data(town, _producerIndex));
 
+            RefreshTooltipEnabled();
+
             if (!_isAvailable)
                 return;
 
@@ -227,6 +229,12 @@ namespace Features.Towns.Production.UI
             arrowT2T3Delivery.SetActive(townTier > Tier.Tier2 && hasT3Producer);
         }
 
+        private void RefreshTooltipEnabled()
+        {
+            var isEnabled = _town.ProductionManager.HasProducer(Tier.Tier1, _producerIndex);
+            tooltip.SetEnabled(isEnabled);
+        }
+
         private void OnProducerAdded(Producer producer, int producerIndex)
         {
             if (!_isAvailable)
@@ -242,6 +250,7 @@ namespace Features.Towns.Production.UI
             SetupProducerCell(producer);
             RefreshProducerCellStates();
             RefreshArrows();
+            RefreshTooltipEnabled();
         }
 
         private void SetupProducerCell(Producer producer)
