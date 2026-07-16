@@ -87,7 +87,7 @@ namespace Features.Towns.Production.UI
                 var producer = _productionManager.GetProducers(tier)[_producerIndex];
                 if (producer != null)
                 {
-                    OnProducerAdded(producer, _producerIndex);
+                    SetupProducerCell(producer);
                 }
             }
 
@@ -239,17 +239,17 @@ namespace Features.Towns.Production.UI
                 return;
             }
 
+            SetupProducerCell(producer);
+            RefreshProducerCellStates();
+            RefreshArrows();
+        }
+
+        private void SetupProducerCell(Producer producer)
+        {
             var producerCell = _producerCellsPerTier[producer.Tier];
             producerCell.SetGood(producer.ProducedGood);
             producerCell.SetAmount(0);
             _producerCellsPerGood[producer.ProducedGood] = producerCell;
-            RefreshProducerCellStates();
-            RefreshArrows();
-
-            if (producer.Tier == Tier.Tier3)
-            {
-                ToggleDeliveryCell(true);
-            }
         }
 
         private void OnProducerRemoved(Producer producer)
