@@ -8,6 +8,7 @@ using Common.UI.Elements;
 using Features.Goods.Config;
 using Features.Localization.Data;
 using Features.Map.Modes;
+using Features.Player.Caravan.Logic;
 using Features.Player.Caravan.UI;
 using Features.Ticking.Logic;
 using Features.Towns;
@@ -50,7 +51,8 @@ namespace Features.Tutorial.Onboarding.Logic
         [SerializeField, Required]
         private OnboardingTaskListUI taskListUI;
 
-        private const float DelayBetweenSteps = 0.5f;
+        [SerializeField]
+        private float delayBetweenSteps = 0.5f;
 
         private Coroutine _tutorialCoroutine;
 
@@ -60,17 +62,21 @@ namespace Features.Tutorial.Onboarding.Logic
 
         private MapModeModel _mapModeModel;
         private GameSpeedModel _gameSpeedModel;
+        private CaravanManager _caravanManager;
 
         private Town _townA, _townB;
         private OnboardingSequence _onboardingSequence;
 
         private object _townNameObject;
 
+        private const int BerryDeliveryCount = 30;
+
         public override void Initialize()
         {
             var model = GameplayContext.Instance.Model;
             _mapModeModel = model.MapModeModel;
             _gameSpeedModel = model.GameSpeed;
+            _caravanManager = model.Player.CaravanManager;
 
             var resourceManager = ResourceManager.Instance;
             _onboardingResources = resourceManager.OnboardingResources;
@@ -158,7 +164,7 @@ namespace Features.Tutorial.Onboarding.Logic
             var goToBTask = new OnboardingTask(loc.TravelToTask(_townB.Name));
             var sellHayTask = new OnboardingTask(loc.SellGoodsTask(hayAmount, goodName, _townA.Name));
 
-            return new OnboardingSequence(DelayBetweenSteps,
+            return new OnboardingSequence(delayBetweenSteps,
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
                 new OnboardingExplainerStep(OnboardingExplainer.Welcome),
                 new OnboardingExplainerStep(OnboardingExplainer.IntroGoal),
@@ -185,7 +191,7 @@ namespace Features.Tutorial.Onboarding.Logic
             var taskString = _localizationResources.BuildProducerTask(_townB.Name, producerName);
             var buildBerryPickerTask = new OnboardingTask(taskString);
 
-            var buildBerryPickerSequence = new OnboardingSequence(DelayBetweenSteps,
+            var buildBerryPickerSequence = new OnboardingSequence(delayBetweenSteps,
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
                 new OnboardingExplainerStep(OnboardingExplainer.HayMissionComplete),
                 new OnboardingEnsureFundsStep(505),
@@ -195,11 +201,7 @@ namespace Features.Tutorial.Onboarding.Logic
                 new OnboardingTaskStep(buildBerryPickerTask),
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Resume(); }),
                 new OnboardingBuildProducerStep(_townB, Good.T1Berries, buildBerryPickerTask),
-                new OnboardingSimpleStep(() =>
-                {
-                    var berryCount = _townB.Inventory.Get(Good.T1Berries);
-                    _townB.Inventory.AddGood(Good.T1Berries, 20 - berryCount);
-                }),
+                new OnboardingEnsureInventoryStep(_townB, Good.T1Berries, 20),
                 new OnboardingTaskClearStep()
             );
             return buildBerryPickerSequence;
@@ -207,16 +209,23 @@ namespace Features.Tutorial.Onboarding.Logic
 
         private OnboardingSequence GameSpeedControlsSequence()
         {
+            var berryName = _goodResources.ResourceData[Good.T1Berries].GoodName;
             var pauseGameTask = new OnboardingTask(_localizationResources.UnpauseGameTask());
             var speedUpGameTask = new OnboardingTask(_localizationResources.SetSpeedTask());
+            var waitForBerriesText = _localizationResources.WaitForBerriesTask(
+                BerryDeliveryCount,
+                berryName,
+                _townB.Name);
+            var waitForBerriesTask = new OnboardingTask(waitForBerriesText);
 
-            return new OnboardingSequence(DelayBetweenSteps,
+            return new OnboardingSequence(delayBetweenSteps,
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
                 new OnboardingExplainerStep(OnboardingExplainer.BerryPickerComplete),
                 new OnboardingExplainerStep(OnboardingExplainer.GameSpeedInstructions),
-                new OnboardingTaskStep(pauseGameTask, speedUpGameTask),
+                new OnboardingTaskStep(pauseGameTask, speedUpGameTask, waitForBerriesTask),
                 new OnboardingResumeGameStep(pauseGameTask),
                 new OnboardingSetGameSpeedTask(speedUpGameTask),
+                new OnboardingWaitUntilStep(() => _townB.Inventory.HasGood(Good.T1Berries, BerryDeliveryCount)),
                 new OnboardingTaskClearStep()
             );
         }
@@ -225,38 +234,32 @@ namespace Features.Tutorial.Onboarding.Logic
         {
             var loc = _localizationResources;
 
-            const int berryCount = 30;
             const int gameCount = 20;
             var berryName = _goodResources.ResourceData[Good.T1Berries].GoodName;
             var gameName = _goodResources.ResourceData[Good.T1WildGame].GoodName;
 
-            var upgradeCartTask = new OnboardingTask(loc.UpgradeCartTask(Tier.Tier2));
-            var buyBerriesTask = new OnboardingTask(loc.BuyGoodsTask(berryCount, berryName, _townB.Name));
+            var buyBerriesTask = new OnboardingTask(loc.BuyGoodsTask(BerryDeliveryCount, berryName, _townB.Name));
             var buyGameTask = new OnboardingTask(loc.BuyGoodsTask(gameCount, gameName, _townB.Name));
             var goToATask = new OnboardingTask(loc.TravelToTask(_townA.Name));
-            var sellBerriesTask = new OnboardingTask(loc.SellGoodsTask(berryCount, berryName, _townA.Name));
+            var sellBerriesTask = new OnboardingTask(loc.SellGoodsTask(BerryDeliveryCount, berryName, _townA.Name));
             var sellGameTask = new OnboardingTask(loc.SellGoodsTask(gameCount, gameName, _townA.Name));
 
-            return new OnboardingSequence(DelayBetweenSteps,
-                new OnboardingWaitUntilStep(() => _townB.Inventory.HasGood(Good.T1Berries, berryCount)),
+            return new OnboardingSequence(delayBetweenSteps,
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
                 new OnboardingExplainerStep(OnboardingExplainer.BerryDeliveryInstructions),
-                new OnboardingExplainerStep(OnboardingExplainer.CartUpgradeInstructions),
                 new OnboardingTaskStep(
-                    upgradeCartTask,
                     buyBerriesTask,
                     buyGameTask,
                     goToATask,
                     sellBerriesTask,
                     sellGameTask),
-                new OnboardingEnsureFundsStep(800),
-                new OnboardingCartUpgradeStep(2, upgradeCartTask),
+                new OnboardingSimpleStep(() => { _caravanManager.UpgradeCart(0); }),
                 new OnboardingEnsureFundsStep(300),
-                new OnboardingTradeStep(TradeType.Buy, Good.T1Berries, berryCount, _townB, buyBerriesTask),
+                new OnboardingTradeStep(TradeType.Buy, Good.T1Berries, BerryDeliveryCount, _townB, buyBerriesTask),
                 new OnboardingEnsureFundsStep(300),
                 new OnboardingTradeStep(TradeType.Buy, Good.T1WildGame, gameCount, _townB, buyGameTask),
                 new OnboardingTravelStep(_townA, goToATask),
-                new OnboardingTradeStep(TradeType.Sell, Good.T1Berries, berryCount, _townA, sellBerriesTask),
+                new OnboardingTradeStep(TradeType.Sell, Good.T1Berries, BerryDeliveryCount, _townA, sellBerriesTask),
                 new OnboardingTradeStep(TradeType.Sell, Good.T1WildGame, gameCount, _townA, sellGameTask),
                 new OnboardingTaskClearStep()
             );
@@ -267,7 +270,7 @@ namespace Features.Tutorial.Onboarding.Logic
             const float townBDevelopmentLevel = 87.5f;
             var townUpgradeTask = new OnboardingTask(_localizationResources.UpgradeTownTask(_townB.Name, Tier.Tier2));
 
-            return new OnboardingSequence(DelayBetweenSteps,
+            return new OnboardingSequence(delayBetweenSteps,
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
                 new OnboardingExplainerStep(OnboardingExplainer.TownAUpgraded),
                 new OnboardingExplainerStep(OnboardingExplainer.FindYourOwnFortune),

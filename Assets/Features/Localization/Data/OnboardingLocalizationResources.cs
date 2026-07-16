@@ -18,7 +18,8 @@ namespace Features.Localization.Data
             upgradeCartTask,
             sellGoodsTask,
             buyGoodsTask,
-            upgradeTownTask;
+            upgradeTownTask,
+            waitForBerriesTask;
 
         public string TravelToTask(string townName)
         {
@@ -44,6 +45,17 @@ namespace Features.Localization.Data
         public string SetSpeedTask()
         {
             return setSpeedTask.GetLocalizedString();
+        }
+
+        public string WaitForBerriesTask(int amount, string goodName, string townName)
+        {
+            var stringObj = new
+            {
+                _int_Amount = amount,
+                GoodName = goodName,
+                TownName = townName
+            };
+            return waitForBerriesTask.GetLocalizedString(stringObj);
         }
 
         public string UpgradeCartTask(Tier tier)
