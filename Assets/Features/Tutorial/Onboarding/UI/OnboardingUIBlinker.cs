@@ -61,10 +61,14 @@ namespace Features.Tutorial.Onboarding.UI
         private void SetBlinkerRectTransform(RectTransform target)
         {
             var worldCorners = target.GetWorldCorners();
+            var parent = (RectTransform)rectTransform.parent;
 
-            var bottomLeft = worldCorners[0];
-            var topRight = worldCorners[2];
-            var size = topRight - bottomLeft + new Vector3(2 * padding, 2 * padding, 0);
+            // anchoredPosition is measured from the parent's rect.min in the parent's local
+            // space, not from world space directly - these only coincide when the Canvas
+            // Scaler's scale factor is 1, i.e. exactly at the reference resolution.
+            var bottomLeft = (Vector2)parent.InverseTransformPoint(worldCorners[0]) - parent.rect.min;
+            var topRight = (Vector2)parent.InverseTransformPoint(worldCorners[2]) - parent.rect.min;
+            var size = topRight - bottomLeft + new Vector2(2 * padding, 2 * padding);
 
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.zero;
