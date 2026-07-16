@@ -103,9 +103,9 @@ namespace Features.Tutorial.Onboarding.Logic
             _tutorialCoroutine = StartCoroutine(_onboardingSequence.Run(this));
         }
 
-        public void PostExplainer(int explainerIndex, Action onNextClicked)
+        public void PostExplainer(OnboardingExplainer explainer, Action onNextClicked)
         {
-            var message = _onboardingResources.explainerTexts.GetValueOrDefault(explainerIndex, null);
+            var message = _onboardingResources.explainerTexts.GetValueOrDefault(explainer, null);
             if (message == null)
                 return;
 
@@ -151,24 +151,29 @@ namespace Features.Tutorial.Onboarding.Logic
         {
             var loc = _localizationResources;
             var goodName = _goodResources.ResourceData[Good.T1Hay].GoodName;
-            const int amount = 15;
+            const int hayAmount = 15;
 
-            var buyHayTask = new OnboardingTask(loc.BuyGoodsTask(amount, goodName, _townA.Name));
-            var goToATask = new OnboardingTask(loc.TravelToTask(_townB.Name));
-            var sellHayTask = new OnboardingTask(loc.SellGoodsTask(amount, goodName, _townA.Name));
+            var buyHayTask = new OnboardingTask(loc.BuyGoodsTask(hayAmount, goodName, _townA.Name));
+            var goToATask = new OnboardingTask(loc.TravelToTask(_townA.Name));
+            var goToBTask = new OnboardingTask(loc.TravelToTask(_townB.Name));
+            var sellHayTask = new OnboardingTask(loc.SellGoodsTask(hayAmount, goodName, _townA.Name));
 
             return new OnboardingSequence(DelayBetweenSteps,
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
-                new OnboardingExplainerStep(0),
-                new OnboardingExplainerStep(1),
+                new OnboardingExplainerStep(OnboardingExplainer.Welcome),
+                new OnboardingExplainerStep(OnboardingExplainer.IntroGoal),
                 new OnboardingSimpleStep(() => { _mapModeModel.MapMode.Value = MapMode.Town; }),
-                new OnboardingExplainerStep(2),
-                new OnboardingTaskStep(buyHayTask, goToATask, sellHayTask),
+                new OnboardingExplainerStep(OnboardingExplainer.IntroCampsite),
+                new OnboardingTaskStep(goToATask),
+                new OnboardingTravelStep(_townA, goToATask),
+                new OnboardingTaskClearStep(),
+                new OnboardingExplainerStep(OnboardingExplainer.HayMissionInstructions),
+                new OnboardingTaskStep(buyHayTask, goToBTask, sellHayTask),
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Resume(); }),
-                new OnboardingTradeStep(TradeType.Buy, Good.T1Hay, amount, _townA, buyHayTask),
+                new OnboardingTradeStep(TradeType.Buy, Good.T1Hay, hayAmount, _townA, buyHayTask),
                 new OnboardingSimpleStep(() => { TownUI.Close(); }),
-                new OnboardingTravelStep(_townB, goToATask),
-                new OnboardingTradeStep(TradeType.Sell, Good.T1Hay, amount, _townB, sellHayTask),
+                new OnboardingTravelStep(_townB, goToBTask),
+                new OnboardingTradeStep(TradeType.Sell, Good.T1Hay, hayAmount, _townB, sellHayTask),
                 new OnboardingTaskClearStep()
             );
         }
@@ -182,11 +187,11 @@ namespace Features.Tutorial.Onboarding.Logic
 
             var buildBerryPickerSequence = new OnboardingSequence(DelayBetweenSteps,
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
-                new OnboardingExplainerStep(3),
+                new OnboardingExplainerStep(OnboardingExplainer.HayMissionComplete),
                 new OnboardingEnsureFundsStep(505),
                 new OnboardingSimpleStep(() => { _townA.DevelopmentManager.AddDevelopmentChange(100); }),
-                new OnboardingExplainerStep(4),
-                new OnboardingExplainerStep(5),
+                new OnboardingExplainerStep(OnboardingExplainer.TownAUpgradeReady),
+                new OnboardingExplainerStep(OnboardingExplainer.BerryPickerInstructions),
                 new OnboardingTaskStep(buildBerryPickerTask),
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Resume(); }),
                 new OnboardingBuildProducerStep(_townB, Good.T1Berries, buildBerryPickerTask),
@@ -207,8 +212,8 @@ namespace Features.Tutorial.Onboarding.Logic
 
             return new OnboardingSequence(DelayBetweenSteps,
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
-                new OnboardingExplainerStep(6),
-                new OnboardingExplainerStep(7),
+                new OnboardingExplainerStep(OnboardingExplainer.BerryPickerComplete),
+                new OnboardingExplainerStep(OnboardingExplainer.GameSpeedInstructions),
                 new OnboardingTaskStep(pauseGameTask, speedUpGameTask),
                 new OnboardingResumeGameStep(pauseGameTask),
                 new OnboardingSetGameSpeedTask(speedUpGameTask),
@@ -235,8 +240,8 @@ namespace Features.Tutorial.Onboarding.Logic
             return new OnboardingSequence(DelayBetweenSteps,
                 new OnboardingWaitUntilStep(() => _townB.Inventory.HasGood(Good.T1Berries, berryCount)),
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
-                new OnboardingExplainerStep(8),
-                new OnboardingExplainerStep(9),
+                new OnboardingExplainerStep(OnboardingExplainer.BerryDeliveryInstructions),
+                new OnboardingExplainerStep(OnboardingExplainer.CartUpgradeInstructions),
                 new OnboardingTaskStep(
                     upgradeCartTask,
                     buyBerriesTask,
@@ -264,9 +269,9 @@ namespace Features.Tutorial.Onboarding.Logic
 
             return new OnboardingSequence(DelayBetweenSteps,
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Pause(); }),
-                new OnboardingExplainerStep(10),
-                new OnboardingExplainerStep(11),
-                new OnboardingExplainerStep(12),
+                new OnboardingExplainerStep(OnboardingExplainer.TownAUpgraded),
+                new OnboardingExplainerStep(OnboardingExplainer.FindYourOwnFortune),
+                new OnboardingExplainerStep(OnboardingExplainer.ClosingRemarks),
                 new OnboardingSimpleStep(() => { _gameSpeedModel.Resume(); }),
                 new OnboardingSimpleStep(() =>
                 {

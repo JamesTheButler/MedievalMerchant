@@ -12,6 +12,6 @@ namespace Features.Tutorial.Onboarding.Data
     public sealed class OnboardingResources : ScriptableObject
     {
         [SerializeField]
-        public SerializedDictionary<int, LocalizedString> explainerTexts;
+        public SerializedDictionary<OnboardingExplainer, LocalizedString> explainerTexts;
     }
 }

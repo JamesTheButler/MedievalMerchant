@@ -13,6 +13,7 @@ namespace Features.Tutorial.Onboarding.Logic.Steps
     public sealed class OnboardingTradeStep : IOnboardingStep
     {
         public OnboardingTask Task { get; }
+
         private readonly TradeType _tradeType;
         private readonly Good _good;
         private readonly int _amount;
