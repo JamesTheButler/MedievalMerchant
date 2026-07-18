@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 7330017870725814728}
   - component: {fileID: 1182923446397233811}
   - component: {fileID: 7080843674134408401}
+  - component: {fileID: 9123456789012345678}
   m_Layer: 5
   m_Name: CoinCell
   m_TagString: Untagged
@@ -346,6 +347,7 @@ MonoBehaviour:
   completedIcon: {fileID: 2057245527779477686}
   amountText: {fileID: 7650719904557137505}
   amountTextSecondary: {fileID: 5361826249300218272}
+  messageTooltip: {fileID: 9123456789012345678}
   disabledAlpha: 0.5
 --- !u!114 &7080843674134408401
 MonoBehaviour:
@@ -359,6 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ce80d58f075e545a25259e541ad5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Elements.Hoverable
+  unhoverOnAwake: 1
   onHoverStart:
     m_PersistentCalls:
       m_Calls:
@@ -389,7 +392,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  unhoverOnAwake: 1
+--- !u!114 &9123456789012345678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5228330734817415516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2df2a3e2a4c27248b3722c08f6c0052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: 6cce81d870558214190214c98307bce4, type: 3}
+  enabledOnStart: 0
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
+  text:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &6680914921971152023
 GameObject:
   m_ObjectHideFlags: 0

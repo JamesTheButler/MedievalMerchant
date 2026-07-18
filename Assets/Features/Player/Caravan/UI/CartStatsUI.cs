@@ -8,6 +8,7 @@ using Common.UI.Tooltips;
 using Common.UI.Utility;
 using Common.Utility;
 using Features.Goods.Config;
+using Features.Map.Pathfinding;
 using Features.Player.Caravan.Config;
 using Features.Player.Caravan.Logic;
 using Features.Player.Logic;
@@ -53,6 +54,9 @@ namespace Features.Player.Caravan.UI
         private CartTooltipHandler cartUnlockTooltip, cartUpgradeTooltip;
 
         [SerializeField, Required]
+        private SimpleTooltipHandler unlockLocationTooltip, upgradeLocationTooltip;
+
+        [SerializeField, Required]
         private Image backgroundImage, cartImage;
 
         [SerializeField, Required]
@@ -76,6 +80,7 @@ namespace Features.Player.Caravan.UI
         private Cart _cart;
         private CaravanResources _caravanResources;
         private CaravanConfig _caravanConfig;
+        private bool _isAtCampsite;
 
         public void Bind(Cart cart, int index, Action upgradeAction, Action unlockAction)
         {
@@ -96,7 +101,8 @@ namespace Features.Player.Caravan.UI
                 _cart.Level.Observe(OnLevelChanged),
                 _cart.MoveSpeed.Observe(OnMoveSpeedChanged),
                 _cart.Upkeep.Observe(OnUpkeepChanged),
-                _cart.SlotCount.Observe(OnSlotCountChanged)
+                _cart.SlotCount.Observe(OnSlotCountChanged),
+                _player.Location.MapLocation.Observe(OnPlayerLocationChanged)
             );
             _player.Inventory.Funds.Observe(OnPlayerFundsChanged);
 
@@ -163,8 +169,33 @@ namespace Features.Player.Caravan.UI
             if (level >= CaravanConfig.MaxLevel)
             {
                 Unhover();
-                cartUpgradeTooltip.SetEnabled(false);
             }
+
+            RefreshUpgradeButton();
+        }
+
+        private void OnPlayerLocationChanged(IMapLocation location)
+        {
+            _isAtCampsite = _player.Location.IsAtCampsite();
+            RefreshUpgradeButton();
+            RefreshUnlockButton();
+        }
+
+        private void RefreshUpgradeButton()
+        {
+            var canAffordUpgrade = _cart.UpgradeCost <= _player.Inventory.Funds.Value;
+            upgradeButton.interactable = _isAtCampsite && canAffordUpgrade;
+
+            var isUnderMaxLevel = _cart.Level.Value < CaravanConfig.MaxLevel;
+            cartUpgradeTooltip.SetEnabled(_isAtCampsite && isUnderMaxLevel);
+            upgradeLocationTooltip.SetEnabled(!_isAtCampsite && isUnderMaxLevel);
+        }
+
+        private void RefreshUnlockButton()
+        {
+            unlockButton.interactable = _isAtCampsite;
+            cartUnlockTooltip.SetEnabled(_isAtCampsite);
+            unlockLocationTooltip.SetEnabled(!_isAtCampsite);
         }
 
         private void HoverTextfield(
@@ -223,7 +254,7 @@ namespace Features.Player.Caravan.UI
 
         private void OnPlayerFundsChanged(float funds)
         {
-            upgradeButton.interactable = _cart.UpgradeCost <= funds;
+            RefreshUpgradeButton();
         }
 
         private void SetLocked(bool isLocked)
@@ -231,6 +262,7 @@ namespace Features.Player.Caravan.UI
             unlockButton.gameObject.SetActive(isLocked);
             unlockedParent.gameObject.SetActive(!isLocked);
             Fade(isLocked);
+            RefreshUnlockButton();
         }
 
         private void OnSlotCountChanged(int slotCount)

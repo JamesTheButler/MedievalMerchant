@@ -1,4 +1,5 @@
 using System;
+using Common.UI.Tooltips;
 using Common.Utility;
 using NaughtyAttributes;
 using TMPro;
@@ -17,6 +18,9 @@ namespace Common.UI.InventoryUI
 
         [SerializeField, Required]
         private TMP_Text amountText, amountTextSecondary;
+
+        [SerializeField, Required]
+        private SimpleTooltipHandler messageTooltip;
 
         [SerializeField]
         private float disabledAlpha = 0.5f;
@@ -40,6 +44,11 @@ namespace Common.UI.InventoryUI
             {
                 Clicked?.Invoke();
             }
+        }
+
+        public void PostMessage(string message)
+        {
+            messageTooltip.ShowTooltip(message);
         }
     }
 }

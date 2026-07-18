@@ -35,7 +35,7 @@ namespace Features.Player.Camp.UI
         private TMP_Text nameText, levelText, upkeepValueText, descriptionText, forHireText, upgradeText;
 
         [SerializeField]
-        private LocalizedString levelString, deliveryString, hireString;
+        private LocalizedString levelString, deliveryString, hireString, notAtCampString;
 
         [SerializeField, Required]
         private RectTransform effectsContainer, missionItemContainer;
@@ -59,7 +59,6 @@ namespace Features.Player.Camp.UI
         private CompanionDeliveryPanel deliveryPanel;
 
         private PlayerLocation _playerLocation;
-        private Logic.Camp _campLocation;
         private CompanionConfig _companionConfig;
         private CompanionConfigData _companionConfigData;
         private CompanionResource _companionResource;
@@ -72,7 +71,6 @@ namespace Features.Player.Camp.UI
         private void Awake()
         {
             _playerLocation = GameplayContext.Instance.Model.Player.Location;
-            _campLocation = GameplayContext.Instance.Model.Camp;
             _companionConfig = ConfigurationManager.Configurations.CompanionConfig;
             _companionResource = ResourceManager.Instance.CompanionResources.Get(companionType);
             _companionModel = GameplayContext.Instance.Model.Player.RetinueModel.Companions[companionType];
@@ -101,7 +99,7 @@ namespace Features.Player.Camp.UI
 
         private void OnPlayerLocationChanged(IMapLocation location)
         {
-            _isInteractive = location == _campLocation;
+            _isInteractive = _playerLocation.IsAtCampsite();
         }
 
         public void Unbind()
@@ -197,18 +195,21 @@ namespace Features.Player.Camp.UI
                 _missionBindings.Track(item.IsCompleted.Observe(isCompleted => cell.EnableCornerIcon(isCompleted)));
 
                 var capturedGood = good;
-                cell.Clicked += () => OnGoodCellClicked(capturedGood);
+                cell.Clicked += () => OnGoodCellClicked(cell, capturedGood);
             }
 
             var coinCell = Instantiate(costItemPrefab, missionItemContainer);
             _missionBindings.Track(mission.CoinCost.RemainingAmount.Observe(coinCell.SetAmount));
-            coinCell.Clicked += OnCoinCellClicked;
+            coinCell.Clicked += () => OnCoinCellClicked(coinCell);
         }
 
-        private void OnGoodCellClicked(Good good)
+        private void OnGoodCellClicked(InventoryCell cell, Good good)
         {
             if (!_isInteractive)
+            {
+                cell.PostMessage(notAtCampString.GetLocalizedString());
                 return;
+            }
 
             var mission = _companionModel.ActiveMission.Value;
             if (mission == null)
@@ -221,10 +222,13 @@ namespace Features.Player.Camp.UI
             deliveryPanel.Open();
         }
 
-        private void OnCoinCellClicked()
+        private void OnCoinCellClicked(CoinCell cell)
         {
             if (!_isInteractive)
+            {
+                cell.PostMessage(notAtCampString.GetLocalizedString());
                 return;
+            }
 
             var mission = _companionModel.ActiveMission.Value;
             if (mission == null || mission.CoinCost.IsCompleted.Value)
@@ -232,11 +236,6 @@ namespace Features.Player.Camp.UI
 
             deliveryPanel.SetUp(companionType, mission.CoinCost);
             deliveryPanel.Open();
-        }
-
-        public void SetInteractive(bool isInteractive)
-        {
-            _isInteractive = isInteractive;
         }
     }
 }

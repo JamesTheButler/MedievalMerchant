@@ -6,6 +6,7 @@ using Features.Player.Camp.Logic;
 using Features.Player.Logic;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Features.Player.Camp.UI
 {
@@ -13,6 +14,9 @@ namespace Features.Player.Camp.UI
     {
         [SerializeField, Required]
         private InventoryCellContainer campStorageCells;
+
+        [SerializeField]
+        private LocalizedString notAtCampString;
 
         private CampsiteStorageService _storageService;
         private PlayerModel _player;
@@ -36,6 +40,12 @@ namespace Features.Player.Camp.UI
 
         private void OnCellClicked(InventoryCell cell)
         {
+            if (!_player.Location.IsAtCampsite())
+            {
+                cell.PostMessage(notAtCampString.GetLocalizedString());
+                return;
+            }
+
             if (cell.Good == null)
                 return;
 
@@ -45,6 +55,12 @@ namespace Features.Player.Camp.UI
 
         public void HandleCaravanCellClick(GoodCell cell)
         {
+            if (!_player.Location.IsAtCampsite())
+            {
+                cell.PostMessage(notAtCampString.GetLocalizedString());
+                return;
+            }
+
             if (cell.Good == null)
                 return;
 
