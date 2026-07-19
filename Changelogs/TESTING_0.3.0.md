@@ -2,7 +2,7 @@
 
 > Supersedes `TESTING_0.2.2.md` — that release was drafted but never tagged/shipped, so its
 > items are folded in here alongside everything new since. Scope: all commits since the last
-> tagged release `0.2.1` (2026-02-05).
+> tagged release `0.2.1` (2026-02-05), refreshed through `a59a955` (2026-07-18).
 
 ## Localization — Core System
 
@@ -18,14 +18,20 @@
   - _14cc362 support extended latin character set in font_
 - [ ] Font outlines render correctly on all localized text
   - _eea2137 fix font outlines, 8b26394 font fixes_
+- [ ] Language Settings now lists German as a third selectable option (rewritten as a generic list of toggles, not hardcoded EN/FR) — each toggle correctly reflects the active locale on open, and selecting it applies German
+  - _e6f0f13 enable German + localization fixes_
+- [ ] Language settings header text fits without clipping/overflow after the shortened title
+  - _c22176f shorten language settings header_
 
 ## Localization — Translation Coverage (DE / FR)
 
 - [ ] German translations are complete and correct across all tables (Common, Modifiers, Trade, Towns, Player, Campsite, Goods, Conditions, Levels, Tutorial, Start Menu)
-  - _b23d8d1, a1c4cbd, db29274, 434a09c and ~15 other German-translation commits_
+  - _b23d8d1, a1c4cbd, db29274, 434a09c and ~15 other German-translation commits, plus e6f0f13 enable German_
 - [ ] French translations are complete and correct across all tables (same list as above)
   - _cce7a50, 26ed976, 353ffa3, 886a62c, 9676c0d, f393cf7, f4ff8de, 7b31981, d4016f9, a5ba0ef, cb817d7, b974f50, bb7bdb7, 3e0684f, f718100 and other French-pass commits_
 - [ ] No untranslated/fallback-key strings visible anywhere in DE or FR (spot-check every screen, not just ones listed above)
+- [ ] Previously-missing translation is now present and correct (verify the specific string, not just that it's non-empty)
+  - _0db6718 fix missing translation_
 - [ ] Longer DE/FR strings don't clip or overflow their containers (many dynamic-layout fixes below relate to this)
 - [ ] Translator/credit links work correctly
   - _f1e007e add translator links_
@@ -134,6 +140,56 @@
   - _fc52b11, aeef92b, 2a102f3_
 - [ ] All escapable dynamic panels (including campsite ones) block gameplay input while open, and un-block on close
   - _2518df6 all escapable dynamic panels block gameplay inputs_
+- [ ] All camp panels are disabled/inaccessible when the player is not actually in camp (broader fix beyond just the companion panel)
+  - _a59a955 disabled camp panels when not in camp._
+- [ ] Producer Tooltip is hidden (not shown empty) for producer groups with no producers
+  - _c7ab2ec disabled producer tooltip for empty producer group UIs_
+- [ ] Producer popup no longer throws an error in any producer state
+  - _3c16c2e fix producer popup error_
+- [ ] Camp storage inventory no longer shows an unrelated "log" popup when interacted with
+  - _a54bd85 camp storage inventory no longer shows log popup_
+- [ ] Hovering the *next* (not-yet-reached) companion level shows the correct upkeep value
+  - _c2032b7 hover next companion level shows correct upkeep_
+- [ ] Production Building tooltip displays correctly
+  - _f040f0f fix Production Buliding tooltip_
+- [ ] Campsite panel tooltips read clearly after simplification (no missing info)
+  - _e6cd892 simplify tooltip in campsite panel_
+- [ ] Campsite Cart Panel only shows carts that are actually unlockable
+  - _c8fc61e campsite cart panel - hide carts that aren't unlockable_
+- [ ] Cart upgrade modifier text clearly and correctly describes the upgrade's effect
+  - _cdc5567 improve cart ugprade modifier text_
+- [ ] Cart upgrade step in onboarding/progression works correctly end-to-end
+  - _2bacc2c fix cart upgrade step and missing onboarding task to wait for 30 berries_
+- [ ] Caravan panel UI refreshes immediately after unlocking a new cart (no stale display requiring reopen)
+  - _1f9a665 refresh caravan panel ui when unlocking new carts_
+
+## Onboarding & Tutorial (new/updated)
+
+- [ ] Onboarding includes a campsite step that triggers at the right point and highlights the correct element
+  - _79c5a92 add campsite step to onboarding_
+- [ ] Tutorial content referencing the campsite is accurate and up to date
+  - _a8e3a2b update tutorial with campsite_
+- [ ] Onboarding blinker/highlight is positioned correctly on every step, not just the new campsite one
+  - _1b37c58 fix onboarding blinker position bug_
+- [ ] Onboarding task that waits for "30 berries" now appears/completes correctly (was previously missing)
+  - _2bacc2c fix cart upgrade step and missing onboarding task to wait for 30 berries_
+- [ ] Tutorial-related art assets import with correct settings (no blurry/wrong-format sprites)
+  - _4584bf4 small import settings fix for tutorial assets_
+
+## Feedback & Crash Reporting (new)
+
+- [ ] Feedback form now submits via Sentry (`SentrySdk.CaptureFeedback`) instead of the old Google Form — confirm submitted feedback actually shows up in the Sentry dashboard
+  - _82a565f add sentry and disable google-based feedback_
+- [ ] Feedback form still shows a confirmation/closes correctly after submitting (event is now `ObservableEvent` instead of a C# `Action`)
+- [ ] Escape menu's feedback entry point still opens and submits correctly
+  - _82a565f (EscapeMenu.cs)_
+- [ ] Sentry only activates in actual builds, not in the Editor — verify no Sentry network calls fire during editor play
+  - _d0e648e configure sentry for builds only_
+- [ ] Sentry breadcrumb trail (100 configured) doesn't cause a noticeable performance hit
+  - _f809174 100 sentry breadcrumbs_
+- [ ] Sentry sampling/options behave as configured with no error dialogs or blocking network calls surfaced to the player
+  - _5208a19 sentry option tweaks_
+- [ ] Force a crash/exception in a built (non-editor) player and confirm it's captured in Sentry
 
 ## Companion Missions & Upgrades (new feature)
 

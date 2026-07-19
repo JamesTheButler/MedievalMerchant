@@ -11,7 +11,11 @@ namespace Common.Infrastructure
 #if UNITY_EDITOR
             options.Enabled = false;
 #else
-        options.Enabled = true;
+            options.Enabled = true;
+#endif
+
+#if SENTRY_TEST_ENVIRONMENT
+            options.Environment = "test";
 #endif
         }
     }
