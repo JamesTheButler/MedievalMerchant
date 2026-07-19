@@ -4,43 +4,43 @@
 > items are folded in here alongside everything new since. Scope: all commits since the last
 > tagged release `0.2.1` (2026-02-05), refreshed through `a59a955` (2026-07-18).
 
-## Localization — Core System
+## Localization — Core System ✅
 
-- [ ] First launch (no save file): game detects system language and applies it
-- [ ] First launch with unsupported system language: defaults to English
-- [ ] Saved locale persists across game restarts (check `LocaleSettings.save` file)
-- [ ] Language settings UI shows correct toggle for current locale on open
-- [ ] Switching language saves preference, reloads start scene, and displays new language
-- [ ] Switching language does **not** cause a major lag spike/freeze
+- [x] First launch (no save file): game detects system language and applies it
+- [x] First launch with unsupported system language: defaults to English
+- [x] Saved locale persists across game restarts (check `LocaleSettings.save` file)
+- [x] Language settings UI shows correct toggle for current locale on open => **BUG: Toggle shows English**
+- [x] Switching language saves preference, reloads start scene, and displays new language
+- [x] Switching language does **not** cause a major lag spike/freeze
   - _294a5d7 fix major lag when changing language_
-- [ ] Double-clicking language toggle doesn't cause errors or double-reload
-- [ ] Extended Latin characters (accented: é, ö, ü, etc.) render correctly in all fonts
+- [x] Double-clicking language toggle doesn't cause errors or double-reload
+- [x] Extended Latin characters (accented: é, ö, ü, etc.) render correctly in all fonts
   - _14cc362 support extended latin character set in font_
-- [ ] Font outlines render correctly on all localized text
+- [x] Font outlines render correctly on all localized text
   - _eea2137 fix font outlines, 8b26394 font fixes_
-- [ ] Language Settings now lists German as a third selectable option (rewritten as a generic list of toggles, not hardcoded EN/FR) — each toggle correctly reflects the active locale on open, and selecting it applies German
+- [x] Language Settings now lists German as a third selectable option (rewritten as a generic list of toggles, not hardcoded EN/FR) — each toggle correctly reflects the active locale on open, and selecting it applies German
   - _e6f0f13 enable German + localization fixes_
-- [ ] Language settings header text fits without clipping/overflow after the shortened title
+- [x] Language settings header text fits without clipping/overflow after the shortened title
   - _c22176f shorten language settings header_
 
 ## Localization — Translation Coverage (DE / FR)
 
-- [ ] German translations are complete and correct across all tables (Common, Modifiers, Trade, Towns, Player, Campsite, Goods, Conditions, Levels, Tutorial, Start Menu)
+- [x] German translations are complete and correct across all tables (Common, Modifiers, Trade, Towns, Player, Campsite, Goods, Conditions, Levels, Tutorial, Start Menu)
   - _b23d8d1, a1c4cbd, db29274, 434a09c and ~15 other German-translation commits, plus e6f0f13 enable German_
-- [ ] French translations are complete and correct across all tables (same list as above)
+- [x] French translations are complete and correct across all tables (same list as above)
   - _cce7a50, 26ed976, 353ffa3, 886a62c, 9676c0d, f393cf7, f4ff8de, 7b31981, d4016f9, a5ba0ef, cb817d7, b974f50, bb7bdb7, 3e0684f, f718100 and other French-pass commits_
-- [ ] No untranslated/fallback-key strings visible anywhere in DE or FR (spot-check every screen, not just ones listed above)
-- [ ] Previously-missing translation is now present and correct (verify the specific string, not just that it's non-empty)
+- [x] No untranslated/fallback-key strings visible anywhere in DE or FR (spot-check every screen, not just ones listed above)
+- [x] Previously-missing translation is now present and correct (verify the specific string, not just that it's non-empty)
   - _0db6718 fix missing translation_
-- [ ] Longer DE/FR strings don't clip or overflow their containers (many dynamic-layout fixes below relate to this)
-- [ ] Translator/credit links work correctly
+- [x] Longer DE/FR strings don't clip or overflow their containers (many dynamic-layout fixes below relate to this)
+- [x] Translator/credit links work correctly
   - _f1e007e add translator links_
 
 ## Localization — Dynamic Layout & Sizing
 
-- [ ] Good/milestone tooltips resize correctly for long localized text
+- [x] Good/milestone tooltips resize correctly for long localized text
   - _b2571c8 fix dynamic layout in good and milestone tooltips_
-- [ ] Start menu layout doesn't break when text length changes (language switch, refresh)
+- [x] Start menu layout doesn't break when text length changes (language switch, refresh)
   - _2de8145, b6a304e_
 - [ ] Tutorial UI layout holds up with longer translated strings
   - _1fe638b fix tutorial ui layout_
@@ -228,63 +228,83 @@
 - [ ] Trade error-proofing: can't complete a trade with 0 amount or an unaffordable amount
 - [ ] Trade uses the CompletedTrade flow correctly end-to-end
 
-## Player / Movement
+## Player / Movement ✅
 
-- [ ] Player avatar doesn't jitter from rapid/spam clicking
+- [x] Player avatar doesn't jitter from rapid/spam clicking
   - _03e1397, 13b71ed stop click-spam jitter on player avatar_
-- [ ] Game speed / movement speed changes apply immediately, without delay
+- [x] Game speed / movement speed changes apply immediately, without delay
   - _43d0dfb fix delayed application of game and movespeed in RoadTraveler_
-- [ ] Road-traveler abstraction (prep for future bandit encounters) hasn't changed normal town-to-town travel behavior
+- [x] Road-traveler abstraction (prep for future bandit encounters) hasn't changed normal town-to-town travel behavior
   - _52da7b1 abstract logic from road traveler to prepare for bandits — feature itself is not yet playable, this is a regression check only_
-- [ ] IMapLocation abstraction: town-based win/loss/other conditions still evaluate correctly now that Camp is also a map location
+- [x] IMapLocation abstraction: town-based win/loss/other conditions still evaluate correctly now that Camp is also a map location
   - _79f62ca abstract IMapLocation from Town_
 
-## Audio
+## Audio ✅
 
-- [ ] Win audio plays on level completion
-- [ ] Loss audio plays on level failure
-- [ ] Town upgrade fireworks have a sound effect
-- [ ] Music volume is consistent across all tracks (no sudden loud/quiet)
-- [ ] SFX volume is consistent across all effects
+- [x] Win audio plays on level completion
+- [x] Loss audio plays on level failure
+- [x] Town upgrade fireworks have a sound effect
+- [x] Music volume is consistent across all tracks (no sudden loud/quiet)
+- [x] SFX volume is consistent across all effects
 
-## UI Animations & Visual
+## UI Animations & Visual ✅
 
-- [ ] Panels slide in smoothly when opened; background fades in
-- [ ] Animations don't break panel open/close state; DOTween doesn't cause issues on scene transitions
-- [ ] Popup close animations don't cause a tiling/visual glitch
+- [x] Panels slide in smoothly when opened; background fades in
+- [x] Animations don't break panel open/close state; DOTween doesn't cause issues on scene transitions
+- [x] Popup close animations don't cause a tiling/visual glitch
   - _42791c4 fix tiling issue in popup close animations_
-- [ ] New forest tiles and field tiles look correct with no visual gaps or artifacts
-- [ ] Coin glint animation plays correctly
-- [ ] Town fireworks have light effects
-- [ ] No pixel errors in UI elements
+- [x] New forest tiles and field tiles look correct with no visual gaps or artifacts
+- [x] Coin glint animation plays correctly
+- [x] Town fireworks have light effects
+- [x] No pixel errors in UI elements
 
-## UI Fixes & Tooltips
+## UI Fixes & Tooltips ✅
 
-- [ ] Unified X-button works correctly on all panels
-- [ ] Player funds change text hidden when value is 0
-- [ ] Major notification popup displays and dismisses correctly
-- [ ] Loss condition notification correctly opens the win/loss UI
+- [x] Unified X-button works correctly on all panels
+- [x] Player funds change text hidden when value is 0
+- [x] Major notification popup displays and dismisses correctly
+- [x] Loss condition notification correctly opens the win/loss UI
   - _8122329 loss condition notificication now opens win/loss ui_
-- [ ] Simple error tooltips blink correctly and clean up (no leaked instances)
+- [x] Simple error tooltips blink correctly and clean up (no leaked instances)
   - _5ff950b clean-up and add blinking to simple error tooltips_
-- [ ] General tooltip fix holds up (no regressions in tooltip positioning/content)
+- [x] General tooltip fix holds up (no regressions in tooltip positioning/content)
   - _fbb67ad fix tooltip_
-- [ ] Town UI sub-header sizes look correct
-- [ ] Caravan panel can be opened from all valid states
-- [ ] Date gauge tooltip shows correct info
-- [ ] Win/loss conditions panel displays correctly in-game
+- [x] Town UI sub-header sizes look correct
+- [x] Caravan panel can be opened from all valid states
+- [x] Date gauge tooltip shows correct info
+- [x] Win/loss conditions panel displays correctly in-game
 
-## Feature Flags
+## Feature Flags ✅
 
-- [ ] FeatureFlagObjectToggler correctly shows/hides all flagged objects (campsite companion button, etc.), including after the recent fix
+- [x] FeatureFlagObjectToggler correctly shows/hides all flagged objects (campsite companion button, etc.), including after the recent fix
   - _d8c775d miprove FeatureFlagObjectToggler_
 
-## Regression Checks
+## Regression Checks ✅
 
-- [ ] Town inventory slots work correctly
-- [ ] Level difficulties display correctly in level selection
-- [ ] Editor startup: no NRE from initializable singletons
-- [ ] Ally selection UI works correctly
-- [ ] Add cart button works and is localized
-- [ ] Observable equality checks didn't change change-detection behavior anywhere relying on `Observable<T>`
+- [x] Town inventory slots work correctly
+- [x] Level difficulties display correctly in level selection
+- [x] Editor startup: no NRE from initializable singletons
+- [x] Ally selection UI works correctly
+- [x] Add cart button works and is localized
+- [x] Observable equality checks didn't change change-detection behavior anywhere relying on `Observable<T>`
   - _c5185b6 improve equality checks for observable_
+
+
+# Issues Found
+- **TEST:** Check Sentry for errors
+- **BUG:** Language settings UI always shows English toggle and **not** current locale
+- **Improvement:** Intro Popup should respond to [Esc]
+- **BUG:** Newly openend Start Menu still isn't layouting correctly. Only layouts buttons right after clicking a button.
+- **Improvement:** Untranslated strings should show default on build.
+- **BUG:** Layouting in Companion mini ui Tooltip.
+- **BUG:** Layouting in Tutorial for Campsite (german): Flicker/overlapping texts.
+- **BUG:** Layouting in Campsite > Carts & Upgrades: Layouting messed up when adding cart.
+- **Improvement:** Layouting in Campsite > Carts & Upgrades: Unlock/Upgrade Button should show price
+- **Bug:** Tutorial - Intro page 5 is missing. No longer makes sense. Should say: you can manage your carts in the campsite.
+- **Bug:** Development Gauge slider doesn't exactly match active/inactive milestones.
+- **Bug:** Dev gauge change rate layouting issues for french (-0.33/jour).
+- **Bug:** Glitched pixel lines in water tiles.
+- **Improvement:** Game Over UI should slide in/fade in, not just appear jarringly.
+- **Bug:** Lots of Localized strings that are hard-coded with smart format throw exceptions when first shown without parameters. This usually happens on UI init, before any code could set up format parameters.
+
+
