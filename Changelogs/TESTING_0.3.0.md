@@ -23,7 +23,7 @@
 - [x] Language settings header text fits without clipping/overflow after the shortened title
   - _c22176f shorten language settings header_
 
-## Localization — Translation Coverage (DE / FR)
+## Localization — Translation Coverage (DE / FR) ✅
 
 - [x] German translations are complete and correct across all tables (Common, Modifiers, Trade, Towns, Player, Campsite, Goods, Conditions, Levels, Tutorial, Start Menu)
   - _b23d8d1, a1c4cbd, db29274, 434a09c and ~15 other German-translation commits, plus e6f0f13 enable German_
@@ -36,7 +36,7 @@
 - [x] Translator/credit links work correctly
   - _f1e007e add translator links_
 
-## Localization — Dynamic Layout & Sizing
+## Localization — Dynamic Layout & Sizing ✅
 
 - [x] Good/milestone tooltips resize correctly for long localized text
   - _b2571c8 fix dynamic layout in good and milestone tooltips_
@@ -44,189 +44,189 @@
   - _2de8145, b6a304e_
 - [ ] Tutorial UI layout holds up with longer translated strings
   - _1fe638b fix tutorial ui layout_
-- [ ] General dynamic-text layouting fixes hold across screens
+- [x] General dynamic-text layouting fixes hold across screens
   - _09664e7, f1c37f5, fc52b11_
-- [ ] Modifiable tooltips: dynamic sizing doesn't clip content
+- [x] Modifiable tooltips: dynamic sizing doesn't clip content
   - _340d871 fix dynamic sizing in modifiable tooltip_
-- [ ] Town UI: dynamic sizing works (long translated strings don't overflow)
+- [x] Town UI: dynamic sizing works (long translated strings don't overflow)
   - _5c9ac04 fix up town translations and dynamic sizing_
 
-## Localization — Start Screen & Menus
+## Localization — Start Screen & Menus ✅
 
-- [ ] All static text on start screen is localized
-- [ ] Level selection screen: level names, descriptions, difficulty labels
-- [ ] Escape menu: all buttons localized
-- [ ] Audio settings: header and labels localized
-- [ ] Credits UI: static labels localized (names stay as-is)
-- [ ] Feedback UI: static labels localized
-- [ ] Language settings panel: labels and toggle text localized
-- [ ] "Press Any Key" text displays and behaves correctly
+- [x] All static text on start screen is localized
+- [x] Level selection screen: level names, descriptions, difficulty labels
+- [x] Escape menu: all buttons localized
+- [x] Audio settings: header and labels localized
+- [x] Credits UI: static labels localized (names stay as-is)
+- [x] Feedback UI: static labels localized
+- [x] Language settings panel: labels and toggle text localized
+- [x] "Press Any Key" text displays and behaves correctly
   - _e553e5f improvements of Press Any Key text in start page_
-- [ ] Duplicate start menu settings entries removed — each setting appears once
+- [x] Duplicate start menu settings entries removed — each setting appears once
   - _30f8aab remove duplicate start menu settings_
-- [ ] Version text displays correctly
+- [x] Version text displays correctly
   - _ae470a4, 08959c1, 719a132, 79bb619, f057693, 5700169_
 
-## Localization — Gameplay UI
+## Localization — Gameplay UI ✅
 
-- [ ] Town UI: name, tier descriptor, reputation, funds, development section — all localized
-- [ ] Trade UI: buy/sell button, funds summary, reputation summary, profit/loss text
-- [ ] Trade UI: haggle level names, coin effect, reputation effect strings
-- [ ] Trade UI: trade validation error messages (not enough coin, etc.)
+- [z] Town UI: name, tier descriptor, reputation, funds, development section — all localized
+- [x] Trade UI: buy/sell button, funds summary, reputation summary, profit/loss text
+- [x] Trade UI: haggle level names, coin effect, reputation effect strings
+- [x] Trade UI: trade validation error messages (not enough coin, etc.)
   - _cb68f03 implement LOC for trade validation strings_
-- [ ] Good tooltips: name, base price label, current price label with town name prefix
-- [ ] Good selectors (recipe panel, etc.) display localized good names
-- [ ] Mission tooltips: mission type, details, reward/penalty descriptions
-- [ ] Companion UI: names, descriptions, level tooltips, upkeep strings
-- [ ] Companion tooltips: effect descriptions per level
-- [ ] Cart tooltips: tier label, upgrade details, upkeep per-day string; cart upgrade cost localized
+- [x] Good tooltips: name, base price label, current price label with town name prefix
+- [x] Good selectors (recipe panel, etc.) display localized good names
+- [x] Mission tooltips: mission type, details, reward/penalty descriptions
+- [x] Companion UI: names, descriptions, level tooltips, upkeep strings
+- [x] Companion tooltips: effect descriptions per level
+- [x] Cart tooltips: tier label, upgrade details, upkeep per-day string; cart upgrade cost localized
   - _e1a1f43 add cart upgrade cost localization_
-- [ ] Modifiable tooltips: modifier descriptions (flat, percentage, base value)
+- [x] Modifiable tooltips: modifier descriptions (flat, percentage, base value)
   - _1e73ef1, fa6adc1, 30e923b, 990c7f1_
-- [ ] Notification system: minor + major notification text localized
-- [ ] Event list header ("Ongoing Events (N)") uses LocalizedText with args
-- [ ] Timed game modifier: "X days left" uses LocalizedText with args
-- [ ] Building names localized
-- [ ] Region names localized
-- [ ] Availability strings localized and display correct names
+- [x] Notification system: minor + major notification text localized
+- [x] Event list header ("Ongoing Events (N)") uses LocalizedText with args
+- [x] Timed game modifier: "X days left" uses LocalizedText with args
+- [x] Building names localized
+- [x] Region names localized
+- [x] Availability strings localized and display correct names
   - _5cd2b2e, bc4ef78 improved availability names_
-- [ ] Game date is localized correctly in all date displays
+- [x] Game date is localized correctly in all date displays
   - _404b2e4 localize game date_
-- [ ] Tooltips never fall back to raw/untranslated text
+- [x] Tooltips never fall back to raw/untranslated text
   - _262e2a0 force localization in TitleDescriptionTooltip, 65ab289 enforce localization in simpletooltiphandler_
 
-## Localization — Conditions, Game Over, Tutorial
+## Localization — Conditions, Game Over, Tutorial ✅
 
-- [ ] Win/loss conditions progress (funds, town tier, local/global rep, timeout, bankruptcy) localized
-- [ ] Condition descriptions (from ScriptableObjects) localized; conditions list doesn't error at runtime
+- [x] Win/loss conditions progress (funds, town tier, local/global rep, timeout, bankruptcy) localized
+- [x] Condition descriptions (from ScriptableObjects) localized; conditions list doesn't error at runtime
   - _32d36b4 fix runtime issues in conditions lists_
-- [ ] Win screen: title, stats labels, dynamic stats
-- [ ] Loss screen: title, failure reason text
-- [ ] Favorite good stat displays correctly on game over (was a crash bug)
+- [x] Win screen: title, stats labels, dynamic stats
+- [x] Loss screen: title, failure reason text
+- [x] Favorite good stat displays correctly on game over (was a crash bug)
   - _16a5b82_
-- [ ] Tutorial topics: titles, descriptions, "Tasks" header localized
-- [ ] Onboarding explainer text (smart strings) renders with correct args
-- [ ] Level modifier / event names, descriptions, and effect text localized (production, reputation, price, movement speed, development)
+- [x] Tutorial topics: titles, descriptions, "Tasks" header localized
+- [x] Onboarding explainer text (smart strings) renders with correct args
+- [x] Level modifier / event names, descriptions, and effect text localized (production, reputation, price, movement speed, development)
 
-## Campsite (new feature)
+## Campsite (new feature) ✅
 
-- [ ] New game starts the player in the campsite rather than directly on the map
+- [x] New game starts the player in the campsite rather than directly on the map
   - _a5eb440 player starts game in campsite_
-- [ ] Camp tile appears correctly on the map and camp navigation works (arriving/leaving)
+- [x] Camp tile appears correctly on the map and camp navigation works (arriving/leaving)
   - _c5301bc, 993787a_
-- [ ] Camp is present and functional in the intro level
+- [x] Camp is present and functional in the intro level
   - _67f35de add camp to intro level_
-- [ ] Campsite storage: deposit/withdraw goods; storage UI reflects current state correctly
+- [x] Campsite storage: deposit/withdraw goods; storage UI reflects current state correctly
   - _c6f8f8e, 47f5503, 9530cd4, 5d8ba43 fix campsite storage_
-- [ ] Campsite Cart Panel shows correct cart contents/state
+- [x] Campsite Cart Panel shows correct cart contents/state
   - _a00e3bd implement Campsite Cart Panel_
-- [ ] Caravan tent placeholder UI displays correctly where final art is pending
+- [x] Caravan tent placeholder UI displays correctly where final art is pending
   - _011bcf7_
-- [ ] Campsite Companion Panel only opens/is interactive while actually in camp
+- [x] Campsite Companion Panel only opens/is interactive while actually in camp
   - _b2e249b_
-- [ ] Retinue mini UI opens the Campsite Companion Panel (old RetinuePanel is fully gone, no dangling references)
+- [x] Retinue mini UI opens the Campsite Companion Panel (old RetinuePanel is fully gone, no dangling references)
   - _5c21cd8 retinue mini ui now opens campsite companion panel (deleted RetinuePanel)_
-- [ ] Companion upkeep values shown in campsite panel are correct
+- [x] Companion upkeep values shown in campsite panel are correct
   - _8115af9 correctly show upkeep in campsite companion page_
-- [ ] Hovering a companion level in the campsite panel shows correct info
+- [x] Hovering a companion level in the campsite panel shows correct info
   - _3ddf81f level hovering in campsite companion page_
-- [ ] Producer Tooltip displays correct info in camp
+- [x] Producer Tooltip displays correct info in camp
   - _5f9faba implement Producer Tooltip_
-- [ ] Camp signage/art displays correctly (new art assets)
+- [x] Camp signage/art displays correctly (new art assets)
   - _5bd465b, 27e5972, 714455e, a713488 (placeholder AI art removed)_
-- [ ] Campsite companion button visibility respects its feature flag
+- [x] Campsite companion button visibility respects its feature flag
   - _39e02a6 hide campsite companion button based on feature flag_
-- [ ] Campsite panel layout is correct at various resolutions
+- [x] Campsite panel layout is correct at various resolutions
   - _fc52b11, aeef92b, 2a102f3_
-- [ ] All escapable dynamic panels (including campsite ones) block gameplay input while open, and un-block on close
+- [x] All escapable dynamic panels (including campsite ones) block gameplay input while open, and un-block on close
   - _2518df6 all escapable dynamic panels block gameplay inputs_
-- [ ] All camp panels are disabled/inaccessible when the player is not actually in camp (broader fix beyond just the companion panel)
+- [x] All camp panels are disabled/inaccessible when the player is not actually in camp (broader fix beyond just the companion panel)
   - _a59a955 disabled camp panels when not in camp._
-- [ ] Producer Tooltip is hidden (not shown empty) for producer groups with no producers
+- [x] Producer Tooltip is hidden (not shown empty) for producer groups with no producers
   - _c7ab2ec disabled producer tooltip for empty producer group UIs_
-- [ ] Producer popup no longer throws an error in any producer state
+- [x] Producer popup no longer throws an error in any producer state
   - _3c16c2e fix producer popup error_
-- [ ] Camp storage inventory no longer shows an unrelated "log" popup when interacted with
+- [x] Camp storage inventory no longer shows an unrelated "log" popup when interacted with
   - _a54bd85 camp storage inventory no longer shows log popup_
-- [ ] Hovering the *next* (not-yet-reached) companion level shows the correct upkeep value
+- [x] Hovering the *next* (not-yet-reached) companion level shows the correct upkeep value
   - _c2032b7 hover next companion level shows correct upkeep_
-- [ ] Production Building tooltip displays correctly
+- [x] Production Building tooltip displays correctly
   - _f040f0f fix Production Buliding tooltip_
-- [ ] Campsite panel tooltips read clearly after simplification (no missing info)
+- [x] Campsite panel tooltips read clearly after simplification (no missing info)
   - _e6cd892 simplify tooltip in campsite panel_
-- [ ] Campsite Cart Panel only shows carts that are actually unlockable
+- [x] Campsite Cart Panel only shows carts that are actually unlockable
   - _c8fc61e campsite cart panel - hide carts that aren't unlockable_
-- [ ] Cart upgrade modifier text clearly and correctly describes the upgrade's effect
+- [x] Cart upgrade modifier text clearly and correctly describes the upgrade's effect
   - _cdc5567 improve cart ugprade modifier text_
-- [ ] Cart upgrade step in onboarding/progression works correctly end-to-end
+- [x] Cart upgrade step in onboarding/progression works correctly end-to-end
   - _2bacc2c fix cart upgrade step and missing onboarding task to wait for 30 berries_
-- [ ] Caravan panel UI refreshes immediately after unlocking a new cart (no stale display requiring reopen)
+- [x] Caravan panel UI refreshes immediately after unlocking a new cart (no stale display requiring reopen)
   - _1f9a665 refresh caravan panel ui when unlocking new carts_
 
-## Onboarding & Tutorial (new/updated)
+## Onboarding & Tutorial (new/updated) ✅
 
-- [ ] Onboarding includes a campsite step that triggers at the right point and highlights the correct element
+- [x] Onboarding includes a campsite step that triggers at the right point and highlights the correct element
   - _79c5a92 add campsite step to onboarding_
-- [ ] Tutorial content referencing the campsite is accurate and up to date
+- [x] Tutorial content referencing the campsite is accurate and up to date
   - _a8e3a2b update tutorial with campsite_
-- [ ] Onboarding blinker/highlight is positioned correctly on every step, not just the new campsite one
+- [x] Onboarding blinker/highlight is positioned correctly on every step, not just the new campsite one
   - _1b37c58 fix onboarding blinker position bug_
-- [ ] Onboarding task that waits for "30 berries" now appears/completes correctly (was previously missing)
+- [x] Onboarding task that waits for "30 berries" now appears/completes correctly (was previously missing)
   - _2bacc2c fix cart upgrade step and missing onboarding task to wait for 30 berries_
-- [ ] Tutorial-related art assets import with correct settings (no blurry/wrong-format sprites)
+- [x] Tutorial-related art assets import with correct settings (no blurry/wrong-format sprites)
   - _4584bf4 small import settings fix for tutorial assets_
 
-## Feedback & Crash Reporting (new)
+## Feedback & Crash Reporting (new) ✅
 
-- [ ] Feedback form now submits via Sentry (`SentrySdk.CaptureFeedback`) instead of the old Google Form — confirm submitted feedback actually shows up in the Sentry dashboard
+- [x] Feedback form now submits via Sentry (`SentrySdk.CaptureFeedback`) instead of the old Google Form — confirm submitted feedback actually shows up in the Sentry dashboard
   - _82a565f add sentry and disable google-based feedback_
-- [ ] Feedback form still shows a confirmation/closes correctly after submitting (event is now `ObservableEvent` instead of a C# `Action`)
-- [ ] Escape menu's feedback entry point still opens and submits correctly
+- [x] Feedback form still shows a confirmation/closes correctly after submitting (event is now `ObservableEvent` instead of a C# `Action`)
+- [x] Escape menu's feedback entry point still opens and submits correctly
   - _82a565f (EscapeMenu.cs)_
-- [ ] Sentry only activates in actual builds, not in the Editor — verify no Sentry network calls fire during editor play
+- [x] Sentry only activates in actual builds, not in the Editor — verify no Sentry network calls fire during editor play
   - _d0e648e configure sentry for builds only_
-- [ ] Sentry breadcrumb trail (100 configured) doesn't cause a noticeable performance hit
+- [x] Sentry breadcrumb trail (100 configured) doesn't cause a noticeable performance hit
   - _f809174 100 sentry breadcrumbs_
-- [ ] Sentry sampling/options behave as configured with no error dialogs or blocking network calls surfaced to the player
+- [x] Sentry sampling/options behave as configured with no error dialogs or blocking network calls surfaced to the player
   - _5208a19 sentry option tweaks_
-- [ ] Force a crash/exception in a built (non-editor) player and confirm it's captured in Sentry
+- [x] Force a crash/exception in a built (non-editor) player and confirm it's captured in Sentry
 
-## Companion Missions & Upgrades (new feature)
+## Companion Missions & Upgrades (new feature) ✅
 
-- [ ] Companion upgrade mission requirements are enforced correctly (rule-based)
+- [x] Companion upgrade mission requirements are enforced correctly (rule-based)
   - _b3bd8b2 rule based companion mission requirements_
-- [ ] Mission delivery panel shows an info tooltip when delivery is currently impossible
+- [x] Mission delivery panel shows an info tooltip when delivery is currently impossible
   - _189584f_
-- [ ] "Or Pay" button in the delivery panel works and applies the correct cost
+- [x] "Or Pay" button in the delivery panel works and applies the correct cost
   - _0992f9c improve Or Pay button in delivery panel_
-- [ ] Substitute payments are accepted for companion upgrade missions when the exact good is unavailable
+- [x] Substitute payments are accepted for companion upgrade missions when the exact good is unavailable
   - _eae0c8d implement substitute payments for companion upgrade missions_
-- [ ] Companion mission delivery flow completes end-to-end without errors
+- [x] Companion mission delivery flow completes end-to-end without errors
   - _133d2b8 implement companion mission delivery_
-- [ ] Companion frames render correctly for every companion tier (including any without final art)
+- [x] Companion frames render correctly for every companion tier (including any without final art)
   - _3395bf3, 05be83c_
-- [ ] Coin cell in companion UI shows hover outline
+- [x] Coin cell in companion UI shows hover outline
   - _0b85784_
-- [ ] No regressions vs. pre-refactor companion behavior (old behavior revert was intentional — verify nothing broke)
+- [x] No regressions vs. pre-refactor companion behavior (old behavior revert was intentional — verify nothing broke)
   - _7b3b3dc revert old companion behavior_
-- [ ] CompanionModel refactor + upkeep-modifier move didn't break existing companion stats/behavior
+- [x] CompanionModel refactor + upkeep-modifier move didn't break existing companion stats/behavior
   - _5092892, 267210c, 267bb90, e30d9e0, 361364a_
 
-## Slot-Based Inventory (new feature)
+## Slot-Based Inventory (new feature) ✅
 
-- [ ] CaravanSlotService correctly manages cart slot allocation (add/remove/move goods between slots)
+- [x] CaravanSlotService correctly manages cart slot allocation (add/remove/move goods between slots)
   - _93f48bc add CaravanSlotService_
-- [ ] No errors/exceptions surfaced from the slot-based inventory rework
+- [x] No errors/exceptions surfaced from the slot-based inventory rework
   - _2b8aa34 fix errors_
-- [ ] Caravan cart panel UI still correctly reflects slot contents after the rework
+- [x] Caravan cart panel UI still correctly reflects slot contents after the rework
 
-## Trade & Price
+## Trade & Price ✅
 
-- [ ] Buy/sell prices calculate correctly in all towns (Trade/Logic/Price had multiple changes this cycle — verify no regression)
-- [ ] Quick trade buttons (15, 30, Max, Mission) all work
-- [ ] Quick trade button for mission amount only visible when a mission exists for that good
-- [ ] Trade error-proofing: can't complete a trade with 0 amount or an unaffordable amount
-- [ ] Trade uses the CompletedTrade flow correctly end-to-end
+- [x] Buy/sell prices calculate correctly in all towns (Trade/Logic/Price had multiple changes this cycle — verify no regression)
+- [x] Quick trade buttons (15, 30, Max, Mission) all work
+- [x] Quick trade button for mission amount only visible when a mission exists for that good
+- [x] Trade error-proofing: can't complete a trade with 0 amount or an unaffordable amount
+- [x] Trade uses the CompletedTrade flow correctly end-to-end
 
 ## Player / Movement ✅
 
@@ -306,5 +306,18 @@
 - **Bug:** Glitched pixel lines in water tiles.
 - **Improvement:** Game Over UI should slide in/fade in, not just appear jarringly.
 - **Bug:** Lots of Localized strings that are hard-coded with smart format throw exceptions when first shown without parameters. This usually happens on UI init, before any code could set up format parameters.
-
-
+- **Improvement:** [Esc] should work in settings on Start Menu
+- **Improvement:** [Esc] should work on lvl 3 ally picker
+- **Improvement:** Add tooltip to Town UI Flag: "Region: <Region Name>"
+- **Improvement:** Add tooltip to Town UI Tier Icon: "Tier <Tier Name>"
+- **Bug:** Campsite Retinue Panel question mark buttons are bugged. some of them don't change on hover?
+- **Improvement:** Enter should confirm trade
+- **Improvement:** Onboarding: If I accidentally buy wild game first, i won't have enough money to buy berries, hard-locking the onboarding. i should give enough coin upfront to buy all game and berries.
+- **Bug:** Tutorial window is BEHIND campsite panel. Should be in front.
+- **Improvement:** German: Tutorial button should say "Tutorial: Topic" not "Anleitung
+- **Improvement:** Feedback: [Tab] should go from name to feedback input
+- **Improvement:** TradeUI: Buy button doesnt get disabled when slider is at 0. it should be disabled just like how it is when the total price is above the players coin amount.
+- **Improvement:** Missing Total Retinue Upkeep somewhere.
+- **Bug:** Layout in campsite retinue delivery panel "Or pay" button doesnt scale right with long text.
+- **Improvement:** German: Gefährten vs Gefolge (for example in funds change tooltip)
+- **Improvement:** German: "Aneheuern" in campsite
