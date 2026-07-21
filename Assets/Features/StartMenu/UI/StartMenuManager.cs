@@ -9,6 +9,7 @@ using Features.Levels;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace Features.StartMenu.UI
 {
@@ -63,13 +64,15 @@ namespace Features.StartMenu.UI
 
         private static void InitializeEverything()
         {
-            var behaviors = FindObjectsByType<InitializableBehavior>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            var behaviors =
+                FindObjectsByType<InitializableBehavior>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (var behavior in behaviors)
             {
                 behavior.Initialize();
             }
 
-            var singletons = FindObjectsByType<InitializableSingleton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            var singletons =
+                FindObjectsByType<InitializableSingleton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (var singleton in singletons)
             {
                 singleton.Initialize();
@@ -117,6 +120,8 @@ namespace Features.StartMenu.UI
             var tutorialService = GlobalContext.Instance.Services.TutorialService;
             tutorialPopupGO.SetActive(!tutorialService.HasCompletedIntro);
             tutorialService.SetIntroCompleted();
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(levelSelectionGO.transform as RectTransform);
         }
     }
 }
