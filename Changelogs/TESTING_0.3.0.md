@@ -42,7 +42,7 @@
   - _b2571c8 fix dynamic layout in good and milestone tooltips_
 - [x] Start menu layout doesn't break when text length changes (language switch, refresh)
   - _2de8145, b6a304e_
-- [ ] Tutorial UI layout holds up with longer translated strings
+- [x] Tutorial UI layout holds up with longer translated strings
   - _1fe638b fix tutorial ui layout_
 - [x] General dynamic-text layouting fixes hold across screens
   - _09664e7, f1c37f5, fc52b11_
@@ -292,10 +292,10 @@
 
 # Issues Found
 - [ ] **TEST:** Check Sentry for errors — [MED-427](https://medievalmerchant.youtrack.cloud/issue/MED-427)
-- [x] **BUG:** Language settings UI always shows English toggle and **not** current locale
-- [x] **Improvement:** Intro Popup should respond to [Esc]
+- [ ] **BUG:** Language settings UI always shows English toggle and **not** current locale
+- [ ] **Improvement:** Intro Popup should respond to [Esc]
 - [ ] **BUG:** Newly openend Start Menu still isn't layouting correctly. Only layouts buttons right after clicking a button. — [MED-428](https://medievalmerchant.youtrack.cloud/issue/MED-428)
-- [x] **Improvement:** Untranslated strings should show default on build.
+- [ ] **Improvement:** Untranslated strings should show default on build.
 - [ ] **BUG:** Layouting in Companion mini ui Tooltip. — [MED-429](https://medievalmerchant.youtrack.cloud/issue/MED-429)
 - [ ] **BUG:** Layouting in Tutorial for Campsite (german): Flicker/overlapping texts. — [MED-430](https://medievalmerchant.youtrack.cloud/issue/MED-430)
 - [ ] **BUG:** Layouting in Campsite > Carts & Upgrades: Layouting messed up when adding cart. — [MED-431](https://medievalmerchant.youtrack.cloud/issue/MED-431)
@@ -306,18 +306,18 @@
 - [ ] **Bug:** Glitched pixel lines in water tiles. — [MED-436](https://medievalmerchant.youtrack.cloud/issue/MED-436)
 - [ ] **Improvement:** Game Over UI should slide in/fade in, not just appear jarringly. — [MED-437](https://medievalmerchant.youtrack.cloud/issue/MED-437)
 - [ ] **Bug:** Lots of Localized strings that are hard-coded with smart format throw exceptions when first shown without parameters. This usually happens on UI init, before any code could set up format parameters. — [MED-438](https://medievalmerchant.youtrack.cloud/issue/MED-438)
-- [x] **Improvement:** [Esc] should work in settings on Start Menu
-- [x] **Improvement:** [Esc] should work on lvl 3 ally picker
+- [ ] **Improvement:** [Esc] should work in settings on Start Menu
+- [ ] **Improvement:** [Esc] should work on lvl 3 ally picker
 - [ ] **Improvement:** Add tooltip to Town UI Flag: "Region: <Region Name>" — [MED-439](https://medievalmerchant.youtrack.cloud/issue/MED-439)
 - [ ] **Improvement:** Add tooltip to Town UI Tier Icon: "Tier <Tier Name>" — [MED-440](https://medievalmerchant.youtrack.cloud/issue/MED-440)
 - [ ] **Bug:** Campsite Retinue Panel question mark buttons are bugged. some of them don't change on hover? — [MED-441](https://medievalmerchant.youtrack.cloud/issue/MED-441)
 - [ ] **Improvement:** Enter should confirm trade — [MED-442](https://medievalmerchant.youtrack.cloud/issue/MED-442)
-- [x] **Improvement:** Onboarding: If I accidentally buy wild game first, i won't have enough money to buy berries, hard-locking the onboarding. i should give enough coin upfront to buy all game and berries.
+- [ ] **Improvement:** Onboarding: If I accidentally buy wild game first, i won't have enough money to buy berries, hard-locking the onboarding. i should give enough coin upfront to buy all game and berries.
 - [ ] **Bug:** Tutorial window is BEHIND campsite panel. Should be in front. — [MED-443](https://medievalmerchant.youtrack.cloud/issue/MED-443)
-- [x] **Improvement:** German: Tutorial button should say "Tutorial: Topic" not "Anleitung
+- [ ] **Improvement:** German: Tutorial button should say "Tutorial: Topic" not "Anleitung
 - [ ] **Improvement:** Feedback: [Tab] should go from name to feedback input — [MED-444](https://medievalmerchant.youtrack.cloud/issue/MED-444)
-- [x] **Improvement:** TradeUI: Buy button doesnt get disabled when slider is at 0. it should be disabled just like how it is when the total price is above the players coin amount.
+- [ ] **Improvement:** TradeUI: Buy button doesnt get disabled when slider is at 0. it should be disabled just like how it is when the total price is above the players coin amount.
 - [ ] **Improvement:** Missing Total Retinue Upkeep somewhere. — [MED-445](https://medievalmerchant.youtrack.cloud/issue/MED-445)
 - [ ] **Bug:** Layout in campsite retinue delivery panel "Or pay" button doesnt scale right with long text. — [MED-446](https://medievalmerchant.youtrack.cloud/issue/MED-446)
-- [x] **Improvement:** German: Gefährten vs Gefolge (for example in funds change tooltip)
+- [ ] **Improvement:** German: Gefährten vs Gefolge (for example in funds change tooltip)
 - [ ] **Improvement:** German: "Aneheuern" in campsite — [MED-447](https://medievalmerchant.youtrack.cloud/issue/MED-447)
