@@ -384,9 +384,10 @@ namespace Features.Trade.UI
             var totalPrice = _ongoingTrade.TotalPrice;
             var buyerFunds = _buyingInventory.Funds;
 
-            var isTradePossible = buyerFunds >= totalPrice;
+            var canAfford = buyerFunds >= totalPrice;
+            var isTradePossible = _ongoingTrade.Amount > 0 && canAfford;
             TradeButton.interactable = isTradePossible;
-            tradeButtonTooltip.SetEnabled(!isTradePossible);
+            tradeButtonTooltip.SetEnabled(!canAfford);
 
             if (isTradePossible)
                 return;
