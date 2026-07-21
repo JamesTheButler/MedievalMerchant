@@ -24,6 +24,8 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
 
         public override void SetLevel(int level)
         {
+            if (level <= 0) return;
+
             _thiefLevelData = ConfigData.GetTypedLevelData(level);
 
             if (_thiefLevelData is null)
@@ -60,11 +62,13 @@ namespace Features.Player.Retinue.Logic.CompanionLogics
             town.Inventory.RemoveFunds(_thiefLevelData.TownEntranceGold);
 
             var log = $"Thief stole {_thiefLevelData.TownEntranceGold} from {town.Name}.";
-            
+
             var isThiefCaught = RandomUtility.GetBool(_thiefLevelData.ReputationLossChance);
             if (isThiefCaught)
             {
-                town.ReputationModel.UpdateReputation(_thiefLevelData.ReputationLoss, "Your thief was caught stealing!");
+                town.ReputationModel.UpdateReputation(
+                    _thiefLevelData.ReputationLoss,
+                    "Your thief was caught stealing!");
                 log += $".. and got caught ({_thiefLevelData.ReputationLoss} rep)";
             }
 

@@ -17,6 +17,9 @@ namespace Features.Player.Camp.UI
     public sealed class CompanionDeliveryPanel : DynamicPanel
     {
         [SerializeField, Required]
+        private RectTransform rootTransform;
+
+        [SerializeField, Required]
         private Slider amountSlider;
 
         [SerializeField, Required]
@@ -164,6 +167,8 @@ namespace Features.Player.Camp.UI
             coinSubstituteButton.interactable = interactable;
             coinSubstituteTooltip.SetEnabled(!interactable && selectedAmount != 0);
             coinSubstituteText.text = $"{substituteCost:0.#}";
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rootTransform);
         }
     }
 }

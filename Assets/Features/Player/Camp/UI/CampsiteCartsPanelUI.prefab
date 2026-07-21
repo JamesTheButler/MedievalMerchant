@@ -600,7 +600,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 860, y: 616}
+  m_SizeDelta: {x: 860, y: 640}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5248708482540539827
 MonoBehaviour:
@@ -710,10 +710,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 9200420398376607276}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 430, y: -560}
+  m_SizeDelta: {x: 636, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3568677094054308810
 MonoBehaviour:
@@ -746,7 +746,6 @@ GameObject:
   - component: {fileID: 9200420398376607276}
   - component: {fileID: 2412810305099017156}
   - component: {fileID: 8459246626010092642}
-  - component: {fileID: 3447104549265314378}
   - component: {fileID: 923592679613124054}
   m_Layer: 5
   m_Name: Content
@@ -806,32 +805,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8575253527738586912}
   m_CullTransparentMesh: 1
---- !u!114 &3447104549265314378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8575253527738586912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
-  m_Padding:
-    m_Left: 112
-    m_Right: 112
-    m_Top: 16
-    m_Bottom: 16
-  m_ChildAlignment: 4
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!114 &923592679613124054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,6 +830,8 @@ GameObject:
   - component: {fileID: 4089574920088335386}
   - component: {fileID: 721471555580968987}
   - component: {fileID: 8768572008919438107}
+  - component: {fileID: 1167220189937297409}
+  - component: {fileID: 2945587717166907670}
   m_Layer: 5
   m_Name: Cart Grid
   m_TagString: Untagged
@@ -884,8 +859,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 430, y: -276}
-  m_SizeDelta: {x: 636, y: 0}
+  m_AnchoredPosition: {x: 430, y: -288}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &721471555580968987
 MonoBehaviour:
@@ -900,10 +875,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: 12
+    m_Right: 12
+    m_Top: 12
+    m_Bottom: 12
   m_ChildAlignment: 1
   m_Spacing: 8
   m_ChildForceExpandWidth: 0
@@ -925,8 +900,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
-  m_HorizontalFit: 0
+  m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!222 &1167220189937297409
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8730055874882725139}
+  m_CullTransparentMesh: 1
+--- !u!114 &2945587717166907670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8730055874882725139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -1884675582, guid: 54e1aac0ce25dd94bbbd291a41de0b82, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1001 &1464811247239691727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2251,6 +2264,10 @@ PrefabInstance:
     - target: {fileID: 3070330302301070853, guid: c15cbdafba1db664399cddfc2fc6848b, type: 3}
       propertyPath: m_Name
       value: Cart 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3070330302301070853, guid: c15cbdafba1db664399cddfc2fc6848b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3238021091350097085, guid: c15cbdafba1db664399cddfc2fc6848b, type: 3}
       propertyPath: m_AnchorMax.y

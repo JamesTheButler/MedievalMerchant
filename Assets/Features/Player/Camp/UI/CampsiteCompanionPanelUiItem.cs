@@ -121,6 +121,9 @@ namespace Features.Player.Camp.UI
 
         public void UnhoverNextLevel()
         {
+            if (_companionConfigData is null)
+                return;
+
             if (_currentLevel == _companionConfigData.MaxLevel)
                 return;
 
