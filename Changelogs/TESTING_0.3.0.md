@@ -293,7 +293,7 @@
 # Issues Found
 - [ ] **TEST:** Check Sentry for errors
 - [x] **BUG:** Language settings UI always shows English toggle and **not** current locale
-- [ ] **Improvement:** Intro Popup should respond to [Esc]
+- [x] **Improvement:** Intro Popup should respond to [Esc]
 - [ ] **BUG:** Newly openend Start Menu still isn't layouting correctly. Only layouts buttons right after clicking a button.
 - [x] **Improvement:** Untranslated strings should show default on build.
 - [ ] **BUG:** Layouting in Companion mini ui Tooltip.
@@ -306,8 +306,8 @@
 - [ ] **Bug:** Glitched pixel lines in water tiles.
 - [ ] **Improvement:** Game Over UI should slide in/fade in, not just appear jarringly.
 - [ ] **Bug:** Lots of Localized strings that are hard-coded with smart format throw exceptions when first shown without parameters. This usually happens on UI init, before any code could set up format parameters.
-- [ ] **Improvement:** [Esc] should work in settings on Start Menu
-- [ ] **Improvement:** [Esc] should work on lvl 3 ally picker
+- [x] **Improvement:** [Esc] should work in settings on Start Menu
+- [x] **Improvement:** [Esc] should work on lvl 3 ally picker
 - [ ] **Improvement:** Add tooltip to Town UI Flag: "Region: <Region Name>"
 - [ ] **Improvement:** Add tooltip to Town UI Tier Icon: "Tier <Tier Name>"
 - [ ] **Bug:** Campsite Retinue Panel question mark buttons are bugged. some of them don't change on hover?
