@@ -291,33 +291,33 @@
 
 
 # Issues Found
-- **TEST:** Check Sentry for errors
-- **BUG:** Language settings UI always shows English toggle and **not** current locale
-- **Improvement:** Intro Popup should respond to [Esc]
-- **BUG:** Newly openend Start Menu still isn't layouting correctly. Only layouts buttons right after clicking a button.
-- **Improvement:** Untranslated strings should show default on build.
-- **BUG:** Layouting in Companion mini ui Tooltip.
-- **BUG:** Layouting in Tutorial for Campsite (german): Flicker/overlapping texts.
-- **BUG:** Layouting in Campsite > Carts & Upgrades: Layouting messed up when adding cart.
-- **Improvement:** Layouting in Campsite > Carts & Upgrades: Unlock/Upgrade Button should show price
-- **Bug:** Tutorial - Intro page 5 is missing. No longer makes sense. Should say: you can manage your carts in the campsite.
-- **Bug:** Development Gauge slider doesn't exactly match active/inactive milestones.
-- **Bug:** Dev gauge change rate layouting issues for french (-0.33/jour).
-- **Bug:** Glitched pixel lines in water tiles.
-- **Improvement:** Game Over UI should slide in/fade in, not just appear jarringly.
-- **Bug:** Lots of Localized strings that are hard-coded with smart format throw exceptions when first shown without parameters. This usually happens on UI init, before any code could set up format parameters.
-- **Improvement:** [Esc] should work in settings on Start Menu
-- **Improvement:** [Esc] should work on lvl 3 ally picker
-- **Improvement:** Add tooltip to Town UI Flag: "Region: <Region Name>"
-- **Improvement:** Add tooltip to Town UI Tier Icon: "Tier <Tier Name>"
-- **Bug:** Campsite Retinue Panel question mark buttons are bugged. some of them don't change on hover?
-- **Improvement:** Enter should confirm trade
-- **Improvement:** Onboarding: If I accidentally buy wild game first, i won't have enough money to buy berries, hard-locking the onboarding. i should give enough coin upfront to buy all game and berries.
-- **Bug:** Tutorial window is BEHIND campsite panel. Should be in front.
-- **Improvement:** German: Tutorial button should say "Tutorial: Topic" not "Anleitung
-- **Improvement:** Feedback: [Tab] should go from name to feedback input
-- **Improvement:** TradeUI: Buy button doesnt get disabled when slider is at 0. it should be disabled just like how it is when the total price is above the players coin amount.
-- **Improvement:** Missing Total Retinue Upkeep somewhere.
-- **Bug:** Layout in campsite retinue delivery panel "Or pay" button doesnt scale right with long text.
-- **Improvement:** German: Gefährten vs Gefolge (for example in funds change tooltip)
-- **Improvement:** German: "Aneheuern" in campsite
+- [ ] **TEST:** Check Sentry for errors
+- [x] **BUG:** Language settings UI always shows English toggle and **not** current locale
+- [ ] **Improvement:** Intro Popup should respond to [Esc]
+- [ ] **BUG:** Newly openend Start Menu still isn't layouting correctly. Only layouts buttons right after clicking a button.
+- [x] **Improvement:** Untranslated strings should show default on build.
+- [ ] **BUG:** Layouting in Companion mini ui Tooltip.
+- [ ] **BUG:** Layouting in Tutorial for Campsite (german): Flicker/overlapping texts.
+- [ ] **BUG:** Layouting in Campsite > Carts & Upgrades: Layouting messed up when adding cart.
+- [ ] **Improvement:** Layouting in Campsite > Carts & Upgrades: Unlock/Upgrade Button should show price
+- [ ] **Bug:** Tutorial - Intro page 5 is missing. No longer makes sense. Should say: you can manage your carts in the campsite.
+- [ ] **Bug:** Development Gauge slider doesn't exactly match active/inactive milestones.
+- [ ] **Bug:** Dev gauge change rate layouting issues for french (-0.33/jour).
+- [ ] **Bug:** Glitched pixel lines in water tiles.
+- [ ] **Improvement:** Game Over UI should slide in/fade in, not just appear jarringly.
+- [ ] **Bug:** Lots of Localized strings that are hard-coded with smart format throw exceptions when first shown without parameters. This usually happens on UI init, before any code could set up format parameters.
+- [ ] **Improvement:** [Esc] should work in settings on Start Menu
+- [ ] **Improvement:** [Esc] should work on lvl 3 ally picker
+- [ ] **Improvement:** Add tooltip to Town UI Flag: "Region: <Region Name>"
+- [ ] **Improvement:** Add tooltip to Town UI Tier Icon: "Tier <Tier Name>"
+- [ ] **Bug:** Campsite Retinue Panel question mark buttons are bugged. some of them don't change on hover?
+- [ ] **Improvement:** Enter should confirm trade
+- [x] **Improvement:** Onboarding: If I accidentally buy wild game first, i won't have enough money to buy berries, hard-locking the onboarding. i should give enough coin upfront to buy all game and berries.
+- [ ] **Bug:** Tutorial window is BEHIND campsite panel. Should be in front.
+- [x] **Improvement:** German: Tutorial button should say "Tutorial: Topic" not "Anleitung
+- [ ] **Improvement:** Feedback: [Tab] should go from name to feedback input
+- [x] **Improvement:** TradeUI: Buy button doesnt get disabled when slider is at 0. it should be disabled just like how it is when the total price is above the players coin amount.
+- [ ] **Improvement:** Missing Total Retinue Upkeep somewhere.
+- [ ] **Bug:** Layout in campsite retinue delivery panel "Or pay" button doesnt scale right with long text.
+- [x] **Improvement:** German: Gefährten vs Gefolge (for example in funds change tooltip)
+- [ ] **Improvement:** German: "Aneheuern" in campsite
