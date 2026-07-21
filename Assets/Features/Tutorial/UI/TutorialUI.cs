@@ -11,6 +11,9 @@ namespace Features.Tutorial.UI
     public sealed class TutorialUI : DynamicPanel
     {
         [SerializeField, Required]
+        private RectTransform contentRoot;
+
+        [SerializeField, Required]
         private TMP_Text topicTitleText, chapterTitleText, descriptionText, chapterCountText;
 
         [SerializeField, Required]
@@ -74,6 +77,8 @@ namespace Features.Tutorial.UI
 
             leftButtonGroup.alpha = _currentChapterIndex > 0 ? 1 : 0;
             rightButtonGroup.alpha = _currentChapterIndex < _chapterCount - 1 ? 1 : 0;
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(contentRoot);
         }
 
         private void OnRightButtonClicked()
