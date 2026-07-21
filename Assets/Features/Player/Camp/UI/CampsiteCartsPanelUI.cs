@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Observation;
 using Common.UI.Elements.Panels;
-using Common.Utility;
 using Features.Player.Caravan.Logic;
 using Features.Player.Caravan.UI;
 using UnityEngine;
