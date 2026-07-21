@@ -38,10 +38,9 @@ namespace Features.Localization.UI
                 var locale = language.Locale;
                 language.Toggle.onValueChanged.AddListener(isOn =>
                 {
-                    if (isOn)
-                    {
-                        SetLocale(locale);
-                    }
+                    if (!isOn)
+                        return;
+                    SetLocale(locale);
                 });
             }
         }
@@ -51,7 +50,7 @@ namespace Features.Localization.UI
             if (_isChangingLocale)
                 return;
 
-            if (LocalizationSettings.SelectedLocale == locale)
+            if (LocalizationSettings.SelectedLocale.Identifier.Equals(locale.Identifier))
                 return;
 
             _isChangingLocale = true;
@@ -76,7 +75,7 @@ namespace Features.Localization.UI
 
             foreach (var language in languages)
             {
-                if (language.Locale != selectedLocale)
+                if (!language.Locale.Identifier.Equals(selectedLocale.Identifier))
                     continue;
 
                 selectedToggle = language.Toggle;
