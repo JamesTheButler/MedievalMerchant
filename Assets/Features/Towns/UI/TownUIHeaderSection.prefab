@@ -478,6 +478,7 @@ GameObject:
   - component: {fileID: 7322331039762865487}
   - component: {fileID: 2568423399024585638}
   - component: {fileID: 2883979197673984603}
+  - component: {fileID: 5930425922053648326}
   m_Layer: 0
   m_Name: Tier Icon
   m_TagString: Untagged
@@ -526,7 +527,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -562,6 +563,23 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &5930425922053648326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3996390836729573059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf17459a79d4cd2a0454586e74888ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleIconTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: f68f0d15259af314388c89fbf64ce244, type: 3}
+  enabledOnStart: 1
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
 --- !u!1 &4017509722353352443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,6 +1163,8 @@ MonoBehaviour:
   flagIcon: {fileID: 3645415770574137879}
   tierIcon: {fileID: 2568423399024585638}
   reputationIcon: {fileID: 556238784018858248}
+  tierIconTooltip: {fileID: 5930425922053648326}
+  flagIconTooltip: {fileID: 5428730820352568152}
 --- !u!114 &7148625556463814943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2136,6 +2156,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6636441711294492176, guid: 12943a2765eb0f04096132aac55c02ed, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8566904418780586209, guid: 12943a2765eb0f04096132aac55c02ed, type: 3}
       propertyPath: m_Name
       value: FlagUI
@@ -2147,6 +2171,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8566904418780586209, guid: 12943a2765eb0f04096132aac55c02ed, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8099814279547363784}
+    - targetCorrespondingSourceObject: {fileID: 8566904418780586209, guid: 12943a2765eb0f04096132aac55c02ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5428730820352568152}
   m_SourcePrefab: {fileID: 100100000, guid: 12943a2765eb0f04096132aac55c02ed, type: 3}
 --- !u!1 &3550016239047373589 stripped
 GameObject:
@@ -2173,6 +2200,23 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &5428730820352568152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3550016239047373589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf17459a79d4cd2a0454586e74888ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Common.UI.Tooltips.SimpleIconTooltipHandler
+  toolTipPrefab: {fileID: 7373911500606536191, guid: f68f0d15259af314388c89fbf64ce244, type: 3}
+  enabledOnStart: 1
+  hideOnClick: 0
+  useSelfAsOrigin: 1
+  originTransform: {fileID: 0}
 --- !u!114 &3645415770574137879 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8444509388009437667, guid: 12943a2765eb0f04096132aac55c02ed, type: 3}

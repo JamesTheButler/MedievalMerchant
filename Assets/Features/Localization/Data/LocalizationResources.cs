@@ -16,7 +16,7 @@ namespace Features.Localization.Data
         public SerializedDictionary<Difficulty, LocalizedString> Difficulties { get; private set; }
 
         [SerializeField]
-        private LocalizedString date, perDay, cost, and;
+        private LocalizedString date, perDay, cost, and, tier;
 
         [field: SerializeField]
         public ConditionsLocalizationResources Conditions { get; private set; }
@@ -67,6 +67,12 @@ namespace Features.Localization.Data
             return cost.GetLocalizedString(args);
         }
 
+        public string Tier(Tier tier)
+        {
+            var args = new { Tier = tier.ToRomanNumeral() };
+            return this.tier.GetLocalizedString(args);
+        }
+        
         public string And => and.GetLocalizedString();
     }
 }

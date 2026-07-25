@@ -2,6 +2,7 @@
 using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Tooltips;
+using Features.Localization.Data;
 using Features.Towns.Flags.UI;
 using Features.Towns.Reputation.Data;
 using NaughtyAttributes;
@@ -28,13 +29,20 @@ namespace Features.Towns.UI
         [SerializeField, Required]
         private Image tierIcon, reputationIcon;
 
+        [SerializeField, Required]
+        private SimpleIconTooltipHandler tierIconTooltip, flagIconTooltip;
+
         private TierResources _tierResources;
+        private RegionResources _regionResources;
         private ReputationResources _reputationResources;
+        private LocalizationResources _localizationResources;
 
         public override void Initialize()
         {
             _tierResources = ResourceManager.Instance.TierResources;
+            _regionResources = ResourceManager.Instance.RegionResources;
             _reputationResources = ResourceManager.Instance.ReputationResources;
+            _localizationResources = ResourceManager.Instance.LocalizationResources;
         }
 
         public override void CleanUp() { }
@@ -42,6 +50,9 @@ namespace Features.Towns.UI
         public override void Bind(Town town)
         {
             flagIcon.SetFlag(town.FlagInfo);
+            var regionResource = _regionResources.Data[town.MainRegion];
+            var tooltipData = new SimpleIconTooltip.Data(regionResource.Icon, regionResource.Name);
+            flagIconTooltip.SetData(tooltipData);
             nameText.text = town.Name;
 
             fundsChangeTooltip.SetData(town.FundsChange);
@@ -66,6 +77,8 @@ namespace Features.Towns.UI
         {
             var tierSprite = _tierResources.Icons[tier];
             tierIcon.sprite = tierSprite;
+            var tooltipData = new SimpleIconTooltip.Data(tierSprite, _localizationResources.Tier(tier));
+            tierIconTooltip.SetData(tooltipData);
         }
 
         private void OnDescriptorChanged(string descriptor)

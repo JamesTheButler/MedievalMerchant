@@ -1,10 +1,10 @@
+using Common.Infrastructure;
 using Common.Types;
 using Common.UI.Elements.Panels;
 using Common.UI.Utility;
-using Common.Utility;
+using Features.Localization.Data;
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace Features.Goods.Recipe.UI
@@ -20,14 +20,13 @@ namespace Features.Goods.Recipe.UI
         [SerializeField, Required]
         private Button tierSelectorButton;
 
-        [SerializeField]
-        private LocalizedString tierString;
-
+        private LocalizationResources _localizationResources;
         private Tier? _selectedTier;
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
+            _localizationResources = ResourceManager.Instance.LocalizationResources;
             SetUpRecipes();
             tierSelectorButton.onClick.AddListener(OnTierSelectorClicked);
 
@@ -59,8 +58,7 @@ namespace Features.Goods.Recipe.UI
         {
             if (_selectedTier == tier) return;
 
-            var args = new { Tier = tier.ToRomanNumeral() };
-            tierSelectorButton.GetText().text = tierString.GetLocalizedString(args);
+            tierSelectorButton.GetText().text = _localizationResources.Tier(tier);
             tier2Section.gameObject.SetActive(tier == Tier.Tier2);
             tier3Section.gameObject.SetActive(tier == Tier.Tier3);
 
