@@ -13,7 +13,7 @@ namespace Common.UI.Elements
                 _ => "Gameplay"
             };
 
-            if (playerInput.currentActionMap.name == mapId)
+            if (playerInput.currentActionMap is null || playerInput.currentActionMap.name == mapId)
                 return;
 
             playerInput.SwitchCurrentActionMap(mapId);
