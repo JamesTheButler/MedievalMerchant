@@ -291,33 +291,33 @@
 
 
 # Issues Found
-- [ ] **TEST:** Check Sentry for errors — [MED-427](https://medievalmerchant.youtrack.cloud/issue/MED-427)
-- [ ] **BUG:** Language settings UI always shows English toggle and **not** current locale
-- [ ] **Improvement:** Intro Popup should respond to [Esc]
-- [ ] **BUG:** Newly openend Start Menu still isn't layouting correctly. Only layouts buttons right after clicking a button. — [MED-428](https://medievalmerchant.youtrack.cloud/issue/MED-428)
-- [ ] **Improvement:** Untranslated strings should show default on build.
-- [ ] **BUG:** Layouting in Companion mini ui Tooltip. — [MED-429](https://medievalmerchant.youtrack.cloud/issue/MED-429)
-- [ ] **BUG:** Layouting in Tutorial for Campsite (german): Flicker/overlapping texts. — [MED-430](https://medievalmerchant.youtrack.cloud/issue/MED-430)
-- [ ] **BUG:** Layouting in Campsite > Carts & Upgrades: Layouting messed up when adding cart. — [MED-431](https://medievalmerchant.youtrack.cloud/issue/MED-431)
-- [ ] **Improvement:** Layouting in Campsite > Carts & Upgrades: Unlock/Upgrade Button should show price — [MED-432](https://medievalmerchant.youtrack.cloud/issue/MED-432)
-- [ ] **Bug:** Tutorial - Intro page 5 is missing. No longer makes sense. Should say: you can manage your carts in the campsite. — [MED-433](https://medievalmerchant.youtrack.cloud/issue/MED-433)
-- [ ] **Bug:** Development Gauge slider doesn't exactly match active/inactive milestones. — [MED-434](https://medievalmerchant.youtrack.cloud/issue/MED-434)
+- [x] **TEST:** Check Sentry for errors — [MED-427](https://medievalmerchant.youtrack.cloud/issue/MED-427)
+- [x] **BUG:** Language settings UI always shows English toggle and **not** current locale
+- [x] **Improvement:** Intro Popup should respond to [Esc]
+- [x] **BUG:** Newly openend Start Menu still isn't layouting correctly. Only layouts buttons right after clicking a button. — [MED-428](https://medievalmerchant.youtrack.cloud/issue/MED-428)
+- [x] **Improvement:** Untranslated strings should show default on build.
+- [x] **BUG:** Layouting in Companion mini ui Tooltip. — [MED-429](https://medievalmerchant.youtrack.cloud/issue/MED-429)
+- [x] **BUG:** Layouting in Tutorial for Campsite (german): Flicker/overlapping texts. — [MED-430](https://medievalmerchant.youtrack.cloud/issue/MED-430)
+- [x] **BUG:** Layouting in Campsite > Carts & Upgrades: Layouting messed up when adding cart. — [MED-431](https://medievalmerchant.youtrack.cloud/issue/MED-431)
+- [~] **Improvement:** Layouting in Campsite > Carts & Upgrades: Unlock/Upgrade Button should show price — [MED-432](https://medievalmerchant.youtrack.cloud/issue/MED-432)
+- [x] **Bug:** Tutorial - Intro page 5 is missing. No longer makes sense. Should say: you can manage your carts in the campsite. — [MED-433](https://medievalmerchant.youtrack.cloud/issue/MED-433)
+- [~] **Bug:** Development Gauge slider doesn't exactly match active/inactive milestones. — [MED-434](https://medievalmerchant.youtrack.cloud/issue/MED-434)
 - [ ] **Bug:** Dev gauge change rate layouting issues for french (-0.33/jour). — [MED-435](https://medievalmerchant.youtrack.cloud/issue/MED-435)
-- [ ] **Bug:** Glitched pixel lines in water tiles. — [MED-436](https://medievalmerchant.youtrack.cloud/issue/MED-436)
-- [ ] **Improvement:** Game Over UI should slide in/fade in, not just appear jarringly. — [MED-437](https://medievalmerchant.youtrack.cloud/issue/MED-437)
-- [ ] **Bug:** Lots of Localized strings that are hard-coded with smart format throw exceptions when first shown without parameters. This usually happens on UI init, before any code could set up format parameters. — [MED-438](https://medievalmerchant.youtrack.cloud/issue/MED-438)
-- [ ] **Improvement:** [Esc] should work in settings on Start Menu
-- [ ] **Improvement:** [Esc] should work on lvl 3 ally picker
-- [ ] **Improvement:** Add tooltip to Town UI Flag: "Region: <Region Name>" — [MED-439](https://medievalmerchant.youtrack.cloud/issue/MED-439)
-- [ ] **Improvement:** Add tooltip to Town UI Tier Icon: "Tier <Tier Name>" — [MED-440](https://medievalmerchant.youtrack.cloud/issue/MED-440)
-- [ ] **Bug:** Campsite Retinue Panel question mark buttons are bugged. some of them don't change on hover? — [MED-441](https://medievalmerchant.youtrack.cloud/issue/MED-441)
-- [ ] **Improvement:** Enter should confirm trade — [MED-442](https://medievalmerchant.youtrack.cloud/issue/MED-442)
-- [ ] **Improvement:** Onboarding: If I accidentally buy wild game first, i won't have enough money to buy berries, hard-locking the onboarding. i should give enough coin upfront to buy all game and berries.
-- [ ] **Bug:** Tutorial window is BEHIND campsite panel. Should be in front. — [MED-443](https://medievalmerchant.youtrack.cloud/issue/MED-443)
-- [ ] **Improvement:** German: Tutorial button should say "Tutorial: Topic" not "Anleitung
-- [ ] **Improvement:** Feedback: [Tab] should go from name to feedback input — [MED-444](https://medievalmerchant.youtrack.cloud/issue/MED-444)
-- [ ] **Improvement:** TradeUI: Buy button doesnt get disabled when slider is at 0. it should be disabled just like how it is when the total price is above the players coin amount.
-- [ ] **Improvement:** Missing Total Retinue Upkeep somewhere. — [MED-445](https://medievalmerchant.youtrack.cloud/issue/MED-445)
-- [ ] **Bug:** Layout in campsite retinue delivery panel "Or pay" button doesnt scale right with long text. — [MED-446](https://medievalmerchant.youtrack.cloud/issue/MED-446)
-- [ ] **Improvement:** German: Gefährten vs Gefolge (for example in funds change tooltip)
-- [ ] **Improvement:** German: "Aneheuern" in campsite — [MED-447](https://medievalmerchant.youtrack.cloud/issue/MED-447)
+- [x] **Bug:** Glitched pixel lines in water tiles. — [MED-436](https://medievalmerchant.youtrack.cloud/issue/MED-436)
+- [~] **Improvement:** Game Over UI should slide in/fade in, not just appear jarringly. — [MED-437](https://medievalmerchant.youtrack.cloud/issue/MED-437)
+- [x] **Bug:** Lots of Localized strings that are hard-coded with smart format throw exceptions when first shown without parameters. This usually happens on UI init, before any code could set up format parameters. — [MED-438](https://medievalmerchant.youtrack.cloud/issue/MED-438)
+- [x] **Improvement:** [Esc] should work in settings on Start Menu
+- [x] **Improvement:** [Esc] should work on lvl 3 ally picker
+- [~] **Improvement:** Add tooltip to Town UI Flag: "Region: <Region Name>" — [MED-439](https://medievalmerchant.youtrack.cloud/issue/MED-439)
+- [~] **Improvement:** Add tooltip to Town UI Tier Icon: "Tier <Tier Name>" — [MED-440](https://medievalmerchant.youtrack.cloud/issue/MED-440)
+- [x] **Bug:** Campsite Retinue Panel question mark buttons are bugged. some of them don't change on hover? — [MED-441](https://medievalmerchant.youtrack.cloud/issue/MED-441)
+- [~] **Improvement:** Enter should confirm trade — [MED-442](https://medievalmerchant.youtrack.cloud/issue/MED-442)
+- [x] **Improvement:** Onboarding: If I accidentally buy wild game first, i won't have enough money to buy berries, hard-locking the onboarding. i should give enough coin upfront to buy all game and berries.
+- [x] **Bug:** Tutorial window is BEHIND campsite panel. Should be in front. — [MED-443](https://medievalmerchant.youtrack.cloud/issue/MED-443)
+- [x] **Improvement:** German: Tutorial button should say "Tutorial: Topic" not "Anleitung
+- [~] **Improvement:** Feedback: [Tab] should go from name to feedback input — [MED-444](https://medievalmerchant.youtrack.cloud/issue/MED-444)
+- [x] **Improvement:** TradeUI: Buy button doesnt get disabled when slider is at 0. it should be disabled just like how it is when the total price is above the players coin amount.
+- [~] **Improvement:** Missing Total Retinue Upkeep somewhere. — [MED-445](https://medievalmerchant.youtrack.cloud/issue/MED-445)
+- [x] **Bug:** Layout in campsite retinue delivery panel "Or pay" button doesnt scale right with long text. — [MED-446](https://medievalmerchant.youtrack.cloud/issue/MED-446)
+- [x] **Improvement:** German: Gefährten vs Gefolge (for example in funds change tooltip)
+- [x] **Improvement:** German: "Aneheuern" in campsite — [MED-447](https://medievalmerchant.youtrack.cloud/issue/MED-447)
