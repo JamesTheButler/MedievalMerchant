@@ -17,7 +17,7 @@ namespace Features.Cheats
         private CheatService _cheatService;
 
         private string _lastCheat;
-        
+
         protected override void OnInitialize()
         {
             _cheatService = GameplayContext.Instance.Services.Cheats;
@@ -63,31 +63,46 @@ namespace Features.Cheats
             {
                 if (cheat == "l")
                 {
+                    if (string.IsNullOrEmpty(_lastCheat))
+                        return;
                     cheat = _lastCheat;
                 }
-                
+
                 var split = cheat
                     .ToLowerInvariant()
                     .TrimEnd(' ')
                     .Split(" ");
-                switch (split.Length)
+
+                var wasSuccess = ParseCheat(cheat, split);
+                if (wasSuccess)
                 {
-                    case 1:
-                        _cheatService.HandleSimpleCheat(split[0]);
-                        break;
-                    case 2:
-                        _cheatService.HandleParamCheat(split[0], split[1]); break;
-                    default:
-                        _cheatService.HandleInvalidInput(cheat);
-                        break;
+                    _lastCheat = cheat;
                 }
-                
-                _lastCheat = cheat;
             }
             catch (Exception exception)
             {
                 _cheatService.HandleInvalidInput(exception.Message);
             }
+        }
+
+        private bool ParseCheat(string cheat, string[] split)
+        {
+            bool wasSuccess;
+            switch (split.Length)
+            {
+                case 1:
+                    wasSuccess = _cheatService.TryHandleSimpleCheat(split[0]);
+                    break;
+                case 2:
+                    wasSuccess = _cheatService.TryHandleParamCheat(split[0], split[1]);
+                    break;
+                default:
+                    _cheatService.HandleInvalidInput(cheat);
+                    wasSuccess = false;
+                    break;
+            }
+
+            return wasSuccess;
         }
     }
 }

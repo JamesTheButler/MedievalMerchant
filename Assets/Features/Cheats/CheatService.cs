@@ -7,8 +7,8 @@ using Common.Types;
 using Common.Utility;
 using Features.Player.Camp.UI;
 using Features.Player.Caravan.Config;
-using Features.Player.Caravan.Logic;
 using Features.Player.Logic;
+using Features.Player.Retinue;
 using Features.Player.UI;
 using Features.Towns;
 using Features.Tutorial;
@@ -63,6 +63,8 @@ namespace Features.Cheats
                 { "camp", EnterCamp },
                 { "camp.companions", OpenCompanionCampPanel },
                 { "camp.comp", OpenCompanionCampPanel },
+                { "companions.upgrade.all", UpgradeAllCompanionsByOne },
+                { "companions.upgrade.full", UpgradeAllCompanionsCompletely },
             };
 
             _paramCommands = new Dictionary<string, Action<string>>
@@ -80,12 +82,13 @@ namespace Features.Cheats
                 { "town.reputation", SetTownReputation },
                 { "town.funds", AddTownFunds },
                 { "cart.upgrade", UpgradeCart },
+                { "companions.upgrade", UpgradeCompanion },
             };
         }
 
         public void CleanUp() { }
 
-        public void HandleSimpleCheat(string command)
+        public bool TryHandleSimpleCheat(string command)
         {
             if (_simpleCommands.TryGetValue(command, out var simpleCommand))
             {
@@ -97,15 +100,17 @@ namespace Features.Cheats
                 catch (Exception exception)
                 {
                     ReportError($"Exception while executing cheat '{command}':\n {exception}");
+                    return false;
                 }
+
+                return true;
             }
-            else
-            {
-                ReportError($"Unknown cheat '{command}'");
-            }
+
+            ReportError($"Unknown cheat '{command}'");
+            return false;
         }
 
-        public void HandleParamCheat(string command, string parameter)
+        public bool TryHandleParamCheat(string command, string parameter)
         {
             if (_paramCommands.TryGetValue(command, out var paramCommand))
             {
@@ -117,12 +122,14 @@ namespace Features.Cheats
                 catch (Exception exception)
                 {
                     ReportError($"Exception while executing cheat '{command}':\n {exception}");
+                    return false;
                 }
+
+                return true;
             }
-            else
-            {
-                ReportError($"Unknown cheat '{command}'");
-            }
+
+            ReportError($"Unknown cheat '{command}'");
+            return false;
         }
 
         #region Cheats
@@ -428,6 +435,29 @@ namespace Features.Cheats
         {
             var tutorialTopic = Enum.Parse<TutorialTopic>(topic, true);
             _tutorialService.OpenTutorial(tutorialTopic);
+        }
+
+        private void UpgradeCompanion(string companionString)
+        {
+            var companionType = Enum.Parse<CompanionType>(companionString, true);
+            var companion = _playerModel.RetinueModel.Companions[companionType];
+            companion.SetLevel(companion.Level.Value + 1);
+        }
+
+        private void UpgradeAllCompanionsCompletely()
+        {
+            foreach (var companion in _playerModel.RetinueModel.Companions.Values)
+            {
+                companion.SetLevel(companion.MaxLevel);
+            }
+        }
+
+        private void UpgradeAllCompanionsByOne()
+        {
+            foreach (var companion in _playerModel.RetinueModel.Companions.Values)
+            {
+                companion.SetLevel(companion.Level.Value + 1);
+            }
         }
 
         #endregion

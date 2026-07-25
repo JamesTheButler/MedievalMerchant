@@ -3,6 +3,7 @@ using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
 using Common.Types;
+using Features.Player.Retinue.Config.CompanionDatas;
 using Features.Player.Retinue.Logic.Modifiers;
 using UnityEngine;
 
@@ -17,13 +18,19 @@ namespace Features.Player.Retinue.Logic
         public Observable<CompanionMission> ActiveMission { get; } = new();
         public CompanionUpkeepModifier UpkeepModifier { get; }
 
+        public int MaxLevel => _companionConfig.MaxLevel;
+
         private readonly Observable<int> _level = new();
+
+        private readonly CompanionConfigData _companionConfig;
 
         public CompanionModel(CompanionType companionType)
         {
-            var configData = ResourceManager.Instance.CompanionResources.Get(companionType);
+            var companionResource = ResourceManager.Instance.CompanionResources.Get(companionType);
+            _companionConfig = ConfigurationManager.Configurations.CompanionConfig.Get(companionType);
 
-            Name = configData.Name;
+
+            Name = companionResource.Name;
             CompanionType = companionType;
             UpkeepModifier = new CompanionUpkeepModifier(companionType);
 
@@ -35,8 +42,9 @@ namespace Features.Player.Retinue.Logic
 
         public void SetLevel(int newLevel)
         {
-            _level.Value = newLevel;
-            UpkeepModifier.SetLevel(newLevel);
+            var clampedLevel = Mathf.Min(MaxLevel, newLevel);
+            _level.Value = clampedLevel;
+            UpkeepModifier.SetLevel(clampedLevel);
         }
 
         public void StartMission(int coinCost, IReadOnlyDictionary<Good, int> targetGoods)
