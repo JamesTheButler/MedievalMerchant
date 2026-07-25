@@ -302,7 +302,7 @@
 - [~] **Improvement:** Layouting in Campsite > Carts & Upgrades: Unlock/Upgrade Button should show price — [MED-432](https://medievalmerchant.youtrack.cloud/issue/MED-432)
 - [x] **Bug:** Tutorial - Intro page 5 is missing. No longer makes sense. Should say: you can manage your carts in the campsite. — [MED-433](https://medievalmerchant.youtrack.cloud/issue/MED-433)
 - [~] **Bug:** Development Gauge slider doesn't exactly match active/inactive milestones. — [MED-434](https://medievalmerchant.youtrack.cloud/issue/MED-434)
-- [ ] **Bug:** Dev gauge change rate layouting issues for french (-0.33/jour). — [MED-435](https://medievalmerchant.youtrack.cloud/issue/MED-435)
+- [x] **Bug:** Dev gauge change rate layouting issues for french (-0.33/jour). — [MED-435](https://medievalmerchant.youtrack.cloud/issue/MED-435)
 - [x] **Bug:** Glitched pixel lines in water tiles. — [MED-436](https://medievalmerchant.youtrack.cloud/issue/MED-436)
 - [~] **Improvement:** Game Over UI should slide in/fade in, not just appear jarringly. — [MED-437](https://medievalmerchant.youtrack.cloud/issue/MED-437)
 - [x] **Bug:** Lots of Localized strings that are hard-coded with smart format throw exceptions when first shown without parameters. This usually happens on UI init, before any code could set up format parameters. — [MED-438](https://medievalmerchant.youtrack.cloud/issue/MED-438)
