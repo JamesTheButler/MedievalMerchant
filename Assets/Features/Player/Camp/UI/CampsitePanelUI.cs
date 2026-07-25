@@ -1,6 +1,5 @@
 using Common.Infrastructure.Gameplay;
 using Common.UI.Elements.Panels;
-using Features.Levels;
 using Features.Levels.FeatureFlags;
 using UnityEngine;
 

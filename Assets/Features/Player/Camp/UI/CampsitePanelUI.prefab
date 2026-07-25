@@ -416,7 +416,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1936780639487897218}
-  - {fileID: 8050481418086480943}
   m_Father: {fileID: 9207815858583986086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -509,6 +508,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7903316097811412908}
+  - {fileID: 8050481418086480943}
   - {fileID: 259575783021926702}
   - {fileID: 9207815858583986086}
   - {fileID: 1906829808541599183}
@@ -1335,7 +1335,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 7651317429135732345}
+    m_TransformParent: {fileID: 6090174564984053279}
     m_Modifications:
     - target: {fileID: 1088717701771820249, guid: b8374ea042725694ebd4170d01464dd1, type: 3}
       propertyPath: m_Pivot.x
@@ -1363,11 +1363,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1088717701771820249, guid: b8374ea042725694ebd4170d01464dd1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 24
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 1088717701771820249, guid: b8374ea042725694ebd4170d01464dd1, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 24
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 1088717701771820249, guid: b8374ea042725694ebd4170d01464dd1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1399,11 +1399,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1088717701771820249, guid: b8374ea042725694ebd4170d01464dd1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -11
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 1088717701771820249, guid: b8374ea042725694ebd4170d01464dd1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 1088717701771820249, guid: b8374ea042725694ebd4170d01464dd1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1428,8 +1428,36 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6015239379875136474, guid: b8374ea042725694ebd4170d01464dd1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 869116707026068272}
   m_SourcePrefab: {fileID: 100100000, guid: b8374ea042725694ebd4170d01464dd1, type: 3}
+--- !u!1 &3735881651444679468 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6015239379875136474, guid: b8374ea042725694ebd4170d01464dd1, type: 3}
+  m_PrefabInstance: {fileID: 6963383924007665910}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &869116707026068272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3735881651444679468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 1
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!224 &8050481418086480943 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1088717701771820249, guid: b8374ea042725694ebd4170d01464dd1, type: 3}

@@ -7,6 +7,8 @@
         Development = 4,
         Town = 5,
         Production = 7,
-        Campsite = 8
+        Campsite = 8,
+        Haggling = 9,
+        Companions = 10,
     }
 }
