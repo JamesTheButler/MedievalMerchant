@@ -44,12 +44,12 @@ namespace Features.Player.Caravan.Logic
 
         public void Update(int level, CaravanUpgradeData upgradeData)
         {
+            _baseCostModifier.Update(level + 1);
+
             Level.Value = level;
             SlotCount.Value = upgradeData.SlotCount;
             MoveSpeed.Value = upgradeData.MoveSpeed;
             Upkeep.Value = upgradeData.Upkeep;
-
-            _baseCostModifier.Update(level + 1);
         }
 
         public void UpdateSlot(int slotIndex, Good good, int amount)

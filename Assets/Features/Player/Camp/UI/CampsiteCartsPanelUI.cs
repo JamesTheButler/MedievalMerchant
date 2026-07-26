@@ -3,7 +3,6 @@ using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Observation;
 using Common.UI.Elements.Panels;
 using Features.Player.Caravan.Logic;
-using Features.Player.Caravan.UI;
 using UnityEngine;
 
 namespace Features.Player.Camp.UI
@@ -11,7 +10,7 @@ namespace Features.Player.Camp.UI
     public sealed class CampsiteCartsPanelUI : DynamicPanel
     {
         [SerializeField]
-        private List<CartStatsUI> cartUis;
+        private List<CampsiteCartsPanelUIElement> cartUis;
 
         private readonly Dictionary<int, IBinding> _cartUnlockBindings = new();
 

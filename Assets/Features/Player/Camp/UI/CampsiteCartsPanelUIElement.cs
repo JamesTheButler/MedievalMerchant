@@ -11,6 +11,7 @@ using Features.Goods.Config;
 using Features.Map.Pathfinding;
 using Features.Player.Caravan.Config;
 using Features.Player.Caravan.Logic;
+using Features.Player.Caravan.UI;
 using Features.Player.Logic;
 using NaughtyAttributes;
 using TMPro;
@@ -18,15 +19,18 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
 
-namespace Features.Player.Caravan.UI
+namespace Features.Player.Camp.UI
 {
-    public sealed class CartStatsUI : MonoBehaviour
+    public sealed class CampsiteCartsPanelUIElement : MonoBehaviour
     {
         [SerializeField]
         private List<GoodCell> inventoryCells;
 
         [SerializeField, Required]
         private Button upgradeButton;
+
+        [SerializeField, Required]
+        private TMP_Text upgradeCostText;
 
         [SerializeField, Required]
         private Button unlockButton;
@@ -106,12 +110,9 @@ namespace Features.Player.Caravan.UI
             );
             _player.Inventory.Funds.Observe(OnPlayerFundsChanged);
 
-            upgradeButton.onClick.AddListener(() =>
-            {
-                upgradeAction.Invoke();
-            });
-
+            upgradeButton.onClick.AddListener(upgradeAction.Invoke);
             unlockButton.onClick.AddListener(unlockAction.Invoke);
+
             cartUpgradeTooltip.SetData(_cart);
             cartUnlockTooltip.SetData(_cart);
             Unhover();
@@ -160,6 +161,7 @@ namespace Features.Player.Caravan.UI
         private void OnLevelChanged(int level)
         {
             SetLocked(level <= 0);
+            upgradeCostText.text = $"{_cart.UpgradeCost.Value:0}";
             upgradeButton.gameObject.SetActive(level is > 0 and < CaravanConfig.MaxLevel);
             UpdateCartImage();
             var sprite = _caravanResources.TierIcons.GetValueOrDefault(level, null);
