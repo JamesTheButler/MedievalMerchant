@@ -27,6 +27,11 @@ namespace Common.UI.Tooltips
 
         protected override void UpdateUI(ModifiableVariable data)
         {
+            if (_modifiableVariable != null)
+            {
+                Reset();
+            }
+
             _modifiableVariable = data;
             _modifiableVariable.Observe(OnValueChanged);
             _modifiableVariable.ModifiersChanged += RegenerateTooltip;
