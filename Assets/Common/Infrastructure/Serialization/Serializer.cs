@@ -14,7 +14,7 @@ namespace Common.Infrastructure.Serialization
             }
             catch (Exception ex)
             {
-                Debug.LogError(ex.Message);
+                Debug.LogWarning($"Failed to deserialize save data: {ex.Message}");
                 return default;
             }
         }

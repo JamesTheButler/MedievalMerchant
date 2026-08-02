@@ -31,7 +31,13 @@ namespace Features.Levels.Serialization
                 return null;
 
             var fileContent = File.ReadAllText(filePath);
-            return _serializer?.Deserialize<CompletedLevelSaveData>(fileContent);
+            var data = _serializer?.Deserialize<CompletedLevelSaveData>(fileContent);
+            if (data == null)
+            {
+                File.Delete(filePath); // delete invalid save file
+            }
+
+            return data;
         }
 
         public OngoingLevelSaveData GetOngoingLevelData(int levelId)
@@ -41,7 +47,13 @@ namespace Features.Levels.Serialization
                 return null;
 
             var fileContent = File.ReadAllText(filePath);
-            return _serializer.Deserialize<OngoingLevelSaveData>(fileContent);
+            var data = _serializer.Deserialize<OngoingLevelSaveData>(fileContent);
+            if (data == null)
+            {
+                File.Delete(filePath); // delete invalid save file
+            }
+
+            return data;
         }
 
         public void SaveCompletedLevel(int levelId, CompletedLevelSaveData saveData)
