@@ -26,7 +26,7 @@ namespace Features.Towns.Development.Logic
         private readonly Dictionary<Tier, ProducerDevelopmentModifier> _producerModifiers = new();
         private readonly Dictionary<Tier, StoredGoodsDevelopmentModifier> _storedGoodsModifier = new();
 
-        private bool _isDegrowthLocked;
+        private int _degrowthLockCount;
 
         public DevelopmentManager(Town town)
         {
@@ -51,7 +51,7 @@ namespace Features.Towns.Development.Logic
 
         public void AddDevelopmentChange(float developmentChange)
         {
-            if (_isDegrowthLocked && developmentChange < 0f)
+            if (_degrowthLockCount > 0 && developmentChange < 0f)
                 return;
 
             var developmentScore = _developmentScore + developmentChange;
@@ -73,9 +73,11 @@ namespace Features.Towns.Development.Logic
             Debug.Log($"{_town.Name} upgraded to {Tier}");
         }
 
+        // Reference-counted: multiple independent sources (missions, milestones) can hold a lock,
+        // so one source unlocking must not clear a lock still held by another.
         public void LockDegrowth(bool isLocked)
         {
-            _isDegrowthLocked = isLocked;
+            _degrowthLockCount += isLocked ? 1 : -1;
         }
 
         private void OnProducerAdded(Producer producer)

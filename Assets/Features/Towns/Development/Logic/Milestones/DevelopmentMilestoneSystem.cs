@@ -80,7 +80,7 @@ namespace Features.Towns.Development.Logic.Milestones
                 else if (_previousScore >= thresholdScore && score < thresholdScore)
                 {
                     if (!_milestones.TryGetValue(upgradeTime, out var lockedMilestones))
-                        return;
+                        continue;
                     
                     foreach (var upgradeData in lockedMilestones)
                     {

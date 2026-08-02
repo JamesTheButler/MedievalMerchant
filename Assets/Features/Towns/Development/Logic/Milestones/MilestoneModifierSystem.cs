@@ -78,6 +78,10 @@ namespace Features.Towns.Development.Logic.Milestones
                     _modifiers.Add(upgrade, dividendsModifier);
                     break;
 
+                case SelfSufficienyUpgradeData:
+                    _town.DevelopmentManager.LockDegrowth(true);
+                    break;
+
                 default:
                     Debug.LogError($"Failed to apply unhandled upgrade {upgrade.GetType().Name}.");
                     break;
@@ -116,6 +120,10 @@ namespace Features.Towns.Development.Logic.Milestones
                     var dividendsModifier = _modifiers[upgradeData];
                     _player.FundsChange.RemoveModifier(dividendsModifier);
                     _modifiers.Remove(upgradeData);
+                    break;
+
+                case SelfSufficienyUpgradeData:
+                    _town.DevelopmentManager.LockDegrowth(false);
                     break;
 
                 default:
