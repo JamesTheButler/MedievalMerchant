@@ -17,10 +17,10 @@ namespace Features.Towns.Development.Logic.Milestones
     public sealed class MilestoneModifierSystem : ISystem
     {
         private readonly Town _town;
+        private readonly HashSet<MilestoneUpgradeData> _activeUpgrades = new();
         private readonly Dictionary<MilestoneUpgradeData, IModifier> _modifiers = new();
 
-        private readonly
-            Dictionary<PriceBoostUpgradeData, Tuple<MilestonePriceBoostModifier, MilestonePriceBoostModifier>>
+        private readonly Dictionary<PriceBoostUpgradeData, Tuple<MilestonePriceBoostModifier, MilestonePriceBoostModifier>>
             _priceModifiers = new();
 
         private GameplayModel _model;
@@ -47,6 +47,12 @@ namespace Features.Towns.Development.Logic.Milestones
 
         private void OnMilestoneModifierAdded(MilestoneUpgradeData upgrade)
         {
+            if (!_activeUpgrades.Add(upgrade))
+            {
+                Debug.LogWarning($"{upgrade.GetType().Name} was already granted to {_town.Name} - skipping.");
+                return;
+            }
+
             switch (upgrade)
             {
                 case FundsBoostUpgradeData upgradeData:
@@ -90,16 +96,13 @@ namespace Features.Towns.Development.Logic.Milestones
 
         private void OnMilestoneModifierRemoved(MilestoneUpgradeData upgrade)
         {
-            var modifiers = _modifiers.GetValueOrDefault(upgrade);
-
-            if (modifiers == null)
+            if (!_activeUpgrades.Remove(upgrade))
                 return;
 
             switch (upgrade)
             {
                 case FundsBoostUpgradeData upgradeData:
-                    var modifier = _modifiers[upgradeData];
-                    _town.FundsChange.RemoveModifier(modifier);
+                    _town.FundsChange.RemoveModifier(_modifiers[upgradeData]);
                     _modifiers.Remove(upgradeData);
                     break;
 
@@ -111,14 +114,12 @@ namespace Features.Towns.Development.Logic.Milestones
                     break;
 
                 case ProductionBoostUpgradeData upgradeData:
-                    var productionModifier = _modifiers[upgradeData];
-                    _town.ProductionManager.RemoveModifier(productionModifier, IGoodSelector.All);
+                    _town.ProductionManager.RemoveModifier(_modifiers[upgradeData], IGoodSelector.All);
                     _modifiers.Remove(upgradeData);
                     break;
 
                 case DividendsUpgradeData upgradeData:
-                    var dividendsModifier = _modifiers[upgradeData];
-                    _player.FundsChange.RemoveModifier(dividendsModifier);
+                    _player.FundsChange.RemoveModifier(_modifiers[upgradeData]);
                     _modifiers.Remove(upgradeData);
                     break;
 
