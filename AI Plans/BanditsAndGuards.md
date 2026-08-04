@@ -45,17 +45,56 @@ Combatants get stronger for each level (of the captain, or of the bandit group),
 
 
 ## Bandit Behavior
-Bandits have a couple of behaviors.
+Bandit behavior is resolved as a state machine. The Rest state is the default.
  - Rest: 
-   - Description: This is the default state. Bandits occupy a road tile for a few days. During those days, they consume gold and goods that they have robbed. The longer they have rested and the fewer goods they have, the more likely they are to seek out a town to raid.
+   - Description: Bandits occupy a road tile for X days. Each day they are resting, they consume gold and goods depending on their tier and unit count. 
+  At the end of a rest cycle, they may start a new rest cycle or go on a raid. If they choose to rest, they can hire units, upgrade their tier (in both cases they stay where they are) or they relocate a couple of tiles away.
+    - hire a unit (costs x coin and goods)
+    - upgrade tier (chance scales with the )
+   
+   migh higher new ones, if they have the resources. They may also upgrade their tier. The longer they have rested and the fewer goods they have, the more likely they are to seek out a town to raid.
    - Effects: 
      - While resting, bandits are more vulnerable: Debuff to combat ability.
      - Should they attack the player at the end of a cycle, they will get a debuff to movement speed.
+ - Relocating:
+   - Description: the bandits have decided to move their camp.
  - Travelling: the bandits pick a raidable town at random and travel there. As they travel, they will attack the player if he is near.
  - Attacking player: They have increased movement speed and move towards the player. If they are near enough, a fight occurs. More on the fight later.
  - Raiding: When they reach a town, they will start a raid. A raid takes a few days. The larger a town, the longer it takes. More on raids later. Once a raid concludes, the bandits will pick a nearby road tile and go into Rest.
+ - Looking for Rest
+
 
 ### Behavior - Configurable Values
 - days per rest cycle
 - consumption of coin per bandit per day (probably per level => low tier bandits are cheaper than hier tier)
--   
+- upgrade cost per tier  
+
+
+
+
+## UI
+- pre-battle summary (both side, their tiers, their troup counts)
+- post-battle summary (who won, who lost, their unit losses)
+- win screen: pick resources to steal and show gold that you got
+- loss screen: show the resources and the gold you los
+- commander + guard UI
+
+## Art
+- bandit commander icon
+- bandit unit icon
+- HP icon
+- combat strength icon
+- sword for attack animation
+- bandit status effects
+  - resting
+  - raiding
+  - travelling for raid
+
+
+
+## SFX
+- battle started ()
+- battle won 
+- battle lost
+- attack
+- death
