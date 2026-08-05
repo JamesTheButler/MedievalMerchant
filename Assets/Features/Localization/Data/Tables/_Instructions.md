@@ -1,9 +1,13 @@
-# Organization
+# Tables
 
 Translations are organized into tables (.csv files) which help keep the project structured. Typically, there are tables for distinct sections/features in the game.
 If you end up testing the game, the name of the table should give you an idea of where to find the strings in-game.
 
-Translatable texts are defined by
+For most tables, I provide a .md file that contains further information about how the table is organized and some common patterns for the strings within it.
+
+# Strings
+
+Translatable strings are defined by
  - a unique key, for example 'Campsite.Storage.Description'. This is used from code.
  - a unique number. This is used from code.
  - a description. This is optional. I sometimes add them to describe how a string is used, to give some more context or explain the parameters a bit more to aid with grammar and tone.
