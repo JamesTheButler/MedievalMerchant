@@ -5,6 +5,7 @@ using Features.Feedback.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Features.Feedback.UI
@@ -27,7 +28,7 @@ namespace Features.Feedback.UI
             _feedbackService = GlobalContext.Instance.Services.FeedbackService;
         }
 
-        public void Submit()
+        private void Submit()
         {
             if (messageInput.text == "")
                 return;
@@ -44,8 +45,6 @@ namespace Features.Feedback.UI
             gameObject.SetActive(true);
 
             nameInput.Select();
-            nameInput.Select(); // ???
-            nameInput.Select();
         }
 
         protected override void OnClose()
@@ -54,6 +53,15 @@ namespace Features.Feedback.UI
             messageInput.Clear();
 
             gameObject.SetActive(false);
+        }
+
+        public void FocusNext(InputAction.CallbackContext context)
+        {
+            if (!context.performed)
+                return;
+
+            var nextInput = nameInput.isFocused ? messageInput : nameInput;
+            nextInput.Select();
         }
     }
 }
