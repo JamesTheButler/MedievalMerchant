@@ -33,12 +33,19 @@ namespace Common.UI.Tooltips
             }
 
             _modifiableVariable = data;
+
+            if (_modifiableVariable == null)
+                return;
+
             _modifiableVariable.Observe(OnValueChanged);
             _modifiableVariable.ModifiersChanged += RegenerateTooltip;
         }
 
         public override void Reset()
         {
+            if (_modifiableVariable == null)
+                return;
+
             _modifiableVariable.StopObserving(OnValueChanged);
             _modifiableVariable.ModifiersChanged -= RegenerateTooltip;
         }

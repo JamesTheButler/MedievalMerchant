@@ -56,6 +56,9 @@ namespace Features.Localization.Data
             return date.GetLocalizedString(args);
         }
 
+        /// <summary>
+        /// {value} /day
+        /// </summary>
         public string PerDay(string value)
         {
             return perDay.GetLocalizedString(value);
