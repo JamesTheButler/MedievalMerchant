@@ -130,14 +130,14 @@ namespace Features.GameOver
 
         private string GenerateFavoriteGoodString()
         {
-            if (_statsModel.TradedGoods.IsEmpty())
+            if (_statsModel.SoldGoods.IsEmpty())
                 return StateNotFoundsString;
 
-            var favoriteGood = _statsModel.TradedGoods
+            var favoriteGood = _statsModel.SoldGoods
                 .OrderByDescending(kvPair => kvPair.Value)
                 .First().Key;
             var favoriteGoodName = _goodResources.ResourceData[favoriteGood].GoodName;
-            var favoriteGoodAmount = _statsModel.TradedGoods[favoriteGood];
+            var favoriteGoodAmount = _statsModel.SoldGoods[favoriteGood];
 
             var favoriteGoodInfo = new
             {
