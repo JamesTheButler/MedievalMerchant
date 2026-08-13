@@ -1,4 +1,4 @@
-﻿namespace Common.Config
+﻿namespace Common.Config.Sampling
 {
     public interface ISampler
     {

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 937fc6afa648432483ac6575410bde3b, type: 3}
   m_Name: BanditConfig_Default
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   <SpawnData>k__BackingField:
     <DailySpawnChanceIncrease>k__BackingField: 0.05
     <CooldownAfterSpawnDays>k__BackingField: 5
@@ -91,8 +91,8 @@ MonoBehaviour:
         <StolenGoodsPerUnit>k__BackingField: 4
         <StolenCoinPerUnit>k__BackingField: 10
   <CombatData>k__BackingField:
-    <HitFactorMin>k__BackingField: 0.5
-    <HitFactorMax>k__BackingField: 1.5
+    <HitFactorSampler>k__BackingField:
+      rid: 6913842651447165047
     <EngagementRadius>k__BackingField: 1
     <PlayerRecoveringDurationDays>k__BackingField: 5
   <RestData>k__BackingField:
@@ -159,3 +159,45 @@ MonoBehaviour:
       Value:
         <StrengthEffect>k__BackingField: 0.15
         <MovementSpeedEffect>k__BackingField: -0.1
+  references:
+    version: 2
+    RefIds:
+    - rid: 6913842651447165047
+      type: {class: NonUniformSampler, ns: Common.Config.Sampling, asm: Assembly-CSharp}
+      data:
+        <Curve>k__BackingField:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.5
+            value: 0.5
+            inSlope: -0.0024256667
+            outSlope: -0.0024256667
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 1
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        <Minimum>k__BackingField: 0.5
+        <Maximum>k__BackingField: 1.5
+        <Resolution>k__BackingField: 100

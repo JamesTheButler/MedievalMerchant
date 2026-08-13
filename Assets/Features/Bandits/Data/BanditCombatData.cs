@@ -1,4 +1,6 @@
 using System;
+using Common.Config.Sampling;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Bandits.Data
@@ -9,11 +11,8 @@ namespace Features.Bandits.Data
     [Serializable]
     public sealed class BanditCombatData
     {
-        [field: SerializeField]
-        public float HitFactorMin { get; private set; } = 0.5f;
-
-        [field: SerializeField]
-        public float HitFactorMax { get; private set; } = 1.5f;
+        [field: SerializeReference, SubclassSelector]
+        public ISampler HitFactorSampler { get; private set; }
 
         [field: SerializeField]
         public float EngagementRadius { get; private set; } = 1f;
