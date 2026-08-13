@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937fc6afa648432483ac6575410bde3b, type: 3}
+  m_Name: BanditConfig_Default
+  m_EditorClassIdentifier:
+  <SpawnData>k__BackingField:
+    <DailySpawnChanceIncrease>k__BackingField: 0.05
+    <CooldownAfterSpawnDays>k__BackingField: 5
+    <SpawnTileRadiusMin>k__BackingField: 2
+    <SpawnTileRadiusMax>k__BackingField: 3
+    <StartingUnitCountMin>k__BackingField: 2
+    <StartingUnitCountMax>k__BackingField: 4
+    <StartingGold>k__BackingField: 200
+  <TierData>k__BackingField:
+    _serializedList:
+    - Key: 1
+      Value:
+        <Health>k__BackingField: 38
+        <CombatStrength>k__BackingField: 10
+        <MovementSpeed>k__BackingField: 6
+        <HireCost>k__BackingField: 50
+        <UpgradeCost>k__BackingField: 200
+        <MaxUnitCount>k__BackingField: 5
+        <UpgradeThreshold>k__BackingField: 3
+        <RaidThreshold>k__BackingField: 4
+        <MinHirePerRestCycle>k__BackingField: 1
+        <MaxHirePerRestCycle>k__BackingField: 2
+        <CoinConsumptionPerUnitPerDay>k__BackingField: 2
+        <LootCapacityGoods>k__BackingField: 25
+        <LootCapacityCoin>k__BackingField: 200
+        <StolenGoodsPerUnit>k__BackingField: 1
+        <StolenCoinPerUnit>k__BackingField: 3
+    - Key: 2
+      Value:
+        <Health>k__BackingField: 35
+        <CombatStrength>k__BackingField: 9
+        <MovementSpeed>k__BackingField: 8
+        <HireCost>k__BackingField: 75
+        <UpgradeCost>k__BackingField: 400
+        <MaxUnitCount>k__BackingField: 10
+        <UpgradeThreshold>k__BackingField: 6
+        <RaidThreshold>k__BackingField: 7
+        <MinHirePerRestCycle>k__BackingField: 1
+        <MaxHirePerRestCycle>k__BackingField: 3
+        <CoinConsumptionPerUnitPerDay>k__BackingField: 3
+        <LootCapacityGoods>k__BackingField: 35
+        <LootCapacityCoin>k__BackingField: 300
+        <StolenGoodsPerUnit>k__BackingField: 2
+        <StolenCoinPerUnit>k__BackingField: 5
+    - Key: 3
+      Value:
+        <Health>k__BackingField: 55
+        <CombatStrength>k__BackingField: 14
+        <MovementSpeed>k__BackingField: 11
+        <HireCost>k__BackingField: 100
+        <UpgradeCost>k__BackingField: 600
+        <MaxUnitCount>k__BackingField: 15
+        <UpgradeThreshold>k__BackingField: 8
+        <RaidThreshold>k__BackingField: 9
+        <MinHirePerRestCycle>k__BackingField: 2
+        <MaxHirePerRestCycle>k__BackingField: 3
+        <CoinConsumptionPerUnitPerDay>k__BackingField: 4
+        <LootCapacityGoods>k__BackingField: 50
+        <LootCapacityCoin>k__BackingField: 450
+        <StolenGoodsPerUnit>k__BackingField: 3
+        <StolenCoinPerUnit>k__BackingField: 7
+    - Key: 4
+      Value:
+        <Health>k__BackingField: 84
+        <CombatStrength>k__BackingField: 20
+        <MovementSpeed>k__BackingField: 15
+        <HireCost>k__BackingField: 125
+        <UpgradeCost>k__BackingField: 800
+        <MaxUnitCount>k__BackingField: 20
+        <UpgradeThreshold>k__BackingField: 11
+        <RaidThreshold>k__BackingField: 12
+        <MinHirePerRestCycle>k__BackingField: 2
+        <MaxHirePerRestCycle>k__BackingField: 4
+        <CoinConsumptionPerUnitPerDay>k__BackingField: 5
+        <LootCapacityGoods>k__BackingField: 75
+        <LootCapacityCoin>k__BackingField: 700
+        <StolenGoodsPerUnit>k__BackingField: 4
+        <StolenCoinPerUnit>k__BackingField: 10
+  <CombatData>k__BackingField:
+    <HitFactorMin>k__BackingField: 0.5
+    <HitFactorMax>k__BackingField: 1.5
+    <EngagementRadius>k__BackingField: 1
+    <PlayerRecoveringDurationDays>k__BackingField: 5
+  <RestData>k__BackingField:
+    <DaysPerRestCycle>k__BackingField: 5
+    <RelocationDistanceMin>k__BackingField: 2
+    <RelocationDistanceMax>k__BackingField: 5
+    <RelocationCooldownCycles>k__BackingField: 3
+    <RelocationChancePerCycle>k__BackingField: 0.15
+  <RushData>k__BackingField:
+    <DetectionRadius>k__BackingField: 2.5
+  <RaidData>k__BackingField:
+    <TownRecoveringDurationDays>k__BackingField: 7
+    raidDurationTier1:
+      _serializedList:
+      - Key: 1
+        Value: 7
+      - Key: 2
+        Value: 9
+      - Key: 3
+        Value: 15
+    raidDurationTier2:
+      _serializedList:
+      - Key: 1
+        Value: 6
+      - Key: 2
+        Value: 8
+      - Key: 3
+        Value: 10
+    raidDurationTier3:
+      _serializedList:
+      - Key: 1
+        Value: 5
+      - Key: 2
+        Value: 7
+      - Key: 3
+        Value: 8
+    raidDurationTier4:
+      _serializedList:
+      - Key: 1
+        Value: 4
+      - Key: 2
+        Value: 5
+      - Key: 3
+        Value: 6
+  <StateEffects>k__BackingField:
+    _serializedList:
+    - Key: 0
+      Value:
+        <StrengthEffect>k__BackingField: -0.15
+        <MovementSpeedEffect>k__BackingField: -0.1
+    - Key: 1
+      Value:
+        <StrengthEffect>k__BackingField: 0
+        <MovementSpeedEffect>k__BackingField: 0
+    - Key: 2
+      Value:
+        <StrengthEffect>k__BackingField: 0.3
+        <MovementSpeedEffect>k__BackingField: 0.25
+    - Key: 3
+      Value:
+        <StrengthEffect>k__BackingField: -0.3
+        <MovementSpeedEffect>k__BackingField: 0
+    - Key: 4
+      Value:
+        <StrengthEffect>k__BackingField: 0.15
+        <MovementSpeedEffect>k__BackingField: -0.1

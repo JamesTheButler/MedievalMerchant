@@ -10,12 +10,21 @@ namespace Features.Player.Retinue.Config.LevelDatas
     public sealed class GuardLevelData : CompanionLevelData
     {
         [field: SerializeField]
-        public int Strength { get; private set; }
+        public float Health { get; private set; }
+
+        [field: SerializeField]
+        public float CombatStrength { get; private set; }
+
+        [field: SerializeField]
+        public int MaxGuardCount { get; private set; }
+
+        [field: SerializeField]
+        public int HireCostPerGuard { get; private set; }
 
         private GuardCompanionResource Resource => ResourceManager.Instance.CompanionResources.Guard;
-        
+
         public override string Description => new StringBuilder()
-            .AppendLine(Resource.StrengthString.GetLocalizedString(Strength))
+            .AppendLine(Resource.StrengthString.GetLocalizedString(CombatStrength))
             .ToString();
     }
 }

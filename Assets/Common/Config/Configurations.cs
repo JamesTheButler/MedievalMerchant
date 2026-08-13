@@ -1,5 +1,6 @@
 using Common.Utility;
 using Features.Audio.Music;
+using Features.Bandits.Data;
 using Features.Goods.Config;
 using Features.Levels.GameModifiers.Events.Data;
 using Features.Player.Camp.Logic;
@@ -24,6 +25,9 @@ namespace Common.Config
     public sealed class Configurations : ScriptableObject
     {
         [field: SerializeField, Required]
+        public BanditConfig BanditConfig { get; private set; }
+
+        [field: SerializeField, Required]
         public CampConfig CampConfig { get; private set; }
 
         [field: SerializeField, Required]
@@ -37,6 +41,9 @@ namespace Common.Config
 
         [field: SerializeField, Required]
         public GoodConfig GoodConfig { get; private set; }
+
+        [field: SerializeField, Required]
+        public GuardConfig GuardConfig { get; private set; }
 
         [field: SerializeField, Required]
         public HaggleConfig HaggleConfig { get; private set; }
