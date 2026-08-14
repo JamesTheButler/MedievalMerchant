@@ -2,12 +2,13 @@ using Common.Infrastructure.Gameplay;
 using Common.UI.Elements;
 using Common.Utility;
 using Features.Map.Pathfinding;
-using Features.Player.Logic;
 using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Map.Overlays
 {
+    public sealed class PlayerOverla
+    
     public sealed class PlayerOverlay : InitializableBehavior
     {
         [SerializeField, Required]
@@ -18,31 +19,39 @@ namespace Features.Map.Overlays
 
         private readonly GameSpeedAnimationHandler _animationHandler = new();
 
-        private PlayerLocation _playerLocation;
+        private IMapEntity _mapEntity;
         private float _zLevel;
 
         public override void Initialize()
         {
-            _playerLocation = GameplayContext.Instance.Model.Player.Location;
-            _zLevel = gameObject.transform.position.z;
+            SetUp(
+                GameplayContext.Instance.Model.Player.Location,
+                gameObject.transform.position.z);
+        }
+
+        public void SetUp(IMapEntity mapEntity, float zLevel)
+        {
+            _mapEntity = mapEntity;
+            _zLevel = zLevel;
+
 
             _animationHandler.Initialize(animation);
 
-            _playerLocation.MapLocation.Observe(OnLocationChanged);
-            _playerLocation.WorldLocation.Observe(OnWorldLocationChanged);
+            _mapEntity.MapLocation.Observe(OnLocationChanged);
+            _mapEntity.WorldLocation.Observe(OnWorldLocationChanged);
         }
 
         public override void CleanUp()
         {
             base.CleanUp();
-            _playerLocation.MapLocation.StopObserving(OnLocationChanged);
-            _playerLocation.WorldLocation.StopObserving(OnWorldLocationChanged);
+            _mapEntity.MapLocation.StopObserving(OnLocationChanged);
+            _mapEntity.WorldLocation.StopObserving(OnWorldLocationChanged);
             _animationHandler.CleanUp();
         }
 
         private void OnWorldLocationChanged(Vector2 worldLocation)
         {
-            if (_playerLocation.MapLocation.Value != null)
+            if (_mapEntity.MapLocation.Value != null)
                 return;
 
             gameObject.transform.localPosition = worldLocation.FromXY(_zLevel);
