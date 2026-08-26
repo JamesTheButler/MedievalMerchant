@@ -1,5 +1,6 @@
 using System;
 using Common.UI.Art;
+using Features.Map.Overlays;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -21,6 +22,9 @@ namespace Features.Map.Tiling
 
         [SerializeField, Required]
         private SimpleAnimatorHandler animatorHandler;
+
+        [SerializeField, Required]
+        private OverlayIconGroup overlayIconGroup;
 
         private void Awake()
         {
@@ -55,6 +59,16 @@ namespace Features.Map.Tiling
         {
             upgradeAudioSource.Play();
             animatorHandler.Play();
+        }
+
+        public void AddIcon(Sprite icon)
+        {
+            overlayIconGroup.AddIcon(icon);
+        }
+
+        public void RemoveIcon(Sprite icon)
+        {
+            overlayIconGroup.RemoveIcon(icon);
         }
     }
 }

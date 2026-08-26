@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Common.Utility;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -17,6 +19,11 @@ namespace Features.Map.Overlays
 
         private readonly List<Sprite> _icons = new();
         private readonly Dictionary<Sprite, OverlayIcon> _iconObjects = new();
+
+        private void Awake()
+        {
+            itemParent.DestroyChildren();
+        }
 
         public void AddIcon(Sprite icon)
         {

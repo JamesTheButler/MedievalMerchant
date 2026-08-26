@@ -111,7 +111,7 @@ namespace Features.Map.Tiling
                 mapTile.PlayUpgradeEffects();
             }
         }
-
+        
         private void LeftClick()
         {
             onGroundClicked?.Invoke();
