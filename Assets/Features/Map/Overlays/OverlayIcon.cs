@@ -1,16 +1,16 @@
+using NaughtyAttributes;
 using UnityEngine;
 
-public class OverlayIcon : MonoBehaviour
+namespace Features.Map.Overlays
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public sealed class OverlayIcon : MonoBehaviour
     {
-        
-    }
+        [SerializeField, Required]
+        private SpriteRenderer spriteRenderer;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void SetUp(Sprite sprite)
+        {
+            spriteRenderer.sprite = sprite;
+        }
     }
 }

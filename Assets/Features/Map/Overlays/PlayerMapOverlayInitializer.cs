@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Features.Map.Overlays
 {
-    public sealed class PlayerMapOverlaySetup : InitializableBehavior
+    public sealed class PlayerMapOverlayInitializer : InitializableBehavior
     {
         [SerializeField, Required]
         private MapEntityOverlay playerOverlay;

@@ -1,5 +1,3 @@
-using Common.Infrastructure.Gameplay;
-using Common.UI.Elements;
 using Common.Utility;
 using Features.Map.Pathfinding;
 using NaughtyAttributes;
@@ -7,33 +5,29 @@ using UnityEngine;
 
 namespace Features.Map.Overlays
 {
-    public sealed class PlayerOverla
-    
-    public sealed class PlayerOverlay : InitializableBehavior
+    public sealed class MapEntityOverlay : MonoBehaviour
     {
         [SerializeField, Required]
-        private GameObject worldOverlay, townOverlay;
+        private GameObject travellingIcon, landedIcon;
 
         [SerializeField, Required]
         private new Animation animation;
+
+        [SerializeField, Required]
+        private Transform travellingIconAnchor, landedIconAnchor;
+
+        [SerializeField, Required]
+        private OverlayIconGroup iconGroup;
 
         private readonly GameSpeedAnimationHandler _animationHandler = new();
 
         private IMapEntity _mapEntity;
         private float _zLevel;
 
-        public override void Initialize()
-        {
-            SetUp(
-                GameplayContext.Instance.Model.Player.Location,
-                gameObject.transform.position.z);
-        }
-
         public void SetUp(IMapEntity mapEntity, float zLevel)
         {
             _mapEntity = mapEntity;
             _zLevel = zLevel;
-
 
             _animationHandler.Initialize(animation);
 
@@ -41,12 +35,21 @@ namespace Features.Map.Overlays
             _mapEntity.WorldLocation.Observe(OnWorldLocationChanged);
         }
 
-        public override void CleanUp()
+        public void CleanUp()
         {
-            base.CleanUp();
             _mapEntity.MapLocation.StopObserving(OnLocationChanged);
             _mapEntity.WorldLocation.StopObserving(OnWorldLocationChanged);
             _animationHandler.CleanUp();
+        }
+
+        public void AddIcon(Sprite icon)
+        {
+            iconGroup.AddIcon(icon);
+        }
+
+        public void RemoveIcon(Sprite icon)
+        {
+            iconGroup.RemoveIcon(icon);
         }
 
         private void OnWorldLocationChanged(Vector2 worldLocation)
@@ -59,12 +62,15 @@ namespace Features.Map.Overlays
 
         private void OnLocationChanged(IMapLocation location)
         {
-            var isAtLocation = location != null;
+            var isLanded = location != null;
 
-            townOverlay.SetActive(isAtLocation);
-            worldOverlay.SetActive(!isAtLocation);
+            landedIcon.SetActive(isLanded);
+            travellingIcon.SetActive(!isLanded);
 
-            if (!isAtLocation)
+            var iconGroupAnchor = isLanded ? landedIconAnchor : travellingIconAnchor;
+            iconGroup.transform.localPosition = iconGroupAnchor.localPosition;
+
+            if (!isLanded)
                 return;
 
             gameObject.transform.localPosition = location.WorldLocation.FromXY(_zLevel);

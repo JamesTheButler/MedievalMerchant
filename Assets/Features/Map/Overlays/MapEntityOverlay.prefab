@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2453873828864182858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 981230234860053365}
+  m_Layer: 0
+  m_Name: Landed Anchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &981230234860053365
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2453873828864182858}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.35, y: 0.35, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9083068851031128905}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4428025070580408259
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +42,7 @@ GameObject:
   - component: {fileID: 1395261651480280031}
   - component: {fileID: 4642287178509336158}
   m_Layer: 0
-  m_Name: WorldIcon
+  m_Name: Travelling Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,10 +131,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9083068851031128905}
   - component: {fileID: 1704905213321389092}
-  - component: {fileID: 2869802911856002194}
   - component: {fileID: 8370909630783619497}
   m_Layer: 0
-  m_Name: Player
+  m_Name: MapEntityOverlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,6 +154,9 @@ Transform:
   m_Children:
   - {fileID: 1395261651480280031}
   - {fileID: 1369976863779321703}
+  - {fileID: 981230234860053365}
+  - {fileID: 3550510552219360880}
+  - {fileID: 3077448287156698151}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1704905213321389092
@@ -138,22 +171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c87ea0d1402077441bbabe111f0b9040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldOverlay: {fileID: 4428025070580408259}
-  townOverlay: {fileID: 8696927674295139997}
+  travellingIcon: {fileID: 4428025070580408259}
+  landedIcon: {fileID: 8696927674295139997}
   animation: {fileID: 6321651708739456761}
---- !u!114 &2869802911856002194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7088861313033453189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5a8d514857804f479c42ea76805d15b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Map.Pathfinding.PlayerTravelerSetup
-  roadTraveler: {fileID: 8370909630783619497}
+  travellingIconAnchor: {fileID: 3550510552219360880}
+  landedIconAnchor: {fileID: 981230234860053365}
+  iconGroup: {fileID: 6926687406191492086}
 --- !u!114 &8370909630783619497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,6 +191,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Features.Map.Pathfinding.RoadTraveler
   smoothing: 0.2
   tileGrid: {fileID: 0}
+--- !u!1 &8036132074593158155
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3550510552219360880}
+  m_Layer: 0
+  m_Name: Travelling Anchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3550510552219360880
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8036132074593158155}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.8, y: 0.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9083068851031128905}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8696927674295139997
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +234,7 @@ GameObject:
   - component: {fileID: 673364907155707568}
   - component: {fileID: 6321651708739456761}
   m_Layer: 0
-  m_Name: InTownIcon
+  m_Name: Landed Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,3 +330,84 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
+--- !u!1001 &9028280396330898333
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9083068851031128905}
+    m_Modifications:
+    - target: {fileID: 1862435325183171987, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+      propertyPath: m_Name
+      value: OverlayIconGroup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340980066397646778, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.49999997
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340980066397646778, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.49999997
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340980066397646778, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340980066397646778, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340980066397646778, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340980066397646778, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340980066397646778, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340980066397646778, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340980066397646778, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340980066397646778, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340980066397646778, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6340980066397646778, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+--- !u!4 &3077448287156698151 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6340980066397646778, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+  m_PrefabInstance: {fileID: 9028280396330898333}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6926687406191492086 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2119625669508474987, guid: 45f60b86955061d40a2dec2fec4a7c91, type: 3}
+  m_PrefabInstance: {fileID: 9028280396330898333}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a362a5a62fecc3b4f90dfdc2e639eaf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Map.Overlays.OverlayIconGroup
