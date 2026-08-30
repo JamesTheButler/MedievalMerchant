@@ -56,7 +56,7 @@ namespace Features.Map.Effects
         public override void CleanUp()
         {
             base.CleanUp();
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         // 🤨

@@ -73,7 +73,7 @@ namespace Features.Audio.Sfx
 
         public void CleanUp()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void OnNavigationChanged(IMapLocation location)

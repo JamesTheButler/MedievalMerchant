@@ -63,7 +63,7 @@ namespace Features.Player.Caravan.UI
             if (_cart == null)
                 return;
 
-            _slotBindings.UnbindAll();
+            _slotBindings.Unbind();
 
             _cart.Level.StopObserving(OnLevelChanged);
             _cart.SlotCount.StopObserving(OnSlotCountChanged);

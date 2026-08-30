@@ -188,7 +188,7 @@ namespace Features.Trade.UI
 
         protected override void OnClose()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
             gameObject.SetActive(false);
 
             priceTooltip.SetData(null);

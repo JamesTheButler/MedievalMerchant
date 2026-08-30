@@ -27,7 +27,7 @@ namespace Features.Stats
 
         public void CleanUp()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void OnTradeAborted()

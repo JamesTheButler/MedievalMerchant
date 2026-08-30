@@ -104,8 +104,8 @@ namespace Features.Player.Camp.UI
 
         public void Unbind()
         {
-            _bindings.UnbindAll();
-            _missionBindings.UnbindAll();
+            _bindings.Unbind();
+            _missionBindings.Unbind();
 
             missionItemContainer.DestroyChildren();
             effectsContainer.DestroyChildren();
@@ -182,7 +182,7 @@ namespace Features.Player.Camp.UI
         private void OnActiveMissionChanged(CompanionMission mission)
         {
             missionItemContainer.DestroyChildren();
-            _missionBindings.UnbindAll();
+            _missionBindings.Unbind();
 
             upgradeGroup.SetActive(mission != null);
 

@@ -24,7 +24,7 @@ namespace Features.Audio.Data
 
         public void CleanUp()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void OnAnyChanged()

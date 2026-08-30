@@ -51,7 +51,7 @@ tierIcon: {fileID: 347114442268797336}
 - Sets `waggonText.text` immediately from a `LocalizedString` (`cartString.GetLocalizedString(index + 1)`).
 - Tracks four `Observable<T>.Observe(...)` subscriptions in `_cartBindings` — level, slot count, upkeep, move speed — each updating one UI field when the underlying `Cart` model changes.
 - Tracks one `Observe` per inventory slot in a *separate* `_slotBindings` group, so slots can be reset (`ResetSlots()`) independently of the cart-level bindings.
-- `Unbind()` calls `_slotBindings.UnbindAll()` plus explicit `StopObserving` calls for the cart-level ones, then nulls `_cart` — guarded so double-unbind is a no-op.
+- `Unbind()` calls `_slotBindings.Unbind()` plus explicit `StopObserving` calls for the cart-level ones, then nulls `_cart` — guarded so double-unbind is a no-op.
 
 `GoodCell` (base class for `InventoryCell`) shows the single-item-cell pattern: `SetGood(Good? good)` toggles the icon's active state and assigns a sprite looked up from `ResourceManager`/config data, and `IPointerClickHandler.OnPointerClick` raises `Clicked`/`RightClicked` events rather than taking a direct dependency on whatever uses the cell.
 

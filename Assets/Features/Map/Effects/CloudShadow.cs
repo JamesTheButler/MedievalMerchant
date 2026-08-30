@@ -35,7 +35,7 @@ namespace Features.Map.Effects
 
         private void OnDisable()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void OnIsPausedChanged(bool isPaused)

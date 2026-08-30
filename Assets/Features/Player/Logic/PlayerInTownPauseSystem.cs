@@ -29,7 +29,7 @@ namespace Features.Player.Logic
 
         public void CleanUp()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void OnLocationChanged(IMapLocation location)

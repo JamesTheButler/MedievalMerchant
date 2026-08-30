@@ -35,7 +35,7 @@ namespace Features.Levels.Conditions.UI
         public override void CleanUp()
         {
             base.CleanUp();
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         public void Setup(IEnumerable<ICondition> conditions)

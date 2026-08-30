@@ -45,7 +45,7 @@ namespace Features.Tutorial.Onboarding.UI
 
         public void Clear()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
             taskListContainer.DestroyChildren();
             _tasksAndItems.Clear();
             canvasGroup.alpha = 0;
@@ -54,7 +54,7 @@ namespace Features.Tutorial.Onboarding.UI
 
         private void OnDestroy()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void UpdateTaskListItem(OnboardingTask task)

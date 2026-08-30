@@ -57,7 +57,7 @@ namespace Features.Map.Zones.Overlays
 
         public void Close()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
             gameObject.SetActive(false);
         }
 

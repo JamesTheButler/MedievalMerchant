@@ -48,7 +48,7 @@ namespace Features.Audio.Music
         private void OnDestroy()
         {
             this.StopCoroutineSafe(_gameplayLoop);
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void OnApplicationFocus(bool hasFocus)

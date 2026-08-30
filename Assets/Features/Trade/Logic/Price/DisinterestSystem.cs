@@ -39,7 +39,7 @@ namespace Features.Trade.Logic.Price
 
         public void CleanUp()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void OnTradeCompleted(CompletedTrade trade)

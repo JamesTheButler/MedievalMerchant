@@ -63,7 +63,7 @@ namespace Features.Player.Caravan.UI
 
         public override void CleanUp()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void OnMoveSpeedChanged(float moveSpeed)

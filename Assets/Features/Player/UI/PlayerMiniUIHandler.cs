@@ -39,7 +39,7 @@ namespace Features.Player.UI
         public override void CleanUp()
         {
             base.CleanUp();
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void OnFundsChangeChanged(float fundsChange)

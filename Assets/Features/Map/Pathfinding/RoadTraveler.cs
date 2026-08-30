@@ -57,7 +57,7 @@ namespace Features.Map.Pathfinding
 
         public void CleanUp()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
             StopAllCoroutines();
             _targetDestination = null;
             _isSetUp = false;

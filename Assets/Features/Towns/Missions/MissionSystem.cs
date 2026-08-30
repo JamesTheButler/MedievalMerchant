@@ -89,7 +89,7 @@ namespace Features.Towns.Missions
         {
             _tickingService.DayPassed -= OnDayPassed;
             _town.Missions.GoodSelectorChanged -= OnGoodSelectorChanged;
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void OnDevelopmentChanged(float development)

@@ -82,7 +82,7 @@ namespace Features.Towns.Overlays
 
         public void Close()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
 
             foreach (var mission in _town.Missions.Missions.Values)
             {

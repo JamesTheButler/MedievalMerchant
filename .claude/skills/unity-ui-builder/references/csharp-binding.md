@@ -23,11 +23,11 @@ Every reactive UI subscription in this project follows the same shape: `Observab
 
 ```csharp
 // Common.Infrastructure.Observation.Bindings
-public sealed class Bindings
+public sealed class Bindings : IBinding
 {
     public void Track(IBinding binding);
     public void Track(params IBinding[] binding);
-    public void UnbindAll();   // unsubscribes everything, then clears
+    public void Unbind();      // unsubscribes everything, then clears
 }
 ```
 
@@ -77,7 +77,7 @@ public sealed class DetailedCartUI : MonoBehaviour
     public void Unbind()
     {
         if (_cart == null) return;
-        _slotBindings.UnbindAll();
+        _slotBindings.Unbind();
         _cart.Level.StopObserving(OnLevelChanged);
         _cart.SlotCount.StopObserving(OnSlotCountChanged);
         _cart = null;
@@ -88,7 +88,8 @@ public sealed class DetailedCartUI : MonoBehaviour
 Takeaways for a new UI script:
 - One (or more) `private readonly Bindings _xBindings = new();` field per logical group of subscriptions you want to be able to tear down together.
 - `Bind(TModel model, ...)` sets initial values directly, then tracks `Observe` callbacks for anything that changes over time.
-- `Unbind()` calls `UnbindAll()` (and/or `StopObserving`) and nulls out the model reference — always guard against double-unbind (`if (_model == null) return;`).
+- The class's own `Unbind()` calls `_xBindings.Unbind()` (and/or `StopObserving`) and nulls out the model reference — always guard against double-unbind (`if (_model == null) return;`).
+- `Bindings` itself implements `IBinding`, so a group can be tracked inside another group and torn down with it. Never track a group in itself — `Unbind()` would recurse forever.
 - For a *list* of dynamically-shown items (like inventory slots), track each item's binding separately so a single slot can be rebound without tearing down the whole view.
 
 ## `[SerializeField]` ↔ prefab wiring

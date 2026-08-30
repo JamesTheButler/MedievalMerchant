@@ -60,7 +60,7 @@ namespace Features.Trade.Logic
             _tradeCompleted?.Invoke(completedTrade);
 
             var bindings = _bindings[trade];
-            bindings.UnbindAll();
+            bindings.Unbind();
             _bindings.Remove(trade);
 
             Debug.Log($"Trade completed: {completedTrade}.");
@@ -92,7 +92,7 @@ namespace Features.Trade.Logic
             Debug.Log("Trade aborted.");
 
             var bindings = _bindings[trade];
-            bindings.UnbindAll();
+            bindings.Unbind();
             _bindings.Remove(trade);
 
             _tradeAborted.Invoke();

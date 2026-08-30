@@ -27,7 +27,7 @@ namespace Features.Player.Retinue.UI
 
         private void OnDestroy()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void OnCompanionLevelChanged(CompanionType companion, int level)

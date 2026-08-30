@@ -3,7 +3,7 @@ using Common.Utility;
 
 namespace Common.Infrastructure.Observation
 {
-    public sealed class Bindings
+    public sealed class Bindings : IBinding
     {
         private readonly HashSet<IBinding> _bindings = new();
 
@@ -17,7 +17,7 @@ namespace Common.Infrastructure.Observation
             _bindings.Add(binding);
         }
 
-        public void UnbindAll()
+        public void Unbind()
         {
             foreach (var binding in _bindings)
             {

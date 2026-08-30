@@ -35,7 +35,7 @@ namespace Features.Levels.Conditions.Logic
 
         public void CleanUp()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void OnReputationChanged(Town town, float oldRep, float newRep)

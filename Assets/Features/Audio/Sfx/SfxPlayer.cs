@@ -45,7 +45,7 @@ namespace Features.Audio.Sfx
 
         private void OnDestroy()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void OnUISoundEffect(UISoundEffect effect)

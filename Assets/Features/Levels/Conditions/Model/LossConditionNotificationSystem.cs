@@ -35,7 +35,7 @@ namespace Features.Levels.Conditions.Model
 
         public void CleanUp()
         {
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
     }
 }

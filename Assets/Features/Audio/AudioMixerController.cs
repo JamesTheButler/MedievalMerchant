@@ -35,7 +35,7 @@ namespace Features.Audio
         public override void CleanUp()
         {
             base.CleanUp();
-            _bindings.UnbindAll();
+            _bindings.Unbind();
         }
 
         private void MasterVolumeChanged(int volume)
