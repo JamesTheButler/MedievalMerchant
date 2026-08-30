@@ -101,5 +101,92 @@ namespace Editor.Tests.Common
 
             Assert.AreEqual(1.5f, inverted.Value);
         }
+
+        [Test]
+        public void Transform_Unbind_StopsUpdatingFromSource()
+        {
+            var source = new Observable<int>(3);
+            var transformed = source.Transform(value => value * 2);
+
+            transformed.Unbind();
+            source.Value = 5;
+
+            Assert.AreEqual(6, transformed.Value);
+        }
+
+        [Test]
+        public void Transform_ResultIsReleasedByTheBindingsGroupTrackingIt()
+        {
+            var source = new Observable<int>(3);
+            var bindings = new Bindings();
+            var transformed = source.Transform(value => value * 2);
+            bindings.Track(transformed);
+
+            bindings.Unbind();
+            source.Value = 5;
+
+            Assert.AreEqual(6, transformed.Value);
+        }
+
+        [Test]
+        public void Combine_SeedsFromBothCurrentSourceValues()
+        {
+            var left = new Observable<int>(2);
+            var right = new Observable<int>(3);
+
+            var combined = ObservableExtensions.Combine(left, right, (a, b) => a + b);
+
+            Assert.AreEqual(5, combined.Value);
+        }
+
+        [Test]
+        public void Combine_FirstSourceChange_RecomputesResult()
+        {
+            var left = new Observable<int>(2);
+            var right = new Observable<int>(3);
+            var combined = ObservableExtensions.Combine(left, right, (a, b) => a + b);
+
+            left.Value = 10;
+
+            Assert.AreEqual(13, combined.Value);
+        }
+
+        [Test]
+        public void Combine_SecondSourceChange_RecomputesResult()
+        {
+            var left = new Observable<int>(2);
+            var right = new Observable<int>(3);
+            var combined = ObservableExtensions.Combine(left, right, (a, b) => a + b);
+
+            right.Value = 10;
+
+            Assert.AreEqual(12, combined.Value);
+        }
+
+        [Test]
+        public void Combine_SupportsDifferingInputAndOutputTypes()
+        {
+            var count = new Observable<int>(2);
+            var label = new Observable<string>("apple");
+            var combined = ObservableExtensions.Combine(count, label, (n, text) => $"{n}x {text}");
+
+            count.Value = 4;
+
+            Assert.AreEqual("4x apple", combined.Value);
+        }
+
+        [Test]
+        public void Combine_Unbind_StopsUpdatingFromBothSources()
+        {
+            var left = new Observable<int>(2);
+            var right = new Observable<int>(3);
+            var combined = ObservableExtensions.Combine(left, right, (a, b) => a + b);
+
+            combined.Unbind();
+            left.Value = 10;
+            right.Value = 20;
+
+            Assert.AreEqual(5, combined.Value);
+        }
     }
 }
