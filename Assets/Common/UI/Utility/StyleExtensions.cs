@@ -26,6 +26,14 @@ namespace Common.UI.Utility
             return $"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{content}</color>";
         }
 
+        public static Style GetNumberStyle(this int value, bool isPositiveGood = true)
+        {
+            if (value == 0)
+                return Style.Default;
+
+            return value > 0 == isPositiveGood ? Style.Good : Style.Bad;
+        }
+
         public static Style GetNumberStyle(this float value, bool isPositiveGood = true)
         {
             if (value.IsApproximately(0))

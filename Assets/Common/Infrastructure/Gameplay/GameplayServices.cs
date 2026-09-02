@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Common.Camera;
 using Common.UI;
 using Features.Cheats;
+using Features.Combat.Logic;
 using Features.Levels.GameModifiers.Logic;
 using Features.Map;
 using Features.Notifications.Logic;
@@ -27,6 +28,7 @@ namespace Common.Infrastructure.Gameplay
         public CheatService Cheats { get; private set; }
         public NavigationService NavigationService { get; private set; }
         public CaravanSlotService CaravanSlotService { get; private set; }
+        public CombatService CombatService { get; private set; }
 
         private readonly List<IService> _services = new();
 
@@ -44,6 +46,7 @@ namespace Common.Infrastructure.Gameplay
             Cheats = new CheatService();
             NavigationService = new NavigationService();
             CaravanSlotService = new CaravanSlotService();
+            CombatService = new CombatService();
 
             _services.Add(TickingService);
             _services.Add(CompanionUpgradeService);
@@ -57,6 +60,7 @@ namespace Common.Infrastructure.Gameplay
             _services.Add(Cheats);
             _services.Add(NavigationService);
             _services.Add(CaravanSlotService);
+            _services.Add(CombatService);
 
             foreach (var service in _services)
             {

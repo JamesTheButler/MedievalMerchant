@@ -22,6 +22,9 @@ namespace Features.Localization.Data
         public ConditionsLocalizationResources Conditions { get; private set; }
 
         [field: SerializeField]
+        public CombatLocalizationResources Combat { get; private set; }
+
+        [field: SerializeField]
         public GoodLocalizationResources Goods { get; private set; }
 
         [field: SerializeField]
@@ -75,7 +78,7 @@ namespace Features.Localization.Data
             var args = new { Tier = tier.ToRomanNumeral() };
             return this.tier.GetLocalizedString(args);
         }
-        
+
         public string And => and.GetLocalizedString();
     }
 }

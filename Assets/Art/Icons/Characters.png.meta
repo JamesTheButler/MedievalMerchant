@@ -120,7 +120,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Characters_Player
+      name: Companion_Player
       rect:
         serializedVersion: 2
         x: 0
@@ -142,7 +142,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_Thief
+      name: Companion_Thief
       rect:
         serializedVersion: 2
         x: 32
@@ -164,7 +164,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_Architect
+      name: Companion_Architect
       rect:
         serializedVersion: 2
         x: 64
@@ -186,7 +186,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_Diplomat
+      name: Companion_Diplomat
       rect:
         serializedVersion: 2
         x: 96
@@ -208,7 +208,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_Navigator
+      name: Companion_Navigator
       rect:
         serializedVersion: 2
         x: 0
@@ -230,7 +230,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_Negotiator
+      name: Companion_Negotiator
       rect:
         serializedVersion: 2
         x: 32
@@ -252,7 +252,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_Guard
+      name: Companion_Captain
       rect:
         serializedVersion: 2
         x: 64
@@ -273,6 +273,72 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Guard
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e5687150887d94469be74fe4a144525
+      internalID: 1183061454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BanditUnit
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e4d58a5e6fe89e4696c2dc30d1e8759
+      internalID: -1400653382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BanditLeader
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2c0b5bc078369d4c93f0e5d2d3fbe91
+      internalID: 919812215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -287,13 +353,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Characters_Architect: 824890814
-      Characters_Diplomat: -1216225484
-      Characters_Guard: -1942871456
-      Characters_Navigator: 1761304294
-      Characters_Negotiator: 255806927
-      Characters_Player: -1870119393
-      Characters_Thief: -558682726
+      BanditLeader: 919812215
+      BanditUnit: -1400653382
+      Companion_Architect: 824890814
+      Companion_Captain: -1942871456
+      Companion_Diplomat: -1216225484
+      Companion_Navigator: 1761304294
+      Companion_Negotiator: 255806927
+      Companion_Player: -1870119393
+      Companion_Thief: -558682726
+      Guard: 1183061454
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

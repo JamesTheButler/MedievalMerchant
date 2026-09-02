@@ -19,6 +19,15 @@ namespace Common.Infrastructure.Modifiable
         public bool IsBiggerBetter { get; }
         public BaseValueModifier BaseValueModifier { get; }
 
+        public bool IsModified => _modifiers.Count > 0;
+
+        public float BaseValue => BaseValueModifier?.Value.Value ?? 0f;
+
+        // Both sums are already maintained as modifiers come and go, so these are reads
+        // rather than recomputes. TotalPercentage is a fraction: -0.3f reads as -30%.
+        public float TotalPercentage => _percentModifiers.Value;
+        public float TotalFlat => _flatModifiers.Value;
+
         private readonly ObservableSum _flatModifiers = new();
         private readonly ObservableSum _percentModifiers = new();
         private readonly List<IModifier> _modifiers = new();
