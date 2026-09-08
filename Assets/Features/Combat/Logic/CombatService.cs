@@ -4,9 +4,14 @@ using Common.Config.Sampling;
 using Common.Infrastructure;
 using Common.Infrastructure.Gameplay;
 using Common.Utility;
+using Features.Bandits.Data;
+using Features.Combat.Data;
+using Features.Bandits.Logic;
 using Features.Localization.Data;
 using Features.Player.Logic;
 using Features.Player.Retinue;
+using Features.Player.Retinue.Config;
+using Features.Player.Retinue.Config.Resources;
 using UnityEngine;
 
 namespace Features.Combat.Logic
@@ -21,12 +26,18 @@ namespace Features.Combat.Logic
         public Combat OngoingBattle { get; private set; }
 
         private PlayerModel _player;
+        private CombatConfig _config;
+        private CompanionResources _companionResources;
+        private BanditResources _banditResources;
         private CombatLocalizationResources _loc;
 
         public void Initialize()
         {
             _player = GameplayContext.Instance.Model.Player;
+            _config = ConfigurationManager.Configurations.CombatConfig;
             _loc = ResourceManager.Instance.LocalizationResources.Combat;
+            _companionResources = ResourceManager.Instance.CompanionResources;
+            _banditResources = ResourceManager.Instance.BanditResources;
         }
 
         public void CleanUp()
@@ -38,31 +49,36 @@ namespace Features.Combat.Logic
         {
             var captain = _player.RetinueModel.Companions[CompanionType.Guard];
             return new Combatant(
+                "Player", // @claude, localize
                 level: captain.Level.Value,
                 unitCount: 0,
-                baseHealth: 0f,
-                baseCombatStrength: 0f,
+                unitHealth: 0f,
+                unitCombatStrength: 0f,
                 healthDescription: "",
                 combatStrengthDescription: "",
-                hitSampler: new UniformSampler(PlayerHitFactorMin, PlayerHitFactorMax));
+                hitSampler: new UniformSampler(PlayerHitFactorMin, PlayerHitFactorMax),
+                commanderIcon: _companionResources.Guard.Icon,
+                unitIcon: _companionResources.GuardIcon);
         }
 
-        // TODO: missing type for bandit gang
-        private Combatant GetBanditCombatant(object banditGang)
+        private Combatant GetBanditCombatant(BanditGang banditGang)
         {
             return new Combatant(
-                level: 0,
-                unitCount: 0,
-                baseHealth: 0f,
-                baseCombatStrength: 0f,
+                "Bandit", // @claude, localize
+                level: (int)banditGang.Tier.Value,
+                unitCount: banditGang.UnitCount,
+                unitHealth: banditGang.UnitHealth,
+                unitCombatStrength: banditGang.UnitCombatStrength,
                 healthDescription: "",
                 combatStrengthDescription: "",
-                hitSampler: new UniformSampler(BanditHitFactorMin, BanditHitFactorMax));
+                hitSampler: new UniformSampler(BanditHitFactorMin, BanditHitFactorMax),
+                commanderIcon: _banditResources.BanditCommanderIcon,
+                unitIcon: _banditResources.BanditUnitIcon);
         }
 
-        public Combat StartBattle(Combatant player, Combatant bandits)
+        public Combat StartBattle(BanditGang bandits)
         {
-            OngoingBattle = new Combat(GetPlayerCombatant(), bandits);
+            OngoingBattle = new Combat(GetPlayerCombatant(), GetBanditCombatant(bandits));
             return OngoingBattle;
         }
 
@@ -91,6 +107,9 @@ namespace Features.Combat.Logic
 
             combat.RoundCounter.Value++;
 
+            var status = ResolveCombatStatus(combat);
+            var share = combat.GuardHealthShare.Value;
+
             var result = new RoundResult
             {
                 Round = combat.RoundCounter.Value,
@@ -98,10 +117,35 @@ namespace Features.Combat.Logic
                 Fallen = fallen,
                 Guards = DeltaSince(guardsBefore, combat.Player),
                 Bandits = DeltaSince(banditsBefore, combat.Bandits),
-                Status = ResolveCombatStatus(combat),
+                Status = status,
+                PlayerMood = ResolveMood(status, share, isPlayer: true),
+                BanditMood = ResolveMood(status, share, isPlayer: false),
             };
 
             return result;
+        }
+
+        // Both sides are read off the same status and health share, so they can never
+        // contradict each other.
+        private CombatMood ResolveMood(CombatStatus status, float guardHealthShare, bool isPlayer)
+        {
+            switch (status)
+            {
+                case CombatStatus.Victory:
+                    return isPlayer ? CombatMood.Won : CombatMood.Lost;
+                case CombatStatus.Defeat:
+                    return isPlayer ? CombatMood.Lost : CombatMood.Won;
+                case CombatStatus.Draw:
+                    return CombatMood.Lost;
+            }
+
+            var share = isPlayer ? guardHealthShare : 1f - guardHealthShare;
+            var lead = (share - 0.5f) * 2f;
+
+            if (lead > _config.AheadMoodLead)
+                return CombatMood.Ahead;
+
+            return lead < -_config.AheadMoodLead ? CombatMood.Behind : CombatMood.Even;
         }
 
         private static CombatStatus ResolveCombatStatus(Combat combat)

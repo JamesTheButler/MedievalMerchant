@@ -1,6 +1,7 @@
 using Common.Utility;
 using Features.Audio.Music;
 using Features.Bandits.Data;
+using Features.Combat.Data;
 using Features.Goods.Config;
 using Features.Levels.GameModifiers.Events.Data;
 using Features.Player.Camp.Logic;
@@ -32,6 +33,9 @@ namespace Common.Config
 
         [field: SerializeField, Required]
         public CaravanConfig CaravanConfig { get; private set; }
+
+        [field: SerializeField, Required]
+        public CombatConfig CombatConfig { get; private set; }
 
         [field: SerializeField, Required]
         public CompanionConfig CompanionConfig { get; private set; }

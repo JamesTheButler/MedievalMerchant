@@ -3,11 +3,13 @@ using System.Linq;
 using Common.Config.Sampling;
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
+using UnityEngine;
 
 namespace Features.Combat.Logic
 {
     public sealed class Combatant
     {
+        public string Name { get; }
         public int Level { get; }
 
         public ModifiableVariable UnitHealth { get; }
@@ -20,6 +22,8 @@ namespace Features.Combat.Logic
         public Observable<float> TotalHealth { get; }
         public Observable<float> TotalCombatStrength { get; }
 
+        public Sprite CommanderIcon { get; }
+        public Sprite UnitIcon { get; }
         public IEnumerable<CombatUnit> AliveUnits => _units.Where(unit => unit.IsAlive.Value);
 
         public bool IsAlive => AliveCount.Value > 0;
@@ -28,19 +32,25 @@ namespace Features.Combat.Logic
         private readonly List<CombatUnit> _units;
 
         public Combatant(
+            string name,
             int level,
             int unitCount,
-            float baseHealth,
-            float baseCombatStrength,
+            float unitHealth,
+            float unitCombatStrength,
             string healthDescription,
             string combatStrengthDescription,
-            ISampler hitSampler)
+            ISampler hitSampler,
+            Sprite commanderIcon,
+            Sprite unitIcon)
         {
             Level = level;
             HitSampler = hitSampler;
+            CommanderIcon = commanderIcon;
+            UnitIcon = unitIcon;
+            Name = name;
 
-            var baseUnitHealth = new CombatBaseValue(baseHealth, healthDescription);
-            var baseUnitStrength = new CombatBaseValue(baseCombatStrength, combatStrengthDescription);
+            var baseUnitHealth = new CombatBaseValue(unitHealth, healthDescription);
+            var baseUnitStrength = new CombatBaseValue(unitCombatStrength, combatStrengthDescription);
 
             UnitHealth = new ModifiableVariable(healthDescription, true, baseUnitHealth);
             UnitCombatStrength = new ModifiableVariable(combatStrengthDescription, true, baseUnitStrength);

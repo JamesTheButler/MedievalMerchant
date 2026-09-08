@@ -6,9 +6,9 @@ namespace Features.Combat.Logic
     {
         public Combatant Player { get; }
         public Combatant Bandits { get; }
-
         public Observable<int> RoundCounter { get; } = new();
         public ObservableEvent<CombatStatus> CombatResolved { get; } = new();
+        public Observable<float> GuardHealthShare { get; }
 
         public bool IsOver { get; private set; }
 
@@ -16,15 +16,17 @@ namespace Features.Combat.Logic
         {
             Player = player;
             Bandits = bandits;
+
+            GuardHealthShare = ObservableExtensions.Combine(
+                Player.TotalHealth,
+                Bandits.TotalHealth,
+                RefreshGuardHealthShare);
         }
 
-        public float GuardHealthShare
+        private static float RefreshGuardHealthShare(float playerHealth, float banditHealth)
         {
-            get
-            {
-                var total = Player.TotalHealth.Value + Bandits.TotalHealth.Value;
-                return total <= 0f ? 0.5f : Player.TotalHealth.Value / total;
-            }
+            var total = playerHealth + banditHealth;
+            return total <= 0f ? 0.5f : playerHealth / total;
         }
     }
 }

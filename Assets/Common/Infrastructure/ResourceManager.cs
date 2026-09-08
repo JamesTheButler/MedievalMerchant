@@ -1,6 +1,7 @@
 using Common.Config;
 using Common.UI.Elements.Animation;
 using Features.Audio.Data;
+using Features.Bandits.Data;
 using Features.Goods.Config;
 using Features.Goods.Recipe.Data;
 using Features.Localization.Data;
@@ -34,6 +35,9 @@ namespace Common.Infrastructure
 
         [field: SerializeField, Required]
         public AvailabilityResources AvailabilityResources { get; private set; }
+
+        [field: SerializeField, Required]
+        public BanditResources BanditResources { get; private set; }
 
         [field: SerializeField, Required]
         public CampResources CampResources { get; private set; }

@@ -10,5 +10,7 @@ namespace Features.Combat.Logic
         public CombatantDelta Guards { get; init; } = CombatantDelta.None;
         public CombatantDelta Bandits { get; init; } = CombatantDelta.None;
         public CombatStatus Status { get; init; } = CombatStatus.Ongoing;
+        public CombatMood PlayerMood { get; init; } = CombatMood.Even;
+        public CombatMood BanditMood { get; init; } = CombatMood.Even;
     }
 }

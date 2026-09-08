@@ -1,6 +1,7 @@
 ﻿using System;
 using Common.Utility;
 using Features.Player.Retinue.Config.Resources;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Features.Player.Retinue.Config
@@ -27,6 +28,9 @@ namespace Features.Player.Retinue.Config
 
         [field: SerializeField]
         public ThiefCompanionResource Thief { get; private set; }
+
+        [field: SerializeField, Required, ShowAssetPreview]
+        public Sprite GuardIcon { get; private set; }
 
         public CompanionResource Get(CompanionType companionType)
         {
