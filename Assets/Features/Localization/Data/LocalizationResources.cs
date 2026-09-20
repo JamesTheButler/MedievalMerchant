@@ -16,7 +16,7 @@ namespace Features.Localization.Data
         public SerializedDictionary<Difficulty, LocalizedString> Difficulties { get; private set; }
 
         [SerializeField]
-        private LocalizedString date, perDay, cost, and, tier;
+        private LocalizedString date, perDay, cost, and, tier, quote;
 
         [field: SerializeField]
         public ConditionsLocalizationResources Conditions { get; private set; }
@@ -77,6 +77,15 @@ namespace Features.Localization.Data
         {
             var args = new { Tier = tier.ToRomanNumeral() };
             return this.tier.GetLocalizedString(args);
+        }
+
+        /// <summary>
+        /// Wraps a spoken line in the locale's own quotation marks.
+        /// </summary>
+        public string Quote(string line)
+        {
+            var args = new { Line = line };
+            return quote.GetLocalizedString(args);
         }
 
         public string And => and.GetLocalizedString();

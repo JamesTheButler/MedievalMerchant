@@ -4,15 +4,11 @@ using Common.Utility;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Features.Combat.UI
 {
     public sealed class ModifiedStatRow : MonoBehaviour
     {
-        [SerializeField, Required]
-        private Image baseIcon, resultIcon;
-
         [SerializeField, Required]
         private TMP_Text baseValue, modifier, result;
 
@@ -22,13 +18,11 @@ namespace Features.Combat.UI
         private readonly Bindings _bindings = new();
         private ModifiableVariable _stat;
 
-        public void SetStat(Sprite icon, ModifiableVariable stat)
+        public void SetStat( ModifiableVariable stat)
         {
             Unsubscribe();
 
             _stat = stat;
-            baseIcon.sprite = icon;
-            resultIcon.sprite = icon;
 
             if (_stat == null)
                 return;

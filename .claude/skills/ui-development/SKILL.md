@@ -6,7 +6,7 @@ description: Build Unity uGUI screens for Medieval Merchant end to end - from a 
 # UI Development
 
 Prefabs are never hand-authored here. You write a **builder method** in
-`Assets/Editor/AiBasedUiComponentGenerator.cs`; the user runs it from Unity's
+`Assets/Editor/UIGenerator.cs`; the user runs it from Unity's
 menu; Unity's own API writes the `.prefab`. That is the whole mechanism, and it
 is why prefab YAML never appears in this workflow.
 
@@ -26,8 +26,21 @@ Unity code" - this project has its own idioms and they are not the common ones.
 
 Design tokens (TMP style hashes, icon sizes, paddings) are **not** duplicated
 there. They live as constants at the top of
-`Assets/Editor/AiBasedUiComponentGenerator.cs`; read that file when you need
-their values.
+`Assets/Editor/UIGenerationHelper.cs`; read that file when you need their values.
+
+The generator is **two files**, and the split matters:
+
+- `Assets/Editor/UIGenerator.cs` - class `UIGenerator`. The menu item, the output
+  folder, and the builder methods for the screen being generated. **This is the
+  file you rewrite.** Its builders are single-use; delete leftovers from previous
+  runs outright.
+- `Assets/Editor/UIGenerationHelper.cs` - class `UIGenerationHelper`. Design
+  tokens, layout, panels, the shared button prefabs, localization, wiring, save.
+  **Persistent.** Add to it when a layout need has no helper; never put anything
+  screen-specific here.
+
+`UIGenerator` opens with `using static Editor.UIGenerationHelper;`, so the helper
+vocabulary reads unqualified inside builder methods.
 
 ## 1. Vocabulary
 
@@ -35,9 +48,9 @@ Three tiers. Which tier a thing belongs to is decided by what it is *allowed to
 know*, not by how big it is:
 
 - **Element** - atomic, reusable, dumb. Its public API is setters: `SetUp(...)`,
-  `SetCount(...)`, `SetCompleted(bool)`. It takes primitives, sprites and
-  strings. It has **no model dependency, no `GameplayContext`, no
-  `ResourceManager`, and no bindings.** Whoever owns it feeds it.
+  `SetCount(...)`, `SetCompleted(bool)`. It takes primitives and strings. It has
+  **no model dependency, no `GameplayContext`, no `ResourceManager`, and no
+  bindings.** Whoever owns it feeds it.
 - **Component** - composes elements and binds to a model. Public API is a
   `Bind(TModel ...)` / `Unbind()` pair. May reach `GameplayContext`,
   `ConfigurationManager` and `ResourceManager`.
@@ -70,6 +83,20 @@ Components** - with these columns:
 *Composes* is what makes the hierarchy checkable at review time. *Strings* is
 what Phase 2 needs in order to create the localization entries.
 
+**Icons are not part of a public API.** An icon that is the same every time a
+given prefab instance is used - the health icon on a stat row, the coin on a
+price row - is a `[SerializeField] Sprite` on the element, assigned by hand in
+the editor on that instance. Do not add a `Sprite` parameter to a setter, and do
+not add a `Sprite` field to the owner just to pass one down; that only moves the
+same decision one level up and puts it in code instead of the inspector.
+
+A `Sprite` belongs in a signature only when it genuinely varies with the model at
+runtime and one prefab serves every case - `UnitToken.SetUnit(Sprite characterIcon,
+CombatUnit unit)`, where the same token is a guard or a bandit depending on the
+combatant, or a tier icon looked up from `ResourceManager` by level. If the answer
+to "could the user just drag the right sprite onto this instance?" is yes, it is
+a serialized field.
+
 **Do not go searching the codebase for existing elements to reuse.** If
 something pre-existing should be used, the user will name it. Ask if you are
 unsure whether a piece of the design is meant to be new.
@@ -87,7 +114,8 @@ calls `AddComponent<YourClass>()`, so the type has to exist and Unity has to
 have compiled it before the menu item can run.
 
 Element code-behind stays trivial - `[SerializeField, Required]` fields and
-setter methods, nothing else. Component code-behind may bind; follow the
+setter methods, nothing else. Icons are serialized fields on the element, never
+setter parameters (see Phase 1). Component code-behind may bind; follow the
 `Bindings` shape in the reference file, and always tear down in `OnDestroy` as
 well as in `Unbind()`.
 
@@ -103,19 +131,40 @@ Editor so it compiles. Only then move to Phase 3.
 
 ## 4. Phase 3 - the builder method
 
-Rewrite `Assets/Editor/AiBasedUiComponentGenerator.cs`. Point its `TargetFolder`
-at the feature's UI folder, and register each builder method in `Generate()`.
+Rewrite `Assets/Editor/UIGenerator.cs`. Point its `OutputFolder` at the feature's
+UI folder, and register each builder method in `Generate()`.
 
-**The constants at the top of that file must not be changed** - the TMP style
-hashes, the icon sizes, the padding values. Everything else is yours: helpers
-may be rewritten, extended or deleted, and builder methods left over from
-previous runs are **deleted outright** without checking whether anything used
-them. Each builder method is written to be run once.
+**The constants at the top of `UIGenerationHelper.cs` must not be changed** - the
+TMP style hashes, the icon sizes, the padding values. The rest of that file is
+extensible: add helpers freely, but don't delete ones you aren't using and don't
+move screen-specific code into it.
+
+Builder methods in `UIGenerator.cs` left over from previous runs are **deleted
+outright** without checking whether anything used them. Each builder is written
+to be run once.
 
 Use the existing helper vocabulary (`NewUI`, `NewRow`, `NewColumn`, `NewIcon`,
-`NewText`, `NewLocalizedText`, `NewPanel`, `NewButton`, `Fit`, `SetSize`,
-`SetTextStyle`, `Assign`, `Save`) and add to it when a layout needs something it
-doesn't have.
+`NewText`, `NewLocalizedText`, `NewPanel`, `NewButton`, `NewElement`, `Fit`,
+`SetSize`, `SetTextStyle`, `Assign`, `Save`) and add to `UIGenerationHelper.cs`
+when a layout needs something it doesn't have.
+
+**Add the code-behind with `AddBehaviour<T>(root)`, not `AddComponent<T>().`** It
+does the same thing and then walks the component up to sit directly under the
+Transform, so opening the prefab shows the script first rather than an Image, a
+layout group and a fitter. The uGUI plumbing stays below it.
+
+**Buttons come from the shared prefabs, never from a panel plus a `Button`
+component** - the prefabs carry the project's hover, layout and text conventions:
+
+| Need | Helper | Prefab |
+|---|---|---|
+| Label, optionally with an icon | `NewButton(name, parent, table, key, english, comment, icon, iconAfterText)` | `Assets/Common/UI/Elements/Button.prefab` |
+| Icon only | `NewIconButton(name, parent, icon)` | `Assets/Common/UI/Elements/ButtonWithIcon.prefab` |
+| Close (X), top-right of a panel | `NewCloseButton(name, parent)` | `Assets/Common/UI/Elements/XButton.prefab` |
+
+`NewButton` creates and wires the label's entry itself, so don't add a
+`NewLocalizedText` child to a button. `iconAfterText: true` flips the row's
+Reverse Arrangement so the icon trails the label.
 
 Two things that bite:
 
@@ -123,11 +172,15 @@ Two things that bite:
   field produces a `Debug.LogError` and a silently unassigned field - not a
   compile error. Copy the field names out of the `.cs` you just wrote; don't
   retype them from memory.
-- **Containers are built from nested panel sprites.** A visual block is
-  alternating `NewPanel(..., PanelKind.Background)` and `PanelKind.Foreground`.
-  They are drawn **tiled** from 9-slice sprites, matching Panel UI Template -
-  so they behave like plain rectangles at any size. Don't burn effort getting
-  the nesting pixel-perfect; the user adjusts by hand afterwards.
+- **One panel per visual block.** A `NewPanel(...)` sprite already carries its
+  own border, drawn **tiled** from a 9-slice so it behaves like a plain rectangle
+  at any size, matching Panel UI Template. That prefab has a single Image, and so
+  do this project's elements - none of them wrap their contents in an inner panel.
+  Nest a second `NewPanel` only where the design actually shows a frame inside a
+  frame, and then it is usually a real element prefab (a tile, a cell) rather than
+  a wrapper. A reflexive `Inner` panel under every block is a GameObject, an Image
+  and a draw call producing a border nobody asked for, which the user then has to
+  delete.
 
 ## 5. Localization
 

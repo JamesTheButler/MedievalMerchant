@@ -27,9 +27,6 @@ namespace Features.Combat.UI
         [SerializeField, Required]
         private UnitToken unitTokenPrefab;
 
-        [SerializeField, Required]
-        private Sprite unitCountIcon;
-
         [SerializeField]
         private int maxUnitsPerRow = 10;
 
@@ -49,7 +46,7 @@ namespace Features.Combat.UI
             partyNameText.text = partyName;
             tierIcon.sprite = ResourceManager.Instance.TierResources.GetTierIconByLevel(combatant.Level);
 
-            unitCountRow.SetCount(unitCountIcon, combatant.AliveCount, combatant.UnitCount);
+            unitCountRow.SetCount(combatant.AliveCount, combatant.UnitCount);
 
             SpawnTokens();
         }

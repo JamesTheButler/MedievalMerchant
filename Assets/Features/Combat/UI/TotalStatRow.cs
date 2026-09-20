@@ -2,25 +2,20 @@ using Common.Infrastructure.Observation;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Features.Combat.UI
 {
     public sealed class TotalStatRow : MonoBehaviour
     {
         [SerializeField, Required]
-        private Image icon;
-
-        [SerializeField, Required]
         private TMP_Text value, delta;
 
         private readonly Bindings _bindings = new();
 
-        public void SetTotal(Sprite iconSprite, IReadOnlyObservable<float> total)
+        public void SetTotal(IReadOnlyObservable<float> total)
         {
             _bindings.Unbind();
 
-            icon.sprite = iconSprite;
             _bindings.Track(total.Observe(OnTotalChanged));
 
             SetDelta(0f);

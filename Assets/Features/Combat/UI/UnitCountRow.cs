@@ -21,13 +21,12 @@ namespace Features.Combat.UI
 
         private int _maxCount;
 
-        public void SetCount(Sprite iconSprite, IReadOnlyObservable<int> alive, int maxCount)
+        public void SetCount(IReadOnlyObservable<int> alive, int maxCount)
         {
             _bindings.Unbind();
             _maxCount = maxCount;
 
-            icon.sprite = iconSprite;
-            icon.gameObject.SetActive(showIcon && iconSprite != null);
+            icon.gameObject.SetActive(showIcon);
 
             _bindings.Track(alive.Observe(OnAliveChanged));
 

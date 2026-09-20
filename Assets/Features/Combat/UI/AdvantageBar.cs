@@ -1,7 +1,7 @@
+using System.Linq;
 using Common.Infrastructure;
 using Common.Infrastructure.Observation;
 using Features.Combat.Data;
-using Features.Combat.Logic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -23,15 +23,16 @@ namespace Features.Combat.UI
             evenlyMatchedCaption,
             slightlyAheadCaption,
             aheadCaption,
-            dominatingCaption;
+            dominatingCaption,
+            guardsName,
+            banditsName;
 
         private Logic.Combat _combat;
         private CombatConfig _config;
-        private string _playerName, _banditName;
 
         private readonly Bindings _bindings = new();
 
-        public void Bind(Logic.Combat combat, string playerName, string banditName)
+        public void Bind(Logic.Combat combat)
         {
             Unbind();
 
@@ -40,11 +41,6 @@ namespace Features.Combat.UI
 
             _combat = combat;
             _config = ConfigurationManager.Configurations.CombatConfig;
-            _playerName = playerName;
-            _banditName = banditName;
-
-            leftNameText.text = playerName;
-            rightNameText.text = banditName;
 
             _bindings.Track(_combat.GuardHealthShare.Observe(OnHealthShareChanged));
         }
@@ -66,6 +62,7 @@ namespace Features.Combat.UI
             if (!_combat.Player.IsAlive && !_combat.Bandits.IsAlive)
                 return mutualDestructionCaption.GetLocalizedString();
 
+            // share comes from 0-1; we normalize from -1 to 1
             var lead = Mathf.Abs(share - 0.5f) * 2f;
 
             if (lead < _config.EvenlyMatchedLead)
@@ -73,7 +70,7 @@ namespace Features.Combat.UI
 
             var args = new
             {
-                Side = share > 0.5f ? _playerName : _banditName,
+                Side = share > 0.5f ? guardsName.GetLocalizedString() : banditsName.GetLocalizedString(),
             };
 
             if (lead < _config.SlightlyAheadLead)

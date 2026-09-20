@@ -16,7 +16,7 @@ namespace Features.Localization.Data
             {
                 _int_MaxUnitCount = maxUnitCount,
             };
-            return unitLossOutOf.GetLocalizedString(args); // $"of {maxUnitCount}";
+            return unitLossOutOf.GetLocalizedString(args);
         }
     }
 }

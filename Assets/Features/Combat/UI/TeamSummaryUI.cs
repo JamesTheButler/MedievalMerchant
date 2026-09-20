@@ -1,9 +1,9 @@
 using Common.Infrastructure;
 using Features.Combat.Logic;
+using Features.Localization.Data;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace Features.Combat.UI
@@ -28,17 +28,14 @@ namespace Features.Combat.UI
         [SerializeField, Required]
         private TotalStatRow totalHealthRow, totalCombatStrengthRow;
 
-        [SerializeField]
-        private Sprite unitIcon, healthIcon, combatStrengthIcon;
-
-        [SerializeField]
-        private LocalizedString commanderLineString;
+        private LocalizationResources _loc;
 
         private Combatant _combatant;
 
         public void Bind(Combatant combatant, string partyName)
         {
             Unbind();
+            _loc = ResourceManager.Instance.LocalizationResources;
 
             if (combatant == null)
                 return;
@@ -48,11 +45,11 @@ namespace Features.Combat.UI
             partyNameText.text = partyName;
             tierIcon.sprite = ResourceManager.Instance.TierResources.GetTierIconByLevel(combatant.Level);
 
-            unitCountRow.SetCount(unitIcon, combatant.AliveCount, combatant.UnitCount);
-            combatStrengthRow.SetStat(combatStrengthIcon, combatant.UnitCombatStrength);
-            healthRow.SetStat(healthIcon, combatant.UnitHealth);
-            totalHealthRow.SetTotal(healthIcon, combatant.TotalHealth);
-            totalCombatStrengthRow.SetTotal(combatStrengthIcon, combatant.TotalCombatStrength);
+            unitCountRow.SetCount(combatant.AliveCount, combatant.UnitCount);
+            combatStrengthRow.SetStat(combatant.UnitCombatStrength);
+            healthRow.SetStat(combatant.UnitHealth);
+            totalHealthRow.SetTotal(combatant.TotalHealth);
+            totalCombatStrengthRow.SetTotal(combatant.TotalCombatStrength);
 
             SetRoundDeltas(CombatantDelta.None);
             Say(CombatMood.Start);
@@ -76,12 +73,7 @@ namespace Features.Combat.UI
         // TODO: placeholder. support blips
         public void Say(CombatMood mood)
         {
-            var args = new
-            {
-                Line = mood.ToString(),
-            };
-
-            commanderLineText.text = commanderLineString.GetLocalizedString(args);
+            commanderLineText.text = _loc.Quote(mood.ToString());
         }
 
         private void OnDestroy()

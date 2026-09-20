@@ -5,8 +5,9 @@ Copy the idiom, not just the intent — this project has its own conventions and
 they are not the common Unity ones.
 
 Design tokens are **not** repeated here. TMP style hashes, icon sizes and
-paddings are constants at the top of
-`Assets/Editor/AiBasedUiComponentGenerator.cs`; read that file for their values.
+paddings are constants at the top of `Assets/Editor/UIGenerationHelper.cs`; read
+that file for their values. Builder methods go in `Assets/Editor/UIGenerator.cs`,
+which imports the helper with `using static Editor.UIGenerationHelper;`.
 
 ## Conventions visible in every example below
 
@@ -47,6 +48,44 @@ namespace Common.UI.Elements
     }
 }
 ```
+
+## Element — icons live in fields, not in the signature
+
+`TextWithIconElement` above takes a `Sprite` because it is generic: the caller
+decides what the icon is, and it differs call to call. That is the exception.
+
+The rule is the other way round. An icon that is the same every time a given
+prefab instance is used — the health icon on a stat row, the coin on a price row —
+is a serialized field, assigned by hand in the editor on that instance. It never
+travels through the API, and the owner does not hold a `Sprite` field to pass
+down; that only moves the same decision one level up and out of the inspector.
+
+<!-- source: Assets/Features/Combat/UI/TotalStatRow.cs (abridged) -->
+```csharp
+public sealed class TotalStatRow : MonoBehaviour
+{
+    // The health row gets the health icon, the strength row the strength icon.
+    // Set once, in the editor.
+    [SerializeField, Required]
+    private Image icon;
+
+    [SerializeField, Required]
+    private TMP_Text value, delta;
+
+    public void SetTotal(IReadOnlyObservable<float> total)
+    {
+        _bindings.Unbind();
+        _bindings.Track(total.Observe(OnTotalChanged));
+        SetDelta(0f);
+    }
+}
+```
+
+A `Sprite` earns a place in a signature only when the art varies with the model
+and one prefab serves every case — `UnitToken.SetUnit(Sprite characterIcon,
+CombatUnit unit)`, where the same token renders a guard or a bandit depending on
+the combatant. Ask "could the user just drag the right sprite onto this
+instance?" If yes, it is a field.
 
 ## Element — state swap
 
@@ -431,25 +470,27 @@ The owner then calls `handler.SetData(model)`. The handler needs its
 
 ## A builder method
 
-Nested panels for the visual block, a layout-only row inside them, an icon, a
+One panel for the visual block, a layout-only row inside it, an icon, a
 code-driven number, and a static localized label. A real builder ends by adding
-its code-behind component and calling `Assign(...)` with that component's exact
-`[SerializeField]` field names.
+its code-behind component with `AddBehaviour` and calling `Assign(...)` with that
+component's exact `[SerializeField]` field names.
 
-<!-- source: Assets/Editor/AiBasedUiComponentGenerator.cs -->
+<!-- source: Assets/Editor/UIGenerator.cs -->
 ```csharp
 private static string BuildExampleElement()
 {
+    // One panel. The sprite carries its own border - don't wrap the contents in a
+    // second "Inner" panel unless the design really shows a frame inside a frame.
     var root = NewPanel("ExampleElement", null, PanelKind.Background);
     SetSize(root, 220, 48);
 
-    var inner = NewPanel("Inner", root, PanelKind.Foreground);
-    Stretch(inner, PaddingSmall);
-
     var row = NewRow("Row", PaddingMedium);
-    row.transform.SetParent(inner.transform, false);
+    row.transform.SetParent(root.transform, false);
+    SetPadding(row, PaddingSmall);
 
-    NewIcon("Icon", row, DefaultIconSize);
+    // Fixed for this element, so the icon is a serialized field wired below rather
+    // than a parameter on its setter.
+    var icon = NewIcon("Icon", row, DefaultIconSize);
 
     // Code-driven text: a plain TMP field, with a realistic placeholder so the
     // prefab reads correctly in the editor.
@@ -467,21 +508,24 @@ private static string BuildExampleElement()
         comment: "Suffix after a goods count, e.g. \"1,240 in stock\".",
         styleHashCode: StyleSubtitle);
 
+    // AddBehaviour, not AddComponent: it puts the code-behind directly under the
+    // Transform so the prefab opens on the script rather than on uGUI plumbing.
+    var component = AddBehaviour<ExampleElement>(root);
+
+    Assign(component, new Dictionary<string, Object>
+    {
+        { "icon", icon },
+        { "amountText", amount },
+    });
+
     return Save(root);
 }
 ```
 
-Wiring the code-behind, with a `LocalizedString` field assigned in the same pass:
+A `[SerializeField] LocalizedString` on the code-behind is created and pointed at
+its entry in the same pass, right after the `Assign(...)` above:
 
 ```csharp
-var component = root.AddComponent<ExampleElement>();
-
-Assign(component, new Dictionary<string, Object>
-{
-    { "icon", icon },
-    { "amountText", amount },
-});
-
 AssignLocalizedString(
     component, "emptyString",
     table: "Common",
@@ -499,7 +543,13 @@ AssignLocalizedString(
 | `NewIcon(name, parent, size)` | An `Image` sized by both `sizeDelta` and a `LayoutElement` |
 | `NewText(name, parent, fontSize)` | A plain `TextMeshProUGUI` for code-driven text |
 | `NewLocalizedText(...)` | A `LocalizedText` prefab instance with its entry created and key wired |
-| `NewButton(name, parent, w, h)` | Button sprite + `UnityEngine.UI.Button` with `targetGraphic` set |
+| `NewButton(name, parent, table, key, english, comment, icon, iconAfterText)` | `Button.prefab` instance; creates and wires its label entry |
+| `NewIconButton(name, parent, icon)` | `ButtonWithIcon.prefab` instance, icon only |
+| `NewCloseButton(name, parent)` | `XButton.prefab` instance, for a panel's top-right corner |
+| `NewElement<T>(name, parent)` / `LoadElement<T>()` | An existing layer-1 element prefab from the output folder, found by class name |
+| `AddBehaviour<T>(go)` | `AddComponent<T>` then moves it directly under the Transform |
+| `NewFillImage(name, parent)` | Stretched `Image` in Filled/Horizontal mode, for bars |
+| `FixedWidth(go, width)` | Releases the horizontal `ContentSizeFitter` so a width can be pinned |
 | `Stretch(go, inset)` | Anchors the rect to fill its parent, inset on every side |
 | `Fit(go)` / `SetPadding(go, p)` / `SetSize(go, w, h)` | `ContentSizeFitter`, layout padding, explicit size |
 | `SetTextStyle(text, hash)` | Writes TMP's `m_TextStyleHashCode` |
