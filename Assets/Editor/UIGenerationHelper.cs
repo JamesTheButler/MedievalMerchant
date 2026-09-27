@@ -442,6 +442,81 @@ namespace Editor
             element.preferredWidth = width;
         }
 
+        /// <summary>
+        /// Drops a container's ContentSizeFitter out of the way, for a rect that is sized by
+        /// its anchors rather than by its contents.
+        /// </summary>
+        public static void Unfit(GameObject go)
+        {
+            var fitter = go.GetComponent<ContentSizeFitter>();
+
+            if (fitter == null)
+                return;
+
+            fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+            fitter.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        }
+
+        /// <summary>
+        /// Pins a fixed-width column against the parent's left edge, full height.
+        /// </summary>
+        public static void StretchLeftEdge(GameObject go, float width)
+        {
+            var rect = (RectTransform)go.transform;
+
+            rect.anchorMin = new Vector2(0f, 0f);
+            rect.anchorMax = new Vector2(0f, 1f);
+            rect.pivot = new Vector2(0f, 0.5f);
+            rect.sizeDelta = new Vector2(width, 0f);
+            rect.anchoredPosition = Vector2.zero;
+        }
+
+        /// <summary>
+        /// Pins a fixed-width column against the parent's right edge, full height.
+        /// </summary>
+        public static void StretchRightEdge(GameObject go, float width)
+        {
+            var rect = (RectTransform)go.transform;
+
+            rect.anchorMin = new Vector2(1f, 0f);
+            rect.anchorMax = new Vector2(1f, 1f);
+            rect.pivot = new Vector2(1f, 0.5f);
+            rect.sizeDelta = new Vector2(width, 0f);
+            rect.anchoredPosition = Vector2.zero;
+        }
+
+        /// <summary>
+        /// A full-width strip along the parent's bottom edge - an underline, a state marker.
+        /// </summary>
+        public static void StretchBottomEdge(GameObject go, float height)
+        {
+            var rect = (RectTransform)go.transform;
+
+            rect.anchorMin = new Vector2(0f, 0f);
+            rect.anchorMax = new Vector2(1f, 0f);
+            rect.pivot = new Vector2(0.5f, 0f);
+            rect.sizeDelta = new Vector2(0f, height);
+            rect.anchoredPosition = Vector2.zero;
+        }
+
+        /// <summary>
+        /// A nested Canvas stretched over its parent, for content that is spawned and
+        /// destroyed constantly - projectiles, floaters. Keeps their canvas rebuilds off the
+        /// rest of the screen.
+        /// </summary>
+        public static GameObject NewCanvasLayer(string name, GameObject parent, int sortingOrder)
+        {
+            var go = NewUI(name);
+            go.transform.SetParent(parent.transform, false);
+
+            var canvas = go.AddComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = sortingOrder;
+
+            Stretch(go);
+            return go;
+        }
+
         // Fills the parent rect, optionally inset on every side.
         public static void Stretch(GameObject go, float inset = 0f)
         {

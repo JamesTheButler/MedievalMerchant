@@ -139,9 +139,19 @@ TMP style hashes, the icon sizes, the padding values. The rest of that file is
 extensible: add helpers freely, but don't delete ones you aren't using and don't
 move screen-specific code into it.
 
-Builder methods in `UIGenerator.cs` left over from previous runs are **deleted
-outright** without checking whether anything used them. Each builder is written
-to be run once.
+**`Generate()` must build only what this pass is producing.** Builder methods
+left over from previous runs are **deleted outright**, not left registered.
+Re-running a builder rewrites its prefab from scratch and silently destroys every
+hand-tune the user has made since - the reason each builder is written to be run
+once. A later pass that composes earlier prefabs reaches them through
+`NewElement<T>()` / `LoadElement<T>()`, which read them off disk; it never
+rebuilds them.
+
+**The same goes for string entries.** `EnsureEntry` rewrites an existing key's
+English and comment, and a key the user has since *renamed* by hand comes back as
+a duplicate under the old name. Only create entries for strings this pass is
+introducing; delete the calls for everything already in the tables along with the
+builders that made them.
 
 Use the existing helper vocabulary (`NewUI`, `NewRow`, `NewColumn`, `NewIcon`,
 `NewText`, `NewLocalizedText`, `NewPanel`, `NewButton`, `NewElement`, `Fit`,

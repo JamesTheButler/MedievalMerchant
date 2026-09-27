@@ -320,8 +320,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3804423969808039723}
   - component: {fileID: 1911406337557330298}
-  - component: {fileID: 1093137711846651612}
   - component: {fileID: 2519143045512471885}
+  - component: {fileID: 6538725399999872178}
   m_Layer: 0
   m_Name: TeamBattleUI
   m_TagString: Untagged
@@ -376,20 +376,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &1093137711846651612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6064705244574347357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!114 &2519143045512471885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,8 +394,27 @@ MonoBehaviour:
   topRow: {fileID: 164975773604762034}
   bottomRow: {fileID: 1234180141506495747}
   unitTokenPrefab: {fileID: 5125074673710785045, guid: 46721a8dcbafa8d4fb1317875967cb31, type: 3}
-  unitCountIcon: {fileID: 0}
   maxUnitsPerRow: 10
+--- !u!114 &6538725399999872178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064705244574347357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: 1
+  m_LayoutPriority: 1
 --- !u!1 &6125938281811271395
 GameObject:
   m_ObjectHideFlags: 0
