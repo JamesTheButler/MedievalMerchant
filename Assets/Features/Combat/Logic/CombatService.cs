@@ -50,33 +50,27 @@ namespace Features.Combat.Logic
             var guards = _guardData.GetTypedLevelData(captainLevel);
 
             return new Combatant(
-                _loc.GuardsTeamName.GetLocalizedString(),
                 level: captainLevel,
                 unitCount: guards.MaxGuardCount,
                 unitHealth: guards.Health,
                 unitCombatStrength: guards.CombatStrength,
-                healthDescription: "", // TODO what goes here?
-                combatStrengthDescription: "", // TODO what goes here?
                 hitSampler: new UniformSampler(_guardConfig.HitFactorMin, _guardConfig.HitFactorMax),
                 commanderIcon: _companionResources.Guard.Icon,
                 unitIcon: _companionResources.GuardIcon,
-                _loc.GuardsUnitName.GetLocalizedString());
+                _loc.Guards);
         }
 
         public Combatant GetBanditCombatant(BanditGang banditGang)
         {
             return new Combatant(
-                _loc.BanditsTeamName.GetLocalizedString(),
                 level: (int)banditGang.Tier.Value,
                 unitCount: banditGang.UnitCount.Value,
                 unitHealth: banditGang.UnitHealth.Value,
                 unitCombatStrength: banditGang.UnitCombatStrength.Value,
-                healthDescription: "", // TODO what goes here?
-                combatStrengthDescription: "", // TODO what goes here?
                 hitSampler: _banditConfig.CombatData.HitFactorSampler,
                 commanderIcon: _banditResources.BanditCommanderIcon,
                 unitIcon: _banditResources.BanditUnitIcon,
-                _loc.BanditsUnitName.GetLocalizedString());
+                _loc.Bandits);
         }
 
         public Combat StartBattle(Combatant player, Combatant bandits)

@@ -8,19 +8,22 @@ namespace Features.Localization.Data
     public sealed class CombatLocalizationResources
     {
         [SerializeField]
-        private LocalizedString unitLossOutOf;
+        private LocalizedString unitLossOutOf,
+            healthPerUnit,
+            strengthPerUnit,
+            totalHealth,
+            totalStrength;
+
+        public string HealthPerUnit => healthPerUnit.GetLocalizedString();
+        public string StrengthPerUnit => strengthPerUnit.GetLocalizedString();
+        public string TotalHealth => totalHealth.GetLocalizedString();
+        public string TotalStrength => totalStrength.GetLocalizedString();
 
         [field: SerializeField]
-        public LocalizedString GuardsTeamName { get; private set; }
+        public CombatantLocalizationResources Guards { get; private set; }
 
         [field: SerializeField]
-        public LocalizedString GuardsUnitName { get; private set; }
-
-        [field: SerializeField]
-        public LocalizedString BanditsTeamName { get; private set; }
-
-        [field: SerializeField]
-        public LocalizedString BanditsUnitName { get; private set; }
+        public CombatantLocalizationResources Bandits { get; private set; }
 
         public string UnitLossOutOf(int maxUnitCount)
         {

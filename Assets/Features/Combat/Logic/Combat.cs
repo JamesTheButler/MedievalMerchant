@@ -8,6 +8,9 @@ namespace Features.Combat.Logic
         public Combatant Bandits { get; }
         public Observable<int> RoundCounter { get; } = new();
         public ObservableEvent<CombatStatus> CombatResolved { get; } = new();
+        /// <summary>
+        /// 0 - 1
+        /// </summary>
         public Observable<float> GuardHealthShare { get; }
 
         public bool IsOver { get; private set; }
@@ -26,7 +29,7 @@ namespace Features.Combat.Logic
         private static float RefreshGuardHealthShare(float playerHealth, float banditHealth)
         {
             var total = playerHealth + banditHealth;
-            return total <= 0f ? 0.5f : playerHealth / total;
+            return playerHealth / total;
         }
     }
 }

@@ -1,4 +1,5 @@
 using Common.Infrastructure.Observation;
+using Common.UI.Tooltips;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -10,14 +11,17 @@ namespace Features.Combat.UI
         [SerializeField, Required]
         private TMP_Text value, delta;
 
+        [SerializeField, Required]
+        private SimpleTooltipHandler tooltip;
+
         private readonly Bindings _bindings = new();
 
-        public void SetTotal(IReadOnlyObservable<float> total)
+        public void SetTotal(IReadOnlyObservable<float> total, string title)
         {
             _bindings.Unbind();
 
             _bindings.Track(total.Observe(OnTotalChanged));
-
+            tooltip.SetData(title);
             SetDelta(0f);
         }
 

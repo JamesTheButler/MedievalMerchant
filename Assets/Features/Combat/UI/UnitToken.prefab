@@ -86,14 +86,13 @@ GameObject:
   - component: {fileID: 3506455554750434197}
   - component: {fileID: 836026598860950810}
   - component: {fileID: 7225397572259737393}
-  - component: {fileID: 4398897753062495957}
   m_Layer: 0
   m_Name: Background Outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3506455554750434197
 RectTransform:
   m_ObjectHideFlags: 0
@@ -141,7 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4599338952064285769, guid: 7ab7e3022fb39164985269fefd1e93e0, type: 3}
+  m_Sprite: {fileID: 1713203084, guid: 7ab7e3022fb39164985269fefd1e93e0, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -151,21 +150,6 @@ MonoBehaviour:
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4398897753062495957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2169198279129285107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
-  m_EffectColor: {r: 0.23529413, g: 0.18039216, b: 0.1254902, a: 1}
-  m_EffectDistance: {x: 0.5, y: -0.5}
-  m_UseGraphicAlpha: 1
 --- !u!1 &3796214910714731922
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +190,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 48, y: 48}
+  m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5125074673710785045
 MonoBehaviour:
@@ -299,10 +283,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
   m_IgnoreLayout: 0
-  m_MinWidth: 48
-  m_MinHeight: 48
-  m_PreferredWidth: 48
-  m_PreferredHeight: 48
+  m_MinWidth: 64
+  m_MinHeight: 64
+  m_PreferredWidth: 64
+  m_PreferredHeight: 64
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -483,7 +467,6 @@ GameObject:
   - component: {fileID: 9160052302490156981}
   - component: {fileID: 2175008792254879563}
   - component: {fileID: 753247617323697499}
-  - component: {fileID: 8981320560863583413}
   m_Layer: 0
   m_Name: Health Fill Ring
   m_TagString: Untagged
@@ -538,7 +521,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4599338952064285769, guid: 7ab7e3022fb39164985269fefd1e93e0, type: 3}
+  m_Sprite: {fileID: 1713203084, guid: 7ab7e3022fb39164985269fefd1e93e0, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -548,18 +531,3 @@ MonoBehaviour:
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8981320560863583413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8436023095820192341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
-  m_EffectColor: {r: 0.03137255, g: 0.4039216, b: 0.09411766, a: 1}
-  m_EffectDistance: {x: 0.5, y: -0.5}
-  m_UseGraphicAlpha: 1

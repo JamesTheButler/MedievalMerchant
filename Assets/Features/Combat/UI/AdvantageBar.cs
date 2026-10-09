@@ -1,4 +1,3 @@
-using System.Linq;
 using Common.Infrastructure;
 using Common.Infrastructure.Observation;
 using Features.Combat.Data;
@@ -6,14 +5,15 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Features.Combat.UI
 {
     public sealed class AdvantageBar : MonoBehaviour
     {
-        [SerializeField, Required]
-        private Image fill;
+        [FormerlySerializedAs("fill"),SerializeField, Required]
+        private Slider advantageSlider;
 
         [SerializeField, Required]
         private TMP_Text leftNameText, rightNameText, captionText;
@@ -53,7 +53,8 @@ namespace Features.Combat.UI
 
         private void OnHealthShareChanged(float share)
         {
-            fill.fillAmount = share;
+            // guards are on the left, so we invert the share
+            advantageSlider.value = 1f - share;
             captionText.text = ResolveCaption(share);
         }
 

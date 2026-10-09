@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Common.Config.Sampling;
+using Common.Infrastructure;
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
+using Common.Utility;
+using Features.Localization.Data;
 using UnityEngine;
 
 namespace Features.Combat.Logic
@@ -21,7 +24,6 @@ namespace Features.Combat.Logic
         public Observable<int> AliveCount { get; }
         public Observable<float> TotalHealth { get; }
         public Observable<float> TotalCombatStrength { get; }
-
         public Sprite CommanderIcon { get; }
         public Sprite UnitIcon { get; }
         public IEnumerable<CombatUnit> AliveUnits => _units.Where(unit => unit.IsAlive.Value);
@@ -33,30 +35,29 @@ namespace Features.Combat.Logic
         private readonly List<CombatUnit> _units;
 
         public Combatant(
-            string name,
             int level,
             int unitCount,
             float unitHealth,
             float unitCombatStrength,
-            string healthDescription,
-            string combatStrengthDescription,
             ISampler hitSampler,
             Sprite commanderIcon,
             Sprite unitIcon,
-            string unitName)
+            CombatantLocalizationResources combatantLoc)
         {
             Level = level;
             HitSampler = hitSampler;
             CommanderIcon = commanderIcon;
             UnitIcon = unitIcon;
-            UnitName = unitName;
-            Name = name;
+            UnitName = combatantLoc.UnitName;
+            Name = combatantLoc.TeamName;
 
-            var baseUnitHealth = new CombatBaseValue(unitHealth, healthDescription);
-            var baseUnitStrength = new CombatBaseValue(unitCombatStrength, combatStrengthDescription);
+            var loc = ResourceManager.Instance.LocalizationResources.Combat;
 
-            UnitHealth = new ModifiableVariable(healthDescription, true, baseUnitHealth);
-            UnitCombatStrength = new ModifiableVariable(combatStrengthDescription, true, baseUnitStrength);
+            var baseUnitHealth = new CombatBaseValue(unitHealth, loc.HealthPerUnit);
+            var baseUnitStrength = new CombatBaseValue(unitCombatStrength, loc.StrengthPerUnit);
+
+            UnitHealth = new ModifiableVariable(loc.HealthPerUnit, true, baseUnitHealth);
+            UnitCombatStrength = new ModifiableVariable(loc.StrengthPerUnit, true, baseUnitStrength);
 
             _units = new List<CombatUnit>(unitCount);
             for (var i = 0; i < unitCount; i++)

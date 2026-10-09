@@ -93,8 +93,6 @@ namespace Features.Combat.UI
 
             playerBattle.Unbind();
             banditBattle.Unbind();
-            playerSummary.Unbind();
-            banditSummary.Unbind();
             advantageBar.Unbind();
 
             _combat = null;

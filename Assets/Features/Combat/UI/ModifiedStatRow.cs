@@ -1,6 +1,6 @@
 using Common.Infrastructure.Modifiable;
 using Common.Infrastructure.Observation;
-using Common.Utility;
+using Common.UI.Tooltips;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -15,10 +15,13 @@ namespace Features.Combat.UI
         [SerializeField, Required]
         private GameObject modifierGroup;
 
+        [SerializeField, Required]
+        private ModifiableTooltipHandler tooltip;
+
         private readonly Bindings _bindings = new();
         private ModifiableVariable _stat;
 
-        public void SetStat( ModifiableVariable stat)
+        public void SetStat(ModifiableVariable stat)
         {
             Unsubscribe();
 
@@ -26,6 +29,9 @@ namespace Features.Combat.UI
 
             if (_stat == null)
                 return;
+
+
+            tooltip.SetData(stat);
 
             _bindings.Track(_stat.Observe(OnValueChanged));
             _stat.ModifiersChanged += Refresh;
@@ -49,9 +55,7 @@ namespace Features.Combat.UI
             if (!_stat.IsModified)
                 return;
 
-            var abs = Mathf.Abs(_stat.TotalPercentage);
-            var sign = _stat.TotalPercentage.Sign();
-            modifier.text = $" {sign} {abs * 100:0.##}% =";
+            modifier.text = $"{_stat.TotalPercentage * 100:+0.#;-0.#;0.#}% =";
             result.text = $"{_stat.Value:0.##}";
         }
 

@@ -95,9 +95,7 @@ namespace Features.Combat.UI
             var fraction = _unit.MaxHealth <= 0f ? 0f : Mathf.Clamp01(_displayHealth / _unit.MaxHealth);
 
             healthFill.fillAmount = fraction;
-            var color = healthGradient.Evaluate(fraction);
-            healthFill.color = color;
-            healthFill.GetComponent<Outline>().effectColor = color;
+            healthFill.color = healthGradient.Evaluate(fraction);
             canvasGroup.alpha = _displayHealth > 0f ? 1f : deadAlpha;
         }
     }
