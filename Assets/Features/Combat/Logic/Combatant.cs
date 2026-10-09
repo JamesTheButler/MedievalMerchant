@@ -28,6 +28,7 @@ namespace Features.Combat.Logic
 
         public bool IsAlive => AliveCount.Value > 0;
         public ISampler HitSampler { get; }
+        public string UnitName { get; set; }
 
         private readonly List<CombatUnit> _units;
 
@@ -41,12 +42,14 @@ namespace Features.Combat.Logic
             string combatStrengthDescription,
             ISampler hitSampler,
             Sprite commanderIcon,
-            Sprite unitIcon)
+            Sprite unitIcon,
+            string unitName)
         {
             Level = level;
             HitSampler = hitSampler;
             CommanderIcon = commanderIcon;
             UnitIcon = unitIcon;
+            UnitName = unitName;
             Name = name;
 
             var baseUnitHealth = new CombatBaseValue(unitHealth, healthDescription);

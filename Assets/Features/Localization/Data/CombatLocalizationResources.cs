@@ -10,6 +10,18 @@ namespace Features.Localization.Data
         [SerializeField]
         private LocalizedString unitLossOutOf;
 
+        [field: SerializeField]
+        public LocalizedString GuardsTeamName { get; private set; }
+
+        [field: SerializeField]
+        public LocalizedString GuardsUnitName { get; private set; }
+
+        [field: SerializeField]
+        public LocalizedString BanditsTeamName { get; private set; }
+
+        [field: SerializeField]
+        public LocalizedString BanditsUnitName { get; private set; }
+
         public string UnitLossOutOf(int maxUnitCount)
         {
             var args = new

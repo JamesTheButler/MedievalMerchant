@@ -2,89 +2,92 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Config.Sampling;
 using Common.Infrastructure;
-using Common.Infrastructure.Gameplay;
 using Common.Utility;
 using Features.Bandits.Data;
 using Features.Combat.Data;
 using Features.Bandits.Logic;
 using Features.Localization.Data;
 using Features.Player.Logic;
-using Features.Player.Retinue;
 using Features.Player.Retinue.Config;
-using Features.Player.Retinue.Config.Resources;
-using UnityEngine;
+using Features.Player.Retinue.Config.CompanionDatas;
 
 namespace Features.Combat.Logic
 {
     public sealed class CombatService : IService
     {
-        // TODO: Config
-        // TODO: better Samplers
-        private const float PlayerHitFactorMin = 0.92f, PlayerHitFactorMax = 1.18f;
-        private const float BanditHitFactorMin = 0.40f, BanditHitFactorMax = 1.60f;
-
-        public Combat OngoingBattle { get; private set; }
-
         private PlayerModel _player;
         private CombatConfig _config;
+        private GuardConfig _guardConfig;
+        private BanditConfig _banditConfig;
+        private GuardCompanionData _guardData;
         private CompanionResources _companionResources;
         private BanditResources _banditResources;
         private CombatLocalizationResources _loc;
 
+        private Combat _ongoingBattle;
+
         public void Initialize()
         {
-            _player = GameplayContext.Instance.Model.Player;
-            _config = ConfigurationManager.Configurations.CombatConfig;
-            _loc = ResourceManager.Instance.LocalizationResources.Combat;
-            _companionResources = ResourceManager.Instance.CompanionResources;
-            _banditResources = ResourceManager.Instance.BanditResources;
+            var configs = ConfigurationManager.Configurations;
+            var resources = ResourceManager.Instance;
+
+            _config = configs.CombatConfig;
+            _guardConfig = configs.GuardConfig;
+            _banditConfig = configs.BanditConfig;
+            _guardData = configs.CompanionConfig.GuardData;
+            _companionResources = resources.CompanionResources;
+            _banditResources = resources.BanditResources;
+            _loc = resources.LocalizationResources.Combat;
         }
 
         public void CleanUp()
         {
-            OngoingBattle = null;
+            _ongoingBattle = null;
         }
 
-        private Combatant GetPlayerCombatant()
+        public Combatant GetPlayerCombatant(int captainLevel)
         {
-            var captain = _player.RetinueModel.Companions[CompanionType.Guard];
+            var guards = _guardData.GetTypedLevelData(captainLevel);
+
             return new Combatant(
-                "Player", // @claude, localize
-                level: captain.Level.Value,
-                unitCount: 0,
-                unitHealth: 0f,
-                unitCombatStrength: 0f,
-                healthDescription: "",
-                combatStrengthDescription: "",
-                hitSampler: new UniformSampler(PlayerHitFactorMin, PlayerHitFactorMax),
+                _loc.GuardsTeamName.GetLocalizedString(),
+                level: captainLevel,
+                unitCount: guards.MaxGuardCount,
+                unitHealth: guards.Health,
+                unitCombatStrength: guards.CombatStrength,
+                healthDescription: "", // TODO what goes here?
+                combatStrengthDescription: "", // TODO what goes here?
+                hitSampler: new UniformSampler(_guardConfig.HitFactorMin, _guardConfig.HitFactorMax),
                 commanderIcon: _companionResources.Guard.Icon,
-                unitIcon: _companionResources.GuardIcon);
+                unitIcon: _companionResources.GuardIcon,
+                _loc.GuardsUnitName.GetLocalizedString());
         }
 
-        private Combatant GetBanditCombatant(BanditGang banditGang)
+        public Combatant GetBanditCombatant(BanditGang banditGang)
         {
             return new Combatant(
-                "Bandit", // @claude, localize
+                _loc.BanditsTeamName.GetLocalizedString(),
                 level: (int)banditGang.Tier.Value,
-                unitCount: banditGang.UnitCount,
-                unitHealth: banditGang.UnitHealth,
-                unitCombatStrength: banditGang.UnitCombatStrength,
-                healthDescription: "",
-                combatStrengthDescription: "",
-                hitSampler: new UniformSampler(BanditHitFactorMin, BanditHitFactorMax),
+                unitCount: banditGang.UnitCount.Value,
+                unitHealth: banditGang.UnitHealth.Value,
+                unitCombatStrength: banditGang.UnitCombatStrength.Value,
+                healthDescription: "", // TODO what goes here?
+                combatStrengthDescription: "", // TODO what goes here?
+                hitSampler: _banditConfig.CombatData.HitFactorSampler,
                 commanderIcon: _banditResources.BanditCommanderIcon,
-                unitIcon: _banditResources.BanditUnitIcon);
+                unitIcon: _banditResources.BanditUnitIcon,
+                _loc.BanditsUnitName.GetLocalizedString());
         }
 
-        public Combat StartBattle(BanditGang bandits)
+        public Combat StartBattle(Combatant player, Combatant bandits)
         {
-            OngoingBattle = new Combat(GetPlayerCombatant(), GetBanditCombatant(bandits));
-            return OngoingBattle;
+            _ongoingBattle = new Combat(player, bandits);
+            return _ongoingBattle;
         }
 
         public RoundResult ResolveRound()
         {
-            var combat = OngoingBattle;
+            var combat = _ongoingBattle;
             if (combat == null || combat.IsOver)
                 return null;
 
@@ -125,8 +128,6 @@ namespace Features.Combat.Logic
             return result;
         }
 
-        // Both sides are read off the same status and health share, so they can never
-        // contradict each other.
         private CombatMood ResolveMood(CombatStatus status, float guardHealthShare, bool isPlayer)
         {
             switch (status)

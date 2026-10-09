@@ -1,7 +1,5 @@
-using System.Linq;
 using Common.Config;
 using Common.Infrastructure;
-using Common.Types;
 using Common.UI.Tooltips;
 using Common.Utility;
 using Features.Combat.Logic;
@@ -31,6 +29,7 @@ namespace Features.Combat.UI
 
         public override void Reset()
         {
+            unitName.text = string.Empty;
             health.text = string.Empty;
             damageTaken.text = string.Empty;
             effects.text = string.Empty;
@@ -48,7 +47,7 @@ namespace Features.Combat.UI
 
             if (active.Count > 0)
             {
-                effects.text = active.AggregateString(modifier => $"{modifier.Description.Value}/n");
+                effects.text = active.AggregateString(modifier => $"{modifier.Description.Value}\n");
             }
         }
     }

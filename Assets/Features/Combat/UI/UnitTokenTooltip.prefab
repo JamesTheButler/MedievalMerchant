@@ -845,9 +845,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3414409076618827650}
+  - component: {fileID: 9013021823593219256}
   - component: {fileID: 621123682843660069}
   - component: {fileID: 7058112238624864276}
-  - component: {fileID: 9013021823593219256}
   - component: {fileID: 2426746172740400986}
   - component: {fileID: 4864028487916589503}
   m_Layer: 0
@@ -881,6 +881,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 330, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &9013021823593219256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8101738886762179479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16cc5e462b34d83b708aaf369f6a0ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Combat.UI.UnitTokenTooltip
+  drawDebugLines: 1
+  unitName: {fileID: 4910331246300404660}
+  health: {fileID: 6909291250714078161}
+  damageTaken: {fileID: 7186386291182470442}
+  effects: {fileID: 5168787875345173512}
+  tierIcon: {fileID: 3982783995768005673}
 --- !u!114 &621123682843660069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,23 +939,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!114 &9013021823593219256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8101738886762179479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c16cc5e462b34d83b708aaf369f6a0ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Combat.UI.UnitTokenTooltip
-  drawDebugLines: 1
-  unitName: {fileID: 4910331246300404660}
-  health: {fileID: 6909291250714078161}
-  damageTaken: {fileID: 7186386291182470442}
-  effects: {fileID: 5168787875345173512}
 --- !u!222 &2426746172740400986
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1126,6 +1127,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6078212310347650269}
     m_Modifications:
+    - target: {fileID: 1016231570279540700, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+      propertyPath: staticString.m_TableEntryReference.m_KeyId
+      value: 11083297394708480
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016231570279540700, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+      propertyPath: staticString.m_TableReference.m_TableCollectionName
+      value: GUID:ec175d72388cfc547bb3c6edf7d06d0d
+      objectReference: {fileID: 0}
     - target: {fileID: 2845166165479156792, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_Name
       value: DamageTakenLabel
@@ -1211,6 +1220,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+      propertyPath: m_text
+      value: Damage Taken
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_TextStyleHashCode
       value: 2085476100
       objectReference: {fileID: 0}
@@ -1240,6 +1253,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5158608781729586470}
     m_Modifications:
+    - target: {fileID: 1016231570279540700, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+      propertyPath: staticString.m_TableEntryReference.m_KeyId
+      value: 11083264138072064
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016231570279540700, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+      propertyPath: staticString.m_TableReference.m_TableCollectionName
+      value: GUID:ec175d72388cfc547bb3c6edf7d06d0d
+      objectReference: {fileID: 0}
     - target: {fileID: 2845166165479156792, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_Name
       value: HealthLabel
@@ -1323,6 +1344,10 @@ PrefabInstance:
     - target: {fileID: 4833215302764452591, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
+      propertyPath: m_text
+      value: Health
       objectReference: {fileID: 0}
     - target: {fileID: 8723709183751462464, guid: ddf137886c2e6544f86b5723780b2a30, type: 3}
       propertyPath: m_TextStyleHashCode

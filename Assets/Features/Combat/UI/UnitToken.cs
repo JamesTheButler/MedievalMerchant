@@ -6,14 +6,9 @@ using UnityEngine.UI;
 
 namespace Features.Combat.UI
 {
-    // The token deliberately does NOT observe CombatUnit.Health. The logic resolves a
-    // round instantly, so by the time the first sword is in the air the model is already
-    // at its final value. The token walks its own displayed health down as each attack
-    // lands, and derives death from that rather than from IsAlive - otherwise a unit
-    // would grey out before the blow that killed it arrives.
     public sealed class UnitToken : MonoBehaviour
     {
-        [SerializeField, Required, Tooltip("Image Type must be Filled / Radial 360.")]
+        [SerializeField, Required]
         private Image healthFill;
 
         [SerializeField, Required]
@@ -40,8 +35,6 @@ namespace Features.Combat.UI
         private CombatUnit _unit;
         private Coroutine _blink;
         private float _displayHealth;
-
-        public CombatUnit Unit => _unit;
 
         public void SetUnit(Sprite characterIcon, CombatUnit unit)
         {
@@ -102,7 +95,9 @@ namespace Features.Combat.UI
             var fraction = _unit.MaxHealth <= 0f ? 0f : Mathf.Clamp01(_displayHealth / _unit.MaxHealth);
 
             healthFill.fillAmount = fraction;
-            healthFill.color = healthGradient.Evaluate(fraction);
+            var color = healthGradient.Evaluate(fraction);
+            healthFill.color = color;
+            healthFill.GetComponent<Outline>().effectColor = color;
             canvasGroup.alpha = _displayHealth > 0f ? 1f : deadAlpha;
         }
     }

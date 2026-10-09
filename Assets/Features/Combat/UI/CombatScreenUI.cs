@@ -1,7 +1,5 @@
 using System.Collections;
-using Common.Infrastructure.Gameplay;
 using Common.Infrastructure.Observation;
-using Common.UI.Elements;
 using Features.Combat.Logic;
 using NaughtyAttributes;
 using UnityEngine;
@@ -9,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Features.Combat.UI
 {
-    public sealed class CombatScreenUI : InitializableBehavior
+    public sealed class CombatScreenUI : MonoBehaviour
     {
         [SerializeField, Required]
         private TeamBattleUI playerBattle, banditBattle;
@@ -38,7 +36,9 @@ namespace Features.Combat.UI
         [SerializeField]
         private float swordFlightSeconds = 0.42f, swordStaggerSeconds = 0.03f, settleSeconds = 0.42f;
 
-        private CombatService _combatService;
+        public ObservableEvent RoundRequested { get; } = new();
+        public ObservableEvent OutcomeDismissed { get; } = new();
+
         private Logic.Combat _combat;
         private BattleOutcomeUI _outcome;
         private Coroutine _round;
@@ -48,20 +48,14 @@ namespace Features.Combat.UI
 
         private readonly Bindings _outcomeBindings = new();
 
-        public override void Initialize()
+        private void Awake()
         {
-            _combatService = GameplayContext.Instance.Services.CombatService;
-
             nextRoundButton.onClick.AddListener(OnNextRoundClicked);
             autoButton.onClick.AddListener(OnAutoClicked);
-
-            Hide();
         }
 
-        public override void CleanUp()
+        private void OnDestroy()
         {
-            base.CleanUp();
-
             StopRound();
             ClearOutcome();
 
@@ -107,25 +101,28 @@ namespace Features.Combat.UI
             gameObject.SetActive(false);
         }
 
-        private void OnNextRoundClicked()
+        public void PlayRound(RoundResult result)
         {
-            ResolveRound();
+            if (result == null || _round != null)
+                return;
+
+            _round = StartCoroutine(PlayRoundRoutine(result));
         }
 
-        private void ResolveRound()
+        private void OnNextRoundClicked()
+        {
+            RequestRound();
+        }
+
+        private void RequestRound()
         {
             if (_combat == null || _isOver || _round != null)
                 return;
 
-            var result = _combatService.ResolveRound();
-
-            if (result == null)
-                return;
-
-            _round = StartCoroutine(PlayRound(result));
+            RoundRequested.Invoke();
         }
 
-        private IEnumerator PlayRound(RoundResult result)
+        private IEnumerator PlayRoundRoutine(RoundResult result)
         {
             RefreshControls();
 
@@ -170,7 +167,7 @@ namespace Features.Combat.UI
 
             if (_auto)
             {
-                ResolveRound();
+                RequestRound();
             }
         }
 
@@ -234,8 +231,7 @@ namespace Features.Combat.UI
 
         private void OnOutcomeNextRequested()
         {
-            // TODO: hand off to the loot screen for this outcome. Its own UI, not this screen's.
-            Hide();
+            OutcomeDismissed.Invoke();
         }
 
         private void ClearOutcome()
@@ -255,7 +251,7 @@ namespace Features.Combat.UI
 
             if (_auto && _round == null)
             {
-                ResolveRound();
+                RequestRound();
             }
         }
 
@@ -265,8 +261,6 @@ namespace Features.Combat.UI
             autoActiveMarker.SetActive(isOn);
         }
 
-        // Next Round is blocked while a round is playing out; Auto stays live so a run can be
-        // called off mid-volley.
         private void RefreshControls()
         {
             nextRoundButton.interactable = !_isOver && _round == null;

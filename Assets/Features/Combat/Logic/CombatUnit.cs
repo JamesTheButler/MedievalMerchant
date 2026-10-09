@@ -7,6 +7,7 @@ namespace Features.Combat.Logic
     public sealed class CombatUnit
     {
         public Combatant Combatant { get; }
+        public string Name { get; }
         public float MaxHealth { get; }
         public Observable<float> Health { get; }
         public Observable<float> DamageTaken { get; } = new();
@@ -20,6 +21,8 @@ namespace Features.Combat.Logic
 
             Health = new Observable<float>(maxHealth);
             IsAlive = new Observable<bool>(true);
+
+            Name = combatant.UnitName;
         }
 
         public void ReceiveDamage(float damage)
